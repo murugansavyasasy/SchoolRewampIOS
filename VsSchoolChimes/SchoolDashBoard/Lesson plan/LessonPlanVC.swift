@@ -7,33 +7,24 @@
 
 import UIKit
 
+
 class LessonPlanVC: UIViewController {
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var viewBtn: UIButton!
-    @IBOutlet weak var createBtn: UIButton!
-    @IBOutlet var ButtonStackview: UIStackView!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var NodataImage: UIImageView!
+    @IBOutlet weak var NodataLbl: UILabel!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
-    let complete :[Double] = [75,60,83,47,90,32]
-    let pending :[Double] = [25,40,17,53,10,68]
     let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
     let colours1 = ["AttendenceColor","Clr","Color","lesson1","lesson3"]
-    var id  = 2//0
-    
-    let lessonPlans: [LessonPlan] = [
-        LessonPlan(subject: "Principles of Management", className: "XI - A", staffName: "Lakshmanan S", progress: 30),
-        LessonPlan(subject: "Business Studies", className: "XI - B", staffName: "Anita R", progress: 50),
-        LessonPlan(subject: "Economics", className: "XI - C", staffName: "Vikram K", progress: 75),
-        LessonPlan(subject: "Accountancy", className: "XI - D", staffName: "Meera J", progress: 16),
-        LessonPlan(subject: "Marketing", className: "XI - E", staffName: "Suresh P", progress: 60),
-        LessonPlan(subject: "Financial Management", className: "XI - F", staffName: "Divya M", progress: 80),
-        LessonPlan(subject: "Entrepreneurship", className: "XI - G", staffName: "Ramesh T", progress: 35),
-        LessonPlan(subject: "Human Resource Management", className: "XI - H", staffName: "Priya N", progress: 90)
-    ]
-    
-    let colours = ["gradient1","gradient2","gradient3","gradientBlue1","gradientgreen1"]
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var LessonPlanData: [LessonPlanStaffReport]?
+    var ViewLessonData: [LessonPlanDetail]?
+    var isViewLesson = false
+    var ReqestType = "myclass"
+    var staffRole = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +32,18 @@ class LessonPlanVC: UIViewController {
         UIupdate()
         BackBtn.applyBackButton()
         searchBar.applyRightTxt()
-        searchBar.addDoneButton()
-        gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        createBtn.setTitleColor(UIColor.white, for: .normal)
+        searchBar.searchTextField.addDoneButton()
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
+        
+        if staffRole == "p3" {
+            ReqestType = "myclass"
+            segmentControl.isHidden = true
+        }else{
+            ReqestType = "allclass"
+        }
+        
+        lesson_plan_staff_report_Api()
+        
         let nib1 = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
         tableview.register(nib1, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
         let nib = UINib(nibName: CellConfingName.LessonProgressCell, bundle: nil)
@@ -51,6 +51,10 @@ class LessonPlanVC: UIViewController {
         
         let nib2 = UINib(nibName: CellConfingName.LessonDashboardTv, bundle: nil)
         tableview.register(nib2, forCellReuseIdentifier: CellConfingName.LessonDashboardTv)
+        
+        let nib3 = UINib(nibName: "LessonViewTvCell", bundle: nil)
+        tableview.register(nib3, forCellReuseIdentifier: "LessonViewTvCell")
+        
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -58,57 +62,95 @@ class LessonPlanVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
     
     func UIupdate(){
-        searchBar.backgroundImage = UIImage()
-        searchBar.layer.borderWidth = 0
-        searchBar.layer.borderColor = UIColor.clear.cgColor
 
-        ButtonStackview.layer.cornerRadius = 20
-        createBtn.layer.cornerRadius = 20
-        viewBtn.layer.cornerRadius = 20
+        NodataImage.isHidden = true
+        NodataLbl.isHidden = true
+    }
+    
+    //MARK: Lesson plan Api call
+    func lesson_plan_staff_report_Api(){
         
-        createBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        viewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        let param: [String: Any] = [LessonPlanStringFile.request_type: ReqestType]
+        
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<LessonPlanStaffReportResponse,Error>) in
+            
+            switch result{
+                
+            case .success(let success):
+                DispatchQueue.main.async { [self] in
+                    
+                    LessonPlanData = success.data
+                    NodataImage.isHidden = !(LessonPlanData?.isEmpty ?? false)
+                    NodataLbl.isHidden = !(LessonPlanData?.isEmpty ?? false)
+                    
+                    tableview.reloadData()
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {[self] in
+                    
+                    NodataImage.isHidden = false
+                    NodataLbl.isHidden = false
+                    NodataLbl.text = error.localizedDescription
+                    
+                    print("Error: ",error.localizedDescription)
+                }
+            }
+        }
     }
     
-    func gradientcolours(button : UIButton,colours : [CGColor]){
-        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        // Create and configure the gradient layer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = button.bounds
-        gradientLayer.cornerRadius = button.layer.cornerRadius
-        // Insert the gradient layer into the button's layer
-        button.layer.insertSublayer(gradientLayer, at: 0)
+    func View_Lesson_Plan_Api(){
+        
+        let param: [String: Any] = [LessonPlanStringFile.section_subject_id : "355065",LessonPlanStringFile.lesson_plan_status: 0]
+        
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<LessonPlanDetailResponse,Error>) in
+            
+            switch result {
+            case .success(let success):
+                
+                DispatchQueue.main.async { [self] in
+                    
+                    ViewLessonData = success.data
+                    NodataImage.isHidden = !(ViewLessonData?.isEmpty ?? false)
+                    NodataLbl.isHidden = !(ViewLessonData?.isEmpty ?? false)
+                    NodataLbl.text = success.message
+                    tableview.reloadData()
+                }
+                
+            case .failure(let failure):
+                
+                DispatchQueue.main.async {[self] in
+                    
+                    NodataImage.isHidden = false
+                    NodataLbl.isHidden = false
+                    NodataLbl.text = failure.localizedDescription
+                    
+                    print("Error: ",failure.localizedDescription)
+                }
+            }
+        }
     }
     
-    @IBAction func createBtnAct(_ sender: Any) {
-        gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        createBtn.setTitleColor(UIColor.white, for: .normal)
-        gradientcolours(button: viewBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        viewBtn.setTitleColor(UIColor.black, for: .normal)
-    }
-    
-    @IBAction func viewBtnAct(_ sender: Any) {
-        gradientcolours(button: viewBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        viewBtn.setTitleColor(UIColor.white, for: .normal)
-        gradientcolours(button: createBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        createBtn.setTitleColor(UIColor.black, for: .normal)
+    @IBAction func SegmentAct(_ sender: Any) {
+        
+        if segmentControl.selectedSegmentIndex == 0{
+            ReqestType = "allclass"
+        }else {
+            ReqestType = "myclass"
+        }
+        
+        lesson_plan_staff_report_Api()
     }
     
     @IBAction func BackBtnAct(_ sender: Any) {
-        if id == 1{
-            // Randomly select either 0 or 2
-            let randomValue = Int.random(in: 0...2) == 0 ? 0 : 2
-            id = randomValue//0
+        if isViewLesson == true{
+            isViewLesson = false
             tableview.reloadData()
         }else{
             dismiss(animated: true)
@@ -120,64 +162,74 @@ class LessonPlanVC: UIViewController {
 @available(iOS 15.0, *)
 extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if  id == 0{
-            return  6
-        }else if id == 2{
-            return lessonPlans.count
+        
+        if isViewLesson == false {
+            return LessonPlanData?.count ?? 0
         }else{
-            return  10
+            return ViewLessonData?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     if id == 2{
+        if isViewLesson == false{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDashboardTv, for: indexPath) as! LessonDashboardTv
-            cell.SubjectLbl.text = lessonPlans[indexPath.row].subject
-            cell.StandardLbl.text = lessonPlans[indexPath.row].className
-            cell.setProgress(to: lessonPlans[indexPath.row].progress)
+         cell.SubjectLbl.text = LessonPlanData?[indexPath.row].subject_name
+         cell.StandardLbl.text = (LessonPlanData?[indexPath.row].class_name ?? "") + " - " + (LessonPlanData?[indexPath.row].section_name ?? "")
+         cell.StaffNameLbl.text = LessonPlanData?[indexPath.row].staff_name
+         let percentage = Double(LessonPlanData?[indexPath.row].percentage_value ?? 0)
+         cell.setProgress(to: percentage)
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(ViewbtnAct))
             cell.ViewBtn.addGestureRecognizer(tap)
             return cell
         }
         else{
-            let colour = cellcolour[indexPath.row % cellcolour.count]
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonProgressCell, for: indexPath) as! LessonProgressCell
-    
-            // Set the default state before configuring the cell
-            cell.progressView.backgroundColor = .systemGreen  // Default color
-           // cell.ProgressHeight.constant = 85  // Default height
+//            let colour = cellcolour[indexPath.row % cellcolour.count]
+//            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonProgressCell, for: indexPath) as! LessonProgressCell
+//    
+//            // Set the default state before configuring the cell
+//            cell.progressView.backgroundColor = .systemGreen  // Default color
+//           // cell.ProgressHeight.constant = 85  // Default height
+//            
+//            if indexPath.row == 0{
+//                cell.TopProgressView.isHidden = true
+//            }
+//            
+//            let colour1 = indexPath.row % colours1.count
+//            cell.Baseview.backgroundColor = UIColor(named: colours1[colour1])
+//            
+//            let totalRows = tableView.numberOfRows(inSection: indexPath.section)
+//            
+//            if indexPath.row > 5 {
+//                cell.checkImageView.image = UIImage(named: "CheckCircle")
+//                cell.progressView.backgroundColor = .lightGray
+//                cell.TopProgressView.backgroundColor = .lightGray
+//            } else {
+//                cell.checkImageView.image = UIImage(named: "round")
+//                cell.progressView.backgroundColor = .systemGreen
+//            }
+//            
+//            if indexPath.row == totalRows - 1 {
+//                //cell.ProgressHeight.constant = 0
+//                cell.progressView.isHidden = true
+//            } else {
+//                // Calculate dynamic height if needed
+//                //    let distance = distanceBetweenImageViews(in: tableView, at: indexPath)
+//                //    cell.ProgressHeight.constant = distance ?? 85
+//            }
+//            
+//            cell.TitleLbl.text = ViewLessonData?[indexPath.row].details[0].name
+//            
+//            cell.setNeedsLayout()
+//            cell.layoutIfNeeded()
+//            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LessonViewTvCell", for: indexPath) as! LessonViewTvCell
             
-            if indexPath.row == 0{
-                cell.TopProgressView.isHidden = true
-            }
+            let details = ViewLessonData?[indexPath.row].details ?? []
+
+            cell.configure(with: details)
             
-            let colour1 = indexPath.row % colours1.count
-            cell.Baseview.backgroundColor = UIColor(named: colours1[colour1])
-            
-            let totalRows = tableView.numberOfRows(inSection: indexPath.section)
-            
-            if indexPath.row > 5 {
-                cell.checkImageView.image = UIImage(named: "CheckCircle")
-                cell.progressView.backgroundColor = .lightGray
-                cell.TopProgressView.backgroundColor = .lightGray
-            } else {
-                cell.checkImageView.image = UIImage(named: "round")
-                cell.progressView.backgroundColor = .systemGreen
-            }
-            
-            if indexPath.row == totalRows - 1 {
-                //cell.ProgressHeight.constant = 0
-                cell.progressView.isHidden = true
-            } else {
-                // Calculate dynamic height if needed
-                //    let distance = distanceBetweenImageViews(in: tableView, at: indexPath)
-                //    cell.ProgressHeight.constant = distance ?? 85
-            }
-            cell.setNeedsLayout()
-            cell.layoutIfNeeded()
             return cell
-           
         }
     }
     
@@ -237,20 +289,19 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     
   
     @IBAction func ViewbtnAct() {
-        id = 1
-        tableview.reloadData()
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        isViewLesson = true
+        View_Lesson_Plan_Api()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if id == 0{
-//            let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
-//            
-//            cell.animatePopUpEffect()
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if  isViewLesson == true {
+            return 100
+        }else{
+          
+            return UITableView.automaticDimension
         }
     }
+    
 }
 
 extension LessonPlanVC: UISearchBarDelegate{
@@ -259,12 +310,4 @@ extension LessonPlanVC: UISearchBarDelegate{
         
         searchBar.resignFirstResponder()
     }
-}
-
-
-struct LessonPlan {
-    let subject: String
-    let className: String
-    let staffName: String
-    let progress: Double
 }

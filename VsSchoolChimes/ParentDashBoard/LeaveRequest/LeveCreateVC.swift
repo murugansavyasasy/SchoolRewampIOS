@@ -11,45 +11,52 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     func date(date: String) {
         
         dateFormatter.dateFormat = dateFormat1
-        let DayDate = dateFormatter.date(from: date)!
-        // Change to output format
-        dateFormatter.dateFormat = dateFormat2
-        let outputDateString = dateFormatter.string(from: DayDate)
-        
-        if dateSelection == true{
-            dateBtn.setTitle(date, for: .normal)
-            setFormattedDate(outputDateString, label: fromDateLbl)
+        if let selectedDate = dateFormatter.date(from: date) {
+            if dateSelection {
+                // Set From Date
+                FromDateLbl.setFormattedDate(from: selectedDate)
 
-        }else{
-            todate.setTitle(date, for: .normal)
-            setFormattedDate(outputDateString, label: toDateLbl)
+                // Check if To Date is set and valid
+                if let toText = ToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
+                    let labelFormatter = DateFormatter()
+                    labelFormatter.dateFormat = "d EEE, MMM yyyy" // Matches formatted label
+
+                    if let toDate = labelFormatter.date(from: toText) {
+                        if selectedDate > toDate {
+                            // Auto-adjust To Date if From Date is later
+                            ToDateLbl.setFormattedDate(from: selectedDate)
+                        }
+                    }
+                }
+
+            } else {
+                // Set To Date
+                ToDateLbl.setFormattedDate(from: selectedDate)
+            }
+        } else {
+            print("Error: Invalid date format or nil value")
         }
-        
-        if let from = dateBtn.titleLabel?.text, let to = todate.titleLabel?.text{
-            updateDayCountLabel(startDateStr: from, endDateStr: to, dayCount: dayCount)
-        }
+
     }
     
-    
+    @IBOutlet weak var ToDateLbl: UILabel!
+    @IBOutlet weak var FromDateLbl: UILabel!
+    @IBOutlet weak var TodateTop: UIView!
+    @IBOutlet weak var FromDateTop: UIView!
+    @IBOutlet weak var ToDateView: UIView!
+    @IBOutlet weak var FromDateView: UIView!
     @IBOutlet weak var dayCount: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var ReasonLbl: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
-    @IBOutlet weak var calanderBtn: HalfColorButton!
-    @IBOutlet weak var calander2Btn: HalfColorButton!
-    @IBOutlet weak var dateBtn: UIButton!
-    @IBOutlet weak var todate: UIButton!
-    @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var ToLbl: UILabel!
     @IBOutlet weak var fromLbl: UILabel!
-    @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var contentTxtView: UITextView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var costomView: ImageSelection!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var SubmitBtn: UIButton!
-    
     
    
     let dateFormatter = DateFormatter()
@@ -59,7 +66,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     var selectedImages: [UIImage] = []
     var url : URL?
     var dateFormat1 = "dd MMM yyyy"
-    var dateFormat2 = "EEE dd"
     var isKeyboardVisible = false
     var childDetails = UserDefaultFileManager.get_child_Details()
     let alert = CustomAlert()
@@ -74,6 +80,12 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
        
         imageSelection()
         setupPlaceholder()
+        
+        let DateGesture = UITapGestureRecognizer(target: self, action: #selector(datepicker))
+        FromDateView.addGestureRecognizer(DateGesture)
+        
+        let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDate))
+        ToDateView.addGestureRecognizer(ToDateGesture)
        
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
@@ -94,6 +106,26 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     }
     
     func uiConfic(){
+        
+        FromDateView.layer.cornerRadius = 8
+        ToDateView.layer.cornerRadius = 8
+        FromDateTop.layer.cornerRadius = 8
+        TodateTop.layer.cornerRadius = 8
+        FromDateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+        TodateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+        
+        FromDateView.layer.cornerRadius = 10
+        FromDateView.layer.shadowColor = UIColor.black.cgColor
+        FromDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        FromDateView.layer.shadowRadius = 5
+        FromDateView.layer.shadowOpacity = 0.3
+        
+        ToDateView.layer.cornerRadius = 10
+        ToDateView.layer.shadowColor = UIColor.black.cgColor
+        ToDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        ToDateView.layer.shadowRadius = 5
+        ToDateView.layer.shadowOpacity = 0.3
+        
         contentTxtView.layer.cornerRadius = 10
         contentTxtView.layer.borderWidth = 0.5
         contentTxtView.layer.borderColor = UIColor.black.cgColor
@@ -104,26 +136,14 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
         
-        calanderBtn.layer.borderWidth = 1 // Border width
-        calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
-        calander2Btn.layer.borderWidth = 1 // Border width
-        calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
-        calander2Btn.layer.cornerRadius = 10
-        calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
-        
-        
-        ToLbl.setFont(style:.body, size: FontSize.BodySize)
-        ToLbl.text = CommonStringFile.To.translated()
-        headerTitle.setFont(style:.body, size: FontSize.BodySize)
+        ReasonLbl.setRequiredText("Reason")
+        ToLbl.setFont(style:.title, size: FontSize.TitleSize)
+        //ToLbl.text = CommonStringFile.To.translated()
+        headerTitle.setFont(style:.title, size: FontSize.TitleSize)
         headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
-        ReasonLbl.setFont(style:.body, size: FontSize.BodySize)
-        fromLbl.setFont(style:.body, size: FontSize.BodySize)
+        fromLbl.setFont(style:.title, size: FontSize.TitleSize)
         fromLbl.text = CommonStringFile.From.translated()
         dayCount.setFont(style:.header, size: FontSize.BodySize)
-        dateBtn.setTitleFont(style: .body, size: 12)
-        todate.setTitleFont(style: .body, size: 12)
-       
-        calanderBtn.layer.cornerRadius = 10
 
     }
     
@@ -156,7 +176,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         
         if contentTxtView.text != ""{
             
-//            ApplyLeave()
+           ApplyLeave()
         }else{
             alert.showAlert(title: "", message: AlertstringFile.Enter_reason, on: self)
         }
@@ -165,51 +185,51 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     
     //MARK: Leave Request API call
     
-//    func ApplyLeave(){
-//        
-//        let LeaveFrom = ConvertDateStringSmart(dateBtn.titleLabel?.text)
-//        let LeaveTo = ConvertDateStringSmart(todate.titleLabel?.text)
-//        
-//        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
-//        
-//        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
-//                              
-//            onOk: {
-//                  
-//            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
-//                
-//                switch result{
-//                    
-//                case .success(let success):
-//                    
-//                    DispatchQueue.main.async {[self] in
-//                        
-//                        let title = success.status==true ? AlertstringFile.Success : AlertstringFile.Failed
-//                        
-//                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self) {
-//                            
-//                            self.dismiss(animated: true)
-//                        }
-//                    }
-//                    
-//                case .failure(let error):
-//                    
-//                    DispatchQueue.main.async {[self] in
-//                        
-//                        CustomAlert.showAlertWithOkAction(title: "Error", message:error.localizedDescription, on: self) {
-//                            
-//                            self.dismiss(animated: true)
-//                        }
-//                    }
-//                }
-//            }
-//            
-//        }, onNo: {
-//            
-//            print("user Canceled Action")
-//        }
-//        )
-//    }
+    func ApplyLeave(){
+        
+        let LeaveFrom = ConvertDateStringSmart(FromDateLbl.text)
+        let LeaveTo = ConvertDateStringSmart(ToDateLbl.text)
+        
+        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
+        
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
+                              
+            onOk: {
+                  
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
+                
+                switch result{
+                    
+                case .success(let success):
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        let title = success.status==true ? AlertstringFile.Success : AlertstringFile.Failed
+                        
+                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self) {
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        CustomAlert.showAlertWithOkAction(title: "Error", message:error.localizedDescription, on: self) {
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                }
+            }
+            
+        }, onNo: {
+            
+            print("user Canceled Action")
+        }
+        )
+    }
     
     
     
@@ -222,15 +242,9 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         dateFormatter.dateFormat = dateFormat1
         let date = dateFormatter.string(from: currentDate)
         
-        let formatedDate = ConvertDateStringSmart(date, toFormat: dateFormat1)
+        FromDateLbl.setFormattedDate(from: currentDate)
+        ToDateLbl.setFormattedDate(from: currentDate)
         
-        dateBtn.setTitle(formatedDate, for: .normal)
-        todate.setTitle(formatedDate, for: .normal)
-        
-        let customDate = ConvertDateStringSmart(date, toFormat: dateFormat2)
-        
-        setFormattedDate(customDate, label: fromDateLbl)
-        setFormattedDate(customDate, label: toDateLbl)
     }
     
     
@@ -290,7 +304,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     }
 
     
-    @IBAction func datepicker(_ sender: UIButton) {
+    @IBAction func datepicker(_ sender: Any) {
          dateSelection = true
          let vc = DatePickerVC(nibName: nil, bundle: nil)
          vc.dateSelection = 2
@@ -300,11 +314,29 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
          self.present(vc, animated: false)
          
     }
-    @IBAction func toDate(_ sender: UIButton) {
+    
+    @IBAction func toDate(_ sender: Any) {
         dateSelection = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.delegate = self
+
+        // Extract and parse from FromDateLbl
+        if let fromDateString = FromDateLbl.text {
+            let components = fromDateString.components(separatedBy: "\n")
+            if components.count == 2,
+               let day = components.first,
+               let rest = components.last {
+                let fullDateString = "\(day) \(rest)" // e.g., "18 Wed, Jun 2025"
+
+                let formatter = DateFormatter()
+                formatter.dateFormat = "d EEE, MMM yyyy"
+                if let fromDate = formatter.date(from: fullDateString) {
+                    vc.minimumDate = fromDate
+                }
+            }
+        }
+
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.present(vc, animated: false)
@@ -324,12 +356,11 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         let calendar = Calendar.current
         if let days = calendar.dateComponents([.day], from: startDate, to: endDate).day {
             let totalDays = days + 1  // Include the end date
-            dayCount.text = "\(totalDays) Day" + (totalDays > 1 ? "s" : "")
+            dayCount.text = (dayCount.text ?? "") + " \(totalDays) Day" + (totalDays > 1 ? "s" : "")
         } else {
             dayCount.text = "Error calculating"
         }
     }
-
 }
 
 @available(iOS 14.0, *)
@@ -519,5 +550,41 @@ extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
             }
         }
         textView.layoutIfNeeded() // Refresh the layout
+    }
+}
+
+extension UILabel {
+    func setFormattedDate(from date: Date) {
+        let calendar = Calendar.current
+        let dayNumber = calendar.component(.day, from: date)
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, MMM yyyy" // e.g., "Wed, Jun 2025"
+        let dayText = dateFormatter.string(from: date)
+
+        let fullString = "\(dayNumber)\n\(dayText)"
+        let attributedText = NSMutableAttributedString(string: fullString)
+
+        // Day number style: Poppins-SemiBold
+        if let boldFont = UIFont(name: "Poppins-SemiBold", size: 15) {
+            let dayNumberRange = (fullString as NSString).range(of: "\(dayNumber)")
+            attributedText.addAttributes([
+                .font: boldFont,
+                .foregroundColor: UIColor.label
+            ], range: dayNumberRange)
+        }
+
+        // Date text style: Poppins-Medium
+        if let mediumFont = UIFont(name: "Poppins-Medium", size: 10) {
+            let dayTextRange = (fullString as NSString).range(of: dayText)
+            attributedText.addAttributes([
+                .font: mediumFont,
+                .foregroundColor: UIColor.secondaryLabel
+            ], range: dayTextRange)
+        }
+
+        self.attributedText = attributedText
+        self.numberOfLines = 0
+        self.textAlignment = .center
     }
 }

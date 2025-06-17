@@ -254,3 +254,11 @@ class LeaveRequestStringFile{
     static let id = "id"
     static let is_approve = "is_approve"
 }
+
+
+class LessonPlanStringFile{
+    
+    static let request_type = "request_type"
+    static let section_subject_id = "section_subject_id"
+    static let lesson_plan_status = "lesson_plan_status"
+}

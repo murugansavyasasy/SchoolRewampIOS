@@ -21,7 +21,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
             
-            self.Leave_Update_status(id: Leaveid, status: status)
+            self.Leave_Update_status(id: Leaveid, status: status, index: index)
             
         }, onNo: {
             
@@ -45,8 +45,9 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         super.viewDidLoad()
         BackBtn.applyBackButton()
       
-        BackBtn.setTitle(MenuStringFile.LeaveRequest.translated(), for: .normal)
-        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+       // BackBtn.setTitle(MenuStringFile.LeaveRequest.translated(), for: .normal)
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.LeaveRequest, secondLine: StaffDetails?.school_name ?? "")
+       // BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
@@ -56,6 +57,9 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         NodataImage.isHidden = true
         EmptyView.isHidden = true
         
+        leaveRequestTable.showsVerticalScrollIndicator = false
+        leaveRequestTable.showsHorizontalScrollIndicator = false
+
         GetLeaveRequestAPI()
         
         leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
@@ -92,6 +96,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
                     NodataImage.isHidden = !(LeaveRequestData?.isEmpty ?? false)
                     NodateLbl.isHidden = !(LeaveRequestData?.isEmpty ?? false)
                     EmptyView.isHidden = !(LeaveRequestData?.isEmpty ?? false)
+                    searchBar.isHidden = (LeaveRequestData?.isEmpty ?? false)
                     leaveRequestTable.reloadData()
                 }
                 
@@ -108,7 +113,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         }
     }
     
-    func Leave_Update_status(id: String, status: Bool) {
+    func Leave_Update_status(id: String, status: Bool,index: Int) {
         
         let param: [String:Any] = [LeaveRequestStringFile.id: id,LeaveRequestStringFile.is_approve: status]
         
@@ -120,11 +125,26 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
                 
                 DispatchQueue.main.async {[self] in
                     
-                    let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
-                    
-                    CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self){
+                    if success.status == true {
                         
-                        self.GetLeaveRequestAPI()
+                        let title = AlertstringFile.Success
+                        
+                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self){
+                            
+                            //self.GetLeaveRequestAPI()
+                            let leaveStatus = status == true ? "Approved" : "Rejected"
+                            self.SearchLeavetData?[index].status = leaveStatus
+                            let formatter = DateFormatter()
+                                    formatter.dateFormat = "dd MMM yyyy hh:mm a"
+                                    let currentDate = Date()
+                                    let formattedDate = formatter.string(from: currentDate)
+                            self.SearchLeavetData?[index].updated_on = formattedDate
+                            self.leaveRequestTable.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                        }
+                    }else {
+                        
+                        let title = AlertstringFile.Failed
+                        alert.showAlert(title: title, message: success.message ?? "", on: self)
                     }
                 }
                 
@@ -166,25 +186,35 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         cell.resonLbl.text = LeaveRequest?.reason
         cell.NoOfDaysLbl.text = LeaveRequest?.no_of_days
         cell.delegate = self
+        cell.aproveBtn.tag = indexPath.row
+        cell.rejectBtn.tag = indexPath.row
         
-        if LeaveRequest?.status == "Approved"{
-            
+        if LeaveRequest?.status == "Approved" {
             cell.UpdatedOnBtn.isHidden = false
-            cell.UpdatedOnBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+            cell.UpdatedOnBtn.backgroundColor = .systemGreen.withAlphaComponent(0.25)
             cell.UpdatedOnBtn.setTitleColor(.systemGreen, for: .normal)
             cell.ApproveRejectStack.isHidden = true
             cell.StatusBtn.backgroundColor = .systemGreen.withAlphaComponent(0.8)
             cell.StatusBtn.setTitle(LeaveRequest?.status, for: .normal)
             
-        }else if LeaveRequest?.status == "Rejected" {
-            
+        } else if LeaveRequest?.status == "Rejected" {
             cell.UpdatedOnBtn.isHidden = false
             cell.UpdatedOnBtn.backgroundColor = .systemRed.withAlphaComponent(0.3)
             cell.UpdatedOnBtn.setTitleColor(.systemRed, for: .normal)
             cell.ApproveRejectStack.isHidden = true
             cell.StatusBtn.setTitle(LeaveRequest?.status, for: .normal)
             cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.8)
+            
+        } else {
+            // Default/reset state (e.g., Pending or undefined status)
+            cell.UpdatedOnBtn.isHidden = true
+            cell.ApproveRejectStack.isHidden = false
+            cell.StatusBtn.setTitle("", for: .normal)
+            cell.StatusBtn.backgroundColor = .clear
+            cell.UpdatedOnBtn.setTitle("", for: .normal)
+            cell.UpdatedOnBtn.backgroundColor = .clear
         }
+
         let btnTitle = (LeaveRequest?.status ?? "") + " on " + (ConvertDateStringSmart(LeaveRequest?.updated_on, toFormat: "dd MMM yyyy hh:mm a"))
         cell.UpdatedOnBtn.setTitle(btnTitle, for: .normal)
         
@@ -223,56 +253,3 @@ extension SenderLeaveRqstVC: UISearchBarDelegate{
         leaveRequestTable.reloadData()
     }
 }
-
-//extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return filterStudent?.count ?? 0
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.SenderLeaveTV, for: indexPath) as! SenderLeaveTV
-//        cell.fromDate.text = filterStudent?[indexPath.row].fromDate
-//        cell.toDate.text = filterStudent?[indexPath.row].toDate
-//        cell.resonLbl.text = filterStudent?[indexPath.row].reson
-//        cell.delegate = self
-//        cell.aproveBtn.tag = indexPath.row
-//        cell.rejectBtn.tag = indexPath.row
-//        cell.statusLbl.isHidden = !filterStudent![indexPath.row].isExpanded
-//        cell.statusLbl.text = filterStudent?[indexPath.row].status
-//        cell.statusLbl.textColor = filterStudent?[indexPath.row].status == "Approved" ? .aproved : .red
-//        if filterStudent![indexPath.row].isExpanded{
-//            cell.aproved.isHidden = true
-//            cell.reject.isHidden = true
-//            cell.height.constant = 0
-//        }else{
-//            cell.aproved.isHidden = false
-//            cell.reject.isHidden = false
-//            cell.height.constant = 40
-//        }
-//        
-//        return cell
-//    }
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//}
-
-//@available(iOS 14.0, *)
-//extension SenderLeaveRqstVC: UISearchBarDelegate{
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            // Reset to full data when the search text is cleared
-//            filterStudent = leaveResuest
-//        } else {
-//            // Filter data based on the search text
-//            filterStudent = leaveResuest.filter { student in
-//                student.fromDate!.lowercased().contains(searchText.lowercased())
-//            }
-//        }
-//        leaveRequestTable.reloadData()
-//    }
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
-//    }
-//}

@@ -11,10 +11,9 @@ class LeveHistoryTV: UITableViewCell {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var approvedBy: UILabel!
-    @IBOutlet weak var aproverNameLbl: UILabel!
+    @IBOutlet weak var ReasonLbl: UILabel!
     @IBOutlet weak var statusBtn: UIView!
-    @IBOutlet weak var aproveLbl: UILabel!
+    @IBOutlet weak var StatusLbl: UILabel!
     @IBOutlet weak var edit: UIButton!
     @IBOutlet weak var satusImg: UIImageView!
     @IBOutlet weak var botomSts: NSLayoutConstraint!
@@ -22,6 +21,14 @@ class LeveHistoryTV: UITableViewCell {
     @IBOutlet weak var editHeight: NSLayoutConstraint!
     @IBOutlet weak var deltBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
+    @IBOutlet weak var NoOfDaysLbl: UILabel!
+    @IBOutlet weak var NoOfdaysDefLbl: UILabel!
+    @IBOutlet weak var AppliedonDefLbl: UILabel!
+    @IBOutlet weak var UpdatedonDefLbl: UILabel!
+    @IBOutlet weak var AppliedonLbl: UILabel!
+    @IBOutlet weak var UpdatedonLbl: UILabel!
+    @IBOutlet weak var ReasonDefLbl: UILabel!
+    @IBOutlet weak var UpdatedOnColon: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,13 +51,15 @@ class LeveHistoryTV: UITableViewCell {
         statusBtn.layer.shadowRadius = 5
         statusBtn.layer.shadowOpacity = 0.3
         
-        styleLabel(toDateLbl)
-        styleLabel(fromDateLbl)
+        edit.isHidden = true
+        
+//        styleLabel(toDateLbl)
+//        styleLabel(fromDateLbl)
      
-        fromDateLbl.setFont(style:.body, size: FontSize.BodySize)
-        toDateLbl.setFont(style:.body, size: FontSize.BodySize)
-        aproveLbl.setFont(style:.body, size: FontSize.BodySize)
-        approvedBy.setFont(style:.body, size: FontSize.BodySize)
+        fromDateLbl.setFont(style:.title, size: FontSize.TitleSize)
+        toDateLbl.setFont(style:.title, size: FontSize.TitleSize)
+        StatusLbl.setFont(style:.body, size: FontSize.BodySize)
+        //ReasonLbl.setFont(style:.body, size: FontSize.BodySize)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
         contentView.isUserInteractionEnabled = true // Ensure interaction is enabled
         contentView.addGestureRecognizer(tapGesture)

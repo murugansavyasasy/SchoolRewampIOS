@@ -542,6 +542,8 @@
 		84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC82DBCAE6700BBEDD7 /* ParentCommunicationVc.xib */; };
 		84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC62DBCAE6700BBEDD7 /* FiltersCvCell.xib */; };
 		FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */; };
+		FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA28FC452E01349700647A76 /* LessonViewTvCell.xib */; };
+		FA28FC472E01349700647A76 /* LessonViewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28FC442E01349700647A76 /* LessonViewTvCell.swift */; };
 		FA2A3FBA2DB0CABB0000AF55 /* SenderAttachmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A3FB82DB0CABB0000AF55 /* SenderAttachmentVC.swift */; };
 		FA2A3FBB2DB0CABB0000AF55 /* SenderAttachmentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA2A3FB92DB0CABB0000AF55 /* SenderAttachmentVC.xib */; };
 		FA31A7C12D7023890069C954 /* VideoPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */; };
@@ -565,6 +567,8 @@
 		FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */; };
 		FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */; };
 		FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */; };
+		FAAF79902DFBE3C400227DCC /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */; };
+		FAAF79922DFBE3E000227DCC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */; };
 		FAD14FD82DBFAE01006BD3E1 /* StudentTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */; };
 		FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */; };
 		FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */; };
@@ -1219,6 +1223,8 @@
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
 		FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
+		FA28FC442E01349700647A76 /* LessonViewTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewTvCell.swift; sourceTree = "<group>"; };
+		FA28FC452E01349700647A76 /* LessonViewTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonViewTvCell.xib; sourceTree = "<group>"; };
 		FA2A3FB82DB0CABB0000AF55 /* SenderAttachmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderAttachmentVC.swift; sourceTree = "<group>"; };
 		FA2A3FB92DB0CABB0000AF55 /* SenderAttachmentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAttachmentVC.xib; sourceTree = "<group>"; };
 		FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerVC.swift; sourceTree = "<group>"; };
@@ -1243,6 +1249,8 @@
 		FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreFooterView.swift; sourceTree = "<group>"; };
 		FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressCell.swift; sourceTree = "<group>"; };
 		FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressCell.xib; sourceTree = "<group>"; };
+		FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTVCell.swift; sourceTree = "<group>"; };
 		FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentTVCell.xib; sourceTree = "<group>"; };
 		FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportVC.swift; sourceTree = "<group>"; };
@@ -2323,6 +2331,8 @@
 				FA7A64112D64995900D43031 /* LessonDashboardTv.xib */,
 				FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */,
 				FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */,
+				FA28FC442E01349700647A76 /* LessonViewTvCell.swift */,
+				FA28FC452E01349700647A76 /* LessonViewTvCell.xib */,
 			);
 			path = "Lesson plan";
 			sourceTree = "<group>";
@@ -2427,6 +2437,8 @@
 		849E57362C1FF6BD006119DA /* roboto-slab */ = {
 			isa = PBXGroup;
 			children = (
+				FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */,
+				FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */,
 				84385F692CF8516E0020E94D /* Poppins-Bold.otf */,
 				844188782CC9019B006483C3 /* Poppins-Medium.ttf */,
 				849E57312C1FF6BD006119DA /* RobotoSlab-Bold.ttf */,
@@ -3554,6 +3566,7 @@
 				84BB5EAB2D11334400AD0C87 /* ScheduleExamsList.xib in Resources */,
 				84B57EC82D14A0A300E0EA29 /* ParentNoticeBoardVc.xib in Resources */,
 				84EFF9CE2CCC7A6000C11C26 /* PasswordVc.xib in Resources */,
+				FAAF79922DFBE3E000227DCC /* Poppins-Regular.ttf in Resources */,
 				849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
@@ -3638,6 +3651,7 @@
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
 				84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */,
 				FAFF9E0D2D6C806700498368 /* NewLSRWTVcell.xib in Resources */,
+				FAAF79902DFBE3C400227DCC /* Poppins-SemiBold.ttf in Resources */,
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
 				84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
@@ -3686,6 +3700,7 @@
 				18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
+				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
 				84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */,
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
@@ -4164,6 +4179,7 @@
 				84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */,
 				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,
 				84C82A052D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
+				FA28FC472E01349700647A76 /* LessonViewTvCell.swift in Sources */,
 				84C82A062D086A490024A46A /* SparkView.swift in Sources */,
 				8420316E2D390CED003C4076 /* TimetableVC.swift in Sources */,
 				84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */,
@@ -4550,6 +4566,7 @@
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your contacts to get your phone number.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
@@ -4563,6 +4580,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4591,6 +4609,7 @@
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your contacts to get your phone number.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
@@ -4604,6 +4623,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

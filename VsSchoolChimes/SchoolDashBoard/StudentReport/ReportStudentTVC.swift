@@ -10,7 +10,6 @@ import UIKit
 class ReportStudentTVC: UITableViewCell {
     
     @IBOutlet weak var standerdLbl: UILabel!
-    @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var idCardImg: UIImageView!
     @IBOutlet weak var emailBtn: UIButton!
     @IBOutlet weak var smsBtn: UIButton!
@@ -21,13 +20,9 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var admissionTitle: UILabel!
     @IBOutlet weak var dobLbl: UILabel!
     @IBOutlet weak var dobTitleLbl: UILabel!
-    @IBOutlet weak var nameTitle: UILabel!
     @IBOutlet weak var studentNmae: UILabel!
     @IBOutlet weak var genderLbl: UILabel!
     @IBOutlet weak var fatherName: UILabel!
-    
-    @IBOutlet weak var standerdNameLbl: UILabel!
-    @IBOutlet weak var sectionnameLbl: UILabel!
     @IBOutlet weak var rollNoLbl: UILabel!
     @IBOutlet weak var rollNo: UILabel!
     @IBOutlet weak var shimmerView: AnimatView!
@@ -107,17 +102,16 @@ class ReportStudentTVC: UITableViewCell {
         admissionLbl.setFont(style: .body, size: FontSize.BodySize)
         dobLbl.setFont(style: .body, size: FontSize.BodySize)
         dobTitleLbl.setFont(style: .body, size: FontSize.BodySize)
-        nameTitle.setFont(style: .body, size: FontSize.BodySize)
-        studentNmae.setFont(style: .body, size: FontSize.BodySize)
+       
+        studentNmae.setFont(style: .title, size: FontSize.TitleSize)
         genderLbl.setFont(style: .body, size: FontSize.BodySize)
         fatherName.setFont(style: .body, size: FontSize.BodySize)
         fatherTitle.setFont(style: .body, size: FontSize.BodySize)
-        standerdNameLbl.setFont(style: .body, size: FontSize.BodySize)
-        sectionnameLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         rollNoLbl.setFont(style: .body, size: FontSize.BodySize)
         rollNo.setFont(style: .body, size: FontSize.BodySize)
-        sectionLbl.setFont(style: .body, size: FontSize.BodySize)
-        standerdLbl.setFont(style: .body, size: FontSize.BodySize)
+       
+        standerdLbl.setFont(style: .title, size: FontSize.BodySize)
         genderTitle.setFont(style: .body, size: FontSize.BodySize)
         emailBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         mobleNo.setTitleFont(style: .body, size: FontSize.BodySize)

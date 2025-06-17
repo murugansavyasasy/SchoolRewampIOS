@@ -11,7 +11,6 @@ import DropDown
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var searchHidBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
-    
     @IBOutlet weak var searchHeight: NSLayoutConstraint!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
@@ -28,6 +27,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var classDropdown = DropDown()
     var fillterDropdown = DropDown()
     var AcodemicDropdown = DropDown()
+    var GenderDropdown = DropDown()
     var sectionsDetails: [sectionsDetail]?
     var standardDetails: [StandardDetail]?
     var AcadimicYearDatas : [AcadimicYearData] = []
@@ -39,14 +39,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var reportSegment: UISegmentedControl!
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var GenderBtn: UIButton!
+    
     var standerdArray = [String]()
     var sectionArray = [String]()
     var selectStudentType = ""
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var studentList : [StudentData]?
     var imgs = ["shiyam","StudImg","stuentimg 1"]
-    var Filters = ["Name ASC ","Name DSC","Roll No ASC","Roll No DSC"]
+    var Filters = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓"]
+    var Gender = ["All","Male","Female","Others"]
+    var studentList : [StudentData]?
     var filterStudent : [StudentData]?
     var sortedStudent : [StudentData]?
     let menuName = MenuStringFile()
@@ -86,6 +89,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     func uiConfic(){
         reportTable.register(UINib(nibName: CellConfingName.ReportStudentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.ReportStudentTVC)
+        
+        GenderBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        GenderBtn.layer.cornerRadius = 10
         sectionView.layer.cornerRadius = 10
         sectionView.layer.shadowColor = UIColor.black.cgColor
         sectionView.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -167,7 +173,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        fillterDropdown.dataSource = [CommonStringFile.getAllStudent.translated(),CommonStringFile.getStanderd.translated(),CommonStringFile.getStanderd_Section.translated()]
+        fillterDropdown.dataSource = [CommonStringFile.getAllStudent.translated(),CommonStringFile.getStanderd_Section.translated()]
         fillterDropdown.anchorView = filterView
         fillterDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         fillterDropdown.direction = .bottom
@@ -178,10 +184,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             
             switch item.translated(){
             case CommonStringFile.getStanderd_Section.translated():
+                
+                if sectionArray.first != "All" {
+                       sectionArray.insert("All", at: 0)
+                   }
+                sectionBtn.setTitle(sectionArray.first, for: .normal)
                 getStanderd.isHidden = false
                 sectionSelection.isHidden = false
+                classId = standardDetails?.first?.id
                 selection = CommonStringFile.getStanderd_Section.translated()
-                getStudentAPI(class_id:classId,section_id:sectionId)
+                //getStudentAPI(class_id:classId,section_id:sectionId)
+                getStudentAPI(class_id:classId)
             case CommonStringFile.getStanderd.translated():
                 getStanderd.isHidden = false
                 sectionSelection.isHidden = true
@@ -220,9 +233,14 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionDropdown.width = sectionView.bounds.width
         sectionDropdown.show()
         sectionDropdown.selectionAction = { [self] (index: Int, item: String) in
-            sectionId = sectionsDetails?[index].id ?? ""
-            getStudentAPI(class_id:classId,section_id:sectionId)
             self.sectionBtn.setTitle(item, for: .normal)
+            if index == 0{
+                getStudentAPI(class_id:classId)
+                
+            }else{
+                sectionId = sectionsDetails?[index - 1].id ?? ""
+                getStudentAPI(class_id:classId,section_id:sectionId)
+            }
         }
     }
     @IBAction func classSelection(_ sender: UIButton) {
@@ -239,17 +257,73 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             sectionsDetails = standardDetails?[index].sections
             
             sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
+            if sectionArray.first != "All" {
+                   sectionArray.insert("All", at: 0)
+               }
             self.clsBtn.setTitle(item.translated(), for: .normal)
-            self.sectionBtn.setTitle(standardDetails?[index].sections?.first?.name, for: .normal)
+            self.sectionBtn.setTitle(sectionArray.first, for: .normal)
             classId = standardDetails?[index].id ?? ""
             sectionId = standardDetails?[index].sections?.first?.id ?? ""
-            if selection == CommonStringFile.getStanderd_Section.translated(){
-                getStudentAPI(class_id:classId,section_id:sectionId)
-            }else{
+//            if selection == CommonStringFile.getStanderd_Section.translated(){
+//                getStudentAPI(class_id:classId,section_id:sectionId)
+//            }else{
                 getStudentAPI(class_id:standardDetails?[index].id ?? "")
-            }
+           //}
         }
     }
+    
+    @IBAction func GenderSelection(_ sender: UIButton) {
+        
+        GenderDropdown.dataSource = Gender
+           GenderDropdown.anchorView = GenderBtn
+           GenderDropdown.bottomOffset = CGPoint(x: 0, y: GenderBtn.bounds.height)
+           GenderDropdown.width = GenderBtn.bounds.width
+
+           GenderDropdown.selectionAction = { [weak self] (index: Int, selectedGender: String) in
+               guard let self = self else { return }
+
+               self.GenderBtn.setTitle(selectedGender, for: .normal)
+               self.filterStudents(by: selectedGender)
+               self.reportTable.reloadData()
+           }
+
+           GenderDropdown.show()
+    }
+    
+    private func filterStudents(by gender: String) {
+        guard let students = studentList else {
+            filterStudent = []
+            return
+        }
+
+        switch gender.lowercased() {
+        case "male":
+            filterStudent = students.filter { $0.gender.lowercased() == "male" }
+
+        case "female":
+            filterStudent = students.filter { $0.gender.lowercased() == "female" }
+
+        case "others":
+            filterStudent = students.filter {
+                let g = $0.gender.lowercased()
+                return g != "male" && g != "female"
+            }
+
+        case "all":
+            filterStudent = students
+
+        default:
+            filterStudent = students
+        }
+        
+        nodataImg.isHidden = !(filterStudent?.isEmpty ?? false)
+        nodataLbl.isHidden = !(filterStudent?.isEmpty ?? false)
+        nodataLbl.text = "No data found"
+
+        print("Filtered student count: \(filterStudent?.count ?? 0)")
+    }
+
+    
     func getStandardsAPI(academic_year_id:Int){
         standerdArray.removeAll()
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
@@ -264,7 +338,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         standerdArray = standardDetails?.compactMap { $0.name } ?? []
                         sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
                         clsBtn.setTitle(standardDetails?.first?.name, for: .normal)
-                        sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
+                        //sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
                         classId = standardDetails?.first?.id
                         sectionId = sectionsDetails?.first?.id
                         classId = ""
@@ -316,11 +390,16 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         }
                         
                         self.filterStudent = self.sortedStudent
+                        if let gender = self.GenderDropdown.selectedItem {
+                            self.filterStudents(by: gender)
+                        }else {
+                            self.filterStudents(by: self.Gender.first ?? "All")
+                        }
                         self.selectedIndex = IndexPath(item: 0, section: 0)
-                        self.nodataLbl.isHidden = true
-                        self.nodataImg.isHidden = true
-                        self.FilterCV.isHidden = false
-                        //                    self.reportSegment.isHidden = false
+                        self.nodataImg.isHidden = !(self.filterStudent?.isEmpty ?? false)
+                        self.nodataLbl.isHidden = !(self.filterStudent?.isEmpty ?? false)
+                       // self.FilterCV.isHidden = (self.filterStudent?.isEmpty ?? false)
+                        //self.reportSegment.isHidden = false
                         self.FilterCV.reloadData()
                     } else {
                         self.studentList = response.data
@@ -423,8 +502,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.admissionLbl.text = studentDetail.admission_no
             cell.dobLbl.text = studentDetail.dob
             cell.studentNmae.text = studentDetail.name
-            cell.standerdLbl.text = studentDetail.class_name
-            cell.sectionLbl.text = studentDetail.section_name
+            cell.standerdLbl.text = studentDetail.class_name + " - " + studentDetail.section_name
             cell.genderLbl.text = studentDetail.gender
             cell.fatherName.text = studentDetail.father_name
             cell.imgView.contentMode = .scaleAspectFill
@@ -479,22 +557,22 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         selectedIndex = indexPath
         let selectedFilter = Filters[indexPath.item]
         
-        guard let sortedStudent = sortedStudent else { return }
+        guard let sortedStudent = filterStudent else { return }
         
         switch selectedFilter {
-        case "Name ASC":
+        case Filters[0]:
             filterStudent = sortedStudent.sorted {
                 $0.name.localizedCompare($1.name) == .orderedAscending
             }
-        case "Name DSC":
+        case Filters[1]:
             filterStudent = sortedStudent.sorted {
                 $0.name.localizedCompare($1.name) == .orderedDescending
             }
-        case "Roll No ASC":
+        case Filters[2]:
             filterStudent = sortedStudent.sorted {
                 $0.admission_no < $1.admission_no
             }
-        case "Roll No DSC":
+        case Filters[3]:
             filterStudent = sortedStudent.sorted {
                 $0.admission_no > $1.admission_no
             }

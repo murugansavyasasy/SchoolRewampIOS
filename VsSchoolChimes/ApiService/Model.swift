@@ -133,6 +133,8 @@ struct ChildDetails: Codable {
     let secondary_mobile: String?
     let whatsapp_number: String?
     let class_teacher: String?
+    let academic_year_id: Int?
+    let academic_year_name: String?
 }
 
 
@@ -763,8 +765,8 @@ struct LeaveInfo: Codable {
     let leave_to: String
     let no_of_days: String
     let reason: String
-    let status: String
-    let updated_on: String
+    var status: String
+    var updated_on: String
 }
 
 //MARK: ASSIGINMENT LIST
@@ -806,4 +808,43 @@ struct Submission: Codable {
     let description: String
     let submitted_on: String
 }
+
+//MARK: Lesson Plan
+
+struct LessonPlanStaffReportResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [LessonPlanStaffReport]
+}
+
+struct LessonPlanStaffReport: Codable {
+    let section_subject_id: String
+    let staff_name: String
+    let class_name: String
+    let section_name: String
+    let subject_name: String
+    let completed_items: String
+    let total_items: String
+    let percentage_value: Int
+    let items_completed: String
+}
+
+struct LessonPlanDetailResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [LessonPlanDetail]
+}
+
+struct LessonPlanDetail: Codable {
+    let particular_id: String
+    let lesson_plan_status: Int
+    let details: [LessonDetailItem]
+}
+
+struct LessonDetailItem: Codable {
+    let name: String
+    let value: String
+}
+
+
 
