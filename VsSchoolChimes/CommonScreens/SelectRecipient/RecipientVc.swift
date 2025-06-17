@@ -331,44 +331,44 @@ class RecipientVc: UIViewController{
                         iframeHTML,
                         fileSize in
                         
-                        if let videoID = extractVimeoID(from: videoURLString ?? "") {
-                            fetchVimeoVideoFiles(videoID: videoID, accessToken: self.YOUR_VIMEO_TOKEN) { urls in
-                                if let firstURLString = urls.first{
-                                    
-                                    DispatchQueue.main.async {
-                           print(firstURLString)
-                                    }
-                                } else {
-                                    print("No video URLs found or error")
-                                }
-                            }
-                        } else {
-                            print("Invalid Vimeo URL")
-                        }
-                        
-                        
-                        
-                        
-                        
-//                        if let videoURLString = videoURLString {
-//                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
-//                            if let iframeHTML = iframeHTML {
-//                                iframeValue = iframeHTML
+//                        if let videoID = extractVimeoID(from: videoURLString ?? "") {
+//                            fetchVimeoVideoFiles(videoID: videoID, accessToken: self.YOUR_VIMEO_TOKEN) { urls in
+//                                if let firstURLString = urls.first{
+//                                    
+//                                    DispatchQueue.main.async {
+//                           print(firstURLString)
+//                                    }
+//                                } else {
+//                                    print("No video URLs found or error")
+//                                }
 //                            }
-//                            if let size = fileSize {
-//                                fileSizeValue = self
-//                                    .convertSize(size)//String(size)
-//                            }
-//                                self.sendAttachment(
-//                                with: uploadedFiles,
-//                                iframe: iframeValue,
-//                                filesize: fileSizeValue,
-//                                baseURl: baseURL
-//                            )
 //                        } else {
-//                            print("❌ Video upload failed")
-//                            // Optionally show alert or retry UI
+//                            print("Invalid Vimeo URL")
 //                        }
+                        
+                        
+                        
+                        
+                        
+                        if let videoURLString = videoURLString {
+                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
+                            if let iframeHTML = iframeHTML {
+                                iframeValue = iframeHTML
+                            }
+                            if let size = fileSize {
+                                fileSizeValue = self
+                                    .convertSize(size)//String(size)
+                            }
+                                self.sendAttachment(
+                                with: uploadedFiles,
+                                iframe: iframeValue,
+                                filesize: fileSizeValue,
+                                baseURl: baseURL
+                            )
+                        } else {
+                            print("❌ Video upload failed")
+                            // Optionally show alert or retry UI
+                        }
                     }
                 }else {
                     

@@ -18,6 +18,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     var assignments: [Submission]?
     var titleName:String?
     var subject:String?
+    var id:String?
       override func viewDidLoad() {
           super.viewDidLoad()
           sumitionList.delegate = self
@@ -30,15 +31,16 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     func ReadStatusUpdate(){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_my_submissions, parameters: [:], type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [self] (result : Result<SubmissionResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_my_submissions, parameters: ["id":id ?? ""], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [self] (result : Result<SubmissionResponse,Error>) in
             
             switch result {
             case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
                     DispatchQueue.main.async { [self] in
                         assignments = SuccessMessage.data
-                    }
+                        noDtaImg.isHidden = !SuccessMessage.data.isEmpty
+                        nodataLbl.isHidden = !SuccessMessage.data.isEmpty
+                        nodataLbl.text = SuccessMessage.message
+                        sumitionList.reloadData()
                 }
             case .failure(let error):
                 
@@ -93,7 +95,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
               cell.subjectName.text = subject
               cell.date.text = dateString
               cell.FilesUrl = data.content
-              cell.timeLeft.text = timeAgo
+              cell.timeLeft.text = "Submited: \(timeAgo)"
               cell.descriptionLbl.text = data.description
               cell.descriptionLbl.setupExpandable(text: data.description)
               cell.descriptionLbl.onExpandableTap = {

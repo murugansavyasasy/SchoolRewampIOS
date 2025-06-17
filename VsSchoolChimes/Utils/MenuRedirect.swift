@@ -264,9 +264,12 @@ class MenuRedirectHandler {
     }
     
     func senderFeePendingNavigate(from viewController: UIViewController) {
-        let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        if #available(iOS 15.0, *) {
+            let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            viewController.present(vc, animated: true)
+        }
+       
         
     }
     
@@ -309,9 +312,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func senderDailyCollectionNavigate(from viewController: UIViewController) {
-        let vc = NewDailyCollectionViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        if #available(iOS 15.0, *) {
+            let vc = NewDailyCollectionViewController(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            viewController.present(vc, animated: true)
+        }
+       
     }
     func StaffWiseAttendance(from viewController: UIViewController) {
         let vc = LocationHistoryVc(nibName: nil, bundle: nil)

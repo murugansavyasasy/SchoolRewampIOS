@@ -37,7 +37,11 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
       let photoPickManager = PhotoPickerManager.shared
     var titleName:String?
     var uploadedURLs: [String] = []
+    let alert = CustomAlert()
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    var id:String?
+    let initialHeight: CGFloat = 120
+    let maxHeight: CGFloat = 300
       override func viewDidLoad() {
           super.viewDidLoad()
           NameLbl.text = studentDetails?.name
@@ -79,9 +83,9 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
       // MARK: - Setup
 
       func setupUI() {
-          bagrountview.layer.cornerRadius = 10
-          bagrountview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-          bagrountview.clipsToBounds = true
+//          bagrountview.layer.cornerRadius = 10
+//          bagrountview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//          bagrountview.clipsToBounds = true
           DescriptionTextview.layer.cornerRadius = 10
           DescriptionTextview.layer.borderWidth = 1
           DescriptionTextview.layer.borderColor = UIColor.gray.cgColor
@@ -98,7 +102,37 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
       // MARK: - IBActions
 
       @IBAction func submitBtn(_ sender: UIButton) {
-          // Submit action logic
+          
+          if DescriptionTextview.text != "", id != nil, !attachments.isEmpty {
+              
+              uploadAWSMedia(file: attachments) { [self] in
+                  CircularProgressLoader.shared.hide()
+                  
+                  let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { urlString in
+                      guard let url = URL(string: urlString) else { return nil }
+                      
+                      let fileType = url.pathExtension.lowercased()
+                      let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+                      
+                      return [
+                          CommonStringFile.url: urlString,
+                          CommonStringFile.type: type
+                      ]
+                  }
+                  
+                  sendAttachment(with: uploadedFiles)
+              }
+              
+          } else {
+              DispatchQueue.main.async {
+                  self.alert.showAlert(
+                      title: AlertstringFile.Alert_title,
+                      message: "Please provide a description and at least one attachment.",
+                      on: self
+                  )
+              }
+          }
+
       }
 
       @IBAction func backBtn(_ sender: UIButton) {
@@ -452,26 +486,26 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         }
     }
     
-    //MARK: Sender Attachment
-    private func SendingAttachmentFlow(baseURL: String) {
-        let selectedType = user_inputs.selectedFileType
-        var uploadedFiles: [[String: String]] = []
-
-        uploadAWSMedia(file: attachments) { [self] in
-            CircularProgressLoader.shared.hide()
-            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                if let url = URL(string: url) {
-                    let type = url.pathExtension.lowercased()
-                    user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                }
-                return [
-                    CommonStringFile.url: url,
-                    CommonStringFile.type: user_inputs.selectedFileType
-                ]
-            }
-            
-        }
-    }
+//    //MARK: Sender Attachment
+//    private func SendingAttachmentFlow(baseURL: String) {
+//        let selectedType = user_inputs.selectedFileType
+//        var uploadedFiles: [[String: String]] = []
+//
+//        uploadAWSMedia(file: attachments) { [self] in
+//            CircularProgressLoader.shared.hide()
+//            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+//                if let url = URL(string: url) {
+//                    let type = url.pathExtension.lowercased()
+//                    user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+//                }
+//                return [
+//                    CommonStringFile.url: url,
+//                    CommonStringFile.type: user_inputs.selectedFileType
+//                ]
+//            }
+//            
+//        }
+//    }
     
 //    @IBAction func deleteVideo(){
 //        
@@ -556,68 +590,75 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         }
         
     }
-//    func sendAttachment(with uploadedFiles: [[String: String]], iframe: String,filesize: String,baseURl: String) {
-//        
-//        
-//        var parameters: [String: Any] = [
-//            SendAttachmentStringFile.file_path: uploadedFiles,
-//            SendAttachmentStringFile.iframe: iframe,
-//            SendAttachmentStringFile.file_size: filesize,
-//            SendAttachmentStringFile.target_code: array_selectedId,
-//            SendAttachmentStringFile.target_type: target_type ?? "",
-//            SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? 0
-//        ]
-//        
-//        
-//        
-//        // Conditionally add value
-//        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
-//            parameters[UploadMessageKeys.subjectId] = subjectId ?? ""
-//        }
-//        
-//        
-//        Common_request_params.merge(parameters) { (_, new) in new }
-//        print("📤 Sending parameters: \(parameters)")
-//        
-//        APIService.shared.makeApi(
-//            url: baseURl,
-//            parameters: Common_request_params,
-//            type: ApitTypeSringFile.POST,
-//            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-//        ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
-//            switch result {
-//            case .success(let successMessage):
-//                
-//                if successMessage.status == true {
-//                    DispatchQueue.main.async {
-//                        CustomAlert.showAlertWithOkAction(
-//                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
-//                            message: successMessage.message,
-//                            on: self
-//                        ) {
-//                            self.gotoDashboard()
-//                        }
-//                    }
-//                }else {
-//                    
-//                    DispatchQueue.main.async {
-//                        CustomAlert
-//                            .showAlertWithOkAction(
-//                                title: AlertstringFile.Alert_title,
-//                                message: successMessage.message,
-//                                on: self
-//                            ) {
-//                                self.gotoDashboard()
-//                            }
-//                    }
-//                }
-//                
-//                
-//            case .failure(let error):
-//                print("❌ API error: \(error.localizedDescription)")
-//                // Optional: Add alert for failure
-//            }
-//        }
-//        
-//    }
+    func sendAttachment(with uploadedFiles: [[String: String]]) {
+        let parameters: [String: Any] = [
+            "id":id ?? "",
+            "description": DescriptionTextview.text ?? "",
+            "iframe": "",
+            "file_size": "",
+            "file_path": uploadedFiles]
+
+        APIService.shared.makeApi(
+            url:ServiceUrl.comm_api_assignment_submit_assignment,
+            parameters: parameters,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
+            switch result {
+            case .success(let successMessage):
+                
+                if successMessage.status == true {
+                    DispatchQueue.main.async {
+                        CustomAlert.showAlertWithOkAction(
+                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: successMessage.message,
+                            on: self
+                        ) {
+                            self.gotoDashboard()
+                        }
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Alert_title,
+                                message: successMessage.message,
+                                on: self
+                            ) {
+                                self.gotoDashboard()
+                            }
+                    }
+                }
+                
+                
+            case .failure(let error):
+                print("❌ API error: \(error.localizedDescription)")
+                // Optional: Add alert for failure
+            }
+        }
+        
+    }
+    func gotoDashboard(){
+        self.dismiss(animated: false, completion: nil)
+    }
+
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Current text in the UITextView
+        let currentText = textView.text ?? ""
+        
+        // Compute the new text length
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if newText.count <= 500 {
+            descriptionCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return false // Reject the change
+        }
+    }
+    
 }

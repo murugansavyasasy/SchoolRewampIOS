@@ -43,6 +43,8 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
     var videoUrl :String?
     var player: AVPlayer?
     var staff = false
+    var id:String?
+    var assignmentId:String?
        override func awakeFromNib() {
            super.awakeFromNib()
            let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
@@ -122,6 +124,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
             if #available(iOS 14.0, *) {
                 let vcc = SubmitVC(nibName: nil, bundle: nil)
                 vcc.titleName = tittleLbl.text
+                vcc.id = id
                 vcc.modalPresentationStyle = .fullScreen
                 currentVC.present(vcc, animated: true, completion: nil)
             }
@@ -133,6 +136,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
                 let vcc = AssignmentSummitionVC(nibName: nil, bundle: nil)
                 vcc.titleName = tittleLbl.text
                 vcc.subject = SubjectLabel.text
+                vcc.id = id
                 vcc.modalPresentationStyle = .fullScreen
                 currentVC.present(vcc, animated: true, completion: nil)
             }

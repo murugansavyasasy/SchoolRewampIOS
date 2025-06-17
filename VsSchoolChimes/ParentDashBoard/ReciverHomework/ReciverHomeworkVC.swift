@@ -250,6 +250,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.datelbl.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
             cell.titleLbl.text = homework.title
             cell.subjectName.text = homework.subject_name
+            cell.layoutIfNeeded()
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC

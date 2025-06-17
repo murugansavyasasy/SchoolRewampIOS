@@ -19,7 +19,7 @@ class ImagePdfCvCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         applyShadowAndCornerRadius(to: fullView)
-        imageView.layer.cornerRadius = Colornames.CORadius15
+        imageView.layer.cornerRadius = Colornames.CORadius10
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
     }

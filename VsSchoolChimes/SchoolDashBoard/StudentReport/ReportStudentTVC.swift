@@ -52,6 +52,7 @@ class ReportStudentTVC: UITableViewCell {
             //            backgroundImageView.tintColor = .blue
             backgroundImageView.layer.cornerRadius = 10
             backgroundImageView.clipsToBounds = true
+            
 //            backgroundImageView.alpha = 0.6
             // Add the background UIImageView to outerView
             outerView.insertSubview(backgroundImageView, at: 0)

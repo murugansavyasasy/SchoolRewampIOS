@@ -2,7 +2,7 @@
 import UIKit
 import DropDown
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
    
     func date(date: String) {
@@ -15,6 +15,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         }
     }
     
+    @IBOutlet weak var totalCollectionView: UIView!
     @IBOutlet weak var totalAmountLbl: UILabel!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var Backbtn: UIButton!
@@ -40,7 +41,78 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     var type : Int!
     var DropDownStr : [String] = []
     var dateSelection = false
-    var DailyCollectionData: [DailyCollectionData]?
+    private var gradientLayer: CAGradientLayer?
+    var dailyCollectionData: [DailyCollectionData] = [
+        DailyCollectionData(
+            category: "Current Year - First Term - School",
+            total: "₹25000.00",
+            fee_data: [
+                FeeData(type_name: "School Fee", amount: "₹25000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Second Term - School",
+            total: "₹15000.00",
+            fee_data: [
+                FeeData(type_name: "Book Fee", amount: "₹15000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Third Term - School",
+            total: "₹18000.00",
+            fee_data: [
+                FeeData(type_name: "Exam Fee", amount: "₹18000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Hostel",
+            total: "₹22000.00",
+            fee_data: [
+                FeeData(type_name: "Room Rent", amount: "₹12000.00"),
+                FeeData(type_name: "Food", amount: "₹10000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Transport",
+            total: "₹8000.00",
+            fee_data: [
+                FeeData(type_name: "Bus Fee", amount: "₹8000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Library",
+            total: "₹3000.00",
+            fee_data: [
+                FeeData(type_name: "Library Fine", amount: "₹1000.00"),
+                FeeData(type_name: "Membership", amount: "₹2000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Activities",
+            total: "₹6000.00",
+            fee_data: [
+                FeeData(type_name: "Sports", amount: "₹4000.00"),
+                FeeData(type_name: "Cultural", amount: "₹2000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Donation",
+            total: "₹12000.00",
+            fee_data: [
+                FeeData(type_name: "Alumni Fund", amount: "₹5000.00"),
+                FeeData(type_name: "Infrastructure", amount: "₹7000.00")
+            ]
+        ),
+        DailyCollectionData(
+            category: "Current Year - Extra Curricular",
+            total: "₹4000.00",
+            fee_data: [
+                FeeData(type_name: "Dance", amount: "₹2500.00"),
+                FeeData(type_name: "Music", amount: "₹1500.00")
+            ]
+        )
+    ]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,21 +128,17 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         currentdate = formattedDateTime
         fromLbl.text = formattedDateTime
         todateLbl.text = formattedDateTime
-        
-        tv.dataSource = self
-        tv.delegate = self
-        tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
-        tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
-        tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-        
+        tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
+//        tv.register(UINib(nibName: CellConfingName.PaymentHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.PaymentHeaderView)
+//        tv.register(UINib(nibName: CellConfingName.PaymentTypeTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentTypeTVC)
         let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
         calendarView.addGestureRecognizer(fromdateTap)
         
         let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
         TodateView.addGestureRecognizer(todateTap)
-        
+        tv.dataSource = self
+        tv.delegate = self
         daily_collectionApi(type: "1")
-        
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -78,8 +146,15 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        totalCollectionView.layer.cornerRadius = 16
+        totalCollectionView.layer.masksToBounds = false
+        totalCollectionView.layer.shadowColor = UIColor.black.cgColor
+        totalCollectionView.layer.shadowOpacity = 0.1
+        totalCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        totalCollectionView.layer.shadowRadius = 8
+        
     }
-    
+
     
     
     @IBAction func segmentActBtn(_ sender: Any) {
@@ -114,67 +189,30 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dismiss(animated: true)
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-         return DailyCollectionData?.count ?? 0
-     }
 
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         let feeCount = DailyCollectionData?[section].fee_data?.count ?? 0
-         if section == (DailyCollectionData?.count ?? 0) - 1, DailyCollectionData?[section].total_collection != nil {
-             return feeCount + 1 // Add one for Total Collection
-         }
-         return feeCount
-     }
 
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let sectionData = DailyCollectionData?[indexPath.section]
-         let feeData = sectionData?.fee_data ?? []
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dailyCollectionData.count
+    }
 
-         if indexPath.section == (DailyCollectionData?.count ?? 0) - 1,
-            indexPath.row == feeData.count,
-            let total = sectionData?.total_collection {
+   
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.FeePendingTVC, for: indexPath) as! FeePendingTVC
+        
+        let data = dailyCollectionData[indexPath.row]
+        cell.keyNameLbl.text = data.category
+        cell.valueLbl.text = data.total
+        cell.configure(with: data.fee_data ?? [])
+        
+        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
+        tv.layoutIfNeeded()
+        return cell
+    }
 
-             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as! PendingFeeReportTableViewCell
-             cell.classLbl.isHidden = true
-             cell.amountLbl.isHidden = true
-            
-             return cell
-         }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 
-         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as! PendingFeeReportTableViewCell
-         cell.classLbl.isHidden = false
-         cell.amountLbl.textColor = .black
-         cell.amountLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-         cell.classLbl.text = feeData[indexPath.row].type_name
-         cell.amountLbl.text = feeData[indexPath.row].amount
-         return cell
-     }
-
-     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-         if DailyCollectionData?[section].category == nil,
-            DailyCollectionData?[section].fee_data == nil,
-            DailyCollectionData?[section].total_collection != nil {
-             return nil
-         }
-
-         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.DataCollectionTvHeaderView) as! DataCollectionTvHeaderView
-         headerView.classLbl.text = DailyCollectionData?[section].category
-         headerView.amountLbl.text = DailyCollectionData?[section].total
-         return headerView
-     }
-
-     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-         if DailyCollectionData?[section].category == nil {
-             return .leastNormalMagnitude // hides header completely
-         }
-         return UITableView.automaticDimension
-     }
-
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-         return UITableView.automaticDimension
-     }
-
-    
     func daily_collectionApi(type:String){
         
         let fromdate = ConvertDateStringSmart(fromLbl.text)
@@ -196,10 +234,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                         DispatchQueue.main.async { [self] in
                             tv.isHidden = false
                             norecordLbl.isHidden = true
-                            DailyCollectionData = successMessage.data ?? []
-                            for  i in 0..<(DailyCollectionData?.count ?? 0){
-                                totalAmountLbl.text = "Total Collection : \(DailyCollectionData?[i].total_collection ?? "")"
-                            }
+                            dailyCollectionData = successMessage.data?.first?.pending_details ?? []
                            
                             tv.reloadData()
                         }
@@ -209,7 +244,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                             tv.isHidden = true
                             norecordLbl.isHidden = false
                             norecordLbl.text = successMessage.message
-                            DailyCollectionData = successMessage.data ?? []
+//                            dailyCollectionData = successMessage.data ?? []
                             tv.reloadData()
                         }
                        
@@ -225,6 +260,14 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                 }
             }
     }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        return nil
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return CGFloat.leastNormalMagnitude // returns minimal height ≈ 0
+//    }
+
     
 }
 

@@ -16,3 +16,4 @@ class PendingFeeReportTableViewHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var amountLbl: UILabel!
     
 }
+

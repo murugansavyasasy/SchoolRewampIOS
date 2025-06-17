@@ -521,14 +521,16 @@ struct GeometricLocation:Codable{
 struct DailyCollectionResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [DailyCollectionData]?
+    let data: [CollectionReportData]?
 }
-
+struct CollectionReportData: Codable {
+    let pending_details: [DailyCollectionData]?
+    let total_pending: String?
+}
 struct DailyCollectionData: Codable {
     let category: String?
     let total: String?
     let fee_data: [FeeData]?
-    let total_collection: String?
 }
 
 struct FeeData: Codable {
@@ -590,22 +592,23 @@ struct EventList: Codable {
 }
 
 struct PendingReportsResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [PendingReportData]
+    let status: Bool?
+    let message: String?
+    let data: [PendingReportData]?
 }
 
 struct PendingReportData: Codable {
-    let category: String?
-    let total: String?
-    let pending_data: [PendingFeeData]?
+    let pending_details: [PendingDetail]?
     let total_pending: String?
 }
 
-struct PendingFeeData: Codable {
-    let type_name: String
-    let amount: String
+struct PendingDetail: Codable {
+    let category: String?
+    let total: String?
+    let pending_data: [FeeData]?
 }
+
+
 struct StudentReportResponse: Codable {
     let status: Bool
     let message: String

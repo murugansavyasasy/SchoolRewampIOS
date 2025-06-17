@@ -242,7 +242,9 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 cell.newImg.isHidden = true
                 cell.datelbl.text = event?.date.convertToTargetDateFormat() ?? "-"
                 cell.titleLbl.text = event?.title
-                cell.subjectName.isHidden = true
+                cell.subjectName.text = event?.venue
+                cell.subjectName.isHidden = false
+                cell.layoutIfNeeded()
                 return cell
             }else{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
