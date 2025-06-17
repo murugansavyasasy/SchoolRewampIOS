@@ -389,42 +389,42 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                     DispatchQueue.main.async { [self] in
                         
                         TotalMessageList?.append(contentsOf: SuccessMessage.data)
+                        
+                        if selectedIndex.row == 0{
                             
-                            if selectedIndex.row == 0{
-
-                                switch readStatus {
-                                    
-                                case 0 :
-                                    FilteredMessages = TotalMessageList
-                                    
-                                case 1 :
-                                    FilteredMessages = TotalMessageList?.readMessages()
-                                    
-                                case 2:
-                                    FilteredMessages = TotalMessageList?.unreadMessages()
-                               
-                                default:
-                                    FilteredMessages = TotalMessageList
-                                }
+                            switch readStatus {
                                 
-                            }else {
+                            case 0 :
+                                FilteredMessages = TotalMessageList
                                 
-                                switch readStatus {
-                                    
-                                case 0:
-                                    FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
-                                    
-                                case 1:
-                                    FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[ selectedIndex.row])
-                                case 2:
-                                    FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[ selectedIndex.row])
-                                    
-                                default:
-                                    FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
-                                }
+                            case 1 :
+                                FilteredMessages = TotalMessageList?.readMessages()
                                 
+                            case 2:
+                                FilteredMessages = TotalMessageList?.unreadMessages()
+                                
+                            default:
+                                FilteredMessages = TotalMessageList
                             }
-                          
+                            
+                        }else {
+                            
+                            switch readStatus {
+                                
+                            case 0:
+                                FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
+                                
+                            case 1:
+                                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[ selectedIndex.row])
+                            case 2:
+                                FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[ selectedIndex.row])
+                                
+                            default:
+                                FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
+                            }
+                            
+                        }
+                        
                         SearchMessages = FilteredMessages
                         
                         SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false

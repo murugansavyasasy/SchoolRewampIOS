@@ -116,7 +116,7 @@
                             </constraints>
                         </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYc-Ym-UI5">
-                            <rect key="frame" x="10" y="435" width="373" height="21"/>
+                            <rect key="frame" x="10" y="435" width="373" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -125,32 +125,37 @@
                             <rect key="frame" x="0.0" y="143" width="393" height="473"/>
                             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sj-3D-WNp">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zMc-9v-bOy">
                             <rect key="frame" x="334" y="115" width="39" height="18"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                            <color key="textColor" name="ButtonColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sj-3D-WNp">
+                                    <rect key="frame" x="0.0" y="0.0" width="39" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                    <color key="textColor" name="ButtonColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="VPP-Ra-zfM" firstAttribute="leading" secondItem="yNb-PB-iv6" secondAttribute="leading" constant="50" id="5oc-O2-Weg"/>
                         <constraint firstAttribute="bottom" secondItem="nId-F7-oOb" secondAttribute="bottom" constant="5" id="9G0-MX-hpT"/>
+                        <constraint firstItem="nId-F7-oOb" firstAttribute="top" secondItem="zMc-9v-bOy" secondAttribute="bottom" constant="10" id="9VR-qB-z4F"/>
                         <constraint firstItem="Gtt-gc-der" firstAttribute="top" secondItem="VPP-Ra-zfM" secondAttribute="bottom" constant="20" id="9nZ-PO-fZL"/>
                         <constraint firstItem="nId-F7-oOb" firstAttribute="leading" secondItem="yNb-PB-iv6" secondAttribute="leading" id="C7g-CM-wXX"/>
                         <constraint firstAttribute="trailing" secondItem="Gtt-gc-der" secondAttribute="trailing" constant="10" id="CGc-L7-Rnw"/>
                         <constraint firstAttribute="trailing" secondItem="nId-F7-oOb" secondAttribute="trailing" id="Hgm-BZ-yhK"/>
                         <constraint firstAttribute="trailing" secondItem="VPP-Ra-zfM" secondAttribute="trailing" constant="50" id="Igt-zJ-Wox"/>
                         <constraint firstItem="KYc-Ym-UI5" firstAttribute="leading" secondItem="Gtt-gc-der" secondAttribute="leading" id="Jyb-4s-XbT"/>
-                        <constraint firstItem="nId-F7-oOb" firstAttribute="top" secondItem="0Sj-3D-WNp" secondAttribute="bottom" constant="10" id="NZQ-yS-OIe"/>
                         <constraint firstItem="Yhr-jh-2MZ" firstAttribute="top" secondItem="yNb-PB-iv6" secondAttribute="top" constant="15" id="SCD-gF-fnj"/>
                         <constraint firstItem="KYc-Ym-UI5" firstAttribute="top" secondItem="Gtt-gc-der" secondAttribute="bottom" constant="10" id="Trq-7d-D0v"/>
                         <constraint firstAttribute="trailing" secondItem="Yhr-jh-2MZ" secondAttribute="trailing" constant="30" id="Ts5-Th-O1K"/>
-                        <constraint firstItem="0Sj-3D-WNp" firstAttribute="top" secondItem="VPP-Ra-zfM" secondAttribute="bottom" constant="10" id="TsE-Uk-8LM"/>
                         <constraint firstItem="Gtt-gc-der" firstAttribute="leading" secondItem="yNb-PB-iv6" secondAttribute="leading" constant="10" id="WpA-Fk-oLS"/>
-                        <constraint firstAttribute="trailing" secondItem="0Sj-3D-WNp" secondAttribute="trailing" constant="20" id="g0t-av-fQR"/>
                         <constraint firstItem="KYc-Ym-UI5" firstAttribute="trailing" secondItem="Gtt-gc-der" secondAttribute="trailing" id="kT4-jS-0Tj"/>
                         <constraint firstItem="Yhr-jh-2MZ" firstAttribute="leading" secondItem="yNb-PB-iv6" secondAttribute="leading" constant="30" id="mm3-WU-4lr"/>
+                        <constraint firstAttribute="trailing" secondItem="zMc-9v-bOy" secondAttribute="trailing" constant="20" symbolic="YES" id="pbt-np-Aim"/>
+                        <constraint firstItem="zMc-9v-bOy" firstAttribute="top" secondItem="VPP-Ra-zfM" secondAttribute="bottom" constant="10" id="saW-BZ-eMj"/>
                         <constraint firstItem="VPP-Ra-zfM" firstAttribute="top" secondItem="Yhr-jh-2MZ" secondAttribute="bottom" constant="20" id="tm2-KZ-l02"/>
                     </constraints>
                 </view>
