@@ -162,11 +162,11 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         BackBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
        
         //MARK: Label Font Style
-        AddAttachmentsLbl.setFont(style: .title, size: FontSize.TitleSize)
+        AddAttachmentsLbl.setRequiredText(CommonStringFile.Add_attachment)
+        titleLbl.setRequiredText(CommonStringFile.Title)
+        DescriptionLbl.setRequiredText(CommonStringFile.Description)
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLettersCount.setFont(style: .body, size: FontSize.BodySize)
-        DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
-        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
         ClickTochooseVideoLbl.setFont(style: .title, size: FontSize.TitleSize)
     }

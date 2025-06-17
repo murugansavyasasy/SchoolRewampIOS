@@ -330,6 +330,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 attendanceData?.working_hours ?? "0"
             )
         
+        cell.historyTimImage.isHidden = attendanceData?.in_time == ""
+        
         if let components = convertDateComponents(from: attendanceData?.date ?? "") {
             
             cell.datelbl.text = components.day
@@ -348,15 +350,17 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedDate = SearchResults?[indexPath.row].date
-        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        vc.selectedDate = selectedDate ?? ""
-        vc.selected_staff_id = SearchResults?[indexPath.row].staff_id ?? ""
-        vc.date = SearchResults?[indexPath.row].date ?? ""
-        vc.roll = SearchResults?[indexPath.row].role ?? ""
-        vc.user = SearchResults?[indexPath.row].name
-        present(vc, animated: true)
+        if SearchResults?[indexPath.row].in_time != ""{
+            let selectedDate = SearchResults?[indexPath.row].date
+            let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            vc.selectedDate = selectedDate ?? ""
+            vc.selected_staff_id = SearchResults?[indexPath.row].staff_id ?? ""
+            vc.date = SearchResults?[indexPath.row].date ?? ""
+            vc.roll = SearchResults?[indexPath.row].role ?? ""
+            vc.user = SearchResults?[indexPath.row].name
+            present(vc, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

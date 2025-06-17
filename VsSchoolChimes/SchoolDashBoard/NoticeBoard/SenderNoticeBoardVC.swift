@@ -17,7 +17,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yy"
+        dateFormatter.dateFormat = standardDateFormat
             let DayDate = dateFormatter.date(from: date)!
             // Change to output format
             dateFormatter.dateFormat = "EEE dd"
@@ -26,13 +26,25 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             if dateSelection == true{
                 fromdateBtn.setTitle(date, for: .normal)
                 setFormattedDate(outputDateString, label: fromDateLbl)
+                NewFromdateLbl.setFormattedDate(from: DayDate)
 
             }else{
                 todateBtn.setTitle(date, for: .normal)
                 setFormattedDate(outputDateString, label: toDateLbl)
+                NewToDateLbl.setFormattedDate(from: DayDate)
             }
         }
     
+    
+    @IBOutlet weak var DisplayRangeLbl: UILabel!
+    @IBOutlet weak var ToLbl: UILabel!
+    @IBOutlet weak var FromLbl: UILabel!
+    @IBOutlet weak var NewToDateLbl: UILabel!
+    @IBOutlet weak var NewFromdateLbl: UILabel!
+    @IBOutlet weak var TodateTop: UIView!
+    @IBOutlet weak var FromDateTop: UIView!
+    @IBOutlet weak var ToDateView: UIView!
+    @IBOutlet weak var FromDateView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var textview: UITextView!
@@ -77,6 +89,36 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         super.viewDidLoad()
         
         StyleAndTranslater()
+        FromDateView.layer.cornerRadius = 8
+        ToDateView.layer.cornerRadius = 8
+        FromDateTop.layer.cornerRadius = 8
+        TodateTop.layer.cornerRadius = 8
+        FromDateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+        TodateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+        
+        DisplayRangeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
+        FromLbl.setFont(style: .title, size: FontSize.TitleSize)
+        ToLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
+        FromDateView.layer.cornerRadius = 10
+        FromDateView.layer.shadowColor = UIColor.black.cgColor
+        FromDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        FromDateView.layer.shadowRadius = 5
+        FromDateView.layer.shadowOpacity = 0.3
+        
+        ToDateView.layer.cornerRadius = 10
+        ToDateView.layer.shadowColor = UIColor.black.cgColor
+        ToDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        ToDateView.layer.shadowRadius = 5
+        ToDateView.layer.shadowOpacity = 0.3
+        
+        let DateGesture = UITapGestureRecognizer(target: self, action: #selector(fromDate))
+        FromDateView.addGestureRecognizer(DateGesture)
+        
+        let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDate))
+        ToDateView.addGestureRecognizer(ToDateGesture)
+        
         setInitialDate()
         setupPlaceholder()
         TitleTextfield.addDoneButton()
@@ -206,8 +248,12 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     //MARK: Setting Current Date as initial Date
     func setInitialDate() {
     
-        dateFormatter.dateFormat = standardDateFormat
+        
         let currentDate = Date() // Current date and time
+        dateFormatter.dateFormat = standardDateFormat
+        
+        NewFromdateLbl.setFormattedDate(from: currentDate)
+        NewToDateLbl.setFormattedDate(from: currentDate)
         
         let formattedDate = dateFormatter.string(from: currentDate)
         fromdateBtn.setTitle(formattedDate, for: .normal)
@@ -261,8 +307,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         addPhotoLbl.setFont(style: .body, size: FontSize.BodySize)
         ToTittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         fromTitleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        DescriptionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        TittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         todateBtn.setTitleFont(style: .body, size: 12)
         fromdateBtn.setTitleFont(style: .body, size: 12)
         DescriptionLettersCount.setFont(style: .body, size: FontSize.BodySize)
@@ -270,15 +314,16 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         NextBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
         
         //MARK: Translate
+        
+        TittleDefLbl.setRequiredText(CommonStringFile.Title.translated())
+        DescriptionDefLbl.setRequiredText(CommonStringFile.Description.translated())
         addPhotoLbl.text = CommonStringFile.Add_attachment_optional.translated()
-        TittleDefLbl.text = CommonStringFile.Title.translated()
         TitleTextfield.placeholder = CommonStringFile.Title.translated()
-        DescriptionDefLbl.text = CommonStringFile.Description.translated()
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
 
     
-    @IBAction func fromDate(_ sender: UIButton) {
+    @IBAction func fromDate(_ sender: Any) {
         //showTimePicker(for: sender, date: true)
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
@@ -292,7 +337,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
     }
     
-    @IBAction func toDate(_ sender: UIButton) {
+    @IBAction func toDate(_ sender: Any) {
         
             dateSelection = false
             let vc = DatePickerVC(nibName: nil, bundle: nil)
@@ -640,4 +685,35 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         scrollView.scrollRectToVisible(rect, animated: true)
     }
     
+}
+
+extension UILabel {
+    func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
+        // Main label font: Poppins-Bold, size 14
+        let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)
+
+        // Asterisk font: Poppins-Regular, larger size
+        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
+
+        let normalText = NSAttributedString(
+            string: text,
+            attributes: [
+                .font: mainFont,
+                .foregroundColor: self.textColor ?? .black
+            ])
+
+        let asteriskText = NSAttributedString(
+            string: "*",
+            attributes: [
+                .font: asteriskFont,
+                .foregroundColor: asteriskColor,
+                .baselineOffset: 2 // tweak to align nicely with main text
+            ])
+
+        let combined = NSMutableAttributedString()
+        combined.append(normalText)
+        combined.append(asteriskText)
+
+        self.attributedText = combined
+    }
 }

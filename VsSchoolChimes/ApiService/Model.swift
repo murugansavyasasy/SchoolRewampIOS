@@ -133,6 +133,8 @@ struct ChildDetails: Codable {
     let secondary_mobile: String?
     let whatsapp_number: String?
     let class_teacher: String?
+    let academic_year_id: Int?
+    let academic_year_name: String?
 }
 
 
@@ -760,8 +762,8 @@ struct LeaveInfo: Codable {
     let leave_to: String
     let no_of_days: String
     let reason: String
-    let status: String
-    let updated_on: String
+    var status: String
+    var updated_on: String
 }
 
 //MARK: ASSIGINMENT LIST

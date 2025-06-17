@@ -111,9 +111,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.textColor = .lightGray
         customdate.dateFormat = "EEE d"
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         //MARK: Label Font Style
-        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        DetailsLbl.setFont(style: .title, size: FontSize.TitleSize)
+        titleLbl.setRequiredText(CommonStringFile.Title)
+        DetailsLbl.setRequiredText(CommonStringFile.Description)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
         setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)

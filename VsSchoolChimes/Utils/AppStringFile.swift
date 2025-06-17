@@ -261,6 +261,7 @@ class CommonStringFile{
     static let Status = "Status".translated()
     static let Section = "Section".translated()
     static let Standard = "Standard".translated()
+    static let Academic_Year = "Academic Year".translated()
     static let Filter = "Filter".translated()
     static let UploadAttachment = "Upload Attachment".translated()
     static let UploadImagepdf = "Upload Image/Document".translated()

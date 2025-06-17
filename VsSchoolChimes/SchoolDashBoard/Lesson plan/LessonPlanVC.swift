@@ -51,6 +51,10 @@ class LessonPlanVC: UIViewController {
         
         let nib2 = UINib(nibName: CellConfingName.LessonDashboardTv, bundle: nil)
         tableview.register(nib2, forCellReuseIdentifier: CellConfingName.LessonDashboardTv)
+        
+        let nib3 = UINib(nibName: "LessonViewTvCell", bundle: nil)
+        tableview.register(nib3, forCellReuseIdentifier: "LessonViewTvCell")
+        
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -103,7 +107,7 @@ class LessonPlanVC: UIViewController {
     
     func View_Lesson_Plan_Api(){
         
-        let param: [String: Any] = [LessonPlanStringFile.section_subject_id : "355077",LessonPlanStringFile.lesson_plan_status: 0]
+        let param: [String: Any] = [LessonPlanStringFile.section_subject_id : "355065",LessonPlanStringFile.lesson_plan_status: 0]
         
         APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<LessonPlanDetailResponse,Error>) in
             
@@ -180,46 +184,52 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
             return cell
         }
         else{
-            let colour = cellcolour[indexPath.row % cellcolour.count]
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonProgressCell, for: indexPath) as! LessonProgressCell
-    
-            // Set the default state before configuring the cell
-            cell.progressView.backgroundColor = .systemGreen  // Default color
-           // cell.ProgressHeight.constant = 85  // Default height
+//            let colour = cellcolour[indexPath.row % cellcolour.count]
+//            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonProgressCell, for: indexPath) as! LessonProgressCell
+//    
+//            // Set the default state before configuring the cell
+//            cell.progressView.backgroundColor = .systemGreen  // Default color
+//           // cell.ProgressHeight.constant = 85  // Default height
+//            
+//            if indexPath.row == 0{
+//                cell.TopProgressView.isHidden = true
+//            }
+//            
+//            let colour1 = indexPath.row % colours1.count
+//            cell.Baseview.backgroundColor = UIColor(named: colours1[colour1])
+//            
+//            let totalRows = tableView.numberOfRows(inSection: indexPath.section)
+//            
+//            if indexPath.row > 5 {
+//                cell.checkImageView.image = UIImage(named: "CheckCircle")
+//                cell.progressView.backgroundColor = .lightGray
+//                cell.TopProgressView.backgroundColor = .lightGray
+//            } else {
+//                cell.checkImageView.image = UIImage(named: "round")
+//                cell.progressView.backgroundColor = .systemGreen
+//            }
+//            
+//            if indexPath.row == totalRows - 1 {
+//                //cell.ProgressHeight.constant = 0
+//                cell.progressView.isHidden = true
+//            } else {
+//                // Calculate dynamic height if needed
+//                //    let distance = distanceBetweenImageViews(in: tableView, at: indexPath)
+//                //    cell.ProgressHeight.constant = distance ?? 85
+//            }
+//            
+//            cell.TitleLbl.text = ViewLessonData?[indexPath.row].details[0].name
+//            
+//            cell.setNeedsLayout()
+//            cell.layoutIfNeeded()
+//            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LessonViewTvCell", for: indexPath) as! LessonViewTvCell
             
-            if indexPath.row == 0{
-                cell.TopProgressView.isHidden = true
-            }
+            let details = ViewLessonData?[indexPath.row].details ?? []
+
+            cell.configure(with: details)
             
-            let colour1 = indexPath.row % colours1.count
-            cell.Baseview.backgroundColor = UIColor(named: colours1[colour1])
-            
-            let totalRows = tableView.numberOfRows(inSection: indexPath.section)
-            
-            if indexPath.row > 5 {
-                cell.checkImageView.image = UIImage(named: "CheckCircle")
-                cell.progressView.backgroundColor = .lightGray
-                cell.TopProgressView.backgroundColor = .lightGray
-            } else {
-                cell.checkImageView.image = UIImage(named: "round")
-                cell.progressView.backgroundColor = .systemGreen
-            }
-            
-            if indexPath.row == totalRows - 1 {
-                //cell.ProgressHeight.constant = 0
-                cell.progressView.isHidden = true
-            } else {
-                // Calculate dynamic height if needed
-                //    let distance = distanceBetweenImageViews(in: tableView, at: indexPath)
-                //    cell.ProgressHeight.constant = distance ?? 85
-            }
-            
-            cell.TitleLbl.text = ViewLessonData?[indexPath.row].details[0].name
-            
-            cell.setNeedsLayout()
-            cell.layoutIfNeeded()
             return cell
-           
         }
     }
     
@@ -284,7 +294,12 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        if  isViewLesson == true {
+            return 100
+        }else{
+          
+            return UITableView.automaticDimension
+        }
     }
     
 }

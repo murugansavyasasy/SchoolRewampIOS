@@ -20,6 +20,7 @@ class StudentTVCell: UITableViewCell {
     @IBOutlet weak var SchoolAdressLbl: UILabel!
     @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var RegionalSchoolName: UILabel!
+    @IBOutlet weak var AcademicYearLbl: UILabel!
     
     private var gradientColors: [CGColor] = []
     
@@ -57,6 +58,7 @@ class StudentTVCell: UITableViewCell {
         SchoolNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         SchoolAdressLbl.setFont(style: .body, size: FontSize.BodySize)
         RegionalSchoolName.setFont(style: .body, size: FontSize.BodySize)
+        AcademicYearLbl.setFont(style: .body, size: FontSize.BodySize)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
