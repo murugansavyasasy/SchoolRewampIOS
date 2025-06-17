@@ -133,6 +133,8 @@ struct ChildDetails: Codable {
     let secondary_mobile: String?
     let whatsapp_number: String?
     let class_teacher: String?
+    let academic_year_id: Int?
+    let academic_year_name: String?
 }
 
 
@@ -521,14 +523,16 @@ struct GeometricLocation:Codable{
 struct DailyCollectionResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [DailyCollectionData]?
+    let data: [CollectionReportData]?
 }
-
+struct CollectionReportData: Codable {
+    let pending_details: [DailyCollectionData]?
+    let total_pending: String?
+}
 struct DailyCollectionData: Codable {
     let category: String?
     let total: String?
     let fee_data: [FeeData]?
-    let total_collection: String?
 }
 
 struct FeeData: Codable {
@@ -590,22 +594,23 @@ struct EventList: Codable {
 }
 
 struct PendingReportsResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [PendingReportData]
+    let status: Bool?
+    let message: String?
+    let data: [PendingReportData]?
 }
 
 struct PendingReportData: Codable {
-    let category: String?
-    let total: String?
-    let pending_data: [PendingFeeData]?
+    let pending_details: [PendingDetail]?
     let total_pending: String?
 }
 
-struct PendingFeeData: Codable {
-    let type_name: String
-    let amount: String
+struct PendingDetail: Codable {
+    let category: String?
+    let total: String?
+    let pending_data: [FeeData]?
 }
+
+
 struct StudentReportResponse: Codable {
     let status: Bool
     let message: String
@@ -760,8 +765,8 @@ struct LeaveInfo: Codable {
     let leave_to: String
     let no_of_days: String
     let reason: String
-    let status: String
-    let updated_on: String
+    var status: String
+    var updated_on: String
 }
 
 //MARK: ASSIGINMENT LIST

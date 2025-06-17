@@ -338,6 +338,7 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
             cell.titleLbl.text = data.title
             cell.subjectName.text = data.subject_name
             cell.forwardBtn.isHidden = false
+            cell.layoutIfNeeded()
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC

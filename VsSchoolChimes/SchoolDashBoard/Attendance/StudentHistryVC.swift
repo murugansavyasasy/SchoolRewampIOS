@@ -291,7 +291,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     }else{
                         DispatchQueue.main.async { [self] in
                             historyTable.isHidden = true
-                            //                        noRecordLbl.text = successMessage.message
                         }
                     }
                     
@@ -965,12 +964,14 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         let query = searchText.lowercased()
         if query.isEmpty {
             filterData = studentsDetails
+            selectAllBtn.isHidden = false
         } else {
             filterData = studentsDetails?.filter { student in
                 return student.name?.lowercased().contains(query) ?? false ||
                 student.roll_no?.lowercased().contains(query) ?? false ||
                 student.admission_no?.lowercased().contains(query) ?? false
             }
+            selectAllBtn.isHidden = true
         }
         historyTable.reloadData()
     }

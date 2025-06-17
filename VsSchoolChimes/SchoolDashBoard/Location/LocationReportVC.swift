@@ -309,6 +309,8 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
             cell.workingHrsLbl.isHidden = true
         }
         
+        cell.historyTimImage.isHidden = AttendanceDetails?[indexPath.row].in_time == ""
+        
         if let components = convertDateComponents(from: AttendanceDetails?[indexPath.row].date ?? "") {
             
             cell.datelbl.text = components.day
@@ -321,16 +323,18 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedDate = AttendanceDetails?[indexPath.row].date
-        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        vc.selectedDate = selectedDate ?? ""
-        vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
-        vc.date = AttendanceDetails?[indexPath.row].date ?? ""
-        vc.roll = AttendanceDetails?[indexPath.row].role ?? ""
-        vc.user = AttendanceDetails?[indexPath.row].name
-        //        vc.roll = AttendanceDetails?[indexPath.row].
-        present(vc, animated: true)
+        if AttendanceDetails?[indexPath.row].in_time != ""{
+            let selectedDate = AttendanceDetails?[indexPath.row].date
+            let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            vc.selectedDate = selectedDate ?? ""
+            vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
+            vc.date = AttendanceDetails?[indexPath.row].date ?? ""
+            vc.roll = AttendanceDetails?[indexPath.row].role ?? ""
+            vc.user = AttendanceDetails?[indexPath.row].name
+            //        vc.roll = AttendanceDetails?[indexPath.row].
+            present(vc, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

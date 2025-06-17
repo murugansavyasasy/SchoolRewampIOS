@@ -288,6 +288,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             //cell.imgview.image = UIImage(named: childDetails?[indexPath.row].school_logo_url ?? "")
             cell.NameLbl.text = childDetails?[indexPath.row].name
             cell.RollNo.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
+            cell.AcademicYearLbl.text = CommonStringFile.Academic_Year + " : " + (childDetails?[indexPath.row].academic_year_name ?? "")
                       
             cell.ClassLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
             cell.SchoolNameLbl.text = childDetails?[indexPath.row].school_name

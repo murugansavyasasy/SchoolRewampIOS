@@ -371,6 +371,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
             }
             cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
             cell.titleLbl.text = data.title
+            cell.layoutIfNeeded()
             return cell
             
         case "DOCUMENT":

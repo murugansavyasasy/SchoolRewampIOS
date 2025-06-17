@@ -17,7 +17,10 @@ class LeveHistoryVC: UIViewController{
     @IBOutlet weak var toLbl: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var historyTable: UITableView!
-    
+    @IBOutlet weak var EmptyView: UIView!
+    @IBOutlet weak var NodataLbl: UILabel!
+    @IBOutlet weak var NodataImage: UIImageView!
+    @IBOutlet weak var TopInfoView: UIView!
     var EditDropdown = DropDown()
     var LeaveHistoryData: [LeaveInfo]?
     var childDetails = UserDefaultFileManager.get_child_Details()
@@ -25,10 +28,14 @@ class LeveHistoryVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fromLbl.setFont(style:.body, size: FontSize.BodySize)
-        toLbl.setFont(style:.body, size: FontSize.BodySize)
-        statusLbl.setFont(style:.body, size: FontSize.BodySize)
+        fromLbl.setFont(style:.title, size: FontSize.TitleSize)
+        toLbl.setFont(style:.title, size: FontSize.TitleSize)
+        statusLbl.setFont(style:.title, size: FontSize.TitleSize)
         headerTitle.setFont(style:.body, size: FontSize.BodySize)
+        
+        EmptyView.isHidden = true
+        NodataImage.isHidden = true
+        NodataLbl.isHidden = true
         
         historyTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
         
@@ -52,12 +59,23 @@ class LeveHistoryVC: UIViewController{
                     
                     LeaveHistoryData = success.data
                     
+                    NodataLbl.text = success.message
+                    EmptyView.isHidden = !(LeaveHistoryData?.isEmpty ?? false)
+                    NodataImage.isHidden = !(LeaveHistoryData?.isEmpty ?? false)
+                    NodataLbl.isHidden = !(LeaveHistoryData?.isEmpty ?? false)
+                    TopInfoView.isHidden = (LeaveHistoryData?.isEmpty ?? false)
+                    
                     historyTable.reloadData()
                 }
                
             case .failure(let error):
                 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async {[self] in
+                    NodataLbl.text = error.localizedDescription
+                    EmptyView.isHidden = false
+                    NodataImage.isHidden = false
+                    NodataLbl.isHidden = false
+                    TopInfoView.isHidden = true
                     print("Error: ",error.localizedDescription)
                 }
             }
@@ -104,27 +122,36 @@ extension LeveHistoryVC: UITableViewDelegate,UITableViewDataSource {
        
         cell.fromDateLbl.text = convertDate(leaveData.leave_from, toFormat: "dd MMM yyyy")
         cell.toDateLbl.text = convertDate(leaveData.leave_to, toFormat: "dd MMM yyyy")
-        cell.aproveLbl.text = leaveData.status
-        cell.approvedBy.text = leaveData.reason
+        cell.StatusLbl.text = leaveData.status
+        cell.ReasonLbl.text = leaveData.reason
         
         // Status-based customization
         if leaveData.status == "Approved" {
             cell.statusBtn.backgroundColor = Colornames.AprovedClr
             cell.satusImg.image = ImageName.check
-            cell.aproveLbl.textColor = .white
+            cell.StatusLbl.textColor = .white
             cell.edit.isHidden = true
             cell.editHeight.constant = 0
+            cell.UpdatedonDefLbl.isHidden = false
+            cell.UpdatedOnColon.isHidden = false
+            cell.UpdatedonLbl.isHidden = false
         } else if leaveData.status == "Rejected" {
             cell.statusBtn.backgroundColor = .red
             cell.satusImg.image = UIImage(systemName: "multiply.circle.fill")
-            cell.aproveLbl.textColor = .white
+            cell.StatusLbl.textColor = .white
             cell.satusImg.tintColor = .white
+            cell.UpdatedonDefLbl.isHidden = false
+            cell.UpdatedOnColon.isHidden = false
+            cell.UpdatedonLbl.isHidden = false
         } else {
-            cell.aproveLbl.text = "In review"
-            cell.aproveLbl.textColor = .white
+            cell.StatusLbl.text = "In review"
+            cell.StatusLbl.textColor = .white
             cell.satusImg.tintColor = .white
             cell.statusBtn.backgroundColor = Colornames.pendingClr
             cell.satusImg.image = ImageName.Pending
+            cell.UpdatedonDefLbl.isHidden = true
+            cell.UpdatedOnColon.isHidden = true
+            cell.UpdatedonLbl.isHidden = true
         }
         
         return cell
