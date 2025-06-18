@@ -31,6 +31,7 @@ class CellConfingName {
     static let MeetingsTVcell = "MeetingsTVcell"
     static let PiechartCVCell = "PiechartCVCell"
     static let AttachmentCVCell = "AttachmentCVCell"
+    static let SectionStregnthTVC = "SectionStregnthTVC"
     static let DateCVC = "DateCVC"
     static let ImageTVC = "ImageTVC"
     static let AttendenceTVC = "AttendenceTVC"
@@ -45,6 +46,7 @@ class CellConfingName {
     static let RatingTypeTableViewCell = "RatingTypeTableViewCell"
     static let SuggestionsCollectionViewCell = "SuggestionsCollectionViewCell"
     static let StrengthTvCell = "StrengthTvCell"
+    static let StandardTVC = "StandardTVC"
     static let AttendenceReportTVCell = "AttendenceReportTVCell"
    
     static let NoticeBoardTvcellTableViewCell = "NoticeBoardTvcellTableViewCell"

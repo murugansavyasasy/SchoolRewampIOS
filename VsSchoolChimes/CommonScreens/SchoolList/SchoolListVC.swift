@@ -288,33 +288,70 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         
         guard !array_selectedSchoolId.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self
-                )
-                return
-            }
-
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self
+            )
+            return
+        }
+        
+        
+        let comm = commonApi_forSending()
         switch Menu_id.staffSelectedMenuId {
-            case Menu_id.communicationMenuId:
-                SendingCommunicationFlow()
-
-            case Menu_id.homeWorkMenuId:
-                handleHomeworkFlow()
+        case Menu_id.communicationMenuId:
+            SendingCommunicationFlow()
         case Menu_id.noticeboardMenuId:
-            SendingNoticeboardFlow()
-
-            default:
-                print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
-            }
+            sendAttachmentFlow(
+                via: comm,
+                url: ServiceUrl.api_notice_board_send_notice,
+                subjectId:""
+            )
+        default:
+            print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+        }
     }
    
     
     
-    private func handleHomeworkFlow() {
+    
+    
+    private func sendAttachmentFlow(
+        via comm: commonApi_forSending,
+        url baseURL: String,
+        subjectId: String
+    ) {
         
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
         
+        comm.SendingAttachmentFlow(
+            selectedAcadimicYearId: selectedAcadimicYearId ?? 0,
+            target_type: target_type ?? 0,
+            selectedId: array_selectedSchoolId,
+            baseURL: baseURL,
+            subjectId: subjectId,
+            message: message ?? "",
+            from: self,
+            Common_request_params: Common_request_params
+        ) { response in
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.hide()
+                CustomAlert.showAlertWithOkAction(
+                    title: AlertstringFile.Success,
+                    message: response.message,
+                    on: self
+                ) { [self] in
+                    gotoDashboard()
+                }
+            }
+        }
     }
     
     private func SendingCommunicationFlow() {

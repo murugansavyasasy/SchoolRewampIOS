@@ -58,7 +58,6 @@ class RecipientVc: UIViewController{
     var target_type : Int?
     let alert = CustomAlert()
     var circular_types : String?
-    var standard_sectionlabel : String?
     var subjectId : String?
     var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
@@ -70,6 +69,7 @@ class RecipientVc: UIViewController{
     let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var vimeoUploader: VimeoUploader?
     var Common_request_params: [String:Any] = [:]
+    var sectionName:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -317,208 +317,6 @@ class RecipientVc: UIViewController{
         return message ?? ""
     }
     
-   
-    //MARK: Sender Attachment
-    private func SendingAttachmentFlow(baseURL: String) {
-        let selectedType = user_inputs.selectedFileType
-        var uploadedFiles: [[String: String]] = []
-        var iframeValue = ""
-        var fileSizeValue = ""
-        let title = AlertstringFile.Confirm_title
-        alert.showAlertCancel(
-            title: title,
-            message: acidmicYearOrNotAlertMessage(),
-            actionLbl1: AlertstringFile.Yes_Send,
-            actionLbl2: AlertstringFile.Cancel,
-            on: self,
-            onOk: { [self] in
-                if selectedType == AttachmentTypeString.VIDEO {
-                    guard let videoURL = user_inputs.VideoPath else {
-                        print("❌ Video path is missing")
-                        return
-                    }
-                    let videoTitle =  Common_request_params[assignmentResquestStringKey.title] as? String ?? ""
-                    let videoDescription = Common_request_params[assignmentResquestStringKey.description] as? String ?? ""
-                    
-                  
-                    startUpload(
-                        videoURL: videoURL,
-                        title: videoTitle,
-                        description: videoDescription
-                    ) {
-                        videoURLString,
-                        iframeHTML,
-                        fileSize in
-                        
-//                        if let videoID = extractVimeoID(from: videoURLString ?? "") {
-//                            fetchVimeoVideoFiles(videoID: videoID, accessToken: self.YOUR_VIMEO_TOKEN) { urls in
-//                                if let firstURLString = urls.first{
-//                                    
-//                                    DispatchQueue.main.async {
-//                           print(firstURLString)
-//                                    }
-//                                } else {
-//                                    print("No video URLs found or error")
-//                                }
-//                            }
-//                        } else {
-//                            print("Invalid Vimeo URL")
-//                        }
-                        
-                        
-                        
-                        
-                        
-                        if let videoURLString = videoURLString {
-                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
-                            if let iframeHTML = iframeHTML {
-                                iframeValue = iframeHTML
-                            }
-                            if let size = fileSize {
-                                fileSizeValue = self
-                                    .convertSize(size)//String(size)
-                            }
-                                self.sendAttachment(
-                                with: uploadedFiles,
-                                iframe: iframeValue,
-                                filesize: fileSizeValue,
-                                baseURl: baseURL
-                            )
-                        } else {
-                            print("❌ Video upload failed")
-                            // Optionally show alert or retry UI
-                        }
-                    }
-                }else {
-                    
-                    let file: Any = user_inputs.SelectedUrls
-                    uploadAWSMedia(file: file) { [self] in
-                        CircularProgressLoader.shared.hide()
-                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                            if let url = URL(string: url) {
-                                let type = url.pathExtension.lowercased()
-                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                            }
-                            return [
-                                CommonStringFile.url: url,
-                                CommonStringFile.type: user_inputs.selectedFileType
-                            ]
-                        }
-                        
-                        sendAttachment(
-                            with: uploadedFiles,
-                            iframe: iframeValue,
-                            filesize: fileSizeValue,
-                            baseURl: baseURL
-                        )
-                    }
-                }
-            },
-            
-            onNo: {
-                print("User canceled.")
-            }
-        )
-    }
-    
-    //Function for video upload
-    func startUpload(videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void) {
-        print("📂 Selected video URL: \(videoURL)")
-        
-        CircularProgressLoader.shared.show()
-        
-        vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: self)
-        
-        vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
-            print("📊 Upload progress: \(progress * 100)%")
-            CircularProgressLoader.shared.updateProgress(to: progress)
-        }, completion: { videoURL, iframeHTML, fileSize in
-            CircularProgressLoader.shared.hide()
-            
-            if let videoURL = videoURL {
-                print("✅ Video uploaded! Watch it at: \(videoURL)")
-                if let iframeHTML = iframeHTML {
-                    print("💻 Embed HTML: \(iframeHTML)")
-                }
-                if let size = fileSize {
-                    print("📦 File size: \(size) bytes")
-                }
-                completion(videoURL, iframeHTML, fileSize)
-            } else {
-                print("❌ Upload failed!")
-                completion(nil, nil, nil)
-            }
-        })
-    }
-    
-    func fetchMP4VideoURL(videoURI: String, accessToken: String, completion: @escaping (String?) -> Void) {
-        let url = URL(string: "https://api.vimeo.com\(videoURI)")! // e.g. /videos/12345678
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                print("❌ Error fetching video info: \(error?.localizedDescription ?? "Unknown error")")
-                completion(nil)
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let files = (json["download"] as? [[String: Any]]) ?? (json["files"] as? [[String: Any]]) {
-                    
-                    for file in files {
-                        if let quality = file["quality"] as? String,
-                           let link = file["link"] as? String,
-                           quality == "source" || quality == "hd" || link.hasSuffix(".mp4") {
-                            print("✅ Found MP4 URL: \(link)")
-                            completion(link)
-                            return
-                        }
-                    }
-                    print("❌ No .mp4 file found in files array.")
-                    completion(nil)
-                } else {
-                    print("❌ Unexpected JSON structure: \(String(data: data, encoding: .utf8) ?? "")")
-                    completion(nil)
-                }
-            } catch {
-                print("❌ JSON parsing error: \(error.localizedDescription)")
-                completion(nil)
-            }
-        }.resume()
-    }
-    func convertSize(_ sizeInBytes: Int) -> String {
-        let kb = 1024.0
-        let mb = kb * 1024
-        let gb = mb * 1024
-        let size = Double(sizeInBytes)
-        
-        switch size {
-        case 0..<kb:
-            return String(format: "%.0f B", size)
-        case kb..<mb:
-            return String(format: "%.2f KB", size / kb)
-        case mb..<gb:
-            return String(format: "%.2f MB", size / mb)
-        default:
-            return String(format: "%.2f GB", size / gb)
-        }
-    }
-    
-    
-    func getExtension(from filePath: String) -> String? {
-        return URL(string: filePath)?.pathExtension.lowercased()
-    }
-    
-    
-    
-    
-    
-   
-    
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
@@ -567,7 +365,7 @@ class RecipientVc: UIViewController{
         )
     }
     
-   
+    
     
     
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
@@ -589,13 +387,20 @@ class RecipientVc: UIViewController{
         }else{
             message = false
         }
+        
+        let selectedSectionName = sectionsDetails?
+            .first(where: {$0.isSelect == true })?
+            .name
+        
+       
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
         vc.AlertMessageContent = message
         vc.accidmaticNAme = acidmicYrLbl.text
         vc.selectedAcadimicYearId = self.selectedAcadimicYearId
-        vc.standard_sectionlabel = self.standard_sectionlabel
+        vc.StandardString = drpodonLbl.text
+        vc.SectionString = selectedSectionName
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -682,6 +487,7 @@ class RecipientVc: UIViewController{
             if let label = self.selectStandardDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
             }
+            speficBtnName.isHidden = true
             self.tv.isHidden = false
             self.tv.reloadData()
             DispatchQueue.main.async {
@@ -1320,22 +1126,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-    }
-    
-    
-    
-    // MARK:   Listing  API END ===========================
-    
-    
-    
-    
-    
-    
+    }// MARK:   Listing  API END ===========================
     
     
     //MARK: ALL Sending API START ===========================
-    
-    
     
     func sendtextmessage_communication(){
         APIService.shared
@@ -1377,8 +1171,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 .showAlert(
                                     title: AlertstringFile.Alert_title,
                                     message: succesmessage.message ?? "" ,
-                                    on: self
-                                )
+                                    on: self)
                         }
                     }
                     
@@ -1425,18 +1218,18 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     
                     if succesmessage.status == true {
                         DispatchQueue.main.async { [self] in
-                        CircularProgressLoader.shared.hide()
-                        
-                        CustomAlert
-                            .showAlertWithOkAction(
-                                title: AlertstringFile.Success,
-                                message: succesmessage.message ?? "",
-                                on: self
-                            ) { [self] in
-                                gotoDashboard()
-                            }
-                        
-                    }
+                            CircularProgressLoader.shared.hide()
+                            
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) { [self] in
+                                    gotoDashboard()
+                                }
+                            
+                        }
                     }else {
                         
                         DispatchQueue.main.async {

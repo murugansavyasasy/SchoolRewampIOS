@@ -81,14 +81,12 @@ struct ServiceUrl{
     static let   comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
-    static let comm_api_assignment_list = "comm/api/assignment/list"
-    static let comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
+  
     static let lms_api_lesson_plan_staff_report = "lms/api/lesson-plan/staff-report"
     static let lms_api_lesson_plan_view = "lms/api/lesson-plan/view"
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"
     static let lms_api_lesson_plan_update = "lms/api/lesson-plan/update"
     static let lms_api_lesson_plan_delete = "lms/api/lesson-plan/delete"
-    static let comm_api_my_submissions = "comm/api/my-submissions"
     
 }
 
@@ -99,6 +97,7 @@ struct localData{
     static var child_data: [ChildDetails]?
     static var user_details : UserDetails? = nil
     static var user_data : UserData? = nil
+    static var  accidamic_year_data : get_academic_yearSuc? = nil
 
 }
 struct screenType{
