@@ -230,10 +230,11 @@ class LocationViewController: UIViewController {
     @IBAction func SegmentAction(_ sender: Any) {
         
         if SegmentControl.selectedSegmentIndex == 1{
-            addLocationEnabel(Show: add_location_enabel ?? false )
+            addLocationEnabel(Show: false )
             addChildViewControllerToContainer()
         }else{
-            addLocationEnabel(Show: false )
+           
+            addLocationEnabel(Show: add_location_enabel ?? false )
             removeChildVC()
             checkLocationAuthorization()
         }

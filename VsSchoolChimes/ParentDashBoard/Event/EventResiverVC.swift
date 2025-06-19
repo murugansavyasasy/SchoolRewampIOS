@@ -37,6 +37,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     let dateFormatter = DateFormatter()
     var playIndex : Int = 0
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    var SearchData: [EventList]?
+    var FilteredData: [EventList]?
     override func viewDidLoad() {
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name ?? ""
@@ -134,6 +136,8 @@ class EventResiverVC: UIViewController, SelectNotice{
                     switch result {
                     case .success(let successMessage):
                         self.event = successMessage.data
+                        self.FilteredData = self.event
+                        self.SearchData = self.event
                         self.tableview.reloadData()
                         if self.event?.count == 0{
                             self.noDataLbl.text = successMessage.message
@@ -146,7 +150,8 @@ class EventResiverVC: UIViewController, SelectNotice{
                         }else{
                             self.noDataLbl.isHidden = true
                             self.noDataImg.isHidden = true
-                            self.searchHeight.constant = 56
+//                            self.searchHeight.constant = 56
+                            self.searchHeight.constant = 0
                             self.tableview.isHidden = false
                         }
                     case .failure(let error):
@@ -223,13 +228,13 @@ class EventResiverVC: UIViewController, SelectNotice{
 @available(iOS 14.0, *)
 extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.section == 0 ? event?.count ?? 0:eventHolidayData?.count ?? 0
+        return self.section == 0 ? FilteredData?.count ?? 0:eventHolidayData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if section == 0{
             
-            let event = event?[indexPath.row]
+            let event = FilteredData?[indexPath.row]
             if event?.file_path.first?.type?.uppercased() == "VIDEO"{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
                 cell.confic(event?.file_path.first?.url ?? "")
@@ -326,6 +331,11 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     
    
     
+    //MARK: TEXT ADD SEE MORE
+    
+    
+   
+    
     func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
@@ -384,5 +394,24 @@ extension EventResiverVC: UISearchBarDelegate{
         searchbar.resignFirstResponder()
     }
 
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            SearchData = FilteredData
+        } else {
+            SearchData = FilteredData?.filter { notice in
+                (notice.title.lowercased().contains(searchText.lowercased()) ?? false) ||
+                (notice.description.lowercased().contains(searchText.lowercased()) ?? false) ||
+                (
+                    notice.date
+                        .lowercased()
+                        .contains(searchText.lowercased()) ?? false
+                )
+            }
+        }
+        
+        noDataImg.isHidden = !(SearchData?.isEmpty ?? false)
+        noDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+        tableview.reloadData()
+    }
 }

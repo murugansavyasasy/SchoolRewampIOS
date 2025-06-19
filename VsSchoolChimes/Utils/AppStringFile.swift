@@ -104,6 +104,7 @@ class AlertstringFile{
     static let voice_or_title_is_required = "Voice and title is required".translated()
     static let enter_title_description = "Enter title and description".translated()
     static let Choose_any_target = "Choose any target to send message".translated()
+    static let Choose_any_standard_section = "Choose any standard and section".translated()
     static let Choose_any_section = "Choose any section and subject".translated()
     static let Audio_exceeds_3_minutes = "Audio exceeds 3 minutes. Please select a shorter audio.".translated()
     static let Alert_title = "Alert".translated()
@@ -177,6 +178,7 @@ class AlertstringFile{
     static let Are_you_sure_you_want_to_submit_leave_request = "Are you sure you want to submit this leave request?".translated()
     static let Enter_reason = "Please Enter the reason".translated()
     static let Failed = "Failed".translated()
+   
     
     
 }

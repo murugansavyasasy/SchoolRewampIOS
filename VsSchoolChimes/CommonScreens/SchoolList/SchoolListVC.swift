@@ -14,7 +14,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var chooseUrSchoolLbl: UILabel!
     @IBOutlet weak var headerSchoolLbl: UILabel!
     @IBOutlet weak var radioBtnStack: UIStackView!
-    @IBOutlet weak var sendOnlyLbl: UILabel!
     @IBOutlet weak var studentBtnName: UIButton!
     @IBOutlet weak var staffBtnName: UIButton!
     @IBOutlet weak var allbtnName: UIButton!
@@ -83,7 +82,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 radioButtonTapped(allbtnName)
                 ViewAnimator.hideFade(segmentName)
                 ViewAnimator.showFade(radioBtnStack)
-                ViewAnimator.showFade(sendOnlyLbl)
                 ViewAnimator.showFade(sendBtnName)
                 segmentName.selectedSegmentIndex = 1
             }
@@ -98,7 +96,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         button.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
         // Optional: Set content alignment
         button.contentHorizontalAlignment = .left
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0 , bottom: 0, right: 15)
     }
     
     override func viewDidLayoutSubviews() {
@@ -290,33 +288,70 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         
         guard !array_selectedSchoolId.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self
-                )
-                return
-            }
-
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self
+            )
+            return
+        }
+        
+        
+        let comm = commonApi_forSending()
         switch Menu_id.staffSelectedMenuId {
-            case Menu_id.communicationMenuId:
-                SendingCommunicationFlow()
-
-            case Menu_id.homeWorkMenuId:
-                handleHomeworkFlow()
+        case Menu_id.communicationMenuId:
+            SendingCommunicationFlow()
         case Menu_id.noticeboardMenuId:
-            SendingNoticeboardFlow()
-
-            default:
-                print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
-            }
+            sendAttachmentFlow(
+                via: comm,
+                url: ServiceUrl.api_notice_board_send_notice,
+                subjectId:""
+            )
+        default:
+            print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+        }
     }
    
     
     
-    private func handleHomeworkFlow() {
+    
+    
+    private func sendAttachmentFlow(
+        via comm: commonApi_forSending,
+        url baseURL: String,
+        subjectId: String
+    ) {
         
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
         
+        comm.SendingAttachmentFlow(
+            selectedAcadimicYearId: selectedAcadimicYearId ?? 0,
+            target_type: target_type ?? 0,
+            selectedId: array_selectedSchoolId,
+            baseURL: baseURL,
+            subjectId: subjectId,
+            message: message ?? "",
+            from: self,
+            Common_request_params: Common_request_params
+        ) { response in
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.hide()
+                CustomAlert.showAlertWithOkAction(
+                    title: AlertstringFile.Success,
+                    message: response.message,
+                    on: self
+                ) { [self] in
+                    gotoDashboard()
+                }
+            }
+        }
     }
     
     private func SendingCommunicationFlow() {
@@ -801,6 +836,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     
     
+    
+    
     //MARK: Sender Noticeboard
     private func SendingNoticeboardFlow() {
         
@@ -836,7 +873,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         SendNoticeStringFile.title : user_inputs.title,
                         SendNoticeStringFile.description : user_inputs.description,
                         SendNoticeStringFile.target_code : array_selectedSchoolId,
-                        SendNoticeStringFile.intended_for : selectedTarget ?? "",
+                        SendNoticeStringFile.intended_for : selectedTarget,
                         SendNoticeStringFile.visible_from : user_inputs.FromDate,
                         SendNoticeStringFile.visible_to : user_inputs.ToDate,
                         SendNoticeStringFile.file_path : uploadedFiles,

@@ -32,7 +32,6 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var CollectionBaseview: UIView!
     
     var delegate : SelectNotice?
-    
     var homeworkDocs:[FilePath]?
     private var docController: UIDocumentInteractionController?
     
@@ -136,7 +135,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 110)
+        return CGSize(width: 110, height: 110)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -155,6 +154,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         filurls.insert(filePath, at: 0)
         vcc.FileURL =  filurls
         vcc.pdfUrl = homeworkDocs?[indexPath.row].url
+        vcc.subjectName = TitleLbl.text ?? ""
         vcc.scrollIndex = indexPath
         vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen

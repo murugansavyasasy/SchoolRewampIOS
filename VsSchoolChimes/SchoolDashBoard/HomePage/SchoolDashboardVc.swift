@@ -258,7 +258,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         super.viewWillAppear(animated)
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        get_dashboard_details()
+        getacadmicYr{
+            self.get_dashboard_details()
+        }
+       
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -272,17 +275,29 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     
-    func OpenInside(from viewController: UIViewController){
-        let storeViewController = SKStoreProductViewController()
-        storeViewController.delegate = viewController as? SKStoreProductViewControllerDelegate
-        storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "YOUR_APP_ID"]) { (loaded, error) in
-            if loaded {
-                viewController.present(storeViewController, animated: true)
-            }else{
-                print("can't open the appstore ❤️")
+
+    
+    func getacadmicYr(onComplete: @escaping () -> Void){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                            localData.accidamic_year_data = successMessage
+                    }else{
+                        localData.accidamic_year_data = successMessage
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
-        }
+        
+        onComplete()
     }
+    
     
     @IBAction func redirectAct() {
         dismiss(animated: true)
