@@ -76,7 +76,11 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
         cell.standerdScection?.text = "\(student.standard ?? "") - \(student.section ?? "")"
         cell.subject.text = subject ?? ""
         cell.titleLbl.text = titleString ?? ""
-        cell.submitedCount.text = "✅ \(student.submit_status ?? ""): \(student.submissions_details?.count ?? 0)"
+        
+        let emoji = (student.submit_status == "NOTSUBMITTED") ? "❎" : "✅"
+        cell.indicationBtn.isHidden = (student.submit_status == "NOTSUBMITTED")
+        let count = student.submissions_details?.count ?? 0
+        cell.submitedCount.text = (student.submit_status == "NOTSUBMITTED") ? "\(emoji) \(student.submit_status ?? "")" : "\(emoji) \(student.submit_status ?? ""): \(count)"
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

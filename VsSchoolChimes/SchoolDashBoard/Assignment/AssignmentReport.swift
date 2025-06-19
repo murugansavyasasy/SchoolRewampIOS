@@ -20,6 +20,7 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
     var data : [Report]?
     var filteredData :[Report]?
     let acidamicdrops = DropDown()
+    let alert = CustomAlert()
     var acodemicId: Int?
     var AcadimicYearDatas: [AcadimicYearData] = []
     var accadimYr: [String] = []
@@ -27,6 +28,7 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
     var tapGesture: UITapGestureRecognizer?
     override func viewDidLoad() {
         super.viewDidLoad()
+        getacadmicYr()
         reportTable.register(UINib(nibName: CellConfingName.AssignmentListCTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AssignmentListCTVC)
         reportTable.delegate = self
         reportTable.dataSource = self
@@ -40,16 +42,21 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
         acodemicView.layer.borderColor = UIColor.lightGray.cgColor
         acodemicView.layer.borderWidth = 0.5
     }
+    func getacadmicYr() {
+        accadimYr = localData.accidamic_year_data?.data?.compactMap { $0.year } ?? []
+        AcadimicYearDatas = localData.accidamic_year_data?.data ?? []
+        acodomicYearLbl.text = accadimYr.last ?? ""
+        acodemicId = localData.accidamic_year_data?.data?.last?.id ?? 0
+    }
     func getAssigment() {
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_assignment_report,
-            parameters: ["academic_year_id":7],
+            parameters: ["academic_year_id":acodemicId ?? 0],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<AssignmentReportResponse, Error>) in
             switch result {
             case .success(let response):
-                if response.status == true {
                     DispatchQueue.main.async {
                         self?.data = response.data ?? []
                         self?.filteredData = self?.data
@@ -57,9 +64,9 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
                         self?.nodataLbl.isHidden = !isEmpty
                         self?.nodataLbl.text = isEmpty ? response.message : ""
                         self?.noRecordImg.isHidden = !isEmpty
-                        self?.noDataStack.isHidden = true
+                        self?.reportTable.isHidden = isEmpty
                         self?.reportTable.reloadData()
-                    }
+
                 }
             case .failure(let error):
                 print("API Error: \(error.localizedDescription)")
@@ -82,8 +89,15 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
         cell.staff = true
         cell.submitBtn.setTitle("Submited : \(filteredData?[indexPath.row].submitted_count ?? 0)", for: .normal)
         let unsubmitted = (filteredData?[indexPath.row].total_count ?? 0) - (filteredData?[indexPath.row].submitted_count ?? 0)
-
+        cell.unsubmitcount = unsubmitted
+        cell.submitcount = filteredData?[indexPath.row].submitted_count ?? 0
         cell.NotSubmitedBtn.setTitle("Unsubmitted : \(unsubmitted)", for: .normal)
+        cell.DescriptionLbl.setupExpandable(text: filteredData?[indexPath.row].description ?? "")
+        cell.DescriptionLbl.onExpandableTap = {
+            cell.DescriptionLbl.isExpanded.toggle()
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         cell.id = filteredData?[indexPath.row].id
         cell.assignmentId = filteredData?[indexPath.row].id
         cell.FilesUrl = filteredData?[indexPath.row].file_path
@@ -96,9 +110,43 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     @objc func deletedTapped(_ sender: UIButton) {
         let index = sender.tag
-        print("Button tapped at index: \(index)")
-        // Use index to get data from your array
+
+        let title = AlertstringFile.Confirm_title
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.deletemessage,
+            actionLbl1: AlertstringFile.delete,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [weak self] in
+                guard let self = self,
+                      let idToRemove = self.filteredData?[index].id else { return }
+
+                APIService.shared.makeApi(
+                    url: ServiceUrl.comm_api_assignment_delete,
+                    parameters: ["id": idToRemove],
+                    type: ApitTypeSringFile.Put,
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                ) { (result: Result<Send_AttachmentResponse, Error>) in
+                    switch result {
+                    case .success(let response):
+                        if response.status {
+                            DispatchQueue.main.async {
+                                self.data?.removeAll { $0.id == idToRemove }
+                                self.filteredData?.removeAll { $0.id == idToRemove }
+                                self.reportTable.reloadData()
+                            }
+                        }
+                    case .failure(let error):
+                        print("API Error: \(error.localizedDescription)")
+                    }
+                }
+            }, onNo: {
+                print("User canceled.")
+            }
+        )
     }
+
 
     // MARK: - Dropdown Selections
     @IBAction func selectAcademicYear(_ sender: UIButton) {
@@ -109,6 +157,7 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
         acidamicdrops.selectionAction = { [weak self] index, item in
             self?.acodomicYearLbl.text = item
             self?.acodemicId = self?.AcadimicYearDatas[index].id
+            self?.getAssigment()
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

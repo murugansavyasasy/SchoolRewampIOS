@@ -58,6 +58,8 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
         }
     }
     var id:String?
+    var submitcount:Int?
+    var unsubmitcount:Int?
     var assignmentId:String?
        override func awakeFromNib() {
            super.awakeFromNib()
@@ -127,26 +129,29 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
     
     @IBAction func notSubmited(_ sender: UIButton) {
         if let currentVC = getCurrentViewController() {
-            let vcc = SubmitedAssignmentVC(nibName: nil, bundle: nil)
-            vcc.type = "NOTSUBMITTED"
-            vcc.id = id
-            vcc.titleString = tittleLbl.text
-            vcc.subject = SubjectLabel.text
-            vcc.modalPresentationStyle = .fullScreen
-            currentVC.present(vcc, animated: true, completion: nil)
-        }
-    }
-    @IBAction func submit(_ sender: UIButton) {
-        if let currentVC = getCurrentViewController() {
-            if staff{
-                
+            if unsubmitcount != 0 {
                 let vcc = SubmitedAssignmentVC(nibName: nil, bundle: nil)
-                vcc.type = "SUBMITTED"
+                vcc.type = "NOTSUBMITTED"
                 vcc.id = id
                 vcc.titleString = tittleLbl.text
                 vcc.subject = SubjectLabel.text
                 vcc.modalPresentationStyle = .fullScreen
                 currentVC.present(vcc, animated: true, completion: nil)
+            }
+        }
+    }
+    @IBAction func submit(_ sender: UIButton) {
+        if let currentVC = getCurrentViewController() {
+            if staff{
+                if submitcount != 0{
+                    let vcc = SubmitedAssignmentVC(nibName: nil, bundle: nil)
+                    vcc.type = "SUBMITTED"
+                    vcc.id = id
+                    vcc.titleString = tittleLbl.text
+                    vcc.subject = SubjectLabel.text
+                    vcc.modalPresentationStyle = .fullScreen
+                    currentVC.present(vcc, animated: true, completion: nil)
+                }
             }else{
                 if #available(iOS 14.0, *) {
                     let vcc = SubmitVC(nibName: nil, bundle: nil)

@@ -31,7 +31,7 @@
                     <rect key="frame" x="0.0" y="59" width="430" height="873"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="96r-yu-K0I">
-                            <rect key="frame" x="10" y="20" width="410" height="320.33333333333331"/>
+                            <rect key="frame" x="10" y="129.99999999999997" width="410" height="320.33333333333326"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="WLG-oh-3qg">
                                     <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
@@ -121,19 +121,19 @@
                             </connections>
                         </searchBar>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PBw-1A-YXp">
-                            <rect key="frame" x="10" y="140" width="410" height="733"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <rect key="frame" x="0.0" y="130" width="430" height="743"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="PBw-1A-YXp" firstAttribute="top" secondItem="1sY-wH-WZ2" secondAttribute="bottom" constant="10" id="708-hA-L8H"/>
-                        <constraint firstItem="96r-yu-K0I" firstAttribute="top" secondItem="rKs-5V-blU" secondAttribute="top" constant="20" id="BaI-N7-FH2"/>
+                        <constraint firstItem="PBw-1A-YXp" firstAttribute="top" secondItem="1sY-wH-WZ2" secondAttribute="bottom" id="708-hA-L8H"/>
+                        <constraint firstItem="PBw-1A-YXp" firstAttribute="leading" secondItem="rKs-5V-blU" secondAttribute="leading" id="9O7-D5-IQv"/>
                         <constraint firstItem="96r-yu-K0I" firstAttribute="trailing" secondItem="1sY-wH-WZ2" secondAttribute="trailing" id="DXU-VH-HRO"/>
-                        <constraint firstItem="PBw-1A-YXp" firstAttribute="trailing" secondItem="1sY-wH-WZ2" secondAttribute="trailing" id="I38-2s-XWa"/>
                         <constraint firstAttribute="trailing" secondItem="TzU-y7-8Ud" secondAttribute="trailing" constant="20" id="KZD-PO-OmU"/>
-                        <constraint firstItem="PBw-1A-YXp" firstAttribute="leading" secondItem="1sY-wH-WZ2" secondAttribute="leading" id="S14-hc-uUU"/>
+                        <constraint firstAttribute="trailing" secondItem="PBw-1A-YXp" secondAttribute="trailing" id="UrN-SM-Pdl"/>
                         <constraint firstAttribute="bottom" secondItem="PBw-1A-YXp" secondAttribute="bottom" id="WbE-2c-hTJ"/>
+                        <constraint firstItem="96r-yu-K0I" firstAttribute="top" secondItem="PBw-1A-YXp" secondAttribute="top" id="d3b-Y0-WYn"/>
                         <constraint firstItem="1sY-wH-WZ2" firstAttribute="top" secondItem="TzU-y7-8Ud" secondAttribute="bottom" constant="10" id="dV5-zZ-zP8"/>
                         <constraint firstItem="TzU-y7-8Ud" firstAttribute="top" secondItem="rKs-5V-blU" secondAttribute="top" constant="10" id="f7H-C0-LH6"/>
                         <constraint firstItem="TzU-y7-8Ud" firstAttribute="leading" secondItem="rKs-5V-blU" secondAttribute="leading" constant="20" id="l7p-ec-ptG"/>

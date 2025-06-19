@@ -89,6 +89,7 @@ struct ServiceUrl{
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"
     static let lms_api_lesson_plan_update = "lms/api/lesson-plan/update"
     static let lms_api_lesson_plan_delete = "lms/api/lesson-plan/delete"
+    static let comm_api_assignment_delete = "comm/api/assignment/delete"
     
 }
 

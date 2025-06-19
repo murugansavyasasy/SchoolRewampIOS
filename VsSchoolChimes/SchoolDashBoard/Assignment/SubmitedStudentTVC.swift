@@ -8,6 +8,7 @@
 import UIKit
 
 class SubmitedStudentTVC: UITableViewCell {
+    @IBOutlet weak var indicationBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var standerdScection: UILabel!
