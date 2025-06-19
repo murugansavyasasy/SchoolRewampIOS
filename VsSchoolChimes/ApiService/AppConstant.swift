@@ -78,17 +78,16 @@ struct ServiceUrl{
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
     static let comm_api_leave_req_list = "comm/api/leave-req/list"
     static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
+    static let comm_api_assignment_report = "comm/api/assignment/report"
+    static let comm_api_assignment_submissions_list = "comm/api/assignment/submissions-list"
     static let   comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
-    static let comm_api_assignment_list = "comm/api/assignment/list"
-    static let comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let lms_api_lesson_plan_staff_report = "lms/api/lesson-plan/staff-report"
     static let lms_api_lesson_plan_view = "lms/api/lesson-plan/view"
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"
     static let lms_api_lesson_plan_update = "lms/api/lesson-plan/update"
     static let lms_api_lesson_plan_delete = "lms/api/lesson-plan/delete"
-    static let comm_api_my_submissions = "comm/api/my-submissions"
     
 }
 

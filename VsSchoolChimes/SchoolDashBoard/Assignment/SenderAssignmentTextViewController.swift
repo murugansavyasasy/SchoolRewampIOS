@@ -42,7 +42,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         return .none // This forces popover on iPhone
     }
     @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
@@ -56,7 +55,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var addphotosheight: NSLayoutConstraint!
     @IBOutlet weak var CreateView: UIView!
-    @IBOutlet weak var AssignmenttypeLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var categoryDropDownLbl: UILabel!
     @IBOutlet weak var assignTitleTxtFld: UITextField!
@@ -65,7 +63,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
-    @IBOutlet weak var AssignmentTypeview: UIView!
     @IBOutlet weak var VideoPlayBtn: UIButton!
     
     @IBOutlet weak var ClickTochooseVideoLbl: UILabel!
@@ -111,8 +108,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
-        BackBtn.applyBackButton()
-      
         videoPicker = VideoPickerManager(presenter: self, delegate: self)
             
         // Add observers for keyboard notifications
@@ -135,7 +130,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         contentTextView.applyRightTxt()
         categoryLbl.applyRightTxt()
         categoryDropDownLbl.applyRightTxt()
-        AssignmenttypeLbl.applyRightTxt()
         DescriptionLbl.applyRightTxt()
         letterscountLbl.applyRightTxt()
         titleLbl.applyRightTxt()
@@ -163,32 +157,32 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     }
     
    
-        
-    @IBAction func segmntAction(_ sender: UISegmentedControl) {
-        
-        if sender.selectedSegmentIndex == 0 {
-                removeChildVC()
-            } else {
-                addChildViewControllerToContainer()
-            }
-    }
-   
-   
-    func removeChildVC() {
-//        guard let vc = childVC else { return }
-//        vc.willMove(toParent: nil)
-//        vc.view.removeFromSuperview()
-//        vc.removeFromParent()
-//        childVC = nil
-    }
-    func addChildViewControllerToContainer() {
-//        let vc = AssignmentReportVc(nibName: nil, bundle: nil)
-//        addChild(vc)
-//        vc.view.frame = CreateView.bounds
-//        CreateView.addSubview(vc.view)
-//        vc.didMove(toParent: self)
-//        self.childVC = vc // Save reference
-    }
+//        
+//    @IBAction func segmntAction(_ sender: UISegmentedControl) {
+//        
+//        if sender.selectedSegmentIndex == 0 {
+//                removeChildVC()
+//            } else {
+//                addChildViewControllerToContainer()
+//            }
+//    }
+//   
+//   
+//    func removeChildVC() {
+////        guard let vc = childVC else { return }
+////        vc.willMove(toParent: nil)
+////        vc.view.removeFromSuperview()
+////        vc.removeFromParent()
+////        childVC = nil
+//    }
+//    func addChildViewControllerToContainer() {
+////        let vc = AssignmentReportVc(nibName: nil, bundle: nil)
+////        addChild(vc)
+////        vc.view.frame = CreateView.bounds
+////        CreateView.addSubview(vc.view)
+////        vc.didMove(toParent: self)
+////        self.childVC = vc // Save reference
+//    }
     @IBAction func deleteVideo(){
         
         videoPickerManagerDidCloseVideo()
@@ -296,12 +290,12 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     }
     
     override func viewDidLayoutSubviews() {
-        
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+//        
+//        view.applyGradient(
+//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
     }
     
     deinit {
@@ -319,7 +313,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         CreateView.layer.shadowRadius = 5
         CreateView.layer.shadowOpacity = 0.3
         CreateView.layer.cornerRadius = 10
-        AssignmentTypeview.layer.cornerRadius = 10
         categoryDropDownView.layer.cornerRadius = 10
         selectImgPdfview.layer.cornerRadius = 10
         contentTextView.layer.cornerRadius = 10
@@ -332,9 +325,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         categoryDropDownView.layer.borderWidth = 1
         categoryDropDownView.layer.borderColor = UIColor.lightGray.cgColor
         categoryDropDownView.backgroundColor = .white
-        AssignmentTypeview.layer.borderWidth = 1
-        AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
-        AssignmentTypeview.backgroundColor = .white
         contentTextView.text = CommonStringFile.Description.translated()
         contentTextView.textColor = .lightGray
         customizedDateBtn.layer.cornerRadius = 10
@@ -351,7 +341,7 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
         categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
         collectionViewHeght.constant = 120
@@ -364,12 +354,7 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         let selectedDate = sender.date
         print("Selected Date: \(selectedDate)")
     }
-    
-    @IBAction func backVc() {
-        
-        dismiss(animated: true)
-    }
-    
+
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
         
         guard let title = assignTitleTxtFld.text , !title.isEmpty, let contents = contentTextView.text , !contents.isEmpty

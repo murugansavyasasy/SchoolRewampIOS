@@ -8,7 +8,7 @@
 import UIKit
 
 class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
-
+    
     @IBOutlet weak var standerdSectionLbl: UILabel!
     @IBOutlet weak var sudentName: UILabel!
     @IBOutlet weak var nodataLbl: UILabel!
@@ -19,15 +19,35 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     var titleName:String?
     var subject:String?
     var id:String?
-      override func viewDidLoad() {
-          super.viewDidLoad()
-          sumitionList.delegate = self
-          sumitionList.dataSource = self
-          sumitionList.register(UINib(nibName: "SubmissionTVC", bundle: nil), forCellReuseIdentifier: "SubmissionTVC")
-          ReadStatusUpdate()
-      }
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    var submissions_details: [SubmissionDetail]?
+    var submitedList = false
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sudentName.text = studentDetails?.name
+        standerdSectionLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
+        sudentName.setFont(style: .body, size: FontSize.BodySize)
+        standerdSectionLbl.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        sumitionList.delegate = self
+        sumitionList.dataSource = self
+        sumitionList.register(UINib(nibName: "SubmissionTVC", bundle: nil), forCellReuseIdentifier: "SubmissionTVC")
+        if !submitedList{
+            ReadStatusUpdate()
+        }
+        
+    }
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
+        if !submitedList{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }else{
+            view.applyGradient(
+                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }
     }
     func ReadStatusUpdate(){
         
@@ -35,86 +55,80 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
             
             switch result {
             case .success(let SuccessMessage):
-                    DispatchQueue.main.async { [self] in
-                        assignments = SuccessMessage.data
-                        noDtaImg.isHidden = !SuccessMessage.data.isEmpty
-                        nodataLbl.isHidden = !SuccessMessage.data.isEmpty
-                        nodataLbl.text = SuccessMessage.message
-                        sumitionList.reloadData()
+                DispatchQueue.main.async { [self] in
+                    assignments = SuccessMessage.data
+                    noDtaImg.isHidden = !SuccessMessage.data.isEmpty
+                    nodataLbl.isHidden = !SuccessMessage.data.isEmpty
+                    nodataLbl.text = SuccessMessage.message
+                    sumitionList.reloadData()
                 }
             case .failure(let error):
                 
                 DispatchQueue.main.async {
-                    let data: [Submission] = [
-                        Submission(
-                            id: "1001",
-                            content: [
-                                FilePath(url: "https://example.com/image1.jpg", type: "IMAGE")
-                            ],
-                            description: "This is the first dummy assignment submission",
-                            submitted_on: "2025-06-09 10:45:00" // today
-                        ),
-                        Submission(
-                            id: "1002",
-                            content: [
-                                FilePath(url: "https://example.com/image2.jpg", type: "IMAGE")
-                            ],
-                            description: "Second submission done yesterday evening",
-                            submitted_on: "2025-06-08 18:30:00" // 1 day ago
-                        ),
-                        Submission(
-                            id: "1003",
-                            content: [
-                                FilePath(url: "https://example.com/image3.pdf", type: "PDF")
-                            ],
-                            description: "Late submission for science project",
-                            submitted_on: "2025-06-06 14:15:00" // 3 days ago
-                        )
-                    ]
-
-                    self.assignments = data
+                    self.assignments = []
                     self.sumitionList.reloadData()
                     print(error.localizedDescription)
                 }
             }
         }
     }
-      @IBAction func BackBtn(_ sender: UIButton) {
-          dismiss(animated: true)
-      }
-
-      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          return assignments?.count ?? 0
-      }
-
-      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-          let cell = sumitionList.dequeueReusableCell(withIdentifier: "SubmissionTVC", for: indexPath) as! SubmissionTVC
-          if let data = assignments?[indexPath.row]{
-              let (timeAgo, dateString) = data.submitted_on.submissionTimeDisplay()
-              cell.assignmentTitle.text = titleName
-              cell.subjectName.text = subject
-              cell.date.text = dateString
-              cell.FilesUrl = data.content
-              cell.timeLeft.text = "Submited: \(timeAgo)"
-              cell.descriptionLbl.text = data.description
-              cell.descriptionLbl.setupExpandable(text: data.description)
-              cell.descriptionLbl.onExpandableTap = {
-                  cell.descriptionLbl.isExpanded.toggle()
-                  tableView.beginUpdates()
-                  tableView.endUpdates()
-              }
-          }
-          
-          return cell
-      }
-
-      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-          return UITableView.automaticDimension
-      }
+    @IBAction func BackBtn(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return submitedList ? submissions_details?.count ?? 0 : assignments?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = sumitionList.dequeueReusableCell(withIdentifier: "SubmissionTVC", for: indexPath) as! SubmissionTVC
+        if submitedList {
+            if let data = submissions_details?[indexPath.row],
+               let submittedDate = data.submitted_on?.submissionTimeDisplay() {
+                
+                let (timeAgo, dateString) = submittedDate
+                cell.assignmentTitle.text = titleName
+                cell.subjectName.text = subject
+                cell.date.text = dateString
+                cell.FilesUrl = data.file_path
+                cell.timeLeft.text = "Submited: \(timeAgo)"
+                cell.descriptionLbl.text = data.description
+                cell.descriptionLbl.setupExpandable(text: data.description ?? "")
+                cell.descriptionLbl.onExpandableTap = {
+                    cell.descriptionLbl.isExpanded.toggle()
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+            }
+            return cell
+        }else{
+            if let data = assignments?[indexPath.row]{
+                let (timeAgo, dateString) = data.submitted_on.submissionTimeDisplay()
+                cell.assignmentTitle.text = titleName
+                cell.subjectName.text = subject
+                cell.date.text = dateString
+                cell.FilesUrl = data.file_path
+                cell.timeLeft.text = "Submited: \(timeAgo)"
+                cell.descriptionLbl.text = data.description
+                cell.descriptionLbl.setupExpandable(text: data.description)
+                cell.descriptionLbl.onExpandableTap = {
+                    cell.descriptionLbl.isExpanded.toggle()
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+            }
+            
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }
 
 extension String {
-    func submissionTimeDisplay(format: String = "yyyy-MM-dd HH:mm:ss") -> (String, String) {
+    func submissionTimeDisplay(format: String = "dd-MM-yyyy hh:mm:ss a") -> (String, String) {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         formatter.timeZone = TimeZone.current

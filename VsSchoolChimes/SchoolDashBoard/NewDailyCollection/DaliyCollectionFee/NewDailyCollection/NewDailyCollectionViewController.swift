@@ -4,7 +4,7 @@ import DropDown
 
 @available(iOS 15.0, *)
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
-   
+    
     func date(date: String) {
         if dateSelection == true{
             fromLbl.text = date
@@ -15,6 +15,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         }
     }
     
+    @IBOutlet weak var norecordImg: UIImageView!
+    @IBOutlet weak var titleStack: UIStackView!
+    @IBOutlet weak var totalCollectionLblTitle: UILabel!
     @IBOutlet weak var totalCollectionView: UIView!
     @IBOutlet weak var totalAmountLbl: UILabel!
     @IBOutlet weak var segmentName: UISegmentedControl!
@@ -42,78 +45,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     var DropDownStr : [String] = []
     var dateSelection = false
     private var gradientLayer: CAGradientLayer?
-    var dailyCollectionData: [DailyCollectionData] = [
-        DailyCollectionData(
-            category: "Current Year - First Term - School",
-            total: "₹25000.00",
-            fee_data: [
-                FeeData(type_name: "School Fee", amount: "₹25000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Second Term - School",
-            total: "₹15000.00",
-            fee_data: [
-                FeeData(type_name: "Book Fee", amount: "₹15000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Third Term - School",
-            total: "₹18000.00",
-            fee_data: [
-                FeeData(type_name: "Exam Fee", amount: "₹18000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Hostel",
-            total: "₹22000.00",
-            fee_data: [
-                FeeData(type_name: "Room Rent", amount: "₹12000.00"),
-                FeeData(type_name: "Food", amount: "₹10000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Transport",
-            total: "₹8000.00",
-            fee_data: [
-                FeeData(type_name: "Bus Fee", amount: "₹8000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Library",
-            total: "₹3000.00",
-            fee_data: [
-                FeeData(type_name: "Library Fine", amount: "₹1000.00"),
-                FeeData(type_name: "Membership", amount: "₹2000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Activities",
-            total: "₹6000.00",
-            fee_data: [
-                FeeData(type_name: "Sports", amount: "₹4000.00"),
-                FeeData(type_name: "Cultural", amount: "₹2000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Donation",
-            total: "₹12000.00",
-            fee_data: [
-                FeeData(type_name: "Alumni Fund", amount: "₹5000.00"),
-                FeeData(type_name: "Infrastructure", amount: "₹7000.00")
-            ]
-        ),
-        DailyCollectionData(
-            category: "Current Year - Extra Curricular",
-            total: "₹4000.00",
-            fee_data: [
-                FeeData(type_name: "Dance", amount: "₹2500.00"),
-                FeeData(type_name: "Music", amount: "₹1500.00")
-            ]
-        )
-    ]
-
-    
+    var dailyCollectionData: [DailyCollectionData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: calendarView,cornerRadius: 6)
@@ -129,8 +61,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         fromLbl.text = formattedDateTime
         todateLbl.text = formattedDateTime
         tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
-//        tv.register(UINib(nibName: CellConfingName.PaymentHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.PaymentHeaderView)
-//        tv.register(UINib(nibName: CellConfingName.PaymentTypeTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentTypeTVC)
         let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
         calendarView.addGestureRecognizer(fromdateTap)
         
@@ -154,7 +84,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         totalCollectionView.layer.shadowRadius = 8
         
     }
-
+    
     
     
     @IBAction func segmentActBtn(_ sender: Any) {
@@ -189,13 +119,13 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dismiss(animated: true)
     }
     
-
-
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dailyCollectionData.count
     }
-
-   
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.FeePendingTVC, for: indexPath) as! FeePendingTVC
         
@@ -204,15 +134,14 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         cell.valueLbl.text = data.total
         cell.configure(with: data.fee_data ?? [])
         
-        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
-        tv.layoutIfNeeded()
+//        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
     func daily_collectionApi(type:String){
         
         let fromdate = ConvertDateStringSmart(fromLbl.text)
@@ -230,24 +159,18 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
             ) in
                 switch result {
                 case .success(let successMessage):
-                    if successMessage.status == true{
-                        DispatchQueue.main.async { [self] in
-                            tv.isHidden = false
-                            norecordLbl.isHidden = true
-                            dailyCollectionData = successMessage.data?.first?.pending_details ?? []
-                           
-                            tv.reloadData()
-                        }
-                    }else{
-                        DispatchQueue.main.async { [self] in
-                            totalAmountLbl.text = ""
-                            tv.isHidden = true
-                            norecordLbl.isHidden = false
-                            norecordLbl.text = successMessage.message
-//                            dailyCollectionData = successMessage.data ?? []
-                            tv.reloadData()
-                        }
-                       
+                    DispatchQueue.main.async { [self] in
+                        tv.isHidden = false
+                        
+                        dailyCollectionData = successMessage.data?.first?.collections ?? []
+                        totalAmountLbl.text = successMessage.data?.first?.total_collection
+                        totalCollectionLblTitle.isHidden = successMessage.data?.count == 0
+                        titleStack.isHidden = successMessage.data?.count == 0
+                        tv.isHidden = successMessage.data?.count == 0
+                        tv.reloadData()
+                        norecordLbl.isHidden = successMessage.data?.count != 0
+                        norecordLbl.text = successMessage.message
+                        norecordImg.isHidden = successMessage.data?.count != 0
                     }
                 case .failure(let error):
                     DispatchQueue.main.async { [self] in
@@ -260,14 +183,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                 }
             }
     }
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return nil
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return CGFloat.leastNormalMagnitude // returns minimal height ≈ 0
-//    }
-
     
 }
 
@@ -277,16 +192,16 @@ import UIKit
 extension UIButton {
     func configureAsBackButton(firstLine: String, secondLine: String) {
         let fullTitle = "\(firstLine)\n\(secondLine)"
-
+        
         // Set the back arrow image
         let image = UIImage(systemName: "chevron.left")
         self.setImage(image, for: .normal)
-
+        
         // Configure paragraph style
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         paragraphStyle.lineSpacing = 3
-
+        
         // Create attributed title
         let attributedTitle = NSMutableAttributedString(
             string: fullTitle,
@@ -296,7 +211,7 @@ extension UIButton {
                 .paragraphStyle: paragraphStyle
             ]
         )
-
+        
         // Apply style to second line
         let secondLineRange = (fullTitle as NSString).range(of: secondLine)
         if secondLineRange.location != NSNotFound {
@@ -305,15 +220,15 @@ extension UIButton {
                 .foregroundColor: UIColor.black.withAlphaComponent(0.6)
             ], range: secondLineRange)
         }
-
+        
         // Configure title label
         self.titleLabel?.numberOfLines = 3
         self.titleLabel?.lineBreakMode = .byWordWrapping
         self.titleLabel?.textAlignment = .left
-
+        
         // Apply attributed title
         self.setAttributedTitle(attributedTitle, for: .normal)
-
+        
         // Adjust content and insets
         self.contentHorizontalAlignment = .left
         self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
