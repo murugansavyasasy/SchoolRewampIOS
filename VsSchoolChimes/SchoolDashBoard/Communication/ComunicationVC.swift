@@ -481,7 +481,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         //MARK: Label font style
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
-        voiceSetTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        voiceSetTitleLbl.setRequiredText(CommonStringFile.Title)
         messageSendTime.setFont(style: .body, size: FontSize.BodySize)
         voiceTiming.setFont(style: .body, size: FontSize.BodySize)
         Timinglbl.setFont(style: .body, size: FontSize.BodySize)
@@ -492,8 +492,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         fromDateLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToDateLbl.setFont(style: .title, size: FontSize.TitleSize)
         EnableCallLbl.setFont(style: .title, size: FontSize.TitleSize)
-        TextMsgTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        TextMsgContent.setFont(style: .title, size: FontSize.TitleSize)
+        TextMsgTitleLbl.setRequiredText(CommonStringFile.Title)
+        TextMsgContent.setRequiredText(CommonStringFile.Description)
         textCountLbl.setFont(style: .body, size: FontSize.BodySize)
         textMsgVoiceCountLbl.setFont(style: .body, size: FontSize.BodySize)
         

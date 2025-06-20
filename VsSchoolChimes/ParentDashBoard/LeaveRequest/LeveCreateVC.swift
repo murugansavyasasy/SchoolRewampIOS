@@ -144,6 +144,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         fromLbl.setFont(style:.title, size: FontSize.TitleSize)
         fromLbl.text = CommonStringFile.From.translated()
         dayCount.setFont(style:.header, size: FontSize.BodySize)
+        contentCount.setFont(style: .body, size: FontSize.BodySize)
 
     }
     

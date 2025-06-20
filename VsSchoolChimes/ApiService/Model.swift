@@ -843,5 +843,20 @@ struct LessonDetailItem: Codable {
     let value: String
 }
 
+struct LessonEditResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [LessonEditData]?
+}
+
+struct LessonEditData: Codable {
+    let id: String?
+    let name: String?
+    let field_id: String?
+    let value: String?
+    let field_type: String?
+    let field_data: [String]?
+    let is_disable: Bool?
+}
 
 
