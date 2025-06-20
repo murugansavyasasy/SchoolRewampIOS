@@ -495,37 +495,15 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         
         if let studentDetail = filterStudent?[indexPath.row]{
             
-            cell.confic(student: studentDetail)
-            if let mobile = studentDetail.primary_mobile, !mobile.isEmpty,
-               let email = studentDetail.email, !email.isEmpty {
-                
-                let attributedString = NSAttributedString(
-                    string: mobile,
-                    attributes: [
-                        .underlineStyle: NSUnderlineStyle.single.rawValue,
-                        .foregroundColor: cell.mobleNo.titleColor(for: .normal) ?? UIColor.systemBlue
-                    ]
-                )
-                let attributedString1 = NSAttributedString(
-                    string: email,
-                    attributes: [
-                        .underlineStyle: NSUnderlineStyle.single.rawValue,
-                        .foregroundColor: cell.emailBtn.titleColor(for: .normal) ?? UIColor.systemBlue
-                    ]
-                )
-                cell.smsNumber = mobile
-                cell.mobleNo.setAttributedTitle(attributedString, for: .normal)
-                cell.emailBtn.setAttributedTitle(attributedString1, for: .normal)
-                cell.mobleNo.isHidden = false
-                cell.smsBtn.isHidden = false
-                cell.
-            } else {
-                cell.mobleNo.isHidden = true
-                cell.smsBtn.isHidden = true
-                cell.emailBtn.isHidden = true
-            }
-            
-            
+            let trimmedMobile = studentDetail.primary_mobile?.trimmingCharacters(in: .whitespacesAndNewlines)
+            cell.CallBtn.isHidden = trimmedMobile?.isEmpty ?? true
+            cell.SmsNewBtn.isHidden = trimmedMobile?.isEmpty ?? true
+
+            let trimmedEmail = (studentDetail.email ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            cell.EmailNewBtn.isHidden = trimmedEmail.isEmpty
+
+            cell.smsNumber = studentDetail.primary_mobile ?? ""
+            cell.Email = studentDetail.email ?? ""
             
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.rollNo.text = studentDetail.roll_no

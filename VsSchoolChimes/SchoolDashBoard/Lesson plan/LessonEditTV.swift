@@ -69,6 +69,9 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.isHidden = false
                 DropdownField.text = edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
+                if edit.is_disable ?? false {
+                    DropdownField.backgroundColor = .systemGray5
+                }
 
                 dropDown.dataSource = edit.field_data ?? []
                 dropDown.anchorView = DropdownField
@@ -86,6 +89,10 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.isHidden = true
                 TextField.text = edit.value
                 TextField.isEditable = !(edit.is_disable ?? false)
+                if edit.is_disable ?? false {
+                    TextField.backgroundColor = .systemGray5
+                    TextField.isUserInteractionEnabled = false
+                }
 
             case "datepicker":
                 TextField.isHidden = true
@@ -93,6 +100,9 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 DropdownField.addTarget(self, action: #selector(showDatePicker), for: .editingDidBegin)
+                if edit.is_disable ?? false {
+                    DropdownField.backgroundColor = .systemGray5
+                }
 
             default:
                 break

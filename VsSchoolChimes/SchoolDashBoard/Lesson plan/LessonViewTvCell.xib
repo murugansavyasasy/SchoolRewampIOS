@@ -87,16 +87,16 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JDX-5j-ucg">
                                         <rect key="frame" x="15" y="0.0" width="274" height="60"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pending" translatesAutoresizingMaskIntoConstraints="NO" id="Vfh-qz-AUa">
-                                                <rect key="frame" x="127" y="5" width="20" height="20"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.2.circlepath.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Vfh-qz-AUa">
+                                                <rect key="frame" x="122" y="5.6666666666666661" width="30" height="28.666666666666671"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="20" id="Ver-O7-mpc"/>
-                                                    <constraint firstAttribute="height" constant="20" id="zil-lj-h10"/>
+                                                    <constraint firstAttribute="width" constant="30" id="Ver-O7-mpc"/>
+                                                    <constraint firstAttribute="height" constant="30" id="zil-lj-h10"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yet To Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsP-o2-2U8">
-                                                <rect key="frame" x="10" y="33" width="254" height="22"/>
+                                                <rect key="frame" x="10" y="43" width="254" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                                 <nil key="highlightedColor"/>
@@ -192,7 +192,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Pending" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="arrow.2.circlepath.circle.fill" catalog="system" width="128" height="123"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
