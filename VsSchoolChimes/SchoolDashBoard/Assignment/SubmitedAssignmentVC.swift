@@ -18,11 +18,12 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
     var type:String?
     var subject:String?
     var titleString:String?
+    var shouldShowFooter = true
     override func viewDidLoad() {
         super.viewDidLoad()
         submitionList.delegate = self
         submitionList.dataSource = self
-
+        setupTableFooter()
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.layer.borderWidth = 0
@@ -59,7 +60,67 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
             }
         }
     }
-
+    func getAssigmentArchive() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_assignment_submissions_list_archive,
+            parameters: ["id": id ?? "","type":type ?? ""],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<StudentSubmissionResponse, Error>) in
+            switch result {
+            case .success(let response):
+                if response.status ?? false {
+                    DispatchQueue.main.async {
+                        self?.submitedAssignment = response.data ?? []
+                        self?.filterAssignment = response.data ?? []
+                        self?.submitionList.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print("API Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    func setupTableFooter() {
+        if shouldShowFooter {
+            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+                footer.frame = CGRect(x: 0, y: 0, width: submitionList.frame.width, height: 60)
+                let buttonTitle = "See More"
+                let attributedString = NSMutableAttributedString(string: buttonTitle)
+                
+                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
+                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
+                
+                // Apply underline style
+                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+                
+                // Set attributed title to UIButton
+                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
+                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+                footer.SeeMoreBtn.isUserInteractionEnabled = true
+                submitionList.tableFooterView = footer
+            }
+        } else {
+            submitionList.tableFooterView = nil
+        }
+    }
+    
+    @objc func seeMoreAction() {
+        if let footer = submitionList.tableFooterView {
+            UIView.animate(withDuration: 0.3, animations: {
+                footer.alpha = 0
+            }, completion: {[self] _ in
+                // Hide the footer after animation completes.
+                submitionList.tableFooterView = nil
+                shouldShowFooter = false
+                getAssigmentArchive()
+            })
+        } else {
+            // In case footer is already nil.
+            shouldShowFooter = false
+        }
+    }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }

@@ -192,13 +192,13 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
             landmarkName = "ReadStatusUpdateArchive(type:detail_id:filterType:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "24799270-7032-49E9-9E67-A245C1CEE063 - dc4e64881c06901a"
+                  uuid = "24799270-7032-49E9-9E67-A245C1CEE063 - dc4e64881c06905c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -208,11 +208,11 @@
                   urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "284"
-                  endingLineNumber = "284">
+                  startingLineNumber = "286"
+                  endingLineNumber = "286">
                </Location>
                <Location
-                  uuid = "24799270-7032-49E9-9E67-A245C1CEE063 - 9d18e5d0b7e8ac56"
+                  uuid = "24799270-7032-49E9-9E67-A245C1CEE063 - 9d18e5d0b7e8ac10"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -222,8 +222,8 @@
                   urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "285"
-                  endingLineNumber = "285">
+                  startingLineNumber = "287"
+                  endingLineNumber = "287">
                </Location>
             </Locations>
          </BreakpointContent>

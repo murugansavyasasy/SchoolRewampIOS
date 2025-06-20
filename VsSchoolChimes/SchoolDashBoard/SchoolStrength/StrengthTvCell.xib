@@ -99,25 +99,12 @@
                                     <constraint firstItem="DJ3-fA-HEP" firstAttribute="leading" secondItem="Thb-4o-aaR" secondAttribute="leading" constant="8" id="rbP-wI-c5l"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-in-hdv" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="62" width="279" height="149"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="149" id="BOd-wq-ekO"/>
-                                </constraints>
-                            </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to see All classes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-09-YYT">
-                                <rect key="frame" x="10" y="213" width="280" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="yP8-rh-GJm"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemGrayColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GMt-WI-yQo">
-                                <rect key="frame" x="5" y="65" width="290" height="146"/>
+                                <rect key="frame" x="5" y="65" width="290" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="pyB-ps-bJE"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qd3-S7-UsU">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -125,33 +112,15 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                             </collectionView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Lv-KJ-pgx">
-                                <rect key="frame" x="281" y="101" width="17" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="Jdv-8v-lsb"/>
-                                    <constraint firstAttribute="width" constant="17" id="hhi-MY-cnA"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="chevron.forward" catalog="system"/>
-                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="9gm-in-hdv" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="2DQ-9m-KRy"/>
-                            <constraint firstItem="jhL-09-YYT" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" constant="10" id="5Ou-Ye-FeJ"/>
-                            <constraint firstItem="GMt-WI-yQo" firstAttribute="leading" secondItem="9gm-in-hdv" secondAttribute="leading" constant="5" id="6tx-9k-cAz"/>
-                            <constraint firstItem="jhL-09-YYT" firstAttribute="top" secondItem="9gm-in-hdv" secondAttribute="bottom" constant="2" id="M1A-p8-PF4"/>
+                            <constraint firstItem="GMt-WI-yQo" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" constant="5" id="3qh-0C-Jdh"/>
+                            <constraint firstAttribute="bottom" secondItem="GMt-WI-yQo" secondAttribute="bottom" constant="10" id="FRL-c9-agb"/>
                             <constraint firstItem="GMt-WI-yQo" firstAttribute="top" secondItem="Thb-4o-aaR" secondAttribute="bottom" constant="5" id="UU6-Ng-B1U"/>
-                            <constraint firstAttribute="trailing" secondItem="jhL-09-YYT" secondAttribute="trailing" constant="10" id="VZO-4D-jKU"/>
-                            <constraint firstItem="4Lv-KJ-pgx" firstAttribute="leading" secondItem="9gm-in-hdv" secondAttribute="trailing" constant="2" id="e4m-Xq-Mb2"/>
-                            <constraint firstAttribute="trailing" secondItem="4Lv-KJ-pgx" secondAttribute="trailing" constant="2" id="eVr-sI-PGh"/>
-                            <constraint firstAttribute="bottom" secondItem="jhL-09-YYT" secondAttribute="bottom" constant="2" id="fZk-9L-3mF"/>
                             <constraint firstItem="Thb-4o-aaR" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="jPB-o1-Q78"/>
-                            <constraint firstItem="4Lv-KJ-pgx" firstAttribute="centerY" secondItem="Fv7-Bq-GnT" secondAttribute="centerY" id="lqQ-qs-4ta"/>
-                            <constraint firstItem="GMt-WI-yQo" firstAttribute="bottom" secondItem="9gm-in-hdv" secondAttribute="bottom" id="o9W-y3-r8N"/>
                             <constraint firstItem="GMt-WI-yQo" firstAttribute="trailing" secondItem="Thb-4o-aaR" secondAttribute="trailing" constant="-5" id="qhn-AS-dh1"/>
                             <constraint firstAttribute="trailing" secondItem="Thb-4o-aaR" secondAttribute="trailing" id="r3r-qv-H5J"/>
                             <constraint firstItem="Thb-4o-aaR" firstAttribute="top" secondItem="Fv7-Bq-GnT" secondAttribute="top" id="se1-uu-FIK"/>
-                            <constraint firstItem="9gm-in-hdv" firstAttribute="top" secondItem="Thb-4o-aaR" secondAttribute="bottom" constant="2" id="xdx-QJ-ZMF"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -164,14 +133,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="BottomLbl" destination="jhL-09-YYT" id="LMC-EX-la3"/>
-                <outlet property="BottomLblHeight" destination="yP8-rh-GJm" id="POS-B1-w3D"/>
-                <outlet property="SideBtn" destination="4Lv-KJ-pgx" id="AWP-0c-KXA"/>
-                <outlet property="SideBtnWidth" destination="hhi-MY-cnA" id="tCW-Rt-eaj"/>
                 <outlet property="StandardBtn" destination="iFE-Fw-Xd6" id="DtR-fP-3Tr"/>
                 <outlet property="StandardView" destination="Thb-4o-aaR" id="wLJ-bg-sct"/>
-                <outlet property="barChartView" destination="9gm-in-hdv" id="PTL-gE-EsE"/>
-                <outlet property="barchartHeight" destination="BOd-wq-ekO" id="LhO-5n-vel"/>
+                <outlet property="barchartHeight" destination="pyB-ps-bJE" id="xcK-gm-Qaf"/>
                 <outlet property="boysCountLbl" destination="gjX-nF-PU5" id="37w-1g-DIP"/>
                 <outlet property="cellview" destination="Fv7-Bq-GnT" id="4iR-t9-rFY"/>
                 <outlet property="countLbl" destination="jwh-xF-8h3" id="HSw-tq-Zpz"/>
@@ -184,13 +148,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
