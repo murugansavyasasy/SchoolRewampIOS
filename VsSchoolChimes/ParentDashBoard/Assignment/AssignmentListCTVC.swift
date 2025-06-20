@@ -42,8 +42,24 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
     var FilesUrl : [FilePath]?
     var videoUrl :String?
     var player: AVPlayer?
-    var staff = false
+    var staff = false{
+        didSet{
+            if staff {
+                viewSumitionBtn.isHidden = true
+                NotSubmitedBtn.isHidden = false
+                deleteBtn.isHidden = false
+                leftLbl.isHidden = true
+            }else{
+                submitBtn.isHidden = false
+                NotSubmitedBtn.isHidden = true
+                deleteBtn.isHidden = true
+                leftLbl.isHidden = false
+            }
+        }
+    }
     var id:String?
+    var submitcount:Int?
+    var unsubmitcount:Int?
     var assignmentId:String?
        override func awakeFromNib() {
            super.awakeFromNib()
@@ -61,6 +77,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
            spirelview.layer.masksToBounds = false
            outImg.translatesAutoresizingMaskIntoConstraints = false
            NotSubmitedBtn.layer.cornerRadius = 10
+           deleteBtn.layer.cornerRadius = 4
            submitBtn.layer.cornerRadius = 10
            viewSumitionBtn.layer.cornerRadius = 10
            ForwardBtn.layer.cornerRadius = 4
@@ -94,15 +111,6 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
            submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            NotSubmitedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            ForwardBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-           if staff {
-               NotSubmitedBtn.isHidden = false
-               deleteBtn.isHidden = false
-               leftLbl.isHidden = true
-           }else{
-               NotSubmitedBtn.isHidden = true
-               deleteBtn.isHidden = true
-               leftLbl.isHidden = false
-           }
            PageController.numberOfPages = FilesUrl?.count ?? 0
            PageController.currentPage = 0
        }
@@ -119,17 +127,44 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
 //        AttachmentCV.reloadData()
 //    }
     
-    @IBAction func submit(_ sender: UIButton) {
+    @IBAction func notSubmited(_ sender: UIButton) {
         if let currentVC = getCurrentViewController() {
-            if #available(iOS 14.0, *) {
-                let vcc = SubmitVC(nibName: nil, bundle: nil)
-                vcc.titleName = tittleLbl.text
+            if unsubmitcount != 0 {
+                let vcc = SubmitedAssignmentVC(nibName: nil, bundle: nil)
+                vcc.type = "NOTSUBMITTED"
                 vcc.id = id
+                vcc.titleString = tittleLbl.text
+                vcc.subject = SubjectLabel.text
                 vcc.modalPresentationStyle = .fullScreen
                 currentVC.present(vcc, animated: true, completion: nil)
             }
         }
     }
+    @IBAction func submit(_ sender: UIButton) {
+        if let currentVC = getCurrentViewController() {
+            if staff{
+                if submitcount != 0{
+                    let vcc = SubmitedAssignmentVC(nibName: nil, bundle: nil)
+                    vcc.type = "SUBMITTED"
+                    vcc.id = id
+                    vcc.titleString = tittleLbl.text
+                    vcc.subject = SubjectLabel.text
+                    vcc.modalPresentationStyle = .fullScreen
+                    currentVC.present(vcc, animated: true, completion: nil)
+                }
+            }else{
+                if #available(iOS 14.0, *) {
+                    let vcc = SubmitVC(nibName: nil, bundle: nil)
+                    vcc.titleName = tittleLbl.text
+                    vcc.id = id
+                    vcc.modalPresentationStyle = .fullScreen
+                    currentVC.present(vcc, animated: true, completion: nil)
+                }
+            }
+            
+        }
+    }
+    
     @IBAction func viewAssignment(_ sender: UIButton) {
         if #available(iOS 14.0, *) {
             if let currentVC = getCurrentViewController() {

@@ -165,8 +165,10 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                         attachmentTable.reloadData()
                         
                     }else{
-                        self.hideView(ishide: false)
-                        self.NodataLbl.text = response.message
+                        if attachmentData.count == 0{
+                            self.hideView(ishide: false)
+                            self.NodataLbl.text = response.message
+                        }
                     }
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)

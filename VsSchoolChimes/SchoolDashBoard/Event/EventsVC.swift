@@ -258,7 +258,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
         calander2Btn.layer.cornerRadius = 10
         fromLbl.setFont(style: .title, size: FontSize.TitleSize)
-        eventDeatail.setFont(style: .title, size: FontSize.TitleSize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
         Totime.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
@@ -266,8 +265,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         EventTtleLbl.setRequiredText(CommonStringFile.Title.translated())
         eventDeatail.setRequiredText(CommonStringFile.Description.translated())
         addPhotoLbl.text = CommonStringFile.UploadImagepdfoptional.translated()
-        eventDeatail.text = CommonStringFile.Description.translated()
-        EventTtleLbl.text = CommonStringFile.Title.translated()
         placeTxt.placeholder = CommonStringFile.egChennai.translated()
         
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString: CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)

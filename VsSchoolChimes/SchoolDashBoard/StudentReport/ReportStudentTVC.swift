@@ -32,7 +32,13 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tagView: UIView!
+    @IBOutlet weak var CallBtn: UIButton!
+    @IBOutlet weak var SmsNewBtn: UIButton!
+    @IBOutlet weak var EmailNewBtn: UIButton!
+    
     var smsNumber = ""
+    var Email = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -71,6 +77,7 @@ class ReportStudentTVC: UITableViewCell {
         profileView.layer.shadowOpacity = 0.5
         profileView.layer.shadowRadius = 4
         
+        confic()
 //        hiddenui(true)
 //        animationview()
 
@@ -92,7 +99,7 @@ class ReportStudentTVC: UITableViewCell {
         }
         
     }
-    func confic(student:StudentData){
+    func confic(){
 
         //MARK: Label Font
         
@@ -116,6 +123,17 @@ class ReportStudentTVC: UITableViewCell {
         emailBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         mobleNo.setTitleFont(style: .body, size: FontSize.BodySize)
         smsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        SmsNewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        CallBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        EmailNewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        mobleNo.isHidden = true
+        smsBtn.isHidden = true
+        emailBtn.isHidden = true
+        
+        CallBtn.isHidden = true
+        EmailNewBtn.isHidden = true
+        SmsNewBtn.isHidden = true
     }
     @IBAction func callAction(_ sender: UIButton) {
         let phoneNumber = smsNumber // Replace with the phone number you want
@@ -127,11 +145,9 @@ class ReportStudentTVC: UITableViewCell {
         }
     }
     @IBAction func emailAction(_ sender: UIButton) {
-        let email = sender.titleLabel?.text // Replace with the recipient's email
-        let subject = "Hello" // Replace with your subject
-        let body = "This is a sample email body." // Replace with your email body
+        let email = Email // Replace with the recipient's email
         
-        let emailURL = "mailto:\(email ?? "")?subject=\(subject)&body=\(body)"
+        let emailURL = "mailto:\(email)?"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         if let url = URL(string: emailURL ?? ""),
@@ -144,10 +160,8 @@ class ReportStudentTVC: UITableViewCell {
     }
     @IBAction func smsAction(_ sender: UIButton) {
         let phoneNumber = smsNumber // Replace with the recipient's phone number
-        let message = "Hello, this is a sample message." // Replace with your SMS message
         
-        let smsURL = "sms:\(phoneNumber)&body=\(message)"
-            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let smsURL = "sms:\(phoneNumber)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         if let url = URL(string: smsURL ?? ""),
            UIApplication.shared.canOpenURL(url) {

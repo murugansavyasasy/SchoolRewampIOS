@@ -91,8 +91,8 @@
                                 <constraint firstAttribute="trailing" secondItem="c9W-O9-ZBd" secondAttribute="trailing" constant="50" id="etS-hf-dUF"/>
                             </constraints>
                         </stackView>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Q45-3M-bwr">
-                            <rect key="frame" x="10" y="422" width="373" height="293.66666666666674"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Q45-3M-bwr">
+                            <rect key="frame" x="10" y="430" width="373" height="285.66666666666674"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
@@ -104,7 +104,7 @@
                         <constraint firstAttribute="trailing" secondItem="Q45-3M-bwr" secondAttribute="trailing" constant="10" id="XVW-gy-pMm"/>
                         <constraint firstAttribute="bottom" secondItem="Q45-3M-bwr" secondAttribute="bottom" id="Yor-9v-kXu"/>
                         <constraint firstItem="s8l-aW-uYt" firstAttribute="top" secondItem="PVT-5w-vrA" secondAttribute="top" constant="8" id="lw1-EG-5ee"/>
-                        <constraint firstItem="Q45-3M-bwr" firstAttribute="top" secondItem="s8l-aW-uYt" secondAttribute="bottom" id="vxG-QP-wx3"/>
+                        <constraint firstItem="Q45-3M-bwr" firstAttribute="top" secondItem="s8l-aW-uYt" secondAttribute="bottom" constant="8" id="vxG-QP-wx3"/>
                     </constraints>
                 </view>
             </subviews>

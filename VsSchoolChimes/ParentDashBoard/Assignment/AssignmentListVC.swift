@@ -24,9 +24,11 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     var filteredData :[Assignment]?
     var shouldShowFooter = true
     var tapGesture: UITapGestureRecognizer?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
@@ -103,18 +105,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     func register(){
         listTable.register(UINib(nibName: CellConfingName.AssignmentListCTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AssignmentListCTVC)
     }
-    func isDueDatePassed(dueDate: String) -> Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        guard let dueDateObject = dateFormatter.date(from: dueDate) else {
-            print("Invalid date format")
-            return false
-        }
-        let currentDate = Calendar.current.startOfDay(for: Date())
-        
-        // Compare dueDate with currentDate
-        return dueDateObject < currentDate
-    }
+    
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.becomeFirstResponder()

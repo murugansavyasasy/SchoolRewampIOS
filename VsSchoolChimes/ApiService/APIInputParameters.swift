@@ -261,4 +261,8 @@ class LessonPlanStringFile{
     static let request_type = "request_type"
     static let section_subject_id = "section_subject_id"
     static let lesson_plan_status = "lesson_plan_status"
+    static let particular_id = "particular_id"
+    static let myclass = "myclass"
+    static let allclass = "allclass"
+    static let key_value_data = "key_value_data"
 }

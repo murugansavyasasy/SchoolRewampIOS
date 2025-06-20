@@ -591,54 +591,43 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
     }
     func sendAttachment(with uploadedFiles: [[String: String]]) {
-        let parameters: [String: Any] = [
-            "id":id ?? "",
-            "description": DescriptionTextview.text ?? "",
-            "iframe": "",
-            "file_size": "",
-            "file_path": uploadedFiles]
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
 
-        APIService.shared.makeApi(
-            url:ServiceUrl.comm_api_assignment_submit_assignment,
-            parameters: parameters,
-            type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-        ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
-            switch result {
-            case .success(let successMessage):
-                
-                if successMessage.status == true {
+            let parameters: [String: Any] = [
+                "id": self.id ?? "",
+                "description": self.DescriptionTextview.text ?? "",
+                "iframe": "",
+                "file_size": "",
+                "file_path": uploadedFiles
+            ]
+
+            APIService.shared.makeApi(
+                url: ServiceUrl.comm_api_assignment_submit_assignment,
+                parameters: parameters,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
                     DispatchQueue.main.async {
                         CustomAlert.showAlertWithOkAction(
-                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
-                            message: successMessage.message,
+                            title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: response.message,
                             on: self
                         ) {
                             self.gotoDashboard()
                         }
                     }
-                }else {
-                    
-                    DispatchQueue.main.async {
-                        CustomAlert
-                            .showAlertWithOkAction(
-                                title: AlertstringFile.Alert_title,
-                                message: successMessage.message,
-                                on: self
-                            ) {
-                                self.gotoDashboard()
-                            }
-                    }
+                case .failure(let error):
+                    print("❌ API error: \(error.localizedDescription)")
+                    // Optionally show error alert here
                 }
-                
-                
-            case .failure(let error):
-                print("❌ API error: \(error.localizedDescription)")
-                // Optional: Add alert for failure
             }
         }
-        
     }
+
     func gotoDashboard(){
         self.dismiss(animated: false, completion: nil)
     }

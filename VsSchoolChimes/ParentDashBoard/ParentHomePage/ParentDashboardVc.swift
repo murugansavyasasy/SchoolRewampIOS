@@ -702,6 +702,7 @@ extension UIView {
     }
 }
 
+
 // MARK: - UIColor Extension for Hex Support
 extension UIColor {
     /// Initialize UIColor with a hex string

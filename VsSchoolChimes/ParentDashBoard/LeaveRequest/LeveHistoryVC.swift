@@ -33,6 +33,7 @@ class LeveHistoryVC: UIViewController{
         statusLbl.setFont(style:.title, size: FontSize.TitleSize)
         headerTitle.setFont(style:.body, size: FontSize.BodySize)
         
+        TopInfoView.isHidden = true
         EmptyView.isHidden = true
         NodataImage.isHidden = true
         NodataLbl.isHidden = true

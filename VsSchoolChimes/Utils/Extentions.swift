@@ -775,6 +775,18 @@ class DateFormatterHelper {
         return outputTimeFormatter.string(from: date)
     }
 }
+func isDueDatePassed(dueDate: String) -> Bool {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd-MM-yyyy"
+    guard let dueDateObject = dateFormatter.date(from: dueDate) else {
+        print("Invalid date format")
+        return false
+    }
+    let currentDate = Calendar.current.startOfDay(for: Date())
+    
+    // Compare dueDate with currentDate
+    return dueDateObject < currentDate
+}
 func extractVimeoID(from url: String) -> String? {
     let pattern = #"(\d+)$"#
     

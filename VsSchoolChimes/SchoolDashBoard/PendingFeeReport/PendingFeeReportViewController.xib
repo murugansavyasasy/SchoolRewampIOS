@@ -18,7 +18,9 @@
                 <outlet property="acodomicYearLbl" destination="NxE-Ql-BCN" id="5wF-0z-szy"/>
                 <outlet property="noRecordsView" destination="Gtt-gc-der" id="rr3-3S-LnP"/>
                 <outlet property="nodataLbl" destination="KYc-Ym-UI5" id="Dzy-EZ-lSy"/>
+                <outlet property="pendingStack" destination="EH8-w9-4RR" id="s3i-R8-LOP"/>
                 <outlet property="switchReport" destination="Yhr-jh-2MZ" id="xAE-A8-SPS"/>
+                <outlet property="titleStack" destination="mAw-7K-Uan" id="i2W-1i-g9M"/>
                 <outlet property="totalfeeLbl" destination="0Sj-3D-WNp" id="BsZ-C0-E5a"/>
                 <outlet property="tv" destination="nId-F7-oOb" id="Qgt-dS-W3I"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -125,9 +127,8 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nId-F7-oOb">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nId-F7-oOb">
                             <rect key="frame" x="0.0" y="220" width="393" height="494"/>
-                            <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EH8-w9-4RR">
                             <rect key="frame" x="16" y="125" width="361" height="60"/>

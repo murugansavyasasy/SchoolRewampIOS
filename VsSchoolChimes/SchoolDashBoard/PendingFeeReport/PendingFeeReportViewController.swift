@@ -10,6 +10,8 @@ import DropDown
 @available(iOS 15.0, *)
 class PendingFeeReportViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var pendingStack: UIStackView!
+    @IBOutlet weak var titleStack: UIStackView!
     @IBOutlet weak var totalfeeLbl: UILabel!
     @IBOutlet weak var switchReport: UISegmentedControl!
     @IBOutlet weak var BackBtn: UIButton!
@@ -53,6 +55,8 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
         tv.delegate = self
         tv.dataSource = self
+        tv.estimatedRowHeight = 100
+        tv.rowHeight = UITableView.automaticDimension
 
         getacadmicYr()
     }
@@ -74,21 +78,18 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         ) { [self] (result: Result<get_academic_yearSuc, Error>) in
             switch result {
             case .success(let response):
-                if response.status == true {
-                    DispatchQueue.main.async { [self] in
-                        AcadimicYearDatas = response.data ?? []
-                        nodata(true)
-                        for year in AcadimicYearDatas where year.current_academic_year == true {
-                            acodomicYearLbl.text = year.year
-                            academicId = year.id
-                            getPendingReportAPI(academicId ?? 0)
-                        }
+                DispatchQueue.main.async { [self] in
+                    AcadimicYearDatas = response.data ?? []
+                    nodata(true)
+                    for year in AcadimicYearDatas where year.current_academic_year == true {
+                        acodomicYearLbl.text = year.year
+                        academicId = year.id
+                        getPendingReportAPI(academicId ?? 0)
                     }
-                } else {
-                    nodata(false)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                nodata(false)
             }
         }
     }
@@ -103,64 +104,18 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
             switch result {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
-                    if response.status == true {
-                        PendingReports = response.data?.first?.pending_details
-                        totalfeeLbl.text = response.data?.first?.total_pending
-                        tv.reloadData()
-                        nodata(true)
-                    } else {
-                        PendingReports = [
-                            PendingDetail(
-                                category: "Transport",
-                                total: "₹1000.00",
-                                pending_data: [
-                                    FeeData(type_name: "Bus Fee", amount: "₹500.00"),
-                                    FeeData(type_name: "Van Fee", amount: "₹500.00")
-                                ]
-                            ),
-                            PendingDetail(
-                                category: "Hostel",
-                                total: "₹3000.00",
-                                pending_data: [
-                                    FeeData(type_name: "Room Rent", amount: "₹2000.00"),
-                                    FeeData(type_name: "Mess Fee", amount: "₹1000.00")
-                                ]
-                            ),
-                            PendingDetail(
-                                category: "Tuition",
-                                total: "₹12000.00",
-                                pending_data: [
-                                    FeeData(type_name: "Term 1", amount: "₹6000.00"),
-                                    FeeData(type_name: "Term 2", amount: "₹6000.00")
-                                ]
-                            ),
-                            PendingDetail(
-                                category: "Library",
-                                total: "₹300.00",
-                                pending_data: [
-                                    FeeData(type_name: "Late Fee", amount: "₹100.00"),
-                                    FeeData(type_name: "Book Damage", amount: "₹200.00")
-                                ]
-                            ),
-                            PendingDetail(
-                                category: "Lab",
-                                total: "₹500.00",
-                                pending_data: [
-                                    FeeData(type_name: "Science Lab", amount: "₹300.00"),
-                                    FeeData(type_name: "Computer Lab", amount: "₹200.00")
-                                ]
-                            )
-                        ]
-                        totalfeeLbl.text = ""
-                        tv.reloadData()
-                        nodata(true)
-                    }
+                    PendingReports = response.data?.first?.pending_details
+                    totalfeeLbl.text = response.data?.first?.total_pending
+                    nodata(!(response.data?.isEmpty ?? true))
+                    pendingStack.isHidden = response.data?.count == 0
+                    titleStack.isHidden = response.data?.count == 0
+                    tv.isHidden = response.data?.count == 0
+                    nodataLbl.text = response.message
+                    tv.reloadData()
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                    nodata(false)
-                }
+                print(error.localizedDescription)
+                nodata(false)
             }
         }
     }
@@ -175,24 +130,18 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
             switch result {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
-                    if response.status == true {
-                        PendingReports = response.data?.first?.pending_details
-                        totalfeeLbl.text = response.data?.first?.total_pending ?? ""
-                        
-                        tv.reloadData()
-                        nodata(true)
-                    } else {
-                        PendingReports = []
-                        totalfeeLbl.text = ""
-                        tv.reloadData()
-                        nodata(false)
-                    }
+                    PendingReports = response.data?.first?.pending_details
+                    totalfeeLbl.text = response.data?.first?.total_pending
+                    nodata(!(response.data?.isEmpty ?? true))
+                    pendingStack.isHidden = response.data?.count == 0
+                    titleStack.isHidden = response.data?.count == 0
+                    tv.isHidden = response.data?.count == 0
+                    nodataLbl.text = response.message
+                    tv.reloadData()
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                    nodata(false)
-                }
+                print(error.localizedDescription)
+                nodata(false)
             }
         }
     }
@@ -228,22 +177,21 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         dismiss(animated: true)
     }
 
+    // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PendingReports?.count ?? 0
     }
 
-   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FeePendingTVC", for: indexPath) as! FeePendingTVC
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.FeePendingTVC, for: indexPath) as! FeePendingTVC
         let data = PendingReports?[indexPath.row]
         cell.keyNameLbl.text = data?.category
         cell.valueLbl.text = data?.total
         cell.pendingFee = true
         cell.configure(with: data?.pending_data ?? [])
-        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
-        tv.layoutIfNeeded()
         return cell
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -251,9 +199,4 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return 80
-    }
-
 }

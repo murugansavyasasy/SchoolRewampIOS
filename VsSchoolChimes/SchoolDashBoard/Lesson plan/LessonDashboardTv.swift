@@ -18,6 +18,8 @@ class LessonDashboardTv: UITableViewCell {
     @IBOutlet weak var StaffNameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var SubjectLbl: UILabel!
+    @IBOutlet weak var CompletedItemsLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -46,6 +48,7 @@ class LessonDashboardTv: UITableViewCell {
         SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         StaffNameLbl.setFont(style: .body, size: FontSize.BodySize)
+        CompletedItemsLbl.setFont(style: .body, size: FontSize.BodySize)
 
     }
 

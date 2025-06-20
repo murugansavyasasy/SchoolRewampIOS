@@ -123,6 +123,7 @@ class AlertstringFile{
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_sendHomeWork = "Are you sure you want to send this Home Work?".translated()
     static let are_yousure_youWant_to_sendAttachment = "Are you sure you want to send this Attachment?".translated()
+    static let deletemessage = "Are you sure you want to Delete?".translated()
     static let are_yousure_youWant_to_send_Notice = "Are you sure you want to send this Notice?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
@@ -142,6 +143,7 @@ class AlertstringFile{
     static let Enter_Otp = "Enter the otp".translated()
     static let OK = "Ok".translated()
     static let Yes_Send = "Yes,Send".translated()
+    static let delete = "Delete".translated()
     static let  enableRemindersAccess =  "Please enable reminders access in Settings.".translated()
     static let  PermissionDenied = "Permission Denied".translated()
     static let  Done = "Done".translated()
@@ -178,7 +180,8 @@ class AlertstringFile{
     static let Are_you_sure_you_want_to_submit_leave_request = "Are you sure you want to submit this leave request?".translated()
     static let Enter_reason = "Please Enter the reason".translated()
     static let Failed = "Failed".translated()
-   
+    static let Are_you_sure_you_want_to_Edit_Lesson = "Are you sure you want to Edit this Lesson Plan?".translated()
+    static let Are_you_sure_you_want_to_Delete_Lesson = "Are you sure you want to Delete this Lesson Plan?".translated()
     
     
 }
