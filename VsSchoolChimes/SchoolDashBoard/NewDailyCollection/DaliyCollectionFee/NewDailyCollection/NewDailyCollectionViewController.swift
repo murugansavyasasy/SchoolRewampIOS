@@ -2,9 +2,9 @@
 import UIKit
 import DropDown
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
-   
+    
     func date(date: String) {
         if dateSelection == true{
             fromLbl.text = date
@@ -15,6 +15,10 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         }
     }
     
+    @IBOutlet weak var norecordImg: UIImageView!
+    @IBOutlet weak var titleStack: UIStackView!
+    @IBOutlet weak var totalCollectionLblTitle: UILabel!
+    @IBOutlet weak var totalCollectionView: UIView!
     @IBOutlet weak var totalAmountLbl: UILabel!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var Backbtn: UIButton!
@@ -40,8 +44,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     var type : Int!
     var DropDownStr : [String] = []
     var dateSelection = false
-    var DailyCollectionData: [DailyCollectionData]?
-    
+    private var gradientLayer: CAGradientLayer?
+    var dailyCollectionData: [DailyCollectionData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: calendarView,cornerRadius: 6)
@@ -56,21 +60,15 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         currentdate = formattedDateTime
         fromLbl.text = formattedDateTime
         todateLbl.text = formattedDateTime
-        
-        tv.dataSource = self
-        tv.delegate = self
-        tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
-        tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
-        tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-        
+        tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
         let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
         calendarView.addGestureRecognizer(fromdateTap)
         
         let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
         TodateView.addGestureRecognizer(todateTap)
-        
+        tv.dataSource = self
+        tv.delegate = self
         daily_collectionApi(type: "1")
-        
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -78,6 +76,13 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        totalCollectionView.layer.cornerRadius = 16
+        totalCollectionView.layer.masksToBounds = false
+        totalCollectionView.layer.shadowColor = UIColor.black.cgColor
+        totalCollectionView.layer.shadowOpacity = 0.1
+        totalCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        totalCollectionView.layer.shadowRadius = 8
+        
     }
     
     
@@ -114,66 +119,28 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dismiss(animated: true)
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-         return DailyCollectionData?.count ?? 0
-     }
-
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         let feeCount = DailyCollectionData?[section].fee_data?.count ?? 0
-         if section == (DailyCollectionData?.count ?? 0) - 1, DailyCollectionData?[section].total_collection != nil {
-             return feeCount + 1 // Add one for Total Collection
-         }
-         return feeCount
-     }
-
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let sectionData = DailyCollectionData?[indexPath.section]
-         let feeData = sectionData?.fee_data ?? []
-
-         if indexPath.section == (DailyCollectionData?.count ?? 0) - 1,
-            indexPath.row == feeData.count,
-            let total = sectionData?.total_collection {
-
-             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as! PendingFeeReportTableViewCell
-             cell.classLbl.isHidden = true
-             cell.amountLbl.isHidden = true
-            
-             return cell
-         }
-
-         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as! PendingFeeReportTableViewCell
-         cell.classLbl.isHidden = false
-         cell.amountLbl.textColor = .black
-         cell.amountLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-         cell.classLbl.text = feeData[indexPath.row].type_name
-         cell.amountLbl.text = feeData[indexPath.row].amount
-         return cell
-     }
-
-     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-         if DailyCollectionData?[section].category == nil,
-            DailyCollectionData?[section].fee_data == nil,
-            DailyCollectionData?[section].total_collection != nil {
-             return nil
-         }
-
-         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.DataCollectionTvHeaderView) as! DataCollectionTvHeaderView
-         headerView.classLbl.text = DailyCollectionData?[section].category
-         headerView.amountLbl.text = DailyCollectionData?[section].total
-         return headerView
-     }
-
-     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-         if DailyCollectionData?[section].category == nil {
-             return .leastNormalMagnitude // hides header completely
-         }
-         return UITableView.automaticDimension
-     }
-
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-         return UITableView.automaticDimension
-     }
-
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dailyCollectionData.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.FeePendingTVC, for: indexPath) as! FeePendingTVC
+        
+        let data = dailyCollectionData[indexPath.row]
+        cell.keyNameLbl.text = data.category
+        cell.valueLbl.text = data.total
+        cell.configure(with: data.fee_data ?? [])
+        
+//        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
     func daily_collectionApi(type:String){
         
@@ -192,27 +159,18 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
             ) in
                 switch result {
                 case .success(let successMessage):
-                    if successMessage.status == true{
-                        DispatchQueue.main.async { [self] in
-                            tv.isHidden = false
-                            norecordLbl.isHidden = true
-                            DailyCollectionData = successMessage.data ?? []
-                            for  i in 0..<(DailyCollectionData?.count ?? 0){
-                                totalAmountLbl.text = "Total Collection : \(DailyCollectionData?[i].total_collection ?? "")"
-                            }
-                           
-                            tv.reloadData()
-                        }
-                    }else{
-                        DispatchQueue.main.async { [self] in
-                            totalAmountLbl.text = ""
-                            tv.isHidden = true
-                            norecordLbl.isHidden = false
-                            norecordLbl.text = successMessage.message
-                            DailyCollectionData = successMessage.data ?? []
-                            tv.reloadData()
-                        }
-                       
+                    DispatchQueue.main.async { [self] in
+                        tv.isHidden = false
+                        
+                        dailyCollectionData = successMessage.data?.first?.collections ?? []
+                        totalAmountLbl.text = successMessage.data?.first?.total_collection
+                        totalCollectionLblTitle.isHidden = successMessage.data?.count == 0
+                        titleStack.isHidden = successMessage.data?.count == 0
+                        tv.isHidden = successMessage.data?.count == 0
+                        tv.reloadData()
+                        norecordLbl.isHidden = successMessage.data?.count != 0
+                        norecordLbl.text = successMessage.message
+                        norecordImg.isHidden = successMessage.data?.count != 0
                     }
                 case .failure(let error):
                     DispatchQueue.main.async { [self] in
@@ -234,16 +192,16 @@ import UIKit
 extension UIButton {
     func configureAsBackButton(firstLine: String, secondLine: String) {
         let fullTitle = "\(firstLine)\n\(secondLine)"
-
+        
         // Set the back arrow image
         let image = UIImage(systemName: "chevron.left")
         self.setImage(image, for: .normal)
-
+        
         // Configure paragraph style
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         paragraphStyle.lineSpacing = 3
-
+        
         // Create attributed title
         let attributedTitle = NSMutableAttributedString(
             string: fullTitle,
@@ -253,7 +211,7 @@ extension UIButton {
                 .paragraphStyle: paragraphStyle
             ]
         )
-
+        
         // Apply style to second line
         let secondLineRange = (fullTitle as NSString).range(of: secondLine)
         if secondLineRange.location != NSNotFound {
@@ -262,15 +220,15 @@ extension UIButton {
                 .foregroundColor: UIColor.black.withAlphaComponent(0.6)
             ], range: secondLineRange)
         }
-
+        
         // Configure title label
         self.titleLabel?.numberOfLines = 3
         self.titleLabel?.lineBreakMode = .byWordWrapping
         self.titleLabel?.textAlignment = .left
-
+        
         // Apply attributed title
         self.setAttributedTitle(attributedTitle, for: .normal)
-
+        
         // Adjust content and insets
         self.contentHorizontalAlignment = .left
         self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)

@@ -207,7 +207,7 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
             
             if let urls =  notice?.file_path, urls.count != 0{
                 cell.collectionview.isHidden = false
-                cell.CollectionViewHeight.constant = 130
+                cell.CollectionViewHeight.constant = 110
                 cell.loadImage(urls: urls)
             }else {
                 cell.CollectionViewHeight.constant = 0

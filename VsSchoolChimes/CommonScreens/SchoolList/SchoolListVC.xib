@@ -22,10 +22,9 @@
                 <outlet property="listTable" destination="d71-Gb-zpY" id="rVe-S1-jO7"/>
                 <outlet property="noRecordLbl" destination="MKy-uY-QCB" id="k5D-CY-3tT"/>
                 <outlet property="norecordImg" destination="woy-gr-GnA" id="iO3-Nv-dlX"/>
-                <outlet property="radioBtnStack" destination="4a1-3g-NDD" id="w3H-LI-3Tp"/>
+                <outlet property="radioBtnStack" destination="4a1-3g-NDD" id="d3Z-m3-8n2"/>
                 <outlet property="segmentName" destination="vG8-IU-045" id="eLO-uS-8tH"/>
                 <outlet property="sendBtnName" destination="hIj-m3-g5V" id="JJ4-O7-X6t"/>
-                <outlet property="sendOnlyLbl" destination="HXu-ur-crR" id="I4F-9P-m0e"/>
                 <outlet property="staffBtnName" destination="32H-46-wPI" id="BGB-r7-z04"/>
                 <outlet property="studentBtnName" destination="ikQ-gm-zxe" id="K0y-Ho-bGP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -104,6 +103,53 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Qt-z4x">
                                             <rect key="frame" x="10" y="68" width="373" height="38"/>
                                             <subviews>
+                                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4a1-3g-NDD">
+                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="0.0"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Target :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSb-O9-Yjv">
+                                                            <rect key="frame" x="0.0" y="0.0" width="93.333333333333329" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PV0-F8-PqL">
+                                                            <rect key="frame" x="93.333333333333343" y="0.0" width="93.333333333333343" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" title="All">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <imageReference key="image" image="circle.inset.filled" catalog="system" symbolScale="medium"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="radioButtonTapped:" destination="-1" eventType="touchUpInside" id="6dw-AL-bk7"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32H-46-wPI">
+                                                            <rect key="frame" x="186.66666666666666" y="0.0" width="92.999999999999972" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" title="Staff">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <imageReference key="image" image="circle" catalog="system" symbolScale="medium"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="radioButtonTapped:" destination="-1" eventType="touchUpInside" id="bTt-dK-Za5"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikQ-gm-zxe">
+                                                            <rect key="frame" x="279.66666666666669" y="0.0" width="93.333333333333314" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" title="Student">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <imageReference key="image" image="checkmark.square.fill" catalog="system" symbolScale="medium"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="radioButtonTapped:" destination="-1" eventType="touchUpInside" id="eTI-1u-s4g"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vG8-IU-045">
                                                     <rect key="frame" x="0.0" y="0.0" width="373" height="39"/>
                                                     <constraints>
@@ -132,7 +178,7 @@
                                             </subviews>
                                         </stackView>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="d71-Gb-zpY">
-                                            <rect key="frame" x="10" y="121" width="373" height="481"/>
+                                            <rect key="frame" x="10" y="116" width="373" height="486"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <outlet property="dataSource" destination="-1" id="sbl-9r-91f"/>
@@ -143,54 +189,13 @@
                                             <rect key="frame" x="10" y="617" width="373" height="0.0"/>
                                             <subviews>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send only :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXu-ur-crR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="305" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="96" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="4a1-3g-NDD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="305" height="0.0"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PV0-F8-PqL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="67" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="All" image="circle.inset.filled" catalog="system"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="circle.inset.filled" catalog="system" title="All">
-                                                                <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="14"/>
-                                                            </buttonConfiguration>
-                                                            <connections>
-                                                                <action selector="radioButtonTapped:" destination="-1" eventType="touchUpInside" id="6dw-AL-bk7"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32H-46-wPI">
-                                                            <rect key="frame" x="94.666666666666686" y="0.0" width="81" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="Staff" image="circle" catalog="system"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system" title="Staff">
-                                                                <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="13"/>
-                                                            </buttonConfiguration>
-                                                            <connections>
-                                                                <action selector="radioButtonTapped:" destination="-1" eventType="touchUpInside" id="bTt-dK-Za5"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikQ-gm-zxe">
-                                                            <rect key="frame" x="203.33333333333334" y="0.0" width="101.66666666666666" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="Student" image="checkmark.square.fill" catalog="system"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="checkmark.square.fill" catalog="system" title="Student">
-                                                                <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="14"/>
-                                                            </buttonConfiguration>
-                                                            <connections>
-                                                                <action selector="radioButtonTapped:" destination="-1" eventType="touchUpInside" id="eTI-1u-s4g"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </stackView>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIj-m3-g5V">
-                                                    <rect key="frame" x="0.0" y="0.0" width="305" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="96" height="0.0"/>
                                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send" imagePadding="6">
@@ -208,9 +213,9 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="RfC-Rf-wJJ" firstAttribute="top" secondItem="AAz-3S-lmC" secondAttribute="top" constant="15" id="1dg-KP-UXD"/>
+                                        <constraint firstItem="d71-Gb-zpY" firstAttribute="top" secondItem="uN1-Qt-z4x" secondAttribute="bottom" constant="10" id="453-e1-7mf"/>
                                         <constraint firstAttribute="trailing" secondItem="RfC-Rf-wJJ" secondAttribute="trailing" constant="15" id="648-9T-TWu"/>
                                         <constraint firstItem="98w-Tf-Ld0" firstAttribute="top" secondItem="d71-Gb-zpY" secondAttribute="bottom" constant="15" id="7AC-Se-J8a"/>
-                                        <constraint firstItem="d71-Gb-zpY" firstAttribute="top" secondItem="uN1-Qt-z4x" secondAttribute="bottom" constant="15" id="9Wc-zE-KbU"/>
                                         <constraint firstItem="uN1-Qt-z4x" firstAttribute="leading" secondItem="AAz-3S-lmC" secondAttribute="leading" constant="10" id="CVu-IQ-jii"/>
                                         <constraint firstItem="RfC-Rf-wJJ" firstAttribute="leading" secondItem="AAz-3S-lmC" secondAttribute="leading" constant="14" id="M1c-60-qqm"/>
                                         <constraint firstItem="uN1-Qt-z4x" firstAttribute="top" secondItem="RfC-Rf-wJJ" secondAttribute="bottom" constant="15" id="Qpk-aW-lY9"/>

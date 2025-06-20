@@ -498,26 +498,35 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                 DispatchQueue.main.async { [self] in
                     if successMessage.status == true{
                         
-                        StandardData = successMessage.data
-                        StandardData?.enumerated().forEach { index, standard in
-                            StandardList.append(standard.name ?? "")
-                        }
-                        
-                        StandardId = StandardData?.first?.id ?? ""
-                        
-                        if let sections = StandardData?.first?.sections{
-                            SectionData = sections
-                            for j in 0..<sections.count {
-                                SectionList.append(SectionData?[j].name ?? "")
+                    
+                            StandardData = successMessage.data
+                            StandardData?.enumerated().forEach { index, standard in
+                                StandardList.append(standard.name ?? "")
                             }
-                        }
-                        sectionId = StandardData?.first?.sections?.first?.id ?? ""
-                       
-                        standardLbl.text = StandardData?.first?.name
-                        sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
-                        student_attendance_report()
+                            
+                            StandardId = StandardData?.first?.id ?? ""
+                            
+                            if let sections = StandardData?.first?.sections{
+                                SectionData = sections
+                                for j in 0..<sections.count {
+                                    SectionList.append(SectionData?[j].name ?? "")
+                                }
+                            }
+                            sectionId = StandardData?.first?.sections?.first?.id ?? ""
+                            
+                            standardLbl.text = StandardData?.first?.name
+                            sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
+                            student_attendance_report()
                         
                     }else{
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Alert_title,
+                                message: successMessage.message ?? "",
+                                on: self
+                            ) {
+                                self.dismiss(animated: true)
+                            }
                         sectionId = ""
                         StandardId = ""
                     }

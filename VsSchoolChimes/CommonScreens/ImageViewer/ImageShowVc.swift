@@ -121,6 +121,7 @@ class ImageShowVc: UIViewController{
             default:
                 if let pdfURL = URL(string: pdfUrl ?? "") {
                     let request = URLRequest(url: pdfURL)
+                    ActivityIndicator.startAnimating()
                     pdfView.load(request)
                     dowloadUrl = pdfUrl
                 } else {

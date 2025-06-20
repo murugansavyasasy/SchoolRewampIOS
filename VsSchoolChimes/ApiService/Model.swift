@@ -523,14 +523,16 @@ struct GeometricLocation:Codable{
 struct DailyCollectionResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [DailyCollectionData]?
+    let data: [CollectionReportData]?
 }
-
+struct CollectionReportData: Codable {
+    let collections: [DailyCollectionData]?
+    let total_collection: String?
+}
 struct DailyCollectionData: Codable {
     let category: String?
     let total: String?
     let fee_data: [FeeData]?
-    let total_collection: String?
 }
 
 struct FeeData: Codable {
@@ -592,22 +594,23 @@ struct EventList: Codable {
 }
 
 struct PendingReportsResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [PendingReportData]
+    let status: Bool?
+    let message: String?
+    let data: [PendingReportData]?
 }
 
 struct PendingReportData: Codable {
-    let category: String?
-    let total: String?
-    let pending_data: [PendingFeeData]?
+    let pending_details: [PendingDetail]?
     let total_pending: String?
 }
 
-struct PendingFeeData: Codable {
-    let type_name: String
-    let amount: String
+struct PendingDetail: Codable {
+    let category: String?
+    let total: String?
+    let pending_data: [FeeData]?
 }
+
+
 struct StudentReportResponse: Codable {
     let status: Bool
     let message: String
@@ -658,6 +661,9 @@ struct SchoolStrengthResponse: Codable {
 struct SchoolStrength: Codable {
     let total_student_strength: String?
     let total_staff_strength: String?
+    let total_boys_strength: String?
+    let total_girls_strength: String?
+    let total_others_strength: String?
     let standards: [Standard]?
 }
 
@@ -801,9 +807,9 @@ struct SubmissionResponse: Codable {
 
 struct Submission: Codable {
     let id: String
-    let content: [FilePath]
     let description: String
     let submitted_on: String
+    let file_path: [FilePath]
 }
 
 //MARK: Lesson Plan
@@ -860,3 +866,50 @@ struct LessonEditData: Codable {
 }
 
 
+// MARK: - Assignment List Response
+
+struct AssignmentReportResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [Report]?
+}
+
+struct Report: Codable {
+    let id: String?
+    let title: String?
+    let description: String?
+    let category: String?
+    let subject: String?
+    let created_date: String?
+    let created_time: String?
+    let submitted_count: Int?
+    let total_count: Int?
+    let end_date: String?
+    let file_path: [FilePath]?
+}
+// MARK: - Student Submission Report
+
+struct StudentSubmissionResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentSubmission]?
+}
+
+struct StudentSubmission: Codable {
+    let student_id: String?
+    let student_name: String?
+    let standard: String?
+    let section: String?
+    let submit_status: String?
+    let is_archive: Bool?
+    let submissions_details: [SubmissionDetail]?
+}
+
+struct SubmissionDetail: Codable {
+    let id: String?
+    let description: String?
+    let submitted_on: String?
+    let iframe: String?
+    let file_size: String?
+    let file_path: [FilePath]?
+}

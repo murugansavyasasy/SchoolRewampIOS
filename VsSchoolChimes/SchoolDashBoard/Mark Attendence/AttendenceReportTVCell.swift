@@ -17,18 +17,14 @@ class AttendenceReportTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cellView.layer.borderWidth = 0.5
-        cellView.layer.borderColor = UIColor.lightGray.cgColor
-        cellView.layer.backgroundColor = UIColor.white.cgColor
-        cellView.layer.cornerRadius = 10
+       
+        cellView.layer.cornerRadius = 5
         cellView.layer.masksToBounds = true
-        
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.5
-        contentView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        contentView.layer.shadowRadius = 5
-        contentView.layer.cornerRadius = 10
-        
+        cellView.layer.shadowColor = UIColor.black.cgColor
+        cellView.layer.shadowOpacity = 0.5
+        cellView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        cellView.layer.shadowRadius = 5
+        cellView.layer.masksToBounds = false
         // Style the status view
         statusView.layer.cornerRadius = 15 // Adjust the radius as needed
         statusView.layer.maskedCorners = [.layerMinXMinYCorner]

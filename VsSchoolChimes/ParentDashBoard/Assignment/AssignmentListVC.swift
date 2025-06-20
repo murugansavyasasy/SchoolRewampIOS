@@ -4,6 +4,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     func sumition(index: Int) {
         if #available(iOS 14.0, *) {
             let vc = SubmitVC(nibName: nil, bundle: nil)
+            vc.id = filteredData?[index].header_id
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: false)
         }
@@ -23,9 +24,11 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     var filteredData :[Assignment]?
     var shouldShowFooter = true
     var tapGesture: UITapGestureRecognizer?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
@@ -102,21 +105,9 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     func register(){
         listTable.register(UINib(nibName: CellConfingName.AssignmentListCTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AssignmentListCTVC)
     }
-    func isDueDatePassed(dueDate: String) -> Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        guard let dueDateObject = dateFormatter.date(from: dueDate) else {
-            print("Invalid date format")
-            return false
-        }
-        let currentDate = Calendar.current.startOfDay(for: Date())
-        
-        // Compare dueDate with currentDate
-        return dueDateObject < currentDate
-    }
+    
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        // Automatically show the keyboard when search bar is clicked
         searchBar.becomeFirstResponder()
     }
     
@@ -137,6 +128,8 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.dueDateLbl.textColor = .red
         }
+        cell.id = filteredData?[indexPath.row].header_id
+        cell.assignmentId = filteredData?[indexPath.row].id
         cell.FilesUrl = filteredData?[indexPath.row].file_path
         cell.dueDateLbl.text = filteredData?[indexPath.row].end_date
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
@@ -160,19 +153,40 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         didSelectDelegate?.select(index: index, value: value,Img:Img,Pdf:Pdf,text:text,type:type)
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
+        guard let data = data else { return }
+
+        let lowercasedQuery = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+
+        if lowercasedQuery.isEmpty {
             filteredData = data
         } else {
-            filteredData = data?.filter {
-                ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
-                ($0.subject?.lowercased().contains(searchText.lowercased()) ?? false) ||
-                ($0.end_date?.lowercased().contains(searchText.lowercased()) ?? false) ||
-                ($0.sent_by?.lowercased().contains(searchText.lowercased()) ?? false) ||
-                ("\($0.submitted_count ?? 0)".contains(searchText))
+            filteredData = data.filter { item in
+                let title = item.title?.lowercased() ?? ""
+                let subject = item.subject?.lowercased() ?? ""
+                let endDate = item.end_date?.lowercased() ?? ""
+                let sentBy = item.sent_by?.lowercased() ?? ""
+                let category = item.category?.lowercased() ?? ""
+                let submittedCount = "\(item.submitted_count ?? 0)"
+
+                return title.contains(lowercasedQuery) ||
+                       subject.contains(lowercasedQuery) ||
+                       endDate.contains(lowercasedQuery) ||
+                       sentBy.contains(lowercasedQuery) ||
+                       category.contains(lowercasedQuery) ||
+                       submittedCount.contains(lowercasedQuery)
             }
         }
+
+        // Update No Data UI
+        let isEmpty = filteredData?.isEmpty ?? true
+        nodataLbl.isHidden = !isEmpty
+        nodataLbl.text = isEmpty ? "No Records Found" : ""
+        noRecordImg.isHidden = !isEmpty
+
         listTable.reloadData()
     }
+
+
 
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

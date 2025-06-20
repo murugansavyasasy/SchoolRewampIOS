@@ -37,7 +37,6 @@ class SenderHomeWorkVC: UIViewController {
     let acidamicdrops = DropDown()
     let formatter = DateFormatter()
     let customdate = DateFormatter()
-    
     var homeWorkList: [Homework]?
     var FilterHomeWorkList: [Homework]?
     var AcadimicYearDatas: [AcadimicYearData] = []
@@ -47,11 +46,9 @@ class SenderHomeWorkVC: UIViewController {
     var sectionList = [String]()
     var standerdList = [String]()
     var selectedImgUrl: [FilePath] = []
-    
     var acodemicId: Int?
     var sectionId: String?
     var selectNotice: SelectNotice?
-
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
 
@@ -64,12 +61,7 @@ class SenderHomeWorkVC: UIViewController {
         getAcademicYearList()
         searchBar.delegate = self
     }
-
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        homeWorkTable.reloadData()
-//    }
-    
+ 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // clear caches or large objects
@@ -338,6 +330,7 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
             cell.titleLbl.text = data.title
             cell.subjectName.text = data.subject_name
             cell.forwardBtn.isHidden = false
+            cell.layoutIfNeeded()
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
