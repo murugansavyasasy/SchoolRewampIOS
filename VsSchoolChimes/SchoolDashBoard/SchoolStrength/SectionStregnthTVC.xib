@@ -5,97 +5,57 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SectionStregnthTVC" customModule="School_Chimes" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="148" id="KGk-i7-Jjw" customClass="SectionStregnthTVC" customModule="School_Chimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SectionStregnthTVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="416" height="189"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="148"/>
+                <rect key="frame" x="0.0" y="0.0" width="416" height="189"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQc-f0-Zv1">
-                        <rect key="frame" x="5" y="5" width="404" height="138"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9F-fc-rK8">
+                        <rect key="frame" x="10" y="10" width="396" height="169"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UpX-tf-h6D">
-                                <rect key="frame" x="244" y="31.333333333333336" width="150" height="35.000000000000007"/>
-                                <color key="backgroundColor" red="0.80570340100000004" green="0.8396113369" blue="0.86990004779999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQc-f0-Zv1" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="5" y="5" width="386" height="159"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="4X6-aA-4Lr"/>
-                                    <constraint firstAttribute="height" constant="35" id="Oei-Lz-nfS"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="min-height-constraint"/>
                                 </constraints>
-                                <color key="tintColor" systemColor="viewFlipsideBackgroundColor"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="165566 students"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IX - A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvM-Wg-7mg">
-                                <rect key="frame" x="10" y="10" width="224" height="77.666666666666671"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="1Fl-cQ-1ci">
-                                <rect key="frame" x="10" y="107.66666666666667" width="384" height="20.333333333333329"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="👦 Boys :  8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57K-g4-mAt">
-                                        <rect key="frame" x="0.0" y="0.0" width="146" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="👧 Girls: 7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMg-4b-TeY">
-                                        <rect key="frame" x="146" y="0.0" width="126" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Others: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlx-9U-d9Q">
-                                        <rect key="frame" x="272" y="0.0" width="112" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.1803921568627451" green="0.066666666666666666" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="UpX-tf-h6D" firstAttribute="centerY" secondItem="qvM-Wg-7mg" secondAttribute="centerY" id="36m-3M-XUg"/>
-                            <constraint firstAttribute="trailing" secondItem="UpX-tf-h6D" secondAttribute="trailing" constant="10" id="4in-TC-NwE"/>
-                            <constraint firstItem="1Fl-cQ-1ci" firstAttribute="leading" secondItem="XQc-f0-Zv1" secondAttribute="leading" constant="10" id="TjN-wc-YdE"/>
-                            <constraint firstItem="qvM-Wg-7mg" firstAttribute="top" secondItem="XQc-f0-Zv1" secondAttribute="top" constant="10" id="UWJ-Yh-qVr"/>
-                            <constraint firstItem="1Fl-cQ-1ci" firstAttribute="top" secondItem="qvM-Wg-7mg" secondAttribute="bottom" constant="20" id="XmA-G9-fzA"/>
-                            <constraint firstItem="qvM-Wg-7mg" firstAttribute="leading" secondItem="XQc-f0-Zv1" secondAttribute="leading" constant="10" id="aTi-Qo-zFh"/>
-                            <constraint firstAttribute="bottom" secondItem="1Fl-cQ-1ci" secondAttribute="bottom" constant="10" id="c7w-Hl-Q6o"/>
-                            <constraint firstAttribute="trailing" secondItem="1Fl-cQ-1ci" secondAttribute="trailing" constant="10" id="efi-bZ-2vw"/>
-                            <constraint firstItem="UpX-tf-h6D" firstAttribute="leading" secondItem="qvM-Wg-7mg" secondAttribute="trailing" constant="10" id="fUz-t5-1kl"/>
+                            <constraint firstAttribute="trailing" secondItem="XQc-f0-Zv1" secondAttribute="trailing" constant="5" id="6y2-Wz-xfT"/>
+                            <constraint firstItem="XQc-f0-Zv1" firstAttribute="leading" secondItem="d9F-fc-rK8" secondAttribute="leading" constant="5" id="FBe-mX-Toj"/>
+                            <constraint firstAttribute="bottom" secondItem="XQc-f0-Zv1" secondAttribute="bottom" constant="5" id="cHO-fs-aKO"/>
+                            <constraint firstItem="XQc-f0-Zv1" firstAttribute="top" secondItem="d9F-fc-rK8" secondAttribute="top" constant="5" id="jzI-VM-Eyt"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="XQc-f0-Zv1" secondAttribute="trailing" constant="5" id="1YP-5h-0Ng"/>
-                    <constraint firstItem="XQc-f0-Zv1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="UnG-VR-mSC"/>
-                    <constraint firstItem="XQc-f0-Zv1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="Vaj-eQ-lxE"/>
-                    <constraint firstAttribute="bottom" secondItem="XQc-f0-Zv1" secondAttribute="bottom" constant="5" id="fAz-N4-Rpl"/>
+                    <constraint firstAttribute="bottom" secondItem="d9F-fc-rK8" secondAttribute="bottom" constant="10" id="HNY-JN-YZ0"/>
+                    <constraint firstItem="d9F-fc-rK8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="TYe-f2-aHO"/>
+                    <constraint firstAttribute="trailing" secondItem="d9F-fc-rK8" secondAttribute="trailing" constant="10" id="kSe-fW-ZnY"/>
+                    <constraint firstItem="d9F-fc-rK8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qNW-Ke-odd"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="boysCountLbl" destination="57K-g4-mAt" id="Hp0-eB-Wgv"/>
-                <outlet property="girlsCountLbl" destination="yMg-4b-TeY" id="NXF-YU-C8u"/>
-                <outlet property="otersCountLbl" destination="vlx-9U-d9Q" id="tPW-MX-4Df"/>
-                <outlet property="standardName" destination="qvM-Wg-7mg" id="FAL-kG-5EW"/>
-                <outlet property="studentCount" destination="UpX-tf-h6D" id="Z62-d4-Xw9"/>
+                <outlet property="outerView" destination="d9F-fc-rK8" id="eq0-uI-TZP"/>
+                <outlet property="pieChartView" destination="XQc-f0-Zv1" id="iWg-xd-P1M"/>
             </connections>
-            <point key="canvasLocation" x="73.282442748091597" y="56.338028169014088"/>
+            <point key="canvasLocation" x="74.809160305343511" y="70.070422535211264"/>
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="viewFlipsideBackgroundColor">
-            <color red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
