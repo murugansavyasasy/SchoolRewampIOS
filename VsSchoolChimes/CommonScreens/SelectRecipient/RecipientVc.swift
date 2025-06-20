@@ -292,7 +292,12 @@ class RecipientVc: UIViewController{
                     message: response.message,
                     on: self
                 ) { [self] in
-                    gotoDashboard()
+                    
+                    Common_request_params.removeAll()
+                    if user_inputs.clearTempData(){
+                        gotoDashboard()
+                    }
+                    
                 }
             }
         }
@@ -1226,6 +1231,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
+                                    
+                                    
                                     gotoDashboard()
                                 }
                             

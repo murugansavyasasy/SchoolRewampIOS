@@ -201,14 +201,8 @@ class SchoolStrengthVC: UIViewController {
        }
 
        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-           let previousIndexPath = selectedIndexPath
            selectedIndexPath = (selectedIndexPath == indexPath) ? nil : indexPath
-
-           var indexPathsToReload = [indexPath]
-           if let previous = previousIndexPath, previous != indexPath {
-               indexPathsToReload.append(previous)
-           }
-           tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+           tableView.reloadData()
        }
 
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

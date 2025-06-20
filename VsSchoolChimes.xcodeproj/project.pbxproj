@@ -165,6 +165,43 @@
 		840F677A2D94128F00AC2F5A /* cell1Tv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840F67782D94128F00AC2F5A /* cell1Tv.xib */; };
 		840F677D2D9412B400AC2F5A /* cell2Tv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F677B2D9412B400AC2F5A /* cell2Tv.swift */; };
 		840F677E2D9412B400AC2F5A /* cell2Tv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840F677C2D9412B400AC2F5A /* cell2Tv.xib */; };
+		84127AC92E03C8F00092159D /* CVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA82E03C8F00092159D /* CVCell.swift */; };
+		84127ACA2E03C8F00092159D /* ActivateCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */; };
+		84127ACB2E03C8F00092159D /* AddCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA02E03C8F00092159D /* AddCoupenTVC.swift */; };
+		84127ACC2E03C8F00092159D /* CoupenCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AB92E03C8F00092159D /* CoupenCvCell.swift */; };
+		84127ACE2E03C8F00092159D /* CoupenDetailCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA42E03C8F00092159D /* CoupenDetailCVC.swift */; };
+		84127ACF2E03C8F00092159D /* AddSuccessTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA22E03C8F00092159D /* AddSuccessTVC.swift */; };
+		84127AD12E03C8F00092159D /* CooponViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AAF2E03C8F00092159D /* CooponViewVC.swift */; };
+		84127AD32E03C8F00092159D /* CustomTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AC52E03C8F00092159D /* CustomTabVC.swift */; };
+		84127AD42E03C8F00092159D /* ApplyCustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AB22E03C8F00092159D /* ApplyCustomFont.swift */; };
+		84127AD52E03C8F00092159D /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AAD2E03C8F00092159D /* BottomView.swift */; };
+		84127AD82E03C8F00092159D /* CaterogyCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AB72E03C8F00092159D /* CaterogyCvCell.swift */; };
+		84127AD92E03C8F00092159D /* HomePaucktVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127ABC2E03C8F00092159D /* HomePaucktVC.swift */; };
+		84127ADC2E03C8F00092159D /* CoupenDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA62E03C8F00092159D /* CoupenDetailTVC.swift */; };
+		84127ADD2E03C8F00092159D /* ExperiedDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AAA2E03C8F00092159D /* ExperiedDetailTVC.swift */; };
+		84127AE02E03C8F00092159D /* ReedimHistoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AC22E03C8F00092159D /* ReedimHistoryVc.swift */; };
+		84127AE42E03C8F00092159D /* ReedimHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127ABF2E03C8F00092159D /* ReedimHistoryCell.swift */; };
+		84127AE52E03C8F00092159D /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A972E03C8F00092159D /* TicketView.swift */; };
+		84127AE62E03C8F00092159D /* ClaimCouponVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A952E03C8F00092159D /* ClaimCouponVc.swift */; };
+		84127AE92E03C8F00092159D /* AddSuccessTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA32E03C8F00092159D /* AddSuccessTVC.xib */; };
+		84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB82E03C8F00092159D /* CaterogyCvCell.xib */; };
+		84127AEB2E03C8F00092159D /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB42E03C8F00092159D /* Gilroy-Regular.ttf */; };
+		84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC32E03C8F00092159D /* ReedimHistoryVc.xib */; };
+		84127AED2E03C8F00092159D /* Gilroy-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB52E03C8F00092159D /* Gilroy-SemiBold.ttf */; };
+		84127AEE2E03C8F00092159D /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AAE2E03C8F00092159D /* BottomView.xib */; };
+		84127AEF2E03C8F00092159D /* CoupenCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127ABA2E03C8F00092159D /* CoupenCvCell.xib */; };
+		84127AF02E03C8F00092159D /* ActivateCoupenTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127A9F2E03C8F00092159D /* ActivateCoupenTVC.xib */; };
+		84127AF12E03C8F00092159D /* CoupenDetailTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA72E03C8F00092159D /* CoupenDetailTVC.xib */; };
+		84127AF22E03C8F00092159D /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB32E03C8F00092159D /* Gilroy-Bold.ttf */; };
+		84127AF32E03C8F00092159D /* CustomTabVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC62E03C8F00092159D /* CustomTabVC.xib */; };
+		84127AF42E03C8F00092159D /* CoupenDetailCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA52E03C8F00092159D /* CoupenDetailCVC.xib */; };
+		84127AF52E03C8F00092159D /* AddCoupenTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA12E03C8F00092159D /* AddCoupenTVC.xib */; };
+		84127AF62E03C8F00092159D /* CVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA92E03C8F00092159D /* CVCell.xib */; };
+		84127AF72E03C8F00092159D /* ExperiedDetailTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AAB2E03C8F00092159D /* ExperiedDetailTVC.xib */; };
+		84127AF82E03C8F00092159D /* CooponViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB02E03C8F00092159D /* CooponViewVC.xib */; };
+		84127AF92E03C8F00092159D /* HomePaucktVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127ABD2E03C8F00092159D /* HomePaucktVC.xib */; };
+		84127AFA2E03C8F00092159D /* ClaimCouponVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127A962E03C8F00092159D /* ClaimCouponVc.xib */; };
+		84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC02E03C8F00092159D /* ReedimHistoryCell.xib */; };
 		841ACC8F2DA5076800326D52 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 841ACC9B2DA50C7A00326D52 /* Lottie */; };
 		8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8420316C2D390CED003C4076 /* TimetableVC.xib */; };
@@ -831,6 +868,43 @@
 		840F67782D94128F00AC2F5A /* cell1Tv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cell1Tv.xib; sourceTree = "<group>"; };
 		840F677B2D9412B400AC2F5A /* cell2Tv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cell2Tv.swift; sourceTree = "<group>"; };
 		840F677C2D9412B400AC2F5A /* cell2Tv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cell2Tv.xib; sourceTree = "<group>"; };
+		84127A952E03C8F00092159D /* ClaimCouponVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimCouponVc.swift; sourceTree = "<group>"; };
+		84127A962E03C8F00092159D /* ClaimCouponVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClaimCouponVc.xib; sourceTree = "<group>"; };
+		84127A972E03C8F00092159D /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
+		84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateCoupenTVC.swift; sourceTree = "<group>"; };
+		84127A9F2E03C8F00092159D /* ActivateCoupenTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivateCoupenTVC.xib; sourceTree = "<group>"; };
+		84127AA02E03C8F00092159D /* AddCoupenTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoupenTVC.swift; sourceTree = "<group>"; };
+		84127AA12E03C8F00092159D /* AddCoupenTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCoupenTVC.xib; sourceTree = "<group>"; };
+		84127AA22E03C8F00092159D /* AddSuccessTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSuccessTVC.swift; sourceTree = "<group>"; };
+		84127AA32E03C8F00092159D /* AddSuccessTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddSuccessTVC.xib; sourceTree = "<group>"; };
+		84127AA42E03C8F00092159D /* CoupenDetailCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupenDetailCVC.swift; sourceTree = "<group>"; };
+		84127AA52E03C8F00092159D /* CoupenDetailCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoupenDetailCVC.xib; sourceTree = "<group>"; };
+		84127AA62E03C8F00092159D /* CoupenDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupenDetailTVC.swift; sourceTree = "<group>"; };
+		84127AA72E03C8F00092159D /* CoupenDetailTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoupenDetailTVC.xib; sourceTree = "<group>"; };
+		84127AA82E03C8F00092159D /* CVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVCell.swift; sourceTree = "<group>"; };
+		84127AA92E03C8F00092159D /* CVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CVCell.xib; sourceTree = "<group>"; };
+		84127AAA2E03C8F00092159D /* ExperiedDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiedDetailTVC.swift; sourceTree = "<group>"; };
+		84127AAB2E03C8F00092159D /* ExperiedDetailTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExperiedDetailTVC.xib; sourceTree = "<group>"; };
+		84127AAD2E03C8F00092159D /* BottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
+		84127AAE2E03C8F00092159D /* BottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
+		84127AAF2E03C8F00092159D /* CooponViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooponViewVC.swift; sourceTree = "<group>"; };
+		84127AB02E03C8F00092159D /* CooponViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CooponViewVC.xib; sourceTree = "<group>"; };
+		84127AB22E03C8F00092159D /* ApplyCustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyCustomFont.swift; sourceTree = "<group>"; };
+		84127AB32E03C8F00092159D /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		84127AB42E03C8F00092159D /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		84127AB52E03C8F00092159D /* Gilroy-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBold.ttf"; sourceTree = "<group>"; };
+		84127AB72E03C8F00092159D /* CaterogyCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaterogyCvCell.swift; sourceTree = "<group>"; };
+		84127AB82E03C8F00092159D /* CaterogyCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CaterogyCvCell.xib; sourceTree = "<group>"; };
+		84127AB92E03C8F00092159D /* CoupenCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupenCvCell.swift; sourceTree = "<group>"; };
+		84127ABA2E03C8F00092159D /* CoupenCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoupenCvCell.xib; sourceTree = "<group>"; };
+		84127ABC2E03C8F00092159D /* HomePaucktVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePaucktVC.swift; sourceTree = "<group>"; };
+		84127ABD2E03C8F00092159D /* HomePaucktVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePaucktVC.xib; sourceTree = "<group>"; };
+		84127ABF2E03C8F00092159D /* ReedimHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedimHistoryCell.swift; sourceTree = "<group>"; };
+		84127AC02E03C8F00092159D /* ReedimHistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReedimHistoryCell.xib; sourceTree = "<group>"; };
+		84127AC22E03C8F00092159D /* ReedimHistoryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedimHistoryVc.swift; sourceTree = "<group>"; };
+		84127AC32E03C8F00092159D /* ReedimHistoryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReedimHistoryVc.xib; sourceTree = "<group>"; };
+		84127AC52E03C8F00092159D /* CustomTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabVC.swift; sourceTree = "<group>"; };
+		84127AC62E03C8F00092159D /* CustomTabVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabVC.xib; sourceTree = "<group>"; };
 		841ACC8E2DA5076800326D52 /* loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
 		8420316B2D390CED003C4076 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
@@ -1939,6 +2013,122 @@
 			path = Attachments;
 			sourceTree = "<group>";
 		};
+		84127A982E03C8F00092159D /* ClaimCoupon */ = {
+			isa = PBXGroup;
+			children = (
+				84127A952E03C8F00092159D /* ClaimCouponVc.swift */,
+				84127A962E03C8F00092159D /* ClaimCouponVc.xib */,
+				84127A972E03C8F00092159D /* TicketView.swift */,
+			);
+			path = ClaimCoupon;
+			sourceTree = "<group>";
+		};
+		84127A9D2E03C8F00092159D /* CommonFolder */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CommonFolder;
+			sourceTree = "<group>";
+		};
+		84127AAC2E03C8F00092159D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */,
+				84127A9F2E03C8F00092159D /* ActivateCoupenTVC.xib */,
+				84127AA02E03C8F00092159D /* AddCoupenTVC.swift */,
+				84127AA12E03C8F00092159D /* AddCoupenTVC.xib */,
+				84127AA22E03C8F00092159D /* AddSuccessTVC.swift */,
+				84127AA32E03C8F00092159D /* AddSuccessTVC.xib */,
+				84127AA42E03C8F00092159D /* CoupenDetailCVC.swift */,
+				84127AA52E03C8F00092159D /* CoupenDetailCVC.xib */,
+				84127AA62E03C8F00092159D /* CoupenDetailTVC.swift */,
+				84127AA72E03C8F00092159D /* CoupenDetailTVC.xib */,
+				84127AA82E03C8F00092159D /* CVCell.swift */,
+				84127AA92E03C8F00092159D /* CVCell.xib */,
+				84127AAA2E03C8F00092159D /* ExperiedDetailTVC.swift */,
+				84127AAB2E03C8F00092159D /* ExperiedDetailTVC.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		84127AB12E03C8F00092159D /* CuoponDetails */ = {
+			isa = PBXGroup;
+			children = (
+				84127AAC2E03C8F00092159D /* Cell */,
+				84127AAD2E03C8F00092159D /* BottomView.swift */,
+				84127AAE2E03C8F00092159D /* BottomView.xib */,
+				84127AAF2E03C8F00092159D /* CooponViewVC.swift */,
+				84127AB02E03C8F00092159D /* CooponViewVC.xib */,
+			);
+			path = CuoponDetails;
+			sourceTree = "<group>";
+		};
+		84127AB62E03C8F00092159D /* Fonts_gilroy */ = {
+			isa = PBXGroup;
+			children = (
+				84127AB22E03C8F00092159D /* ApplyCustomFont.swift */,
+				84127AB32E03C8F00092159D /* Gilroy-Bold.ttf */,
+				84127AB42E03C8F00092159D /* Gilroy-Regular.ttf */,
+				84127AB52E03C8F00092159D /* Gilroy-SemiBold.ttf */,
+			);
+			path = Fonts_gilroy;
+			sourceTree = "<group>";
+		};
+		84127ABB2E03C8F00092159D /* PaucktCVcell */ = {
+			isa = PBXGroup;
+			children = (
+				84127AB72E03C8F00092159D /* CaterogyCvCell.swift */,
+				84127AB82E03C8F00092159D /* CaterogyCvCell.xib */,
+				84127AB92E03C8F00092159D /* CoupenCvCell.swift */,
+				84127ABA2E03C8F00092159D /* CoupenCvCell.xib */,
+			);
+			path = PaucktCVcell;
+			sourceTree = "<group>";
+		};
+		84127ABE2E03C8F00092159D /* HomePageVc */ = {
+			isa = PBXGroup;
+			children = (
+				84127ABB2E03C8F00092159D /* PaucktCVcell */,
+				84127ABC2E03C8F00092159D /* HomePaucktVC.swift */,
+				84127ABD2E03C8F00092159D /* HomePaucktVC.xib */,
+			);
+			path = HomePageVc;
+			sourceTree = "<group>";
+		};
+		84127AC12E03C8F00092159D /* ReedimHistoryCell */ = {
+			isa = PBXGroup;
+			children = (
+				84127ABF2E03C8F00092159D /* ReedimHistoryCell.swift */,
+				84127AC02E03C8F00092159D /* ReedimHistoryCell.xib */,
+			);
+			path = ReedimHistoryCell;
+			sourceTree = "<group>";
+		};
+		84127AC42E03C8F00092159D /* ReedimHistory */ = {
+			isa = PBXGroup;
+			children = (
+				84127AC12E03C8F00092159D /* ReedimHistoryCell */,
+				84127AC22E03C8F00092159D /* ReedimHistoryVc.swift */,
+				84127AC32E03C8F00092159D /* ReedimHistoryVc.xib */,
+			);
+			path = ReedimHistory;
+			sourceTree = "<group>";
+		};
+		84127AC72E03C8F00092159D /* Pauckt */ = {
+			isa = PBXGroup;
+			children = (
+				84127A982E03C8F00092159D /* ClaimCoupon */,
+				84127A9D2E03C8F00092159D /* CommonFolder */,
+				84127AB12E03C8F00092159D /* CuoponDetails */,
+				84127AB62E03C8F00092159D /* Fonts_gilroy */,
+				84127ABE2E03C8F00092159D /* HomePageVc */,
+				84127AC42E03C8F00092159D /* ReedimHistory */,
+				84127AC52E03C8F00092159D /* CustomTabVC.swift */,
+				84127AC62E03C8F00092159D /* CustomTabVC.xib */,
+			);
+			path = Pauckt;
+			sourceTree = "<group>";
+		};
 		8420316A2D390CAF003C4076 /* TimetableNew */ = {
 			isa = PBXGroup;
 			children = (
@@ -2694,6 +2884,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84127AC72E03C8F00092159D /* Pauckt */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
 				84FC4DC92DBCAE6700BBEDD7 /* Communication */,
 				840F67722D94066000AC2F5A /* Attachments */,
@@ -3712,6 +3903,25 @@
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
 				848CC17A2D8A997200CD0255 /* MobileNumberVc.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
+				84127AE92E03C8F00092159D /* AddSuccessTVC.xib in Resources */,
+				84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */,
+				84127AEB2E03C8F00092159D /* Gilroy-Regular.ttf in Resources */,
+				84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */,
+				84127AED2E03C8F00092159D /* Gilroy-SemiBold.ttf in Resources */,
+				84127AEE2E03C8F00092159D /* BottomView.xib in Resources */,
+				84127AEF2E03C8F00092159D /* CoupenCvCell.xib in Resources */,
+				84127AF02E03C8F00092159D /* ActivateCoupenTVC.xib in Resources */,
+				84127AF12E03C8F00092159D /* CoupenDetailTVC.xib in Resources */,
+				84127AF22E03C8F00092159D /* Gilroy-Bold.ttf in Resources */,
+				84127AF32E03C8F00092159D /* CustomTabVC.xib in Resources */,
+				84127AF42E03C8F00092159D /* CoupenDetailCVC.xib in Resources */,
+				84127AF52E03C8F00092159D /* AddCoupenTVC.xib in Resources */,
+				84127AF62E03C8F00092159D /* CVCell.xib in Resources */,
+				84127AF72E03C8F00092159D /* ExperiedDetailTVC.xib in Resources */,
+				84127AF82E03C8F00092159D /* CooponViewVC.xib in Resources */,
+				84127AF92E03C8F00092159D /* HomePaucktVC.xib in Resources */,
+				84127AFA2E03C8F00092159D /* ClaimCouponVc.xib in Resources */,
+				84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */,
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
 				8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */,
 				18D718E42D0D479B00E9EDA3 /* ClassTableViewCell.xib in Resources */,
@@ -3994,6 +4204,24 @@
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
 				84A5BF9A2C1AF19F00E32496 /* MethodName.swift in Sources */,
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
+				84127AC92E03C8F00092159D /* CVCell.swift in Sources */,
+				84127ACA2E03C8F00092159D /* ActivateCoupenTVC.swift in Sources */,
+				84127ACB2E03C8F00092159D /* AddCoupenTVC.swift in Sources */,
+				84127ACC2E03C8F00092159D /* CoupenCvCell.swift in Sources */,
+				84127ACE2E03C8F00092159D /* CoupenDetailCVC.swift in Sources */,
+				84127ACF2E03C8F00092159D /* AddSuccessTVC.swift in Sources */,
+				84127AD12E03C8F00092159D /* CooponViewVC.swift in Sources */,
+				84127AD32E03C8F00092159D /* CustomTabVC.swift in Sources */,
+				84127AD42E03C8F00092159D /* ApplyCustomFont.swift in Sources */,
+				84127AD52E03C8F00092159D /* BottomView.swift in Sources */,
+				84127AD82E03C8F00092159D /* CaterogyCvCell.swift in Sources */,
+				84127AD92E03C8F00092159D /* HomePaucktVC.swift in Sources */,
+				84127ADC2E03C8F00092159D /* CoupenDetailTVC.swift in Sources */,
+				84127ADD2E03C8F00092159D /* ExperiedDetailTVC.swift in Sources */,
+				84127AE02E03C8F00092159D /* ReedimHistoryVc.swift in Sources */,
+				84127AE42E03C8F00092159D /* ReedimHistoryCell.swift in Sources */,
+				84127AE52E03C8F00092159D /* TicketView.swift in Sources */,
+				84127AE62E03C8F00092159D /* ClaimCouponVc.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,

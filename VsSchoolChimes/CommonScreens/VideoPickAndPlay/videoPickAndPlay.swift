@@ -4,9 +4,9 @@
 //
 //  Created by SARANRAJ SHANMUGAM on 30/05/25.
 import UIKit
+import MobileCoreServices
 import AVFoundation
 import AVKit
-import MobileCoreServices
 
 protocol VideoPickerManagerDelegate: AnyObject {
     func videoPickerManager(didPickVideo url: URL)
@@ -88,7 +88,7 @@ class VideoPickerManager: NSObject {
         stopVideo()
         delegate?.videoPickerManagerDidCloseVideo()
     }
-    
+
     func closeVideoPlayback() {
         closeVideo()
     }
@@ -105,6 +105,48 @@ class VideoPickerManager: NSObject {
             print("Error generating thumbnail: \(error)")
         }
     }
+
+    private func compressVideo(inputURL: URL, completion: @escaping (URL?) -> Void) {
+        let avAsset = AVURLAsset(url: inputURL)
+
+        guard let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetMediumQuality) else {
+            print("Failed to create export session")
+            completion(nil)
+            return
+        }
+
+        let compressedURL = URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + ".mp4")
+        exportSession.outputURL = compressedURL
+        exportSession.outputFileType = .mp4
+        exportSession.shouldOptimizeForNetworkUse = true
+
+        exportSession.exportAsynchronously {
+            switch exportSession.status {
+            case .completed:exportSession
+                print("Video compression successful: \(compressedURL)")
+                let compressedSize = self.fileSizeInMB(for: compressedURL)
+                print("Compressed video size: \(String(format: "%.2f", compressedSize)) MB")
+                completion(compressedURL)
+            case .failed:
+                print("Compression failed: \(String(describing: exportSession.error))")
+                completion(nil)
+            case .cancelled:
+                print("Compression cancelled")
+                completion(nil)
+            default:
+                print("Compression status: \(exportSession.status)")
+                completion(nil)
+            }
+        }
+    }
+
+    private func fileSizeInMB(for url: URL) -> Double {
+        let resourceValues = try? url.resourceValues(forKeys: [.fileSizeKey])
+        if let fileSize = resourceValues?.fileSize {
+            return Double(fileSize) / (1024 * 1024)
+        }
+        return 0.0
+    }
 }
 
 extension VideoPickerManager: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -115,10 +157,20 @@ extension VideoPickerManager: UIImagePickerControllerDelegate, UINavigationContr
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true)
-        if let videoURL = info[.mediaURL] as? URL {
-            delegate?.videoPickerManager(didPickVideo: videoURL)
-            generateThumbnail(from: videoURL)
-            user_inputs.selectedFileType = AttachmentTypeString.VIDEO
+
+        guard let videoURL = info[.mediaURL] as? URL else { return }
+
+        let originalSize = fileSizeInMB(for: videoURL)
+        print("Original video size: \(String(format: "%.2f", originalSize)) MB")
+
+        compressVideo(inputURL: videoURL) { [weak self] compressedURL in
+            guard let self = self, let compressedURL = compressedURL else { return }
+
+            DispatchQueue.main.async {
+                self.delegate?.videoPickerManager(didPickVideo: compressedURL)
+                self.generateThumbnail(from: compressedURL)
+                user_inputs.selectedFileType = AttachmentTypeString.VIDEO
+            }
         }
     }
 }

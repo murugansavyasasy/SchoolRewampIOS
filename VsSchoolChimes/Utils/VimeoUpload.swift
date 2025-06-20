@@ -182,15 +182,15 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
                 
                 completion(url, uri, embedHTML)
                 
-                if let imageData =  user_inputs.thumbNail?.jpegData(
-                    compressionQuality: 0.8
-                ) {
-                    self.uploadThumbnailToVimeo(
-                        videoUri: uri,
-                        imageData: imageData,
-                        accessToken: self.accessToken
-                    )
-                }
+//                if let imageData =  user_inputs.thumbNail?.jpegData(
+//                    compressionQuality: 0.8
+//                ) {
+//                    self.uploadThumbnailToVimeo(
+//                        videoUri: uri,
+//                        imageData: imageData,
+//                        accessToken: self.accessToken
+//                    )
+//                }
                 print("videoUpload json: \(json)")
             } else {
                 print("❌ Failed to parse upload link: \(String(data: data, encoding: .utf8) ?? "No data")")

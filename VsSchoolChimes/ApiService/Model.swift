@@ -847,4 +847,203 @@ struct LessonDetailItem: Codable {
 }
 
 
+// MARK: Packet Modal
 
+
+//struct ActivateCouponResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: CouponDetails?
+//}
+//
+//struct CouponDetails: Codable {
+//    var coupons: [Coupon]?
+//    var merchant_logo: String?
+//    var offer: String?
+//    var redirect_url: String?
+//    var isCTAvalid: Bool?
+//    var CTAname: String?
+//    var CTAredirect: String?
+//}
+//
+//struct Coupon: Codable {
+//    var coupon_code: String?
+//    var qr_code: String?
+//    var expiry_date: String?
+//}
+//
+//
+//struct CampaignResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: CampaignDetailsData?
+//}
+//
+//struct CampaignDetailsData: Codable {
+//    var campaign_details: CampaignDetails?
+//}
+//
+//struct CampaignDetails: Codable {
+//    var campaign_name: String?
+//    var expiry_date: String?
+//    var cover_image: String?
+//    var template_les: String?
+//    var merchant_name: String?
+//    var threshold_amount: String?
+//    var offer_text: String?
+//    var offer_type: String?
+//    var discount: Int?
+//    var how_to_use: String?
+//    var terms_and_conditions: String?
+//    var template_le: String?
+//    var merchant_logo: String?
+//    var campaign_type: String?
+//    var coupon_valid_for: Int?
+//    var customer_buys_value: String?
+//    var customer_gets_value: String?
+//    var template_file: String?
+//    var offer_to_show: String?
+//    var expiry_type: String?
+//}
+//
+//
+//
+//struct CampaignsResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: CampaignData?
+//}
+//
+//struct CampaignData: Codable {
+//    var total_count: Int?
+//    var campaigns: CampaignPagination?
+//}
+//
+//struct CampaignPagination: Codable {
+//    var current_page: Int?
+//    var data: [Campaign]?
+//    var first_page_url: String?
+//    var from: Int?
+//    var next_page_url: String?
+//    var path: String?
+//    var per_page: Int?
+//    var prev_page_url: String?
+//    var to: Int?
+//}
+//
+//struct Campaign: Codable {
+//    var temp_id: Int?
+//    var source_link: String?
+//    var campaign_name: String?
+//    var campaign_type: String?
+//    var threshold_amount: String?
+//    var offer_text: String?
+//    var thumbnail: String?
+//    var expiry_date: String?
+//    var end_date: String?
+//    var offer_type: String?
+//    var discount: Int?
+//    var merchant_name: String?
+//    var category_name: String?
+//    var category_image: String?
+//    var merchant_logo: String?
+//    var offer_to_show: String?
+//    var coupon_status: String?
+//    var coupon_code: String?
+//    var isCTAvalid: Bool?
+//}
+//
+//
+//struct CategoriesResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: CategoryData?
+//}
+//
+//struct CategoryData: Codable {
+//    var categories: [Category]?
+//    var total_pages: Int?
+//}
+//
+//struct Category: Codable {
+//    var id: Int?
+//    var category_name: String?
+//    var category_image: String?
+//}
+//
+//
+//struct MyCouponResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: CouponData?
+//}
+//
+//struct CouponData: Codable {
+//    var total_pages: Int?
+//    var coupon_list: CouponList?
+//}
+//
+//struct CouponList: Codable {
+//    var current_page: Int?
+//    var data: [Coupon]?
+//    var first_page_url: String?
+//    var from: Int?
+//    var next_page_url: String?
+//    var path: String?
+//    var per_page: Int?
+//    var prev_page_url: String?
+//    var to: Int?
+//}
+//
+//struct Coupon: Codable {
+//    var id: Int?
+//    var merchant_name: String?
+//    var campaign_name: String?
+//    var merchant_id: Int?
+//    var merchant_logo: String?
+//    var about_merchant: String?
+//    var campaign_type: String?
+//    var offer_type: String?
+//    var discount: Int?
+//    var template_files: [String]?
+//    var threshold_amount: String?
+//    var expiry_date: String?
+//    var expiry_type: String?
+//    var coupon_valid_for: String?
+//    var how_to_use: String?
+//    var terms_and_conditions: String?
+//    var cover_image: String?
+//    var cta_url: String?
+//    var offer_text: String?
+//    var location_list: [Location]?
+//    var redeemed_on: String?
+//    var qr_code: String?
+//    var category_name: String?
+//    var source_link: String?
+//    var industry_name: String?
+//    var coupon_code: String?
+//    var coupon_status: String?
+//    var expires_in: Int?
+//    var isCTAvalid: Bool?
+//    var CTAname: String?
+//    var CTAredirect: String?
+//    var offer_to_show: String?
+//}
+//
+//struct Location: Codable {
+//    var location_name: String?
+//    var latitude: String?
+//    var longitude: String?
+//}
+//
+//struct GetCoinResponse: Codable {
+//    var status: Int?
+//    var message: String?
+//    var data: GetCoinData?
+//}
+//
+//struct GetCoinData: Codable {
+//    var pointsEarned: Int?
+//    var pointsSpent: Int?
+//    var pointsRemaining: Int?
+//}
