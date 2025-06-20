@@ -128,7 +128,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         historyTable.register(UINib(nibName: CellConfingName.SpecificStudentTvcell, bundle: nil), forCellReuseIdentifier: CellConfingName.SpecificStudentTvcell)
         historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
         historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
-        historyTable.register(UINib(nibName: CellConfingName.MarkAtendenceTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MarkAtendenceTV)
         
     }
     

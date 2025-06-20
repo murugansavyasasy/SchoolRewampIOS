@@ -47,10 +47,7 @@ class PriorityVC: UIViewController {
        
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.tintColor = .white
-        
-        let nib = UINib(nibName: CellConfingName.ParentTVCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.ParentTVCell)
-        
+    
         let nib1 = UINib(nibName: CellConfingName.SchoolTVCell, bundle: nil)
         tableview.register(nib1, forCellReuseIdentifier: CellConfingName.SchoolTVCell)
         
