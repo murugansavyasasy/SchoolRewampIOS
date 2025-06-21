@@ -66,7 +66,7 @@ class LessonViewTvCell: UITableViewCell {
         for detail in details {
             let rowStack = UIStackView()
             rowStack.axis = .horizontal
-            rowStack.spacing = 8
+            rowStack.spacing = 4
             rowStack.alignment = .top
             rowStack.distribution = .fill
 
@@ -76,13 +76,19 @@ class LessonViewTvCell: UITableViewCell {
             nameLabel.numberOfLines = 0
             nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
+            let colonLabel = UILabel()
+            colonLabel.text = ":"
+            colonLabel.font = UIFont(name: "Poppins-Medium", size: 14)
+            colonLabel.setContentHuggingPriority(.required, for: .horizontal)
+
             let valueLabel = UILabel()
-            valueLabel.text = ":  \(detail.value)"
+            valueLabel.text = detail.value
             valueLabel.font = UIFont(name: "Poppins-Medium", size: 14)
             valueLabel.numberOfLines = 0
             valueLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
             rowStack.addArrangedSubview(nameLabel)
+            rowStack.addArrangedSubview(colonLabel)
             rowStack.addArrangedSubview(valueLabel)
             mainStack.addArrangedSubview(rowStack)
         }
@@ -98,5 +104,6 @@ class LessonViewTvCell: UITableViewCell {
             mainStack.bottomAnchor.constraint(equalTo: ProgressStack.topAnchor, constant: -8)
         ])
     }
+
 
 }

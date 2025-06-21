@@ -139,14 +139,17 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         case 1:
             colour = .systemOrange
             cell.StatusLbl.text = "Yet to Start"
+            cell.ProgressImage.image = UIImage.pending
             
         case 2:
             colour = .systemBlue
             cell.StatusLbl.text = "Inprogress"
+            cell.ProgressImage.image = UIImage(systemName: "arrow.2.circlepath.circle.fill")
             
         case 3:
             colour = .systemGreen
             cell.StatusLbl.text = "Completed"
+            cell.ProgressImage.image = UIImage.completed1
         default:
             colour = .systemOrange
         }
@@ -160,6 +163,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         cell.ProgressView2.backgroundColor = colour.withAlphaComponent(0.1)
         cell.ProgressView2.layer.borderColor = colour.cgColor
         cell.StatusLbl.textColor = colour
+        cell.ProgressImage.tintColor = colour
         
         let details = ViewLessonData?[indexPath.row].details ?? []
 
