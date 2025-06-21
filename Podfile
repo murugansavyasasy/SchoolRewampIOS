@@ -7,26 +7,18 @@ target 'VsSchoolChimes' do
 
   # Pods for VsSchoolChimes
 
-pod 'Alamofire'
-
-pod "KRProgressHUD"
 pod 'DropDown'
 pod 'FirebaseMessaging'
- pod 'Firebase/Core'
-  pod 'Fabric'
-  pod 'Crashlytics'
-  pod 'Firebase/Analytics'
-  pod 'FirebaseCore'
+pod 'Firebase/Core'
+pod 'Fabric'
+pod 'Crashlytics'
+pod 'Firebase/Analytics'
+pod 'FirebaseCore'
 pod 'AWSS3'
 pod 'AWSCognito'
 pod 'AWSCore'
 pod 'Charts'
-pod 'SDWebImage'
-pod 'FSCalendar'
 pod 'Firebase/Database'
-pod 'Kingfisher'
-
-
 
   target 'VsSchoolChimesTests' do
     inherit! :search_paths

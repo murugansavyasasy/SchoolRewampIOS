@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ReedimHistoryCell" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="190" height="214"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="190" height="214"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cOg-FI-1Ol">
+                        <rect key="frame" x="5" y="5" width="180" height="204"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y3v-e4-VHK">
+                                <rect key="frame" x="10" y="10" width="160" height="184"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="sR5-o7-AV1">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="105"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Subtract" translatesAutoresizingMaskIntoConstraints="NO" id="jYz-kM-lFe">
+                                                <rect key="frame" x="0.0" y="0.0" width="160" height="90"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="90" id="1lL-cQ-yFf"/>
+                                                </constraints>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZ6-QF-USK">
+                                                <rect key="frame" x="0.0" y="80" width="160" height="25"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeemed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFE-Nm-Btp">
+                                                        <rect key="frame" x="2" y="0.0" width="156" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="gFE-Nm-Btp" firstAttribute="top" secondItem="UZ6-QF-USK" secondAttribute="top" id="7ne-Ia-CeF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="gFE-Nm-Btp" secondAttribute="trailing" constant="2" id="Jin-UO-o0a"/>
+                                                    <constraint firstItem="gFE-Nm-Btp" firstAttribute="leading" secondItem="UZ6-QF-USK" secondAttribute="leading" constant="2" id="Oda-Ne-ClJ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="gFE-Nm-Btp" secondAttribute="bottom" id="Tg3-28-K2J"/>
+                                                    <constraint firstAttribute="height" constant="25" id="vfr-MS-s4Z"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MGM Dizzee World" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6Q-oe-K44">
+                                        <rect key="frame" x="0.0" y="113.33333333333334" width="160" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" systemColor="systemGray2Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 20 % Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BT4-pc-944">
+                                        <rect key="frame" x="0.0" y="139.66666666666666" width="160" height="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expires in 5 days" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQo-NA-yrw">
+                                        <rect key="frame" x="0.0" y="166" width="160" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Y3v-e4-VHK" firstAttribute="leading" secondItem="cOg-FI-1Ol" secondAttribute="leading" constant="10" id="DDH-Tv-akO"/>
+                            <constraint firstAttribute="trailing" secondItem="Y3v-e4-VHK" secondAttribute="trailing" constant="10" id="X6C-Ly-Le2"/>
+                            <constraint firstAttribute="bottom" secondItem="Y3v-e4-VHK" secondAttribute="bottom" constant="10" id="qvi-WC-KXz"/>
+                            <constraint firstItem="Y3v-e4-VHK" firstAttribute="top" secondItem="cOg-FI-1Ol" secondAttribute="top" constant="10" id="zSc-QU-vVs"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VideoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="wdm-g6-Drw">
+                        <rect key="frame" x="65" y="30" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="2FU-PO-b89"/>
+                            <constraint firstAttribute="width" constant="60" id="I0y-Pi-kEy"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="cOg-FI-1Ol" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="BiR-oz-b2h"/>
+                <constraint firstAttribute="bottom" secondItem="cOg-FI-1Ol" secondAttribute="bottom" constant="5" id="Qp7-9M-TOO"/>
+                <constraint firstAttribute="trailing" secondItem="cOg-FI-1Ol" secondAttribute="trailing" constant="5" id="TGb-ig-WhB"/>
+                <constraint firstItem="wdm-g6-Drw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="65" id="iWM-sT-6VR"/>
+                <constraint firstItem="cOg-FI-1Ol" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="mhq-65-jzf"/>
+                <constraint firstItem="wdm-g6-Drw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="30" id="yPk-aB-GR6"/>
+            </constraints>
+            <size key="customSize" width="213" height="233"/>
+            <connections>
+                <outlet property="BackgroundImage" destination="jYz-kM-lFe" id="VTp-NY-IdC"/>
+                <outlet property="BrandLogoImage" destination="wdm-g6-Drw" id="Tq3-dA-bbL"/>
+                <outlet property="BrandNameLbl" destination="N6Q-oe-K44" id="km5-Xe-Ag8"/>
+                <outlet property="CouponStatusLbl" destination="gFE-Nm-Btp" id="8KA-4f-Bom"/>
+                <outlet property="CouponStatusView" destination="UZ6-QF-USK" id="fTQ-jD-8Qd"/>
+                <outlet property="ExpireyDateLbl" destination="jQo-NA-yrw" id="5GR-HB-ZDD"/>
+                <outlet property="OfferLbl" destination="BT4-pc-944" id="uVK-GN-oyw"/>
+                <outlet property="ticketViews" destination="cOg-FI-1Ol" id="Q5B-Zt-hSp"/>
+            </connections>
+            <point key="canvasLocation" x="251.90839694656486" y="30.985915492957748"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Subtract" width="151" height="100"/>
+        <image name="VideoPlaceholder" width="955" height="551"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

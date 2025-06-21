@@ -221,6 +221,9 @@ class  commonApi_forSending {
                 if let size = fileSize {
                     print("📦 File size: \(size) bytes")
                 }
+                try? FileManager.default.removeItem(at: URL(fileURLWithPath: videoURL))
+
+
                 completion(videoURL, iframeHTML, fileSize)
             } else {
                 print("❌ Upload failed!")

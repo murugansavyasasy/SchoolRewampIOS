@@ -14,7 +14,7 @@ struct ServiceUrl{
     static var token = ""
     static var awsBucketName = ""
     
-  
+    
     static let country_list              = "app/api/setup/countries"
     static let version_check             = "app/api/setup/version-check"
     static let validate_validate_user    = "app/api/auth/validate-user"
@@ -54,7 +54,7 @@ struct ServiceUrl{
     static let  staff_attd_geometric_geometric_punch_history  = "staff-attd/api/geometric/geometric-punch-history"
     static let  staff_attd_geometric_geometric_staff_attendance_report  = "staff-attd/api/geometric/geometric-staff-attendance-report"
     static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/api/geometric/remove-geometric-location"
-
+    
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/api/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
     static let api_notice_board_send_notice = "admin/api/notice-board/send-notice"
@@ -90,6 +90,14 @@ struct ServiceUrl{
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"
     static let lms_api_lesson_plan_update = "lms/api/lesson-plan/update"
     static let lms_api_lesson_plan_delete = "lms/api/lesson-plan/delete"
+    // MARK: PAUKET API URL
+    static let activate_coupon = "activate_coupon"
+    static let get_campaigns = "get_campaigns"
+    static let get_campaign_details = "get_campaign_details"
+    static let get_category_list = "get_category_list"
+    static let my_coupons = "my_coupons"
+    static let get_Points = "get-Points"
+    //
     static let comm_api_assignment_delete = "comm/api/assignment/delete"
     
 }
@@ -164,19 +172,19 @@ struct recipeint_tabBarName{
     static let Entier_School = "Entire School"
 }
 
-struct user_inputs{
+struct user_inputs {
     static var voice_link = ""
-    static var duration : Int = 0
-    static var is_schedule : Bool = false
+    static var duration: Int = 0
+    static var is_schedule: Bool = false
     static var title = ""
     static var description = ""
-    static var is_emergency : Bool = false
-    static var schedule_date : [String] = []
-    static var selectedImg : [UIImage] = []
-    static var selectedImgUrls : [FilePath] = []
-    static var SelectedUrls : [AttachmentItem] = []
-    static var fileUrl:URL?
-    static var thumbNail:UIImage?
+    static var is_emergency: Bool = false
+    static var schedule_date: [String] = []
+    static var selectedImgData: [Data] = [] // ✅ replaced [UIImage]
+    static var selectedImgUrls: [FilePath] = []
+    static var SelectedUrls: [AttachmentItem] = []
+    static var fileUrl: URL?
+    static var thumbNail: Data? // ✅ changed UIImage? to Data?
     static var docUrl = [String]()
     static var start_time = ""
     static var end_time = ""
@@ -195,7 +203,27 @@ struct user_inputs{
     static var attendance_date = ""
     static var submissionDate = ""
     static var assigmentCategory = ""
+
+    static func clearTempData() -> Bool {
+        selectedImgData.removeAll()
+        selectedImgUrls.removeAll()
+        SelectedUrls.removeAll()
+        VideoPath = nil
+        thumbNail = nil
+        fileUrl = nil
+        docUrl.removeAll()
+        voice_link = ""
+        title = ""
+        description = ""
+        file_name = ""
+        circular_type = ""
+        return true
+    }
 }
+
+
+
+
 struct circular_type{
     static var school =  "A"
     static var  standard = "C"
