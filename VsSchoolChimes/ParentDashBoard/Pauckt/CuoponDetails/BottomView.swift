@@ -6,7 +6,7 @@
 ////
 //
 //import UIKit
-//import ObjectMapper
+//import SDWebImage
 //protocol AddCoupen{
 //    func addpucket()
 //}
@@ -62,16 +62,16 @@
 //    var source_link : String?
 //    var DataArray : [String] = []
 //    var category : String?
-//    var Coupon : [coupondetails] = []
+//    var Coupon : [CouponDetails] = []
 //    var sourceLink : String?
 //    var CouponStatus : String?
 //    var RedirectURL : String?
 //    var childId : String?
 //    var totalPoints : String?
-//    var mobileNumber : String?
+//
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
-//         mobileNumber = UserDefaults.standard.object(forKey:USERNAME) as? String ?? ""
+//         
 //        QrcodeHeight.constant = 0
 //        reedimFullView.isHidden = true
 //        qrCodeView.isHidden = true
@@ -83,8 +83,7 @@
 //        OrdernowBtn.isHidden = true
 //        activatePageView.layer.cornerRadius = 20
 //        
-//        let userDefaults = UserDefaults.standard
-//        childId = userDefaults.string(forKey: DefaultsKeys.chilId)
+//       
 //        
 //        if CouponStatus == "activated" {
 //            
@@ -239,7 +238,7 @@
 //        coupenAdded = true
 //        ActivateCoupon{ success in
 //            if success {
-//                self.spend_coin()
+////                self.spend_coin()
 //            }
 //        }
 //        
@@ -410,29 +409,29 @@
 //        
 //    }
 //    
-//    func spend_coin(){
-//        
-//        let param : [String : Any] =
-//        [
-//            "user_type": 1,
-//            "mobile_number": mobileNumber ?? "",
-//            "coupon_link" : sourceLink ?? "",
-//            "coupon_id" : 0
-//        ]
-//        print("paramparamm,nc",param)
-//        
-//        let headers: [String: Any] = [ :
-//        ]
-//        
-//        spend_point.call_request(param: param,headers: headers ){ [self]
-//            (res) in
-//            
-//            print("resres",res)
-//            let getattendace : CampaignResponse = Mapper<CampaignResponse>().map(JSONString: res)!
-//            
-//        }
-//        
-//    }
+////    func spend_coin(){
+////        
+////        let param : [String : Any] =
+////        [
+////            "user_type": 1,
+////            "mobile_number": mobileNumber ?? "",
+////            "coupon_link" : sourceLink ?? "",
+////            "coupon_id" : 0
+////        ]
+////        print("paramparamm,nc",param)
+////        
+////        let headers: [String: Any] = [ :
+////        ]
+////        
+////        spend_point.call_request(param: param,headers: headers ){ [self]
+////            (res) in
+////            
+////            print("resres",res)
+////            let getattendace : CampaignResponse = Mapper<CampaignResponse>().map(JSONString: res)!
+////            
+////        }
+////        
+////    }
 //    
 //    
 //}
