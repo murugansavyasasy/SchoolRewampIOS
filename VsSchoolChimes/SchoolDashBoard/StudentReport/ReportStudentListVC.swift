@@ -30,7 +30,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var GenderDropdown = DropDown()
     var sectionsDetails: [sectionsDetail]?
     var standardDetails: [StandardDetail]?
-    var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     @IBOutlet weak var sectionSelection: UIStackView!
     @IBOutlet weak var classSelection: UIStackView!
@@ -219,8 +218,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.width = selectedType.bounds.width
         AcodemicDropdown.show()
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
-            getStandardsAPI(academic_year_id: AcadimicYearDatas[index].id ?? 0)
-            academicId = AcadimicYearDatas[index].id ?? 0
+            getStandardsAPI(
+                academic_year_id: localData.accidamic_year_data?
+                    .data?[index].id ?? 0
+            )
+            academicId = localData.accidamic_year_data?.data?[index].id ?? 0
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
         }
     }
@@ -456,6 +458,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     
+    
     func getacadmicYr(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
@@ -464,16 +467,22 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             ) in
                 switch result {
                 case .success(let successMessage):
-                    if successMessage.status == true{
+                    if localData.accidamic_year_data?.status == true{
                         DispatchQueue.main.async { [self] in
-                            AcadimicYearDatas = successMessage.data ?? []
-                            for i in 0..<(AcadimicYearDatas.count){
-                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    selectedType.setTitle("\(AcadimicYearDatas[i].year ?? "")", for: .normal)
-                                    academicId = AcadimicYearDatas[i].id ?? 0
-                                    getStandardsAPI(academic_year_id: AcadimicYearDatas[i].id ?? 0)
+                            for i in 0..<(
+                                localData.accidamic_year_data?.data?.count ?? 0
+                            ){
+                                if localData.accidamic_year_data?
+                                    .data?[i].current_academic_year ?? false == true{
+                                    selectedType.setTitle((localData.accidamic_year_data?
+                                    .data?[i].year ?? ""), for: .normal)
+                                    academicId = localData.accidamic_year_data?
+                                        .data?[i].id ?? 0
+                                    getStandardsAPI(academic_year_id: localData.accidamic_year_data?
+                                        .data?[i].id ?? 0)
                                 }
-                                accadimYr.append(AcadimicYearDatas[i].year ?? "")
+                                accadimYr.append(localData.accidamic_year_data?
+                                    .data?[i].year ?? "")
                             }
                         }
                     }

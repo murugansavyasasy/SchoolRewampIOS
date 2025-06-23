@@ -7,7 +7,7 @@
 ////
 //
 //import UIKit
-//import ObjectMapper
+//import SDWebImage
 //class CooponViewVC: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate,UICollectionViewDelegateFlowLayout {
 //    
 //    @IBOutlet weak var stackView: UIStackView!
