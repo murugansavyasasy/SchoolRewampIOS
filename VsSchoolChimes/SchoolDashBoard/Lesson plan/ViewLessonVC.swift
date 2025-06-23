@@ -32,6 +32,10 @@ class ViewLessonVC: UIViewController {
         
         BAckBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
         
+        NoDataImg.isHidden = true
+        NoDataLbl.isHidden = true
+        NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
+        
         SearchBar.isHidden = true
         TableView.showsVerticalScrollIndicator = false
         TableView.showsHorizontalScrollIndicator = false
@@ -47,6 +51,9 @@ class ViewLessonVC: UIViewController {
         
         FilterCV.delegate = self
         FilterCV.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
         View_Lesson_Plan_Api(status: LessonPlanStatus)
     }
@@ -74,7 +81,9 @@ class ViewLessonVC: UIViewController {
                     NoDataImg.isHidden = !(ViewLessonData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(ViewLessonData?.isEmpty ?? false)
                    // SearchBar.isHidden = (ViewLessonData?.isEmpty ?? false)
-                    FilterCV.isHidden = (ViewLessonData?.isEmpty ?? false)
+                    if status == 0 {
+                      FilterCV.isHidden = (ViewLessonData?.isEmpty ?? false)
+                    }
                     NoDataLbl.text = success.message
                     TableView.reloadData()
                 }
@@ -104,7 +113,14 @@ class ViewLessonVC: UIViewController {
                 DispatchQueue.main.async {
                     
                     let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
-                    CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                    
+                    if success.status == true {
+                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
+                            self.View_Lesson_Plan_Api(status: self.LessonPlanStatus)
+                        })
+                    }else {
+                        CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                    }
                 }
             case .failure(let error):
                 CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
@@ -209,7 +225,14 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         cell.FilterLbl.text = Filters[indexPath.item]
         
-        cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
+        cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.topBackgroundCLr : .systemGray5
+        
+        cell.cellView.layer.masksToBounds = false
+        cell.cellView.layer.shadowColor = UIColor.black.cgColor
+        cell.cellView.layer.shadowOpacity = indexPath == selectedIndex ? 0.2 : 0.0
+        cell.cellView.layer.shadowRadius = indexPath == selectedIndex ? 4 : 0
+        cell.cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.CheckboxImg.isHidden = true
         
         return cell
     }
@@ -217,10 +240,9 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         selectedIndex = indexPath
-        
-        let type = Filters[selectedIndex.item]
-        
-        View_Lesson_Plan_Api(status: selectedIndex.item)
+    
+        LessonPlanStatus = selectedIndex.item
+        View_Lesson_Plan_Api(status: LessonPlanStatus)
         FilterCV.reloadData()
     }
     

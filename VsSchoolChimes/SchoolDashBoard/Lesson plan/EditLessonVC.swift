@@ -40,6 +40,9 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         Tableview.showsVerticalScrollIndicator = false
         Tableview.showsHorizontalScrollIndicator = false
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         let nib = UINib(nibName: "LessonEditTV", bundle: nil)
         Tableview.register(nib, forCellReuseIdentifier: "LessonEditTV")
         
@@ -81,6 +84,35 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         addTopBorderAndShadow(to: BottomView)
     }
     
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        let keyboardHeight = keyboardFrame.height
+
+        Tableview.contentInset.bottom = keyboardHeight
+
+        var insets = Tableview.verticalScrollIndicatorInsets
+        insets.bottom = keyboardHeight
+        Tableview.verticalScrollIndicatorInsets = insets
+
+        // Optionally scroll to the active cell
+        if let firstResponder = view.currentFirstResponder(),
+           let cell = firstResponder.superview(of: UITableViewCell.self),
+           let indexPath = Tableview.indexPath(for: cell) {
+            Tableview.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        Tableview.contentInset = .zero
+        Tableview.verticalScrollIndicatorInsets = .zero
+    }
+
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     //MARK: Lesson Edit Api call
     
     func Get_Edit_Details(){
@@ -124,14 +156,22 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 
                 DispatchQueue.main.async { [self] in
                     
-                    alert.showAlert(title: "", message: Success.message ?? "", on: self)
+                    if Success.status == true {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: Success.message ?? "", on: self, okAction: {
+                            self.dismiss(animated: true)
+                        })
+                    }else {
+                        
+                        alert.showAlert(title: AlertstringFile.Failed, message:Success.message ?? "", on: self)
+                    }
                 }
                 
             case .failure(let error):
                 
                 DispatchQueue.main.async { [self] in
                     
-                    alert.showAlert(title: "", message: error.localizedDescription, on: self)
+                    alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
             }
         }
@@ -167,7 +207,11 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         cell.tableView = self.Tableview
         
-        if let edit = EditData?[indexPath.row] {
+        if var edit = EditData?[indexPath.row] {
+            
+            if let updatedValue = editedFields[edit.field_id ?? ""] {
+                       edit.value = updatedValue
+                   }
             cell.configure(with: edit)
         }
         
@@ -183,5 +227,23 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBAction func BackAct(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+}
+
+extension UIView {
+    func currentFirstResponder() -> UIView? {
+        if self.isFirstResponder {
+            return self
+        }
+        for subview in subviews {
+            if let firstResponder = subview.currentFirstResponder() {
+                return firstResponder
+            }
+        }
+        return nil
+    }
+
+    func superview<T: UIView>(of type: T.Type) -> T? {
+        return superview as? T ?? superview?.superview(of: T.self)
     }
 }

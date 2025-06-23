@@ -27,6 +27,18 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 fromdateBtn.setTitle(date, for: .normal)
                 setFormattedDate(outputDateString, label: fromDateLbl)
                 NewFromdateLbl.setFormattedDate(from: DayDate)
+                // Check if To Date is set and valid
+                if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
+                    let labelFormatter = DateFormatter()
+                    labelFormatter.dateFormat = "d EEE, MMM yyyy" // Matches formatted label
+
+                    if let toDate = labelFormatter.date(from: toText) {
+                        if DayDate > toDate {
+                            // Auto-adjust To Date if From Date is later
+                            NewToDateLbl.setFormattedDate(from: DayDate)
+                        }
+                    }
+                }
 
             }else{
                 todateBtn.setTitle(date, for: .normal)

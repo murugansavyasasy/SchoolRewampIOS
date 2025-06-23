@@ -75,6 +75,7 @@ class LessonPlanVC: UIViewController {
         
         NodataImage.isHidden = true
         NodataLbl.isHidden = true
+        NodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
     }
     
     //MARK: Lesson plan Api call

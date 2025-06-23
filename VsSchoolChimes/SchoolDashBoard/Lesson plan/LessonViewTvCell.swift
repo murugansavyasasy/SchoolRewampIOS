@@ -66,30 +66,42 @@ class LessonViewTvCell: UITableViewCell {
         for detail in details {
             let rowStack = UIStackView()
             rowStack.axis = .horizontal
-            rowStack.spacing = 4
+            rowStack.spacing = 8
             rowStack.alignment = .top
             rowStack.distribution = .fill
 
+            // Name label
             let nameLabel = UILabel()
             nameLabel.text = detail.name
             nameLabel.font = UIFont(name: "Poppins-SemiBold", size: 14)
             nameLabel.numberOfLines = 0
-            nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            nameLabel.setContentHuggingPriority(.required, for: .horizontal)
+            nameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            nameLabel.widthAnchor.constraint(equalToConstant: 115).isActive = true // Fix column width
+            nameLabel.textColor = .systemBlue
 
+            // Colon label
             let colonLabel = UILabel()
             colonLabel.text = ":"
-            colonLabel.font = UIFont(name: "Poppins-Medium", size: 14)
+            colonLabel.font = UIFont(name: "Poppins-SemiBold", size: 14)
+            colonLabel.textAlignment = .center
             colonLabel.setContentHuggingPriority(.required, for: .horizontal)
+            colonLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            colonLabel.widthAnchor.constraint(equalToConstant: 10).isActive = true // Fixed width for vertical alignment
 
+            // Value label
             let valueLabel = UILabel()
             valueLabel.text = detail.value
             valueLabel.font = UIFont(name: "Poppins-Medium", size: 14)
             valueLabel.numberOfLines = 0
             valueLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            valueLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
+            // Add to row
             rowStack.addArrangedSubview(nameLabel)
             rowStack.addArrangedSubview(colonLabel)
             rowStack.addArrangedSubview(valueLabel)
+
             mainStack.addArrangedSubview(rowStack)
         }
 

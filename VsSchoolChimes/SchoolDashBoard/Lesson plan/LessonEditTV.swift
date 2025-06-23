@@ -71,6 +71,9 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 if edit.is_disable ?? false {
                     DropdownField.backgroundColor = .systemGray5
+                }else {
+                    DropdownField.backgroundColor = .white
+                   // DropdownField.layer.borderColor = UIColor.systemGreen.cgColor
                 }
 
                 dropDown.dataSource = edit.field_data ?? []
@@ -92,7 +95,16 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 if edit.is_disable ?? false {
                     TextField.backgroundColor = .systemGray5
                     TextField.isUserInteractionEnabled = false
+                }else {
+                    TextField.backgroundColor = .white
+                   // TextField.layer.borderColor = UIColor.systemGreen.cgColor
                 }
+                // ✅ Adjust height based on content right now (from API)
+                    let size = CGSize(width: TextField.frame.width, height: .infinity)
+                    let estimatedSize = TextField.sizeThatFits(size)
+                    let minHeight: CGFloat = 45
+                    TextFieldHeight.constant = max(estimatedSize.height, minHeight)
+
 
             case "datepicker":
                 TextField.isHidden = true
@@ -102,6 +114,9 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.addTarget(self, action: #selector(showDatePicker), for: .editingDidBegin)
                 if edit.is_disable ?? false {
                     DropdownField.backgroundColor = .systemGray5
+                }else {
+                    DropdownField.backgroundColor = .white
+                   // DropdownField.layer.borderColor = UIColor.systemGreen.cgColor
                 }
 
             default:
@@ -133,23 +148,26 @@ class LessonEditTV: UITableViewCell, Datepicker {
 
 @available(iOS 14.0, *)
 extension LessonEditTV: UITextViewDelegate {
+    
     func textViewDidChange(_ textView: UITextView) {
-       
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
 
-        TextFieldHeight.constant = estimatedSize.height
+        // Set a minimum height of 45
+        let minHeight: CGFloat = 45
+        TextFieldHeight.constant = max(estimatedSize.height, minHeight)
 
         UIView.setAnimationsEnabled(false)
         tableView?.beginUpdates()
         tableView?.endUpdates()
         UIView.setAnimationsEnabled(true)
-        
+
         let newValue = textView.text ?? ""
-            if newValue != originalValue {
-                onEdit?(fieldID, newValue)
-            }
+        if newValue != originalValue {
+            onEdit?(fieldID, newValue)
+        }
     }
+
 }
 
 

@@ -1053,14 +1053,14 @@ struct LessonDetailItem: Codable {
 struct LessonEditResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [LessonEditData]?
+    var data: [LessonEditData]?
 }
 
 struct LessonEditData: Codable {
     let id: String?
     let name: String?
     let field_id: String?
-    let value: String?
+    var value: String?
     let field_type: String?
     let field_data: [String]?
     let is_disable: Bool?

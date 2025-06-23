@@ -130,6 +130,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         contentTxtView.layer.cornerRadius = 10
         contentTxtView.layer.borderWidth = 0.5
         contentTxtView.layer.borderColor = UIColor.black.cgColor
+        contentTxtView.font = UIFont(name: "Poppins-Medium", size: 13)
         
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
