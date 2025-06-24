@@ -61,6 +61,7 @@ class HomePaucktVC: UIViewController
         TotalcoinsFullView.layer.shadowOffset = CGSize(width: 0, height: 2)
         TotalcoinsFullView.layer.shadowRadius = 4
         
+        Get_Categories()
 //        BackBtn.setTitleFont(style: .secondary, size: 15)
         totalCoinsLbl.setFont(style: .title, size: 17)
         UsedCoinsLbl.setFont(style: .body, size: 15)
@@ -101,6 +102,9 @@ class HomePaucktVC: UIViewController
         couponsCV.register(UINib(nibName: "CoupenCvCell", bundle: nil), forCellWithReuseIdentifier: "CoupenCvCell")
         categoriesCV.register(UINib(nibName: "CaterogyCvCell", bundle: nil), forCellWithReuseIdentifier: "CaterogyCvCell")
         
+        couponsCV.delegate = self
+        couponsCV.dataSource = self
+        
     }
     
     @IBAction func  back(_ sender: UIButton) {
@@ -127,7 +131,7 @@ class HomePaucktVC: UIViewController
         if collectionView == categoriesCV{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CaterogyCvCell", for: indexPath) as! CaterogyCvCell
                     let category = categories[indexPath.item]
-                    cell.configure(with: category, selected: indexPath.item == selectedCategoryIndex)
+                  //  cell.configure(with: category, selected: indexPath.item == selectedCategoryIndex)
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CoupenCvCell", for: indexPath) as! CoupenCvCell
@@ -247,7 +251,28 @@ class HomePaucktVC: UIViewController
         couponsCV.reloadData()
     }
     
-    
+    func Get_Categories(){
+        
+        let param: [String: Any] = [:]
+        
+        APIService.shared.makeApi(url: ServiceUrl.get_category_list, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket) {[self] (result: Result<CategoriesResponse,Error>) in
+            
+            switch result{
+                
+            case .success(let success):
+                DispatchQueue.main.async {
+                    let categoryData:CategoryData?
+                    categoryData = success.data
+                   // self.categories = categoryData?.categories ?? []
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print("Error:",error.localizedDescription)
+                }
+            }
+        }
+    }
 //    func Get_Categories(){
 //        let param : [String : Any] =
 //        ["": ""]

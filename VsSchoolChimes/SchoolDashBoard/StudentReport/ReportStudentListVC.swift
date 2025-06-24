@@ -366,6 +366,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         standerdArray.removeAll()
                         studentList?.removeAll()
                         filterStudent?.removeAll()
+                        getStanderd.isHidden = true
+                        self.filterBtn.setTitle(CommonStringFile.getAllStudent.translated(), for: .normal)
                         nodataImg.isHidden = false
                         nodataLbl.isHidden = false
                         nodataLbl.text = successMessage.message

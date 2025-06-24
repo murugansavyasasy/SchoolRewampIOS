@@ -35,11 +35,23 @@ class APIService: NSObject, URLSessionDelegate {
         print("✅ Request URL: \(fullURL)")
         print("📦 Parameters: \(parameters ?? [:])")
         
+        
         var request = URLRequest(url: fullURL)
-        request.httpMethod = type
-        request.addValue("Application/json", forHTTPHeaderField: "Accept")
-        request.addValue("Application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(token, forHTTPHeaderField: "Authorization")
+        
+        
+        if token != PaucketHeader.Paucket{
+            request.httpMethod = type
+            request.addValue("Application/json", forHTTPHeaderField: "Accept")
+            request.addValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue(token, forHTTPHeaderField: "Authorization")
+        }else{
+            request.httpMethod = type
+            request.addValue("Application/json", forHTTPHeaderField: "Accept")
+            request.addValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue(PaucketHeader.api_key_value, forHTTPHeaderField: PaucketHeader.api_key)
+            request.addValue(PaucketHeader.partner_name_value, forHTTPHeaderField: PaucketHeader.partner_name)
+        }
+       
         
         if (type == "POST" || type == "PUT"), let parameters = parameters {
             do {

@@ -268,3 +268,12 @@ class LessonPlanStringFile{
     static let allclass = "allclass"
     static let key_value_data = "key_value_data"
 }
+
+class PaucketHeader{
+    
+    static let api_key = "api-key"
+    static let partner_name = "partner-name"
+    static let api_key_value = "33adab6a67a9eee6e72be49acfb6c100"
+    static let partner_name_value = "savyasasy"
+    static let Paucket = "Paucket"
+}

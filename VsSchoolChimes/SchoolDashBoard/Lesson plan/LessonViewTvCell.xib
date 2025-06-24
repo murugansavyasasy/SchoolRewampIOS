@@ -23,7 +23,7 @@
                         <rect key="frame" x="8" y="10" width="304" height="174"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wF1-L6-ms7">
-                                <rect key="frame" x="0.0" y="66" width="304" height="100"/>
+                                <rect key="frame" x="0.0" y="61" width="304" height="105"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBu-jR-nEe">
                                         <rect key="frame" x="-3" y="-50" width="310" height="50"/>
@@ -85,18 +85,18 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JDX-5j-ucg">
-                                        <rect key="frame" x="15" y="0.0" width="274" height="60"/>
+                                        <rect key="frame" x="15" y="0.0" width="274" height="65"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.2.circlepath.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Vfh-qz-AUa">
-                                                <rect key="frame" x="122" y="5.6666666666666661" width="30" height="28.666666666666671"/>
-                                                <color key="tintColor" systemColor="labelColor"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pending" translatesAutoresizingMaskIntoConstraints="NO" id="Vfh-qz-AUa">
+                                                <rect key="frame" x="122" y="5" width="30" height="30"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="Ver-O7-mpc"/>
                                                     <constraint firstAttribute="height" constant="30" id="zil-lj-h10"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yet To Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsP-o2-2U8">
-                                                <rect key="frame" x="10" y="43" width="254" height="12"/>
+                                                <rect key="frame" x="10" y="43" width="254" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                                 <nil key="highlightedColor"/>
@@ -109,12 +109,12 @@
                                             <constraint firstAttribute="bottom" secondItem="EsP-o2-2U8" secondAttribute="bottom" constant="5" id="Jhw-3M-uKI"/>
                                             <constraint firstAttribute="trailing" secondItem="EsP-o2-2U8" secondAttribute="trailing" constant="10" id="W6r-tt-nLT"/>
                                             <constraint firstItem="EsP-o2-2U8" firstAttribute="top" secondItem="Vfh-qz-AUa" secondAttribute="bottom" constant="8" id="Yl1-vd-wAi"/>
-                                            <constraint firstAttribute="height" constant="60" id="i4z-yT-C2B"/>
+                                            <constraint firstAttribute="height" constant="65" id="i4z-yT-C2B"/>
                                             <constraint firstItem="Vfh-qz-AUa" firstAttribute="centerX" secondItem="JDX-5j-ucg" secondAttribute="centerX" id="j8V-Cb-OGR"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="O3I-Dd-Bgv">
-                                        <rect key="frame" x="0.0" y="70" width="304" height="30"/>
+                                        <rect key="frame" x="0.0" y="75" width="304" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TqN-JK-cWg">
                                                 <rect key="frame" x="0.0" y="0.0" width="104" height="30"/>
@@ -192,7 +192,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="arrow.2.circlepath.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="Pending" width="21.333333969116211" height="21.333333969116211"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
@@ -200,23 +200,20 @@
         <namedColor name="meetcolour2">
             <color red="0.94509803921568625" green="0.62745098039215685" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
