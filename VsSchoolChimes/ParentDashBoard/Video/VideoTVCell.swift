@@ -13,6 +13,7 @@ import AVKit
 
 class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
+    @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var forwardBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var subjectName: UILabel!

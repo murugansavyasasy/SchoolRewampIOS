@@ -72,6 +72,7 @@ class RecipientVc: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         nodataFound.isHidden = true
         noRecordLbl.isHidden = true
         speficBtnName.isHidden = true
@@ -293,6 +294,7 @@ class RecipientVc: UIViewController{
                 ) { [self] in
                     
                     Common_request_params.removeAll()
+                    
                     if user_inputs.clearTempData(){
                         gotoDashboard()
                     }
@@ -1160,6 +1162,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func sendVoiceMessage_communication() {
         
+        print("user_inputs.duration",user_inputs.duration)
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
                 

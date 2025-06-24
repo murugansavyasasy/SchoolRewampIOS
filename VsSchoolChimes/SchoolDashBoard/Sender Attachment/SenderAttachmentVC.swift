@@ -311,15 +311,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         }else {
             
             
-            user_inputs.title = textFieldText
-            user_inputs.description = textViewText
+
+           
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
             
-            
             let params: [String: Any] = [
-                SendAttachmentStringFile.title: assignTitleTxtFld.text ?? "",
-                SendAttachmentStringFile.description: contentTextView.text ?? ""
+                SendAttachmentStringFile.title: textFieldText,
+                SendAttachmentStringFile.description: textViewText
             ]
             
             if isStaff(){

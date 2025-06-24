@@ -155,7 +155,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var  selectedAcadimicYearId: Int?
     var accadimYrIDs :[Int] = []
     var accadmicDefaultYrName : String?
-    
+    var forWardVoiceDuraction : Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -311,7 +311,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             user_inputs.voice_link = AudioPlayUrl!
             user_inputs.description = voiceTitleeTxt.text!
-            user_inputs.duration = voiceRecordedDuration ?? 0
+            user_inputs.duration = voiceRecordedDuration ?? forWardVoiceDuraction ?? 0
             user_inputs.is_schedule = isScheduleSelected
             user_inputs.is_emergency = isEmergencyVoice ?? false
             user_inputs.file_name = "sss-" + today_date + ".mp3"
@@ -1509,6 +1509,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
+            forWardVoiceDuraction = durations
             AudioPlayUrl = voiceUrl
             voiceTileTextFldCount.text = "\(title.count) of 500"
             ViewAnimator.animateConstraintChange { [self] in
@@ -1588,7 +1589,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
-            
+            forWardVoiceDuraction = durations
             ViewAnimator.animateConstraintChange { [self] in
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()

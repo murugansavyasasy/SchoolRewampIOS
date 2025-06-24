@@ -3,9 +3,9 @@
 //  School Chimes
 //  Created by SARANRAJ SHANMUGAM on 30/05/25.
 import UIKit
-import MobileCoreServices
 import AVFoundation
 import AVKit
+import MobileCoreServices
 
 protocol VideoPickerManagerDelegate: AnyObject {
     func videoPickerManager(didPickVideo url: URL)
@@ -14,7 +14,7 @@ protocol VideoPickerManagerDelegate: AnyObject {
 }
 
 class VideoPickerManager: NSObject {
-    
+
     weak var delegate: VideoPickerManagerDelegate?
     weak var presenter: UIViewController?
     private var player: AVPlayer?
@@ -27,7 +27,7 @@ class VideoPickerManager: NSObject {
 
     func pickVideo() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            print("Photo Library is not available")
+            print("❌ Photo Library is not available")
             return
         }
 
@@ -35,7 +35,7 @@ class VideoPickerManager: NSObject {
         picker.delegate = self
         picker.sourceType = .photoLibrary
         picker.mediaTypes = [kUTTypeMovie as String]
-        picker.allowsEditing = true
+        picker.allowsEditing = false // ✅ Prevent memory overhead
         presenter?.present(picker, animated: true)
     }
 
@@ -77,7 +77,9 @@ class VideoPickerManager: NSObject {
 
     func stopVideo() {
         player?.pause()
+        player?.replaceCurrentItem(with: nil) // ✅ Avoid AVPlayer memory retention
         player = nil
+
         playerVC?.view.removeFromSuperview()
         playerVC?.removeFromParent()
         playerVC = nil
@@ -97,19 +99,30 @@ class VideoPickerManager: NSObject {
         let imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform = true
         do {
-            let cgImage = try imageGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 1), actualTime: nil)
+            let cgImage = try imageGenerator.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 600), actualTime: nil)
             let image = UIImage(cgImage: cgImage)
+            imageGenerator.cancelAllCGImageGeneration() // ✅ Release memory after use
             delegate?.videoPickerManager(didGenerateThumbnail: image)
         } catch {
-            print("Error generating thumbnail: \(error)")
+            print("❌ Error generating thumbnail: \(error)")
         }
     }
 
     private func compressVideo(inputURL: URL, completion: @escaping (URL?) -> Void) {
-        let avAsset = AVURLAsset(url: inputURL)
+        let originalSize = fileSizeInMB(for: inputURL)
+        print("📦 Original size: \(String(format: "%.2f", originalSize)) MB")
 
+        if originalSize > 100 {
+            DispatchQueue.main.async {
+                self.alert(message: "Please select a video smaller than 100 MB.")
+            }
+            completion(nil)
+            return
+        }
+
+        let avAsset = AVURLAsset(url: inputURL)
         guard let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetMediumQuality) else {
-            print("Failed to create export session")
+            print("❌ Failed to create export session")
             completion(nil)
             return
         }
@@ -121,19 +134,18 @@ class VideoPickerManager: NSObject {
 
         exportSession.exportAsynchronously {
             switch exportSession.status {
-            case .completed:exportSession
-                print("Video compression successful: \(compressedURL)")
+            case .completed:
                 let compressedSize = self.fileSizeInMB(for: compressedURL)
-                print("Compressed video size: \(String(format: "%.2f", compressedSize)) MB")
+                print("✅ Compression successful: \(compressedURL.lastPathComponent) | Size: \(String(format: "%.2f", compressedSize)) MB")
                 completion(compressedURL)
             case .failed:
-                print("Compression failed: \(String(describing: exportSession.error))")
+                print("❌ Compression failed: \(String(describing: exportSession.error))")
                 completion(nil)
             case .cancelled:
-                print("Compression cancelled")
+                print("⚠️ Compression cancelled")
                 completion(nil)
             default:
-                print("Compression status: \(exportSession.status)")
+                print("ℹ️ Compression status: \(exportSession.status.rawValue)")
                 completion(nil)
             }
         }
@@ -146,10 +158,18 @@ class VideoPickerManager: NSObject {
         }
         return 0.0
     }
+
+    private func alert(message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "⚠️", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.presenter?.present(alert, animated: true)
+        }
+    }
 }
 
 extension VideoPickerManager: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
@@ -159,17 +179,25 @@ extension VideoPickerManager: UIImagePickerControllerDelegate, UINavigationContr
 
         guard let videoURL = info[.mediaURL] as? URL else { return }
 
-        let originalSize = fileSizeInMB(for: videoURL)
-        print("Original video size: \(String(format: "%.2f", originalSize)) MB")
+        // 🔄 Delay to prevent lag in UI
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            // Show loader if you have one
+//            CircularProgressLoader.shared.show(message: "Compressing...")
 
-        compressVideo(inputURL: videoURL) { [weak self] compressedURL in
-            guard let self = self, let compressedURL = compressedURL else { return }
+            self.compressVideo(inputURL: videoURL) { [weak self] compressedURL in
+                DispatchQueue.main.async {
+                    CircularProgressLoader.shared.hide()
+                }
 
-            DispatchQueue.main.async {
-                self.delegate?.videoPickerManager(didPickVideo: compressedURL)
-                self.generateThumbnail(from: compressedURL)
-                user_inputs.selectedFileType = AttachmentTypeString.VIDEO
+                guard let self = self, let compressedURL = compressedURL else { return }
+
+                DispatchQueue.main.async {
+                    self.delegate?.videoPickerManager(didPickVideo: compressedURL)
+                    self.generateThumbnail(from: compressedURL)
+                    user_inputs.selectedFileType = AttachmentTypeString.VIDEO
+                }
             }
         }
     }
+
 }
