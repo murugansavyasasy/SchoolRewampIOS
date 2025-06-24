@@ -355,7 +355,8 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func receiverFeeDetails(from viewController: UIViewController) {
-        let vc = FeeDetails(nibName: nil, bundle: nil)
+        //let vc = FeeDetails(nibName: nil, bundle: nil)
+        let vc = HomePaucktVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

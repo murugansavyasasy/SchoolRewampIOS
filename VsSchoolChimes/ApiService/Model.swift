@@ -849,6 +849,23 @@ struct LessonDetailItem: Codable {
     let value: String
 }
 
+struct LessonEditResponse: Codable {
+    let status: Bool?
+    let message: String?
+    var data: [LessonEditData]?
+}
+
+struct LessonEditData: Codable {
+    let id: String?
+    let name: String?
+    let field_id: String?
+    var value: String?
+    let field_type: String?
+    let field_data: [String]?
+    let is_disable: Bool?
+}
+
+
 
 // MARK: Packet Modal
 //
@@ -1051,24 +1068,6 @@ struct GetCoinData: Codable {
     var pointsRemaining : Int?
     var pointsPerCoupon : Int?
 }
-
-
-struct LessonEditResponse: Codable {
-    let status: Bool?
-    let message: String?
-    var data: [LessonEditData]?
-}
-
-struct LessonEditData: Codable {
-    let id: String?
-    let name: String?
-    let field_id: String?
-    var value: String?
-    let field_type: String?
-    let field_data: [String]?
-    let is_disable: Bool?
-}
-
 
 // MARK: - Assignment List Response
 

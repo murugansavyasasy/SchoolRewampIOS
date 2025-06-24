@@ -698,34 +698,3 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
     }
     
 }
-
-extension UILabel {
-    func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
-        // Main label font: Poppins-Bold, size 14
-        let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)
-
-        // Asterisk font: Poppins-Regular, larger size
-        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
-
-        let normalText = NSAttributedString(
-            string: text,
-            attributes: [
-                .font: mainFont,
-                .foregroundColor: self.textColor ?? .black
-            ])
-
-        let asteriskText = NSAttributedString(
-            string: "*",
-            attributes: [
-                .font: asteriskFont,
-                .foregroundColor: asteriskColor,
-                .baselineOffset: 2 // tweak to align nicely with main text
-            ])
-
-        let combined = NSMutableAttributedString()
-        combined.append(normalText)
-        combined.append(asteriskText)
-
-        self.attributedText = combined
-    }
-}
