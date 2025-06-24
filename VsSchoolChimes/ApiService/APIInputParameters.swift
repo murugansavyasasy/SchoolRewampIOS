@@ -140,7 +140,9 @@ class SendAttachmentStringFile {
     static let venue = "venue"
     static let event_date = "event_date"
     static let event_time = "event_time"
-    
+    static var intended_for = "intended_for"
+    static var visible_from = "visible_from"
+    static var visible_to = "visible_to"
    
 }
 

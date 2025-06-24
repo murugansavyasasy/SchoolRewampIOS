@@ -94,6 +94,9 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
         
+        let nib2 = UINib(nibName:CellConfingName.VideoTVCell, bundle: nil)
+        tableview.register(nib2, forCellReuseIdentifier: CellConfingName.VideoTVCell)
+        
         let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)
         FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
     }

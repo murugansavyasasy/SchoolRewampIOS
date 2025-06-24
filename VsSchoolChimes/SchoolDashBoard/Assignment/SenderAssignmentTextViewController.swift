@@ -378,14 +378,11 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
             assignmentResquestStringKey.submission_date: date,
         ]
         
-//        user_inputs.selectedImg = selectedImages
-//        user_inputs.docUrl =  fileUrls
         user_inputs.VideoPath = selectedVideoURL
         user_inputs.SelectedUrls = attachments
         
         let vc = RecipientVc(nibName: nil, bundle: nil)
         vc.Common_request_params = params
-        vc.ScreenType = Menu_id.AttachmentMenuId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -396,16 +393,14 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     @IBAction  func categoryDropdown (){
         dropDown.dataSource = ["GENERAL", "CLASS WORK", "PROJECT", "RESEARCH PAPER"]
         self.view.layoutIfNeeded()
-        dropDown.width = categoryDropDownView.bounds.width
-        dropDown.bottomOffset = CGPoint(x: 0, y: categoryDropDownView.bounds.height)
+        
+        dropDown.anchorView = categoryDropDownView
+        dropDown.bottomOffset = CGPoint(x: 0, y: (dropDown.anchorView?.plainView.bounds.height) ?? 0)
         dropDown.direction = .bottom
         dropDown.show()
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-            // Update the label inside the UIView
-            if let label = self?.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.categoryDropDownLbl.text = item
-            }
         }
     }
     

@@ -418,15 +418,21 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 return
             }
             
-            user_inputs.title = TitleTextfield.text ?? ""
-            user_inputs.description = textview.text
+//        assignmentResquestStringKey.title = TitleTextfield.text ?? ""
+//        assignmentResquestStringKey.description = textview.text
             user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
             user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            
+        let params: [String: Any] = [
+            SendAttachmentStringFile.title: textFieldText,
+            SendAttachmentStringFile.description: textViewText,
+            SendAttachmentStringFile.visible_from : user_inputs.FromDate,
+            SendAttachmentStringFile.visible_to : user_inputs.ToDate
+        ]
            
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
+        vc.Common_request_params = params
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
            
