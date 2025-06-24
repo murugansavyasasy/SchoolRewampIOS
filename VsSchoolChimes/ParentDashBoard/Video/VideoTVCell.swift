@@ -13,6 +13,7 @@ import AVKit
 
 class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
+    @IBOutlet weak var dateAndtimeLbl: UILabel!
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var forwardBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
@@ -38,6 +39,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
     override func awakeFromNib() {
         super.awakeFromNib()
         datelbl.setFont(style: .body, size: FontSize.BodySize)
+        dateAndtimeLbl.setFont(style: .body, size: FontSize.BodySize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         
@@ -57,20 +59,20 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
 
     func confic(_ url: String) {
         
-        if let videoID = extractVimeoID(from: url) {
-            fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
-                if let firstURLString = urls.first,
-                   let videoURL = URL(string: firstURLString) {
-                    DispatchQueue.main.async {
-                        self.setupPlayer(url: videoURL)
-                    }
-                } else {
-                    print("No video URLs found or invalid URL format")
-                }
-            }
-        } else {
-            print("Invalid Vimeo URL")
-        }
+//        if let videoID = extractVimeoID(from: url) {
+//            fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
+//                if let firstURLString = urls.first,
+//                   let videoURL = URL(string: firstURLString) {
+//                    DispatchQueue.main.async {
+//                        self.setupPlayer(url: videoURL)
+//                    }
+//                } else {
+//                    print("No video URLs found or invalid URL format")
+//                }
+//            }
+//        } else {
+//            print("Invalid Vimeo URL")
+//        }
     }
 
     func hiddenui(_ hide:Bool){

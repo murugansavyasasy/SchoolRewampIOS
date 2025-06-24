@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -122,6 +122,12 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s4a-L9-jDt">
+                                        <rect key="frame" x="0.0" y="14" width="334" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -159,13 +165,16 @@
                 <outlet property="ImageCollectionView" destination="fQA-Qk-MLg" id="uNM-oi-YGi"/>
                 <outlet property="SelectBtnHeight" destination="HKr-32-SdP" id="LE0-ai-vY5"/>
                 <outlet property="cellview" destination="7b9-lt-wsP" id="uHl-xt-GIn"/>
+                <outlet property="dateLblHeight" destination="x3c-x9-d4f" id="Ham-Bl-zoT"/>
                 <outlet property="dateLble" destination="jy1-vl-Tjq" id="X0u-sA-bI9"/>
                 <outlet property="descriptionLbl" destination="7Bk-XA-jfN" id="Nse-hY-klq"/>
+                <outlet property="eventTimeLbl" destination="s4a-L9-jDt" id="blq-5U-m0I"/>
                 <outlet property="forwordBtn" destination="Vvq-7f-GGP" id="gcz-Sv-qAG"/>
                 <outlet property="newView" destination="Raq-WQ-d8t" id="Puw-d2-HHz"/>
                 <outlet property="pageViewController" destination="igp-8E-3Qo" id="E8F-Gl-kDx"/>
                 <outlet property="subjectName" destination="29J-Gi-X61" id="d7i-ux-Lb5"/>
                 <outlet property="topics" destination="tgv-yq-t3f" id="yBE-tN-lcZ"/>
+                <outlet property="withofImageView" destination="JbQ-Jg-zBO" id="qwv-n1-AMR"/>
             </connections>
             <point key="canvasLocation" x="76.33587786259541" y="129.57746478873241"/>
         </tableViewCell>
@@ -174,13 +183,13 @@
         <image name="newimg" width="498" height="501"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -232,11 +232,13 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
         if section == 0{
             
             let event = FilteredData?[indexPath.row]
             if event?.file_path.first?.type?.uppercased() == "VIDEO"{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+                cell.selectionStyle = .none
                 cell.confic(event?.file_path.first?.url ?? "")
                 cell.descriptContent.setupExpandable(text: event?.description ?? "")
                 cell.descriptContent.onExpandableTap = {
@@ -245,21 +247,32 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                     tableView.endUpdates()
                 }
                 cell.newImg.isHidden = true
-                cell.datelbl.text = event?.date.convertToTargetDateFormat() ?? "-"
+                cell.datelbl.isHidden = true
+                let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
+                cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
+                    event?.time ?? ""
+                ) + " , " + "   📆   " + formattedDateString
                 cell.titleLbl.text = event?.title
-                cell.subjectName.text = event?.venue
+                cell.subjectName.text = "📍" + (event?.venue ?? "")
                 cell.subjectName.isHidden = false
                 cell.layoutIfNeeded()
                 return cell
             }else{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
+                cell.selectionStyle = .none
                 cell.ImageCollectionView.isHidden = true
+                cell.withofImageView.constant = 0
+                cell.dateLblHeight.constant = 0
                 // Configure cell data
-                cell.subjectName.text = event?.venue
+                cell.subjectName.text = "📍" + (event?.venue ?? "")
                 cell.topics.text = event?.title ?? ""
-                
-                
-    //            cell.dateLble.text = event?.date.convertToTargetDateFormat() ?? "-"
+                cell.eventTimeLbl.isHidden = false
+                let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
+                cell.eventTimeLbl.text = "🕒 Event starts at: " + (
+                    event?.time ?? ""
+                ) + " , " + "   📆   " + formattedDateString
+                cell.dateLble.isHidden = true
+//                cell.dateLble.text = ""
                 cell.forwordBtn.isHidden = true
                 cell.SelectBtnHeight.constant = 0
                 cell.newView.isHidden = true
@@ -271,9 +284,9 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 }
                 let contentText = event?.description ?? ""
                 cell.descriptionLbl.setupExpandable(text: contentText)
-                let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 
-                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
+                
+//                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
 //                cell.newView.isHidden = contentText.count <= 100
                 cell.descriptionLbl.onExpandableTap = { [weak tableView] in
                     cell.descriptionLbl.isExpanded.toggle()
