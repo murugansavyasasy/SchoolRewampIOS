@@ -58,10 +58,11 @@ class  commonApi_forSending {
                     ) {
                         videoURLString,
                         iframeHTML,
-                        fileSize in
+                        fileSize,
+                        finalEmbedUrl in
                         
                         if let videoURLString = videoURLString {
-                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
+                            uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
                             if let iframeHTML = iframeHTML {
                                 iframeValue = iframeHTML
                             }
@@ -199,7 +200,7 @@ class  commonApi_forSending {
     
     
     //Function for video upload
-    func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void) {
+    func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
         
         CircularProgressLoader.shared.show()
@@ -209,7 +210,7 @@ class  commonApi_forSending {
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
             CircularProgressLoader.shared.updateProgress(to: progress)
-        }, completion: { videoURL, iframeHTML, fileSize in
+        }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
             CircularProgressLoader.shared.hide()
             
             if let videoURL = videoURL {
@@ -220,13 +221,16 @@ class  commonApi_forSending {
                 if let size = fileSize {
                     print("📦 File size: \(size) bytes")
                 }
+                if let emb = finalEmbedUrl {
+                    print("📦 File : \(emb)")
+                }
                 try? FileManager.default.removeItem(at: URL(fileURLWithPath: videoURL))
                 
                 
-                completion(videoURL, iframeHTML, fileSize)
+                completion(videoURL, iframeHTML, fileSize, finalEmbedUrl)
             } else {
                 print("❌ Upload failed!")
-                completion(nil, nil, nil)
+                completion(nil, nil, nil,nil)
             }
         })
     }
