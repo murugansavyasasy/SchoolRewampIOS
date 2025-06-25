@@ -9,6 +9,9 @@ import UIKit
 
 class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var dateLblHeight: NSLayoutConstraint!
+    @IBOutlet weak var withofImageView: NSLayoutConstraint!
+    @IBOutlet weak var eventTimeLbl: UILabel!
     @IBOutlet weak var CvHeight: NSLayoutConstraint!
     @IBOutlet weak var newView: UIImageView!
     @IBOutlet weak var forwordBtn: UIButton!
@@ -29,8 +32,10 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         dateLble.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         topics.setFont(style: .title, size: FontSize.TitleSize)
+        eventTimeLbl.setFont(style: .title, size: 12)
         forwordBtn.layer.cornerRadius = 4
         forwordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
         cellview.layer.cornerRadius = 10
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5

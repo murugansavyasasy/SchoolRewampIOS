@@ -40,10 +40,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="xmC-Zy-xA2">
-                                <rect key="frame" x="359.33333333333331" y="297.33333333333331" width="119.66666666666669" height="120.66666666666669"/>
+                                <rect key="frame" x="479" y="297.33333333333331" width="0.0" height="120.66666666666669"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat, Sept 8, 2024" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDP-As-xaT">
-                                        <rect key="frame" x="0.0" y="0.0" width="119.66666666666667" height="25"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDP-As-xaT">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="kDe-cH-WnA"/>
                                         </constraints>
@@ -52,16 +52,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="lr4-B1-fua">
-                                        <rect key="frame" x="0.0" y="120.66666666666669" width="119.66666666666667" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="120.66666666666669" width="0.0" height="0.0"/>
                                         <subviews>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeJ-zC-0fu">
-                                                <rect key="frame" x="119.66666666666669" y="0.0" width="0.0" height="25"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="25"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikf-6W-eIe">
-                                                <rect key="frame" x="119.66666666666669" y="0.0" width="80" height="25"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="25"/>
                                                 <color key="backgroundColor" systemColor="systemMintColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="Gz0-1W-S1K"/>
@@ -107,6 +107,12 @@
                                         <rect key="frame" x="0.0" y="30.333333333333314" width="457" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lD-tM-fvb">
+                                        <rect key="frame" x="0.0" y="47.333333333333314" width="457" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -162,6 +168,7 @@
             <connections>
                 <outlet property="OuterView" destination="y10-eG-N7i" id="TUQ-Fc-gWc"/>
                 <outlet property="Unreadview" destination="U4W-Hk-W7t" id="ofC-uV-Eqz"/>
+                <outlet property="dateAndtimeLbl" destination="1lD-tM-fvb" id="YO2-iH-AlW"/>
                 <outlet property="datelbl" destination="oDP-As-xaT" id="GcX-tQ-OFb"/>
                 <outlet property="descriptContent" destination="dCM-yi-Fai" id="D0L-lu-NEO"/>
                 <outlet property="forwardBtn" destination="Ikf-6W-eIe" id="t2t-XL-n2D"/>
