@@ -10,6 +10,7 @@ import UIKit
 
 struct ServiceUrl{
     static var baseurl = "http://apiv7.schoolchimes.net/"
+    static var Pacukt_baseurl = "http://api.pauket.com/api/partner/"
     static var report_url = ""
     static var token = ""
     static var awsBucketName = ""

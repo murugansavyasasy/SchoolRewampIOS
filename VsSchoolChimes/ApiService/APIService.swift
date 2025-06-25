@@ -26,7 +26,7 @@ class APIService: NSObject, URLSessionDelegate {
             return
         }
         
-        guard let fullURL = buildURLWithQueryParams(path: url, queryParams: parameters, method: type) else {
+        guard let fullURL = buildURLWithQueryParams(path: url, queryParams: parameters, method: type, baseUrlType: token ) else {
             let error = getError(statusCode: 0, description: "Invalid URL")
             completionHandler(.failure(error))
             return
@@ -37,7 +37,6 @@ class APIService: NSObject, URLSessionDelegate {
         
         
         var request = URLRequest(url: fullURL)
-        
         
         if token != PaucketHeader.Paucket{
             request.httpMethod = type
@@ -84,17 +83,26 @@ class APIService: NSObject, URLSessionDelegate {
             }
         }.resume()
     }
+    
 
     // MARK: - Build URL with query parameters for GET
-    private func buildURLWithQueryParams(path: String, queryParams: [String: Any]?, method: String) -> URL? {
-        var components = URLComponents(string: ServiceUrl.baseurl + path)
-
+    private func buildURLWithQueryParams(path: String, queryParams: [String: Any]?, method: String,baseUrlType:String) -> URL? {
+        
+        let baseURL: String
+        if baseUrlType != PaucketHeader.Paucket {
+            baseURL = ServiceUrl.baseurl // or a different one like ServiceUrl.paucketBaseURL
+        } else {
+            baseURL = ServiceUrl.Pacukt_baseurl
+        }
+        var components = URLComponents(string: baseURL + path)
+        
+    
         if method.uppercased() == "GET", let queryParams = queryParams {
             components?.queryItems = queryParams.map {
                 URLQueryItem(name: $0.key, value: "\($0.value)")
             }
         }
-
+        
         return components?.url
     }
 

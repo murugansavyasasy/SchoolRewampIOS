@@ -36,6 +36,8 @@ class HomePaucktVC: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        
+        
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
                 searchTextField.inputAccessoryView = getDoneToolbar()
             }
@@ -131,7 +133,7 @@ class HomePaucktVC: UIViewController
         if collectionView == categoriesCV{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CaterogyCvCell", for: indexPath) as! CaterogyCvCell
                     let category = categories[indexPath.item]
-                  //  cell.configure(with: category, selected: indexPath.item == selectedCategoryIndex)
+                    cell.configure(with: category, selected: indexPath.item == selectedCategoryIndex)
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CoupenCvCell", for: indexPath) as! CoupenCvCell
@@ -197,38 +199,44 @@ class HomePaucktVC: UIViewController
         
         if collectionView == couponsCV{
             
-//            let vc = CooponViewVC(nibName: nil, bundle: nil)
-//            vc.source_Link = filteredOffers[indexPath.row].source_link ?? ""
-//            vc.Category = filteredOffers[indexPath.row].category_name
-//            vc.ThumbnailImg = filteredOffers[indexPath.row].thumbnail
-//            vc.totalPoints = String(getCoinData?.pointsEarned ?? 0)
-//            
-//            if let status = filteredOffers[indexPath.row].coupon_status {
-//                
-//                vc.ActivatedStatus = status
-//            }
-//            
-//            vc.modalPresentationStyle = .fullScreen
-//            present(vc, animated: true)
+            let vc = CooponViewVC(nibName: nil, bundle: nil)
+            vc.source_Link = filteredOffers[indexPath.row].source_link ?? ""
+            vc.Category = filteredOffers[indexPath.row].category_name
+            vc.ThumbnailImg = filteredOffers[indexPath.row].thumbnail
+            vc.totalPoints = String(getCoinData?.pointsEarned ?? 0)
+            
+            if let status = filteredOffers[indexPath.row].coupon_status {
+                
+                vc.ActivatedStatus = status
+            }
+            
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
             
         } else if collectionView == categoriesCV {
             
-//            selectedCategoryIndex = indexPath.item
-//                    categoriesCV.reloadData()
-//                    
-//                    let selectedCategory = categories[indexPath.item]
-//                    if selectedCategory.id == 0 {
-//                        AllCouponsLbl.text = "All Coupons"
-//                        Get_campians(parameter: ["mobile_no": "91" + (mobileNumber ?? "")])
-//                    } else {
-//                        AllCouponsLbl.text = selectedCategory.category_name
-//                        Get_campians(parameter: [
-//                            "mobile_no": "91" + (mobileNumber ?? ""),
-//                            "category_id": "\(selectedCategory.id ?? 0)"
-//                        ])
-//                    }
-//                    couponsCV.reloadData()
-                }
+            selectedCategoryIndex = indexPath.item
+            categoriesCV.reloadData()
+            
+            let selectedCategory = categories[indexPath.item]
+            if selectedCategory.id == 0 {
+                AllCouponsLbl.text = "All Coupons"
+                Get_campians(
+                    parameter: ["mobile_no": "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
+                )
+            } else {
+                AllCouponsLbl.text = selectedCategory.category_name
+                Get_campians(
+                    parameter: [
+                        "mobile_no": "91" + (
+                            UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
+                        ),
+                        "category_id": "\(selectedCategory.id ?? 0)"
+                    ]
+                )
+            }
+            couponsCV.reloadData()
+        }
         
     }
     
@@ -260,10 +268,40 @@ class HomePaucktVC: UIViewController
             switch result{
                 
             case .success(let success):
-                DispatchQueue.main.async {
-                    let categoryData:CategoryData?
-                    categoryData = success.data
-                   // self.categories = categoryData?.categories ?? []
+                DispatchQueue.main.async { [self] in
+
+                    if success.data?.categories?.count == 0 {
+                            AllCouponsLbl.isHidden = true
+                            norecordLbl.isHidden = false
+                            norecordLbl.text = "There is no Coupon Found"
+                        } else {
+                            norecordLbl.isHidden = true
+                            AllCouponsLbl.isHidden = false
+
+                            var updatedCategories = success.data?.categories ?? []
+                            let allCategory = Categorys(id: 0, category_name: "All")
+                            updatedCategories.insert(allCategory, at: 0)
+                            self.categories = updatedCategories
+                            
+                            categoriesCV.delegate = self
+                            categoriesCV.dataSource = self
+                            self.categoriesCV.reloadData()
+                            
+                            // ✅ Auto-select and auto-scroll to first index
+                            let firstIndex = IndexPath(item: 0, section: 0)
+                            self.categoriesCV.selectItem(at: firstIndex, animated: false, scrollPosition: [])
+                            self.categoriesCV.scrollToItem(at: firstIndex, at: .left, animated: true)
+                            self.collectionView(self.categoriesCV, didSelectItemAt: firstIndex)
+                        }
+
+                       
+                        Get_campians(
+                            parameter: ["mobile_no": "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
+                        )
+                        
+                        
+                        
+                    
                 }
             case .failure(let error):
                 
@@ -273,126 +311,51 @@ class HomePaucktVC: UIViewController
             }
         }
     }
-//    func Get_Categories(){
-//        let param : [String : Any] =
-//        ["": ""]
-//        print("paramparamm,nc",param)
-//        
-//        Get_Category_List.call_request(param: param,headers: DefaultsKeys.packut_Headers ){ [self]
-//            (res) in
-//            
-//            print("resres",res)
-//            let getattendace : CategoriesResponse = Mapper<CategoriesResponse>().map(JSONString: res)!
-//            
-//            if getattendace.status == true {
-//                
-//                if getattendace.data?.categories?.count == 0 {
-//                    AllCouponsLbl.isHidden = true
-//                    norecordLbl.isHidden = false
-//                    norecordLbl.text = "There is no Coupon Found"
-//                } else {
-//                    norecordLbl.isHidden = true
-//                    AllCouponsLbl.isHidden = false
-//
-//                    var updatedCategories = getattendace.data?.categories ?? []
-//                    let allCategory = CategoryDatas(JSON: ["id": 0, "category_name": "All"])
-//                    updatedCategories.insert(allCategory!, at: 0)
-//                    self.categories = updatedCategories
-//                    
-//                    categoriesCV.delegate = self
-//                    categoriesCV.dataSource = self
-//                    self.categoriesCV.reloadData()
-//                    
-//                    // ✅ Auto-select and auto-scroll to first index
-//                    let firstIndex = IndexPath(item: 0, section: 0)
-//                    self.categoriesCV.selectItem(at: firstIndex, animated: false, scrollPosition: [])
-//                    self.categoriesCV.scrollToItem(at: firstIndex, at: .left, animated: true)
-//                    self.collectionView(self.categoriesCV, didSelectItemAt: firstIndex)
-//                }
-//
-//               
-//                Get_campians(
-//                    parameter: ["mobile_no": "91" + (mobileNumber ?? "")]
-//                )
-//                
-//                
-//                
-//            }else{
-//            }
-//        }
-//        
-//    }
-//
-//    func get_coins(onComplete: @escaping() -> Void){
-//        
-//        let param : [String : Any] =
-//        ["user_type": 1,
-//         "mobile_number" : mobileNumber ?? "" ]
-//        
-//        get_coinsReq.call_request(param: param){ [self]
-//            (res) in
-//            
-//            print("resres",res)
-//            let getLocationResponse : get_coinResponce = Mapper<get_coinResponce>().map(JSONString: res)!
-//            
-//            
-//            if getLocationResponse.status == 1  {
-//                
-//                getCoinData = getLocationResponse.data
-//                totalCoinsLbl.text  = String(getCoinData?.pointsEarned ?? 0)
-//                UsedCoinsLbl.text = "Used : "+String(getCoinData?.pointsSpent ?? 0) + " , " + "Available : "+String(
-//                    getCoinData?.pointsRemaining ?? 0
-//                )
-//            }
-//            
-//            else{
-//                
-//                
-//        }
-//        
-//            onComplete()
-//       
-//        }
-//        
-//        
-//    }
-//
-//
-//    func Get_campians(parameter : [String: Any]){
-//        print("paramparamm,nc",parameter)
-//        Get_campians_Request.call_request(param: parameter,headers:  DefaultsKeys.packut_Headers ){ [self]
-//            (res) in
-//            
-//            //print("resresesrgdrgdrgdrf",res)
-//            let getattendace : CampaignsResponse = Mapper<CampaignsResponse>().map(JSONString: res)!
-//            
-//            if getattendace.status == true  {
-//                
-//                if getattendace.data?.campaigns?.data?.count ?? 0 == 0 {
-//                    norecordLbl.isHidden = false
-//                    norecordLbl.text = "There is no Coupon Found"
-//                    AllCouponsLbl.isHidden = true
-//                    couponsCV.isHidden = true
-//                }else{
-//                    norecordLbl.isHidden = true
-//                    AllCouponsLbl.isHidden = false
-//                    CampaignData = getattendace.data?.campaigns?.data ?? []
-//                    filteredOffers = CampaignData
-//                    couponsCV.isHidden = false
-//                    couponsCV.delegate = self
-//                    couponsCV.dataSource = self
-//                    couponsCV.reloadData()
-//                }
-//            }else{
-//        
-//                
-//            }
-//        }
-//        
-//    }
+
+    func Get_campians(parameter : [String: Any]){
+        print("paramparamm,nc",parameter)
+        
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.get_category_list, parameters: parameter, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
+                result: Result<CampaignsResponse,
+                Error>
+            ) in
+            
+            switch result{
+                
+            case .success(let success):
+                DispatchQueue.main.async { [self] in
+                    if success.data?.campaigns?.data?.count ?? 0 == 0 {
+                        norecordLbl.isHidden = false
+                        norecordLbl.text = "There is no Coupon Found"
+                        AllCouponsLbl.isHidden = true
+                        couponsCV.isHidden = true
+                    }else{
+                        norecordLbl.isHidden = true
+                        AllCouponsLbl.isHidden = false
+                        CampaignData = success.data?.campaigns?.data ?? []
+                        filteredOffers = CampaignData
+                        couponsCV.isHidden = false
+                        couponsCV.delegate = self
+                        couponsCV.dataSource = self
+                        couponsCV.reloadData()
+                    }
+                    
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print("Error:",error.localizedDescription)
+                }
+            }
+        }
+    }
     
     
 }
+
+
 
 struct Offer {
     let title: String

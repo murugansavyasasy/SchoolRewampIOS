@@ -76,23 +76,23 @@ class CaterogyCvCell: UICollectionViewCell {
            ])
        }
        
-    func configure(with category: Category, selected: Bool) {
-//           titleLabel.text = category.category_name
-//           iconImageView.sd_setImage(
-//            with: URL(string: category.category_image ?? ""),
-//               placeholderImage: UIImage(systemName: "photo")
-//           )
-//           
-//           if selected {
-//               containerView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
-//               containerView.layer.borderWidth = 2
-//               containerView.layer.borderColor = UIColor.systemBlue.cgColor
-//               titleLabel.textColor = UIColor.systemBlue
-//           } else {
-//               containerView.backgroundColor = UIColor(white: 0.98, alpha: 1.0)
-//               containerView.layer.borderWidth = 0
-//               containerView.layer.borderColor = UIColor.clear.cgColor
-//               titleLabel.textColor = UIColor.darkGray
-//           }
+    func configure(with category: Categorys, selected: Bool) {
+           titleLabel.text = category.category_name
+           iconImageView.sd_setImage(
+            with: URL(string: category.category_image ?? ""),
+               placeholderImage: UIImage(systemName: "photo")
+           )
+           
+           if selected {
+               containerView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
+               containerView.layer.borderWidth = 2
+               containerView.layer.borderColor = UIColor.systemBlue.cgColor
+               titleLabel.textColor = UIColor.systemBlue
+           } else {
+               containerView.backgroundColor = UIColor(white: 0.98, alpha: 1.0)
+               containerView.layer.borderWidth = 0
+               containerView.layer.borderColor = UIColor.clear.cgColor
+               titleLabel.textColor = UIColor.darkGray
+           }
       }
    }

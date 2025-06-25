@@ -989,6 +989,11 @@ struct Categorys: Codable {
     var id: Int?
     var category_name: String?
     var category_image: String?
+    
+    init(id: Int, category_name: String) {
+            self.id = id
+            self.category_name = category_name
+        }
 }
 
 
