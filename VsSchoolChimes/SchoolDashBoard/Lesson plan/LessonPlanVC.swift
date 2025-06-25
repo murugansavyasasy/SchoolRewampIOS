@@ -148,13 +148,28 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         cell.StandardLbl.text = (Lesson?.class_name ?? "") + " - " + (Lesson?.section_name ?? "")
         cell.StaffNameLbl.text = Lesson?.staff_name
         cell.CompletedItemsLbl.text = "Items completed : \(Lesson?.items_completed ?? "")"
+        cell.ArrowImage.isHidden = Lesson?.percentage_value == 0
         let percentage = Double(Lesson?.percentage_value ?? 0)
         cell.setProgress(to: percentage)
-        
+        cell.isAnimate = false
         cell.ViewBtn.tag = indexPath.row
         cell.ViewBtn.addTarget(self, action: #selector(ViewbtnAct(_:)), for: .touchUpInside)
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let lesson = SearchData?[indexPath.row] else { return }
+        
+        if lesson.percentage_value != 0{
+            let vc = ViewLessonVC(nibName: nil, bundle: nil)
+            vc.Reqest_Type = ReqestType
+            vc.SubjectId = lesson.section_subject_id
+            vc.modalPresentationStyle = .fullScreen
+            
+            present(vc, animated: true)
+        }
     }
     
     @objc func ViewbtnAct(_ sender: UIButton) {

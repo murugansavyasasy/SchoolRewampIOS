@@ -276,4 +276,6 @@ class PaucketHeader{
     static let api_key_value = "33adab6a67a9eee6e72be49acfb6c100"
     static let partner_name_value = "savyasasy"
     static let Paucket = "Paucket"
+    static let source_link = "source_link"
+    static let mobile_no = "mobile_no"
 }

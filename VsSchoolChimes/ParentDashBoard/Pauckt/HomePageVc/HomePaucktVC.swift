@@ -298,10 +298,6 @@ class HomePaucktVC: UIViewController
                         Get_campians(
                             parameter: ["mobile_no": "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
                         )
-                        
-                        
-                        
-                    
                 }
             case .failure(let error):
                 

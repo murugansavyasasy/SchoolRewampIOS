@@ -100,6 +100,8 @@ struct ServiceUrl{
     static let get_Points = "get-Points"
     //
     static let comm_api_assignment_delete = "comm/api/assignment/delete"
+    static let comm_api_msg_from_management_get_messages_staff = "comm/api/msg-from-management/get-messages-staff"
+    static let comm_api_msg_from_management_get_messages_staff_archive = "comm/api/msg-from-management/get-messages-staff-archive"
     
 }
 
@@ -146,6 +148,7 @@ struct Menu_id{
     static let schoolStrength = 31
     static let  AbsenteeismReport = 1
     static let  LessonPlan = 19
+    static let  MessageFromManagement = 22
 }
 struct TargetTypes{
     

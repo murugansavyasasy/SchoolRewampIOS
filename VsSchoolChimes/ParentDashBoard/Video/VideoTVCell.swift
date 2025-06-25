@@ -54,6 +54,10 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         OuterView.layer.cornerRadius = 20
         playbtl.layer.cornerRadius = playbtl.frame.height/2
         print(file_path?.count ?? 0)
+        playerview.isHidden = true
+        thumimg.isHidden = true
+        playbtl.isHidden = true
+        
     }
 
 
@@ -73,6 +77,17 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
 //        } else {
 //            print("Invalid Vimeo URL")
 //        }
+        
+        let dataTypes = Set([WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeCookies])
+         WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: Date.distantPast) {
+         print("WebView cache cleared")
+
+         // Load video
+         if let url = URL(string: url) {
+         let request = URLRequest(url: url)
+         self.webview.load(request)
+         }
+         }
     }
 
     func hiddenui(_ hide:Bool){
