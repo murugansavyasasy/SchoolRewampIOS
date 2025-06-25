@@ -148,6 +148,7 @@ struct Menu_id{
     static let schoolStrength = 31
     static let  AbsenteeismReport = 1
     static let  LessonPlan = 19
+    static let  MessageFromManagement = 22
 }
 struct TargetTypes{
     

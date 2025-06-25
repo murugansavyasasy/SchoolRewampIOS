@@ -23,6 +23,8 @@ class CooponViewVC: UIViewController,UICollectionViewDelegate, UICollectionViewD
     var ThumbnailImg : String?
     var ActivatedStatus: String?
     var totalPoints: String?
+    var campaignData: CampaignDetails?
+    var studentetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         shareBtn.layer.cornerRadius = 15
@@ -35,50 +37,78 @@ class CooponViewVC: UIViewController,UICollectionViewDelegate, UICollectionViewD
         cv.dataSource = self
 //        startAutoScroll()
         view.bringSubviewToFront(backBtn)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-//            let detailViewController = BottomView()
-//            detailViewController.category = Category
-//            detailViewController.sourceLink = source_Link
-//            detailViewController.CouponStatus = ActivatedStatus
-//            detailViewController.totalPoints = totalPoints
-//            
-//            let nav = UINavigationController(rootViewController: detailViewController)
-//            
-//            // 1 - Set modal presentation style
-//            nav.modalPresentationStyle = .pageSheet
-//            
-//            // 2 - Configure bottom sheet
-//            if let sheet = nav.sheetPresentationController {
-//                if #available(iOS 16.0, *) {
-//                    sheet.detents = [.custom { _ in 470 }, .large()]
-//                }
-//                sheet.prefersGrabberVisible = false // Hide grabber
-//                sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
-//            }
-//            
-//            // 3 - Prevent dismiss on swipe down
-//            nav.isModalInPresentation = true
-//            // 4 - Present the bottom sheet
-//            present(nav, animated: true)
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            let detailViewController = BottomView()
+            detailViewController.category = Category
+            detailViewController.sourceLink = source_Link
+            detailViewController.CouponStatus = ActivatedStatus
+            detailViewController.totalPoints = totalPoints
+            
+            let nav = UINavigationController(rootViewController: detailViewController)
+            
+            // 1 - Set modal presentation style
+            nav.modalPresentationStyle = .pageSheet
+            
+            // 2 - Configure bottom sheet
+            if #available(iOS 15.0, *) {
+                if let sheet = nav.sheetPresentationController {
+                    if #available(iOS 16.0, *) {
+                        sheet.detents = [.custom { _ in 470 }, .large()]
+                    }
+                    sheet.prefersGrabberVisible = false // Hide grabber
+                    sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+            
+            // 3 - Prevent dismiss on swipe down
+            nav.isModalInPresentation = true
+            // 4 - Present the bottom sheet
+            present(nav, animated: true)
+        }
         
     }
-//    func startAutoScroll() {
-//        autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
-//    }
-//    
-//    @objc func autoScroll() {
-//        let nextIndex = (currentIndex + 1) % 3
-//        let nextIndexPath = IndexPath(item: nextIndex, section: 0)
-//        cv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
-//        currentIndex = nextIndex
-//        
-//    }
-//    
-//    @objc func stopAutoScroll() {
-//        autoScrollTimer?.invalidate()
-//        autoScrollTimer = nil
-//    }
+    func startAutoScroll() {
+        autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+    }
+    
+    @objc func autoScroll() {
+        let nextIndex = (currentIndex + 1) % 3
+        let nextIndexPath = IndexPath(item: nextIndex, section: 0)
+        cv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
+        currentIndex = nextIndex
+        
+    }
+    
+    @objc func stopAutoScroll() {
+        autoScrollTimer?.invalidate()
+        autoScrollTimer = nil
+    }
+    
+    
+    func get_campaign_details(){
+        
+        let param: [String: Any] = [PaucketHeader.source_link:source_Link ?? "", PaucketHeader.mobile_no: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""]
+        
+        APIService.shared.makeApi(url: ServiceUrl.get_campaign_details, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket) {[self] (result: Result<CampaignResponse,Error>) in
+            
+            switch result{
+                
+            case .success(let success):
+                DispatchQueue.main.async { [self] in
+                        
+                    campaignData = success.data?.campaign_details
+                    
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print("Error:",error.localizedDescription)
+                }
+            }
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1

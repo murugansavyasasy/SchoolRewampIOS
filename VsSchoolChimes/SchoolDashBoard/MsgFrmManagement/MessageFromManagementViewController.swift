@@ -39,9 +39,13 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         NoDataLbl.isHidden = true
         NoDataImage.isHidden = true
         
+        Cell_Registration()
+        
         tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
         tv.dataSource = self
         tv.delegate = self
+        
+        Get_messages()
         
     }
     
@@ -51,6 +55,16 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+    }
+    
+    func Cell_Registration() {
+        tv.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
+        
+        tv.register(UINib(nibName: CellConfingName.HistoryTC, bundle: nil), forCellReuseIdentifier: CellConfingName.HistoryTC)
+        
+        tv.register(UINib(nibName: CellConfingName.HomeWorkTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
+        
+        tv.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
     
     //MARK: Get Message Data Api call
@@ -67,6 +81,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     messageData = success.data
                     SearchData = messageData
                     
+                    NoDataLbl.text = success.message
                     NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
                     SearchBar.isHidden = (messageData?.isEmpty ?? false)
@@ -79,6 +94,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     NoDataImage.isHidden = false
                     NoDataLbl.isHidden = false
                     SearchBar.isHidden = true
+                    NoDataLbl.text = error.localizedDescription
                     tv.reloadData()
                 }
             }
@@ -95,37 +111,36 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MessageFromManagementTableViewCell, for: indexPath)as! MessageFromManagementTableViewCell
         
         let Message = SearchData?[indexPath.row]
         
         switch Message?.type {
             
         case "ATTACHMENT":
-            ""
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
+            
+            return cell
+            
         case "TEXT":
-            ""
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
+            
+            cell.MessageTitle.text = Message?.title
+            cell.descriptContent.text = Message?.content
+            cell.DateLabel
+            
+            
+            return cell
+            
         case "VOICE":
-            ""
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+            
+            return cell
+            
         default:
-            ""
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
+            
+            return cell
         }
-        
-        let voiceTapGest = UITapGestureRecognizer(target: self, action: #selector(voiceTap))
-        cell.voiceView.addGestureRecognizer(voiceTapGest)
-        
-        let textTapGest = UITapGestureRecognizer(target: self, action: #selector(textTap))
-        cell.textView.addGestureRecognizer(textTapGest)
-        
-        let pdfTapGest = UITapGestureRecognizer(target: self, action: #selector(pdfTap))
-        cell.pdfView.addGestureRecognizer(pdfTapGest)
-        
-        let imgTapGest = UITapGestureRecognizer(target: self, action: #selector(imageTap))
-        cell.imgView.addGestureRecognizer(imgTapGest)
-        
-        let videoTapGest = UITapGestureRecognizer(target: self, action: #selector(videoTap))
-        cell.videoView.addGestureRecognizer(videoTapGest)
-        return cell
     }
     
     @IBAction func voiceTap() {

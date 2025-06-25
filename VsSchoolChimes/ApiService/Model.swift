@@ -1133,6 +1133,7 @@ struct MessageFromManagementResp: Codable {
 struct ManagemantMessageData: Codable {
     let type: String?
     let id: String?
+    let header_id: String?
     let title: String?
     let content: String?
     let file_path: [FilePath]?
@@ -1142,8 +1143,8 @@ struct ManagemantMessageData: Codable {
     let date: String?
     let time: String?
     let sender_info: String?
-    let is_unread: String?
-    let header_id: String?
+    let is_unread: Bool?
+    let is_archive: Bool?
     let order_date: String?
-    let duration: String?
+    let duration: Int?
     }
