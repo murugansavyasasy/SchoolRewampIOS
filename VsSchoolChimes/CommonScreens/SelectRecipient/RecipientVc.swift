@@ -59,7 +59,6 @@ class RecipientVc: UIViewController{
     let alert = CustomAlert()
     var circular_types : String?
     var subjectId : String?
-    var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     let acidamicdrops = DropDown()
     var  selectedAcadimicYearId: Int?
@@ -73,6 +72,7 @@ class RecipientVc: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         nodataFound.isHidden = true
         noRecordLbl.isHidden = true
         speficBtnName.isHidden = true
@@ -180,7 +180,7 @@ class RecipientVc: UIViewController{
         guard accedmicYrEligible else { return }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-            let isAssignmentOrHomework = ScreenType == Menu_id.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+            let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId
             
             if isAssignmentOrHomework {
                 segmentName.isHidden = true
@@ -292,7 +292,13 @@ class RecipientVc: UIViewController{
                     message: response.message,
                     on: self
                 ) { [self] in
-                    gotoDashboard()
+                    
+                    Common_request_params.removeAll()
+                    
+                    if user_inputs.clearTempData(){
+                        gotoDashboard()
+                    }
+                    
                 }
             }
         }
@@ -392,7 +398,7 @@ class RecipientVc: UIViewController{
             .first(where: {$0.isSelect == true })?
             .name
         
-       
+        
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
@@ -447,7 +453,9 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.section
             circular_types =  circular_type.section
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            speficBtnName.isEnabled = !(ScreenType == Menu_id.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+            speficBtnName.isEnabled = !(
+                Menu_id.staffSelectedMenuId == Menu_id.isAssaignment ||  Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId
+            )
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
             
@@ -521,17 +529,19 @@ class RecipientVc: UIViewController{
     
     @IBAction func academicYearDrop_action() {
         accadimYr.removeAll()
-        for i in 0..<(AcadimicYearDatas.count) {
-            accadimYr.append(AcadimicYearDatas[i].year ?? "")
-            accadimYrIDs.append(AcadimicYearDatas[i].id ?? 0)
-        }
+        accadimYrIDs.removeAll()
+        let yearname = localData.accidamic_year_data?.data?.compactMap{ $0.year}
+        let yeardId = localData.accidamic_year_data?.data?.compactMap{ $0.id}
+        accadimYr = yearname ?? []
+        accadimYrIDs = yeardId ?? []
+       
         acidamicdrops.anchorView = acidamicYrDropView
         acidamicdrops.dataSource = accadimYr
         acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
         acidamicdrops.show()
         acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-            selectedAcadimicYearId =  AcadimicYearDatas[index].id
+            selectedAcadimicYearId =  localData.accidamic_year_data?.data?[index].id
             array_selectedId.removeAll()
             acidmicYrLbl.text = item
             if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Standard {
@@ -982,79 +992,29 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
+   
+    
     func getacadmicYr(){
-        APIService.shared
-            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
-                result:Result <get_academic_yearSuc,
-                Error>
-            ) in
-                switch result {
-                case .success(let successMessage):
-                    if successMessage.status == true{
-                        DispatchQueue.main.async { [self] in
-                            //                        listTable.isHidden = true
-                            AcadimicYearDatas = successMessage.data ?? []
-                            var hasCurrentYear = false
-                            for i in 0..<(AcadimicYearDatas.count){
-                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    acidmicYrLbl.text = AcadimicYearDatas[i].year
-                                    accadmicDefaultYrName = AcadimicYearDatas[i].year
-                                    selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
-                                    hasCurrentYear = true
-                                    accedmicYrEligible = true
-                                    segmentName.isUserInteractionEnabled = hasCurrentYear
-                                    break
-                                }
-                            }
-                            
-                            if !hasCurrentYear {
-                                segmentName.isUserInteractionEnabled = false
-                                nodata(false, message: "")
-                                
-                                nodataFound.isHidden = false
-                                nodataFound.image = ImageName.customer_support
-                                acidamicYrDropView.isUserInteractionEnabled = false
-                                heightSegment.constant = 0
-                                chooseDefaultLbl.isHidden = true
-                                segmentName.isHidden = true
-                                acidamicYrDropView.isHidden = true
-                                selectStandardDropDown.isHidden = true
-                                let fullText = CommonStringFile.Your_academic_year_configuration
-                                let attributedString = NSMutableAttributedString(string: fullText)
-                                
-                                let email = CommonStringFile.support_savyasasy_com
-                                if let range = fullText.range(of: email) {
-                                    let nsRange = NSRange(range, in: fullText)
-                                    
-                                    // Color and underline
-                                    attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
-                                    attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
-                                }
-                                
-                                noRecordLbl.attributedText = attributedString
-                                noRecordLbl.isUserInteractionEnabled = true
-                                
-                                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
-                                noRecordLbl.addGestureRecognizer(tapGesture)
-                                
-                            }
-                            homeWorkShowProps()
-                        }
-                        
-                    }else{
-                        DispatchQueue.main.async {
-                            self.alert
-                                .showAlert(
-                                    title: "Error",
-                                    message: successMessage.message ?? "" ,
-                                    on: self
-                                )
-                        }
+        
+        if localData.accidamic_year_data?.status == true{
+            DispatchQueue.main.async { [self] in
+                var hasCurrentYear = false
+                for i in 0..<(
+                    localData.accidamic_year_data?.data?.count ?? 0
+                ){
+                    if localData.accidamic_year_data?.data?[i].current_academic_year ?? false == true{
+                        acidmicYrLbl.text = localData.accidamic_year_data?.data?[i].year
+                        accadmicDefaultYrName = localData.accidamic_year_data?.data?[i].year
+                        selectedAcadimicYearId = localData.accidamic_year_data?.data?[i].id ?? 0
+                        hasCurrentYear = true
+                        accedmicYrEligible = true
+                        segmentName.isUserInteractionEnabled = hasCurrentYear
+                        break
                     }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    
-                    
+                }
+                
+                if !hasCurrentYear {
                     segmentName.isUserInteractionEnabled = false
                     nodata(false, message: "")
                     
@@ -1085,7 +1045,19 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     noRecordLbl.addGestureRecognizer(tapGesture)
                     
                 }
+                homeWorkShowProps()
             }
+            
+        }else{
+            DispatchQueue.main.async {
+                self.alert
+                    .showAlert(
+                        title: "Error",
+                        message: localData.accidamic_year_data?.message ?? "" ,
+                        on: self
+                    )
+            }
+        }
         
     }
     
@@ -1190,6 +1162,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func sendVoiceMessage_communication() {
         
+        print("user_inputs.duration",user_inputs.duration)
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
                 
@@ -1226,6 +1199,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
+                                    
+                                    
                                     gotoDashboard()
                                 }
                             

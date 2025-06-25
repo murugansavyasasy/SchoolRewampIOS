@@ -13,7 +13,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         dateFormatter.dateFormat = dateFormat1
         if let selectedDate = dateFormatter.date(from: date) {
             if dateSelection {
-                // Set From Date
                 FromDateLbl.setFormattedDate(from: selectedDate)
 
                 // Check if To Date is set and valid
@@ -33,6 +32,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
                 // Set To Date
                 ToDateLbl.setFormattedDate(from: selectedDate)
             }
+            
+            updateDayCountLabel(startDateStr: FromDateLbl.text ?? "", endDateStr: ToDateLbl.text ?? "", dayCount: dayCount)
         } else {
             print("Error: Invalid date format or nil value")
         }
@@ -129,6 +130,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         contentTxtView.layer.cornerRadius = 10
         contentTxtView.layer.borderWidth = 0.5
         contentTxtView.layer.borderColor = UIColor.black.cgColor
+        contentTxtView.font = UIFont(name: "Poppins-Medium", size: 13)
         
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
@@ -144,6 +146,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         fromLbl.setFont(style:.title, size: FontSize.TitleSize)
         fromLbl.text = CommonStringFile.From.translated()
         dayCount.setFont(style:.header, size: FontSize.BodySize)
+        contentCount.setFont(style: .body, size: FontSize.BodySize)
 
     }
     
@@ -344,7 +347,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
 
     func updateDayCountLabel(startDateStr: String, endDateStr: String, dayCount: UILabel) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.dateFormat = "d EEE, MMM yyyy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         guard let startDate = dateFormatter.date(from: startDateStr),
@@ -356,7 +359,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         let calendar = Calendar.current
         if let days = calendar.dateComponents([.day], from: startDate, to: endDate).day {
             let totalDays = days + 1  // Include the end date
-            dayCount.text = (dayCount.text ?? "") + " \(totalDays) Day" + (totalDays > 1 ? "s" : "")
+            //dayCount.text = "No of Days - " + " \(totalDays) Day" + (totalDays > 1 ? "s" : "")
+            dayCount.text = "No of Days - " + " \(totalDays)"
         } else {
             dayCount.text = "Error calculating"
         }

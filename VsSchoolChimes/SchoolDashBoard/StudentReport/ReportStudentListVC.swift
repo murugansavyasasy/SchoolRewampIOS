@@ -30,7 +30,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var GenderDropdown = DropDown()
     var sectionsDetails: [sectionsDetail]?
     var standardDetails: [StandardDetail]?
-    var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     @IBOutlet weak var sectionSelection: UIStackView!
     @IBOutlet weak var classSelection: UIStackView!
@@ -47,8 +46,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var imgs = ["shiyam","StudImg","stuentimg 1"]
-    var Filters = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓"]
+    var Sorting = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓"]
     var Gender = ["All","Male","Female","Others"]
+    var Filters = [CommonStringFile.getAllStudent.translated()]
     var studentList : [StudentData]?
     var filterStudent : [StudentData]?
     var sortedStudent : [StudentData]?
@@ -173,7 +173,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        fillterDropdown.dataSource = [CommonStringFile.getAllStudent.translated(),CommonStringFile.getStanderd_Section.translated()]
+        fillterDropdown.dataSource = Filters
         fillterDropdown.anchorView = filterView
         fillterDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         fillterDropdown.direction = .bottom
@@ -218,8 +218,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.width = selectedType.bounds.width
         AcodemicDropdown.show()
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
-            getStandardsAPI(academic_year_id: AcadimicYearDatas[index].id ?? 0)
-            academicId = AcadimicYearDatas[index].id ?? 0
+            getStandardsAPI(
+                academic_year_id: localData.accidamic_year_data?
+                    .data?[index].id ?? 0
+            )
+            academicId = localData.accidamic_year_data?.data?[index].id ?? 0
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
         }
     }
@@ -316,6 +319,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             filterStudent = students
         }
         
+        selectedIndex = IndexPath(item: 0, section: 0)
+        FilterCV.reloadData()
+        self.sortedStudent = self.filterStudent?.sorted {
+            $0.name.localizedCompare($1.name) == .orderedAscending
+        }
+        
+        self.filterStudent = self.sortedStudent
         nodataImg.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.text = "No data found"
@@ -334,6 +344,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         sectionArray.removeAll()
                         standerdArray.removeAll()
                         standardDetails = successMessage.data
+                        if Filters.count == 1{
+                            Filters.append(CommonStringFile.getStanderd_Section)
+                        }
                         sectionsDetails = standardDetails?.first?.sections
                         standerdArray = standardDetails?.compactMap { $0.name } ?? []
                         sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
@@ -349,7 +362,21 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
-                        getStudentAPI()
+                        sectionArray.removeAll()
+                        standerdArray.removeAll()
+                        studentList?.removeAll()
+                        filterStudent?.removeAll()
+                        getStanderd.isHidden = true
+                        self.filterBtn.setTitle(CommonStringFile.getAllStudent.translated(), for: .normal)
+                        nodataImg.isHidden = false
+                        nodataLbl.isHidden = false
+                        nodataLbl.text = successMessage.message
+                        FilterCV.isHidden = true
+                        GenderBtn.isHidden = true
+                        Filters.removeLast()
+                        FilterCV.reloadData()
+                        reportTable.reloadData()
+                       // getStudentAPI()
                     }
                 }
             case .failure(let error):
@@ -385,20 +412,25 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 case .success(let response):
                     if response.status == true {
                         self.studentList = response.data
-                        self.sortedStudent = self.studentList?.sorted {
-                            $0.name.localizedCompare($1.name) == .orderedAscending
-                        }
-                        
-                        self.filterStudent = self.sortedStudent
+                        self.filterStudent = self.studentList
+                      
                         if let gender = self.GenderDropdown.selectedItem {
                             self.filterStudents(by: gender)
                         }else {
                             self.filterStudents(by: self.Gender.first ?? "All")
                         }
+                        
+                        self.sortedStudent = self.filterStudent?.sorted {
+                            $0.name.localizedCompare($1.name) == .orderedAscending
+                        }
+                        
+                        self.filterStudent = self.sortedStudent
+                        
                         self.selectedIndex = IndexPath(item: 0, section: 0)
                         self.nodataImg.isHidden = !(self.filterStudent?.isEmpty ?? false)
                         self.nodataLbl.isHidden = !(self.filterStudent?.isEmpty ?? false)
-                       // self.FilterCV.isHidden = (self.filterStudent?.isEmpty ?? false)
+                        self.FilterCV.isHidden = (self.filterStudent?.isEmpty ?? false)
+                        self.GenderBtn.isHidden = (self.filterStudent?.isEmpty ?? false)
                         //self.reportSegment.isHidden = false
                         self.FilterCV.reloadData()
                     } else {
@@ -410,6 +442,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.nodataLbl.isHidden = false
                         self.nodataImg.isHidden = false
                         self.FilterCV.isHidden = true
+                        self.GenderBtn.isHidden = true
                         //                    self.reportSegment.isHidden = true
                     }
                     self.reportTable.reloadData()
@@ -427,6 +460,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     
+    
     func getacadmicYr(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
@@ -435,16 +469,22 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             ) in
                 switch result {
                 case .success(let successMessage):
-                    if successMessage.status == true{
+                    if localData.accidamic_year_data?.status == true{
                         DispatchQueue.main.async { [self] in
-                            AcadimicYearDatas = successMessage.data ?? []
-                            for i in 0..<(AcadimicYearDatas.count){
-                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    selectedType.setTitle("\(AcadimicYearDatas[i].year ?? "")", for: .normal)
-                                    academicId = AcadimicYearDatas[i].id ?? 0
-                                    getStandardsAPI(academic_year_id: AcadimicYearDatas[i].id ?? 0)
+                            for i in 0..<(
+                                localData.accidamic_year_data?.data?.count ?? 0
+                            ){
+                                if localData.accidamic_year_data?
+                                    .data?[i].current_academic_year ?? false == true{
+                                    selectedType.setTitle((localData.accidamic_year_data?
+                                    .data?[i].year ?? ""), for: .normal)
+                                    academicId = localData.accidamic_year_data?
+                                        .data?[i].id ?? 0
+                                    getStandardsAPI(academic_year_id: localData.accidamic_year_data?
+                                        .data?[i].id ?? 0)
                                 }
-                                accadimYr.append(AcadimicYearDatas[i].year ?? "")
+                                accadimYr.append(localData.accidamic_year_data?
+                                    .data?[i].year ?? "")
                             }
                         }
                     }
@@ -466,36 +506,15 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         
         if let studentDetail = filterStudent?[indexPath.row]{
             
-            cell.confic(student: studentDetail)
-            if let mobile = studentDetail.primary_mobile, !mobile.isEmpty,
-               let email = studentDetail.email, !email.isEmpty {
-                
-                let attributedString = NSAttributedString(
-                    string: mobile,
-                    attributes: [
-                        .underlineStyle: NSUnderlineStyle.single.rawValue,
-                        .foregroundColor: cell.mobleNo.titleColor(for: .normal) ?? UIColor.systemBlue
-                    ]
-                )
-                let attributedString1 = NSAttributedString(
-                    string: email,
-                    attributes: [
-                        .underlineStyle: NSUnderlineStyle.single.rawValue,
-                        .foregroundColor: cell.emailBtn.titleColor(for: .normal) ?? UIColor.systemBlue
-                    ]
-                )
-                cell.smsNumber = mobile
-                cell.mobleNo.setAttributedTitle(attributedString, for: .normal)
-                cell.emailBtn.setAttributedTitle(attributedString1, for: .normal)
-                cell.mobleNo.isHidden = false
-                cell.smsBtn.isHidden = false
-            } else {
-                cell.mobleNo.isHidden = true
-                cell.smsBtn.isHidden = true
-                cell.emailBtn.isHidden = true
-            }
-            
-            
+            let trimmedMobile = studentDetail.primary_mobile?.trimmingCharacters(in: .whitespacesAndNewlines)
+            cell.CallBtn.isHidden = trimmedMobile?.isEmpty ?? true
+            cell.SmsNewBtn.isHidden = trimmedMobile?.isEmpty ?? true
+
+            let trimmedEmail = (studentDetail.email ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            cell.EmailNewBtn.isHidden = trimmedEmail.isEmpty
+
+            cell.smsNumber = studentDetail.primary_mobile ?? ""
+            cell.Email = studentDetail.email ?? ""
             
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.rollNo.text = studentDetail.roll_no
@@ -525,14 +544,14 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
 extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return Filters.count
+        return Sorting.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
         
-        cell.FilterLbl.text = Filters[indexPath.item]
+        cell.FilterLbl.text = Sorting[indexPath.item]
         let isSelected = indexPath == selectedIndex
         
         cell.cellView.backgroundColor = isSelected ? UIColor.topBackgroundCLr : UIColor.systemGray5
@@ -552,27 +571,27 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard indexPath.item < Filters.count else { return }
+        guard indexPath.item < Sorting.count else { return }
         
         selectedIndex = indexPath
-        let selectedFilter = Filters[indexPath.item]
+        let selectedFilter = Sorting[indexPath.item]
         
         guard let sortedStudent = filterStudent else { return }
         
         switch selectedFilter {
-        case Filters[0]:
+        case Sorting[0]:
             filterStudent = sortedStudent.sorted {
                 $0.name.localizedCompare($1.name) == .orderedAscending
             }
-        case Filters[1]:
+        case Sorting[1]:
             filterStudent = sortedStudent.sorted {
                 $0.name.localizedCompare($1.name) == .orderedDescending
             }
-        case Filters[2]:
+        case Sorting[2]:
             filterStudent = sortedStudent.sorted {
                 $0.admission_no < $1.admission_no
             }
-        case Filters[3]:
+        case Sorting[3]:
             filterStudent = sortedStudent.sorted {
                 $0.admission_no > $1.admission_no
             }
@@ -587,7 +606,7 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let text = Filters[indexPath.item] // Assuming your label text is from a data source
+        let text = Sorting[indexPath.item] // Assuming your label text is from a data source
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
         label.text = text

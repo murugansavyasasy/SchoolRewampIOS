@@ -27,6 +27,18 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 fromdateBtn.setTitle(date, for: .normal)
                 setFormattedDate(outputDateString, label: fromDateLbl)
                 NewFromdateLbl.setFormattedDate(from: DayDate)
+                // Check if To Date is set and valid
+                if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
+                    let labelFormatter = DateFormatter()
+                    labelFormatter.dateFormat = "d EEE, MMM yyyy" // Matches formatted label
+
+                    if let toDate = labelFormatter.date(from: toText) {
+                        if DayDate > toDate {
+                            // Auto-adjust To Date if From Date is later
+                            NewToDateLbl.setFormattedDate(from: DayDate)
+                        }
+                    }
+                }
 
             }else{
                 todateBtn.setTitle(date, for: .normal)
@@ -406,15 +418,21 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 return
             }
             
-            user_inputs.title = TitleTextfield.text ?? ""
-            user_inputs.description = textview.text
+//        assignmentResquestStringKey.title = TitleTextfield.text ?? ""
+//        assignmentResquestStringKey.description = textview.text
             user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
             user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            
+        let params: [String: Any] = [
+            SendAttachmentStringFile.title: textFieldText,
+            SendAttachmentStringFile.description: textViewText,
+            SendAttachmentStringFile.visible_from : user_inputs.FromDate,
+            SendAttachmentStringFile.visible_to : user_inputs.ToDate
+        ]
            
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
+        vc.Common_request_params = params
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
            
@@ -685,35 +703,4 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         scrollView.scrollRectToVisible(rect, animated: true)
     }
     
-}
-
-extension UILabel {
-    func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
-        // Main label font: Poppins-Bold, size 14
-        let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)
-
-        // Asterisk font: Poppins-Regular, larger size
-        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
-
-        let normalText = NSAttributedString(
-            string: text,
-            attributes: [
-                .font: mainFont,
-                .foregroundColor: self.textColor ?? .black
-            ])
-
-        let asteriskText = NSAttributedString(
-            string: "*",
-            attributes: [
-                .font: asteriskFont,
-                .foregroundColor: asteriskColor,
-                .baselineOffset: 2 // tweak to align nicely with main text
-            ])
-
-        let combined = NSMutableAttributedString()
-        combined.append(normalText)
-        combined.append(asteriskText)
-
-        self.attributedText = combined
-    }
 }

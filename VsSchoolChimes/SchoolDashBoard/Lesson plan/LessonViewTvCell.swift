@@ -9,11 +9,40 @@ import UIKit
 
 class LessonViewTvCell: UITableViewCell {
 
+    @IBOutlet weak var ProgressStack: UIStackView!
     @IBOutlet weak var ProgressView: UIView!
     @IBOutlet weak var Baseview: UIView!
+    @IBOutlet weak var ProgressView2: UIView!
+    @IBOutlet weak var ProgressImage: UIImageView!
+    @IBOutlet weak var StatusLbl: UILabel!
+    @IBOutlet weak var EditBtn: UIButton!
+    @IBOutlet weak var DeleteBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        ProgressView.isHidden = true
+        Baseview.layer.cornerRadius = 10.0
+        Baseview.layer.masksToBounds = false
+        Baseview.layer.shadowColor = UIColor.black.cgColor
+        Baseview.layer.shadowOpacity = 0.2
+        Baseview.layer.shadowOffset = CGSize(width: 0, height: 4)
+        Baseview.layer.shadowRadius = 6
+        Baseview.layer.borderColor = UIColor.lightGray.cgColor
+        Baseview.layer.borderWidth = 0.5
+        Baseview.backgroundColor = .white
+        
+        ProgressView2.layer.cornerRadius = 10
+        ProgressView2.layer.borderWidth = 2
+        ProgressView2.layer.borderColor = UIColor.systemOrange.withAlphaComponent(0.8).cgColor
+        ProgressView2.backgroundColor = .systemOrange.withAlphaComponent(0.1)
+        
+        DeleteBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        DeleteBtn.layer.cornerRadius = 10
+        EditBtn.layer.cornerRadius = 10
+        StatusLbl.setFont(style: .title, size: FontSize.HeaderSize)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -29,7 +58,7 @@ class LessonViewTvCell: UITableViewCell {
         // Create a vertical stack view
         let mainStack = UIStackView()
         mainStack.axis = .vertical
-        mainStack.spacing = 8
+        mainStack.spacing = 6
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         mainStack.tag = 999 // Tag it so we can identify and remove it later
 
@@ -41,20 +70,38 @@ class LessonViewTvCell: UITableViewCell {
             rowStack.alignment = .top
             rowStack.distribution = .fill
 
+            // Name label
             let nameLabel = UILabel()
             nameLabel.text = detail.name
-            nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            nameLabel.font = UIFont(name: "Poppins-SemiBold", size: 14)
             nameLabel.numberOfLines = 0
-            nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            nameLabel.setContentHuggingPriority(.required, for: .horizontal)
+            nameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            nameLabel.widthAnchor.constraint(equalToConstant: 115).isActive = true // Fix column width
+            nameLabel.textColor = .systemBlue
 
+            // Colon label
+            let colonLabel = UILabel()
+            colonLabel.text = ":"
+            colonLabel.font = UIFont(name: "Poppins-SemiBold", size: 14)
+            colonLabel.textAlignment = .center
+            colonLabel.setContentHuggingPriority(.required, for: .horizontal)
+            colonLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            colonLabel.widthAnchor.constraint(equalToConstant: 10).isActive = true // Fixed width for vertical alignment
+
+            // Value label
             let valueLabel = UILabel()
             valueLabel.text = detail.value
-            valueLabel.font = UIFont.systemFont(ofSize: 14)
+            valueLabel.font = UIFont(name: "Poppins-Medium", size: 14)
             valueLabel.numberOfLines = 0
             valueLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            valueLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
+            // Add to row
             rowStack.addArrangedSubview(nameLabel)
+            rowStack.addArrangedSubview(colonLabel)
             rowStack.addArrangedSubview(valueLabel)
+
             mainStack.addArrangedSubview(rowStack)
         }
 
@@ -63,11 +110,12 @@ class LessonViewTvCell: UITableViewCell {
 
         // Layout constraints to place mainStack above ProgressView
         NSLayoutConstraint.activate([
-            mainStack.topAnchor.constraint(equalTo: Baseview.topAnchor, constant: 8),
-            mainStack.leadingAnchor.constraint(equalTo: Baseview.leadingAnchor, constant: 8),
-            mainStack.trailingAnchor.constraint(equalTo: Baseview.trailingAnchor, constant: -8),
-            mainStack.bottomAnchor.constraint(equalTo: ProgressView.topAnchor, constant: -8)
+            mainStack.topAnchor.constraint(equalTo: Baseview.topAnchor, constant: 10),
+            mainStack.leadingAnchor.constraint(equalTo: Baseview.leadingAnchor, constant: 10),
+            mainStack.trailingAnchor.constraint(equalTo: Baseview.trailingAnchor, constant: -10),
+            mainStack.bottomAnchor.constraint(equalTo: ProgressStack.topAnchor, constant: -8)
         ])
     }
+
 
 }

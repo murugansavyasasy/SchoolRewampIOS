@@ -144,8 +144,7 @@ class  commonApi_forSending {
         target_type : Int,
         selectedAcadimicYearId : Int,
         Common_request_params: [String: Any]? = nil,
-        subjectId: String, onComplete : @escaping(Send_AttachmentResponse) -> Void
-    ) {
+        subjectId: String, onComplete : @escaping(Send_AttachmentResponse) -> Void) {
         
         
         var parameters: [String: Any] = [
@@ -221,6 +220,9 @@ class  commonApi_forSending {
                 if let size = fileSize {
                     print("📦 File size: \(size) bytes")
                 }
+                try? FileManager.default.removeItem(at: URL(fileURLWithPath: videoURL))
+                
+                
                 completion(videoURL, iframeHTML, fileSize)
             } else {
                 print("❌ Upload failed!")

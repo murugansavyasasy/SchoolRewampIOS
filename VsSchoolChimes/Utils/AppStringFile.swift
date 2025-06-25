@@ -180,7 +180,8 @@ class AlertstringFile{
     static let Are_you_sure_you_want_to_submit_leave_request = "Are you sure you want to submit this leave request?".translated()
     static let Enter_reason = "Please Enter the reason".translated()
     static let Failed = "Failed".translated()
-   
+    static let Are_you_sure_you_want_to_Edit_Lesson = "Are you sure you want to Edit this Lesson Plan?".translated()
+    static let Are_you_sure_you_want_to_Delete_Lesson = "Are you sure you want to Delete this Lesson Plan?".translated()
     
     
 }

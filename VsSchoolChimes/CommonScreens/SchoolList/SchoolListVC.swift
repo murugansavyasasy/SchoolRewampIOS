@@ -35,7 +35,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var array_selectedSchoolId :[String] = []
     var target_type:Int?
     var requestCommonDataDetails : [String:Any] = [:]
-    var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     let acidamicdrops = DropDown()
     var selectedAcadimicYearId : Int?
@@ -130,8 +129,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBAction func academicYearDrop_action() {
         accadimYr.removeAll()
-        for i in 0..<(AcadimicYearDatas.count){
-            accadimYr.append(AcadimicYearDatas[i].year ?? "")
+        for i in 0..<(localData.accidamic_year_data?.data?.count ?? 0){
+            accadimYr.append(localData.accidamic_year_data?.data?[i].year ?? "")
         }
         acidamicdrops.anchorView = acidamicYrDropView
         acidamicdrops.dataSource = accadimYr
@@ -141,7 +140,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             
-            selectedAcadimicYearId = AcadimicYearDatas[index].id ?? 0
+            selectedAcadimicYearId = localData.accidamic_year_data?.data?[index].id ?? 0
             acidmicYrLbl.text = item
            
     
@@ -302,6 +301,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
         case Menu_id.noticeboardMenuId:
+            
+            let params: [String: Any] = [
+                SendNoticeStringFile.intended_for : selectedTarget]
+            
+            Common_request_params.merge(params) { _, new in new }
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.api_notice_board_send_notice,
@@ -605,81 +609,70 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         }
     }
 
-    
-    
-    
+
     
     func getacadmicYr(){
-        APIService.shared
-            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
-                result:Result <get_academic_yearSuc,
-                Error>
-            ) in
-                switch result {
-                case .success(let successMessage):
-                    if successMessage.status == true{
-                        DispatchQueue.main.async { [self] in
-                            //                        listTable.isHidden = true
-                            AcadimicYearDatas = successMessage.data ?? []
-                            var hasCurrentYear = false
-                            for i in 0..<(AcadimicYearDatas.count){
-                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                        acidmicYrLbl.text = AcadimicYearDatas[i].year
-                                    accadmicDefaultYrName = AcadimicYearDatas[i].year
-                                        selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
-                                    hasCurrentYear = true
-                                    segmentName.isUserInteractionEnabled = hasCurrentYear
-                                    listTable.reloadData()
-                                        break
-                                   
-                                }
-                            }
-                            
-                            if !hasCurrentYear {
-                                listTable.isHidden = true
-                                sendBtnName.isHidden = true
-                                segmentName.isUserInteractionEnabled = false
-//                                nodata(false, message: "")
-                                norecordImg.isHidden = false
-                                noRecordLbl.isHidden = false
-                                acidamicYrDropView.isUserInteractionEnabled = false
-                                
-                                let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
-                                let attributedString = NSMutableAttributedString(string: fullText)
-
-                                let email = "support@savyasasy.com"
-                                if let range = fullText.range(of: email) {
-                                    let nsRange = NSRange(range, in: fullText)
-                                    
-                                    // Color and underline
-                                    attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
-                                    attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
-                                }
-
-                                noRecordLbl.attributedText = attributedString
-                                noRecordLbl.isUserInteractionEnabled = true
-                                
-                                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
-                                noRecordLbl.addGestureRecognizer(tapGesture)
-
-                            }
-                            
-                        }
+        
+        if  localData.accidamic_year_data?.status == true{
+            DispatchQueue.main.async { [self] in
+                var hasCurrentYear = false
+                for i in 0..<(
+                    localData.accidamic_year_data?.data?.count ?? 0
+                ){
+                    if localData.accidamic_year_data?.data?[i].current_academic_year ?? false == true{
+                        acidmicYrLbl.text = localData.accidamic_year_data?.data?[i].year
+                        accadmicDefaultYrName = localData.accidamic_year_data?.data?[i].year
+                        selectedAcadimicYearId = localData.accidamic_year_data?.data?[i].id ?? 0
+                        hasCurrentYear = true
+                        segmentName.isUserInteractionEnabled = hasCurrentYear
+                        listTable.reloadData()
+                        break
                         
-                    }else{
-                        DispatchQueue.main.async {
-                            self.alert
-                                .showAlert(
-                                    title: "Error",
-                                    message: successMessage.message ?? "" ,
-                                    on: self
-                                )
-                        }
                     }
-                case .failure(let error):
-                    print(error.localizedDescription)
                 }
+                
+                if !hasCurrentYear {
+                    listTable.isHidden = true
+                    sendBtnName.isHidden = true
+                    segmentName.isUserInteractionEnabled = false
+                    //                                nodata(false, message: "")
+                    norecordImg.isHidden = false
+                    noRecordLbl.isHidden = false
+                    acidamicYrDropView.isUserInteractionEnabled = false
+                    
+                    let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                    let attributedString = NSMutableAttributedString(string: fullText)
+                    
+                    let email = "support@savyasasy.com"
+                    if let range = fullText.range(of: email) {
+                        let nsRange = NSRange(range, in: fullText)
+                        
+                        // Color and underline
+                        attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+                        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
+                    }
+                    
+                    noRecordLbl.attributedText = attributedString
+                    noRecordLbl.isUserInteractionEnabled = true
+                    
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
+                    noRecordLbl.addGestureRecognizer(tapGesture)
+                    
+                }
+                
             }
+            
+        }else{
+            DispatchQueue.main.async {
+                self.alert
+                    .showAlert(
+                        title: "Error",
+                        message: localData.accidamic_year_data?.message ?? "" ,
+                        on: self
+                    )
+            }
+        }
+        
         
     }
     

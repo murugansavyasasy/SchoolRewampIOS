@@ -68,6 +68,8 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
+    
+    
 
     func getacadmicYr() {
         APIService.shared.makeApi(

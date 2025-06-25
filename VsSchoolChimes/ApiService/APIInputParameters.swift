@@ -140,7 +140,9 @@ class SendAttachmentStringFile {
     static let venue = "venue"
     static let event_date = "event_date"
     static let event_time = "event_time"
-    
+    static var intended_for = "intended_for"
+    static var visible_from = "visible_from"
+    static var visible_to = "visible_to"
    
 }
 
@@ -261,4 +263,17 @@ class LessonPlanStringFile{
     static let request_type = "request_type"
     static let section_subject_id = "section_subject_id"
     static let lesson_plan_status = "lesson_plan_status"
+    static let particular_id = "particular_id"
+    static let myclass = "myclass"
+    static let allclass = "allclass"
+    static let key_value_data = "key_value_data"
+}
+
+class PaucketHeader{
+    
+    static let api_key = "api-key"
+    static let partner_name = "partner-name"
+    static let api_key_value = "33adab6a67a9eee6e72be49acfb6c100"
+    static let partner_name_value = "savyasasy"
+    static let Paucket = "Paucket"
 }
