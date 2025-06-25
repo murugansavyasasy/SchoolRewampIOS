@@ -1116,3 +1116,29 @@ struct SubmissionDetail: Codable {
     let file_size: String?
     let file_path: [FilePath]?
 }
+
+//MARK: Message from management
+
+struct MessageFromManagementResp: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [ManagemantMessageData]?
+}
+
+struct ManagemantMessageData: Codable {
+    let type: String?
+    let id: String?
+    let title: String?
+    let content: String?
+    let file_path: [FilePath]?
+    let file_size: String?
+    let iframe: String?
+    let description: String?
+    let date: String?
+    let time: String?
+    let sender_info: String?
+    let is_unread: String?
+    let header_id: String?
+    let order_date: String?
+    let duration: String?
+    }

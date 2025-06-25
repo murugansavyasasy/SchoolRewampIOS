@@ -23,7 +23,7 @@ class ViewLessonVC: UIViewController {
     var ViewLessonData: [LessonPlanDetail]?
     var FilteredData: [LessonPlanDetail]?
     var Reqest_Type: String?
-    var Filters = ["All","yet to Start","In Progress","Completed"]
+    var Filters = ["All","Yet to Start","In Progress","Completed"]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var LessonPlanStatus = 0
     
@@ -159,7 +159,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
             
         case 2:
             colour = .systemBlue
-            cell.StatusLbl.text = "Inprogress"
+            cell.StatusLbl.text = "In Progress"
             cell.ProgressImage.image = UIImage(systemName: "arrow.2.circlepath.circle.fill")
             
         case 3:

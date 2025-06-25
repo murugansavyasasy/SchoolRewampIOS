@@ -9,19 +9,36 @@ import UIKit
 
 @available(iOS 14.0, *)
 class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+    
+    
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var SearchBar: UISearchBar!
+    @IBOutlet weak var FilterCV: UICollectionView!
+    @IBOutlet weak var NoDataImage: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    
+    
     let MenuRedirect = MenuRedirectHandler.shared
+    let staffDetails = UserDefaultFileManager.get_staff_Details()
+    var messageData: [ManagemantMessageData]?
+    var SearchData: [ManagemantMessageData]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      
-        
-        
-        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
-        
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.MessagesFromManagement, secondLine: staffDetails?.school_name ?? "")
         BackBtn.applyBackButton()
+        NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
+        
+        SearchBar.searchTextField.addDoneButton()
+        SearchBar.delegate = self
+        
+        FilterCV.isHidden = true
+        SearchBar.isHidden = true
+        NoDataLbl.isHidden = true
+        NoDataImage.isHidden = true
+        
         tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
         tv.dataSource = self
         tv.delegate = self
@@ -36,17 +53,63 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         )
     }
     
+    //MARK: Get Message Data Api call
+    
+    func Get_messages() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_msg_from_management_get_messages_staff, parameters: [:], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[self] (result: Result<MessageFromManagementResp,Error>) in
+            
+            switch result{
+                
+            case .success(let success):
+                DispatchQueue.main.async { [self] in
+                    
+                    messageData = success.data
+                    SearchData = messageData
+                    
+                    NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
+                    NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
+                    SearchBar.isHidden = (messageData?.isEmpty ?? false)
+                    tv.reloadData()
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    
+                    NoDataImage.isHidden = false
+                    NoDataLbl.isHidden = false
+                    SearchBar.isHidden = true
+                    tv.reloadData()
+                }
+            }
+        }
+    }
+    
     @IBAction func backAct() {
         dismiss(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return SearchData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MessageFromManagementTableViewCell, for: indexPath)as! MessageFromManagementTableViewCell
+        
+        let Message = SearchData?[indexPath.row]
+        
+        switch Message?.type {
+            
+        case "ATTACHMENT":
+            ""
+        case "TEXT":
+            ""
+        case "VOICE":
+            ""
+        default:
+            ""
+        }
         
         let voiceTapGest = UITapGestureRecognizer(target: self, action: #selector(voiceTap))
         cell.voiceView.addGestureRecognizer(voiceTapGest)
@@ -109,4 +172,9 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
+}
+
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: UISearchBarDelegate {
+    
 }
