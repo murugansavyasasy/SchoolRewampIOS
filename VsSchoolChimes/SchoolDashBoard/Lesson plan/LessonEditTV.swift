@@ -84,6 +84,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.text = edit.value
                 DropdownLbl.text = edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
+                DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 if edit.is_disable ?? false {
                     DropdownField.backgroundColor = .systemGray5
                     DropDownView.backgroundColor = .systemGray5
@@ -132,6 +133,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
                 DropdownLbl.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
+                DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 DropdownField.addTarget(self, action: #selector(showDatePicker), for: .editingDidBegin)
                 if edit.is_disable ?? false {
                     DropdownField.backgroundColor = .systemGray5

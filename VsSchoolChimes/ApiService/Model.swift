@@ -1143,8 +1143,9 @@ struct ManagemantMessageData: Codable {
     let date: String?
     let time: String?
     let sender_info: String?
-    let is_unread: Bool?
+    var is_unread: Bool?
     let is_archive: Bool?
     let order_date: String?
     let duration: Int?
+    var isExpand:Bool?
     }

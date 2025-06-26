@@ -17,7 +17,9 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     @IBOutlet weak var collectionView: UICollectionView!
     var homeworkDocs: [FilePath]?
     var attachment:Attachment?
+    var ManagementData:ManagemantMessageData?
     var delegate:ReadUpades?
+    var ManagementDelegate:ReadUpadesManagemant?
     private var docController: UIDocumentInteractionController?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -61,6 +63,9 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         let fileExtension = url.pathExtension.lowercased()
         if let data = attachment{
             delegate?.readStatus(attachment: data)
+        }
+        if let data = ManagementData {
+          //  ManagementDelegate?.readStatus(attachment: ManagementData ?? [])
         }
         
         let vc = getCurrentViewController()

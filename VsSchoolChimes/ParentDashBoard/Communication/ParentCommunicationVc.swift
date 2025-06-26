@@ -649,7 +649,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         }
     
 
-    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+   @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel, let attributedText = label.attributedText else { return }
         let text = attributedText.string
 
@@ -670,7 +670,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         var message: CommunicationReciverData?
 
         message = SearchMessages?[indexPath.row]
-
+ 
         guard let fullDescription = message?.content else { return }
 
         let threshold = 120
