@@ -105,9 +105,7 @@ class SchoolStrengthVC: UIViewController {
                     self.norecordLbl.text = response.message
                     self.norecordLbl.isHidden = hasData
                     self.norecordImg.isHidden = hasData
-
                     self.Tv.reloadData()
-
                     if hasData {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                             let indexPath = IndexPath(row: 0, section: 0)
@@ -117,7 +115,6 @@ class SchoolStrengthVC: UIViewController {
                         }
                     }
                 }
-
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
