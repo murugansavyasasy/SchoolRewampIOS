@@ -44,7 +44,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         
 //        hiddenui(true)
-        animationview()
+//        animationview()
         Unreadview.isHidden = true
         OuterView.layer.shadowColor = UIColor.black.cgColor
         OuterView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -62,22 +62,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
 
 
     func confic(_ url: String) {
-        
-//        if let videoID = extractVimeoID(from: url) {
-//            fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
-//                if let firstURLString = urls.first,
-//                   let videoURL = URL(string: firstURLString) {
-//                    DispatchQueue.main.async {
-//                        self.setupPlayer(url: videoURL)
-//                    }
-//                } else {
-//                    print("No video URLs found or invalid URL format")
-//                }
-//            }
-//        } else {
-//            print("Invalid Vimeo URL")
-//        }
-        
+
         let dataTypes = Set([WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeCookies])
          WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: Date.distantPast) {
          print("WebView cache cleared")
@@ -88,6 +73,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
          self.webview.load(request)
          }
          }
+        contentView.layoutIfNeeded()
     }
 
     func hiddenui(_ hide:Bool){

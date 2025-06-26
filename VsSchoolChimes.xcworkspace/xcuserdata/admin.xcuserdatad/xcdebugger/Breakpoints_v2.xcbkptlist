@@ -176,9 +176,9 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Video/VideoTVCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "presentationControllerDidDismiss(_:)"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "play(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

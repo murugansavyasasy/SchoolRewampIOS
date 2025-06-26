@@ -110,7 +110,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                         self.noDataLbl.text = successMessage.message
                         self.noDataLbl.isHidden = false
                         self.noDataImg.isHidden = false
-//                        self.TV.isHidden = true
+                        //                        self.TV.isHidden = true
                         self.searchBar.isHidden = true
                         self.searchHeight.constant = 0
                     }else{
@@ -196,10 +196,9 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         cell.HeaderView.layer.borderColor = UIColor.lightGray.cgColor
         
         cell.HeaderView.layer.shadowColor = UIColor.black.cgColor
-        cell.HeaderView.layer.shadowOpacity = 0.2 // Adjust the opacity of the shadow
-        cell.HeaderView.layer.shadowOffset = CGSize(width: 0, height: 5) // Position of the shadow
-        cell.HeaderView.layer.shadowRadius = 5 // Blur effect of the shadow
-        
+        cell.HeaderView.layer.shadowOpacity = 0.2
+        cell.HeaderView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        cell.HeaderView.layer.shadowRadius = 5
         // Add tap gesture to header
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
         cell.tag = section
@@ -214,7 +213,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-//    
+    //
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -230,8 +229,8 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard
-              let sectionData = FilterHomeWorkList?[indexPath.section],
-              let homework = sectionData.homework?[indexPath.row] else {
+            let sectionData = FilterHomeWorkList?[indexPath.section],
+            let homework = sectionData.homework?[indexPath.row] else {
             return UITableViewCell()
         }
         if homework.file_path?.first?.type?.uppercased() == "VIDEO"{
@@ -336,14 +335,11 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func seeMoreAction() {
-        print("Footer button tapped. Hiding the footer.")
-        
         // Animate the footer fade-out if desired.
         if let footer = TV.tableFooterView {
             UIView.animate(withDuration: 0.3, animations: {
                 footer.alpha = 0
             }, completion: {[self] _ in
-                // Hide the footer after animation completes.
                 TV.tableFooterView = nil
                 shouldShowFooter = false
                 GetHomeWorkArchive()
@@ -363,19 +359,7 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
         
         searchBar.resignFirstResponder()
     }
-    //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    //        if searchText.isEmpty {
-    //            FilterHomeWorkList = homeWorkList
-    //        } else {
-    //            FilterHomeWorkList = homeWorkList?.compactMap { homeworkDate in
-    //                let filteredHomeworks = homeworkDate.homework?.filter {
-    //                    ($0.topic?.localizedCaseInsensitiveContains(searchText) ?? false) ||
-    //                    ($0.subject_name?.localizedCaseInsensitiveContains(searchText) ?? false)
-    //                }
-    //            }
-    //        }
-    //        TV.reloadData()
-    //    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             FilterHomeWorkList = homeWorkList

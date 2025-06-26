@@ -255,7 +255,6 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 cell.titleLbl.text = event?.title
                 cell.subjectName.text = "📍" + (event?.venue ?? "")
                 cell.subjectName.isHidden = false
-                cell.layoutIfNeeded()
                 return cell
             }else{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
@@ -279,6 +278,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 // Load image if available
                 if let urls = event?.file_path, urls.count != 0{
                     cell.ImageCollectionView.isHidden = false
+                    cell.pageViewController.isHidden = urls.count <= 1
                     cell.CvHeight.constant = 100
                     cell.loadImage(urls: urls)
                 }
