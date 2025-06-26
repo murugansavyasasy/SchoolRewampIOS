@@ -50,8 +50,8 @@ class SectionStregnthTVC: UITableViewCell {
             return
         }
 
-        let studentCount = parseDouble(schoolStrength.total_student_strength)
         let staffCount = parseDouble(schoolStrength.total_staff_strength)
+        let studentCount = parseDouble(schoolStrength.total_student_strength)
         let girlsCount = parseDouble(schoolStrength.total_girls_strength)
         let boysCount = parseDouble(schoolStrength.total_boys_strength)
         let othersCount = parseDouble(schoolStrength.total_others_strength)
@@ -68,22 +68,28 @@ class SectionStregnthTVC: UITableViewCell {
 
         // Do NOT include studentCount in chart slices
 
-        if girlsCount > 0 {
-            entries.append(PieChartDataEntry(value: girlsCount, label: "Girls"))
-            labels.append("Girls")
-            colors.append(.systemPink)
+        
+        if staffCount > 0 {
+            entries.append(PieChartDataEntry(value: staffCount, label: "Staff"))
+            labels.append("Staff")
+            colors.append(.systemOrange)
         }
-
+        
+        if studentCount > 0 {
+            entries.append(PieChartDataEntry(value: staffCount, label: "Total Students"))
+            labels.append("Total Students")
+            colors.append(.blue)
+        }
+        
         if boysCount > 0 {
             entries.append(PieChartDataEntry(value: boysCount, label: "Boys"))
             labels.append("Boys")
             colors.append(.systemTeal)
         }
-
-        if staffCount > 0 {
-            entries.append(PieChartDataEntry(value: staffCount, label: "Staff"))
-            labels.append("Staff")
-            colors.append(.systemOrange)
+        if girlsCount > 0 {
+            entries.append(PieChartDataEntry(value: girlsCount, label: "Girls"))
+            labels.append("Girls")
+            colors.append(.systemPink)
         }
 
         if othersCount > 0 {
@@ -148,20 +154,20 @@ class SectionStregnthTVC: UITableViewCell {
         var legendEntries: [LegendEntry] = []
 
         // ✅ Add Total Students on top (separate)
-        if studentCount > 0 {
-            let entry = LegendEntry()
-            entry.label = String(format: "Total Students (%d)", studentCount)
-            entry.form = .circle
-            entry.formSize = 8
-            entry.formColor = .systemBlue
-            legendEntries.append(entry)
-        }
+//        if studentCount > 0 {
+//            let entry = LegendEntry()
+//            entry.label = String(format: "Total Students (%d)", studentCount)
+//            entry.form = .circle
+//            entry.formSize = 8
+//            entry.formColor = .systemBlue
+//            legendEntries.append(entry)
+//        }
 
         for (index, entry) in entries.enumerated() {
-            let percentage = (entry.value / total) * 100
+//            let percentage = (entry.value / total) * 100
             let count = Int(entry.value)
             let legendEntry = LegendEntry()
-            legendEntry.label = String(format: "%@ - %d  (%.1f%%)", labels[index], count, percentage)
+            legendEntry.label = String(format: "%@ - %d ", labels[index], count)
             legendEntry.form = .circle
             legendEntry.formSize = 8
             legendEntry.formColor = colors[index]

@@ -239,6 +239,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.senderAssignmentNavigate(from: self)
             case Menu_id.LessonPlan:
                 MenuRedirect.senderLessonplanNavigate(from: self)
+            case Menu_id.MessageFromManagement:
+                MenuRedirect.senderMgmt(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

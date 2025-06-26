@@ -9,6 +9,11 @@ import UIKit
 protocol SelectedTextDelegate{
     func select(Tittle:String,descriptContent:String)
 }
+
+protocol TextExpandCellDelegate: AnyObject {
+    func didTapExpand(in cell: TextHistoryTVCell)
+}
+
 class TextHistoryTVCell: UITableViewCell {
     
     @IBOutlet weak var sendBtnheight: NSLayoutConstraint!
@@ -22,6 +27,11 @@ class TextHistoryTVCell: UITableViewCell {
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
     var delegate : SelectedTextDelegate?
+    var ExpandDelegate: TextExpandCellDelegate?
+    private var isExpanded = false
+    private var fullText: String = ""
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -38,7 +48,7 @@ class TextHistoryTVCell: UITableViewCell {
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         sendBtn.isHidden = true
-        
+        setupTapGesture()
     }
     
     override func layoutSubviews() {
@@ -65,4 +75,51 @@ class TextHistoryTVCell: UITableViewCell {
         outerview.removeShimmer()
         sendBtn.isHidden = false
     }
+    
+    func configure(with text: String, expanded: Bool, isUnread: Bool) {
+            self.fullText = text
+            self.isExpanded = expanded
+            self.descriptContent.attributedText = getAttributedText(for: text, expanded: expanded)
+            self.descriptContent.numberOfLines = expanded ? 0 : (text.count > 120 ? 3 : 0)
+            self.NewImageView.isHidden = !isUnread
+        self.newImageOuterView.isHidden = !isUnread
+        }
+
+        private func setupTapGesture() {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
+            descriptContent.isUserInteractionEnabled = true
+            descriptContent.addGestureRecognizer(tap)
+        }
+
+        @objc private func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+            guard let text = descriptContent.attributedText?.string else { return }
+
+            let tapRange = (text as NSString).range(of: isExpanded ? "Hide" : "View")
+            if gesture.didTapAttributedTextInLabel(label: descriptContent, inRange: tapRange) {
+                ExpandDelegate?.didTapExpand(in: self)
+            }
+        }
+
+        private func getAttributedText(for text: String, expanded: Bool) -> NSAttributedString {
+            let threshold = 120
+            let attributed = NSMutableAttributedString()
+
+            if text.count > threshold {
+                if expanded {
+                    let full = text + " Hide"
+                    attributed.append(NSAttributedString(string: full))
+                    let range = (full as NSString).range(of: "Hide")
+                    attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
+                } else {
+                    let truncated = String(text.prefix(100)) + "... View"
+                    attributed.append(NSAttributedString(string: truncated))
+                    let range = (truncated as NSString).range(of: "View")
+                    attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
+                }
+            } else {
+                attributed.append(NSAttributedString(string: text))
+            }
+
+            return attributed
+        }
 }

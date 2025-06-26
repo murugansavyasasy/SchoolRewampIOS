@@ -19,6 +19,9 @@ class LessonDashboardTv: UITableViewCell {
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var SubjectLbl: UILabel!
     @IBOutlet weak var CompletedItemsLbl: UILabel!
+    @IBOutlet weak var ArrowImage: UIImageView!
+    
+    var isAnimate = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -94,12 +97,14 @@ class LessonDashboardTv: UITableViewCell {
                pieChartView.centerAttributedText = attributedString
                pieChartView.centerTextRadiusPercent = 0.9
            
-           pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
+           if isAnimate{
+               pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
+           }
        }
     
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {
-        case 1...20:
+        case 0...20:
             return UIColor.systemRed.withAlphaComponent(0.8)
         case 21...40:
             return UIColor.systemOrange.withAlphaComponent(0.8)
