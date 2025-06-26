@@ -242,7 +242,7 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         selectedIndex = indexPath
     
         LessonPlanStatus = selectedIndex.item
-        View_Lesson_Plan_Api(status: LessonPlanStatus)
+       // View_Lesson_Plan_Api(status: LessonPlanStatus)
         FilterCV.reloadData()
     }
     
