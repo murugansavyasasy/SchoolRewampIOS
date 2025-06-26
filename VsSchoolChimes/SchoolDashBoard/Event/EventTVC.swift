@@ -50,7 +50,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         cellview.layer.shadowOpacity = 0.1
         cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
         cellview.layer.shadowRadius = 8
-        
+        cellview.backgroundColor = .white
 //        cellview.layer.masksToBounds = false
         
         let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
@@ -81,7 +81,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func loadImage(urls: [FilePath]) {
-        pageViewController.isHidden = false
+        
         pageViewController.numberOfPages = urls.count
         file_path = urls
         pageViewController.currentPage = 0
