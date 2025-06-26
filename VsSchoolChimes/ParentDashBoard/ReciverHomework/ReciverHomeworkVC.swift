@@ -33,7 +33,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     override func viewDidLoad() {
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         GetHomeWorkReport()
         StyleAndTranslate()
         searchBar.searchTextField.addDoneButton()
@@ -200,6 +200,10 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         cell.HeaderView.layer.shadowOffset = CGSize(width: 0, height: 5) // Position of the shadow
         cell.HeaderView.layer.shadowRadius = 5 // Blur effect of the shadow
         
+//        print(
+//            "FilterHomeWorkList?[section]",
+//            FilterHomeWorkList?[section].homework?.first?.file_path?.last
+//        )
         // Add tap gesture to header
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
         cell.tag = section

@@ -25,7 +25,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBOutlet weak var StandardLbl: UILabel!
  
     var titleLbl = "Event"
-    var button1 = "Event".translated()
+    var button1 = "Event/Holidays".translated()
     var button2 = "Holiday".translated()
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
