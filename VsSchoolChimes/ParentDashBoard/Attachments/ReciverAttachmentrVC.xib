@@ -95,9 +95,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eC6-F4-SwK">
                     <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eQN-JO-oh4">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eQN-JO-oh4">
                             <rect key="frame" x="0.0" y="516" width="393" height="193"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="dTL-Zz-4Cn"/>
                                 <outlet property="delegate" destination="-1" id="4zT-dw-3Vd"/>
@@ -141,6 +141,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="7lS-pd-Lle" secondAttribute="trailing" constant="15" id="2aV-7U-qXS"/>
                                 <constraint firstAttribute="trailing" secondItem="gav-H2-LKL" secondAttribute="trailing" id="g8w-iQ-HDt"/>
@@ -171,6 +172,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="qfY-Tb-ItO" secondAttribute="trailing" id="0DC-cn-Lmc"/>
                                 <constraint firstItem="mUn-B7-YRI" firstAttribute="leading" secondItem="3NV-UJ-v2H" secondAttribute="leading" id="9Yp-LI-efN"/>
@@ -181,7 +183,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="3NV-UJ-v2H" secondAttribute="trailing" id="4rX-WS-CnM"/>
                         <constraint firstAttribute="trailing" secondItem="eQN-JO-oh4" secondAttribute="trailing" id="AkF-Xs-iUx"/>
