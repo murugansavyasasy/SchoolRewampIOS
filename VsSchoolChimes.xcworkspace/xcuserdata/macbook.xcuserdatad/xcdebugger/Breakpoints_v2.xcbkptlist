@@ -7,32 +7,62 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E595D9A0-6F79-47C2-B69C-037FFD38B448"
+            uuid = "A6305D90-0E36-4952-A31B-AC78504EABFB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VsSchoolChimes/SchoolDashBoard/MsgFrmManagement/MessageFromManagementViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "400"
-            endingLineNumber = "400"
-            landmarkName = "readStatus(attachment:)"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
+            landmarkName = "readStatusManagement(attachment:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A6305D90-0E36-4952-A31B-AC78504EABFB - 8f58de938fb7d630"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MessageFromManagementViewController.reload(index: Swift.Int) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchoolNewsource/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/MsgFrmManagement/MessageFromManagementViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477">
+               </Location>
+               <Location
+                  uuid = "A6305D90-0E36-4952-A31B-AC78504EABFB - 8f58de938fb7d630"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MessageFromManagementViewController.reload(index: Swift.Int) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchoolNewsource/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/MsgFrmManagement/MessageFromManagementViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "39B74699-21BF-441B-89B0-FF9B7530E537"
+            uuid = "9786A858-2402-4848-BCBF-458538010108"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VsSchoolChimes/SchoolDashBoard/MsgFrmManagement/MessageFromManagementViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "readStatus(attachment:)"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
+            landmarkName = "readStatusManagement(attachment:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

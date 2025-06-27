@@ -356,6 +356,8 @@ class CommonStringFile{
     static let add_location_secondMessage = """
         Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
         """
+    
+    static let No_data_found = "No Data Found!"
 }
 
 

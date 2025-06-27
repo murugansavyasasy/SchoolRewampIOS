@@ -91,35 +91,52 @@ class TextHistoryTVCell: UITableViewCell {
             descriptContent.addGestureRecognizer(tap)
         }
 
-        @objc private func handleLabelTap(_ gesture: UITapGestureRecognizer) {
-            guard let text = descriptContent.attributedText?.string else { return }
+    @objc private func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = descriptContent.attributedText?.string else { return }
 
-            let tapRange = (text as NSString).range(of: isExpanded ? "Hide" : "View")
-            if gesture.didTapAttributedTextInLabel(label: descriptContent, inRange: tapRange) {
-                ExpandDelegate?.didTapExpand(in: self)
-            }
+        // Check which keyword to respond to
+        let keyword = isExpanded
+            ? (text.count > 120 ? "Hide" : nil)  // Only react to "Hide" for long text
+            : "View"
+
+        guard let target = keyword else { return }
+
+        let tapRange = (text as NSString).range(of: target)
+        if gesture.didTapAttributedTextInLabel(label: descriptContent, inRange: tapRange) {
+            ExpandDelegate?.didTapExpand(in: self)
         }
+    }
 
-        private func getAttributedText(for text: String, expanded: Bool) -> NSAttributedString {
-            let threshold = 120
-            let attributed = NSMutableAttributedString()
 
-            if text.count > threshold {
-                if expanded {
-                    let full = text + " Hide"
-                    attributed.append(NSAttributedString(string: full))
-                    let range = (full as NSString).range(of: "Hide")
-                    attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
-                } else {
-                    let truncated = String(text.prefix(100)) + "... View"
-                    attributed.append(NSAttributedString(string: truncated))
-                    let range = (truncated as NSString).range(of: "View")
-                    attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
-                }
+    private func getAttributedText(for text: String, expanded: Bool) -> NSAttributedString {
+        let threshold = 120
+        let attributed = NSMutableAttributedString()
+
+        if text.count > threshold {
+            if expanded {
+                let full = text + " Hide"
+                attributed.append(NSAttributedString(string: full))
+                let range = (full as NSString).range(of: "Hide")
+                attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
             } else {
-                attributed.append(NSAttributedString(string: text))
+                let truncated = String(text.prefix(100)) + "... View"
+                attributed.append(NSAttributedString(string: truncated))
+                let range = (truncated as NSString).range(of: "View")
+                attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
             }
-
-            return attributed
+        } else {
+            if expanded {
+                // Just show full text, no "Hide"
+                attributed.append(NSAttributedString(string: text))
+            } else {
+                let collapsed = text + " View"
+                attributed.append(NSAttributedString(string: collapsed))
+                let range = (collapsed as NSString).range(of: "View")
+                attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
+            }
         }
+
+        return attributed
+    }
+
 }

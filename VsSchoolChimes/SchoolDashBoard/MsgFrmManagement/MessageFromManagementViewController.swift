@@ -6,7 +6,7 @@
 //
 
 protocol ReadUpadesManagemant{
-    func readStatus(attachment:ManagemantMessageData)
+    func readStatusManagement(attachment:ManagemantMessageData)
 }
 
 import UIKit
@@ -26,6 +26,8 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     var SearchData: [ManagemantMessageData]?
     var dateFormatter = DateFormatter()
     var shouldShowFooter = true
+    var playIndex :Int?
+    var readIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +150,16 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     
                     DispatchQueue.main.async { [self] in
                         
-                        print(SuccessMessage.message)
+                        SearchData = SearchData?.map { message in
+                            
+                            var updated = message
+                            if message.id == detail_id{
+                                updated.is_unread = false
+                            }
+                            return updated
+                        }
+                        
+                        tv.reloadData()
                     }
                     
                 }else {
@@ -181,8 +192,16 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                 if SuccessMessage.status == true {
                     
                     DispatchQueue.main.async { [self] in
+                        SearchData = SearchData?.map { message in
+                            
+                            var updated = message
+                            if message.id == detail_id{
+                                updated.is_unread = false
+                            }
+                            return updated
+                        }
                         
-                        print(SuccessMessage.message)
+                        tv.reloadData()
                     }
                     
                 }else {
@@ -229,7 +248,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     tableView.beginUpdates()
                     tableView.endUpdates()
                 }
-                cell.delegate = self
+               // cell.delegate = self
                 let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
                 cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
                 cell.confic(Message?.file_path?.first?.url ?? "")
@@ -239,9 +258,9 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             }else{
                 let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
                 
-                
+                cell.ManagementData = Message
                 cell.titleLbl.text = Message?.title
-                cell.delegate = self
+                cell.ManagementDelegate = self
                 cell.descriptionLbl.setupExpandable(text: Message?.description ?? "")
                 cell.descriptionLbl.onExpandableTap = {
                     cell.descriptionLbl.isExpanded.toggle()
@@ -297,6 +316,42 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
             
             cell.configureShimmer()
+            
+            let isPlaying = (playIndex == indexPath.row)
+            let voiceData = Message
+            
+            cell.sendbtn.isHidden = true
+            cell.sentBtnHeight.constant = 0
+            cell.sentBtnWidth.constant = 0
+            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.content)
+            cell.playBtn.tag = indexPath.row
+            cell.sendbtn.tag = indexPath.row
+            cell.delegate = self
+            cell.NewImageView.isHidden = true
+            
+            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+            
+            let duration = voiceData?.duration ?? 0
+            print("duration1",duration)
+            let formatted = formatDuration(duration)
+            print("duration",formatted)
+            cell.totaltime.text = "00:00 / \(formatted)"
+            
+            if !isPlaying {
+                cell.playerView.progress = 0.0
+                cell.playerView.updateWithLevel(0.0)
+                cell.playerView.setNeedsDisplay()
+            }else{
+                
+                cell.NewImageView.isHidden = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                cell.configureShimmer()
+            }
+            
+            cell.NewImageView.isHidden = !(Message?.is_unread ?? false)
+            
            
             return cell
             
@@ -364,10 +419,32 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
 @available(iOS 14.0, *)
 extension MessageFromManagementViewController: UISearchBarDelegate {
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty{
+            SearchData = messageData
+        }else {
+            SearchData = messageData?.filter{ message in
+                
+                message.title?.lowercased().contains(searchText.lowercased()) ?? false ||
+                message.description?.lowercased().contains(searchText.lowercased()) ?? false ||
+                message.content?.lowercased().contains(searchText.lowercased()) ?? false
+            }
+        }
+        
+        NoDataImage.isHidden = !(SearchData?.isEmpty ?? false)
+        NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+        NoDataLbl.text = CommonStringFile.No_data_found
+        tv.reloadData()
+    }
 }
 
 @available(iOS 14.0, *)
-extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpades {
+extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpadesManagemant, reloadDelegate {
+    func deleteDelegate(index: Int) {
+        
+    }
+    
     
     func didTapExpand(in cell: TextHistoryTVCell) {
         guard let indexPath = tv.indexPath(for: cell) else { return }
@@ -394,12 +471,46 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
         tv.endUpdates()
     }
     
-    func readStatus(attachment: Attachment) {
+    func readStatusManagement(attachment: ManagemantMessageData) {
         
         if attachment.is_archive == true {
             ReadStatusUpdateArchive(type: attachment.type ?? "", detail_id: attachment.id ?? "")
         } else {
             ReadStatusUpdate(type: attachment.type ?? "", detail_id: attachment.id ?? "")
         }
+    }
+    
+    func reload(index: Int) {
+        
+            if let currentIndex = playIndex, currentIndex != index {
+                let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+                if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
+                    previousCell.updatePlayState(isPlaying: false, url: nil)
+                }
+            }
+            
+        playIndex = (playIndex == index) ? nil : index
+        var currentmessage: ManagemantMessageData?
+        
+
+        currentmessage = SearchData?[index]
+        
+        if currentmessage?.is_unread == true {
+            
+            if currentmessage?.is_archive ?? false {
+                ReadStatusUpdateArchive(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
+            }else {
+                
+                ReadStatusUpdate(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
+            }
+            
+            currentmessage?.is_unread = false
+            
+            if let PlayingMessage = currentmessage{
+                SearchData?[index] = PlayingMessage
+            }
+        }
+        
+            tv.reloadData()
     }
 }

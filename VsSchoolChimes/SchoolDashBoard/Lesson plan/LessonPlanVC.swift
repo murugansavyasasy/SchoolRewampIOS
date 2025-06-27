@@ -166,6 +166,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
             let vc = ViewLessonVC(nibName: nil, bundle: nil)
             vc.Reqest_Type = ReqestType
             vc.SubjectId = lesson.section_subject_id
+            vc.IsDeleteHiden = ReqestType == "myclass" ? false : true
             vc.modalPresentationStyle = .fullScreen
             
             present(vc, animated: true)
