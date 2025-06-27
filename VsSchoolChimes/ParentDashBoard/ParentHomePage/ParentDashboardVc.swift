@@ -405,6 +405,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.LeaveRquest(from: self)
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
+            case 37:
+                MenuRedirect.receiverPauckt(from: self)
             case 39:
                 MenuRedirect.receiverAttachment(from: self)
                 

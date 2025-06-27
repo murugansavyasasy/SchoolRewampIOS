@@ -138,7 +138,8 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
         cell.subject.text = subject ?? ""
         cell.titleLbl.text = titleString ?? ""
         
-        let emoji = (student.submit_status == "NOTSUBMITTED") ? "❎" : "✅"
+        let emoji = (student.submit_status == "NOTSUBMITTED") ? "❌" : "✅"
+        cell.submitedCount.textColor = (student.submit_status == "NOTSUBMITTED") ? UIColor.red : UIColor.aproved
         cell.indicationBtn.isHidden = (student.submit_status == "NOTSUBMITTED")
         let count = student.submissions_details?.count ?? 0
         cell.submitedCount.text = (student.submit_status == "NOTSUBMITTED") ? "\(emoji) \(student.submit_status ?? "")" : "\(emoji) \(student.submit_status ?? ""): \(count)"
@@ -167,6 +168,7 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
             .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
             .first?.rootViewController?.topMostViewController()
     }
+    
     // MARK: - UISearchBarDelegate (Optional Filtering)
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

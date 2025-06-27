@@ -36,11 +36,20 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         forwordBtn.layer.cornerRadius = 4
         forwordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 
-        cellview.layer.cornerRadius = 10
+//        cellview.layer.cornerRadius = 10
+//        cellview.layer.shadowColor = UIColor.black.cgColor
+//        cellview.layer.shadowOpacity = 0.5
+//        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
+//        cellview.layer.shadowRadius = 4
+//        cellview.backgroundColor = .white
+        
+        
+        
+        cellview.layer.cornerRadius = 16
         cellview.layer.shadowColor = UIColor.black.cgColor
-        cellview.layer.shadowOpacity = 0.5
-        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cellview.layer.shadowRadius = 4
+        cellview.layer.shadowOpacity = 0.1
+        cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cellview.layer.shadowRadius = 8
         cellview.backgroundColor = .white
 //        cellview.layer.masksToBounds = false
         
@@ -72,7 +81,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func loadImage(urls: [FilePath]) {
-        pageViewController.isHidden = false
+        
         pageViewController.numberOfPages = urls.count
         file_path = urls
         pageViewController.currentPage = 0
