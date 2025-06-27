@@ -45,12 +45,20 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         
         
         
-        cellview.layer.cornerRadius = 16
+//        cellview.layer.cornerRadius = 16
+//        cellview.layer.shadowColor = UIColor.black.cgColor
+//        cellview.layer.shadowOpacity = 0.1
+//        cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        cellview.layer.shadowRadius = 8
+        
+        
         cellview.layer.shadowColor = UIColor.black.cgColor
-        cellview.layer.shadowOpacity = 0.1
         cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cellview.layer.shadowRadius = 8
-        cellview.backgroundColor = .white
+//        subjectName.isHidden = subjectName.text == ""
+        cellview.layer.shadowRadius = 5
+        cellview.layer.shadowOpacity = 0.3
+        cellview.layer.cornerRadius = 20
+//        cellview.backgroundColor = .white
 //        cellview.layer.masksToBounds = false
         
         let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)

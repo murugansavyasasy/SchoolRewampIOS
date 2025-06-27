@@ -265,6 +265,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.forwordBtn.isHidden = true
             cell.SelectBtnHeight.constant = 0
             cell.newView.isHidden = true
+            cell.pageViewController.isHidden = true
             // Load image if available
             if let urls = homework.file_path, urls.count != 0{
                 cell.ImageCollectionView.isHidden = false

@@ -206,7 +206,7 @@ class  commonApi_forSending {
         CircularProgressLoader.shared.show()
         
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
-        
+//        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
             CircularProgressLoader.shared.updateProgress(to: progress)

@@ -4,9 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -78,7 +76,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" name="ParentClr"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="qpN-Yo-u0B" firstAttribute="top" secondItem="ple-Yb-ohd" secondAttribute="top" id="018-D6-e23"/>
                         <constraint firstItem="KN8-Rt-FY5" firstAttribute="leading" secondItem="qpN-Yo-u0B" secondAttribute="trailing" constant="8.6666666666666572" id="4fD-E7-kt4"/>
@@ -127,7 +125,7 @@
                         </stackView>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rUd-Kf-4v1">
                             <rect key="frame" x="20" y="10" width="353" height="41"/>
-                            <color key="backgroundColor" name="Color"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="H13-nE-73C"/>
                             </constraints>
@@ -140,7 +138,7 @@
                             </connections>
                         </segmentedControl>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="0.51563031462585029" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="m1e-cb-32G" firstAttribute="leading" secondItem="bWN-zH-ICo" secondAttribute="leading" constant="10" id="BVw-TP-DPV"/>
                         <constraint firstItem="bWN-zH-ICo" firstAttribute="top" secondItem="f2D-eH-YpK" secondAttribute="top" id="D36-WE-L5M"/>
@@ -159,7 +157,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="ParentClr"/>
+            <color key="backgroundColor" red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="0.79537458609271527" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ple-Yb-ohd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5Vf-Lz-42T"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="YQz-wK-DCk" secondAttribute="bottom" id="PPQ-lJ-1q1"/>
@@ -175,17 +173,8 @@
     <resources>
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="Color">
-            <color red="0.88599997758865356" green="0.9570000171661377" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="ParentClr">
-            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
