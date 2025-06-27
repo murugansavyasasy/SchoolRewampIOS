@@ -26,6 +26,7 @@ class ViewLessonVC: UIViewController {
     var Filters = ["All","Yet to Start","In Progress","Completed"]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var LessonPlanStatus = 0
+    var IsDeleteHiden = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +56,7 @@ class ViewLessonVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        View_Lesson_Plan_Api(status: LessonPlanStatus)
+        View_Lesson_Plan_Api()
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,9 +67,9 @@ class ViewLessonVC: UIViewController {
         )
     }
     
-    func View_Lesson_Plan_Api(status: Int){
+    func View_Lesson_Plan_Api(){
         
-        let param: [String: Any] = [LessonPlanStringFile.section_subject_id : SubjectId ?? "",LessonPlanStringFile.lesson_plan_status: status]
+        let param: [String: Any] = [LessonPlanStringFile.section_subject_id : SubjectId ?? "",LessonPlanStringFile.lesson_plan_status: 0]
         
         APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<LessonPlanDetailResponse,Error>) in
             
@@ -76,15 +77,15 @@ class ViewLessonVC: UIViewController {
             case .success(let success):
                 
                 DispatchQueue.main.async { [self] in
-                    
-                    ViewLessonData = success.data
-                    NoDataImg.isHidden = !(ViewLessonData?.isEmpty ?? false)
-                    NoDataLbl.isHidden = !(ViewLessonData?.isEmpty ?? false)
-                   // SearchBar.isHidden = (ViewLessonData?.isEmpty ?? false)
-                    if status == 0 {
-                      FilterCV.isHidden = (ViewLessonData?.isEmpty ?? false)
+                    if success.status == true{
+                        ViewLessonData = success.data
+                        LessonFilter(Status: LessonPlanStatus)
+                    }else {
+                        FilterCV.isHidden = true
+                        NoDataLbl.text = success.message
+                        NoDataImg.isHidden = false
+                        NoDataLbl.isHidden = false
                     }
-                    NoDataLbl.text = success.message
                     TableView.reloadData()
                 }
                 
@@ -116,7 +117,7 @@ class ViewLessonVC: UIViewController {
                     
                     if success.status == true {
                         CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
-                            self.View_Lesson_Plan_Api(status: self.LessonPlanStatus)
+                            self.View_Lesson_Plan_Api()
                         })
                     }else {
                         CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
@@ -141,14 +142,14 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return ViewLessonData?.count ?? 0
+        return FilteredData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = TableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonViewTvCell, for: indexPath) as! LessonViewTvCell
         
-        let lesson = ViewLessonData?[indexPath.row]
+        let lesson = FilteredData?[indexPath.row]
         let colour: UIColor
         switch lesson?.lesson_plan_status{
             
@@ -170,6 +171,8 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
             colour = .systemOrange
         }
         
+        cell.DeleteBtn.isHidden = IsDeleteHiden
+        
         cell.EditBtn.tag = indexPath.row
         cell.EditBtn.addTarget(self, action: #selector(EditBtnAct(_:)), for: .touchUpInside)
         
@@ -181,7 +184,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         cell.StatusLbl.textColor = colour
         cell.ProgressImage.tintColor = colour
         
-        let details = ViewLessonData?[indexPath.row].details ?? []
+        let details = FilteredData?[indexPath.row].details ?? []
 
         cell.configure(with: details)
         
@@ -190,7 +193,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
     
     @objc func EditBtnAct(_ sender: UIButton) {
         
-        let particularId = ViewLessonData?[sender.tag].particular_id
+        let particularId = FilteredData?[sender.tag].particular_id
         
         let vc = EditLessonVC(nibName: nil, bundle: nil)
         vc.particular_Id = particularId
@@ -201,7 +204,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
     
     @objc func DeleteBtnAct(_ sender: UIButton) {
         
-        let particularId = ViewLessonData?[sender.tag].particular_id ?? ""
+        let particularId = FilteredData?[sender.tag].particular_id ?? ""
         
         CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_Delete_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
             
@@ -226,24 +229,32 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         cell.FilterLbl.text = Filters[indexPath.item]
         
         cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.topBackgroundCLr : .systemGray5
-        
-        cell.cellView.layer.masksToBounds = false
-        cell.cellView.layer.shadowColor = UIColor.black.cgColor
-        cell.cellView.layer.shadowOpacity = indexPath == selectedIndex ? 0.2 : 0.0
-        cell.cellView.layer.shadowRadius = indexPath == selectedIndex ? 4 : 0
-        cell.cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
         cell.CheckboxImg.isHidden = true
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        selectedIndex = indexPath
     
-        LessonPlanStatus = selectedIndex.item
-       // View_Lesson_Plan_Api(status: LessonPlanStatus)
+        selectedIndex = indexPath
+        LessonPlanStatus = indexPath.item
+        LessonFilter(Status: LessonPlanStatus)
+       
         FilterCV.reloadData()
+        TableView.reloadData()
+    }
+    
+    func LessonFilter(Status:Int){
+        
+        if Status == 0{
+            FilteredData = ViewLessonData
+        }else{
+            FilteredData = ViewLessonData?.filter{$0.lesson_plan_status == Status}
+        }
+        
+        NoDataImg.isHidden = !(FilteredData?.isEmpty ?? false)
+        NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? false)
+        NoDataLbl.text = "No Data Found!"
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

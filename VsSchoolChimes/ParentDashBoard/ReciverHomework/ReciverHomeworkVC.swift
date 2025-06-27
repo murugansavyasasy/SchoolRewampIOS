@@ -4,16 +4,12 @@
 //
 //  Created by Admin on 20/12/24.
 //
-
 import UIKit
 
 @available(iOS 14.0, *)
 class ReciverHomeworkVC: UIViewController, SelectNotice {
-    
-    func didTapButton(title: String, content: String, items: [FilePath]) {
-        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
-    }
-    
+
+    // MARK: - Outlets
     @IBOutlet weak var searchHeight: NSLayoutConstraint!
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var noDataLbl: UILabel!
@@ -23,161 +19,185 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
-    var expandedSections: Set<Int> = [] // Tracks expanded sections
-    var delegate : HistorySelectDelegate?
-    var homeWorkList:[HomeworkList]?
-    var FilterHomeWorkList:[HomeworkList]?
-    var playIndex : Int = 0
+
+    // MARK: - Variables
+    var expandedSections: Set<Int> = []
+    var delegate: HistorySelectDelegate?
+    var homeWorkList: [HomeworkList]?
+    var FilterHomeWorkList: [HomeworkList]?
+    var playIndex: Int = 0
     var shouldShowFooter = true
+    var hasLoadedArchive = false
     var studentDetails = UserDefaultFileManager.get_child_Details()
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        GetHomeWorkReport()
+    }
+
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5), endPoint: CGPoint(x: 0, y: 0.5))
+    }
+
+    // MARK: - Setup
+    func setupUI() {
         NameLbl.text = studentDetails?.name
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         GetHomeWorkReport()
         StyleAndTranslate()
         searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
         backBtn.applyBackButton()
         searchBar.applyRightTxt()
+
         RegisterCell()
         setupTableFooter()
+
         TV.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         TV.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         TV.delegate = self
         TV.dataSource = self
-        
+        TV.showsVerticalScrollIndicator = false
+        TV.showsHorizontalScrollIndicator = false
     }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // clear caches or large objects
-    }
-    
-    func StyleAndTranslate(){
-        //MARK: UI Changes
-        
-        //FontStyle
+
+    func StyleAndTranslate() {
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         searchBar.addDoneButton()
-        //Translation
+
         backBtn.setTitle(MenuStringFile.Homework.translated(), for: .normal)
         searchBar.placeholder = CommonStringFile.Search.translated()
     }
-    
-    //MARK: Cell Registration
-    func RegisterCell(){
-        let nib = UINib(nibName: CellConfingName.HomeWorkTVC, bundle: nil)
-        TV.register(nib, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
-        
-        let nib1 = UINib(nibName: CellConfingName.HomeworkreportTV, bundle: nil)
-        let VideoTVCell = UINib(nibName: CellConfingName.VideoTVCell, bundle: nil)
-        TV.register(VideoTVCell, forCellReuseIdentifier: CellConfingName.VideoTVCell)
-        TV.register(nib1, forCellReuseIdentifier: CellConfingName.HomeworkreportTV)
-        
-        let head = UINib(nibName: CellConfingName.ReciverHomeworkHeader, bundle: nil)
-        TV.register(head, forHeaderFooterViewReuseIdentifier: CellConfingName.ReciverHomeworkHeader)
+
+    func RegisterCell() {
+        TV.register(UINib(nibName: CellConfingName.HomeWorkTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
+        TV.register(UINib(nibName: CellConfingName.HomeworkreportTV, bundle: nil), forCellReuseIdentifier: CellConfingName.HomeworkreportTV)
+        TV.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
+        TV.register(UINib(nibName: CellConfingName.ReciverHomeworkHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ReciverHomeworkHeader)
     }
-    
+
+    // MARK: - Button Actions
     @IBAction func BackBtnAct(_ sender: Any) {
         dismiss(animated: true)
     }
+
+    // MARK: - API Calls
     func GetHomeWorkReport() {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
+        if #available(iOS 15.0, *) { showLottieProgressLoader(animationName: "loader (2)") }
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? ""
-        ) { [self] (result: Result<HomeworListkResponse, Error>) in
+        ) { [weak self] (result: Result<HomeworListkResponse, Error>) in
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
-                
+                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+
                 switch result {
                 case .success(let successMessage):
-                    self.homeWorkList = successMessage.data
-                    self.FilterHomeWorkList = successMessage.data
-                    self.TV.reloadData()
-                    if self.homeWorkList?.count == 0{
-                        self.noDataLbl.text = successMessage.message
-                        self.noDataLbl.isHidden = false
-                        self.noDataImg.isHidden = false
-                        //                        self.TV.isHidden = true
-                        self.searchBar.isHidden = true
-                        self.searchHeight.constant = 0
-                    }else{
-                        self.noDataLbl.isHidden = true
-                        self.noDataImg.isHidden = true
-                        self.TV.isHidden = false
-                        self.searchHeight.constant = 56
-                    }
+                    self?.homeWorkList = successMessage.data
+                    self?.FilterHomeWorkList = successMessage.data
+                    self?.TV.reloadData()
+                    let isEmpty = successMessage.data?.isEmpty ?? true
+                    self?.noDataLbl.text = successMessage.message
+                    self?.noDataLbl.isHidden = !isEmpty
+                    self?.noDataImg.isHidden = !isEmpty
+                    self?.searchBar.isHidden = isEmpty
+                    self?.searchHeight.constant = isEmpty ? 0 : 56
+
                 case .failure(let error):
-                    print(error.localizedDescription)
-                    self.noDataLbl.text = error.localizedDescription
-                    self.noDataLbl.isHidden = false
-                    self.noDataImg.isHidden = false
-                    self.TV.isHidden = true
-                    self.searchBar.isHidden = true
+                    self?.noDataLbl.text = error.localizedDescription
+                    self?.noDataLbl.isHidden = false
+                    self?.noDataImg.isHidden = false
+                    self?.TV.isHidden = true
+                    self?.searchBar.isHidden = true
                 }
             }
         }
     }
+
     func GetHomeWorkArchive() {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
+        if #available(iOS 15.0, *) { showLottieProgressLoader(animationName: "loader (2)") }
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_list_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token:studentDetails?.access_token ?? "") { [self] (result: Result<HomeworListkResponse, Error>) in
-                DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
-                    
-                    switch result {
-                    case .success(let successMessage):
-                        self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
-                        self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
-                        self.TV.reloadData()
-                        if self.homeWorkList?.count == 0{
-                            self.noDataLbl.text = successMessage.message
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            self.TV.isHidden = true
-                            self.searchBar.isHidden = true
-                            self.searchHeight.constant = 0
-                        }else{
-                            self.noDataLbl.isHidden = true
-                            self.noDataImg.isHidden = true
-                            self.searchHeight.constant = 56
-                            self.TV.isHidden = false
-                        }
-                        
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        if self.homeWorkList?.count == 0{
-                            self.noDataLbl.text = error.localizedDescription
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            self.TV.isHidden = true
-                            self.searchBar.isHidden = true
-                        }
-                        
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<HomeworListkResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+
+                switch result {
+                case .success(let successMessage):
+                    self?.homeWorkList?.append(contentsOf: successMessage.data ?? [])
+                    self?.FilterHomeWorkList?.append(contentsOf: successMessage.data ?? [])
+                    self?.TV.reloadData()
+                    self?.shouldShowFooter = false
+                    self?.hasLoadedArchive = true
+
+                case .failure(let error):
+                    if self?.homeWorkList?.isEmpty ?? true {
+                        self?.noDataLbl.text = error.localizedDescription
+                        self?.noDataLbl.isHidden = false
+                        self?.noDataImg.isHidden = false
+                        self?.TV.isHidden = true
+                        self?.searchBar.isHidden = true
                     }
                 }
             }
+        }
+    }
+
+    func setupTableFooter() {
+        guard shouldShowFooter && !hasLoadedArchive && TV.tableFooterView == nil else {
+            TV.tableFooterView = nil
+            return
+        }
+
+        if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+            footer.frame = CGRect(x: 0, y: 0, width: TV.frame.width, height: 60)
+
+            let buttonTitle = "See More"
+            let attributedString = NSMutableAttributedString(string: buttonTitle)
+            let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 17)
+            attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
+            attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+
+            footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
+            footer.SeeMoreBtn.addTarget(self, action: #selector(seeMoreAction), for: .touchUpInside)
+            footer.SeeMoreBtn.accessibilityLabel = "See more homework"
+
+            TV.tableFooterView = footer
+        }
+    }
+
+    @objc func seeMoreAction() {
+        if let footer = TV.tableFooterView {
+            UIView.animate(withDuration: 0.3, animations: {
+                footer.alpha = 0
+            }, completion: { [weak self] _ in
+                self?.TV.tableFooterView = nil
+                self?.shouldShowFooter = false
+                self?.hasLoadedArchive = true
+                self?.GetHomeWorkArchive()
+            })
+        } else {
+            shouldShowFooter = false
+            hasLoadedArchive = true
+        }
+    }
+
+    func didTapButton(title: String, content: String, items: [FilePath]) {
+        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
 }
+
+// UITableViewDelegate, DataSource and UISearchBarDelegate extensions remain unchanged from your version.
+
 
 //MARK: Tableview Functions
 @available(iOS 14.0, *)
@@ -203,7 +223,6 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
         cell.tag = section
         cell.addGestureRecognizer(tapGesture)
-        
         
         if expandedSections.contains(section){
             cell.ArrowImgview.image = UIImage(named: "arrow_up")
@@ -309,47 +328,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         
         TV.reloadSections(sectionsToReload, with: .automatic)
     }
-    
-    func setupTableFooter() {
-        if shouldShowFooter {
-            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                footer.frame = CGRect(x: 0, y: 0, width: TV.frame.width, height: 60)
-                let buttonTitle = "See More"
-                let attributedString = NSMutableAttributedString(string: buttonTitle)
-                
-                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
-                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
-                
-                // Apply underline style
-                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
-                
-                // Set attributed title to UIButton
-                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
-                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-                footer.SeeMoreBtn.isUserInteractionEnabled = true
-                TV.tableFooterView = footer
-            }
-        } else {
-            TV.tableFooterView = nil
-        }
-    }
-    
-    @objc func seeMoreAction() {
-        // Animate the footer fade-out if desired.
-        if let footer = TV.tableFooterView {
-            UIView.animate(withDuration: 0.3, animations: {
-                footer.alpha = 0
-            }, completion: {[self] _ in
-                TV.tableFooterView = nil
-                shouldShowFooter = false
-                GetHomeWorkArchive()
-            })
-        } else {
-            // In case footer is already nil.
-            shouldShowFooter = false
-        }
-    }
+
 }
 
 //MARK: Searchbar delegate
