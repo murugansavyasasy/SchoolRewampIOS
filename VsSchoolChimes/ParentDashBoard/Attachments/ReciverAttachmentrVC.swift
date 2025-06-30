@@ -83,7 +83,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         studentName.text = studentDetails?.name
-        standerd.text = "\(studentDetails?.standard_name ?? ""),\(studentDetails?.section_name ?? "")"
+        standerd.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         studentName.setFont(style: .body, size: FontSize.BodySize)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
@@ -94,7 +94,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     }
     
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientgreen,Colornames.gradientBlue], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     
     private func setupView() {

@@ -26,7 +26,7 @@ class ImageCvCell: UICollectionViewCell, WKUIDelegate, WKNavigationDelegate {
         imageCount.layer.cornerRadius = imageCount.frame.width/2
         TrashIcon.layer.cornerRadius = TrashIcon.frame.width/2
         TrashIcon.layer.borderWidth = 1
-        TrashIcon.layer.borderColor = UIColor.black.cgColor
+        TrashIcon.layer.borderColor = UIColor.red.cgColor
         ActivityIndicator.stopAnimating()
         let filePath = "file:///private/var/mobile/Containers/Data/Application/4881C40B-0842-4004-A75C-A6C2B640BCCF/tmp/com.voicesnap.schoolmessenger-Inbox/sample.pdf"
         guard let fileURL = URL(string: filePath) else {

@@ -98,7 +98,7 @@ class ExamCreatVC: UIViewController, UITextViewDelegate {
         
         setExam.placeholder = "Enter Exam"
         titleLbl.text = "Create Exam"
-        contentCount.text = "0 of 500"
+        contentCount.text = "0 / 500"
     }
     // MARK: - Placeholder Setup
     func setupPlaceholder() {
@@ -125,7 +125,7 @@ class ExamCreatVC: UIViewController, UITextViewDelegate {
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         
         if updatedText.count <= 500 {
-            contentCount.text = "\(updatedText.count) of 500"
+            contentCount.text = "\(updatedText.count) / 500"
             return true
         } else {
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)

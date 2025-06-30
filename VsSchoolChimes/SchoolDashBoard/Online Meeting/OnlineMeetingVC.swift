@@ -571,7 +571,7 @@ extension OnlineMeetingVC : UITextViewDelegate {
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            LettercountLbl.text = "\(newText.count) of 500" // Update the character count label
+            LettercountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

@@ -532,7 +532,7 @@ extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
             placeholderLabel.isHidden = updatedText.count == 0 ? false : true
-            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

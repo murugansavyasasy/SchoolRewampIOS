@@ -541,7 +541,7 @@ extension SenderSideVideoViewController : UITextViewDelegate{
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            CharCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            CharCountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()
