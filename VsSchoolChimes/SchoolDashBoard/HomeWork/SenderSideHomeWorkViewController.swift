@@ -11,7 +11,7 @@ import Kingfisher
 import PDFKit
 
 @available(iOS 14.0, *)
-class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate {
+class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate, UITextFieldDelegate {
     func didTapButton(title: String, content: String, items: [FilePath]) {
         print("sdhbh")
     }
@@ -30,6 +30,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var DetailsLbl: UILabel!
     @IBOutlet weak var DetailsTxtview: UITextView!
     @IBOutlet weak var wordsCountLbl: UILabel!
+    @IBOutlet weak var titleCountLbl: UILabel!
     @IBOutlet weak var uploadattachmentLbl: UILabel!
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
@@ -71,6 +72,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
         DetailsTxtview.delegate = self
+        TitleTxtfield.delegate = self
         VideoView.isHidden = true
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
@@ -504,6 +506,21 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             return false // Reject the change
         }
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Current text
+        let currentText = textField.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        if newText.count <= 50 {
+            titleCountLbl.text = "\(newText.count) / 50" // Update count label
+            return true
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return false
+        }
+    }
+
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {

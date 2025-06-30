@@ -89,7 +89,7 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         vcc.subjectName = titleLbl.text
         vcc.type = 2
         vcc.index = indexPath.row
-        vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
     }
