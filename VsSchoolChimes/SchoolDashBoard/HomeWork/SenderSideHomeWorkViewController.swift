@@ -95,7 +95,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         TextViewheight.constant = newHeight
         attachments.removeAll()
         attachments.append(contentsOf: imageItems)
-        wordsCountLbl.text = "\(content.count) of 500"
+        wordsCountLbl.text = "\(content.count) / 500"
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
@@ -117,7 +117,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsLbl.setRequiredText(CommonStringFile.Description)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
-        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
     @IBAction func deleteVideo(){
@@ -496,7 +496,7 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            wordsCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            wordsCountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

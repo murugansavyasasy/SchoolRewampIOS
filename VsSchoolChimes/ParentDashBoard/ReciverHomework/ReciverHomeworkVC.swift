@@ -38,13 +38,14 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     }
 
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5), endPoint: CGPoint(x: 0, y: 0.5))
+
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
 
     // MARK: - Setup
     func setupUI() {
         NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "")  - \(studentDetails?.section_name ?? "")"
 
         StyleAndTranslate()
         searchBar.searchTextField.addDoneButton()

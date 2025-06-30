@@ -25,7 +25,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         sudentName.text = studentDetails?.name
-        standerdSectionLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
+        standerdSectionLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         sudentName.setFont(style: .body, size: FontSize.BodySize)
         standerdSectionLbl.setFont(style: .body, size: FontSize.BodySize)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)

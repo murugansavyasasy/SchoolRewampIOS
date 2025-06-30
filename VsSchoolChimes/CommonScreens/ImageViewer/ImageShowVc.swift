@@ -38,20 +38,12 @@ class ImageShowVc: UIViewController{
         
         cv.register(UINib(nibName: CellConfingName.ImageShowCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageShowCVCell)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        
-//        DispatchQueue.main.async { [self] in
-//            for i in 0..<imageURL.count{
-//                if imageURL[i].url == pdfUrl{
-//                    self.cv.scrollToItem(at: IndexPath(item: i, section: 0), at: .centeredHorizontally, animated: true)
-//                    dowloadUrl = pdfUrl
-//                }
-//            }
-//        }
 
         dowloadUrl = FileURL.first?.url
         PageController.numberOfPages = FileURL.count
-        PageController.currentPage = 0
+        
     }
+
     @IBAction func saveToFolder(_ sender: UIButton) {
         sender.isEnabled = false
         guard let fileURL = dowloadUrl, let filename = getFileName(from: fileURL) else {
@@ -90,22 +82,23 @@ class ImageShowVc: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         uiUpdate(type: type ?? 0)
+        DispatchQueue.main.async {
+            self.cv.layoutIfNeeded()
+            if let index = self.index, index < self.FileURL.count {
+                self.cv.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: false)
+            }
+        }
+        PageController.currentPage = index ?? 0
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     func uiUpdate(type:Int){
         DispatchQueue.main.async { [self] in
             switch type{
             case 0:
-//                if let pdfURL = URL(string: pdfUrl ?? "") {
-//                    let request = URLRequest(url: pdfURL)
-//                    dowloadUrl = pdfUrl
-//                    pdfView.load(request)
-//                    
-//                } else {
-//                    print("Invalid URL")
-//                }
-//                cv.isHidden = true
-//                textView.isHidden = true
                 cv.isHidden = false
                 pdfView.isHidden = true
                 textView.isHidden = true

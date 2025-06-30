@@ -316,7 +316,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         //MARK: Label Font
         ToTittleDefLbl.setFont(style: .body, size: FontSize.BodySize)
         fromTitleDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        addPhotoLbl.setFont(style: .body, size: FontSize.BodySize)
+        addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToTittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         fromTitleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         todateBtn.setTitleFont(style: .body, size: 12)
@@ -623,7 +623,7 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         
         // If the new text count is within the limit, update the character count label and allow the change
         if updatedText.count <= 50 {
-            TextfieldCharCountLbl.text = "\(updatedText.count) of 50"
+            TextfieldCharCountLbl.text = "\(updatedText.count) / 50"
             return true
         } else {
             // If the limit is exceeded, show an alert and reject the change
@@ -649,7 +649,7 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
-            DescriptionLettersCount.text = "\(updatedText.count) of 500" // Update the character count label
+            DescriptionLettersCount.text = "\(updatedText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

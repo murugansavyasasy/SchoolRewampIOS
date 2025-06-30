@@ -179,7 +179,6 @@ class SenderHomeWorkVC: UIViewController {
         let comparison = Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day)
         todayLbl.text = (comparison == .orderedSame) ? "Today" :
                         (comparison == .orderedAscending) ? "Past Date" : "Future Date"
-        
         dateLbl.text = outputFormatter.string(from: selectedDate)
     }
 
@@ -280,10 +279,6 @@ class SenderHomeWorkVC: UIViewController {
                     self.nodataFoundLbl.text = response.message
                     self.homeWorkTable.reloadData()
 
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        self.tableviewHeight.constant = self.homeWorkTable.contentSize.height
-                    }
-
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
                     self.noDataFound.isHidden = false
@@ -362,6 +357,11 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (FilterHomeWorkList?.count ?? 0) - 1 == indexPath.row{
+            let contentHeight = self.homeWorkTable.contentSize.height
+            self.tableviewHeight.constant = contentHeight
+        }
+        
         return UITableView.automaticDimension
     }
 }

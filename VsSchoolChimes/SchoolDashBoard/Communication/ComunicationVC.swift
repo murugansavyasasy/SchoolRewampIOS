@@ -482,6 +482,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         //MARK: Label font style
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
         voiceSetTitleLbl.setRequiredText(CommonStringFile.Title)
+        ScheduleLbl.setRequiredText(ScheduleLbl.text ?? "")
+        fromDateLbl.setRequiredText(fromDateLbl.text ?? "")
+        ToDateLbl.setRequiredText(ToDateLbl.text ?? "")
         messageSendTime.setFont(style: .body, size: FontSize.BodySize)
         voiceTiming.setFont(style: .body, size: FontSize.BodySize)
         Timinglbl.setFont(style: .body, size: FontSize.BodySize)
@@ -565,7 +568,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
-            textCountLbl.text = "\(updatedText.count) of 500"
+            textCountLbl.text = "\(updatedText.count) / 500"
             return true // Allow the change
         } else {
             let alert = CustomAlert()
@@ -796,14 +799,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         return filePath
     }
 
-    
-//    func getTimestampedFileName(extension ext: String = "m4a") -> String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyyMMdd_HHmmss"
-//        let timestamp = formatter.string(from: Date())
-//        return "Audio_\(timestamp).\(ext)"
-//    }
-    
     //MARK: Setup Audio Session
     func setupAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
@@ -1458,8 +1453,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if !isforwardtext {
             informationcontent.text = ""
             TextMsgTittle.text = ""
-            textCountLbl.text = "0 of 500"
-            textMsgVoiceCountLbl.text = "0 of 50"
+            textCountLbl.text = "0 / 500"
+            textMsgVoiceCountLbl.text = "0 / 50"
         }
         
         ViewAnimator.hideFade(calanderOuter)
@@ -1511,7 +1506,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             voiceTiming.text = "00:00 / \(formatted)"
             forWardVoiceDuraction = durations
             AudioPlayUrl = voiceUrl
-            voiceTileTextFldCount.text = "\(title.count) of 500"
+            voiceTileTextFldCount.text = "\(title.count) / 500"
             ViewAnimator.animateConstraintChange { [self] in
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()
@@ -1585,7 +1580,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             Timinglbl.isHidden = true
             addfile.isHidden = true
             AudioPlayUrl = url
-            voiceTileTextFldCount.text = "\(title.count) of 500"
+            voiceTileTextFldCount.text = "\(title.count) / 500"
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
@@ -2030,8 +2025,8 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         TextMsgTittle.text = Tittle
         informationcontent.text = descriptContent
         placeholderLabel.isHidden = !informationcontent.text.isEmpty
-        textCountLbl.text = "\(descriptContent.count) of 500"
-        textMsgVoiceCountLbl.text = "\(Tittle.count) of 50"
+        textCountLbl.text = "\(descriptContent.count) / 500"
+        textMsgVoiceCountLbl.text = "\(Tittle.count) / 50"
         showTextMessageView(isforwardtext:true)
     }
     

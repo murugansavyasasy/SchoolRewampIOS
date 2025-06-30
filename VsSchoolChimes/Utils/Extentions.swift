@@ -627,7 +627,6 @@ extension String {
             dateFormatter.dateFormat = inputFormat
             if let date = dateFormatter.date(from: self) {
                 dateFormatter.dateFormat = "dd MMM yyyy"
-//                dateFormatter.dateFormat = "E d MMM yyyy"
                 return dateFormatter.string(from: date)
             } else {
                 return nil
@@ -636,7 +635,6 @@ extension String {
             for format in possibleFormats {
                 dateFormatter.dateFormat = format
                 if let date = dateFormatter.date(from: self) {
-//                    dateFormatter.dateFormat = "E d MMM yyyy"
                     dateFormatter.dateFormat = "dd MMM yyyy"
                     return dateFormatter.string(from: date)
                 }
@@ -660,8 +658,7 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
     ]
 
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Safe for parsing known formats
-
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
     for format in possibleFormats {
         dateFormatter.dateFormat = format
         if let date = dateFormatter.date(from: dateString) {
@@ -883,76 +880,6 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
         }.resume()
     }.resume()
 }
-
-
-//func playVimeoVideoOnDefaultPlayer(from vimeoURLString: String, presentingViewController: UIViewController) {
-//    guard let url = URL(string: vimeoURLString) else {
-//        print("Invalid Vimeo URL")
-//        return
-//    }
-//
-//    func fetchConfigURL(from html: String) -> URL? {
-//        let pattern = #"https://player\.vimeo\.com/video/\d+/config\?[^"]+"#
-//        if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
-//            let nsrange = NSRange(html.startIndex..<html.endIndex, in: html)
-//            if let match = regex.firstMatch(in: html, options: [], range: nsrange) {
-//                if let range = Range(match.range, in: html) {
-//                    let configURLString = String(html[range])
-//                    return URL(string: configURLString)
-//                }
-//            }
-//        }
-//        return nil
-//    }
-//
-//    URLSession.shared.dataTask(with: url) { data, _, error in
-//        guard let data = data, error == nil, let html = String(data: data, encoding: .utf8) else {
-//            print("Failed to download Vimeo page: \(error?.localizedDescription ?? "Unknown error")")
-//            return
-//        }
-//
-//        guard let configURL = fetchConfigURL(from: html) else {
-//            print("Failed to find Vimeo config URL")
-//            return
-//        }
-//
-//        URLSession.shared.dataTask(with: configURL) { data, _, error in
-//            guard let data = data, error == nil else {
-//                print("Failed to download Vimeo config JSON")
-//                return
-//            }
-//
-//            do {
-//                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-//                   let request = json["request"] as? [String: Any],
-//                   let files = request["files"] as? [String: Any],
-//                   let progressive = files["progressive"] as? [[String: Any]] {
-//
-//                    let best = progressive.sorted { ($0["height"] as? Int ?? 0) > ($1["height"] as? Int ?? 0) }.first
-//
-//                    if let videoURLString = best?["url"] as? String,
-//                       let videoURL = URL(string: videoURLString) {
-//                        DispatchQueue.main.async {
-//                            // Play using AVPlayerViewController
-//                            let player = AVPlayer(url: videoURL)
-//                            let playerVC = AVPlayerViewController()
-//                            playerVC.player = player
-//                            presentingViewController.present(playerVC, animated: true) {
-//                                player.play()
-//                            }
-//                        }
-//                    } else {
-//                        print("No playable video URL found in config JSON")
-//                    }
-//                } else {
-//                    print("Invalid config JSON structure")
-//                }
-//            } catch {
-//                print("JSON parse error: \(error.localizedDescription)")
-//            }
-//        }.resume()
-//    }.resume()
-//}
 
 extension UILabel {
     func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
