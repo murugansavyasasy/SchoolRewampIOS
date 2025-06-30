@@ -598,7 +598,7 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         
         // If the new text count is within the limit, update the character count label and allow the change
         if updatedText.count <= 50 {
-            TitleLettersCount.text = "\(updatedText.count) of 50"
+            TitleLettersCount.text = "\(updatedText.count) / 50"
             return true
         } else {
             // If the limit is exceeded, show an alert and reject the change
@@ -628,7 +628,7 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            letterscountLbl.text = "\(newText.count) of 500" // Update the character count label
+            letterscountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

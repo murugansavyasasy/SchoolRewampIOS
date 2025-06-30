@@ -117,7 +117,9 @@ class ViewLessonVC: UIViewController {
                     
                     if success.status == true {
                         CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
-                            self.View_Lesson_Plan_Api()
+                            self.ViewLessonData?.removeAll{$0.particular_id == particularID}
+                            self.FilteredData?.removeAll{$0.particular_id == particularID}
+                            self.TableView.reloadData()
                         })
                     }else {
                         CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)

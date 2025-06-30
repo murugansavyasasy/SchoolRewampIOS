@@ -358,6 +358,7 @@ class CommonStringFile{
         """
     
     static let No_data_found = "No Data Found!"
+    static let Notice_Display_Date_Range = "Notice Display Date Range"
 }
 
 
@@ -473,4 +474,19 @@ struct AttachmentTypeString {
     static var VIDEO = "VIDEO"
     static var IMAGE = "IMAGE"
     static var DOCUMENT = "DOCUMENT"
+}
+
+class FilterString {
+    
+    static var All = "All"
+    static var Text = "Text"
+    static var Image = "Image"
+    static var Document = "Document"
+}
+
+class DateFormatString {
+    
+    static var Day_and_date = "EEE dd"
+    static var Date_Day_month_year = "d EEE, MMM yyyy"
+    static var StandardFormat = "dd MMM yyyy"
 }

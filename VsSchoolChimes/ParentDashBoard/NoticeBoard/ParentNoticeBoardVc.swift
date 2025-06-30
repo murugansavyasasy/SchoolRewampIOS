@@ -33,7 +33,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     var NoticeboardData: [Notice]?
     var SearchData: [Notice]?
     var FilteredData: [Notice]?
-    var Filters = ["All","Text","Image","Document"]
+    var Filters = [FilterString.All,FilterString.Text,FilterString.Image,FilterString.Document]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     let dateFormatter = DateFormatter()
     override func viewDidLoad() {
@@ -126,7 +126,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
                     NoticeboardData = SuccessMessage.data
                     FilteredData = NoticeboardData
                     SearchData = NoticeboardData
-                    NoDataLbl.text = SuccessMessage.status == false ? SuccessMessage.message : "No Data Found"
+                    NoDataLbl.text = SuccessMessage.status == false ? SuccessMessage.message : CommonStringFile.No_data_found
                     SearchFilterStack.isHidden = SearchData?.isEmpty ?? false
                     NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
@@ -258,18 +258,18 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         
         switch type {
             
-        case "Image":
+        case FilterString.Image:
             
             FilteredData = NoticeboardData?.filter { NoticeboardData in
                 NoticeboardData.file_path?.first?.type == "IMAGE"
             }
-        case "Document":
+        case FilterString.Document:
             
             FilteredData = NoticeboardData?.filter { NoticeboardData in
                 NoticeboardData.file_path?.first?.type != "IMAGE" && NoticeboardData.file_path?.count != 0
             }
             
-        case "Text":
+        case FilterString.Text:
             
             FilteredData = NoticeboardData?.filter { NoticeboardData in
                 NoticeboardData.file_path?.count == 0
@@ -317,7 +317,12 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
         if searchText.isEmpty {
             SearchData = FilteredData
         } else {
+            
+            
             SearchData = FilteredData?.filter { notice in
+                let components = notice.created_on?.components(separatedBy: " ")
+                let date = dateFormatter.convertDate(components?[0] ?? "")?.lowercased()
+                return date?.contains(searchText.lowercased()) ?? false ||
                 (notice.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
                 (notice.description?.lowercased().contains(searchText.lowercased()) ?? false) ||
                 (notice.created_on?.lowercased().contains(searchText.lowercased()) ?? false)
