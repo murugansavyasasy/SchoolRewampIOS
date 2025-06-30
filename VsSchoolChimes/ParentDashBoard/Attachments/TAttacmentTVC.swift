@@ -78,7 +78,7 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         if let data = attachment,data.is_unread == true{
             delegate?.readStatus(attachment: data)
         }
-        if let data = ManagementData {
+        if let data = ManagementData,data.is_unread == true{
             ManagementDelegate?.readStatusManagement(attachment: data)
         }
         

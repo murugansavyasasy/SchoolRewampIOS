@@ -298,7 +298,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 
 //                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
 //                cell.newView.isHidden = contentText.count <= 100
-                cell.descriptionLbl.onExpandableTap = { [weak tableView] in
+                    cell.descriptionLbl.onExpandableTap = { [weak tableView] in
                     cell.descriptionLbl.isExpanded.toggle()
                     cell.newView.isHidden = true
                     tableView?.beginUpdates()

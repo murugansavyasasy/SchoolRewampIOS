@@ -206,23 +206,23 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-        cell.datelbl.text = filteredData[indexPath.row].name
-        cell.playbtl.tag = indexPath.row
-        cell.descriptContent.attributedText = descript(for: filteredData[indexPath.row].description ?? "", expanded: false)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-        cell.descriptContent.tag = indexPath.row // Tag the label with the row index
-        cell.descriptContent.isUserInteractionEnabled = true
-        cell.descriptContent.addGestureRecognizer(tapGesture)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
-            cell.Unreadview.isHidden = self.data[indexPath.row].readed
-        }
-        cell.thumimg.image = filteredData[indexPath.row].img
-        cell.sharedelegate = self
-        
-        let playTap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
-        cell.playbtl.addGestureRecognizer(playTap)
-        cell.playbtl.isUserInteractionEnabled = true
+//        cell.datelbl.text = filteredData[indexPath.row].name
+//        cell.playbtl.tag = indexPath.row
+//        cell.descriptContent.attributedText = descript(for: filteredData[indexPath.row].description ?? "", expanded: false)
+//        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+//        cell.descriptContent.tag = indexPath.row // Tag the label with the row index
+//        cell.descriptContent.isUserInteractionEnabled = true
+//        cell.descriptContent.addGestureRecognizer(tapGesture)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+//            cell.Unreadview.isHidden = self.data[indexPath.row].readed
+//        }
+//        cell.thumimg.image = filteredData[indexPath.row].img
+//        cell.sharedelegate = self
+//        
+//        let playTap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
+//        cell.playbtl.addGestureRecognizer(playTap)
+//        cell.playbtl.isUserInteractionEnabled = true
         
         return cell
     }

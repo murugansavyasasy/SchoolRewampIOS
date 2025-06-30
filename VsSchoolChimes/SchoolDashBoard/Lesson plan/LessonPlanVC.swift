@@ -206,13 +206,15 @@ extension LessonPlanVC: UISearchBarDelegate{
         if searchText.isEmpty{
             SearchData = LessonPlanData
         }else {
-            
+            let search = searchText.lowercased()
             SearchData = LessonPlanData?.filter{ Lesson in
-                
-                (Lesson.class_name.lowercased().contains(searchText.lowercased())) ||
-                (Lesson.section_name.lowercased().contains(searchText.lowercased())) ||
-                (Lesson.staff_name.lowercased().contains(searchText.lowercased())) ||
-                (Lesson.subject_name.lowercased().contains(searchText.lowercased()))
+                let combined = "\(Lesson.class_name) - \(Lesson.section_name)".lowercased()
+                            
+                return combined.contains(search) ||
+                (Lesson.class_name.lowercased().contains(search)) ||
+                (Lesson.section_name.lowercased().contains(search)) ||
+                (Lesson.staff_name.lowercased().contains(search)) ||
+                (Lesson.subject_name.lowercased().contains(search))
             }
         }
         
