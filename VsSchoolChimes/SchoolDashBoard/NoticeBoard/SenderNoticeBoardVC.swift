@@ -20,7 +20,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dateFormatter.dateFormat = standardDateFormat
             let DayDate = dateFormatter.date(from: date)!
             // Change to output format
-            dateFormatter.dateFormat = "EEE dd"
+        dateFormatter.dateFormat = DateFormatString.Day_and_date
             let outputDateString = dateFormatter.string(from: DayDate)
             
             if dateSelection == true{
@@ -30,7 +30,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 // Check if To Date is set and valid
                 if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                     let labelFormatter = DateFormatter()
-                    labelFormatter.dateFormat = "d EEE, MMM yyyy" // Matches formatted label
+                    labelFormatter.dateFormat = DateFormatString.Date_Day_month_year // Matches formatted label
 
                     if let toDate = labelFormatter.date(from: toText) {
                         if DayDate > toDate {
@@ -94,7 +94,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var DocumentpreviewURL: URL?
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
-    let standardDateFormat = "dd MMM yyyy"
+    let standardDateFormat = DateFormatString.StandardFormat
 
     
     override func viewDidLoad() {
@@ -108,7 +108,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         FromDateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
         TodateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
         
-        DisplayRangeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DisplayRangeLbl.setRequiredText(CommonStringFile.Notice_Display_Date_Range)
         
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -271,7 +271,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         fromdateBtn.setTitle(formattedDate, for: .normal)
         todateBtn.setTitle(formattedDate, for: .normal)
         
-        dateFormatter.dateFormat = "EEE d"
+        dateFormatter.dateFormat = DateFormatString.Day_and_date
         let customDate = dateFormatter.string(from: currentDate)
         
         setFormattedDate(customDate, label: fromDateLbl)
@@ -340,7 +340,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.minimumDate = Date()
-        dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.dateFormat = DateFormatString.StandardFormat
         vc.dateSelection = 2
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
@@ -353,7 +353,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
             dateSelection = false
             let vc = DatePickerVC(nibName: nil, bundle: nil)
-            dateFormatter.dateFormat = "dd MMM yyyy"
+            dateFormatter.dateFormat = DateFormatString.StandardFormat
 
             // Set minimum to fromDate
             if let fromDateString = fromdateBtn.titleLabel?.text,

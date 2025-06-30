@@ -13,8 +13,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     func deleteDelegate(index: Int) {
         
     }
-    
-        
     func reload(index: Int) {
         
             if let currentIndex = playIndex, currentIndex != index {

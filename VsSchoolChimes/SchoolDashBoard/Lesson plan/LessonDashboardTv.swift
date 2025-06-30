@@ -104,13 +104,17 @@ class LessonDashboardTv: UITableViewCell {
     
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {
-        case 0...20:
-            return UIColor.systemRed.withAlphaComponent(0.8)
-        case 21...40:
+//        case 0...20:
+//            return UIColor.systemRed.withAlphaComponent(0.8)
+//        case 21...40:
+//            return UIColor.systemOrange.withAlphaComponent(0.8)
+//        case 41...60:
+//            return UIColor.systemYellow.withAlphaComponent(0.8)
+//        case 61...100:
+//            return UIColor.systemGreen.withAlphaComponent(0.8)
+        case 1...99:
             return UIColor.systemOrange.withAlphaComponent(0.8)
-        case 41...60:
-            return UIColor.systemYellow.withAlphaComponent(0.8)
-        case 61...100:
+        case 100:
             return UIColor.systemGreen.withAlphaComponent(0.8)
         default:
             return UIColor.lightGray // Default color (0% or invalid input)

@@ -110,11 +110,11 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         
-        if let img = homeworkDocs?[indexPath.row] {
-            let fileURL = URL(fileURLWithPath: img.url ?? "")
+        if let file = homeworkDocs?[indexPath.row] {
+            let fileURL = URL(fileURLWithPath: file.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image"{
-                if let pdfURL = URL(string: img.url ?? "") {
+                if let pdfURL = URL(string: file.url ?? "") {
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
                     cell.webView.isHidden = false
@@ -126,7 +126,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             }else{
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
+                cell.imageView.sd_setImage(with: URL(string: file.url ?? ""), placeholderImage: ImageName.placeholder)
             }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage

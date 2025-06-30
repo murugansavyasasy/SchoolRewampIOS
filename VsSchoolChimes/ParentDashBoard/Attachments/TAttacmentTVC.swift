@@ -46,10 +46,24 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        if let img = homeworkDocs?[indexPath.row] {
-            cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
-            let fileURL = URL(fileURLWithPath: img.url ?? "")
+        if let file = homeworkDocs?[indexPath.row] {
+            let fileURL = URL(fileURLWithPath: file.url ?? "")
             let iconName = getFileIconName(for: fileURL)
+            if iconName != "image"{
+                if let pdfURL = URL(string: file.url ?? "") {
+                      let request = URLRequest(url: pdfURL)
+                    cell.webView.load(request)
+                    cell.webView.isHidden = false
+                    cell.imageView.isHidden = true
+                  } else {
+                      cell.webView.isHidden = true
+                      cell.imageView.isHidden = false
+                  }
+            }else{
+                cell.webView.isHidden = true
+                cell.imageView.isHidden = false
+                cell.imageView.sd_setImage(with: URL(string: file.url ?? ""), placeholderImage: ImageName.placeholder)
+            }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
         }
@@ -61,11 +75,11 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
         let fileExtension = url.pathExtension.lowercased()
-        if let data = attachment{
+        if let data = attachment,data.is_unread == true{
             delegate?.readStatus(attachment: data)
         }
-        if let data = ManagementData {
-          //  ManagementDelegate?.readStatus(attachment: ManagementData ?? [])
+        if let data = ManagementData,data.is_unread == true{
+            ManagementDelegate?.readStatusManagement(attachment: data)
         }
         
         let vc = getCurrentViewController()
@@ -75,6 +89,7 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         vcc.subjectName = titleLbl.text
         vcc.type = 2
         vcc.index = indexPath.row
+        vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
     }
