@@ -63,17 +63,28 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
 
     func confic(_ url: String) {
 
+//        let dataTypes = Set([WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeCookies])
+//         WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: Date.distantPast) {
+//         print("WebView cache cleared")
+//
+//         // Load video
+//         if let url = URL(string: url) {
+//         let request = URLRequest(url: url)
+//         self.webview.load(request)
+//         }
+//         }
+        
         let dataTypes = Set([WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeCookies])
-         WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: Date.distantPast) {
-         print("WebView cache cleared")
-
-         // Load video
-         if let url = URL(string: url) {
-         let request = URLRequest(url: url)
-         self.webview.load(request)
-         }
-         }
-        contentView.layoutIfNeeded()
+                      WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: Date.distantPast) {
+                          print("WebView cache cleared")
+       
+                          // Load video
+                          if let url = URL(string: "https://player.vimeo.com/video/1096161787?h=6d2db08e49") {
+                              let request = URLRequest(url: url)
+                              self.webview.load(request)
+                          }
+                      }
+//        contentView.layoutIfNeeded()
     }
 
     func hiddenui(_ hide:Bool){

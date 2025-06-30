@@ -67,12 +67,13 @@ class shareAndDownloadVc: UIViewController {
     
     @IBAction func shareBtnAction(_ sender: UIButton) {
      
+        
         let fileUrl = dowloadUrl
         downloadShareAndDeleteFile(
             from: fileUrl ?? "",
             viewController: self
         )
-
+    
     }
     
     
@@ -88,7 +89,7 @@ class shareAndDownloadVc: UIViewController {
                 return
             }
 
-            // Get suggested or original file name
+            // Get file name from response or fallback to lastPathComponent
             let fileName = response?.suggestedFilename ?? url.lastPathComponent
             let documentsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let finalURL = documentsDir.appendingPathComponent(fileName)
@@ -103,38 +104,51 @@ class shareAndDownloadVc: UIViewController {
                     let activityVC = UIActivityViewController(activityItems: [finalURL], applicationActivities: nil)
 
                     activityVC.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
-                        // ✅ Delete file after sharing
                         do {
                             if FileManager.default.fileExists(atPath: finalURL.path) {
                                 try FileManager.default.removeItem(at: finalURL)
                                 print("🧹 File deleted after sharing.")
-                                self.dismiss(animated: true)
                             }
                         } catch {
                             print("⚠️ Could not delete file: \(error.localizedDescription)")
                         }
                     }
 
-                    // Optional iPad support
-                    /*
+                    // iPad support
                     if let popover = activityVC.popoverPresentationController {
                         popover.sourceView = viewController.view
-                        popover.sourceRect = CGRect(x: viewController.view.bounds.midX, y: viewController.view.bounds.midY, width: 0, height: 0)
+                        popover.sourceRect = CGRect(x: viewController.view.bounds.midX,
+                                                    y: viewController.view.bounds.midY,
+                                                    width: 0, height: 0)
                     }
-                    */
 
                     viewController.present(activityVC, animated: true)
                 }
 
             } catch {
-                print("❌ File error:", error.localizedDescription)
+                print("❌ File move error:", error.localizedDescription)
             }
 
         }.resume()
     }
 
 
-        
+       
+    
+    func shareVideoLink(_ videoID: String, from viewController: UIViewController) {
+        let shareURL = URL(string: "https://vimeo.com/\(videoID)")!
+        let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+
+        if let popover = activityVC.popoverPresentationController {
+            popover.sourceView = viewController.view
+            popover.sourceRect = CGRect(x: viewController.view.bounds.midX,
+                                        y: viewController.view.bounds.midY,
+                                        width: 0, height: 0)
+        }
+
+        viewController.present(activityVC, animated: true)
+    }
+
     }
    
 
