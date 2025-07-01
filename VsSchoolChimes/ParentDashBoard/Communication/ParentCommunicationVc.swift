@@ -899,11 +899,12 @@ extension ParentCommunicationVc : UISearchBarDelegate {
 
             SearchMessages = totalMessages.filter { message in
                 let content = message.content.lowercased()
-                let title = message.content.lowercased()
+                let title = message.title.lowercased()
                 let dateString = dateFormatter.convertDate(message.date)?.lowercased() ?? ""
                 let type = message.type.lowercased()
 
                 return title.contains(lowercasedSearch) ||
+                       content.contains(lowercasedSearch) ||
                        dateString.contains(lowercasedSearch) ||
                        type.contains(lowercasedSearch)
             }
