@@ -196,6 +196,8 @@
 		84127AF92E03C8F00092159D /* HomePaucktVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127ABD2E03C8F00092159D /* HomePaucktVC.xib */; };
 		84127AFA2E03C8F00092159D /* ClaimCouponVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127A962E03C8F00092159D /* ClaimCouponVc.xib */; };
 		84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC02E03C8F00092159D /* ReedimHistoryCell.xib */; };
+		84127D632E1258D90092159D /* VideoPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127D612E1258D90092159D /* VideoPreviewVc.swift */; };
+		84127D642E1258D90092159D /* VideoPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127D622E1258D90092159D /* VideoPreviewVc.xib */; };
 		841ACC8F2DA5076800326D52 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 841ACC9B2DA50C7A00326D52 /* Lottie */; };
 		8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8420316C2D390CED003C4076 /* TimetableVC.xib */; };
@@ -885,6 +887,8 @@
 		84127AC32E03C8F00092159D /* ReedimHistoryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReedimHistoryVc.xib; sourceTree = "<group>"; };
 		84127AC52E03C8F00092159D /* CustomTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabVC.swift; sourceTree = "<group>"; };
 		84127AC62E03C8F00092159D /* CustomTabVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabVC.xib; sourceTree = "<group>"; };
+		84127D612E1258D90092159D /* VideoPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewVc.swift; sourceTree = "<group>"; };
+		84127D622E1258D90092159D /* VideoPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPreviewVc.xib; sourceTree = "<group>"; };
 		841ACC8E2DA5076800326D52 /* loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
 		8420316B2D390CED003C4076 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
@@ -2087,6 +2091,15 @@
 			path = Pauckt;
 			sourceTree = "<group>";
 		};
+		84127D602E12581B0092159D /* VideoPreviewVC */ = {
+			isa = PBXGroup;
+			children = (
+				84127D612E1258D90092159D /* VideoPreviewVc.swift */,
+				84127D622E1258D90092159D /* VideoPreviewVc.xib */,
+			);
+			path = VideoPreviewVC;
+			sourceTree = "<group>";
+		};
 		8420316A2D390CAF003C4076 /* TimetableNew */ = {
 			isa = PBXGroup;
 			children = (
@@ -3005,6 +3018,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				84127D602E12581B0092159D /* VideoPreviewVC */,
 				8435EA152DE9C68B00F02CB9 /* VideoPickAndPlay */,
 				8406396F2DDF541800930943 /* GalleryPickerPage */,
 				84F911882DB0C435001A6408 /* popoverVc */,
@@ -3741,6 +3755,7 @@
 				8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */,
 				FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */,
 				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
+				84127D642E1258D90092159D /* VideoPreviewVc.xib in Resources */,
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
 				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
@@ -4210,6 +4225,7 @@
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
 				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
 				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
+				84127D632E1258D90092159D /* VideoPreviewVc.swift in Sources */,
 				18D718DA2D0D479B00E9EDA3 /* SectionCollectionViewCell.swift in Sources */,
 				84BB5EB02D11337E00AD0C87 /* ExamsListCVCell.swift in Sources */,
 				18D718DC2D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift in Sources */,

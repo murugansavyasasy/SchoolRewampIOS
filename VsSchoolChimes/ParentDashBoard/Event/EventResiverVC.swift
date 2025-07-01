@@ -265,6 +265,16 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 cell.titleLbl.text = event?.title
                 cell.subjectName.text = "📍" + (event?.venue ?? "")
                 cell.subjectName.isHidden = false
+                cell.forwardBtn.isHidden = true
+               
+                cell.configure(indexPath: indexPath)
+
+                    // Handle the tap event with closure
+                    cell.onVideoTapped = { tappedIndexPath in
+                        let item = self.FilteredData?[tappedIndexPath.row]
+                        self.playVideo(for: item!)
+                    
+                }
                 return cell
             }else{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
@@ -336,6 +346,17 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             cell.StatusView.isHidden = true
             return cell
         }
+    }
+    
+    
+    func playVideo(for item: EventList) {
+        
+        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+        vc.url = item.file_path.first?.url
+        vc.titles = item.title
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
