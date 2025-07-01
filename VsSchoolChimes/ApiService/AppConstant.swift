@@ -102,6 +102,7 @@ struct ServiceUrl{
     static let comm_api_assignment_delete = "comm/api/assignment/delete"
     static let comm_api_msg_from_management_get_messages_staff = "comm/api/msg-from-management/get-messages-staff"
     static let comm_api_msg_from_management_get_messages_staff_archive = "comm/api/msg-from-management/get-messages-staff-archive"
+    static let interaction_staff_details_for_chat = "comm/api/interaction/staff-details-for-chat"
     
 }
 

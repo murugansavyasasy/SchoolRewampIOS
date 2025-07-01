@@ -198,6 +198,8 @@
 		84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC02E03C8F00092159D /* ReedimHistoryCell.xib */; };
 		84127D632E1258D90092159D /* VideoPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127D612E1258D90092159D /* VideoPreviewVc.swift */; };
 		84127D642E1258D90092159D /* VideoPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127D622E1258D90092159D /* VideoPreviewVc.xib */; };
+		84127DBB2E13EB260092159D /* interactTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127DB92E13EB260092159D /* interactTvcell.swift */; };
+		84127DBC2E13EB260092159D /* interactTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127DBA2E13EB260092159D /* interactTvcell.xib */; };
 		841ACC8F2DA5076800326D52 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 841ACC9B2DA50C7A00326D52 /* Lottie */; };
 		8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8420316C2D390CED003C4076 /* TimetableVC.xib */; };
@@ -889,6 +891,8 @@
 		84127AC62E03C8F00092159D /* CustomTabVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabVC.xib; sourceTree = "<group>"; };
 		84127D612E1258D90092159D /* VideoPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewVc.swift; sourceTree = "<group>"; };
 		84127D622E1258D90092159D /* VideoPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPreviewVc.xib; sourceTree = "<group>"; };
+		84127DB92E13EB260092159D /* interactTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = interactTvcell.swift; sourceTree = "<group>"; };
+		84127DBA2E13EB260092159D /* interactTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = interactTvcell.xib; sourceTree = "<group>"; };
 		841ACC8E2DA5076800326D52 /* loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
 		8420316B2D390CED003C4076 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
@@ -2101,6 +2105,15 @@
 			path = VideoPreviewVC;
 			sourceTree = "<group>";
 		};
+		84127DB42E13EA080092159D /* intractTvcell */ = {
+			isa = PBXGroup;
+			children = (
+				84127DB92E13EB260092159D /* interactTvcell.swift */,
+				84127DBA2E13EB260092159D /* interactTvcell.xib */,
+			);
+			path = intractTvcell;
+			sourceTree = "<group>";
+		};
 		8420316A2D390CAF003C4076 /* TimetableNew */ = {
 			isa = PBXGroup;
 			children = (
@@ -2148,6 +2161,7 @@
 		84395FE62D10023200FC3242 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				84127DB42E13EA080092159D /* intractTvcell */,
 				84395FEB2D10026600FC3242 /* ChatCell */,
 				84395FE72D10026100FC3242 /* ChatVC.swift */,
 				84395FE82D10026100FC3242 /* ChatVC.xib */,
@@ -3833,6 +3847,7 @@
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				FAF43B672E02A12A00F28A16 /* LessonEditTV.xib in Resources */,
+				84127DBC2E13EB260092159D /* interactTvcell.xib in Resources */,
 				848047762E02A8090042BC5D /* AssignmentPageVC.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
 				8474CBA32D9A6F6000DA0951 /* RecipientCVcell.xib in Resources */,
@@ -4389,6 +4404,7 @@
 				8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */,
 				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
+				84127DBB2E13EB260092159D /* interactTvcell.swift in Sources */,
 				FAF43B682E02A12A00F28A16 /* LessonEditTV.swift in Sources */,
 				84A5BEBF2C198DE200E32496 /* SplashViewController.swift in Sources */,
 				84B5D0332D030C24003CFAAF /* AppStringFile.swift in Sources */,
