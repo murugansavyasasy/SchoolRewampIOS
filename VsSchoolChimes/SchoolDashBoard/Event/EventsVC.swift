@@ -259,6 +259,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         calander2Btn.layer.cornerRadius = 10
         fromLbl.setFont(style: .title, size: FontSize.TitleSize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        tittleCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        contentCount.setFont(style: .body, size: FontSize.BodySize)
         Totime.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
         placeLbl.setRequiredText(CommonStringFile.Venue.translated())
@@ -267,7 +269,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         addPhotoLbl.text = CommonStringFile.UploadImagepdfoptional.translated()
         placeTxt.placeholder = CommonStringFile.egChennai.translated()
         
-        setAttributedText(for: addPhotoLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString: CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString: CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        
     }
     
     func registerCell(){
@@ -671,7 +674,7 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
-            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()
@@ -686,7 +689,7 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
         if updatedText.count <= 50 {
-            tittleCountLbl.text = "\(updatedText.count) of 50"
+            tittleCountLbl.text = "\(updatedText.count) / 50"
             return true
         } else {
             let alert = CustomAlert()

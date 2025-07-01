@@ -340,7 +340,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 let day = calendar.component(.day, from: date)
                 cell.DateLbl.text = "\(day)"
             }
-            cell.MonthView.backgroundColor =  UIColor(named: "Red")
+            cell.MonthView.backgroundColor =  UIColor.red1
             cell.DateView.backgroundColor =  .white
             cell.DateView.layer.borderWidth = 0.5
             cell.StatusView.isHidden = true

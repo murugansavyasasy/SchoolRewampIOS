@@ -85,13 +85,11 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         let vc = getCurrentViewController()
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
         vcc.imageURL = homeworkDocs ?? []
-        var homeworkDocs = homeworkDocs ?? []
-        let filePath = homeworkDocs[indexPath.row]
-        homeworkDocs.remove(at: indexPath.row)
-        homeworkDocs.insert(filePath, at: 0)
-        vcc.FileURL =  homeworkDocs
+        vcc.FileURL =   homeworkDocs ?? []
         vcc.subjectName = titleLbl.text
-        vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+        vcc.type = 2
+        vcc.index = indexPath.row
+        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
     }

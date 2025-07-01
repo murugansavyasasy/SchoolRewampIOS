@@ -45,7 +45,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
       override func viewDidLoad() {
           super.viewDidLoad()
           NameLbl.text = studentDetails?.name
-          StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
+          StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
           setupUI()
           setupPickerCallbacks()
           

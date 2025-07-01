@@ -80,6 +80,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         pageViewController.numberOfPages = homeworkDocs?.count ?? 0
         pageViewController.currentPage = 0
         ImageCollectionView.reloadData()
+        contentView.layoutIfNeeded()
     }
     
     @IBAction func forword(_ sender: UIButton) {
@@ -145,12 +146,12 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
         var homeworkDocs = homeworkDocs ?? []
-        let filePath = homeworkDocs[indexPath.row]
-        homeworkDocs.remove(at: indexPath.row)
-        homeworkDocs.insert(filePath, at: 0)
+//        let filePath = homeworkDocs[indexPath.row]
+//        homeworkDocs.remove(at: indexPath.row)
+//        homeworkDocs.insert(filePath, at: 0)
         vcc.FileURL = homeworkDocs
         vcc.subjectName = subjectName.text
-        vcc.scrollIndex = indexPath
+        vcc.index = indexPath.row
         vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)

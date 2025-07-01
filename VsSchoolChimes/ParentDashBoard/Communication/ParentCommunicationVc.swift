@@ -168,7 +168,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         NodataLbl.setFont(style: .title, size: 17)
         
         NameLbl.text = studentDetails?.name
-        StandardLbl.text = (studentDetails?.standard_name ?? "") + " " + (studentDetails?.section_name ?? "")
+        StandardLbl.text = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -899,12 +899,11 @@ extension ParentCommunicationVc : UISearchBarDelegate {
 
             SearchMessages = totalMessages.filter { message in
                 let content = message.content.lowercased()
-                let description = message.content.lowercased()
+                let title = message.content.lowercased()
                 let dateString = dateFormatter.convertDate(message.date)?.lowercased() ?? ""
                 let type = message.type.lowercased()
 
-                return content.contains(lowercasedSearch) ||
-                       description.contains(lowercasedSearch) ||
+                return title.contains(lowercasedSearch) ||
                        dateString.contains(lowercasedSearch) ||
                        type.contains(lowercasedSearch)
             }

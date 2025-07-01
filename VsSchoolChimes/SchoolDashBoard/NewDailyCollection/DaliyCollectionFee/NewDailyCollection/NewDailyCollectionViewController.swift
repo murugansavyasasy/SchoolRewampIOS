@@ -15,6 +15,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         }
     }
     
+    @IBOutlet weak var fromDateLbl: UILabel!
+    @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var norecordImg: UIImageView!
     @IBOutlet weak var titleStack: UIStackView!
     @IBOutlet weak var totalCollectionLblTitle: UILabel!
@@ -50,6 +52,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: calendarView,cornerRadius: 6)
         Backbtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        toDateLbl.setFont(style: .body, size: FontSize.BodySize)
+        fromDateLbl.setFont(style: .body, size: FontSize.BodySize)
         Backbtn.configureAsBackButton(firstLine: MenuStringFile.DailyCollection, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: TodateView,cornerRadius: 6)
         Backbtn.applyBackButton()

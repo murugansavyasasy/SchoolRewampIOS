@@ -28,7 +28,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)

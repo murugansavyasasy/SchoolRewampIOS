@@ -17,11 +17,13 @@
                 <outlet property="TodateView" destination="dLj-7Q-oNe" id="tTB-ns-NGj"/>
                 <outlet property="calendarView" destination="V0y-aK-beX" id="V3y-8l-zKm"/>
                 <outlet property="dateViewHeight" destination="ywI-Pa-1zE" id="vYE-sT-wlY"/>
+                <outlet property="fromDateLbl" destination="eBy-qE-DZO" id="x7g-oW-NmY"/>
                 <outlet property="fromLbl" destination="zxg-eO-hbB" id="R5Z-IZ-1qZ"/>
                 <outlet property="norecordImg" destination="siu-AH-aY6" id="Bb4-13-MoJ"/>
                 <outlet property="norecordLbl" destination="OHj-Q1-eNO" id="RcZ-6K-jFR"/>
                 <outlet property="segmentName" destination="lMa-1r-up3" id="0vH-ZW-hBm"/>
                 <outlet property="titleStack" destination="NNU-Hl-Yzr" id="F9b-gG-NRd"/>
+                <outlet property="toDateLbl" destination="5fI-UB-YTf" id="yhB-gp-RQa"/>
                 <outlet property="todateLbl" destination="ivg-1d-QRx" id="cVs-c2-H6U"/>
                 <outlet property="totalAmountLbl" destination="XFW-wH-5fZ" id="ebA-lc-zG9"/>
                 <outlet property="totalCollectionLblTitle" destination="fZf-Og-BcD" id="twf-Qa-VNJ"/>

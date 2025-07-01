@@ -341,6 +341,8 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        titleLbl.setRequiredText(CommonStringFile.Title)
+        DescriptionLbl.setRequiredText(CommonStringFile.Description)
         
         categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -656,7 +658,7 @@ extension SenderAssignmentTextViewController : UITextViewDelegate{
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            letterscountLbl.text = "\(newText.count) of 500" // Update the character count label
+            letterscountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

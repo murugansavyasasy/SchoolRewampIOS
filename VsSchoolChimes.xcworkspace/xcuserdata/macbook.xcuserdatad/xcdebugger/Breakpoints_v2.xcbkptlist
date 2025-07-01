@@ -3,4 +3,84 @@
    uuid = "67C584F0-120C-445C-A872-609BEA3AA74E"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "889"
+            endingLineNumber = "889"
+            landmarkName = "SendingNoticeboardFlow()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D3DE78A-3C47-4B4F-8927-7A8469C72563"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "902"
+            endingLineNumber = "902"
+            landmarkName = "SendingNoticeboardFlow()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0D3DE78A-3C47-4B4F-8927-7A8469C72563 - d73511aa14934d38"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchoolNewsource/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "902"
+                  endingLineNumber = "902">
+               </Location>
+               <Location
+                  uuid = "0D3DE78A-3C47-4B4F-8927-7A8469C72563 - 38fa7213835feb88"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchoolNewsource/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "904"
+                  endingLineNumber = "904">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68C1FA4F-6A28-4F70-AABE-3BF228F260F4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "912"
+            endingLineNumber = "912"
+            landmarkName = "SendingNoticeboardFlow()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
