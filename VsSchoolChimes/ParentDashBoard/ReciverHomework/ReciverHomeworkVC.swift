@@ -45,8 +45,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     // MARK: - Setup
     func setupUI() {
         NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "")  - \(studentDetails?.section_name ?? "")"
-
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        GetHomeWorkReport()
         StyleAndTranslate()
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
@@ -285,6 +285,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.forwordBtn.isHidden = true
             cell.SelectBtnHeight.constant = 0
             cell.newView.isHidden = true
+            cell.pageViewController.isHidden = true
             // Load image if available
             if let urls = homework.file_path, urls.count != 0{
                 cell.ImageCollectionView.isHidden = false

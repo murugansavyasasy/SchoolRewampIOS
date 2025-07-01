@@ -50,4 +50,39 @@ import UIKit
              viewController.present(alert, animated: true, completion: nil)
          }
     
+     
+     static func showImageAlert(
+        from imageUrl: String,
+        message: String ,
+        in viewController: UIViewController
+     ) {
+         guard let url = URL(string: imageUrl) else { return }
+
+         let alert = UIAlertController(title: "Downloaded Image", message: message, preferredStyle: .alert)
+
+         let imageVC = UIViewController()
+         let imageView = UIImageView()
+         imageView.contentMode = .scaleAspectFit
+         imageView.translatesAutoresizingMaskIntoConstraints = false
+
+         // 🔽 SDWebImage: Load image from URL
+         imageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
+
+         imageVC.view.addSubview(imageView)
+
+         NSLayoutConstraint.activate([
+             imageView.topAnchor.constraint(equalTo: imageVC.view.topAnchor),
+             imageView.bottomAnchor.constraint(equalTo: imageVC.view.bottomAnchor),
+             imageView.leadingAnchor.constraint(equalTo: imageVC.view.leadingAnchor),
+             imageView.trailingAnchor.constraint(equalTo: imageVC.view.trailingAnchor),
+             imageView.heightAnchor.constraint(equalToConstant: 200)
+         ])
+
+         imageVC.preferredContentSize = CGSize(width: 250, height: 200)
+         alert.setValue(imageVC, forKey: "contentViewController")
+
+         alert.addAction(UIAlertAction(title: "OK", style: .default))
+         viewController.present(alert, animated: true)
+     }
+
 }
