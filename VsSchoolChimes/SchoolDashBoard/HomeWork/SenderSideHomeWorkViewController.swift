@@ -118,6 +118,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         titleLbl.setRequiredText(CommonStringFile.Title)
         DetailsLbl.setRequiredText(CommonStringFile.Description)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        titleCountLbl.setFont(style: .body, size: FontSize.BodySize)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
         setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }

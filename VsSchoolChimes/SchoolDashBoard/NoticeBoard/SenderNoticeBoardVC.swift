@@ -432,7 +432,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         ]
            
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
-        vc.Common_request_params = params
+                vc.Common_request_params = params
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
            
