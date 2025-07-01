@@ -258,6 +258,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 }
                 cell.newImg.isHidden = true
                 cell.datelbl.isHidden = true
+                cell.dateAndtimeLbl.isHidden = false
                 let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
                     event?.time ?? ""
@@ -270,10 +271,10 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 cell.configure(indexPath: indexPath)
 
                     // Handle the tap event with closure
-                    cell.onVideoTapped = { tappedIndexPath in
-                        let item = self.FilteredData?[tappedIndexPath.row]
-                        self.playVideo(for: item!)
-                    
+                cell.onVideoTapped = { tappedIndexPath in
+                    if let item = self.FilteredData?[tappedIndexPath.row]{
+                        self.playVideo(for: item)
+                    }
                 }
                 return cell
             }else{

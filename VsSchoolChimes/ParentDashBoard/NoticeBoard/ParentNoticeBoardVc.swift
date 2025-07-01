@@ -181,6 +181,13 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
                     cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: timePart)
                 }
             }
+            cell.configure(indexPath: indexPath)
+            cell.onVideoTapped = { tappedIndexPath in
+                if let item = self.FilteredData?[tappedIndexPath.row]{
+                    self.playVideo(for: item)
+                }
+            }
+            
             cell.titleLbl.text = notice?.title
             cell.subjectName.isHidden = true
             return cell
@@ -231,6 +238,16 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
     }
+    
+    func playVideo(for item: Notice) {
+            
+            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+            vc.url = item.file_path?.first?.url
+            vc.titles = item.title
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+            
+        }
 }
 
 @available(iOS 14.0, *)
