@@ -269,6 +269,13 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.datelbl.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
             cell.titleLbl.text = homework.title
             cell.subjectName.text = homework.subject_name
+            cell.configure(indexPath: indexPath)
+            cell.onVideoTapped = { tappedIndexPath in
+                if let item = self.FilterHomeWorkList?[indexPath.section].homework?[indexPath.row]{
+                    self.playVideo(for: item)
+                }
+            }
+            
             cell.layoutIfNeeded()
             return cell
         }else{
@@ -330,6 +337,15 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         TV.reloadSections(sectionsToReload, with: .automatic)
     }
 
+    func playVideo(for item: Homework) {
+            
+            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+            vc.url = item.file_path?.first?.url
+            vc.titles = item.title
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+            
+        }
 }
 
 //MARK: Searchbar delegate

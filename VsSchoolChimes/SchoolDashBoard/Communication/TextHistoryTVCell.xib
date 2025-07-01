@@ -11,17 +11,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TextHistoryTVCell" rowHeight="178" id="KGk-i7-Jjw" customClass="TextHistoryTVCell" customModule="VsSchoolChimes" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TextHistoryTVCell" rowHeight="178" id="KGk-i7-Jjw" customClass="TextHistoryTVCell" customModule="School_Chimes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="365" height="178"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="365" height="178"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PuL-ZK-Yro" customClass="ShimmerView2" customModule="VsSchoolChimes" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PuL-ZK-Yro" customClass="ShimmerView2" customModule="School_Chimes" customModuleProvider="target">
                         <rect key="frame" x="20" y="10" width="329" height="158"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="11 sep 24" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orl-Nb-csW" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="11 sep 24" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orl-Nb-csW" customClass="ShimmerLabel" customModule="School_Chimes" customModuleProvider="target">
                                 <rect key="frame" x="16" y="127.66666666666664" width="217" height="20.333333333333329"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.333333333333329" id="UNc-PI-Hfc"/>
@@ -71,7 +71,7 @@
                                     <action selector="Select:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fp8-up-Tbc"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-TO-4ad" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-TO-4ad" customClass="ShimmerLabel" customModule="School_Chimes" customModuleProvider="target">
                                 <rect key="frame" x="16" y="51.333333333333329" width="297" height="61.333333333333329"/>
                                 <string key="text">Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -89,7 +89,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Announcements and promos" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6K-XD-RuD" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Announcements and promos" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6K-XD-RuD" customClass="ShimmerLabel" customModule="School_Chimes" customModuleProvider="target">
                                 <rect key="frame" x="16" y="15.999999999999998" width="297" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -104,7 +104,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ZhC-TO-4ad" firstAttribute="top" secondItem="E6K-XD-RuD" secondAttribute="bottom" constant="15" id="2CO-qg-V6E"/>
                             <constraint firstItem="vwk-N1-Vce" firstAttribute="leading" secondItem="orl-Nb-csW" secondAttribute="trailing" id="4eB-la-ZVh"/>
@@ -123,6 +123,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="PuL-ZK-Yro" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="EbT-Wt-fC6"/>
                     <constraint firstAttribute="trailing" secondItem="PuL-ZK-Yro" secondAttribute="trailing" constant="16" id="IQY-jB-yY1"/>
@@ -131,6 +132,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="DateLabel" destination="orl-Nb-csW" id="OzO-MM-L35"/>
                 <outlet property="MessageTitle" destination="E6K-XD-RuD" id="ZkO-qV-XKD"/>
@@ -150,9 +152,6 @@
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemMintColor">
             <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

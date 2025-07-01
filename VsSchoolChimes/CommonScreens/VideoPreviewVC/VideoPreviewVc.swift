@@ -23,6 +23,7 @@ class VideoPreviewVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         // Do any additional setup after loading the view.
         titleLbl.text = titles
         let config = WKWebViewConfiguration()
@@ -31,7 +32,7 @@ class VideoPreviewVc: UIViewController {
 
                webView = WKWebView(frame: self.fullview.bounds, configuration: config)
                webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        fullview.addSubview(webView)
+               fullview.addSubview(webView)
 
                // Load the Vimeo URL
                if let url = URL(string: url ?? "") {

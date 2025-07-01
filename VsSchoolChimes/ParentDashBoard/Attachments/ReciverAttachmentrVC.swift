@@ -365,6 +365,13 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
             }
             cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
             cell.titleLbl.text = data.title
+            cell.configure(indexPath: indexPath)
+            cell.onVideoTapped = { tappedIndexPath in
+                if let item = self.SearchAttachments?[tappedIndexPath.row]{
+                    self.playVideo(for: item)
+                }
+            }
+            
             cell.layoutIfNeeded()
             return cell
             
@@ -455,6 +462,16 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 60
     }
+    
+    func playVideo(for item: Attachment) {
+            
+            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+            vc.url = item.file_path?.first?.url
+            vc.titles = item.title
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+            
+        }
 }
 
 extension ReciverAttachmentrVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
