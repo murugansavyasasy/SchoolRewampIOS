@@ -22,10 +22,8 @@
                 <outlet property="ToDateView" destination="v8m-h4-dgy" id="kwf-54-PNA"/>
                 <outlet property="ToLbl" destination="vtp-Z2-OSh" id="S3T-jL-q4P"/>
                 <outlet property="TodateTop" destination="Jvl-RL-tqP" id="rrK-0L-UTC"/>
-                <outlet property="collectionViewHeght" destination="iBc-Sz-1Eh" id="0LW-ky-a82"/>
                 <outlet property="contentCount" destination="lcX-GL-hyS" id="bOJ-an-gQ5"/>
                 <outlet property="contentTxtView" destination="rtq-ra-Yom" id="vxB-Cj-RaI"/>
-                <outlet property="costomView" destination="I46-jl-Lri" id="z7Q-j6-cRc"/>
                 <outlet property="dayCount" destination="ErS-17-Z57" id="dru-dX-dwH"/>
                 <outlet property="fromLbl" destination="sw2-rS-z55" id="S4h-FE-RVe"/>
                 <outlet property="headerTitle" destination="7wy-Nc-cWt" id="w10-HB-IMw"/>
@@ -204,35 +202,25 @@
                                                         <constraint firstItem="UQd-Jl-D38" firstAttribute="leading" secondItem="pVc-xc-ASO" secondAttribute="leading" id="wvb-9k-bAG"/>
                                                     </constraints>
                                                 </stackView>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I46-jl-Lri" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
-                                                    <rect key="frame" x="10" y="286.66666666666663" width="311" height="100"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="100" id="iBc-Sz-1Eh"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="I46-jl-Lri" firstAttribute="leading" secondItem="fWl-Ce-8iP" secondAttribute="leading" constant="10" id="3Sd-4R-udN"/>
                                                 <constraint firstAttribute="trailing" secondItem="pVc-xc-ASO" secondAttribute="trailing" constant="10" id="6pf-FH-Xul"/>
                                                 <constraint firstAttribute="trailing" secondItem="ErS-17-Z57" secondAttribute="trailing" constant="10" id="Miv-eD-AU3"/>
-                                                <constraint firstAttribute="trailing" secondItem="I46-jl-Lri" secondAttribute="trailing" constant="10" id="SNB-Qn-GUe"/>
                                                 <constraint firstItem="pVc-xc-ASO" firstAttribute="leading" secondItem="fWl-Ce-8iP" secondAttribute="leading" constant="10" id="Wo4-j3-aGb"/>
                                                 <constraint firstItem="ErS-17-Z57" firstAttribute="leading" secondItem="fWl-Ce-8iP" secondAttribute="leading" constant="10" id="rdH-ex-mVm"/>
                                             </constraints>
                                         </stackView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgF-L8-oah">
                                             <rect key="frame" x="25" y="382" width="301" height="40"/>
+                                            <color key="backgroundColor" name="ButtonColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="1UQ-eh-vuy"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Submit">
-                                                <backgroundConfiguration key="background" cornerRadius="10">
-                                                    <color key="backgroundColor" name="ButtonColor"/>
-                                                </backgroundConfiguration>
-                                            </buttonConfiguration>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Submit">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
                                             <connections>
                                                 <action selector="SubmitAct:" destination="-1" eventType="touchUpInside" id="uNa-fn-Bvo"/>
                                             </connections>

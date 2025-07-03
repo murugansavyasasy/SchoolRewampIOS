@@ -17,7 +17,7 @@ class NewLSRWTVcell: UITableViewCell {
     @IBOutlet weak var StaffName: UIButton!
     @IBOutlet weak var SkillType: UIButton!
     @IBOutlet weak var TakeSkillBtn: UIButton!
-    
+    @IBOutlet weak var iconBtn: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +30,13 @@ class NewLSRWTVcell: UITableViewCell {
         cellView.layer.masksToBounds = false
         cellView.layer.borderWidth = 0.5
         cellView.layer.borderColor = UIColor.lightGray.cgColor
-        
+        iconBtn.setImage( UIImage(systemName: "headphones"), for: .normal)
+        iconBtn.tintColor = .white
+        iconBtn.layer.cornerRadius = 8
+        StaffName.layer.cornerRadius = 8
+        SkillType.layer.cornerRadius = 8
+        Subject.layer.cornerRadius = 8
+        Date.layer.cornerRadius = 8
         TakeSkillBtn.layer.cornerRadius = 10
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
