@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import WebKit
 
  class CustomAlert{
   
@@ -85,4 +86,61 @@ import UIKit
          viewController.present(alert, animated: true)
      }
 
+     
+     @available(iOS 14.0, *)
+     static func showMediaAlert(
+            for media: MediaPickerManager.PickedMedia,
+            in viewController: UIViewController,
+            onSend: @escaping () -> Void
+        ) {
+            let alert = UIAlertController(title: "Preview", message: "Do you want to send this media?", preferredStyle: .alert)
+            
+            let contentVC = UIViewController()
+            contentVC.view.translatesAutoresizingMaskIntoConstraints = false
+            let height: CGFloat = 300
+            
+            switch media.type {
+            case .image(let image):
+                let imageView = UIImageView()
+                imageView.contentMode = .scaleAspectFit
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.image = image
+                
+                contentVC.view.addSubview(imageView)
+                
+                NSLayoutConstraint.activate([
+                    imageView.topAnchor.constraint(equalTo: contentVC.view.topAnchor),
+                    imageView.bottomAnchor.constraint(equalTo: contentVC.view.bottomAnchor),
+                    imageView.leadingAnchor.constraint(equalTo: contentVC.view.leadingAnchor),
+                    imageView.trailingAnchor.constraint(equalTo: contentVC.view.trailingAnchor),
+                    imageView.heightAnchor.constraint(equalToConstant: height)
+                ])
+                
+            case .document(let url):
+                let webView = WKWebView()
+                webView.translatesAutoresizingMaskIntoConstraints = false
+                webView.load(URLRequest(url: url))
+                
+                contentVC.view.addSubview(webView)
+                
+                NSLayoutConstraint.activate([
+                    webView.topAnchor.constraint(equalTo: contentVC.view.topAnchor),
+                    webView.bottomAnchor.constraint(equalTo: contentVC.view.bottomAnchor),
+                    webView.leadingAnchor.constraint(equalTo: contentVC.view.leadingAnchor),
+                    webView.trailingAnchor.constraint(equalTo: contentVC.view.trailingAnchor),
+                    webView.heightAnchor.constraint(equalToConstant: height)
+                ])
+            }
+            
+            contentVC.preferredContentSize = CGSize(width: 250, height: height)
+            alert.setValue(contentVC, forKey: "contentViewController")
+            
+            // Add Cancel and Send actions
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
+                onSend()
+            }))
+            
+            viewController.present(alert, animated: true)
+        }
 }

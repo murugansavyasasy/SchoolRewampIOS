@@ -9,23 +9,35 @@ import UIKit
 
 class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatTableViewCellDelegate,UITextFieldDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var noRecordlbl: UILabel!
+    @IBOutlet weak var replayStackView: UIStackView!
+    @IBOutlet weak var subjectLbl: UILabel!
+    @IBOutlet weak var teacherLbl: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var TextViewFullView: UIView!
     @IBOutlet weak var sendImageView: UIImageView!
     @IBOutlet weak var MessgeTextview: UITextView!
     @IBOutlet weak var ReplyTextFild: UITextField!
-    @IBOutlet weak var messageHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
        var getValue = 1
        private var messages: [(text: String, isSender: Bool)] = [
            ("Hello!", true),
-           ("Hi there! How are you?jksfvnjkjkzbvuibskvbkdbvkbdkvbkdbkjvbjkbjvkzjkbvbjksbcvjkbjkcvbjkabvkjbkjdbvkjadbfkvbkdbvjksbdjkvbakdbvkbzdkjbvkjzdbjkvbkzdbvkdzbkbkzdbvkx", false),
+           (
+            "Hi there! How are you?jksfvnjkjkzbvuibskvbkdbvkbdkvbkdbkjvbjkbjvkzjkbvbjksbcvjkbjkcvbjkabvkjbkjdbvkjadbfkvbkdbvjksbdjkvbakdbvkbzdkjbvkjzdbjkvbkzdbvkdzbkbkzdbvkx",
+            true
+           ),
            ("I'm good, thanks! What about you?fjjkbdfbkb", true),
            ("Doing great, thanks for asking.", false)
        ]
-       
+ 
+    var staffMembersData = StaffMember()
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    var chatDataDetails : [ChatMessage]?
        override func viewDidLoad() {
            super.viewDidLoad()
-          
+           profileImage.layer.cornerRadius = profileImage.frame.size.width/2
+           teacherLbl.text = staffMembersData.name
+           subjectLbl.text = staffMembersData.subject_name
            MessgeTextview.addDoneButton()
            let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
            tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
@@ -37,7 +49,6 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            tableView.separatorStyle = .none
            tableView.rowHeight = UITableView.automaticDimension
            tableView.estimatedRowHeight = 44
-           messageHeight.constant = 0
            TextViewFullView.layer.cornerRadius = Colornames.CORadius5
            TextViewFullView.layer.masksToBounds = true
            TextViewFullView.layer.borderColor = UIColor.lightGray.cgColor
@@ -55,6 +66,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            
            MessgeTextview.delegate = self
           
+           getStaff()
        }
     
     override func viewDidLayoutSubviews() {
@@ -93,9 +105,9 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            print("Clear button tapped!")
 //        textField.resignFirstResponder() // Hides the keyboard for the specific textField
 //           view.endEditing(true)
-        ReplyTextFild.isUserInteractionEnabled = true
-        
-        messageHeight.constant = 0
+        ReplyTextFild.isUserInteractionEnabled = false
+        ReplyTextFild.text = ""
+        replayStackView.isHidden = true
            return true
        }
     
@@ -105,41 +117,112 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         dismiss(animated: true)
     }
     
-       // MARK: - UITableView DataSource
-       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return messages.count
-       }
-       
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTVCell", for: indexPath) as! ChatTVCell
-           let message = messages[indexPath.row]
-           cell.configure(with: message.text, isSender: message.isSender)
-           cell.delegate = self
-           return cell
-       }
-       
-       // MARK: - ChatTableViewCellDelegate
-       func didSlideToReply(for message: String) {
-           print("Reply to: \(message)")
+    @IBAction func addAttachmenAction(_ sender: Any) {
+        
+        if #available(iOS 14.0, *) {
+            MediaPickerManager.shared.pickedMedia = []
+        } else {
+            // Fallback on earlier versions
+        } // reset if needed
+        if #available(iOS 14.0, *) {
+            MediaPickerManager.shared.onMediaPicked = { picked in
+                
+                if let firstMedia = picked.first {
+                    CustomAlert.showMediaAlert(for: firstMedia, in: self) {
+                        print("Send action tapped")
+                        // Proceed with upload/send here
+                    }
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 14.0, *) {
+            MediaPickerManager.shared.showPicker(from: self)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    
+    @IBAction func sendBtnAction(_ sender: Any) {
+        sendChat()
+    }
+    // MARK: - UITableView DataSource
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chatDataDetails?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTVCell", for: indexPath) as! ChatTVCell
+        let message = chatDataDetails?[indexPath.row]
+        
+        
+        
+        if message?.ans_file_path?.count == 0 {
+            if message?.answer != "Not answered yet"{
+                
+                cell
+                    .configure(
+                        with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
+                        isSender: false
+                    )
+            }
+        }else{
+            
+            cell.messageLabel.isHidden = true
+            cell.timeStampLbl.isHidden = true
+            cell.imageStack.isHidden = false
+            cell.imageConficure(with:message?.ans_file_path?.first?.url )
+            
            
-           // Show a reply indicator (e.g., move focus to an input field with the selected message)
-           messageHeight.constant = 190
-           
-//           ReplyTextFild.isUserInteractionEnabled = false
-           
-           ReplyTextFild.text = message
-           
-//
-//           let alert = UIAlertController(title: "Reply", message: "Replying to: \(message)", preferredStyle: .alert)
-//           alert.addTextField { textField in
-//               textField.placeholder = "Write your reply..."
-//           }
-//           alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
-//               // Handle sending the reply here
-//           }))
-//           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//           present(alert, animated: true, completion: nil)
-       }
+
+        }
+        
+        if message?.ques_file_path?.count == 0 {
+            if message?.question != ""{
+                cell.imageStack.isHidden = true
+                cell.messageLabel.isHidden = false
+                cell.timeStampLbl.isHidden = false
+                cell
+                    .configure(
+                        with: message?.question ?? "", timeStamp: message?.asked_on ?? "",
+                        isSender: message?.my_question ?? false
+                    )
+            }
+        }else{
+            
+            cell.messageLabel.isHidden = true
+            cell.timeStampLbl.isHidden = true
+            cell.imageStack.isHidden = false
+            cell.imageConficure(with:message?.ques_file_path?.first?.url )
+        }
+        cell.delegate = self
+        return cell
+    }
+    
+    // MARK: - ChatTableViewCellDelegate
+    func didSlideToReply(for message: String) {
+        print("Reply to: \(message)")
+        
+        // Show a reply indicator (e.g., move focus to an input field with the selected message)
+        //           messageHeight.constant = 190
+        
+        //           ReplyTextFild.isUserInteractionEnabled = false
+        replayStackView.isHidden = false
+        ReplyTextFild.text = message
+        
+        //
+        //           let alert = UIAlertController(title: "Reply", message: "Replying to: \(message)", preferredStyle: .alert)
+        //           alert.addTextField { textField in
+        //               textField.placeholder = "Write your reply..."
+        //           }
+        //           alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
+        //               // Handle sending the reply here
+        //           }))
+        //           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        //           present(alert, animated: true, completion: nil)
+    }
     
     
     
@@ -199,12 +282,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         }
         
     }
-//    func textViewDidChange(_ textView: UITextView) {
-//        if textView.text == "" {
-//            MessgeTextview.text = "Type your message here..."
-//            MessgeTextview.textColor = .lightGray
-//        }
-//    }
+
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
             MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
@@ -213,4 +291,84 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     }
 
     
+    func getStaff(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: ["staff_id" : staffMembersData.id ?? "","subject_id":staffMembersData.subject_id ?? "","offset":0,"is_class_teacher":staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+                result:Result <ChatMessageSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            noRecordlbl.isHidden = true
+                            chatDataDetails = successMessage.data?
+                                .reversed() ?? []
+                            tableView.reloadData()
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            noRecordlbl.isHidden = false
+                            noRecordlbl.text = successMessage.message ?? ""
+                            //                            TextViewFullView.isHidden = true
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
+    func sendChat(){
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let parameters: [String: Any] = [
+                "staff_id": self.staffMembersData.id ?? "",
+                "subject_id": self.staffMembersData.subject_id  ?? "",
+                "question": self.MessgeTextview.text?.removingExtraSpaces() ?? "",
+                "is_class_teacher": self.staffMembersData.is_class_teacher ?? false,
+                "file_path": []
+            ]
+            
+            APIService.shared.makeApi(
+                url: ServiceUrl.interaction_student_ask_question,
+                parameters: parameters,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            ) { [weak self] (result: Result<MessageSuc, Error>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    DispatchQueue.main.async {
+                        self.MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
+                        self.MessgeTextview.textColor = .lightGray
+                        self.resetTextView()
+                        self.getStaff()
+                    }
+                case .failure(let error):
+                    print("❌ API error: \(error.localizedDescription)")
+                    // Optionally show error alert here
+                }
+            }
+        }
+        
+    }
+    
+    
+    func resetTextView() {
+        MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
+        MessgeTextview.textColor = .lightGray
+        MessgeTextview.resignFirstResponder()
+    }
+    
+    
+    
    }
+
+extension String {
+    func removingExtraSpaces() -> String {
+        return self.components(separatedBy: .whitespacesAndNewlines)
+            .filter { !$0.isEmpty }
+            .joined(separator: " ")
+    }
+}

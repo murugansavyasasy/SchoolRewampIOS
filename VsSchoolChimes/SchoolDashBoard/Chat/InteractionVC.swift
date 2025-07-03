@@ -10,12 +10,15 @@ import UIKit
 class InteractionVC: UIViewController {
     @IBOutlet weak var NameStandardStackView: UIStackView!
     
+    @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var HeaderLbl: UILabel!
-    @IBOutlet weak var CV: UICollectionView!
+   
     var passvalue = 0
+    var staffMembersData: [StaffMember]?
+    var childDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn.applyBackButton()
@@ -23,12 +26,14 @@ class InteractionVC: UIViewController {
         HeaderLbl.setFont(style: .header, size: 17)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        let nib = UINib(nibName: CellConfingName.ChatCvcell, bundle: nil)
-        CV.register(nib, forCellWithReuseIdentifier: CellConfingName.ChatCvcell)
+        let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
+        tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
+        tv.delegate = self
+        tv.dataSource = self
+        getStaff()
         
-        CV.delegate = self
-        CV.dataSource = self
-        CV.reloadData()
+       
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,43 +55,68 @@ class InteractionVC: UIViewController {
     
 }
 
-extension InteractionVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 5
+extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return staffMembersData?.count ?? 0
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = CV.dequeueReusableCell(withReuseIdentifier: CellConfingName.ChatCvcell, for: indexPath)as! ChatCvcell
-        let interactTap = UITapGestureRecognizer(target: self, action: #selector(OpenChat))
-        cell.InteractBtn.addGestureRecognizer(interactTap)
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.interactTvcell,
+            for: indexPath
+        ) as? interactTvcell else {
+            return UITableViewCell()
+        }
+        
+        
+        let datas = staffMembersData?[indexPath.row]
+        cell.teacherNameLbl.text = datas?.name ?? ""
+        cell.subjectNameLbl.text = datas?.subject_name ?? ""
         
         return cell
+        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CV.frame.width / 2.2
-           return CGSize(width: width, height: 180)
-       }
 
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-           return 2 // No spacing between items
-       }
-
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-           return 10 // No spacing between rows
-       }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: collectionView.bounds.width, height: UICollectionViewFlowLayout.automaticSize.height)
-//    }
-
-    
-
-    @objc func OpenChat(){
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        
         let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-       // vc.getValue = getValue
+        if let datas = staffMembersData?[indexPath.row]{
+            vc.staffMembersData = datas
+        }
+       
+        // vc.getValue = getValue
         present(vc, animated: true)
+        
+        
     }
+    
+
+    func getStaff(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+                result:Result <StaffListResponse,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            staffMembersData = successMessage.data ?? []
+                            tv.reloadData()
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
 }

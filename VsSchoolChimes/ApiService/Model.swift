@@ -1130,6 +1130,80 @@ struct MessageFromManagementResp: Codable {
     let data: [ManagemantMessageData]?
 }
 
+struct StaffListResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StaffMember]?
+}
+
+struct StaffMember: Codable {
+    let id: String?
+    let name: String?
+    let subject_id: String?
+    let subject_name: String?
+    let is_assigned: Bool?
+    let is_class_teacher: Bool?
+    let unread_count: String?
+    init() {
+           self.id = nil
+           self.name = nil
+           self.subject_id = nil
+           self.subject_name = nil
+           self.is_assigned = nil
+           self.is_class_teacher = nil
+           self.unread_count = nil
+       }
+
+}
+
+struct ChatMessageSuc: Codable {
+    
+    var status : Bool?
+    var message: String?
+    var data :[ChatMessage]?
+}
+
+struct ChatMessage: Codable {
+    let question_id: String?
+    let question: String?
+    let student_id: String?
+    let student_name: String?
+    let asked_on: String?
+    let ques_file_path: [MediaFile]?
+    let reply_type: String?
+    let answer: String?
+    let answered_on: String?
+    let ans_file_path: [MediaFile]?
+    let chat_count: Int?
+    let my_question: Bool?
+
+    
+}
+
+
+struct MessageSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MessageSucResp]?
+}
+
+struct MessageSucResp: Codable {
+    let  id : String?
+    let  name : String?
+    let  section_id : String?
+    let  question : String?
+    let  created_on : String?
+    let  chat_count : Int?
+    let  file_path : [String]?
+}
+
+
+struct MediaFile: Codable {
+    let url: String
+    let type: String  // Example: "IMAGE", "PDF", etc.
+}
+
+
 struct ManagemantMessageData: Codable {
     let type: String?
     let id: String?

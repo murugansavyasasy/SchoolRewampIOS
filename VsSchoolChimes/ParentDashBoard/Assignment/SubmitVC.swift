@@ -50,7 +50,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     var vimeoUploader: VimeoUploader?
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name
