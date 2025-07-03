@@ -190,9 +190,9 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
-    func ScheduleExamVCNavigat(from viewController: UIViewController){
+    func SenderLSRWVCNavigate(from viewController: UIViewController){
        // let vc = ExamCreatVC(nibName: nil, bundle: nil)
-        let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
+        let vc = SenderLSRWVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
