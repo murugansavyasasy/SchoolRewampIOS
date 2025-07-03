@@ -11,7 +11,7 @@ import AVFoundation
 
 @available(iOS 15.0, *)
 class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var attachmentHeight: NSLayoutConstraint!
     @IBOutlet weak var subjectView: UIView!
     @IBOutlet weak var senderView: UIView!
@@ -62,7 +62,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         setupCollectionViews()
         setupTableView()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         audioManager.stopPlayback()
@@ -72,7 +72,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         recordingTimer = nil
         UIApplication.shared.isIdleTimerDisabled = false
     }
-
+    
     // MARK: - Setup Methods
     private func setupUI() {
         titleLbl.text = lsrw?.title
@@ -85,18 +85,18 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         configureViews(for: lsrw?.type, fileType: lsrw?.filePath.first?.type)
         applyShadowAndCornerRadius(to: [playerView, taskTypeView, dateView, subjectView, senderView])
     }
-
+    
     private func configureViews(for taskType: String?, fileType: String?) {
         let isVideo = fileType == "video"
         let isAudio = fileType == "audio"
-
+        
         videoView.isHidden = !isVideo
         imageView.isHidden = isVideo || isAudio
         outerplayerView.isHidden = !isAudio
         if isAudio, let audioURLString = lsrw?.filePath.first?.url, let audioURL = URL(string: audioURLString) {
             audioManager.setupPlayer(with: audioURL)
         }
-
+        
         switch taskType {
         case "listen":
             recordingView.isHidden = true
@@ -106,7 +106,10 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
             recordingView.isHidden = true
             addAttachmentView.isHidden = true
             testView.isHidden = false
-            tableHeight.constant = 300
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.testTable.reloadData()
+                self.updateTableHeight()
+            }
             imageView.isHidden = false
         case "write":
             recordingView.isHidden = true
@@ -120,7 +123,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
             break
         }
     }
-
+    
     private func setupAudio() {
         audioManager.delegate = self
         audioManager.checkRecordPermission { [weak self] granted in
@@ -131,14 +134,14 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
             }
         }
     }
-
+    
     private func setupCollectionViews() {
         imageCollection.delegate = self
         imageCollection.dataSource = self
         addAttachmentView.imageCollectionview.delegate = self
         addAttachmentView.imageCollectionview.dataSource = self
         addAttachmentView.imageCollectionview.backgroundColor = .clear
-
+        
         let imagePdfCellNib = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
         imageCollection.register(imagePdfCellNib, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
         
@@ -150,40 +153,45 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         // Update table height after reload
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.attachmentHeight.constant = self.imageCollection.collectionViewLayout.collectionViewContentSize.height
+            self.testTable.reloadData()
+            self.updateTableHeight()
         }
-//        self.imageCollection.collectionViewLayout.invalidateLayout()
-//        self.imageCollection.performBatchUpdates(nil) { _ in
-//            self.imageCollection.layoutIfNeeded()
-//            self.attachmentHeight.constant = self.imageCollection.collectionViewLayout.collectionViewContentSize.height
-//        }
-
+        
+        //        self.imageCollection.collectionViewLayout.invalidateLayout()
+        //        self.imageCollection.performBatchUpdates(nil) { _ in
+        //            self.imageCollection.layoutIfNeeded()
+        //            self.attachmentHeight.constant = self.imageCollection.collectionViewLayout.collectionViewContentSize.height
+        //        }
         setupImageSelection()
     }
-
+    private func updateTableHeight() {
+        self.testTable.layoutIfNeeded()
+        self.tableHeight.constant = self.testTable.contentSize.height
+    }
     private func setupTableView() {
         testTable.register(UINib(nibName: "TestTVC", bundle: nil), forCellReuseIdentifier: "TestTVC")
         testTable.delegate = self
         testTable.dataSource = self
     }
-
+    
     private func setupImageSelection() {
         photoPickManager.onCameraImagePicked = { [weak self] image in
             guard let self = self else { return }
             self.addAttachment(.init(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
         }
-
+        
         photoPickManager.onImagesPicked = { [weak self] images in
             guard let self = self else { return }
             let imageItems = images.map { AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE) }
             self.addAttachments(imageItems)
         }
-
+        
         photoPickManager.onFilePicked = { [weak self] url in
             guard let self = self else { return }
             self.addAttachment(.init(image: nil, imageURL: url.absoluteString, fileType: CommonStringFile.pdf))
         }
     }
-
+    
     private func applyShadowAndCornerRadius(to views: [UIView]) {
         views.forEach { view in
             view.layer.cornerRadius = 8
@@ -194,7 +202,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
             view.layer.masksToBounds = false
         }
     }
-
+    
     // MARK: - Actions
     @IBAction private func recorderTapped(_ sender: UIButton) {
         if isRecording {
@@ -272,13 +280,6 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
     }
     
     @IBAction func submit(_ sender: UIButton) {
-        testTable.reloadData()
-        
-        // Update table height after reload
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.tableHeight.constant = self.testTable.contentSize.height
-        }
-        
         sender.setTitle("Submit", for: .normal)
     }
     
@@ -286,18 +287,18 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         audioManager.deleteRecording()
         outerplayerView.isHidden = true
     }
-
+    
     @IBAction private func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-
+    
     // MARK: - Helpers
     private func formatTime(_ seconds: Double) -> String {
         let mins = Int(seconds) / 60
         let secs = Int(seconds) % 60
         return String(format: "%02d:%02d", mins, secs)
     }
-
+    
     private func showMicPermissionAlert() {
         let alert = UIAlertController(
             title: "Error",
@@ -312,7 +313,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
     }
-
+    
     private func addAttachment(_ item: AttachmentItem) {
         attachments.removeAll { $0.fileType != item.fileType }
         attachments.append(item)
@@ -320,7 +321,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
         addAttachmentView.imageCollectionview.reloadData()
         updateCollectionViewHeight()
     }
-
+    
     private func addAttachments(_ items: [AttachmentItem]) {
         if !items.isEmpty {
             attachments.removeAll { $0.fileType != items.first?.fileType }
@@ -330,7 +331,7 @@ class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UI
             updateCollectionViewHeight()
         }
     }
-
+    
     private func updateCollectionViewHeight() {
         let totalItems = attachments.count
         collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
@@ -353,16 +354,18 @@ extension LSRWActivitesVC {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lsrw?.test.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
         if let test = lsrw?.test[indexPath.row] {
             cell.test = test
             cell.questionLbl.text = test.question
+            cell.layoutIfNeeded()
         }
+        self.tableHeight.constant = self.testTable.contentSize.height
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -374,7 +377,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == imageCollection {
             return lsrw?.filePath.count ?? 0
@@ -382,7 +385,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
             return 1 + attachments.count
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == imageCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
@@ -415,7 +418,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
                 let item = attachments[adjustedIndex]
                 cell.delegate = self
                 cell.deleteBtn.tag = adjustedIndex
-
+                
                 if let image = item.image {
                     cell.imageViews.image = image
                 } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
@@ -431,7 +434,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
             }
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == imageCollection{
             let width = (imageCollection.frame.width - 30) / 3
@@ -442,7 +445,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
         }
         
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView == addAttachmentView.imageCollectionview else { return }
         
@@ -454,7 +457,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
             
             let item = attachments[adjustedIndex]
             guard item.fileType != "video" else { return }
-
+            
             let vc = PreviewImageVC()
             vc.modalPresentationStyle = .fullScreen
             
@@ -473,7 +476,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
             present(vc, animated: true)
         }
     }
-
+    
     private func showAttachmentOptions() {
         let alertController = UIAlertController(
             title: "Select".translated(),
@@ -496,7 +499,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
         alertController.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
         present(alertController, animated: true)
     }
-
+    
     private func selectImages() {
         let imageCount = attachments.filter { $0.fileType == CommonStringFile.IMAGE }.count
         guard imageCount < 5 else {
@@ -505,7 +508,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
         }
         photoPickManager.presentPicker(ofType: .gallery(selectionLimit: 5 - imageCount), from: self)
     }
-
+    
     private func openCamera() {
         let imageCount = attachments.filter { $0.fileType == CommonStringFile.IMAGE }.count
         guard imageCount < 5 else {
@@ -514,7 +517,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
         }
         photoPickManager.presentPicker(ofType: .camera, from: self)
     }
-
+    
     private func selectPDF() {
         let pdfCount = attachments.filter { $0.fileType == CommonStringFile.pdf }.count
         guard pdfCount < 5 else {
@@ -524,7 +527,7 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
         photoPickManager.presentPicker(ofType: .file, from: self)
         photoPickManager.limiSelection = 5 - pdfCount
     }
-
+    
     private func showLimitReachedAlert() {
         let alert = CustomAlert()
         alert.showAlert(title: "", message: "Already reached your limit".translated(), on: self)

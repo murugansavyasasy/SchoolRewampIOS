@@ -465,11 +465,11 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
     
     func playVideo(for item: Attachment) {
             
-            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-            vc.url = item.file_path?.first?.url
-            vc.titles = item.title
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+//            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+//            vc.url = item.file_path?.first?.url
+//            vc.titles = item.title
+//            vc.modalPresentationStyle = .fullScreen
+//            present(vc, animated: true)
             
         }
 }

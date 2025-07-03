@@ -32,7 +32,6 @@ class TestTVC: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
     }
-    
     // MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

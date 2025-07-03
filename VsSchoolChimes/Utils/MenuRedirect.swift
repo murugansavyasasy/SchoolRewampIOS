@@ -301,8 +301,9 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func senderSchoolNeedsNavigate(from viewController: UIViewController) {
-        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
-        vc.Header = "School Needs"
+//        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
+//        vc.Header = "School Needs"
+        let vc = LSRWPagenationVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
