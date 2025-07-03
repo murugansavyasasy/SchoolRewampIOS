@@ -17,6 +17,8 @@ class InteractionVC: UIViewController {
     @IBOutlet weak var HeaderLbl: UILabel!
    
     var passvalue = 0
+    var staffMembersData: [StaffMember]?
+    var childDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn.applyBackButton()
@@ -24,12 +26,14 @@ class InteractionVC: UIViewController {
         HeaderLbl.setFont(style: .header, size: 17)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
         tv.dataSource = self
-        tv.reloadData()
+        getStaff()
+        
+       
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,7 +57,7 @@ class InteractionVC: UIViewController {
 
 extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return staffMembersData?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -63,22 +67,56 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
         ) as? interactTvcell else {
             return UITableViewCell()
         }
-     
         
+        
+        let datas = staffMembersData?[indexPath.row]
+        cell.teacherNameLbl.text = datas?.name ?? ""
+        cell.subjectNameLbl.text = datas?.subject_name ?? ""
         
         return cell
         
     }
 
-    
-
-
-    
-
-    @objc func OpenChat(){
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        
         let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-       // vc.getValue = getValue
+        if let datas = staffMembersData?[indexPath.row]{
+            vc.staffMembersData = datas
+        }
+       
+        // vc.getValue = getValue
         present(vc, animated: true)
+        
+        
     }
+    
+
+    func getStaff(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+                result:Result <StaffListResponse,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            staffMembersData = successMessage.data ?? []
+                            tv.reloadData()
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
 }

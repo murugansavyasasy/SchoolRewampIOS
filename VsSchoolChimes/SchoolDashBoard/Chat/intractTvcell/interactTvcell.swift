@@ -9,12 +9,17 @@ import UIKit
 
 class interactTvcell: UITableViewCell {
 
+    @IBOutlet weak var countBtnName: UIButton!
+    @IBOutlet weak var timeLabl: UIStackView!
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var ClasTeacherLbl: UILabel!
     @IBOutlet weak var subjectNameLbl: UILabel!
     @IBOutlet weak var teacherNameLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        profileImage.layer.cornerRadius = profileImage.frame.size.width/2
+        countBtnName.layer.cornerRadius = 8
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

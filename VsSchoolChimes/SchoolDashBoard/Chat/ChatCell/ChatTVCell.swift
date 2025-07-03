@@ -11,6 +11,7 @@ protocol ChatTableViewCellDelegate: AnyObject {
 }
 class ChatTVCell: UITableViewCell {
 
+    @IBOutlet weak var timeStampLbl: UILabel!
     @IBOutlet weak var bubbleView: UIView!
        @IBOutlet weak var messageLabel: UILabel!
        
@@ -28,7 +29,7 @@ class ChatTVCell: UITableViewCell {
            bubbleView.clipsToBounds = true
        }
        
-       func configure(with message: String, isSender: Bool) {
+       func configure(with message: String, timeStamp: String, isSender: Bool) {
            messageLabel.text = message
            
            if isSender {

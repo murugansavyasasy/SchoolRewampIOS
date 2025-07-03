@@ -55,6 +55,7 @@ class VideoPreviewVc: UIViewController {
         let popoverContentVC = shareAndDownloadVc(nibName: nil, bundle: nil)
         popoverContentVC.view.backgroundColor = .white
         popoverContentVC.dowloadUrl = url
+        popoverContentVC.typeVideo = true
         popoverContentVC.preferredContentSize = CGSize(width: 150, height: 100)
         popoverContentVC.modalPresentationStyle = .popover
         if let popoverController = popoverContentVC.popoverPresentationController {
