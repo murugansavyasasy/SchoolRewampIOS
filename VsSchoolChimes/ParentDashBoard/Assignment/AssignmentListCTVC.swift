@@ -110,6 +110,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
            //MARK: Button Font
            submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            NotSubmitedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+           viewSumitionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            ForwardBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            PageController.numberOfPages = FilesUrl?.count ?? 0
            PageController.currentPage = 0
@@ -195,13 +196,13 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image" {
                 if img.type?.uppercased() == "VIDEO"{
-                    cell.webView.isHidden = true
-                    cell.imageView.isHidden = false
-                    loadVimeoThumbnail(from: img.url ?? "", accessToken: YOUR_VIMEO_TOKEN) { image in
-                        if let thumbnailImage = image {
-                            cell.imageView.image = thumbnailImage
-                        }
-                    }
+
+                    if let url = URL(string: img.url ?? "") {
+                     let request = URLRequest(url: url)
+                        cell.webView.load(request)
+                     }
+                    cell.webView.isHidden = false
+                    cell.imageView.isHidden = true
                     let iconImage = UIImage(named: "video (1)")
                     cell.IndicaterImageView.image = iconImage
                 }else{
@@ -244,7 +245,14 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
         
                 let vc = getCurrentViewController()
         if file.type?.uppercased() == "VIDEO"{
-            playVimeoVideo(from: file.url ?? "")
+            
+            //playVimeoVideo(from: file.url ?? "")
+            let vcc = VideoPreviewVc(nibName: nil, bundle: nil)
+            vcc.url = file.url
+            vcc.titles = tittleLbl.text
+            vcc.modalPresentationStyle = .fullScreen
+            vc?.present(vcc, animated: true)
+            
         }else{
             let vcc = ImageShowVc(nibName: nil, bundle: nil)
             vcc.imageURL = FilesUrl?.filter({ img in

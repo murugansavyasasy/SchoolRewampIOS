@@ -9,7 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 
-class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, UITextViewDelegate  {
+class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, UITextViewDelegate, VideoPickerManagerDelegate  {
 
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -31,6 +31,11 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var bagrountview: UIView!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
+    @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var VideoDeleteBtn: UIImageView!
+    @IBOutlet weak var VideoPlayBtn: UIButton!
+    @IBOutlet weak var VideoThumbnailImg: UIImageView!
+    
     var placeholderLabel: UILabel!
     var attachments: [AttachmentItem] = []
       var url: URL?
@@ -42,13 +47,18 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var id:String?
     let initialHeight: CGFloat = 120
     let maxHeight: CGFloat = 300
-      override func viewDidLoad() {
+    var videoPicker: VideoPickerManager?
+    var selectedVideoURL: URL?
+    var vimeoUploader: VimeoUploader?
+    
+    override func viewDidLoad() {
           super.viewDidLoad()
           NameLbl.text = studentDetails?.name
           StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
           setupUI()
-          setupPickerCallbacks()
-          
+          videoPicker = VideoPickerManager(presenter: self, delegate: self)
+          imageSelection()
+
           titleTxt.delegate = self
           DescriptionTextview.delegate = self
           selectImgPdfview.imageCollectionview.delegate = self
@@ -61,10 +71,13 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
           StandardLbl.setFont(style: .body, size: FontSize.BodySize)
           backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
           DescriptionTextview.addDoneButton()
+        
+        let DeleteGesture = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
+        VideoDeleteBtn.addGestureRecognizer(DeleteGesture)
       }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Description"
+        placeholderLabel.text = CommonStringFile.Description
         placeholderLabel.font = DescriptionTextview.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -83,6 +96,8 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
       // MARK: - Setup
 
       func setupUI() {
+          VideoView.layer.cornerRadius = 10
+          VideoView.isHidden = true
 //          bagrountview.layer.cornerRadius = 10
 //          bagrountview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 //          bagrountview.clipsToBounds = true
@@ -93,10 +108,12 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
           submitBtn.layer.cornerRadius = 10
           submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 
-          addPhotosLabel.setFont(style: .title, size: FontSize.TitleSize)
           titleLbl.setFont(style: .title, size: FontSize.TitleSize)
           descriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
           descriptionCountLbl.setFont(style: .body, size: FontSize.BodySize)
+          
+          addPhotosLabel.setRequiredText(CommonStringFile.Add_attachment)
+          descriptionLbl.setRequiredText(CommonStringFile.Description)
       }
 
       // MARK: - IBActions
@@ -123,17 +140,55 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                   sendAttachment(with: uploadedFiles)
               }
               
-          } else {
+          }else if DescriptionTextview.text != "", id != nil, selectedVideoURL != nil {
+              
+              guard let videoURL = selectedVideoURL else {return}
+              let selectedType = user_inputs.selectedFileType
+              var uploadedFiles: [[String: String]] = []
+              var iframeValue = ""
+              var fileSizeValue = ""
+              startUpload(from: self, videoURL: videoURL , title: titleTxt.text, description: DescriptionTextview.text) {videoURLString,iframeHTML,fileSize,finalEmbedUrl in
+                  
+                  if let videoURLString = videoURLString {
+                      uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
+                      if let iframeHTML = iframeHTML {
+                          iframeValue = iframeHTML
+                      }
+                      if let size = fileSize {
+                          fileSizeValue = self.convertSize(size)//String(size)
+                      }
+                  }
+              }
+          }
+          else {
               DispatchQueue.main.async {
                   self.alert.showAlert(
                       title: AlertstringFile.Alert_title,
-                      message: "Please provide a description and at least one attachment.",
+                      message: "Please provide a description and minimum one attachment.",
                       on: self
                   )
               }
           }
 
       }
+    
+    func convertSize(_ sizeInBytes: Int) -> String {
+        let kb = 1024.0
+        let mb = kb * 1024
+        let gb = mb * 1024
+        let size = Double(sizeInBytes)
+        
+        switch size {
+        case 0..<kb:
+            return String(format: "%.0f B", size)
+        case kb..<mb:
+            return String(format: "%.2f KB", size / kb)
+        case mb..<gb:
+            return String(format: "%.2f MB", size / mb)
+        default:
+            return String(format: "%.2f GB", size / gb)
+        }
+    }
 
       @IBAction func backBtn(_ sender: UIButton) {
           dismiss(animated: true)
@@ -172,8 +227,87 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
-       
     }
+    
+    func imageSelection(){
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            selectedVideoURL = nil
+
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+        
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+        
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
+            }
+            attachments.append(contentsOf: imageItems)
+            if imageItems.count != 0{
+                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            }
+            selectedVideoURL = nil
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+        
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
+            // handle picked PDF
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            selectedVideoURL = nil
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+    }
+    
+    func selectVideo() {
+        videoPicker?.pickVideo()
+    }
+    
+    @IBAction func playVideoTapped(_ sender: UIButton) {
+        VideoDeleteBtn.isHidden = true
+        if let url = selectedVideoURL {
+            videoPicker?.playVideo(from: url, in: VideoView)
+        } else {
+            videoPicker?.pickVideo()
+        }
+    }
+    
+    @IBAction func deleteVideo(){
+        
+        videoPickerManagerDidCloseVideo()
+    }
+    
+    // MARK: - Delegate Methods
+       func videoPickerManager(didPickVideo url: URL) {
+          
+           attachments.removeAll()
+           selectImgPdfview.isHidden = true
+           collectionViewHeght.constant = 0
+           selectedVideoURL = url
+          
+           VideoView.isHidden = false
+       }
+
+       func videoPickerManager(didGenerateThumbnail image: UIImage) {
+           VideoThumbnailImg.isHidden = false
+           VideoThumbnailImg.image = image
+       }
+
+       func videoPickerManagerDidCloseVideo() {
+           selectedVideoURL = nil
+           VideoThumbnailImg.image = nil
+           VideoView.isHidden = true
+           selectImgPdfview.isHidden = false
+           collectionViewHeght.constant = 120
+           selectImgPdfview.imageCollectionview.reloadData()
+       }
+    
+    
     func textViewDidChange(_ textView: UITextView) {
         if textView == DescriptionTextview {
             adjustTextViewHeights()
@@ -270,8 +404,11 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             alert.addAction(UIAlertAction(title: "Gallery".translated(), style: .default) { [weak self] _ in
                 self?.selectImages()
             })
-            alert.addAction(UIAlertAction(title: "PDF".translated(), style: .default) { [weak self] _ in
+            alert.addAction(UIAlertAction(title: "Document".translated(), style: .default) { [weak self] _ in
                 self?.selectPDF()
+            })
+            alert.addAction(UIAlertAction(title: "Video".translated(), style: .default) { [weak self] _ in
+                self?.selectVideo()
             })
             alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
             present(alert, animated: true)
@@ -486,6 +623,41 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         }
     }
     
+    func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
+        print("📂 Selected video URL: \(videoURL)")
+        
+        CircularProgressLoader.shared.show()
+        
+        vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
+//        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
+        vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
+            print("📊 Upload progress: \(progress * 100)%")
+            CircularProgressLoader.shared.updateProgress(to: progress)
+        }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
+            CircularProgressLoader.shared.hide()
+            
+            if let videoURL = videoURL {
+                print("✅ Video uploaded! Watch it at: \(videoURL)")
+                if let iframeHTML = iframeHTML {
+                    print("💻 Embed HTML: \(iframeHTML)")
+                }
+                if let size = fileSize {
+                    print("📦 File size: \(size) bytes")
+                }
+                if let emb = finalEmbedUrl {
+                    print("📦 File : \(emb)")
+                }
+                try? FileManager.default.removeItem(at: URL(fileURLWithPath: videoURL))
+                
+                
+                completion(videoURL, iframeHTML, fileSize, finalEmbedUrl)
+            } else {
+                print("❌ Upload failed!")
+                completion(nil, nil, nil,nil)
+            }
+        })
+    }
+    
 //    //MARK: Sender Attachment
 //    private func SendingAttachmentFlow(baseURL: String) {
 //        let selectedType = user_inputs.selectedFileType
@@ -557,39 +729,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 //       }
     
 
-    func setupPickerCallbacks(){
-        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
-            selectImgPdfview.imageCollectionview.reloadData()
-        }
-        
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
-        
-            let imageItems = images.map {
-                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
-            }
-            attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            }
-            selectImgPdfview.imageCollectionview.reloadData()
-        }
-        
-        PhotoPickerManager.shared.onFilePicked = { [self] data in
-            // handle picked PDF
-            user_inputs.selectedFileType = CommonStringFile.pdf
-            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-
-            selectImgPdfview.imageCollectionview.reloadData()
-        }
-        
-    }
+    
     func sendAttachment(with uploadedFiles: [[String: String]]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -641,7 +781,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            descriptionCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            descriptionCountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

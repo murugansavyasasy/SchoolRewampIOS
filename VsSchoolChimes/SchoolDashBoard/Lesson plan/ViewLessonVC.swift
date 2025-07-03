@@ -9,8 +9,8 @@ import UIKit
 
 @available(iOS 14.0, *)
 class ViewLessonVC: UIViewController {
-
-
+    
+    
     @IBOutlet weak var BAckBtn: UIButton!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var NoDataImg: UIImageView!
@@ -67,35 +67,50 @@ class ViewLessonVC: UIViewController {
         )
     }
     
+    //MARK: Api Call Functions
+    
     func View_Lesson_Plan_Api(){
+        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
         
         let param: [String: Any] = [LessonPlanStringFile.section_subject_id : SubjectId ?? "",LessonPlanStringFile.lesson_plan_status: 0]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<LessonPlanDetailResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanDetailResponse,Error>) in
             
-            switch result {
-            case .success(let success):
+            DispatchQueue.main.async { [weak self] in
                 
-                DispatchQueue.main.async { [self] in
-                    if success.status == true{
-                        ViewLessonData = success.data
-                        LessonFilter(Status: LessonPlanStatus)
-                    }else {
-                        FilterCV.isHidden = true
-                        NoDataLbl.text = success.message
-                        NoDataImg.isHidden = false
-                        NoDataLbl.isHidden = false
-                    }
-                    TableView.reloadData()
+                guard let self = self else{return}
+                
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
                 }
                 
-            case .failure(let failure):
-                
-                DispatchQueue.main.async {[self] in
-                    SearchBar.isHidden = true
-                    NoDataImg.isHidden = false
-                    NoDataLbl.isHidden = false
-                    NoDataLbl.text = failure.localizedDescription
+                switch result {
+                case .success(let success):
+                    
+                    
+                    if success.status == true{
+                        self.ViewLessonData = success.data
+                        self.LessonFilter(Status: LessonPlanStatus)
+                        self.NoDataLbl.text = CommonStringFile.No_data_found
+                    }else {
+                        self.ViewLessonData = []
+                        self.FilterCV.isHidden = true
+                        self.NoDataLbl.text = success.message
+                        self.NoDataImg.isHidden = false
+                        self.NoDataLbl.isHidden = false
+                    }
+                    TableView.reloadData()
+                    
+                    
+                case .failure(let failure):
+                    
+                    self.SearchBar.isHidden = true
+                    self.NoDataImg.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = failure.localizedDescription
                     
                     print("Error: ",failure.localizedDescription)
                 }
@@ -105,13 +120,13 @@ class ViewLessonVC: UIViewController {
     
     func Delete_LessonPlan_Api(particularID: String){
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_delete, parameters: [LessonPlanStringFile.particular_id: particularID], type: ApitTypeSringFile.Put, token: staffDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_delete, parameters: [LessonPlanStringFile.particular_id: particularID], type: ApitTypeSringFile.Put, token: staffDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
             
-            switch result{
-                
-            case .success(let success):
-                
-                DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else{return}
+                switch result{
+                    
+                case .success(let success):
                     
                     let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
                     
@@ -124,9 +139,10 @@ class ViewLessonVC: UIViewController {
                     }else {
                         CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
                     }
+                    
+                case .failure(let error):
+                    CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
-            case .failure(let error):
-                CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
             }
         }
     }
@@ -187,7 +203,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         cell.ProgressImage.tintColor = colour
         
         let details = FilteredData?[indexPath.row].details ?? []
-
+        
         cell.configure(with: details)
         
         return cell
@@ -237,11 +253,11 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
+        
         selectedIndex = indexPath
         LessonPlanStatus = indexPath.item
         LessonFilter(Status: LessonPlanStatus)
-       
+        
         FilterCV.reloadData()
         TableView.reloadData()
     }
@@ -256,7 +272,6 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         NoDataImg.isHidden = !(FilteredData?.isEmpty ?? false)
         NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? false)
-        NoDataLbl.text = "No Data Found!"
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

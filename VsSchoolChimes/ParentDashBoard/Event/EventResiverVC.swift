@@ -262,7 +262,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
                     event?.time ?? ""
-                ) + " , " + "   📆   " + formattedDateString
+                ) + " , " + "   🗓️   " + formattedDateString
                 cell.titleLbl.text = event?.title
                 cell.subjectName.text = "📍" + (event?.venue ?? "")
                 cell.subjectName.isHidden = false
@@ -290,7 +290,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 cell.eventTimeLbl.text = "🕒 Event starts at: " + (
                     event?.time ?? ""
-                ) + " , " + "   📆   " + formattedDateString
+                ) + " , " + "   🗓️   " + formattedDateString
                 cell.dateLble.isHidden = true
 //                cell.dateLble.text = ""
                 cell.forwordBtn.isHidden = true
