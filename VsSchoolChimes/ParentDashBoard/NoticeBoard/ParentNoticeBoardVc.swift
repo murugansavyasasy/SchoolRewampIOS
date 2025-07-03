@@ -63,7 +63,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        view.applyGradient(colors: [Colornames.gradientgreen,Colornames.gradientBlue], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        //        view.applyGradient(colors: [Colornames.gradientgreen,Colornames.gradientBlue], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         
     }
@@ -117,31 +117,41 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     
     func Get_Notice() {
         
-        APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[self] (result: Result<NoticeResponse,Error>) in
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        
+        APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<NoticeResponse,Error>) in
             
-            switch result {
+            DispatchQueue.main.async { [weak self] in
                 
-            case .success(let SuccessMessage):
-                DispatchQueue.main.async { [self] in
-                    
-                    NoticeboardData = SuccessMessage.data
-                    FilteredData = NoticeboardData
-                    SearchData = NoticeboardData
-                    NoDataLbl.text = SuccessMessage.status == false ? SuccessMessage.message : CommonStringFile.No_data_found
-                    SearchFilterStack.isHidden = SearchData?.isEmpty ?? false
-                    NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
-                    NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-                    EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
-                    tableview.reloadData()
+                guard let self = self else{return}
+                
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
                 }
                 
-            case .failure(let error):
-                
-                DispatchQueue.main.async { [self] in
-                    SearchFilterStack.isHidden = true
-                    NodataImage.isHidden = false
-                    NoDataLbl.isHidden = false
-                    NoDataLbl.text = error.localizedDescription
+                switch result {
+                    
+                case .success(let successResponse):
+                    
+                    self.NoticeboardData = successResponse.data
+                    self.FilteredData = self.NoticeboardData
+                    self.SearchData = self.NoticeboardData
+                    self.NoDataLbl.text = successResponse.status == false ? successResponse.message : CommonStringFile.No_data_found
+                    let Hide = self.SearchData?.isEmpty ?? false
+                    self.SearchFilterStack.isHidden = Hide
+                    self.NodataImage.isHidden = !Hide
+                    self.NoDataLbl.isHidden = !Hide
+                    self.EmptyView.isHidden = !Hide
+                    self.tableview.reloadData()
+                    
+                case .failure(let error):
+                    
+                    self.SearchFilterStack.isHidden = true
+                    self.NodataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = error.localizedDescription
                     print("Error: \(error.localizedDescription)")
                 }
             }
@@ -240,14 +250,14 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     func playVideo(for item: Notice) {
-            
-            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-            vc.url = item.file_path?.first?.url
-            vc.titles = item.title
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-            
-        }
+        
+        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+        vc.url = item.file_path?.first?.url
+        vc.titles = item.title
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
 }
 
 @available(iOS 14.0, *)
@@ -298,9 +308,10 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         
         SearchData = FilteredData
         
-        NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
-        NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-        EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
+        let Hide = SearchData?.isEmpty ?? false
+        NodataImage.isHidden = !Hide
+        NoDataLbl.isHidden = !Hide
+        EmptyView.isHidden = !Hide
         
         FilterCV.reloadData()
         
@@ -346,10 +357,10 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
                 (notice.created_on?.lowercased().contains(searchText.lowercased()) ?? false)
             }
         }
-        
-        NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
-        NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-        EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
+        let Hide = self.SearchData?.isEmpty ?? false
+        NodataImage.isHidden = !Hide
+        NoDataLbl.isHidden = !Hide
+        EmptyView.isHidden = !Hide
         tableview.reloadData()
     }
     

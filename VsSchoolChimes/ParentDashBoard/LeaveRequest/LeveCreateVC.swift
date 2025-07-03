@@ -7,7 +7,8 @@
 
 import UIKit
 @available(iOS 14.0, *)
-class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
+class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
+    
     func date(date: String) {
         
         dateFormatter.dateFormat = dateFormat1
@@ -18,7 +19,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
                 // Check if To Date is set and valid
                 if let toText = ToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                     let labelFormatter = DateFormatter()
-                    labelFormatter.dateFormat = "d EEE, MMM yyyy" // Matches formatted label
+                    labelFormatter.dateFormat = DateFormatString.Date_Day_month_year
 
                     if let toDate = labelFormatter.date(from: toText) {
                         if selectedDate > toDate {
@@ -47,7 +48,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     @IBOutlet weak var ToDateView: UIView!
     @IBOutlet weak var FromDateView: UIView!
     @IBOutlet weak var dayCount: UILabel!
-    @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var ReasonLbl: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var ToLbl: UILabel!
@@ -55,7 +55,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var contentTxtView: UITextView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var costomView: ImageSelection!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var SubmitBtn: UIButton!
     
@@ -66,7 +65,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     let photoPickManager = PhotoPickerManager.shared
     var selectedImages: [UIImage] = []
     var url : URL?
-    var dateFormat1 = "dd MMM yyyy"
+    var dateFormat1 = DateFormatString.StandardFormat
     var isKeyboardVisible = false
     var childDetails = UserDefaultFileManager.get_child_Details()
     let alert = CustomAlert()
@@ -79,7 +78,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         contentTxtView.delegate = self
         contentTxtView.addDoneButton()
        
-        imageSelection()
         setupPlaceholder()
         
         let DateGesture = UITapGestureRecognizer(target: self, action: #selector(datepicker))
@@ -88,8 +86,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDate))
         ToDateView.addGestureRecognizer(ToDateGesture)
        
-        costomView.imageCollectionview.delegate = self
-        costomView.imageCollectionview.dataSource = self
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(_:)),
@@ -138,47 +134,24 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
         
-        ReasonLbl.setRequiredText("Reason")
+        SubmitBtn.layer.cornerRadius = 10
+        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         ToLbl.setFont(style:.title, size: FontSize.TitleSize)
-        //ToLbl.text = CommonStringFile.To.translated()
         headerTitle.setFont(style:.title, size: FontSize.TitleSize)
-        headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
         fromLbl.setFont(style:.title, size: FontSize.TitleSize)
-        fromLbl.text = CommonStringFile.From.translated()
         dayCount.setFont(style:.header, size: FontSize.BodySize)
         contentCount.setFont(style: .body, size: FontSize.BodySize)
-
+        
+        fromLbl.text = CommonStringFile.From.translated()
+        headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
+        ReasonLbl.setRequiredText(CommonStringFile.Reason)
     }
     
-    func imageSelection(){
-        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            // handle camera image
-            selectedImages.append(image)
-            costomView.imageCollectionview.reloadData()
-        }
-
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            selectedImages.append(contentsOf: images)
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
-            costomView.imageCollectionview.reloadData()
-        }
-
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
-            // handle picked PDF
-            selectedImages.removeAll()
-            url = data.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-            costomView.imageCollectionview.reloadData()
-        }
-    }
     
     @IBAction func SubmitAct(_ sender: Any) {
         
         if contentTxtView.text != ""{
-            
            ApplyLeave()
         }else{
             alert.showAlert(title: "", message: AlertstringFile.Enter_reason, on: self)
@@ -199,30 +172,29 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
                               
             onOk: {
                   
-            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
                 
-                switch result{
+                DispatchQueue.main.async { [weak self] in
                     
-                case .success(let success):
+                    guard let self = self else {return}
                     
-                    DispatchQueue.main.async {[self] in
+                    switch result{
                         
-                        let title = success.status==true ? AlertstringFile.Success : AlertstringFile.Failed
+                    case .success(let success):
                         
-                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self) {
+                        if success.status == true{
                             
-                            self.dismiss(animated: true)
-                        }
-                    }
-                    
-                case .failure(let error):
-                    
-                    DispatchQueue.main.async {[self] in
-                        
-                        CustomAlert.showAlertWithOkAction(title: "Error", message:error.localizedDescription, on: self) {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
+                                self.dismiss(animated: true)
+                            }
+                        }else {
                             
-                            self.dismiss(animated: true)
+                            alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                         }
+                        
+                    case .failure(let error):
+                        
+                        alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                     }
                 }
             }
@@ -233,9 +205,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         }
         )
     }
-    
-    
-    
     
     //MARK: BUTTON TITLE CURRENT TIME
     func setInitialDate() {
@@ -249,47 +218,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         ToDateLbl.setFormattedDate(from: currentDate)
         
     }
-    
-    
-    func setFormattedDate(_ date: String, label: UILabel) {
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-        
-        // Function to create an attributed string from a given date
-        func createAttributedText(from date: String) -> NSMutableAttributedString {
-            let components = date.split(separator: " ")
-            guard components.count > 1 else {
-                print("Error: Invalid date format")
-                return NSMutableAttributedString()
-            }
-            
-            let day = components[0]
-            let month = components[1]
-            
-            let attributedText = NSMutableAttributedString()
-            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
-                .font: weekdayFont,
-                .foregroundColor: UIColor.darkGray
-            ]))
-            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
-                .font: dayFont,
-                .foregroundColor: UIColor.black
-            ]))
-            
-            // Set paragraph style for centered alignment
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
-            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-            
-            return attributedText
-        }
-        
-        // Create attributed text and set to label
-        label.attributedText = createAttributedText(from: date)
-        label.numberOfLines = 0
-    }
-
-    
    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
@@ -315,7 +243,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
          vc.modalPresentationStyle = .overCurrentContext
          vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
          self.present(vc, animated: false)
-         
     }
     
     @IBAction func toDate(_ sender: Any) {
@@ -333,7 +260,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
                 let fullDateString = "\(day) \(rest)" // e.g., "18 Wed, Jun 2025"
 
                 let formatter = DateFormatter()
-                formatter.dateFormat = "d EEE, MMM yyyy"
+                formatter.dateFormat = DateFormatString.Date_Day_month_year
                 if let fromDate = formatter.date(from: fullDateString) {
                     vc.minimumDate = fromDate
                 }
@@ -347,7 +274,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
 
     func updateDayCountLabel(startDateStr: String, endDateStr: String, dayCount: UILabel) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d EEE, MMM yyyy"
+        dateFormatter.dateFormat =  DateFormatString.Date_Day_month_year
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         guard let startDate = dateFormatter.date(from: startDateStr),
@@ -364,139 +291,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         } else {
             dayCount.text = "Error calculating"
         }
-    }
-}
-
-@available(iOS 14.0, *)
-extension LeveCreateVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 1 + selectedImages.count
-        
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0{
-            
-            
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
-            cell.layer.cornerRadius = 20
-            if selectedImages.count == 0{
-                collectionViewHeght.constant = 100
-            }
-            return cell
-        }else{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-            cell.delegate = self
-            cell.deleteBtn.tag = indexPath.item - 1
-            if selectedImages.count > indexPath.item - 1 {
-                cell.imageViews.image = selectedImages[indexPath.item - 1]
-            } else {
-                cell.imageViews.image = nil
-            }
-             if selectedImages.count <= 3{
-                collectionViewHeght.constant = 100
-            }else{
-                collectionViewHeght.constant = 220
-            }
-            return cell
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = (costomView.imageCollectionview.frame.width - 30) / 4 // Subtract spacing from total width, then divide by 3
-        
-        return CGSize(width: width, height: 80)
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            
-            
-            
-            //            addItemView.isHidden = false
-            
-            let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
-            //
-            // Camera option
-            let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
-                openCamera()
-            }
-            alertController.addAction(cameraAction)
-            
-            // Gallery option
-            let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
-                //
-                selectImages()
-                //
-            }
-            alertController.addAction(galleryAction)
-            
-            //             PDF option
-            let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
-                
-                selectPDF()
-            }
-            alertController.addAction(pdfAction)
-            
-            // Cancel action
-            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            
-            // Present the alert
-            self.present(alertController, animated: true, completion: nil)
-            
-            //            animateIn()
-        }else{
-            if selectedImages.count > indexPath.item - 1 {
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                vc.selectedFileURL = url
-                // Safe unwrapping of imgView before assigning
-                vc.img = selectedImages[indexPath.item - 1]
-                //
-                present(vc, animated: true)
-            }
-        }
-    }
-    
-    func selectImages() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
-            
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-
-    }
-    func openCamera(){
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-    }
-    func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
-        
-    }
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        
-        controller.dismiss(animated: true, completion: nil)
-        
-    }
-    
-    func deleteImage(index: Int) {
-        selectedImages.remove(at: index)
-        costomView.imageCollectionview.reloadData()
     }
 }
 

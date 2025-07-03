@@ -9,7 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var Tableview: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var CancelBtn: UIButton!
@@ -41,7 +41,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         Tableview.showsHorizontalScrollIndicator = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         let nib = UINib(nibName: "LessonEditTV", bundle: nil)
         Tableview.register(nib, forCellReuseIdentifier: "LessonEditTV")
@@ -50,14 +50,14 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         Tableview.dataSource = self
         Get_Edit_Details()
     }
-
+    
     func addTopBorderAndShadow(to view: UIView) {
         // 1. Add Top Border
-//        let border = CALayer()
-//        border.backgroundColor = UIColor.lightGray.cgColor
-//        border.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 0.3) // 1pt height
-//        view.layer.addSublayer(border)
-
+        //        let border = CALayer()
+        //        border.backgroundColor = UIColor.lightGray.cgColor
+        //        border.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 0.3) // 1pt height
+        //        view.layer.addSublayer(border)
+        
         // 2. Add Top Shadow
         let shadowPath = UIBezierPath()
         shadowPath.move(to: CGPoint(x: 0, y: 0))
@@ -65,14 +65,14 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         shadowPath.addLine(to: CGPoint(x: view.bounds.width, y: -2))
         shadowPath.addLine(to: CGPoint(x: 0, y: -2))
         shadowPath.close()
-
+        
         view.layer.shadowPath = shadowPath.cgPath
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.2
         view.layer.shadowOffset = CGSize(width: 0, height: -2)
         view.layer.shadowRadius = 2
     }
-
+    
     
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -86,15 +86,15 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-
+        
         let keyboardHeight = keyboardFrame.height
-
+        
         Tableview.contentInset.bottom = keyboardHeight
-
+        
         var insets = Tableview.verticalScrollIndicatorInsets
         insets.bottom = keyboardHeight
         Tableview.verticalScrollIndicatorInsets = insets
-
+        
         // Optionally scroll to the active cell
         if let firstResponder = view.currentFirstResponder(),
            let cell = firstResponder.superview(of: UITableViewCell.self),
@@ -102,59 +102,78 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             Tableview.scrollToRow(at: indexPath, at: .middle, animated: true)
         }
     }
-
+    
     @objc func keyboardWillHide(_ notification: Notification) {
         Tableview.contentInset = .zero
         Tableview.verticalScrollIndicatorInsets = .zero
     }
-
+    
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     //MARK: Lesson Edit Api call
     
     func Get_Edit_Details(){
-
+        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        
         let param: [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.request_type: ReqestType ?? ""]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[self] (result: Result<LessonEditResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[ weak self] (result: Result<LessonEditResponse,Error>) in
             
-            switch result {
+            DispatchQueue.main.async {[weak self] in
                 
-            case .success(let success):
+                guard let self = self else {return}
                 
-                DispatchQueue.main.async { [self] in
-                    
-                    EditData = success.data ?? []
-                    Tableview.reloadData()
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
                 }
                 
-            case .failure(let error):
-                print(error.localizedDescription)
+                
+                switch result {
+                    
+                case .success(let success):
+                    
+                    self.EditData = success.data ?? []
+                    self.Tableview.reloadData()
+                    
+                case .failure(let error):
+                    
+                    print(error.localizedDescription)
+                }
             }
-            
         }
     }
     
     func LessonPlan_Update_Api(){
         
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        
         let converted = editedFields.map { (key, value) in
             return ["field_id": key, "value": value]
         }
         
-        print("converted",converted)
-        
         let param : [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.key_value_data:converted]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_update, parameters: param, type: ApitTypeSringFile.Put, token: staffDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_update, parameters: param, type: ApitTypeSringFile.Put, token: staffDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
             
-            switch result {
+            DispatchQueue.main.async { [weak self] in
                 
-            case .success(let Success):
+                guard let self = self else {return}
                 
-                DispatchQueue.main.async { [self] in
+                if #available(iOS 15.0, *){
+                    self.hideLottieProgressLoader()
+                }
+                
+                switch result {
+                    
+                case .success(let Success):
                     
                     if Success.status == true {
                         
@@ -163,15 +182,12 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                         })
                     }else {
                         
-                        alert.showAlert(title: AlertstringFile.Failed, message:Success.message ?? "", on: self)
+                        self.alert.showAlert(title: AlertstringFile.Failed, message:Success.message ?? "", on: self)
                     }
-                }
-                
-            case .failure(let error):
-                
-                DispatchQueue.main.async { [self] in
                     
-                    alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                case .failure(let error):
+                    
+                    self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
             }
         }
@@ -210,8 +226,8 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         if var edit = EditData?[indexPath.row] {
             
             if let updatedValue = editedFields[edit.field_id ?? ""] {
-                       edit.value = updatedValue
-                   }
+                edit.value = updatedValue
+            }
             cell.configure(with: edit)
         }
         
@@ -219,11 +235,11 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             self?.editedFields[fieldID] = newValue
             print("editedFields: ", self?.editedFields ?? [:]) // ✅ Move print here
         }
-
-          return cell
+        
+        return cell
     }
     
-
+    
     @IBAction func BackAct(_ sender: Any) {
         
         dismiss(animated: true)
@@ -242,7 +258,7 @@ extension UIView {
         }
         return nil
     }
-
+    
     func superview<T: UIView>(of type: T.Type) -> T? {
         return superview as? T ?? superview?.superview(of: T.self)
     }

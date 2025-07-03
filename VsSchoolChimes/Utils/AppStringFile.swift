@@ -487,6 +487,6 @@ class FilterString {
 class DateFormatString {
     
     static var Day_and_date = "EEE dd"
-    static var Date_Day_month_year = "d EEE, MMM yyyy"
+    static var Date_Day_month_year = "d EEE, MMM yyyy" 
     static var StandardFormat = "dd MMM yyyy"
 }

@@ -81,31 +81,42 @@ class LessonPlanVC: UIViewController {
     //MARK: Lesson plan Api call
     func lesson_plan_staff_report_Api(){
         
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        
         let param: [String: Any] = [LessonPlanStringFile.request_type: ReqestType]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<LessonPlanStaffReportResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanStaffReportResponse,Error>) in
             
-            switch result{
+            DispatchQueue.main.async { [weak self] in
                 
-            case .success(let success):
-                DispatchQueue.main.async { [self] in
-                    
-                    LessonPlanData = success.data
-                    SearchData = LessonPlanData
-                    NodataImage.isHidden = !(LessonPlanData?.isEmpty ?? false)
-                    NodataLbl.isHidden = !(LessonPlanData?.isEmpty ?? false)
-                    searchBar.isHidden = (LessonPlanData?.isEmpty ?? false)
-                    NodataLbl.text = success.message
-                    tableview.reloadData()
+                guard let self = self else {return}
+                
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
                 }
-            case .failure(let error):
-                DispatchQueue.main.async {[self] in
+                
+                switch result{
                     
-                    NodataImage.isHidden = false
-                    NodataLbl.isHidden = false
-                    NodataLbl.text = error.localizedDescription
+                case .success(let success):
+                   
+                    self.LessonPlanData = success.data
+                    self.SearchData = LessonPlanData
+                    self.NodataLbl.text = success.status ? CommonStringFile.No_data_found : success.message
+                    let Hidden = SearchData?.isEmpty ?? false
+                    self.NodataImage.isHidden = !Hidden
+                    self.NodataLbl.isHidden = !Hidden
+                    self.searchBar.isHidden = Hidden
+                    self.tableview.reloadData()
                     
-                    print("Error: ",error.localizedDescription)
+                case .failure(let error):
+                    
+                    self.NodataImage.isHidden = false
+                    self.NodataLbl.isHidden = false
+                    self.NodataLbl.text = error.localizedDescription
+                        
+                        print("Error: ",error.localizedDescription)
                 }
             }
         }
