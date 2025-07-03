@@ -580,6 +580,8 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 }else{
                     MenuRedirect.senderStudentreportNavigate(from: self)
                 }
+            case 38:
+                MenuRedirect.SenderLSRWVCNavigate(from: self)
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39 :
