@@ -197,13 +197,14 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             if iconName != "image" {
                 if img.type?.uppercased() == "VIDEO"{
 
-                    if let url = URL(string: img.url ?? "") {
-                     let request = URLRequest(url: url)
-                        cell.webView.load(request)
-                     }
-                    cell.webView.isHidden = false
-                    cell.imageView.isHidden = true
-                    let iconImage = UIImage(named: "video (1)")
+//                    if let url = URL(string: img.url ?? "") {
+//                     let request = URLRequest(url: url)
+//                        cell.webView.load(request)
+//                     }
+                    cell.webView.isHidden = true
+                    cell.imageView.isHidden = false
+                    let iconImage = UIImage(named: "")
+                    cell.imageView.image = UIImage(named: "video (1)")
                     cell.IndicaterImageView.image = iconImage
                 }else{
                     if let pdfURL = URL(string: img.url ?? ""){
@@ -245,8 +246,7 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
         
                 let vc = getCurrentViewController()
         if file.type?.uppercased() == "VIDEO"{
-            
-            //playVimeoVideo(from: file.url ?? "")
+            playVimeoVideo(from: file.url ?? "")
             let vcc = VideoPreviewVc(nibName: nil, bundle: nil)
             vcc.url = file.url
             vcc.titles = tittleLbl.text

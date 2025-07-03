@@ -191,7 +191,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
-          
+           if #available(iOS 15.0, *) {
+               self.hideLottieProgressLoader()
+           }
            attachments.removeAll()
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0

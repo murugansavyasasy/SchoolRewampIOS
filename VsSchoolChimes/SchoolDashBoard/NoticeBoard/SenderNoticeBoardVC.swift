@@ -235,6 +235,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
+        if #available(iOS 15.0, *) {
+            self.hideLottieProgressLoader()
+        }
         attachments.removeAll()
         Attachmentview.isHidden = true
         collectionViewHeght.constant = 0

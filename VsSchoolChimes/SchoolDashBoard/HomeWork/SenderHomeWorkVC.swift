@@ -278,6 +278,10 @@ class SenderHomeWorkVC: UIViewController {
                     self.noDataFound.isHidden = response.status ?? false
                     self.nodataFoundLbl.text = response.message
                     self.homeWorkTable.reloadData()
+                    DispatchQueue.main.async {
+                        self.homeWorkTable.layoutIfNeeded()
+                        self.tableviewHeight.constant = self.homeWorkTable.contentSize.height
+                    }
 
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
@@ -325,7 +329,6 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
             cell.titleLbl.text = data.title
             cell.subjectName.text = data.subject_name
             cell.forwardBtn.isHidden = false
-            cell.layoutIfNeeded()
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
@@ -350,8 +353,6 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
                 cell.ImageCollectionView.isHidden = true
                 cell.CvHeight.constant = 0
             }
-
-            cell.cellview.layoutIfNeeded()
             return cell
         }
     }

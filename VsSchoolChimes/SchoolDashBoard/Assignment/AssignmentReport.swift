@@ -36,7 +36,7 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
         searchview.delegate = self
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()
-        searchview.addDoneButton()
+        searchview.searchTextField.addDoneButton()
         getAssigment()
         applyShadowAndCornerRadius(to: acodemicView)
         acodemicView.layer.borderColor = UIColor.lightGray.cgColor
