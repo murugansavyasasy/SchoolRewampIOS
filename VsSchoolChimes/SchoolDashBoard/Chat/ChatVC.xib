@@ -16,6 +16,7 @@
                 <outlet property="MessgeTextview" destination="e0o-TB-C1M" id="Krt-dG-yfz"/>
                 <outlet property="ReplyTextFild" destination="7c0-Dw-awD" id="DTP-T0-fIK"/>
                 <outlet property="TextViewFullView" destination="r1Q-p2-iRb" id="Wwq-kE-OOj"/>
+                <outlet property="noRecordlbl" destination="UMP-aI-mIL" id="gPp-vG-3Re"/>
                 <outlet property="profileImage" destination="ddk-LJ-SsG" id="iRr-Mb-Z1H"/>
                 <outlet property="replayStackView" destination="Dbc-fZ-hDX" id="vQS-Wk-oUG"/>
                 <outlet property="subjectLbl" destination="KDx-RL-6jL" id="Wzg-uj-Nxx"/>
@@ -110,16 +111,26 @@
                                 </view>
                             </subviews>
                         </stackView>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMP-aI-mIL">
+                            <rect key="frame" x="10" y="289.66666666666663" width="373" height="20.333333333333314"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="UMP-aI-mIL" firstAttribute="centerX" secondItem="mQQ-9i-ZOl" secondAttribute="centerX" id="3XH-cI-ydt"/>
                         <constraint firstAttribute="trailing" secondItem="dVl-Hy-kV7" secondAttribute="trailing" constant="5" id="6LT-gj-vod"/>
                         <constraint firstAttribute="trailing" secondItem="DQm-4N-WjD" secondAttribute="trailing" id="KfT-LU-Svn"/>
                         <constraint firstAttribute="bottom" secondItem="dVl-Hy-kV7" secondAttribute="bottom" constant="15" id="MP3-Zy-p3L"/>
                         <constraint firstItem="dVl-Hy-kV7" firstAttribute="leading" secondItem="mQQ-9i-ZOl" secondAttribute="leading" constant="5" id="S8f-nX-rhG"/>
                         <constraint firstItem="DQm-4N-WjD" firstAttribute="leading" secondItem="mQQ-9i-ZOl" secondAttribute="leading" id="aUK-s2-yb7"/>
+                        <constraint firstAttribute="trailing" secondItem="UMP-aI-mIL" secondAttribute="trailing" constant="10" id="i7T-P6-xP1"/>
                         <constraint firstItem="DQm-4N-WjD" firstAttribute="top" secondItem="mQQ-9i-ZOl" secondAttribute="top" id="jxw-Sp-JsB"/>
                         <constraint firstItem="dVl-Hy-kV7" firstAttribute="top" secondItem="DQm-4N-WjD" secondAttribute="bottom" id="kWe-52-tXQ"/>
+                        <constraint firstItem="UMP-aI-mIL" firstAttribute="centerY" secondItem="mQQ-9i-ZOl" secondAttribute="centerY" id="l29-Hr-wuD"/>
+                        <constraint firstItem="UMP-aI-mIL" firstAttribute="leading" secondItem="mQQ-9i-ZOl" secondAttribute="leading" constant="10" id="sbA-VY-Rdo"/>
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6cZ-D8-423">

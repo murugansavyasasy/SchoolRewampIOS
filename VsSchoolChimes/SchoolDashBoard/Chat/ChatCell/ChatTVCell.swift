@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import SDWebImage
 protocol ChatTableViewCellDelegate: AnyObject {
     func didSlideToReply(for message: String)
 }
 class ChatTVCell: UITableViewCell {
 
+    @IBOutlet weak var imageview: UIImageView!
+    @IBOutlet weak var imageStack: UIStackView!
     @IBOutlet weak var timeStampLbl: UILabel!
     @IBOutlet weak var bubbleView: UIView!
        @IBOutlet weak var messageLabel: UILabel!
@@ -29,9 +32,19 @@ class ChatTVCell: UITableViewCell {
            bubbleView.clipsToBounds = true
        }
        
+    
+    func imageConficure(with urlString: String?) {
+        if let urlString = urlString {
+            imageview
+                .sd_setImage(
+                    with: URL(string: urlString),
+                    placeholderImage: UIImage(systemName: "photo")
+                )
+        }
+    }
        func configure(with message: String, timeStamp: String, isSender: Bool) {
            messageLabel.text = message
-           
+           timeStampLbl.text = timeStamp
            if isSender {
                bubbleView.backgroundColor = .gradient1
                bubbleView.layer.shadowOpacity = 2

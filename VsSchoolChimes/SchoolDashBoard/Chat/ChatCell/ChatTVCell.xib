@@ -48,11 +48,11 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-tJ-jre">
                                                 <rect key="frame" x="96" y="0.0" width="139" height="157"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cYa-rA-mP1">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house1" translatesAutoresizingMaskIntoConstraints="NO" id="cYa-rA-mP1">
                                                         <rect key="frame" x="10" y="10" width="119" height="137"/>
                                                     </imageView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="139" id="4QN-nV-Qk5"/>
                                                     <constraint firstItem="cYa-rA-mP1" firstAttribute="leading" secondItem="4pK-tJ-jre" secondAttribute="leading" constant="10" id="WPP-Ij-MOC"/>
@@ -88,6 +88,8 @@
                 <outlet property="bubbleLeadingConstraint" destination="WQC-I6-mwp" id="LPH-lf-lll"/>
                 <outlet property="bubbleTrailingConstraint" destination="ZrM-67-LIu" id="SLD-Hu-qH4"/>
                 <outlet property="bubbleView" destination="bql-QF-2KI" id="3uj-4i-dpg"/>
+                <outlet property="imageStack" destination="PSS-y4-89A" id="VAi-iO-y6n"/>
+                <outlet property="imageview" destination="cYa-rA-mP1" id="cPe-Fg-N1g"/>
                 <outlet property="messageLabel" destination="lZt-GJ-9BM" id="muQ-0x-caW"/>
                 <outlet property="timeStampLbl" destination="pug-5q-dxa" id="9fV-4c-6Li"/>
             </connections>
@@ -95,6 +97,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="house1" width="800" height="599"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

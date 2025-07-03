@@ -50,7 +50,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     var vimeoUploader: VimeoUploader?
-    
+   
     override func viewDidLoad() {
           super.viewDidLoad()
           NameLbl.text = studentDetails?.name
@@ -733,7 +733,6 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func sendAttachment(with uploadedFiles: [[String: String]]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-
             let parameters: [String: Any] = [
                 "id": self.id ?? "",
                 "description": self.DescriptionTextview.text ?? "",

@@ -1180,6 +1180,24 @@ struct ChatMessage: Codable {
     
 }
 
+
+struct MessageSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MessageSucResp]?
+}
+
+struct MessageSucResp: Codable {
+    let  id : String?
+    let  name : String?
+    let  section_id : String?
+    let  question : String?
+    let  created_on : String?
+    let  chat_count : Int?
+    let  file_path : [String]?
+}
+
+
 struct MediaFile: Codable {
     let url: String
     let type: String  // Example: "IMAGE", "PDF", etc.

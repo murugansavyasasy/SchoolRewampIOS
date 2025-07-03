@@ -196,8 +196,6 @@
 		84127AF92E03C8F00092159D /* HomePaucktVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127ABD2E03C8F00092159D /* HomePaucktVC.xib */; };
 		84127AFA2E03C8F00092159D /* ClaimCouponVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127A962E03C8F00092159D /* ClaimCouponVc.xib */; };
 		84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC02E03C8F00092159D /* ReedimHistoryCell.xib */; };
-		84127D632E1258D90092159D /* VideoPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127D612E1258D90092159D /* VideoPreviewVc.swift */; };
-		84127D642E1258D90092159D /* VideoPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127D622E1258D90092159D /* VideoPreviewVc.xib */; };
 		84127DBB2E13EB260092159D /* interactTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127DB92E13EB260092159D /* interactTvcell.swift */; };
 		84127DBC2E13EB260092159D /* interactTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127DBA2E13EB260092159D /* interactTvcell.xib */; };
 		84127DBE2E152DDB0092159D /* chatAttachmentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */; };
@@ -308,6 +306,8 @@
 		8480477A2E02DE920042BC5D /* SubmitedAssignmentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848047782E02DE920042BC5D /* SubmitedAssignmentVC.xib */; };
 		8480477D2E02DF6E0042BC5D /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
 		8480477E2E02DF6E0042BC5D /* SubmitedStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8480477C2E02DF6E0042BC5D /* SubmitedStudentTVC.xib */; };
+		8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848108782E164CFE004A0F87 /* VideoPreviewVc.swift */; };
+		8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848108792E164CFE004A0F87 /* VideoPreviewVc.xib */; };
 		848126D82D91820500BE6979 /* CountryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126D72D91820500BE6979 /* CountryListVC.xib */; };
 		848126D92D91820500BE6979 /* CountryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126D62D91820500BE6979 /* CountryListVC.swift */; };
 		848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126DB2D9182E100BE6979 /* CountryListCVC.xib */; };
@@ -892,8 +892,6 @@
 		84127AC32E03C8F00092159D /* ReedimHistoryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReedimHistoryVc.xib; sourceTree = "<group>"; };
 		84127AC52E03C8F00092159D /* CustomTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabVC.swift; sourceTree = "<group>"; };
 		84127AC62E03C8F00092159D /* CustomTabVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabVC.xib; sourceTree = "<group>"; };
-		84127D612E1258D90092159D /* VideoPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewVc.swift; sourceTree = "<group>"; };
-		84127D622E1258D90092159D /* VideoPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPreviewVc.xib; sourceTree = "<group>"; };
 		84127DB92E13EB260092159D /* interactTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = interactTvcell.swift; sourceTree = "<group>"; };
 		84127DBA2E13EB260092159D /* interactTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = interactTvcell.xib; sourceTree = "<group>"; };
 		84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatAttachmentPicker.swift; sourceTree = "<group>"; };
@@ -1010,6 +1008,8 @@
 		848047782E02DE920042BC5D /* SubmitedAssignmentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitedAssignmentVC.xib; sourceTree = "<group>"; };
 		8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitedStudentTVC.swift; sourceTree = "<group>"; };
 		8480477C2E02DF6E0042BC5D /* SubmitedStudentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitedStudentTVC.xib; sourceTree = "<group>"; };
+		848108782E164CFE004A0F87 /* VideoPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewVc.swift; sourceTree = "<group>"; };
+		848108792E164CFE004A0F87 /* VideoPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPreviewVc.xib; sourceTree = "<group>"; };
 		848126D62D91820500BE6979 /* CountryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListVC.swift; sourceTree = "<group>"; };
 		848126D72D91820500BE6979 /* CountryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListVC.xib; sourceTree = "<group>"; };
 		848126DA2D9182E100BE6979 /* CountryListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListCVC.swift; sourceTree = "<group>"; };
@@ -2104,15 +2104,6 @@
 			path = Pauckt;
 			sourceTree = "<group>";
 		};
-		84127D602E12581B0092159D /* VideoPreviewVC */ = {
-			isa = PBXGroup;
-			children = (
-				84127D612E1258D90092159D /* VideoPreviewVc.swift */,
-				84127D622E1258D90092159D /* VideoPreviewVc.xib */,
-			);
-			path = VideoPreviewVC;
-			sourceTree = "<group>";
-		};
 		84127DB42E13EA080092159D /* intractTvcell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2328,6 +2319,15 @@
 				847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */,
 			);
 			path = SheduleExam;
+			sourceTree = "<group>";
+		};
+		8481087A2E164CFE004A0F87 /* VideoPreviewVC */ = {
+			isa = PBXGroup;
+			children = (
+				848108782E164CFE004A0F87 /* VideoPreviewVc.swift */,
+				848108792E164CFE004A0F87 /* VideoPreviewVc.xib */,
+			);
+			path = VideoPreviewVC;
 			sourceTree = "<group>";
 		};
 		848B94662CFD724800FFC5C2 /* ImagePdf */ = {
@@ -3043,6 +3043,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				8481087A2E164CFE004A0F87 /* VideoPreviewVC */,
 				8435EA152DE9C68B00F02CB9 /* VideoPickAndPlay */,
 				8406396F2DDF541800930943 /* GalleryPickerPage */,
 				84F911882DB0C435001A6408 /* popoverVc */,
@@ -3821,6 +3822,7 @@
 				84F986332D3A6169009FF065 /* QuizTVcell.xib in Resources */,
 				FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
+				8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */,
 				848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */,
 				847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */,
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
@@ -4291,6 +4293,7 @@
 				84D785952DFD4F9400A7B9E9 /* PaymentHeaderView.swift in Sources */,
 				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
+				8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */,
 				FA2A3FBA2DB0CABB0000AF55 /* SenderAttachmentVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
