@@ -161,7 +161,7 @@
                                                             </connections>
                                                         </button>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="NFq-Ez-f50">
-                                                            <rect key="frame" x="317" y="-19.333333333333336" width="30" height="28.666666666666668"/>
+                                                            <rect key="frame" x="320" y="-7.3333333333333339" width="30" height="28.666666666666671"/>
                                                             <color key="tintColor" systemColor="systemRedColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="Xua-kP-OfR"/>
@@ -173,12 +173,12 @@
                                                     <constraints>
                                                         <constraint firstItem="hC3-dY-XCv" firstAttribute="top" secondItem="mWr-fX-bCG" secondAttribute="top" id="22T-qQ-JER"/>
                                                         <constraint firstItem="hC3-dY-XCv" firstAttribute="leading" secondItem="mWr-fX-bCG" secondAttribute="leading" id="5gf-cx-fdc"/>
+                                                        <constraint firstItem="NFq-Ez-f50" firstAttribute="top" secondItem="mWr-fX-bCG" secondAttribute="top" constant="-8" id="77j-Ms-O9T"/>
                                                         <constraint firstItem="KaO-nX-ahG" firstAttribute="centerX" secondItem="mWr-fX-bCG" secondAttribute="centerX" id="Do7-9U-wOr"/>
                                                         <constraint firstItem="KaO-nX-ahG" firstAttribute="centerY" secondItem="mWr-fX-bCG" secondAttribute="centerY" id="TUv-US-k5r"/>
                                                         <constraint firstAttribute="bottom" secondItem="hC3-dY-XCv" secondAttribute="bottom" id="UL9-MY-kr7"/>
-                                                        <constraint firstAttribute="trailing" secondItem="NFq-Ez-f50" secondAttribute="trailing" constant="-2" id="dvZ-Fc-hh5"/>
                                                         <constraint firstAttribute="height" constant="230" id="e9L-WF-vKj"/>
-                                                        <constraint firstItem="NFq-Ez-f50" firstAttribute="top" secondItem="mWr-fX-bCG" secondAttribute="top" constant="-20" id="f8b-pk-iS9"/>
+                                                        <constraint firstAttribute="trailing" secondItem="NFq-Ez-f50" secondAttribute="trailing" constant="-5" id="kKw-ge-TpP"/>
                                                         <constraint firstAttribute="trailing" secondItem="hC3-dY-XCv" secondAttribute="trailing" id="vS2-VE-E0v"/>
                                                     </constraints>
                                                 </view>

@@ -10,7 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 
 class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, UITextViewDelegate, VideoPickerManagerDelegate  {
-
+    
     func deleteImage(index: Int) {
         attachments.remove(at: index)
         selectImgPdfview.imageCollectionview.reloadData()
@@ -38,8 +38,8 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     var placeholderLabel: UILabel!
     var attachments: [AttachmentItem] = []
-      var url: URL?
-      let photoPickManager = PhotoPickerManager.shared
+    var url: URL?
+    let photoPickManager = PhotoPickerManager.shared
     var titleName:String?
     var uploadedURLs: [String] = []
     let alert = CustomAlert()
@@ -52,29 +52,29 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var vimeoUploader: VimeoUploader?
     
     override func viewDidLoad() {
-          super.viewDidLoad()
-          NameLbl.text = studentDetails?.name
-          StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-          setupUI()
-          videoPicker = VideoPickerManager(presenter: self, delegate: self)
-          imageSelection()
-
-          titleTxt.delegate = self
-          DescriptionTextview.delegate = self
-          selectImgPdfview.imageCollectionview.delegate = self
-          selectImgPdfview.imageCollectionview.dataSource = self
-          titleTxt.text = titleName
-          adjustTextViewHeights()
-          setupPlaceholder()
-          //FontStyle 
-          NameLbl.setFont(style: .body, size: FontSize.BodySize)
-          StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-          backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-          DescriptionTextview.addDoneButton()
+        super.viewDidLoad()
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        setupUI()
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+        imageSelection()
+        
+        titleTxt.delegate = self
+        DescriptionTextview.delegate = self
+        selectImgPdfview.imageCollectionview.delegate = self
+        selectImgPdfview.imageCollectionview.dataSource = self
+        titleTxt.text = titleName
+        adjustTextViewHeights()
+        setupPlaceholder()
+        //FontStyle
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        DescriptionTextview.addDoneButton()
         
         let DeleteGesture = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
         VideoDeleteBtn.addGestureRecognizer(DeleteGesture)
-      }
+    }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description
@@ -87,90 +87,93 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         DescriptionTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !DescriptionTextview.text.isEmpty // Hide if text exists
     }
-      override func viewDidLayoutSubviews() {
-          view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                             startPoint: CGPoint(x: 1, y: 0.5),
-                             endPoint: CGPoint(x: 0, y: 0.5))
-      }
-
-      // MARK: - Setup
-
-      func setupUI() {
-          VideoView.layer.cornerRadius = 10
-          VideoView.isHidden = true
-//          bagrountview.layer.cornerRadius = 10
-//          bagrountview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//          bagrountview.clipsToBounds = true
-          DescriptionTextview.layer.cornerRadius = 10
-          DescriptionTextview.layer.borderWidth = 1
-          DescriptionTextview.layer.borderColor = UIColor.gray.cgColor
-          
-          submitBtn.layer.cornerRadius = 10
-          submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
-          titleLbl.setFont(style: .title, size: FontSize.TitleSize)
-          descriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
-          descriptionCountLbl.setFont(style: .body, size: FontSize.BodySize)
-          
-          addPhotosLabel.setRequiredText(CommonStringFile.Add_attachment)
-          descriptionLbl.setRequiredText(CommonStringFile.Description)
-      }
-
-      // MARK: - IBActions
-
-      @IBAction func submitBtn(_ sender: UIButton) {
-          
-          if DescriptionTextview.text != "", id != nil, !attachments.isEmpty {
-              
-              uploadAWSMedia(file: attachments) { [self] in
-                  CircularProgressLoader.shared.hide()
-                  
-                  let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { urlString in
-                      guard let url = URL(string: urlString) else { return nil }
-                      
-                      let fileType = url.pathExtension.lowercased()
-                      let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                      
-                      return [
-                          CommonStringFile.url: urlString,
-                          CommonStringFile.type: type
-                      ]
-                  }
-                  
-                  sendAttachment(with: uploadedFiles)
-              }
-              
-          }else if DescriptionTextview.text != "", id != nil, selectedVideoURL != nil {
-              
-              guard let videoURL = selectedVideoURL else {return}
-              let selectedType = user_inputs.selectedFileType
-              var uploadedFiles: [[String: String]] = []
-              var iframeValue = ""
-              var fileSizeValue = ""
-              startUpload(from: self, videoURL: videoURL , title: titleTxt.text, description: DescriptionTextview.text) {videoURLString,iframeHTML,fileSize,finalEmbedUrl in
-                  
-                  if let videoURLString = videoURLString {
-                      uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
-                      if let iframeHTML = iframeHTML {
-                          iframeValue = iframeHTML
-                      }
-                      if let size = fileSize {
-                          fileSizeValue = self.convertSize(size)//String(size)
-                      }
-                  }
-              }
-          }
-          else {
-              DispatchQueue.main.async {
-                  self.alert.showAlert(
-                      title: AlertstringFile.Alert_title,
-                      message: "Please provide a description and minimum one attachment.",
-                      on: self
-                  )
-              }
-          }
-
-      }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                           startPoint: CGPoint(x: 1, y: 0.5),
+                           endPoint: CGPoint(x: 0, y: 0.5))
+    }
+    
+    // MARK: - Setup
+    
+    func setupUI() {
+        VideoView.layer.cornerRadius = 10
+        VideoView.isHidden = true
+        //          bagrountview.layer.cornerRadius = 10
+        //          bagrountview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        //          bagrountview.clipsToBounds = true
+        DescriptionTextview.layer.cornerRadius = 10
+        DescriptionTextview.layer.borderWidth = 1
+        DescriptionTextview.layer.borderColor = UIColor.gray.cgColor
+        
+        submitBtn.layer.cornerRadius = 10
+        submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        descriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
+        descriptionCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        addPhotosLabel.setRequiredText(CommonStringFile.Add_attachment)
+        descriptionLbl.setRequiredText(CommonStringFile.Description)
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func submitBtn(_ sender: UIButton) {
+        
+        if DescriptionTextview.text != "", id != nil, !attachments.isEmpty {
+            
+            uploadAWSMedia(file: attachments) { [self] in
+                CircularProgressLoader.shared.hide()
+                
+                let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { urlString in
+                    guard let url = URL(string: urlString) else { return nil }
+                    
+                    let fileType = url.pathExtension.lowercased()
+                    let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+                    
+                    return [
+                        CommonStringFile.url: urlString,
+                        CommonStringFile.type: type
+                    ]
+                }
+                
+                sendAttachment(with: uploadedFiles, iframe: "", file_size: "")
+            }
+            
+        }else if DescriptionTextview.text != "", id != nil, selectedVideoURL != nil {
+            
+            guard let videoURL = selectedVideoURL else {return}
+            let selectedType = user_inputs.selectedFileType
+            var uploadedFiles: [[String: String]] = []
+            var fileSizeValue = ""
+            var iframe = ""
+            startUpload(from: self, videoURL: videoURL , title: titleTxt.text, description: DescriptionTextview.text) {videoURLString,iframeHTML,fileSize,finalEmbedUrl in
+                
+                if let videoURLString = videoURLString {
+                    uploadedFiles = [[CommonStringFile.url: videoURLString,
+                                      CommonStringFile.type: "video"]]
+                    if let iframeHTML = iframeHTML {
+                        iframe = iframeHTML
+                        
+                    }
+                    if let size = fileSize {
+                        fileSizeValue = self.convertSize(size)//String(size)
+                    }
+                    self.sendAttachment(with: uploadedFiles, iframe: iframe, file_size: fileSizeValue)
+                }
+            }
+        }
+        else {
+            DispatchQueue.main.async {
+                self.alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: "Please provide a description and minimum one attachment.",
+                    on: self
+                )
+            }
+        }
+        
+    }
     
     func convertSize(_ sizeInBytes: Int) -> String {
         let kb = 1024.0
@@ -189,11 +192,11 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             return String(format: "%.2f GB", size / gb)
         }
     }
-
-      @IBAction func backBtn(_ sender: UIButton) {
-          dismiss(animated: true)
-      }
-
+    
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+    
     // MARK: File Attachments Actions
     func selectImages() {
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
@@ -235,14 +238,14 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             attachments.removeAll { $0.fileType == CommonStringFile.pdf }
             selectedVideoURL = nil
-
+            
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-        
+            
             let imageItems = images.map {
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
@@ -283,29 +286,29 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     
     // MARK: - Delegate Methods
-       func videoPickerManager(didPickVideo url: URL) {
-          
-           attachments.removeAll()
-           selectImgPdfview.isHidden = true
-           collectionViewHeght.constant = 0
-           selectedVideoURL = url
-          
-           VideoView.isHidden = false
-       }
-
-       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-           VideoThumbnailImg.isHidden = false
-           VideoThumbnailImg.image = image
-       }
-
-       func videoPickerManagerDidCloseVideo() {
-           selectedVideoURL = nil
-           VideoThumbnailImg.image = nil
-           VideoView.isHidden = true
-           selectImgPdfview.isHidden = false
-           collectionViewHeght.constant = 120
-           selectImgPdfview.imageCollectionview.reloadData()
-       }
+    func videoPickerManager(didPickVideo url: URL) {
+        
+        attachments.removeAll()
+        selectImgPdfview.isHidden = true
+        collectionViewHeght.constant = 0
+        selectedVideoURL = url
+        
+        VideoView.isHidden = false
+    }
+    
+    func videoPickerManager(didGenerateThumbnail image: UIImage) {
+        VideoThumbnailImg.isHidden = false
+        VideoThumbnailImg.image = image
+    }
+    
+    func videoPickerManagerDidCloseVideo() {
+        selectedVideoURL = nil
+        VideoThumbnailImg.image = nil
+        VideoView.isHidden = true
+        selectImgPdfview.isHidden = false
+        collectionViewHeght.constant = 120
+        selectImgPdfview.imageCollectionview.reloadData()
+    }
     
     
     func textViewDidChange(_ textView: UITextView) {
@@ -319,7 +322,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         let titleSize = CGSize(width: titleTxt.frame.width, height: .infinity)
         let estimatedTitleHeight = titleTxt.sizeThatFits(titleSize).height
         titleHeight.constant = max(estimatedTitleHeight, 40)
-
+        
         // Description height (set by user typing)
         let descSize = CGSize(width: DescriptionTextview.frame.width, height: .infinity)
         let estimatedDescHeight = DescriptionTextview.sizeThatFits(descSize).height
@@ -327,11 +330,11 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         
         view.layoutIfNeeded()
     }
-
-  }
+    
+}
 @available(iOS 14.0, *)
 extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -358,29 +361,29 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
-               cell.delegate = self
-               cell.deleteBtn.tag = adjustedIndex
-
-               if let image = item.image {
-                   cell.imageViews.image = image
-               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                       let iconName = getFileIconName(for: url)
-                       cell.imageViews.image = UIImage(named: iconName)
-                   } else {
-                       cell.imageViews.kf.setImage(with: url)
-                   }
-               } else {
-                   cell.imageViews.image = nil
-               }
+            cell.delegate = self
+            cell.deleteBtn.tag = adjustedIndex
+            
+            if let image = item.image {
+                cell.imageViews.image = image
+            } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                    let iconName = getFileIconName(for: url)
+                    cell.imageViews.image = UIImage(named: iconName)
+                } else {
+                    cell.imageViews.kf.setImage(with: url)
+                }
+            } else {
+                cell.imageViews.image = nil
+            }
             
             // Assuming you have an array of UIImage from selected files
             
-
+            
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
-
+            
             return cell
         }
     }
@@ -392,7 +395,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
         return CGSize(width: width, height: 100)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let alert = UIAlertController(title: "Select".translated(),
@@ -629,7 +632,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         CircularProgressLoader.shared.show()
         
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
-//        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
+        //        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
             CircularProgressLoader.shared.updateProgress(to: progress)
@@ -658,90 +661,19 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         })
     }
     
-//    //MARK: Sender Attachment
-//    private func SendingAttachmentFlow(baseURL: String) {
-//        let selectedType = user_inputs.selectedFileType
-//        var uploadedFiles: [[String: String]] = []
-//
-//        uploadAWSMedia(file: attachments) { [self] in
-//            CircularProgressLoader.shared.hide()
-//            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-//                if let url = URL(string: url) {
-//                    let type = url.pathExtension.lowercased()
-//                    user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-//                }
-//                return [
-//                    CommonStringFile.url: url,
-//                    CommonStringFile.type: user_inputs.selectedFileType
-//                ]
-//            }
-//            
-//        }
-//    }
     
-//    @IBAction func deleteVideo(){
-//        
-//        videoPickerManagerDidCloseVideo()
-//    }
-//    
-//    @IBAction func chooseVideoTapped(_ sender: UIButton) {
-//            videoPicker?.pickVideo()
-//        }
-//
-//    func pickVideoFromGallery(){
-//        
-//        videoPicker?.pickVideo()
-//    }
-//        @IBAction func playVideoTapped(_ sender: UIButton) {
-//            VideoDeleteBtn.isHidden = true
-//            if let url = selectedVideoURL {
-//                videoPicker?.playVideo(from: url, in: VideoView)
-//            } else {
-//                videoPicker?.pickVideo()
-//            }
-//        }
-//
-//    // MARK: - Delegate Methods
-//       func videoPickerManager(didPickVideo url: URL) {
-//           attachments.removeAll()
-//           uploadAttachmentView.isHidden = true
-//           collectionViewHeight.constant = 0
-//           selectedVideoURL = url
-//           VideoView.isHidden = false
-//           RecipientBtn.isHidden = false
-//       }
-//
-//       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-//           VideoThumbnailImg.isHidden = false
-//           VideoThumbnailImg.image = image
-//       }
-//
-//       func videoPickerManagerDidCloseVideo() {
-//           selectedVideoURL = nil
-//           VideoThumbnailImg.image = nil
-//           VideoView.isHidden = true
-////          / chooseRecipientsBtn.isHidden = true
-//           uploadAttachmentView.isHidden = false
-//           collectionViewHeight.constant = 120
-//           uploadAttachmentView.imageCollectionview.reloadData()
-//          
-//           
-//       }
-    
-
-    
-    func sendAttachment(with uploadedFiles: [[String: String]]) {
+    func sendAttachment(with uploadedFiles: [[String: String]],iframe:String,file_size:String) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-
+            
             let parameters: [String: Any] = [
                 "id": self.id ?? "",
                 "description": self.DescriptionTextview.text ?? "",
-                "iframe": "",
-                "file_size": "",
+                "iframe": iframe,
+                "file_size": file_size,
                 "file_path": uploadedFiles
             ]
-
+            
             APIService.shared.makeApi(
                 url: ServiceUrl.comm_api_assignment_submit_assignment,
                 parameters: parameters,
@@ -767,17 +699,15 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             }
         }
     }
-
+    
     func gotoDashboard(){
         self.dismiss(animated: false, completion: nil)
     }
-
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Current text in the UITextView
         let currentText = textView.text ?? ""
-        
-        // Compute the new text length
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
