@@ -352,11 +352,11 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     
     func playVideo(for item: EventList) {
         
-//        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-//        vc.url = item.file_path.first?.url
-//        vc.titles = item.title
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+        vc.url = item.file_path.first?.url
+        vc.titles = item.title
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         
     }
     

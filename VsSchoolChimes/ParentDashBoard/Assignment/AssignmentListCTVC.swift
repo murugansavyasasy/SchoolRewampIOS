@@ -246,13 +246,12 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
         
                 let vc = getCurrentViewController()
         if file.type?.uppercased() == "VIDEO"{
-            
-            //playVimeoVideo(from: file.url ?? "")
-//            let vcc = VideoPreviewVc(nibName: nil, bundle: nil)
-//            vcc.url = file.url
-//            vcc.titles = tittleLbl.text
-//            vcc.modalPresentationStyle = .fullScreen
-//            vc?.present(vcc, animated: true)
+            playVimeoVideo(from: file.url ?? "")
+            let vcc = VideoPreviewVc(nibName: nil, bundle: nil)
+            vcc.url = file.url
+            vcc.titles = tittleLbl.text
+            vcc.modalPresentationStyle = .fullScreen
+            vc?.present(vcc, animated: true)
             
         }else{
             let vcc = ImageShowVc(nibName: nil, bundle: nil)

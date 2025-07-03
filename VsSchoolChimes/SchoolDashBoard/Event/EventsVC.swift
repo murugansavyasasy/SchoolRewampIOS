@@ -191,6 +191,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
+           if #available(iOS 15.0, *) {
+               self.hideLottieProgressLoader()
+           }
            attachments.removeAll()
            costomView.isHidden = true
            collectionViewHeght.constant = 0

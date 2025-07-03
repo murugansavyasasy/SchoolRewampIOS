@@ -207,6 +207,9 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
+           if #available(iOS 15.0, *) {
+               self.hideLottieProgressLoader()
+           }
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0
            selectedVideoURL = url
