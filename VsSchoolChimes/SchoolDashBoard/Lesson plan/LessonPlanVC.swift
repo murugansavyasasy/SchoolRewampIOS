@@ -148,7 +148,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         cell.StandardLbl.text = (Lesson?.class_name ?? "") + " - " + (Lesson?.section_name ?? "")
         cell.StaffNameLbl.text = Lesson?.staff_name
         cell.CompletedItemsLbl.text = "Items completed : \(Lesson?.items_completed ?? "")"
-        cell.ArrowImage.isHidden = Lesson?.percentage_value == 0
+        cell.ArrowImage.isHidden = Lesson?.total_items == "0"
         let percentage = Double(Lesson?.percentage_value ?? 0)
         cell.setProgress(to: percentage)
         cell.isAnimate = false
@@ -162,7 +162,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         
         guard let lesson = SearchData?[indexPath.row] else { return }
         
-        if lesson.percentage_value != 0{
+        if lesson.total_items != "0"{
             let vc = ViewLessonVC(nibName: nil, bundle: nil)
             vc.Reqest_Type = ReqestType
             vc.SubjectId = lesson.section_subject_id

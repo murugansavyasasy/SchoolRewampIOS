@@ -157,7 +157,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         UnreadBtn.layer.cornerRadius = 12
         AllBtn.layer.cornerRadius = 12
         
-        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
         
         ReadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         UnreadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -168,7 +168,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         NodataLbl.setFont(style: .title, size: 17)
         
         NameLbl.text = studentDetails?.name
-        StandardLbl.text = (studentDetails?.standard_name ?? "") + " " + (studentDetails?.section_name ?? "")
+        StandardLbl.text = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -201,9 +201,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     @IBAction func AllAct(_ sender: Any) {
         
-        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-        ReadBtn.backgroundColor = .systemGray5
-        UnreadBtn.backgroundColor = .systemGray5
+        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
+        ReadBtn.backgroundColor = .white
+        UnreadBtn.backgroundColor = .white
         readStatus = 0
         
         if selectedIndex.row == 0{
@@ -225,9 +225,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     @IBAction func ReadAct(_ sender: Any) {
         
-        ReadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-        UnreadBtn.backgroundColor = .systemGray5
-        AllBtn.backgroundColor = .systemGray5
+        ReadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
+        UnreadBtn.backgroundColor = .white
+        AllBtn.backgroundColor = .white
         readStatus = 1
         
         if selectedIndex.row == 0{
@@ -248,9 +248,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     @IBAction func UnreadAct(_ sender: Any) {
         
-        UnreadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-        ReadBtn.backgroundColor = .systemGray5
-        AllBtn.backgroundColor = .systemGray5
+        UnreadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
+        ReadBtn.backgroundColor = .white
+        AllBtn.backgroundColor = .white
         readStatus = 2
          
         if selectedIndex.row == 0{
@@ -810,7 +810,7 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
-        
+        cell.cellView.backgroundColor = .white
         cell.FilterLbl.text = Filters[indexPath.item]
         
         cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
@@ -899,12 +899,12 @@ extension ParentCommunicationVc : UISearchBarDelegate {
 
             SearchMessages = totalMessages.filter { message in
                 let content = message.content.lowercased()
-                let description = message.content.lowercased()
+                let title = message.title.lowercased()
                 let dateString = dateFormatter.convertDate(message.date)?.lowercased() ?? ""
                 let type = message.type.lowercased()
 
-                return content.contains(lowercasedSearch) ||
-                       description.contains(lowercasedSearch) ||
+                return title.contains(lowercasedSearch) ||
+                       content.contains(lowercasedSearch) ||
                        dateString.contains(lowercasedSearch) ||
                        type.contains(lowercasedSearch)
             }

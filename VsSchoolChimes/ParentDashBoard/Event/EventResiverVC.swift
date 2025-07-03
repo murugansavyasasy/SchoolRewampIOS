@@ -25,7 +25,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBOutlet weak var StandardLbl: UILabel!
  
     var titleLbl = "Event"
-    var button1 = "Event".translated()
+    var button1 = "Event/Holidays".translated()
     var button2 = "Holiday".translated()
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
@@ -64,8 +64,18 @@ class EventResiverVC: UIViewController, SelectNotice{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        view
+            .applyGradient(
+                colors: [Colornames.gradientgreen,Colornames.gradientBlue],
+                startPoint: CGPoint(x: 1, y: 0.2),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+//        bgView
+//            .applyGradient(
+//                colors: [Colornames.gradientgreen,Colornames.gradientBlue],
+//                startPoint: CGPoint(x: 1, y: 0.5),
+//                endPoint: CGPoint(x: 0, y: 0.5)
+//            )
         
     }
     
@@ -248,6 +258,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 }
                 cell.newImg.isHidden = true
                 cell.datelbl.isHidden = true
+                cell.dateAndtimeLbl.isHidden = false
                 let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
                     event?.time ?? ""
@@ -255,6 +266,16 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 cell.titleLbl.text = event?.title
                 cell.subjectName.text = "📍" + (event?.venue ?? "")
                 cell.subjectName.isHidden = false
+                cell.forwardBtn.isHidden = true
+               
+                cell.configure(indexPath: indexPath)
+
+                    // Handle the tap event with closure
+                cell.onVideoTapped = { tappedIndexPath in
+                    if let item = self.FilteredData?[tappedIndexPath.row]{
+                        self.playVideo(for: item)
+                    }
+                }
                 return cell
             }else{
                 let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
@@ -326,6 +347,17 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             cell.StatusView.isHidden = true
             return cell
         }
+    }
+    
+    
+    func playVideo(for item: EventList) {
+        
+        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+        vc.url = item.file_path.first?.url
+        vc.titles = item.title
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

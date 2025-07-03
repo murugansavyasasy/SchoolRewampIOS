@@ -592,7 +592,7 @@ func getFileIconName(for fileURL: URL) -> String {
     let ext = fileURL.pathExtension.lowercased()
 
     switch ext {
-    case "jpg", "jpeg", "png", "gif", "heic", "heif":
+    case "jpg", "jpeg", "png", "gif", "heic", "heif", "webp":
         return "image"              // 🖼 Your image icon name
     case "pdf":
         return "pdf (1)"            // 📄 Your PDF icon name

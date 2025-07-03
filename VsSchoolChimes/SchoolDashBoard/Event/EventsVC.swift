@@ -259,6 +259,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         calander2Btn.layer.cornerRadius = 10
         fromLbl.setFont(style: .title, size: FontSize.TitleSize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        tittleCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        contentCount.setFont(style: .body, size: FontSize.BodySize)
         Totime.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
         placeLbl.setRequiredText(CommonStringFile.Venue.translated())

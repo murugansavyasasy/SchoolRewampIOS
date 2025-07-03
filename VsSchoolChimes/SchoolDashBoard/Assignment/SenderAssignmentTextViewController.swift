@@ -212,10 +212,10 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
            selectedVideoURL = url
            self.thumbnailImage = generateThumbnail(for: url)
 
-//           if let thumbnail = self.thumbnailImage {
-//               self.thumbnailImageView.image = thumbnail
-//               user_inputs.thumbNail = thumbnail
-//           }
+           if let thumbnail = self.thumbnailImage {
+               self.thumbnailImageView.image = thumbnail
+               user_inputs.thumbNail = thumbnail
+           }
            VideoView.isHidden = false
            chooseRecipientsBtn.isHidden = false
        }

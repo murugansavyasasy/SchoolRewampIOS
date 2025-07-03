@@ -102,7 +102,7 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
         }else{
             cell.statusLbl.text = CommonStringFile.Absent.translated()
             cell.StatusView.backgroundColor = .systemRed
-            cell.MonthView.backgroundColor =  UIColor(named: "Red")
+            cell.MonthView.backgroundColor =  UIColor.red1
             cell.DateView.backgroundColor =  .white
             cell.DateView.layer.borderWidth = 0.5
         }

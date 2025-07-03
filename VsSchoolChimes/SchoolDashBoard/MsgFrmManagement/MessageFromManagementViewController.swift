@@ -277,17 +277,12 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         case "TEXT":
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
             
-           
-            
             cell.sendBtnheight.constant = 0
             cell.sendBtnWidth.constant = 0
             cell.DateLabel.textAlignment = .right
             cell.sendBtn.isHidden = true
             
             cell.MessageTitle.text = Message?.title
-           // cell.descriptContent.text = Message?.content
-            
-            
             cell.ExpandDelegate = self
            
             cell.configure(with: Message?.content ?? "",
@@ -298,7 +293,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             
             cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
             
-                cell.configureShimmer()
+            cell.configureShimmer()
             
             return cell
             
@@ -425,7 +420,8 @@ extension MessageFromManagementViewController: UISearchBarDelegate {
             SearchData = messageData
         }else {
             SearchData = messageData?.filter{ message in
-                
+                let date = dateFormatter.convertDate(message.date ?? "")?.lowercased()
+                return date?.contains(searchText.lowercased()) ?? false ||
                 message.title?.lowercased().contains(searchText.lowercased()) ?? false ||
                 message.description?.lowercased().contains(searchText.lowercased()) ?? false ||
                 message.content?.lowercased().contains(searchText.lowercased()) ?? false

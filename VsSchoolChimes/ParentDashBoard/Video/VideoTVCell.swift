@@ -13,6 +13,7 @@ import AVKit
 
 class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
+    @IBOutlet weak var ForwardStack: UIStackView!
     @IBOutlet weak var dateAndtimeLbl: UILabel!
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var forwardBtn: UIButton!
@@ -33,10 +34,13 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
     var attachment:Attachment?
     var delegate:ReadUpades?
     var file_path: [FilePath]?
+//    var onVideoTapped: ((FilePath) -> Void)?
+    var onVideoTapped: ((IndexPath) -> Void)?
+    private var currentIndexPath: IndexPath?
     override func awakeFromNib() {
         super.awakeFromNib()
         datelbl.setFont(style: .body, size: FontSize.BodySize)
-        dateAndtimeLbl.setFont(style: .body, size: FontSize.BodySize)
+        dateAndtimeLbl.setFont(style: .title, size: 12)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         Unreadview.isHidden = true
@@ -47,11 +51,30 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         OuterView.layer.shadowOpacity = 0.3
         OuterView.layer.cornerRadius = 20
         
+        forwardBtn.isHidden = true
+        dateAndtimeLbl.isHidden = true
+        ForwardStack.isHidden = true
+        
+        let videoTap = (UITapGestureRecognizer(target: self, action: #selector(videoTapped)))
+        BaseView.addGestureRecognizer(videoTap)
     }
 
+    
+    func configure(indexPath: IndexPath) {
+           self.currentIndexPath = indexPath
+       }
 
+       @objc func videoTapped() {
+           if let indexPath = currentIndexPath {
+               onVideoTapped?(indexPath)
+           }
+       }
+   
     func confic(_ url: String) {
-        
+
+        webview.backgroundColor = .black
+        webview.isOpaque = false // Allows background to show through
+        webview.scrollView.backgroundColor = .black
         let dataTypes = Set([WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeCookies])
          WKWebsiteDataStore.default().removeData(ofTypes: dataTypes, modifiedSince: Date.distantPast) {
          print("WebView cache cleared")
@@ -62,6 +85,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
          self.webview.load(request)
          }
          }
+        contentView.layoutIfNeeded()
     }
 
     func getCurrentViewController() -> UIViewController? {

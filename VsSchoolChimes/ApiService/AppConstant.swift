@@ -188,7 +188,7 @@ struct user_inputs {
     static var selectedImgUrls: [FilePath] = []
     static var SelectedUrls: [AttachmentItem] = []
     static var fileUrl: URL?
-    static var thumbNail: Data? // ✅ changed UIImage? to Data?
+    static var thumbNail: UIImage? // ✅ changed UIImage? to Data?
     static var docUrl = [String]()
     static var start_time = ""
     static var end_time = ""
@@ -259,6 +259,8 @@ func AwsCurrentDateString(format: String = "YYYY-MM-DD") -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())
+    
+   
 }
 func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") -> String {
     guard let date = date else { return "" }

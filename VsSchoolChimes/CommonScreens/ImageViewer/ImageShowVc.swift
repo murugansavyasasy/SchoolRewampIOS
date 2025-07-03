@@ -9,6 +9,11 @@ import UIKit
 import SDWebImage
 import WebKit
 
+extension ImageShowVc: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none // Ensures popover on iPhone
+    }
+}
 class ImageShowVc: UIViewController{
     
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
@@ -45,42 +50,26 @@ class ImageShowVc: UIViewController{
     }
 
     @IBAction func saveToFolder(_ sender: UIButton) {
-        sender.isEnabled = false
-        guard let fileURL = dowloadUrl, let filename = getFileName(from: fileURL) else {
-            print("❌ Invalid file URL or file name")
-            sender.isEnabled = true
-            return
+        
+    
+        let popoverContentVC = shareAndDownloadVc(nibName: nil, bundle: nil)
+        popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.dowloadUrl = dowloadUrl
+        popoverContentVC.preferredContentSize = CGSize(width: 150, height: 100)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .up
+            popoverController.delegate = self
         }
         
-        let downloader = FileDownloader()
-        downloader.downloadFile(
-            from: fileURL,
-            folderName: "SchoolChimesDownloads",
-            fileName: filename
-        ) { result in
-            DispatchQueue.main.async { [self] in
-                sender.isEnabled = true
-                switch result {
-                case .success(let filePath):
-                    CustomAlert.showAlertWithOkAction(
-                            title:"",
-                            message: "\(filename) Downloaded successfully ✅",
-                            on: self)
-                    
-                case .failure(let error):
-                    CustomAlert.showAlertWithOkAction(
-                            title:"",
-                            message: "\(filename) Download Failed ❌",
-                            on: self)
-                }
-            }
-        }
+        // Present the popover
+        self.present(popoverContentVC, animated: true, completion: nil)
+        
+
     }
-    func getFileName(from urlString: String) -> String? {
-        guard let url = URL(string: urlString) else { return nil }
-        return url.lastPathComponent
-    }
-    
+  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         uiUpdate(type: type ?? 0)
