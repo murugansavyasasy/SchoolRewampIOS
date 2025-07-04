@@ -303,7 +303,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
         case Menu_id.noticeboardMenuId:
-            
             let params: [String: Any] = [
                 SendNoticeStringFile.intended_for : selectedTarget]
             
@@ -311,6 +310,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.api_notice_board_send_notice,
+                subjectId:""
+            )
+        case Menu_id.AttachmentMenuId:
+            
+            sendAttachmentFlow(
+                via: comm,
+                url: ServiceUrl.comm_attachment_send_attachment,
                 subjectId:""
             )
         default:
