@@ -178,7 +178,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
 
     func pickVideoFromGallery(){
-        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        } 
         videoPicker?.pickVideo()
     }
         @IBAction func playVideoTapped(_ sender: UIButton) {

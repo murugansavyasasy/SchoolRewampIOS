@@ -1380,6 +1380,7 @@
 		8405884C2DE18CE100A7384E /* FeeDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeeDetail; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
+		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
 		8491FFCF2D818A080060C22B /* ApiService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApiService; sourceTree = "<group>"; };
 		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
 		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
@@ -2872,6 +2873,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				84127AC72E03C8F00092159D /* Pauckt */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
 				84FC4DC92DBCAE6700BBEDD7 /* Communication */,
@@ -3511,6 +3513,7 @@
 				8405884C2DE18CE100A7384E /* FeeDetail */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
+				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				8491FFCF2D818A080060C22B /* ApiService */,
 				849DD1612D9668B00027910D /* Biometric */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,

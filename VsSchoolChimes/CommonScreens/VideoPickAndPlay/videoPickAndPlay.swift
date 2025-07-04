@@ -189,9 +189,6 @@ extension VideoPickerManager: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true)
 
-        if #available(iOS 15.0, *) {
-            presenter?.showLottieProgressLoader(animationName: "loader (2)")
-        }
         guard let videoURL = info[.mediaURL] as? URL else { return }
 
         compressVideo(inputURL: videoURL) { [weak self] compressedURL in
