@@ -21,7 +21,7 @@ class SectionViewController: UIViewController, sectionCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.AbsentStudents, secondLine: staffDetails?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         Searchbar.searchTextField.addDoneButton()
         Searchbar.delegate = self
         

@@ -183,7 +183,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         informationcontent.addDoneButton()
         setInitialButtonTitles()
         StyleAndTranslater()
-        
+       
         
         if emengencyCall.isOn{
             isEmergencyVoice = true
@@ -477,8 +477,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
         clickTextView.text = CommonStringFile.TextMessage.translated()
         clickSchedule.text = CommonStringFile.ScheduleCall.translated()
-        BackBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
-        
+        BackBtn.setTitle( MenuStringFile.selectedMenuName.translated(), for: .normal)
         //MARK: Label font style
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
         voiceSetTitleLbl.setRequiredText(CommonStringFile.Title)

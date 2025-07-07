@@ -86,7 +86,11 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
         searchbar.placeholder = CommonStringFile.Search.translated()
-        backBtn.setTitle(MenuStringFile.NoticeBoard.translated(), for: .normal)
+        backBtn
+            .setTitle(
+                MenuStringFile.selectedMenuName.translated(),
+                for: .normal
+            )
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
     }

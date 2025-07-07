@@ -27,7 +27,7 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
         BackBtn.imageView?.applyRTLFlip(Language == "ar")
         
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.Homework, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
 
         uiConficration()
         setupPageViewController()

@@ -256,6 +256,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+      
         bottomCv.delegate = self
         bottomCv.dataSource = self
         getacadmicYr{
@@ -475,6 +476,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             
             let menuItem = filteredMenu_details?[indexPath.row].id
             Menu_id.staffSelectedMenuId = menuItem ?? 0
+            MenuStringFile.selectedMenuName = filteredMenu_details?[indexPath.row].name ?? ""
             switch menuItem {
             case 1: //
                 if checkMutipleSchool(){

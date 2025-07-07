@@ -46,6 +46,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         super.viewDidLoad()
 
         BackBtn.applyBackButton()
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         DropDownStr = ["2012 - 2013", "2014 - 2015", "2016 - 2017", "2018 - 2019"]
 
         applyShadowAndCornerRadius(to: acodemicView)

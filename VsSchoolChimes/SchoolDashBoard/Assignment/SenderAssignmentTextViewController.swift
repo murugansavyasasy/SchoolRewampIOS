@@ -129,6 +129,8 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         contentTextView.delegate = self
         contentTextView.applyRightTxt()
         categoryLbl.applyRightTxt()
+        categoryLbl.setRequiredText("Category")
+        SubmissionDateLbl.setRequiredText("Submission Date")
         categoryDropDownLbl.applyRightTxt()
         DescriptionLbl.applyRightTxt()
         letterscountLbl.applyRightTxt()

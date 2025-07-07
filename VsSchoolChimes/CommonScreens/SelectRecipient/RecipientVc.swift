@@ -83,7 +83,10 @@ class RecipientVc: UIViewController{
                 for: .normal)
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
-        getacadmicYr()
+        getacadmicYr{
+            
+            self.homeWorkShowProps()
+        }
         
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
@@ -178,12 +181,14 @@ class RecipientVc: UIViewController{
     }
     func homeWorkShowProps() {
         guard accedmicYrEligible else { return }
-        
+        nodataFound.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
             let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId
             
             if isAssignmentOrHomework {
                 segmentName.isHidden = true
+                nodataFound.isHidden = true
+                noRecordLbl.isHidden = true
                 target_type = TargetTypes.section
                 circular_types = circular_type.section
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
@@ -194,11 +199,12 @@ class RecipientVc: UIViewController{
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
                 heightSegment.constant = 0
-                
+               
                 cv_itemsarry = [recipeint_tabBarName.Section_Student]
             } else {
                 speficBtnName.isEnabled = true
                 selectStandardDropDown.isHidden = true
+                
             }
         }
     }
@@ -995,37 +1001,39 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
    
     
-    func getacadmicYr(){
+    func getacadmicYr(onComplete:  @escaping() -> Void){
         
         if localData.accidamic_year_data?.status == true{
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async { [weak self] in
                 var hasCurrentYear = false
                 for i in 0..<(
                     localData.accidamic_year_data?.data?.count ?? 0
                 ){
                     if localData.accidamic_year_data?.data?[i].current_academic_year ?? false == true{
-                        acidmicYrLbl.text = localData.accidamic_year_data?.data?[i].year
-                        accadmicDefaultYrName = localData.accidamic_year_data?.data?[i].year
-                        selectedAcadimicYearId = localData.accidamic_year_data?.data?[i].id ?? 0
+                        self?.acidmicYrLbl.text = localData.accidamic_year_data?.data?[i].year
+                        self?.accadmicDefaultYrName = localData.accidamic_year_data?.data?[i].year
+                        self?.selectedAcadimicYearId = localData.accidamic_year_data?.data?[i].id ?? 0
                         hasCurrentYear = true
-                        accedmicYrEligible = true
-                        segmentName.isUserInteractionEnabled = hasCurrentYear
+                        self?.accedmicYrEligible = true
+                        self?.segmentName.isUserInteractionEnabled = hasCurrentYear
+                        onComplete()
                         break
+                    
                     }
                 }
                 
                 if !hasCurrentYear {
-                    segmentName.isUserInteractionEnabled = false
-                    nodata(false, message: "")
+                    self?.segmentName.isUserInteractionEnabled = false
+                    self?.nodata(false, message: "")
                     
-                    nodataFound.isHidden = false
-                    nodataFound.image = ImageName.customer_support
-                    acidamicYrDropView.isUserInteractionEnabled = false
-                    heightSegment.constant = 0
-                    chooseDefaultLbl.isHidden = true
-                    segmentName.isHidden = true
-                    acidamicYrDropView.isHidden = true
-                    selectStandardDropDown.isHidden = true
+                    self?.nodataFound.isHidden = false
+                    self?.nodataFound.image = ImageName.customer_support
+                    self?.acidamicYrDropView.isUserInteractionEnabled = false
+                    self?.heightSegment.constant = 0
+                    self?.chooseDefaultLbl.isHidden = true
+                    self?.segmentName.isHidden = true
+                    self?.acidamicYrDropView.isHidden = true
+                    self?.selectStandardDropDown.isHidden = true
                     let fullText = CommonStringFile.Your_academic_year_configuration
                     let attributedString = NSMutableAttributedString(string: fullText)
                     
@@ -1038,14 +1046,14 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
                     }
                     
-                    noRecordLbl.attributedText = attributedString
-                    noRecordLbl.isUserInteractionEnabled = true
+                    self?.noRecordLbl.attributedText = attributedString
+                    self?.noRecordLbl.isUserInteractionEnabled = true
                     
-                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
-                    noRecordLbl.addGestureRecognizer(tapGesture)
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.handleEmailTap(_:)))
+                    self?.noRecordLbl.addGestureRecognizer(tapGesture)
                     
                 }
-                homeWorkShowProps()
+               
             }
             
         }else{

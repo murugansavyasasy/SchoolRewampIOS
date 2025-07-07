@@ -308,6 +308,8 @@
 		8480477E2E02DF6E0042BC5D /* SubmitedStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8480477C2E02DF6E0042BC5D /* SubmitedStudentTVC.xib */; };
 		8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848108782E164CFE004A0F87 /* VideoPreviewVc.swift */; };
 		8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848108792E164CFE004A0F87 /* VideoPreviewVc.xib */; };
+		848108B22E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848108B02E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift */; };
+		848108B32E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848108B12E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib */; };
 		848126D82D91820500BE6979 /* CountryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126D72D91820500BE6979 /* CountryListVC.xib */; };
 		848126D92D91820500BE6979 /* CountryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126D62D91820500BE6979 /* CountryListVC.swift */; };
 		848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126DB2D9182E100BE6979 /* CountryListCVC.xib */; };
@@ -1010,6 +1012,8 @@
 		8480477C2E02DF6E0042BC5D /* SubmitedStudentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitedStudentTVC.xib; sourceTree = "<group>"; };
 		848108782E164CFE004A0F87 /* VideoPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewVc.swift; sourceTree = "<group>"; };
 		848108792E164CFE004A0F87 /* VideoPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPreviewVc.xib; sourceTree = "<group>"; };
+		848108B02E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = punchIntTvcellTableViewCell.swift; sourceTree = "<group>"; };
+		848108B12E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = punchIntTvcellTableViewCell.xib; sourceTree = "<group>"; };
 		848126D62D91820500BE6979 /* CountryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListVC.swift; sourceTree = "<group>"; };
 		848126D72D91820500BE6979 /* CountryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListVC.xib; sourceTree = "<group>"; };
 		848126DA2D9182E100BE6979 /* CountryListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListCVC.swift; sourceTree = "<group>"; };
@@ -1834,6 +1838,7 @@
 		18D718982D0D477900E9EDA3 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				848108AF2E1BEFBD004A0F87 /* FirstCell */,
 				18D718762D0D477900E9EDA3 /* Cell */,
 				18D718802D0D477900E9EDA3 /* LocationRequest */,
 				18D7188A2D0D477900E9EDA3 /* LocationResponce */,
@@ -2329,6 +2334,15 @@
 				848108792E164CFE004A0F87 /* VideoPreviewVc.xib */,
 			);
 			path = VideoPreviewVC;
+			sourceTree = "<group>";
+		};
+		848108AF2E1BEFBD004A0F87 /* FirstCell */ = {
+			isa = PBXGroup;
+			children = (
+				848108B02E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift */,
+				848108B12E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib */,
+			);
+			path = FirstCell;
 			sourceTree = "<group>";
 		};
 		848B94662CFD724800FFC5C2 /* ImagePdf */ = {
@@ -3696,6 +3710,7 @@
 				849E573B2C1FF6BD006119DA /* RobotoSlab-Thin.ttf in Resources */,
 				84A5BE4B2C19719900E32496 /* Assets.xcassets in Resources */,
 				849978432CEF1FE5007D45BA /* StudentHistryVC.xib in Resources */,
+				848108B32E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib in Resources */,
 				849978442CEF1FE5007D45BA /* StudentHistryTVC.xib in Resources */,
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
 				841ACC8F2DA5076800326D52 /* loader.json in Resources */,
@@ -4266,6 +4281,7 @@
 				84F0466F2D1D5ED600C686BD /* MarkAttendenceCV.swift in Sources */,
 				84F986322D3A6169009FF065 /* QuizTVcell.swift in Sources */,
 				187CF4DC2D11A176001422CE /* ClassTimeTableTableViewCell.swift in Sources */,
+				848108B22E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift in Sources */,
 				18D718AB2D0D477900E9EDA3 /* StaffListResp.swift in Sources */,
 				18D718AC2D0D477900E9EDA3 /* PunchHistryResp.swift in Sources */,
 				8435EA172DE9C6B200F02CB9 /* videoPickAndPlay.swift in Sources */,

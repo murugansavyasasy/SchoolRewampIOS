@@ -62,6 +62,9 @@ class ChatTVCell: UITableViewCell {
                bubbleTrailingConstraint.constant = 100
                bubbleLeadingConstraint.constant = 16
            }
+           
+           panGestureRecognizer.isEnabled = !isSender
+          
        }
        
        private func setupGesture() {

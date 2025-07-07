@@ -104,7 +104,9 @@ struct ServiceUrl{
     static let comm_api_msg_from_management_get_messages_staff_archive = "comm/api/msg-from-management/get-messages-staff-archive"
     static let interaction_staff_details_for_chat = "comm/api/interaction/staff-details-for-chat" 
     static let interaction_get_staff_answers = "comm/api/interaction/get-staff-answers" 
-    static let interaction_student_ask_question = "comm/api/interaction/student-ask-question"
+    static let interaction_student_ask_question = "comm/api/interaction/student-ask-question" 
+    
+    static let interaction_staff_get_questions = "comm/api/interaction/staff-get-questions"
     
 }
 
@@ -283,7 +285,8 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "EEEE",
         "EEE d MMM yyyy",
         "EEE d",
-        "dd-MM-yyyy hh:mm a"
+        "dd-MM-yyyy hh:mm a",
+        "d EEE, MMM yyyy"
     ]
     
     let outputFormatter = DateFormatter()

@@ -70,7 +70,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         searchBar.addDoneButton()
 
-        backBtn.setTitle(MenuStringFile.Homework.translated(), for: .normal)
+        backBtn.setTitle(MenuStringFile.selectedMenuName.translated(), for: .normal)
         searchBar.placeholder = CommonStringFile.Search.translated()
     }
 

@@ -63,7 +63,12 @@ class LocationViewController: UIViewController {
     }
     
     func StyleAndTranslate(){
-        BackBtn.configureAsBackButton(firstLine:MenuStringFile.GeometricAttendance, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        BackBtn
+            .configureAsBackButton(
+                firstLine:MenuStringFile.selectedMenuName,
+                secondLine: UserDefaultFileManager
+                    .get_staff_Details()?.school_name ?? ""
+            )
         AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
         AllowLocationDescribeLbl.setFont(style: .body, size: FontSize.BodySize)
         PunchDescriptionLbl.setFont(style: .header, size: FontSize.HeaderSize)

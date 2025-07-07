@@ -174,7 +174,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
-        backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
+        backBtn.setTitle(MenuStringFile.selectedMenuName.translated(), for: .normal)
     }
     
     //MARK: Cell registration

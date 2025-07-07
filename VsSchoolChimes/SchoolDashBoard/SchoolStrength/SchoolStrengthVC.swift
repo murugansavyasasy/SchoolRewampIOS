@@ -32,7 +32,11 @@ class SchoolStrengthVC: UIViewController {
 
         UIupdate()
         BackBtn.applyBackButton()
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.SchoolStrength, secondLine: staffDetails?.school_name ?? "")
+        BackBtn
+            .configureAsBackButton(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? ""
+            )
 
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
         let nib1 = UINib(nibName: CellConfingName.SectionStregnthTVC, bundle: nil)

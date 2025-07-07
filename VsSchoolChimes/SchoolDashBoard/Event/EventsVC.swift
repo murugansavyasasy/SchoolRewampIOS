@@ -271,6 +271,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         placeLbl.setRequiredText(CommonStringFile.Venue.translated())
         EventTtleLbl.setRequiredText(CommonStringFile.Title.translated())
         eventDeatail.setRequiredText(CommonStringFile.Description.translated())
+        fromLbl.setRequiredText(CommonStringFile.Starts_on.translated())
         addPhotoLbl.text = CommonStringFile.UploadImagepdfoptional.translated()
         placeTxt.placeholder = CommonStringFile.egChennai.translated()
         
