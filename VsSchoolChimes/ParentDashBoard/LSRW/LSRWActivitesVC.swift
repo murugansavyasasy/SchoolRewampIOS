@@ -393,10 +393,12 @@ extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource,
             if let file = lsrw?.filePath[indexPath.row], let fileURL = URL(string: file.url) {
                 let iconName = getFileIconName(for: fileURL)
                 if iconName != "image" {
+                    cell.hide = false
                     cell.webView.load(URLRequest(url: fileURL))
                     cell.webView.isHidden = false
                     cell.imageView.isHidden = true
                 } else {
+                    cell.hide = false
                     cell.webView.isHidden = true
                     cell.imageView.isHidden = false
                     cell.imageView.kf.setImage(with: fileURL, placeholder: ImageName.placeholder)

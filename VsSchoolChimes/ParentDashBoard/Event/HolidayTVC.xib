@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="HolidayTVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8l-zr-MlM">
+                        <rect key="frame" x="10" y="14.666666666666664" width="15" height="15"/>
+                        <color key="backgroundColor" name="auth_screenClr"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="OHl-m0-20S"/>
+                            <constraint firstAttribute="height" constant="15" id="xUy-ba-Ahc"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BvB-XL-ZfN">
+                        <rect key="frame" x="35" y="10" width="275" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="BvB-XL-ZfN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ETv-fr-LaW"/>
+                    <constraint firstAttribute="bottom" secondItem="BvB-XL-ZfN" secondAttribute="bottom" constant="10" id="O55-SD-J9a"/>
+                    <constraint firstItem="BvB-XL-ZfN" firstAttribute="leading" secondItem="P8l-zr-MlM" secondAttribute="trailing" constant="10" id="So6-tl-1Hb"/>
+                    <constraint firstAttribute="trailing" secondItem="BvB-XL-ZfN" secondAttribute="trailing" constant="10" id="U7K-CB-bmr"/>
+                    <constraint firstItem="P8l-zr-MlM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hya-TA-hBw"/>
+                    <constraint firstItem="P8l-zr-MlM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="rAq-Qj-7dx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="colorBtn" destination="P8l-zr-MlM" id="k2O-cz-fdc"/>
+                <outlet property="nameLbl" destination="BvB-XL-ZfN" id="7hd-QA-OPz"/>
+            </connections>
+            <point key="canvasLocation" x="12" y="20"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="auth_screenClr">
+            <color red="0.11800000071525574" green="0.74099999666213989" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>

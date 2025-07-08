@@ -114,6 +114,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             let fileURL = URL(fileURLWithPath: file.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image"{
+                cell.hide = false
                 if let pdfURL = URL(string: file.url ?? "") {
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
@@ -124,6 +125,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
                       cell.imageView.isHidden = false
                   }
             }else{
+                cell.hide = false
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: file.url ?? ""), placeholderImage: ImageName.placeholder)

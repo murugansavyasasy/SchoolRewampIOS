@@ -335,10 +335,10 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
 }
 
 extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
-    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        print("SearchAttachments?.count ?? 0",SearchAttachments?.count ?? 0)
         return SearchAttachments?.count ?? 0
     }
     
@@ -422,27 +422,39 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
     }
     
     func setupTableFooter() {
-        if shouldShowFooter {
-            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                footer.frame = CGRect(x: 0, y: 0, width: attachmentTable.frame.width, height: 60)
-                let buttonTitle = "See More"
-                let attributedString = NSMutableAttributedString(string: buttonTitle)
-                
-                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
-                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
-                
-                // Apply underline style
-                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
-                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
-                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-                footer.SeeMoreBtn.isUserInteractionEnabled = true
-                attachmentTable.tableFooterView = footer
-            }
-        } else {
+        guard shouldShowFooter else {
             attachmentTable.tableFooterView = nil
+            return
         }
+
+        guard let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView else {
+            return
+        }
+        let footerHeight: CGFloat = 60
+        footer.frame = CGRect(x: 0, y: 0, width: attachmentTable.frame.width, height: footerHeight)
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: attachmentTable.frame.width, height: footerHeight))
+        containerView.addSubview(footer)
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            footer.topAnchor.constraint(equalTo: containerView.topAnchor),
+            footer.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            footer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            footer.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+
+        // 🎯 Set attributed title
+        let buttonTitle = "See More"
+        let attributedString = NSMutableAttributedString(string: buttonTitle)
+        let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
+        attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+        footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
+        footer.SeeMoreBtn.addTarget(self, action: #selector(seeMoreAction), for: .touchUpInside)
+        attachmentTable.tableFooterView = containerView
+        attachmentTable.reloadData()
     }
+
+
     
     @objc func seeMoreAction() {
         if let footer = attachmentTable.tableFooterView {
@@ -464,12 +476,12 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
     }
     
     func playVideo(for item: Attachment) {
-            
-//            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-//            vc.url = item.file_path?.first?.url
-//            vc.titles = item.title
-//            vc.modalPresentationStyle = .fullScreen
-//            present(vc, animated: true)
+    
+            let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+            vc.url = item.file_path?.first?.url
+            vc.titles = item.title
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
             
         }
 }

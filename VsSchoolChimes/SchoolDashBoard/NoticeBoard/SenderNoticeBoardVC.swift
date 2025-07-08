@@ -80,8 +80,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBOutlet weak var NextBtn: UIButton!
     @IBOutlet weak var PopupView: UIView!
     @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var VideoThumbnailImg: UIImageView!
-    @IBOutlet weak var VideoDeleteBtn: UIImageView!
+//    @IBOutlet weak var VideoThumbnailImg: UIImageView!
     
     let photoPickManager = PhotoPickerManager.shared
     var dateSelection = false
@@ -99,7 +98,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         StyleAndTranslater()
         FromDateView.layer.cornerRadius = 8
         ToDateView.layer.cornerRadius = 8
@@ -146,8 +144,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         VideoView.isHidden = true
         
-        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
-        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
         
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         Attachmentview.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
@@ -215,48 +211,34 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         }
     }
     
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
-    }
-    
     func pickVideoFromGallery(){
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
         videoPicker?.pickVideo()
     }
-    
-    @IBAction func playVideoTapped(_ sender: UIButton) {
-        if let url = selectedVideoURL {
-            videoPicker?.playVideo(from: url, in: VideoView)
-        } else {
-            videoPicker?.pickVideo()
-        }
-    }
+
     
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
         if #available(iOS 15.0, *) {
             self.hideLottieProgressLoader()
         }
+        videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         Attachmentview.isHidden = true
         collectionViewHeght.constant = 0
         selectedVideoURL = url
         VideoView.isHidden = false
     }
-    
-    func videoPickerManager(didGenerateThumbnail image: UIImage) {
-        VideoThumbnailImg.isHidden = false
-        VideoThumbnailImg.image = image
-    }
+
     
     func videoPickerManagerDidCloseVideo() {
+        if #available(iOS 15.0, *) {
+            self.hideLottieProgressLoader()
+        }
         selectedVideoURL = nil
-        VideoThumbnailImg.image = nil
         VideoView.isHidden = true
-        //          / chooseRecipientsBtn.isHidden = true
         Attachmentview.isHidden = false
         collectionViewHeght.constant = 120
         Attachmentview.imageCollectionview.reloadData()

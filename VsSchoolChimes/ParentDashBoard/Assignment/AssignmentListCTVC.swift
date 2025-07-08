@@ -12,6 +12,7 @@ protocol SumitionDelegate{
 }
 class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
     
+    @IBOutlet weak var attachmentCVHeight: NSLayoutConstraint!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var viewSumitionBtn: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
@@ -42,6 +43,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
     var FilesUrl : [FilePath]?
     var videoUrl :String?
     var player: AVPlayer?
+    var iframe:String?
     var staff = false{
         didSet{
             if staff {
@@ -194,20 +196,24 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
         if let img = FilesUrl?[indexPath.row] {
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
+            attachmentCVHeight.constant = 100
             if iconName != "image" {
                 if img.type?.uppercased() == "VIDEO"{
-
-//                    if let url = URL(string: img.url ?? "") {
-//                     let request = URLRequest(url: url)
-//                        cell.webView.load(request)
-//                     }
-                    cell.webView.isHidden = true
-                    cell.imageView.isHidden = false
+                    cell.hide = true
+                    attachmentCVHeight.constant = 150
+                    if let url = URL(string: img.url ?? "") {
+                     let request = URLRequest(url: url)
+                        cell.webView.load(request)
+                     }
+                    cell.webView.isHidden = false
+                    cell.imageView.isHidden = true
+                    
                     let iconImage = UIImage(named: "")
-                    cell.imageView.image = UIImage(named: "video (1)")
+//                    cell.imageView.image = UIImage(named: "video (1)")
                     cell.IndicaterImageView.image = iconImage
                 }else{
                     if let pdfURL = URL(string: img.url ?? ""){
+                        cell.hide = false
                         let request = URLRequest(url: pdfURL)
                         cell.webView.load(request)
                         cell.webView.isHidden = false
@@ -223,6 +229,7 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
                     cell.IndicaterImageView.image = iconImage
                 }
             } else {
+                cell.hide = false
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
@@ -236,6 +243,11 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if let img = FilesUrl?[indexPath.row] {
+            if img.type?.uppercased() == "VIDEO" {
+                return CGSize(width: collectionView.frame.width, height: 150)
+            }
+        }
         return CGSize(width: 100, height: 100)
     }
     
@@ -246,7 +258,7 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
         
                 let vc = getCurrentViewController()
         if file.type?.uppercased() == "VIDEO"{
-            playVimeoVideo(from: file.url ?? "")
+//            playVimeoVideo(from: file.url ?? "")
             let vcc = VideoPreviewVc(nibName: nil, bundle: nil)
             vcc.url = file.url
             vcc.titles = tittleLbl.text
@@ -258,10 +270,6 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             vcc.imageURL = FilesUrl?.filter({ img in
                 img.type?.uppercased() == CommonStringFile.IMAGE
             }) ?? []
-//            var homeworkDocs = FilesUrl ?? []
-//            let filePath = homeworkDocs[indexPath.row]
-//            homeworkDocs.remove(at: indexPath.row)
-//            homeworkDocs.insert(filePath, at: 0)
             vcc.FileURL =  FilesUrl ?? []
             vcc.pdfUrl = FilesUrl?[indexPath.row].url
             vcc.scrollIndex = indexPath

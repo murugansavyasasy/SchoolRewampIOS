@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -20,8 +19,6 @@
                 <outlet property="TextViewheight" destination="fEj-3d-AFC" id="olF-Zy-J3h"/>
                 <outlet property="TitleTxtfield" destination="9Kb-gi-bvH" id="Cnu-dv-QuD"/>
                 <outlet property="ToStdOrSecBtnBottom" destination="JI5-8k-I8O" id="as9-aS-qyR"/>
-                <outlet property="VideoDeleteBtn" destination="qKT-Nx-PKh" id="hCq-ce-wgD"/>
-                <outlet property="VideoThumbnailImg" destination="HLs-Hf-Sar" id="we4-zt-lFE"/>
                 <outlet property="VideoView" destination="sOd-kx-zWT" id="myI-YZ-why"/>
                 <outlet property="collectionViewHeight" destination="agZ-JN-fpJ" id="ibB-tE-H0k"/>
                 <outlet property="outerView" destination="3QS-57-hEQ" id="KQo-Ko-A1J"/>
@@ -148,55 +145,9 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOd-kx-zWT">
                                                     <rect key="frame" x="0.0" y="44" width="333" height="230"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HLs-Hf-Sar">
-                                                            <rect key="frame" x="0.0" y="0.0" width="333" height="230"/>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WAW-y0-SOS">
-                                                            <rect key="frame" x="141.66666666666666" y="90" width="50" height="50"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="50" id="HJG-J6-SkP"/>
-                                                                <constraint firstAttribute="width" constant="50" id="xTN-g6-nhs"/>
-                                                            </constraints>
-                                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal">
-                                                                <imageReference key="image" image="play-button" symbolScale="large"/>
-                                                            </state>
-                                                            <state key="selected" image="play-button"/>
-                                                            <connections>
-                                                                <action selector="playVideoTapped:" destination="-1" eventType="touchUpInside" id="GNX-7x-WYr"/>
-                                                            </connections>
-                                                        </button>
-                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click To Choose Video From File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dW9-aR-xhI">
-                                                            <rect key="frame" x="44.333333333333329" y="159" width="244.66666666666669" height="20.333333333333343"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qKT-Nx-PKh">
-                                                            <rect key="frame" x="305" y="-19.333333333333336" width="30" height="28.666666666666668"/>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="u6R-Fj-TvT"/>
-                                                                <constraint firstAttribute="height" constant="30" id="yVn-nH-bv4"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="230" id="9Xk-9a-dAL"/>
-                                                        <constraint firstItem="WAW-y0-SOS" firstAttribute="centerX" secondItem="sOd-kx-zWT" secondAttribute="centerX" id="LIu-DM-btT"/>
-                                                        <constraint firstItem="HLs-Hf-Sar" firstAttribute="leading" secondItem="sOd-kx-zWT" secondAttribute="leading" id="UAj-nD-0Ac"/>
-                                                        <constraint firstAttribute="bottom" secondItem="HLs-Hf-Sar" secondAttribute="bottom" id="X4e-Ic-jdY"/>
-                                                        <constraint firstItem="WAW-y0-SOS" firstAttribute="centerY" secondItem="sOd-kx-zWT" secondAttribute="centerY" id="bdb-rY-FeL"/>
-                                                        <constraint firstItem="qKT-Nx-PKh" firstAttribute="top" secondItem="sOd-kx-zWT" secondAttribute="top" constant="-20" id="d5i-NR-oLk"/>
-                                                        <constraint firstItem="HLs-Hf-Sar" firstAttribute="top" secondItem="sOd-kx-zWT" secondAttribute="top" id="hFc-Os-Cxo"/>
-                                                        <constraint firstAttribute="trailing" secondItem="qKT-Nx-PKh" secondAttribute="trailing" constant="-2" id="sbj-1M-O9b"/>
-                                                        <constraint firstItem="dW9-aR-xhI" firstAttribute="centerX" secondItem="sOd-kx-zWT" secondAttribute="centerX" id="tIO-tQ-mqP"/>
-                                                        <constraint firstItem="dW9-aR-xhI" firstAttribute="top" secondItem="WAW-y0-SOS" secondAttribute="bottom" constant="19" id="x7s-a8-oA6"/>
-                                                        <constraint firstAttribute="trailing" secondItem="HLs-Hf-Sar" secondAttribute="trailing" id="xUb-pB-Z6G"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJh-hV-TeH" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
@@ -268,8 +219,6 @@
     </objects>
     <resources>
         <image name="attachment (1)" width="24" height="24"/>
-        <image name="play-button" width="75" height="75"/>
-        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -280,13 +229,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -12,6 +12,7 @@ class LSRWSubmissionTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
     
 }

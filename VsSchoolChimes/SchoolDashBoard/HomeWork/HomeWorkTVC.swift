@@ -100,8 +100,10 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         if let img = homeworkDocs?[indexPath.row] {
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
+            
             if iconName != "image"{
                 if let pdfURL = URL(string: img.url ?? "") {
+                    cell.hide = false
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
                     cell.webView.isHidden = false
@@ -111,6 +113,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
                       cell.imageView.isHidden = false
                   }
             }else{
+                cell.hide = false
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url

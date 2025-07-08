@@ -38,11 +38,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     @IBOutlet weak var selectImgPdfview: ImageSelection!
     @IBOutlet weak var AssignmentTypeview: UIView!
     @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var VideoThumbnailImg: UIImageView!
-    @IBOutlet weak var VideoPlayBtn: UIButton!
-    @IBOutlet weak var ClickTochooseVideoLbl: UILabel!
     @IBOutlet weak var AddAtachmentStack: UIStackView!
-    @IBOutlet weak var VideoDeleteBtn: UIImageView!
     @IBOutlet weak var AttachmentIcon: UIImageView!
     @IBOutlet weak var TitleLettersCount: UILabel!
     @IBOutlet weak var AttachmentDropdownHeight: NSLayoutConstraint!
@@ -92,7 +88,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.applyRightTxt()
         contentTextView.delegate = self
         assignTitleTxtFld.delegate = self
-       
         AssignmenttypeLbl.applyRightTxt()
         DescriptionLbl.applyRightTxt()
         letterscountLbl.applyRightTxt()
@@ -101,13 +96,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         
         let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
         AssignmentTypeview.addGestureRecognizer(typeGesture)
-        
-       
-        
-        let DeleteGesture = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
-        VideoDeleteBtn.addGestureRecognizer(DeleteGesture)
-    
-        
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         
@@ -168,13 +156,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLettersCount.setFont(style: .body, size: FontSize.BodySize)
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
-        ClickTochooseVideoLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
-    
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
-    }
+
     
     func pickVideoFromGallery(){
         if #available(iOS 15.0, *) {
@@ -182,20 +165,13 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         } 
         videoPicker?.pickVideo()
     }
-        @IBAction func playVideoTapped(_ sender: UIButton) {
-            VideoDeleteBtn.isHidden = true
-            if let url = selectedVideoURL {
-                videoPicker?.playVideo(from: url, in: VideoView)
-            } else {
-                videoPicker?.pickVideo()
-            }
-        }
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
            if #available(iOS 15.0, *) {
                self.hideLottieProgressLoader()
            }
+           videoPicker?.playVideo(from: url, in: VideoView)
            attachments.removeAll()
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0
@@ -205,14 +181,12 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
            chooseRecipientsBtn.isHidden = false
        }
 
-       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-           VideoThumbnailImg.isHidden = false
-           VideoThumbnailImg.image = image
-       }
 
        func videoPickerManagerDidCloseVideo() {
+           if #available(iOS 15.0, *) {
+               self.hideLottieProgressLoader()
+           }
            selectedVideoURL = nil
-           VideoThumbnailImg.image = nil
            VideoView.isHidden = true
            selectImgPdfview.isHidden = false
            collectionViewHeght.constant = 120

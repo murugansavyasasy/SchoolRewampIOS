@@ -12,6 +12,7 @@ class shareAndDownloadVc: UIViewController {
     
   
     var dowloadUrl:String?
+    var fileType:String?
     var typeVideo = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +31,11 @@ class shareAndDownloadVc: UIViewController {
                 sender.isEnabled = true
                 return
             }
-            
+            let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
             let downloader = FileDownloader()
             downloader.downloadFile(
                 from: fileURL,
-                folderName: "SchoolChimesDownloads",
+                folderName: fileType,
                 fileName: filename
             ) { result in
                 DispatchQueue.main.async { [self] in
@@ -45,15 +46,6 @@ class shareAndDownloadVc: UIViewController {
                             title:"",
                             message: "\(filename) Downloaded successfully ✅",
                             on: self)
-                        
-                        //                    let awsImageUrl = dowloadUrl
-                        //                    CustomAlert
-                        //                        .showImageAlert(
-                        //                            from: awsImageUrl ?? "",
-                        //                            message: "\(filename) Downloaded successfully ✅",
-                        //                            in: self
-                        //                        )
-                        
                     case .failure(let error):
                         CustomAlert.showAlertWithOkAction(
                             title:"",
@@ -205,6 +197,7 @@ class shareAndDownloadVc: UIViewController {
                             if FileManager.default.fileExists(atPath: finalURL.path) {
                                 try FileManager.default.removeItem(at: finalURL)
                                 print("🧹 File deleted after sharing.")
+                                self.dismiss(animated: true)
                             }
                         } catch {
                             print("⚠️ Could not delete file: \(error.localizedDescription)")

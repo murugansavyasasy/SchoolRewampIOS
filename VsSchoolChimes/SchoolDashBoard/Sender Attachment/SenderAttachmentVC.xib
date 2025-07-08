@@ -19,14 +19,10 @@
                 <outlet property="AttachmentDropdownHeight" destination="1rq-Ta-5Za" id="DCz-vz-0kW"/>
                 <outlet property="AttachmentIcon" destination="FUf-fQ-B1b" id="kkQ-LZ-lBd"/>
                 <outlet property="BackBtn" destination="1nM-3A-Z1A" id="lwj-ck-Z09"/>
-                <outlet property="ClickTochooseVideoLbl" destination="r7r-jX-hNu" id="fKz-RM-U4a"/>
                 <outlet property="DescriptionLbl" destination="Qfh-fD-yRr" id="6tV-tu-972"/>
                 <outlet property="PopupView" destination="4mj-sk-0QW" id="YgO-zw-ABI"/>
                 <outlet property="TextviewHeight" destination="daq-Jc-qdj" id="L2T-a3-Vgx"/>
                 <outlet property="TitleLettersCount" destination="s5s-Nr-DmM" id="WFp-aE-zeA"/>
-                <outlet property="VideoDeleteBtn" destination="fDn-jd-shQ" id="AfK-fd-Z29"/>
-                <outlet property="VideoPlayBtn" destination="bRE-8a-N5k" id="5Bo-ME-TEK"/>
-                <outlet property="VideoThumbnailImg" destination="fED-0g-Fkh" id="3LS-kD-AQ5"/>
                 <outlet property="VideoView" destination="tea-j5-e7y" id="9q4-Yf-lwb"/>
                 <outlet property="addphotosheight" destination="XPf-xY-Y5h" id="0aV-6E-GKz"/>
                 <outlet property="assignTitleTxtFld" destination="LAD-X0-RfV" id="qwg-UU-gBR"/>
@@ -186,52 +182,9 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tea-j5-e7y">
                                                     <rect key="frame" x="0.0" y="32" width="343" height="230"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fED-0g-Fkh">
-                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="230"/>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRE-8a-N5k">
-                                                            <rect key="frame" x="136.66666666666666" y="80.000000000000057" width="70" height="70"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="70" id="dRr-zt-FS1"/>
-                                                                <constraint firstAttribute="height" constant="70" id="kFA-Hk-YVT"/>
-                                                            </constraints>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="play-button"/>
-                                                            <state key="selected" image="play-button"/>
-                                                            <connections>
-                                                                <action selector="playVideoTapped:" destination="-1" eventType="touchUpInside" id="WSU-Bl-ii4"/>
-                                                            </connections>
-                                                        </button>
-                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click To Choose Video From File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7r-jX-hNu">
-                                                            <rect key="frame" x="49.333333333333329" y="169.00000000000006" width="244.66666666666669" height="20.333333333333343"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fDn-jd-shQ">
-                                                            <rect key="frame" x="321" y="-13.333333333333334" width="30" height="28.666666666666671"/>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="2u6-BQ-LVv"/>
-                                                                <constraint firstAttribute="height" constant="30" id="p1Q-LU-H5y"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                     <constraints>
-                                                        <constraint firstItem="bRE-8a-N5k" firstAttribute="centerX" secondItem="tea-j5-e7y" secondAttribute="centerX" id="0RD-Fb-d85"/>
-                                                        <constraint firstAttribute="bottom" secondItem="fED-0g-Fkh" secondAttribute="bottom" id="J9W-FF-TPn"/>
-                                                        <constraint firstItem="fDn-jd-shQ" firstAttribute="top" secondItem="tea-j5-e7y" secondAttribute="top" constant="-14" id="Q7o-9C-fwv"/>
-                                                        <constraint firstItem="fED-0g-Fkh" firstAttribute="top" secondItem="tea-j5-e7y" secondAttribute="top" id="SLc-cg-uGc"/>
                                                         <constraint firstAttribute="height" constant="230" id="Ta0-Ff-Ec4"/>
-                                                        <constraint firstItem="r7r-jX-hNu" firstAttribute="centerX" secondItem="tea-j5-e7y" secondAttribute="centerX" id="asu-hJ-tl9"/>
-                                                        <constraint firstAttribute="trailing" secondItem="fED-0g-Fkh" secondAttribute="trailing" id="fc3-LU-KLs"/>
-                                                        <constraint firstItem="r7r-jX-hNu" firstAttribute="top" secondItem="bRE-8a-N5k" secondAttribute="bottom" constant="19" id="lv3-XS-yV3"/>
-                                                        <constraint firstItem="fED-0g-Fkh" firstAttribute="leading" secondItem="tea-j5-e7y" secondAttribute="leading" id="mGq-J0-pqA"/>
-                                                        <constraint firstAttribute="trailing" secondItem="fDn-jd-shQ" secondAttribute="trailing" constant="-8" id="mi8-L6-3JO"/>
-                                                        <constraint firstItem="bRE-8a-N5k" firstAttribute="centerY" secondItem="tea-j5-e7y" secondAttribute="centerY" id="t83-aP-W0c"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIV-g8-Vik" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
@@ -316,8 +269,6 @@
         <image name="attachment (1)" width="24" height="24"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
-        <image name="play-button" width="75" height="75"/>
-        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -325,13 +276,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

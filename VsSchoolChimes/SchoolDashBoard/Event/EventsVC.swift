@@ -60,8 +60,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var Totime: UIButton!
     @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var VideoThumbnailImg: UIImageView!
-    @IBOutlet weak var VideoDeleteBtn: UIImageView!
     
     var placeholderLabel: UILabel!
     var activeButton: UIButton?
@@ -107,13 +105,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         eventTxt.addDoneButton()
         contentTxtView.addDoneButton()
         imageSelection()
-        
         videoPicker = VideoPickerManager(presenter: self, delegate: self)
         
         VideoView.isHidden = true
-        
-        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
-        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
         
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
@@ -172,10 +166,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
     }
     
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
-    }
 
     func pickVideoFromGallery(){
         if #available(iOS 15.0, *) {
@@ -183,19 +173,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         } 
         videoPicker?.pickVideo()
     }
-        @IBAction func playVideoTapped(_ sender: UIButton) {
-            if let url = selectedVideoURL {
-                videoPicker?.playVideo(from: url, in: VideoView)
-            } else {
-                videoPicker?.pickVideo()
-            }
-        }
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
            if #available(iOS 15.0, *) {
                self.hideLottieProgressLoader()
            }
+           videoPicker?.playVideo(from: url, in: VideoView)
            attachments.removeAll()
            costomView.isHidden = true
            collectionViewHeght.constant = 0
@@ -203,14 +187,12 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
            VideoView.isHidden = false
        }
 
-       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-           VideoThumbnailImg.isHidden = false
-           VideoThumbnailImg.image = image
-       }
 
        func videoPickerManagerDidCloseVideo() {
+           if #available(iOS 15.0, *) {
+               self.hideLottieProgressLoader()
+           }
            selectedVideoURL = nil
-           VideoThumbnailImg.image = nil
            VideoView.isHidden = true
 //          / chooseRecipientsBtn.isHidden = true
            costomView.isHidden = false

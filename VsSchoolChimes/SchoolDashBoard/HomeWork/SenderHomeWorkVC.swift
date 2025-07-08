@@ -129,7 +129,10 @@ class SenderHomeWorkVC: UIViewController {
             self.sectionId = selectedSections.first?.id
             self.StandardLbl.text = item
             self.SectionLbl.text = selectedSections.first?.name ?? ""
-
+            DispatchQueue.main.async {
+                self.homeWorkTable.layoutIfNeeded()
+                self.tableviewHeight.constant = 300
+            }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }
@@ -147,6 +150,10 @@ class SenderHomeWorkVC: UIViewController {
 
             self.sectionId = self.sectionsDetails?[index].id
             self.SectionLbl.text = item
+            DispatchQueue.main.async {
+                self.homeWorkTable.layoutIfNeeded()
+                self.tableviewHeight.constant = 300
+            }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }

@@ -63,11 +63,6 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
-    @IBOutlet weak var VideoPlayBtn: UIButton!
-    
-    @IBOutlet weak var ClickTochooseVideoLbl: UILabel!
-    @IBOutlet weak var VideoDeleteBtn: UIImageView!
-    @IBOutlet weak var VideoThumbnailImg: UIImageView!
     var selectedShow = ""
    
     var getType = "Principal"
@@ -145,47 +140,9 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
-        let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(chooseVideoTapped))
-        VideoView.addGestureRecognizer(PlayGesture)
-        
-        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
-        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
-   
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         imageSelection()
-    }
-    
-   
-//        
-//    @IBAction func segmntAction(_ sender: UISegmentedControl) {
-//        
-//        if sender.selectedSegmentIndex == 0 {
-//                removeChildVC()
-//            } else {
-//                addChildViewControllerToContainer()
-//            }
-//    }
-//   
-//   
-//    func removeChildVC() {
-////        guard let vc = childVC else { return }
-////        vc.willMove(toParent: nil)
-////        vc.view.removeFromSuperview()
-////        vc.removeFromParent()
-////        childVC = nil
-//    }
-//    func addChildViewControllerToContainer() {
-////        let vc = AssignmentReportVc(nibName: nil, bundle: nil)
-////        addChild(vc)
-////        vc.view.frame = CreateView.bounds
-////        CreateView.addSubview(vc.view)
-////        vc.didMove(toParent: self)
-////        self.childVC = vc // Save reference
-//    }
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
     }
     
     @IBAction func chooseVideoTapped(_ sender: UIButton) {
@@ -198,20 +155,13 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         } 
         videoPicker?.pickVideo()
     }
-        @IBAction func playVideoTapped(_ sender: UIButton) {
-            VideoDeleteBtn.isHidden = true
-            if let url = selectedVideoURL {
-                videoPicker?.playVideo(from: url, in: VideoView)
-            } else {
-                videoPicker?.pickVideo()
-            }
-        }
-
+    
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
            if #available(iOS 15.0, *) {
                self.hideLottieProgressLoader()
            }
+           videoPicker?.playVideo(from: url, in: VideoView)
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0
            selectedVideoURL = url
@@ -225,21 +175,16 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
            chooseRecipientsBtn.isHidden = false
        }
 
-       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-           VideoThumbnailImg.isHidden = false
-           VideoThumbnailImg.image = image
-       }
 
        func videoPickerManagerDidCloseVideo() {
+           if #available(iOS 15.0, *) {
+               self.hideLottieProgressLoader()
+           }
            selectedVideoURL = nil
-           VideoThumbnailImg.image = nil
            VideoView.isHidden = true
-//          / chooseRecipientsBtn.isHidden = true
            selectImgPdfview.isHidden = false
            collectionViewHeght.constant = 120
            selectImgPdfview.imageCollectionview.reloadData()
-          
-           
        }
     
     func generateThumbnail(for url: URL) -> UIImage? {

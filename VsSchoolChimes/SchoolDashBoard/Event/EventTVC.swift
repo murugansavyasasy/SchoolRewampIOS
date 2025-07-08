@@ -112,6 +112,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
             let iconName = getFileIconName(for: fileURL)
             cell.IndicaterImageView.image = UIImage(named: iconName)
             if iconName != "image"{
+                cell.hide = false
                 if let pdfURL = URL(string: img.url ?? "") {
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
@@ -122,6 +123,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
                       cell.imageView.isHidden = false
                   }
             }else{
+                cell.hide = false
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
