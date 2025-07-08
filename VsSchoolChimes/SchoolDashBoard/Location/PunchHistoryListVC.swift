@@ -48,12 +48,8 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: [ punchHistoryStringFile.from_date : selectedDate,
                                                                                                               punchHistoryStringFile.to_date : selectedDate,
-                                                                                                              punchHistoryStringFile.staff_id : selected_staff_id ?? ""], type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (
-                                                                                                                result: Result<PunchHistoryResponse,
-                                                                                                                Error>
-                                                                                                              ) in
+                                                                                                              punchHistoryStringFile.staff_id : selected_staff_id ?? ""], type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
             switch result{
-                
             case .success(let successMessage):
                 
                 if successMessage.status == true {
