@@ -46,7 +46,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         BackBtn.applyBackButton()
       
        // BackBtn.setTitle(MenuStringFile.LeaveRequest.translated(), for: .normal)
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.LeaveRequest, secondLine: StaffDetails?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
        // BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.applyRightTxt()

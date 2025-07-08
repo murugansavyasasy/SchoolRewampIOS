@@ -15,7 +15,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     @IBOutlet weak var teacherLbl: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var TextViewFullView: UIView!
-    @IBOutlet weak var sendImageView: UIImageView!
+    
     @IBOutlet weak var MessgeTextview: UITextView!
     @IBOutlet weak var ReplyTextFild: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -159,25 +159,25 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         
         
         
-        if message?.ans_file_path?.count == 0 {
-            if message?.answer != "Not answered yet"{
-                
-                cell
-                    .configure(
-                        with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
-                        isSender: false
-                    )
-            }
-        }else{
-            
-            cell.messageLabel.isHidden = true
-            cell.timeStampLbl.isHidden = true
-            cell.imageStack.isHidden = false
-            cell.imageConficure(with:message?.ans_file_path?.first?.url )
-            
-           
-
-        }
+//        if message?.ans_file_path?.count == 0 {
+//            if message?.answer != "Not answered yet"{
+//                
+//                cell
+//                    .configure(
+//                        with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
+//                        isSender: false
+//                    )
+//            }
+//        }else{
+//            
+//            cell.messageLabel.isHidden = true
+//            cell.timeStampLbl.isHidden = true
+//            cell.imageStack.isHidden = false
+//            cell.imageConficure(with:message?.ans_file_path?.first?.url )
+//            
+//           
+//
+//        }
         
         if message?.ques_file_path?.count == 0 {
             if message?.question != ""{
@@ -188,6 +188,15 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                     .configure(
                         with: message?.question ?? "", timeStamp: message?.asked_on ?? "",
                         isSender: message?.my_question ?? false
+                    )
+            }
+            
+            if message?.answer != "Not answered yet"{
+                
+                cell
+                    .configure(
+                        with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
+                        isSender: false
                     )
             }
         }else{

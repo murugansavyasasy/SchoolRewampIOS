@@ -28,7 +28,7 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
         BackBtn.imageView?.applyRTLFlip(Language == "ar")
         
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.Assignment, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         uiConficration()
         setupPageViewController()
         loadPages([page1, page2])

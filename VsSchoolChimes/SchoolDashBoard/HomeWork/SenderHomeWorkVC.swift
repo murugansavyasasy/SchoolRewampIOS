@@ -69,13 +69,13 @@ class SenderHomeWorkVC: UIViewController {
 
     // MARK: - Setup
     private func setupViews() {
-        applyShadowAndCornerRadius(to: dateView)
+//        applyShadowAndCornerRadius(to: dateView)
         applyShadowAndCornerRadius(to: acodemicView)
         applyShadowAndCornerRadius(to: standerdView)
         applyShadowAndCornerRadius(to: sectionView)
         searchBar.addDoneButton()
-        dateView.layer.borderColor = UIColor.lightGray.cgColor
-        dateView.layer.borderWidth = 0.5
+//        dateView.layer.borderColor = UIColor.lightGray.cgColor
+//        dateView.layer.borderWidth = 0.5
         
         acodemicView.layer.borderColor = UIColor.lightGray.cgColor
         acodemicView.layer.borderWidth = 0.5

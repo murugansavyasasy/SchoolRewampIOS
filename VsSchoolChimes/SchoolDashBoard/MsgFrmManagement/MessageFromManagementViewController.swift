@@ -32,7 +32,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.MessagesFromManagement, secondLine: staffDetails?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         BackBtn.applyBackButton()
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         

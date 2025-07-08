@@ -36,7 +36,7 @@ class NavigationVC: UIViewController {
     func uiConficration(){
         NameLbl.text = childDetails?.name
         StandardLbl.text = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        backBtn.setTitle(MenuStringFile.LeaveRequest, for: .normal)
+        backBtn.setTitle(MenuStringFile.selectedMenuName, for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)

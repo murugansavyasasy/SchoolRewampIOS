@@ -365,7 +365,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         if indexPath.row < MenuRedirect.receiverItems.count {
             
             let menuItem = filteredMenu_details?[indexPath.row].id
-            
+            MenuStringFile.selectedMenuName = filteredMenu_details?[indexPath.row].name ?? ""
+             
             switch menuItem {
             case 2:
                 MenuRedirect.receiverAssignmentNavigate(from: self)

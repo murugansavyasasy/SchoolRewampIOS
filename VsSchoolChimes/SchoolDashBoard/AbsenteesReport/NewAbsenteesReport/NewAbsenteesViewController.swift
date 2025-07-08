@@ -23,7 +23,7 @@ class NewAbsenteesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.AbsenteesReport, secondLine: StaffDetails?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
         
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
         let rowNib = UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil)

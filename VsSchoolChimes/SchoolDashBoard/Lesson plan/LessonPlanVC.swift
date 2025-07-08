@@ -33,7 +33,7 @@ class LessonPlanVC: UIViewController {
         BackBtn.applyBackButton()
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         
         if staffRole == "p3" {
             ReqestType = LessonPlanStringFile.myclass

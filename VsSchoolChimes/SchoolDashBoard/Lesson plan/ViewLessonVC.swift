@@ -31,7 +31,11 @@ class ViewLessonVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BAckBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
+        BAckBtn
+            .configureAsBackButton(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? ""
+            )
         
         NoDataImg.isHidden = true
         NoDataLbl.isHidden = true

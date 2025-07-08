@@ -166,6 +166,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         let LeaveFrom = ConvertDateStringSmart(FromDateLbl.text)
         let LeaveTo = ConvertDateStringSmart(ToDateLbl.text)
         
+        print("LeaveFrom",LeaveFrom)
+        print("LeaveTo",LeaveTo)
         let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
@@ -353,6 +355,12 @@ extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
 
 extension UILabel {
     func setFormattedDate(from date: Date) {
+        
+        let dayFormatter = DateFormatter()
+            dayFormatter.dateFormat = "dd" // Ensures 2-digit day format
+            
+            let dayString = dayFormatter.string(from: date)
+        
         let calendar = Calendar.current
         let dayNumber = calendar.component(.day, from: date)
 
@@ -360,7 +368,7 @@ extension UILabel {
         dateFormatter.dateFormat = "E, MMM yyyy" // e.g., "Wed, Jun 2025"
         let dayText = dateFormatter.string(from: date)
 
-        let fullString = "\(dayNumber)\n\(dayText)"
+        let fullString = "\(dayString)\n\(dayText)"
         let attributedText = NSMutableAttributedString(string: fullString)
 
         // Day number style: Poppins-SemiBold

@@ -69,6 +69,7 @@ class MenuStringFile{
     static let MarkAttendance = "Mark Attendance"
     static let GeometricAttendance = "Geometric Attendance"
     static let AbsentStudents = "Absent Students"
+    static var selectedMenuName = ""
 }
 
 
@@ -272,6 +273,7 @@ class CommonStringFile{
     static let UploadImagepdf = "Upload Image/Document".translated()
     static let UploadImagepdfoptional = "Upload Image/Document (Optional)".translated()
     static let Description = "Description".translated()
+    static let Starts_on = "Starts on".translated()
     static let Groups = "Groups".translated()
     static let Sectionorstudent = "Section or student".translated()
     static let Standardorsection = "Standard or section".translated()
