@@ -76,7 +76,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                             self?.nodataLbl.isHidden = !isEmpty
                             self?.nodataLbl.text = isEmpty ? response.message : CommonStringFile.No_data_found
                             self?.noRecordImg.isHidden = !isEmpty
-                            self?.searchview.isHidden = isEmpty
+                    self?.searchview.isHidden = self?.data?.count ?? 0 <= 2
                             
                             self?.listTable.reloadData()
                         
@@ -118,7 +118,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                     self?.nodataLbl.isHidden = !isEmpty
                     self?.nodataLbl.text = isEmpty ? response.message : CommonStringFile.No_data_found
                     self?.noRecordImg.isHidden = !isEmpty
-                    self?.searchview.isHidden = isEmpty
+                    self?.searchview.isHidden = self?.data?.count ?? 0 <= 2
                     self?.listTable.reloadData()
                     
                 case .failure(let error):
@@ -166,6 +166,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         cell.id = filteredData?[indexPath.row].header_id
         cell.assignmentId = filteredData?[indexPath.row].id
         cell.FilesUrl = filteredData?[indexPath.row].file_path
+        cell.iframe = filteredData?[indexPath.row].iframe
         cell.dueDateLbl.text = filteredData?[indexPath.row].end_date?.convertToTargetDateFormat()
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
         cell.sendByLbl.text = filteredData?[indexPath.row].sent_by

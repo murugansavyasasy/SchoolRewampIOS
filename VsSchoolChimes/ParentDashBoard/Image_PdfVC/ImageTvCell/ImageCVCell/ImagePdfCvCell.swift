@@ -15,10 +15,16 @@ class ImagePdfCvCell: UICollectionViewCell {
    
     @IBOutlet weak var IndicaterImageView: UIImageView!
     @IBOutlet weak var fullView: UIView!
-
+    var hide = false{
+        didSet{
+            if !hide{
+                applyShadowAndCornerRadius(to: fullView)
+            }
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
-        applyShadowAndCornerRadius(to: fullView)
+       
         imageView.layer.cornerRadius = Colornames.CORadius10
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true

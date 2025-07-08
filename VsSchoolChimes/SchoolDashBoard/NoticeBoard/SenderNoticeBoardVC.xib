@@ -32,8 +32,6 @@
                 <outlet property="ToLbl" destination="xdh-7M-EuB" id="Z3Z-LP-Dpw"/>
                 <outlet property="ToTittleDefLbl" destination="77r-pG-Tmk" id="gER-Oe-BRk"/>
                 <outlet property="TodateTop" destination="leg-z3-dN5" id="otr-jr-4ah"/>
-                <outlet property="VideoDeleteBtn" destination="CBf-Nt-kY1" id="g6v-HV-EjL"/>
-                <outlet property="VideoThumbnailImg" destination="GXw-ud-9Fj" id="ouC-d1-jLp"/>
                 <outlet property="VideoView" destination="qp2-aI-rmH" id="ojK-0i-qx6"/>
                 <outlet property="addPhotoLbl" destination="uUZ-Cz-Fqm" id="kZC-NP-igs"/>
                 <outlet property="calanderBtn" destination="up0-Ix-uLU" id="qyJ-PN-X3e"/>
@@ -425,44 +423,9 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qp2-aI-rmH">
                                                     <rect key="frame" x="0.0" y="32" width="345" height="230"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GXw-ud-9Fj">
-                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="230"/>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t9-0l-i41">
-                                                            <rect key="frame" x="137.66666666666666" y="80" width="70" height="70"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="70" id="P2o-Iu-Tsh"/>
-                                                                <constraint firstAttribute="height" constant="70" id="uQD-9D-uDy"/>
-                                                            </constraints>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="play-button"/>
-                                                            <state key="selected" image="play-button"/>
-                                                            <connections>
-                                                                <action selector="playVideoTapped:" destination="-1" eventType="touchUpInside" id="cgT-jd-xUz"/>
-                                                            </connections>
-                                                        </button>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="CBf-Nt-kY1">
-                                                            <rect key="frame" x="323" y="-13.333333333333334" width="30" height="28.666666666666671"/>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="Llp-h9-o7I"/>
-                                                                <constraint firstAttribute="height" constant="30" id="SIm-QS-w38"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                     <constraints>
-                                                        <constraint firstItem="GXw-ud-9Fj" firstAttribute="top" secondItem="qp2-aI-rmH" secondAttribute="top" id="980-k1-hCg"/>
-                                                        <constraint firstAttribute="trailing" secondItem="GXw-ud-9Fj" secondAttribute="trailing" id="Mk4-A3-WBb"/>
-                                                        <constraint firstItem="GXw-ud-9Fj" firstAttribute="leading" secondItem="qp2-aI-rmH" secondAttribute="leading" id="NlT-WR-h6t"/>
-                                                        <constraint firstItem="CBf-Nt-kY1" firstAttribute="top" secondItem="qp2-aI-rmH" secondAttribute="top" constant="-14" id="OGv-Dc-PrN"/>
-                                                        <constraint firstAttribute="bottom" secondItem="GXw-ud-9Fj" secondAttribute="bottom" id="bad-t9-UZr"/>
-                                                        <constraint firstAttribute="trailing" secondItem="CBf-Nt-kY1" secondAttribute="trailing" constant="-8" id="hIu-Hk-MX3"/>
                                                         <constraint firstAttribute="height" constant="230" id="jxu-Vk-gTh"/>
-                                                        <constraint firstItem="8t9-0l-i41" firstAttribute="centerX" secondItem="qp2-aI-rmH" secondAttribute="centerX" id="ml7-no-vbz"/>
-                                                        <constraint firstItem="8t9-0l-i41" firstAttribute="centerY" secondItem="qp2-aI-rmH" secondAttribute="centerY" id="tWy-3v-4JS"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhJ-qU-4qe" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
@@ -555,8 +518,6 @@
         <image name="attachment (1)" width="24" height="24"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="exchange" width="24" height="24"/>
-        <image name="play-button" width="75" height="75"/>
-        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -577,9 +538,6 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

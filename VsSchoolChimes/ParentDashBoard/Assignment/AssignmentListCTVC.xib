@@ -390,6 +390,7 @@
                 <outlet property="SubCountSec" destination="PPj-Az-KuN" id="sLj-Zk-sny"/>
                 <outlet property="SubjectLabel" destination="li8-pU-KDq" id="rKP-W3-Y7I"/>
                 <outlet property="SubmitBtn" destination="qXI-8U-7Ux" id="zpB-6b-iAv"/>
+                <outlet property="attachmentCVHeight" destination="zDg-Gg-dU8" id="c99-G0-fQe"/>
                 <outlet property="categoryLbl" destination="I5J-Fm-wHy" id="ITI-9f-U0z"/>
                 <outlet property="cvBaseview" destination="sRC-z4-CF3" id="kHX-UM-m3G"/>
                 <outlet property="deleteBtn" destination="esw-od-aAe" id="wGj-wy-twl"/>

@@ -35,9 +35,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
-    
-    @IBOutlet weak var VideoDeleteBtn: UIImageView!
-    @IBOutlet weak var VideoThumbnailImg: UIImageView!
     @IBOutlet weak var VideoView: UIView!
     var attachments: [AttachmentItem] = []
     let photoPickManager = PhotoPickerManager.shared
@@ -64,8 +61,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
-        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
-        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
         TitleTxtfield.addDoneButton()
         DetailsTxtview.addDoneButton()
         StyleAndTranslater()
@@ -123,10 +118,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
-    }
     
     @IBAction func chooseVideoTapped(_ sender: UIButton) {
         videoPicker?.pickVideo()
@@ -138,20 +129,14 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         } 
         videoPicker?.pickVideo()
     }
-    @IBAction func playVideoTapped(_ sender: UIButton) {
-        VideoDeleteBtn.isHidden = true
-        if let url = selectedVideoURL {
-            videoPicker?.playVideo(from: url, in: VideoView)
-        } else {
-            videoPicker?.pickVideo()
-        }
-    }
+
     
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
         if #available(iOS 15.0, *) {
             self.hideLottieProgressLoader()
         }
+        videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         uploadAttachmentView.isHidden = true
         collectionViewHeight.constant = 0
@@ -160,14 +145,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         RecipientBtn.isHidden = false
     }
     
-    func videoPickerManager(didGenerateThumbnail image: UIImage) {
-        VideoThumbnailImg.isHidden = false
-        VideoThumbnailImg.image = image
-    }
-    
     func videoPickerManagerDidCloseVideo() {
+        if #available(iOS 15.0, *) {
+            self.hideLottieProgressLoader()
+        }
         selectedVideoURL = nil
-        VideoThumbnailImg.image = nil
         VideoView.isHidden = true
         //          / chooseRecipientsBtn.isHidden = true
         uploadAttachmentView.isHidden = false

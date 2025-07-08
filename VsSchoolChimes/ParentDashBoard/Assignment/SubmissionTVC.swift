@@ -61,16 +61,14 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
             if iconName != "image" {
                 if img.type?.uppercased() == "VIDEO"{
                     cell.webView.isHidden = true
+                    cell.hide = true
                     cell.imageView.isHidden = false
-                    loadVimeoThumbnail(from: img.url ?? "", accessToken: YOUR_VIMEO_TOKEN) { image in
-                        if let thumbnailImage = image {
-                            cell.imageView.image = thumbnailImage
-                        }
-                    }
-                    let iconImage = UIImage(named: "video (1)")
+                    cell.imageView.image = UIImage(named: "video (1)")
+                    let iconImage = UIImage(named: "")
                     cell.IndicaterImageView.image = iconImage
                 }else{
                     if let pdfURL = URL(string: img.url ?? ""){
+                        cell.hide = false
                         let request = URLRequest(url: pdfURL)
                         cell.webView.load(request)
                         cell.webView.isHidden = false
@@ -86,6 +84,7 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
                     cell.IndicaterImageView.image = iconImage
                 }
             } else {
+                cell.hide = false
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)

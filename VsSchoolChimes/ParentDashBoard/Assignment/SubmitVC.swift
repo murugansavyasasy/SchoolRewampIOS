@@ -32,9 +32,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
     @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var VideoDeleteBtn: UIImageView!
-    @IBOutlet weak var VideoPlayBtn: UIButton!
-    @IBOutlet weak var VideoThumbnailImg: UIImageView!
     
     var placeholderLabel: UILabel!
     var attachments: [AttachmentItem] = []
@@ -71,9 +68,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         DescriptionTextview.addDoneButton()
-        
-        let DeleteGesture = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
-        VideoDeleteBtn.addGestureRecognizer(DeleteGesture)
+       
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
@@ -271,25 +266,13 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         videoPicker?.pickVideo()
     }
     
-    @IBAction func playVideoTapped(_ sender: UIButton) {
-        VideoDeleteBtn.isHidden = true
-        if let url = selectedVideoURL {
-            videoPicker?.playVideo(from: url, in: VideoView)
-        } else {
-            videoPicker?.pickVideo()
-        }
-    }
-    
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
-    }
-    
+
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
         if #available(iOS 15.0, *) {
             self.hideLottieProgressLoader()
         }
+        videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         selectImgPdfview.isHidden = true
         collectionViewHeght.constant = 0
@@ -298,14 +281,11 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         VideoView.isHidden = false
     }
     
-    func videoPickerManager(didGenerateThumbnail image: UIImage) {
-        VideoThumbnailImg.isHidden = false
-        VideoThumbnailImg.image = image
-    }
-    
     func videoPickerManagerDidCloseVideo() {
+        if #available(iOS 15.0, *) {
+            self.hideLottieProgressLoader()
+        }
         selectedVideoURL = nil
-        VideoThumbnailImg.image = nil
         VideoView.isHidden = true
         selectImgPdfview.isHidden = false
         collectionViewHeght.constant = 120

@@ -13,7 +13,7 @@ extension VideoPreviewVc: UIPopoverPresentationControllerDelegate {
     }
 }
 class VideoPreviewVc: UIViewController {
-
+    
     var webView: WKWebView!
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var titleLbl: UILabel!
@@ -22,34 +22,35 @@ class VideoPreviewVc: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         // Do any additional setup after loading the view.
         titleLbl.text = titles
         let config = WKWebViewConfiguration()
-               config.allowsInlineMediaPlayback = true
-               config.mediaTypesRequiringUserActionForPlayback = [] // autoplay if needed
-
-               webView = WKWebView(frame: self.fullview.bounds, configuration: config)
-               webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-               fullview.addSubview(webView)
-
-               // Load the Vimeo URL
-               if let url = URL(string: url ?? "") {
-                   webView.load(URLRequest(url: url))
-               }
-      
+        config.allowsInlineMediaPlayback = true
+        config.mediaTypesRequiringUserActionForPlayback = [] // autoplay if needed
+        
+        webView = WKWebView(frame: self.fullview.bounds, configuration: config)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        fullview.addSubview(webView)
+        
+        // Load the Vimeo URL
+        if let url = URL(string: url ?? "") {
+            webView.load(URLRequest(url: url))
+        }
     }
     
     
-    
-
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
     }
     
-
+    
     @IBAction func popupView(_ sender: UIButton) {
         
         let popoverContentVC = shareAndDownloadVc(nibName: nil, bundle: nil)
@@ -70,14 +71,4 @@ class VideoPreviewVc: UIViewController {
         
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -34,6 +34,7 @@ class ImageShowVc: UIViewController{
     var subjectName:String?
     var scrollIndex:IndexPath?
     var dowloadUrl:String?
+    var fileType:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
@@ -45,6 +46,7 @@ class ImageShowVc: UIViewController{
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
 
         dowloadUrl = FileURL.first?.url
+        fileType = FileURL.first?.type
         PageController.numberOfPages = FileURL.count
         
     }
@@ -55,6 +57,7 @@ class ImageShowVc: UIViewController{
         let popoverContentVC = shareAndDownloadVc(nibName: nil, bundle: nil)
         popoverContentVC.view.backgroundColor = .white
         popoverContentVC.dowloadUrl = dowloadUrl
+        popoverContentVC.fileType = fileType
         popoverContentVC.preferredContentSize = CGSize(width: 150, height: 100)
         popoverContentVC.modalPresentationStyle = .popover
         if let popoverController = popoverContentVC.popoverPresentationController {
@@ -170,10 +173,10 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
             print("❌ Could not detect center cell")
             return
         }
-
         scrollIndex = indexPath
         let fileItem = FileURL[indexPath.item]
         dowloadUrl = fileItem.url
+        fileType = fileItem.type
         PageController.currentPage = indexPath.item
         print("✅ Final paged index: \(indexPath.item)")
     }
