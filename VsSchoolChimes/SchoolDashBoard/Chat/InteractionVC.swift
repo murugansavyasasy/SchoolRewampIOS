@@ -67,7 +67,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
         ) as? interactTvcell else {
             return UITableViewCell()
         }
-        
+        cell.selectionStyle = .none
         
         let datas = staffMembersData?[indexPath.row]
         cell.teacherNameLbl.text = datas?.name ?? ""
