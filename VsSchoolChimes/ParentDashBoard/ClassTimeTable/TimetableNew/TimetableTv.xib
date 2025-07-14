@@ -59,7 +59,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DcW-4S-xP3">
                                                 <rect key="frame" x="0.0" y="36" width="234" height="50.666666666666657"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NR7-Hd-mRA">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NR7-Hd-mRA">
                                                         <rect key="frame" x="0.0" y="10.000000000000002" width="234" height="30.666666666666671"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00 AM - 12:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pii-xL-DVN">
@@ -75,7 +75,7 @@
                                                                 <rect key="frame" x="150" y="0.0" width="50" height="30.666666666666668"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="3nx-8P-mFf"/>
+                                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="3nx-8P-mFf"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -109,20 +109,11 @@
                                     <constraint firstItem="ciT-hW-O2K" firstAttribute="leading" secondItem="xax-7e-LIq" secondAttribute="leading" constant="8" id="rtI-Ab-EPS"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dh8-DX-MD2">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dh8-DX-MD2" customClass="VerticalProgressView" customModule="School_Chimes" customModuleProvider="target">
                                 <rect key="frame" x="19" y="50.333333333333336" width="3" height="102.66666666666666"/>
-                                <subviews>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="z6k-Py-WNs">
-                                        <rect key="frame" x="0.0" y="0.0" width="3" height="102.66666666666667"/>
-                                    </progressView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="z6k-Py-WNs" firstAttribute="top" secondItem="dh8-DX-MD2" secondAttribute="top" id="Gf0-hV-ETq"/>
-                                    <constraint firstAttribute="trailing" secondItem="z6k-Py-WNs" secondAttribute="trailing" id="aX8-Gu-e9S"/>
                                     <constraint firstAttribute="width" constant="3" id="ggv-6X-Mrg"/>
-                                    <constraint firstAttribute="bottom" secondItem="z6k-Py-WNs" secondAttribute="bottom" id="pFg-5n-PyO"/>
-                                    <constraint firstItem="z6k-Py-WNs" firstAttribute="leading" secondItem="dh8-DX-MD2" secondAttribute="leading" id="zNV-du-8SR"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -160,7 +151,7 @@
                 <outlet property="TimeLbl" destination="niK-yA-YMf" id="EvL-hd-xkI"/>
                 <outlet property="cellview" destination="vr8-c6-h7Q" id="DmX-fv-sY9"/>
                 <outlet property="hrsType" destination="bTX-RE-hdV" id="yZW-UE-ZSW"/>
-                <outlet property="progressBar" destination="z6k-Py-WNs" id="c9j-s1-7gQ"/>
+                <outlet property="progrssView" destination="dh8-DX-MD2" id="sE1-aZ-Xww"/>
             </connections>
             <point key="canvasLocation" x="112.21374045801527" y="28.52112676056338"/>
         </tableViewCell>

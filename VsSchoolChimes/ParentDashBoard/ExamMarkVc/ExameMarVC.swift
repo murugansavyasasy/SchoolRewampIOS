@@ -68,8 +68,17 @@ class ExameMarVC: UIViewController {
         present(vc, animated: false)
        
     }
+    @objc func ViewProgress(_ sender: UITapGestureRecognizer) {
+        guard let view = sender.view else { return }
+        let index = view.tag
 
-
+        guard let examID = exameList?[index].id else { return }
+        let vc = ViewProgressVC()
+        vc.modalPresentationStyle = .fullScreen
+        vc.examId = examID
+        present(vc, animated: false)
+       
+    }
 
 }
 
@@ -89,6 +98,10 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.ViewMarkBtnview.tag = indexPath.row
         cell.ViewMarkBtnview.addGestureRecognizer(tap)
         cell.ViewMarkBtnview.isUserInteractionEnabled = true
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(ViewProgress(_:)))
+        cell.ViewProgress.tag = indexPath.row
+        cell.ViewProgress.addGestureRecognizer(tap1)
+        cell.ViewProgress.isUserInteractionEnabled = true
 
         return cell
     }
