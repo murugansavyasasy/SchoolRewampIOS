@@ -278,6 +278,8 @@
 		8451EC952E24E55B00D6DBB4 /* CalanderDateCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EC902E24E55B00D6DBB4 /* CalanderDateCVC.swift */; };
 		8451EC962E24E55B00D6DBB4 /* HolidayTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EC8E2E24E55B00D6DBB4 /* HolidayTVC.swift */; };
 		8451EC972E24E55B00D6DBB4 /* HolidayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EC8C2E24E55B00D6DBB4 /* HolidayVC.swift */; };
+		8451ECF92E25076300D6DBB4 /* ViewProgressVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451ECF82E25076300D6DBB4 /* ViewProgressVC.xib */; };
+		8451ECFA2E25076300D6DBB4 /* ViewProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451ECF72E25076300D6DBB4 /* ViewProgressVC.swift */; };
 		845988412DD61382007CDB23 /* EventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845988402DD61382007CDB23 /* EventTVC.xib */; };
 		845988422DD61382007CDB23 /* EventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459883F2DD61382007CDB23 /* EventTVC.swift */; };
 		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
@@ -1001,6 +1003,8 @@
 		8451EC8F2E24E55B00D6DBB4 /* HolidayTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayTVC.xib; sourceTree = "<group>"; };
 		8451EC902E24E55B00D6DBB4 /* CalanderDateCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalanderDateCVC.swift; sourceTree = "<group>"; };
 		8451EC912E24E55B00D6DBB4 /* CalanderDateCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalanderDateCVC.xib; sourceTree = "<group>"; };
+		8451ECF72E25076300D6DBB4 /* ViewProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProgressVC.swift; sourceTree = "<group>"; };
+		8451ECF82E25076300D6DBB4 /* ViewProgressVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewProgressVC.xib; sourceTree = "<group>"; };
 		8459883F2DD61382007CDB23 /* EventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTVC.swift; sourceTree = "<group>"; };
 		845988402DD61382007CDB23 /* EventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTVC.xib; sourceTree = "<group>"; };
 		845FED3D2D129A0D0090296B /* ExamCreatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreatVC.swift; sourceTree = "<group>"; };
@@ -2018,6 +2022,8 @@
 				840A7CE32D24FDAA0061EAEA /* MarkCell */,
 				FA3230942D95292B0070BA51 /* ExamDetailsVC.swift */,
 				FA3230952D95292B0070BA51 /* ExamDetailsVC.xib */,
+				8451ECF72E25076300D6DBB4 /* ViewProgressVC.swift */,
+				8451ECF82E25076300D6DBB4 /* ViewProgressVC.xib */,
 			);
 			path = ExamMarkVc;
 			sourceTree = "<group>";
@@ -3968,6 +3974,7 @@
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
+				8451ECF92E25076300D6DBB4 /* ViewProgressVC.xib in Resources */,
 				84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */,
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
 				84EAE7832DB20B250083AD9E /* ReciverAttachmentrVC.xib in Resources */,
@@ -4174,6 +4181,7 @@
 				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
 				843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */,
 				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
+				8451ECFA2E25076300D6DBB4 /* ViewProgressVC.swift in Sources */,
 				18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */,
 				18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */,
 				18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */,

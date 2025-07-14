@@ -279,7 +279,6 @@ class TimetableVC: UIViewController {
 
         daily_collectionApi(type: selectedIndex)
     }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startProgressTimer()
@@ -290,14 +289,10 @@ class TimetableVC: UIViewController {
         stopProgressTimer()
     }
 
-    @IBAction func BackAct(_ sender: Any) {
-        dismiss(animated: true)
-    }
-
     func startProgressTimer() {
         stopProgressTimer()
         if dayStatus == "present" {
-            progressTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateVisibleCellsProgress), userInfo: nil, repeats: true)
+            progressTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(updateVisibleCellsProgress), userInfo: nil, repeats: true)
         }
     }
 
@@ -307,22 +302,47 @@ class TimetableVC: UIViewController {
     }
 
     @objc func updateVisibleCellsProgress() {
-        guard dayStatus == "present" else { return }
-
         for cell in tv.visibleCells {
             guard let indexPath = tv.indexPath(for: cell),
                   let item = timeTable?[indexPath.row],
                   let timetableCell = cell as? TimetableTv else { continue }
 
             let progress = getTimeProgress(startTime: item.start_time ?? "", endTime: item.end_time ?? "")
-
-            timetableCell.progressBar.setProgress(Float(progress), animated: true)
-            UIView.animate(withDuration: 0.3) {
-                timetableCell.progressBar.progressTintColor = progress >= 1.0 ? .systemGreen : .systemBlue
-            }
+            timetableCell.progrssView.setProgress(Float(progress), animated: true)
             timetableCell.CheckImgview.image = progress >= 1.0 ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
         }
     }
+
+
+    @IBAction func BackAct(_ sender: Any) {
+        dismiss(animated: true)
+    }
+
+//    func startProgressTimer() {
+//        stopProgressTimer()
+//        if dayStatus == "present" {
+//            progressTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateVisibleCellsProgress), userInfo: nil, repeats: true)
+//        }
+//    }
+
+
+//    @objc func updateVisibleCellsProgress() {
+//        guard dayStatus == "present" else { return }
+//
+//        for cell in tv.visibleCells {
+//            guard let indexPath = tv.indexPath(for: cell),
+//                  let item = timeTable?[indexPath.row],
+//                  let timetableCell = cell as? TimetableTv else { continue }
+//
+//            let progress = getTimeProgress(startTime: item.start_time ?? "", endTime: item.end_time ?? "")
+//
+//            timetableCell.progressBar.setProgress(Float(progress), animated: true)
+//            UIView.animate(withDuration: 0.3) {
+//                timetableCell.progressBar.progressTintColor = progress >= 1.0 ? .systemGreen : .systemBlue
+//            }
+//            timetableCell.CheckImgview.image = progress >= 1.0 ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
+//        }
+//    }
 
     func daily_collectionApi(type: Int) {
         APIService.shared.makeApi(
@@ -341,7 +361,7 @@ class TimetableVC: UIViewController {
                     self?.noDataLbl.text = response.message
                     self?.dayStatus = getDayStatus(for: self?.days[self?.selectedIndex ?? 0] ?? "")
                     self?.tv.reloadData()
-                    self?.startProgressTimer()
+//                    self?.startProgressTimer()
                 case .failure(let error):
                     print("API Error:", error)
                 }
@@ -371,7 +391,7 @@ extension TimetableVC: UITableViewDelegate, UITableViewDataSource {
 
         cell.TimeLbl.text = item.start_time ?? ""
         cell.DurationLbl.text = "\(item.start_time ?? "") - \(item.end_time ?? "")"
-        cell.hrsType.text = item.duration ?? ""
+        cell.hrsType.text = "\(" ")\(item.duration ?? "") \(" ")"
         cell.SubjectLbl.text = item.subject_name ?? ""
         cell.StaffNameLbl.text = item.name ?? ""
 
@@ -379,25 +399,22 @@ extension TimetableVC: UITableViewDelegate, UITableViewDataSource {
 
         switch dayStatus {
         case "present":
-            let progress = getTimeProgress(startTime: item.start_time ?? "", endTime: item.end_time ?? "")
-                cell.progressBar.setProgress(0.0, animated: false) // Force reset
-                cell.progressBar.setProgress(Float(progress), animated: true)
-                cell.CheckImgview.image = progress >= 1.0 ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
-                cell.progressBar.progressTintColor = progress >= 1.0 ? .systemGreen : .systemBlue
+            cell.progrssView.setProgress(0.0, animated: false)
+            cell.progrssView.setProgress(Float(progress), animated: true)
+            cell.CheckImgview.image = progress >= 1.0 ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
 
         case "past":
+            cell.progrssView.setProgress(1.0, animated: false)
             cell.CheckImgview.image = UIImage(systemName: "checkmark.circle.fill")
-            cell.progressBar.setProgress(1.0, animated: false)
-            cell.progressBar.progressTintColor = .systemGreen
 
         case "future":
+            cell.progrssView.setProgress(0.0, animated: false)
             cell.CheckImgview.image = UIImage(systemName: "circle")
-            cell.progressBar.setProgress(0.0, animated: false)
-            cell.progressBar.progressTintColor = .lightGray
 
         default:
             break
         }
+
 
         let colour = indexPath.row % colours.count
         cell.DetailsView.backgroundColor = UIColor(named: colours[colour])
