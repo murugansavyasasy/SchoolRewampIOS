@@ -4,13 +4,19 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PageVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PageVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="A8T-KF-7cm" id="DRX-nE-bVt"/>
+                <outlet property="NameLbl" destination="jeH-VP-nlZ" id="xcb-qR-0ZD"/>
+                <outlet property="StandardLbl" destination="MeO-ZL-eEb" id="ERe-fE-kY8"/>
+                <outlet property="presentView" destination="d76-F2-mit" id="I0Q-cR-ngy"/>
+                <outlet property="segmentController" destination="lsr-uv-y4I" id="ZEA-z7-0yt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,12 +24,100 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NjU-5y-ciN">
+                    <rect key="frame" x="0.0" y="114" width="393" height="704"/>
+                    <subviews>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lsr-uv-y4I">
+                            <rect key="frame" x="20" y="10" width="353" height="41"/>
+                            <color key="backgroundColor" name="Color"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="G4S-vM-faV"/>
+                            </constraints>
+                            <segments>
+                                <segment title="Create"/>
+                                <segment title="Reports"/>
+                            </segments>
+                            <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="segmentChanged:" destination="-1" eventType="valueChanged" id="5xY-kf-1rn"/>
+                            </connections>
+                        </segmentedControl>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d76-F2-mit">
+                            <rect key="frame" x="0.0" y="60" width="393" height="644"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="0.59502748242851833" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="d76-F2-mit" secondAttribute="trailing" id="304-FV-9fr"/>
+                        <constraint firstItem="d76-F2-mit" firstAttribute="top" secondItem="lsr-uv-y4I" secondAttribute="bottom" constant="10" id="48o-K8-WvK"/>
+                        <constraint firstAttribute="trailing" secondItem="lsr-uv-y4I" secondAttribute="trailing" constant="20" id="BT4-Nd-fGc"/>
+                        <constraint firstItem="d76-F2-mit" firstAttribute="leading" secondItem="NjU-5y-ciN" secondAttribute="leading" id="Xp6-fv-HKM"/>
+                        <constraint firstAttribute="bottom" secondItem="d76-F2-mit" secondAttribute="bottom" id="YPE-LC-1nO"/>
+                        <constraint firstItem="lsr-uv-y4I" firstAttribute="leading" secondItem="NjU-5y-ciN" secondAttribute="leading" constant="20" id="bhp-bP-7xR"/>
+                        <constraint firstItem="lsr-uv-y4I" firstAttribute="top" secondItem="NjU-5y-ciN" secondAttribute="top" constant="10" id="t2O-Oe-er0"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8T-KF-7cm">
+                    <rect key="frame" x="0.0" y="59" width="193" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="LCZ-gP-kOu"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Event/HolyDays" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="5Kf-cI-pRR"/>
+                    </connections>
+                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1gC-TL-YPn">
+                    <rect key="frame" x="215.66666666666663" y="59" width="167.33333333333337" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeH-VP-nlZ">
+                            <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MeO-ZL-eEb">
+                            <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19.666666666666671" id="Mpp-OV-AyY"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NjU-5y-ciN" secondAttribute="trailing" id="7JT-Sb-C77"/>
+                <constraint firstItem="NjU-5y-ciN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="M0c-XJ-xv7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="A8T-KF-7cm" secondAttribute="trailing" constant="200" id="QLX-Vr-7Dh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1gC-TL-YPn" secondAttribute="trailing" constant="10" id="ZVs-X4-RBd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="A8T-KF-7cm" secondAttribute="top" id="g0C-mr-4bs"/>
+                <constraint firstItem="NjU-5y-ciN" firstAttribute="top" secondItem="1gC-TL-YPn" secondAttribute="bottom" constant="10" id="oLO-YV-zgj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="1gC-TL-YPn" secondAttribute="top" id="pII-ne-ztA"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NjU-5y-ciN" secondAttribute="bottom" id="wCd-iC-EbY"/>
+                <constraint firstItem="A8T-KF-7cm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wTS-o4-AC8"/>
+            </constraints>
             <point key="canvasLocation" x="138" y="20"/>
         </view>
     </objects>
     <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="Color">
+            <color red="0.88599997758865356" green="0.9570000171661377" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

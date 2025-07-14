@@ -9,9 +9,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamTmTblVCViewController" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamTmTblVCViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="sideTv" destination="GDv-gG-9Ti" id="zdj-UN-t4x"/>
+                <outlet property="examCVC" destination="ay4-uF-MFI" id="hg1-Ys-miQ"/>
                 <outlet property="tv" destination="zp7-BQ-emi" id="mAH-hp-vNK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,36 +24,42 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hDl-9k-U6U">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="5Di-UL-sCz">
-                            <rect key="frame" x="15" y="5" width="363" height="56"/>
+                        <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="5Di-UL-sCz">
+                            <rect key="frame" x="15" y="5" width="363" height="0.0"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="56" id="KCY-cH-5dF"/>
+                                <constraint firstAttribute="height" id="KCY-cH-5dF"/>
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GDv-gG-9Ti">
-                            <rect key="frame" x="5" y="71" width="95" height="669"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ay4-uF-MFI">
+                            <rect key="frame" x="10" y="10" width="373" height="35"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="95" id="6CB-5N-vE8"/>
+                                <constraint firstAttribute="height" constant="35" id="ePk-Y7-wj3"/>
                             </constraints>
-                        </tableView>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="R6F-gQ-YJy">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zp7-BQ-emi">
-                            <rect key="frame" x="108" y="71" width="277" height="669"/>
+                            <rect key="frame" x="10" y="45" width="373" height="695"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="zp7-BQ-emi" firstAttribute="top" secondItem="5Di-UL-sCz" secondAttribute="bottom" constant="10" id="08Y-W5-CrB"/>
                         <constraint firstItem="5Di-UL-sCz" firstAttribute="leading" secondItem="hDl-9k-U6U" secondAttribute="leading" constant="15" id="18x-gx-9Hv"/>
-                        <constraint firstItem="GDv-gG-9Ti" firstAttribute="top" secondItem="5Di-UL-sCz" secondAttribute="bottom" constant="10" id="2MQ-B2-mxH"/>
-                        <constraint firstAttribute="bottom" secondItem="GDv-gG-9Ti" secondAttribute="bottom" constant="19" id="BW9-Z5-1q7"/>
+                        <constraint firstAttribute="trailing" secondItem="ay4-uF-MFI" secondAttribute="trailing" constant="10" id="5vs-Mk-cGc"/>
                         <constraint firstItem="5Di-UL-sCz" firstAttribute="top" secondItem="hDl-9k-U6U" secondAttribute="top" constant="5" id="KMI-aa-coD"/>
-                        <constraint firstAttribute="trailing" secondItem="zp7-BQ-emi" secondAttribute="trailing" constant="8" id="Rbl-0D-mUa"/>
+                        <constraint firstItem="ay4-uF-MFI" firstAttribute="leading" secondItem="hDl-9k-U6U" secondAttribute="leading" constant="10" id="Oud-4n-jDw"/>
+                        <constraint firstItem="zp7-BQ-emi" firstAttribute="top" secondItem="ay4-uF-MFI" secondAttribute="bottom" id="Oyt-KR-xXU"/>
+                        <constraint firstAttribute="trailing" secondItem="zp7-BQ-emi" secondAttribute="trailing" constant="10" id="Rbl-0D-mUa"/>
+                        <constraint firstItem="zp7-BQ-emi" firstAttribute="leading" secondItem="hDl-9k-U6U" secondAttribute="leading" constant="10" id="X82-t9-QL8"/>
+                        <constraint firstItem="ay4-uF-MFI" firstAttribute="top" secondItem="hDl-9k-U6U" secondAttribute="top" constant="10" id="a0c-6o-fW9"/>
                         <constraint firstAttribute="bottom" secondItem="zp7-BQ-emi" secondAttribute="bottom" constant="19" id="nWw-BH-tRd"/>
-                        <constraint firstItem="GDv-gG-9Ti" firstAttribute="leading" secondItem="hDl-9k-U6U" secondAttribute="leading" constant="5" id="ntM-nI-V15"/>
-                        <constraint firstItem="zp7-BQ-emi" firstAttribute="leading" secondItem="GDv-gG-9Ti" secondAttribute="trailing" constant="8" id="yQt-fF-1qC"/>
                         <constraint firstAttribute="trailing" secondItem="5Di-UL-sCz" secondAttribute="trailing" constant="15" id="ydH-6k-FWX"/>
                     </constraints>
                 </view>

@@ -12,54 +12,35 @@ class TimetableTv: UITableViewCell {
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var TimeLbl: UILabel!
     @IBOutlet weak var DetailsView: UIView!
-    @IBOutlet weak var ProgressView: UIView!
-    @IBOutlet weak var ProgrssviewHeight: NSLayoutConstraint!
     @IBOutlet weak var CheckImgview: UIImageView!
     @IBOutlet weak var SubjectLbl: UILabel!
     @IBOutlet weak var StaffNameLbl: UILabel!
     @IBOutlet weak var DurationLbl: UILabel!
+    @IBOutlet weak var hrsType: UILabel!
     var animated = false
-    
+    @IBOutlet weak var progressBar: UIProgressView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+
+        progressBar.progressTintColor = .systemGreen
+        progressBar.trackTintColor = .lightGray
+
+        progressBar.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+
+        progressBar.layer.cornerRadius = 2
+        progressBar.clipsToBounds = true
+        progressBar.subviews.forEach { $0.layer.cornerRadius = 2 }
+
         DetailsView.layer.cornerRadius = 10
+        hrsType.layer.cornerRadius = 8
+        hrsType.clipsToBounds = true
         DetailsView.layer.borderWidth = 0.5
         DetailsView.layer.borderColor = UIColor.gray.cgColor
-       // ProgrssviewHeight.constant = 0
-        ProgressView.backgroundColor = .systemGreen
-        
+        progressBar.setProgress(0.0, animated: false)
         TimeLbl.setFont(style: .title, size: FontSize.TitleSize)
         SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
         StaffNameLbl.setFont(style: .body, size: FontSize.BodySize)
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func animateProgressVertically() {
-        
-        if animated == false {
-            
-            animated = true
-            // Ensure the progress view height starts at 0
-            self.ProgrssviewHeight.constant = 0
-            self.layoutIfNeeded() // Apply the initial state immediately
-            
-            // Calculate the target height for the animation
-            let startY = CheckImgview.frame.maxY
-            let targetHeight = cellview.frame.maxY - startY + 15
-            
-            // Animate the height change
-            UIView.animate(withDuration: 3.0, animations: {
-                self.ProgrssviewHeight.constant = targetHeight
-                self.layoutIfNeeded() // Trigger the animation
-            })
-        }
-    }
-
 }

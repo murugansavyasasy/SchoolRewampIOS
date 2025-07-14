@@ -90,7 +90,8 @@
                     <rect key="frame" x="0.0" y="119" width="393" height="699"/>
                     <subviews>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9jJ-bT-VKq">
-                            <rect key="frame" x="5" y="5" width="383" height="41"/>
+                            <rect key="frame" x="20" y="5" width="353" height="41"/>
+                            <color key="backgroundColor" name="Color"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="ogA-tY-Rpp"/>
                             </constraints>
@@ -112,10 +113,10 @@
                         <constraint firstAttribute="bottom" secondItem="kZe-CL-dcm" secondAttribute="bottom" id="4Z9-3e-vCN"/>
                         <constraint firstItem="kZe-CL-dcm" firstAttribute="leading" secondItem="kpQ-Ae-08f" secondAttribute="leading" id="4mL-Oq-761"/>
                         <constraint firstItem="9jJ-bT-VKq" firstAttribute="top" secondItem="kpQ-Ae-08f" secondAttribute="top" constant="5" id="FSk-iN-GA8"/>
-                        <constraint firstAttribute="trailing" secondItem="9jJ-bT-VKq" secondAttribute="trailing" constant="5" id="Vjd-uc-avl"/>
+                        <constraint firstAttribute="trailing" secondItem="9jJ-bT-VKq" secondAttribute="trailing" constant="20" id="Vjd-uc-avl"/>
                         <constraint firstAttribute="trailing" secondItem="kZe-CL-dcm" secondAttribute="trailing" id="Yyh-dG-Lvc"/>
                         <constraint firstItem="kZe-CL-dcm" firstAttribute="top" secondItem="9jJ-bT-VKq" secondAttribute="bottom" constant="5" id="tpp-5b-26J"/>
-                        <constraint firstItem="9jJ-bT-VKq" firstAttribute="leading" secondItem="kpQ-Ae-08f" secondAttribute="leading" constant="5" id="wjz-AT-tRq"/>
+                        <constraint firstItem="9jJ-bT-VKq" firstAttribute="leading" secondItem="kpQ-Ae-08f" secondAttribute="leading" constant="20" id="wjz-AT-tRq"/>
                     </constraints>
                 </view>
             </subviews>
@@ -135,6 +136,9 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="Color">
+            <color red="0.88599997758865356" green="0.9570000171661377" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="ParentClr">
             <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

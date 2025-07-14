@@ -10,15 +10,13 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClassTimeTableViewController" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClassTimeTableViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="NameLbl" destination="MBF-9e-ndq" id="y7N-Pq-63G"/>
                 <outlet property="StandardLbl" destination="zgu-F5-xnr" id="5lI-4e-k7c"/>
                 <outlet property="backBtn" destination="A9X-vZ-3nR" id="wlR-RR-URf"/>
                 <outlet property="bgView" destination="qan-a5-OQD" id="9eA-RA-ybx"/>
                 <outlet property="cv" destination="hKd-yG-qqU" id="yE7-FB-zPl"/>
-                <outlet property="dateLBl" destination="160-Qu-MUg" id="idm-9k-SC7"/>
-                <outlet property="dayLbl" destination="8yN-YL-tHc" id="hTp-Pp-7Dl"/>
                 <outlet property="tv" destination="vXR-99-UVe" id="1kj-0L-szA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -86,42 +84,15 @@
                                 <constraint firstItem="1N3-Fy-YR2" firstAttribute="top" secondItem="qan-a5-OQD" secondAttribute="top" constant="10" id="y2k-Gb-Uk6"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmT-LP-u9T">
-                            <rect key="frame" x="0.0" y="120" width="393" height="40"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yN-YL-tHc">
-                                    <rect key="frame" x="10" y="10" width="41.333333333333336" height="20"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="160-Qu-MUg">
-                                    <rect key="frame" x="61.333333333333329" y="10" width="41.333333333333329" height="20"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="160-Qu-MUg" secondAttribute="bottom" constant="10" id="1rd-XT-Sjg"/>
-                                <constraint firstItem="160-Qu-MUg" firstAttribute="leading" secondItem="8yN-YL-tHc" secondAttribute="trailing" constant="10" id="BgP-xQ-PTK"/>
-                                <constraint firstItem="8yN-YL-tHc" firstAttribute="top" secondItem="OmT-LP-u9T" secondAttribute="top" constant="10" id="Dn6-cC-46g"/>
-                                <constraint firstAttribute="bottom" secondItem="8yN-YL-tHc" secondAttribute="bottom" constant="10" id="Ne2-Jx-ITS"/>
-                                <constraint firstItem="160-Qu-MUg" firstAttribute="top" secondItem="OmT-LP-u9T" secondAttribute="top" constant="10" id="bj3-RA-3AW"/>
-                                <constraint firstAttribute="height" constant="40" id="m2C-cN-3Zc"/>
-                                <constraint firstItem="8yN-YL-tHc" firstAttribute="leading" secondItem="OmT-LP-u9T" secondAttribute="leading" constant="10" id="yEG-t0-x1V"/>
-                            </constraints>
-                        </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vXR-99-UVe">
-                            <rect key="frame" x="0.0" y="170" width="393" height="589"/>
+                            <rect key="frame" x="0.0" y="110" width="393" height="649"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hKd-yG-qqU">
-                            <rect key="frame" x="0.0" y="60" width="393" height="50"/>
+                            <rect key="frame" x="0.0" y="60" width="393" height="40"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="lnd-ak-0us"/>
+                                <constraint firstAttribute="height" constant="40" id="lnd-ak-0us"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="f1t-Pk-rxj">
                                 <size key="itemSize" width="128" height="128"/>
@@ -133,16 +104,13 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="OmT-LP-u9T" firstAttribute="top" secondItem="hKd-yG-qqU" secondAttribute="bottom" constant="10" id="1Ea-qT-9EE"/>
                         <constraint firstAttribute="trailing" secondItem="vXR-99-UVe" secondAttribute="trailing" id="2vT-NT-lHg"/>
                         <constraint firstAttribute="trailing" secondItem="qan-a5-OQD" secondAttribute="trailing" id="4PU-EC-Tfv"/>
                         <constraint firstItem="hKd-yG-qqU" firstAttribute="leading" secondItem="4h6-7q-dYm" secondAttribute="leading" id="5k0-9B-MNQ"/>
                         <constraint firstItem="hKd-yG-qqU" firstAttribute="top" secondItem="qan-a5-OQD" secondAttribute="bottom" constant="10" id="DxA-PC-Te6"/>
-                        <constraint firstItem="vXR-99-UVe" firstAttribute="top" secondItem="OmT-LP-u9T" secondAttribute="bottom" constant="10" id="GlC-cV-MAw"/>
+                        <constraint firstItem="vXR-99-UVe" firstAttribute="top" secondItem="hKd-yG-qqU" secondAttribute="bottom" constant="10" id="KPN-lA-Is6"/>
                         <constraint firstItem="qan-a5-OQD" firstAttribute="top" secondItem="4h6-7q-dYm" secondAttribute="top" id="LsI-H1-uNE"/>
                         <constraint firstAttribute="trailing" secondItem="hKd-yG-qqU" secondAttribute="trailing" id="QDg-zZ-HfC"/>
-                        <constraint firstItem="OmT-LP-u9T" firstAttribute="leading" secondItem="4h6-7q-dYm" secondAttribute="leading" id="R4b-Vu-old"/>
-                        <constraint firstAttribute="trailing" secondItem="OmT-LP-u9T" secondAttribute="trailing" id="XKO-pS-OCI"/>
                         <constraint firstAttribute="bottom" secondItem="vXR-99-UVe" secondAttribute="bottom" id="XSC-ba-zfw"/>
                         <constraint firstItem="vXR-99-UVe" firstAttribute="leading" secondItem="4h6-7q-dYm" secondAttribute="leading" id="fJu-bX-dr3"/>
                         <constraint firstItem="qan-a5-OQD" firstAttribute="leading" secondItem="4h6-7q-dYm" secondAttribute="leading" id="r4L-Kc-oV6"/>

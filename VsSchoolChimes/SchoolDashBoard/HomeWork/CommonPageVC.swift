@@ -96,12 +96,6 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
             print("Index out of bounds")
             return
         }
-       
-//        if #available(iOS 14.0, *) {
-//            if let page2 = pages[index] as? SenderHomeWorkVC {
-//                page2.apiCall()
-//            }
-//        }
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
 

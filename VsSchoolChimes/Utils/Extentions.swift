@@ -507,60 +507,23 @@ extension UILabel {
         return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
 }
-//func downloadFile(from urlString: String, folderName: String, fileName: String, completion: ((Result<URL, Error>) -> Void)? = nil) {
-//    guard let fileURL = URL(string: urlString) else {
-//        print("❌ Invalid URL string.")
-//        completion?(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
-//        return
-//    }
-//    
-//    let fileManager = FileManager.default
-//    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-//    let folderURL = documentsURL.appendingPathComponent(folderName, isDirectory: true)
-//    let destinationURL = folderURL.appendingPathComponent(fileName)
-//    
-//    // Ensure folder exists
-//    do {
-//        if !fileManager.fileExists(atPath: folderURL.path) {
-//            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true)
-//            print("📁 Created folder at: \(folderURL.path)")
-//        }
-//    } catch {
-//        print("❌ Could not create folder: \(error.localizedDescription)")
-//        completion?(.failure(error))
-//        return
-//    }
-//    
-//    // Download task
-//    let task = URLSession.shared.downloadTask(with: fileURL) { tempLocalURL, response, error in
-//        if let error = error {
-//            print("❌ Download failed: \(error.localizedDescription)")
-//            completion?(.failure(error))
-//            return
-//        }
-//        
-//        guard let tempLocalURL = tempLocalURL else {
-//            let noFileError = NSError(domain: "", code: -2, userInfo: [NSLocalizedDescriptionKey: "Temp file not found"])
-//            print("❌ No temp file URL")
-//            completion?(.failure(noFileError))
-//            return
-//        }
-//        
-//        do {
-//            if fileManager.fileExists(atPath: destinationURL.path) {
-//                try fileManager.removeItem(at: destinationURL)
-//            }
-//            try fileManager.moveItem(at: tempLocalURL, to: destinationURL)
-//            print("✅ File saved to: \(destinationURL.path)")
-//            completion?(.success(destinationURL))
-//        } catch {
-//            print("❌ File saving failed: \(error.localizedDescription)")
-//            completion?(.failure(error))
-//        }
-//    }
-//    
-//    task.resume()
-//}
+extension UIView {
+    func addTopAndBottomBorders(color: UIColor, thickness: CGFloat = 0.2) {
+        // Remove old borders (if any)
+        self.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+
+        let topBorder = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: thickness))
+        topBorder.backgroundColor = color
+        topBorder.tag = 999
+        self.addSubview(topBorder)
+
+        let bottomBorder = UIView(frame: CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness))
+        bottomBorder.backgroundColor = color
+        bottomBorder.tag = 999
+        self.addSubview(bottomBorder)
+    }
+}
+
 extension DateFormatter {
     func convertDate(_ dateString: String, fromFormat: String = "dd-MM-yyyy", toFormat: String = "dd MMM yyyy") -> String? {
         self.dateFormat = fromFormat

@@ -196,19 +196,6 @@ struct classTimeTableStrings {
     static var toTimeArr = [ "9 AM",  "11 AM", "1 PM",  "3 PM",  "5 PM",  "7 PM", "9 PM", "11 PM"]
     static let timeGet = "10 AM"
     
-    
-    static var timetable : [SubItem] = [
-        SubItem.init(subName: "Maths", subDuration: "30 minutes", techer: "Viji"),
-        SubItem.init(subName: "Science", subDuration: "45 minutes", techer: "Banumathi"),
-        SubItem.init(subName: "History", subDuration: "2 hours", techer: "Priya"),
-        SubItem.init(subName: "English", subDuration: "1 hour", techer: "Keerthana"),
-
-        SubItem.init(subName: "English", subDuration: "1 hour", techer: "Seetha"),
-        SubItem.init(subName: "PET", subDuration: "40 minutes", techer: "Padma"),
-        SubItem.init(subName: "Tamil", subDuration: "50 minutes", techer: "Thangam"),
-        SubItem.init(subName: "Social Science", subDuration: "35 minutes", techer: "Suchithra")
-        ]
-        
 }
 
 class MenuTapbar{

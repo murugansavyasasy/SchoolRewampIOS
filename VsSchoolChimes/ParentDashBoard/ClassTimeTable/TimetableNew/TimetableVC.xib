@@ -9,10 +9,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimetableVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimetableVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="Srh-ts-hOe" id="Bte-Do-7n7"/>
+                <outlet property="NameLbl" destination="ygT-5b-IL6" id="H3p-Ud-OVn"/>
+                <outlet property="StandardLbl" destination="CzM-Ec-hXI" id="yGD-ua-uGf"/>
                 <outlet property="bgview" destination="CLS-XZ-Sv7" id="6pv-h6-I76"/>
                 <outlet property="cv" destination="trQ-OE-sTx" id="Fbo-cQ-JAo"/>
+                <outlet property="noDataImg" destination="eR7-9h-jm4" id="rqy-C8-C2X"/>
+                <outlet property="noDataLbl" destination="hG6-mF-cWf" id="JlQ-Xy-fe1"/>
                 <outlet property="tv" destination="hjb-Ke-B1U" id="ozt-6f-6EG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -83,16 +88,28 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DqC-B0-kkG">
                             <rect key="frame" x="0.0" y="50" width="393" height="709"/>
                             <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="eR7-9h-jm4">
+                                    <rect key="frame" x="8" y="58" width="377" height="300"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="hiF-SK-5H8"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Record Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-mF-cWf">
+                                    <rect key="frame" x="8" y="368" width="377" height="20.333333333333314"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hjb-Ke-B1U">
-                                    <rect key="frame" x="8" y="78" width="377" height="623"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <rect key="frame" x="8" y="58" width="377" height="643"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <sections/>
                                 </tableView>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="trQ-OE-sTx">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="70"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="70" id="npP-Oo-kNK"/>
+                                        <constraint firstAttribute="height" constant="50" id="npP-Oo-kNK"/>
                                     </constraints>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="gma-ky-rLY">
                                         <size key="itemSize" width="128" height="128"/>
@@ -104,12 +121,18 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstItem="hG6-mF-cWf" firstAttribute="leading" secondItem="eR7-9h-jm4" secondAttribute="leading" id="1Pf-pi-Ubh"/>
+                                <constraint firstItem="eR7-9h-jm4" firstAttribute="trailing" secondItem="hjb-Ke-B1U" secondAttribute="trailing" id="Cyt-h3-zQP"/>
+                                <constraint firstItem="hG6-mF-cWf" firstAttribute="trailing" secondItem="eR7-9h-jm4" secondAttribute="trailing" id="Dkh-vx-9Do"/>
                                 <constraint firstItem="trQ-OE-sTx" firstAttribute="top" secondItem="DqC-B0-kkG" secondAttribute="top" id="Kfb-fn-QfD"/>
                                 <constraint firstItem="hjb-Ke-B1U" firstAttribute="leading" secondItem="DqC-B0-kkG" secondAttribute="leading" constant="8" id="QEp-qc-V80"/>
+                                <constraint firstItem="hG6-mF-cWf" firstAttribute="top" secondItem="eR7-9h-jm4" secondAttribute="bottom" constant="10" id="QdC-wJ-b2I"/>
                                 <constraint firstAttribute="trailing" secondItem="trQ-OE-sTx" secondAttribute="trailing" id="SAo-1s-DHr"/>
                                 <constraint firstItem="hjb-Ke-B1U" firstAttribute="top" secondItem="trQ-OE-sTx" secondAttribute="bottom" constant="8" id="Wel-sj-1Nh"/>
                                 <constraint firstAttribute="bottom" secondItem="hjb-Ke-B1U" secondAttribute="bottom" constant="8" id="YMp-2N-FwN"/>
+                                <constraint firstItem="eR7-9h-jm4" firstAttribute="top" secondItem="hjb-Ke-B1U" secondAttribute="top" id="ZMw-LV-gFg"/>
                                 <constraint firstAttribute="trailing" secondItem="hjb-Ke-B1U" secondAttribute="trailing" constant="8" id="d7K-B6-ghY"/>
+                                <constraint firstItem="eR7-9h-jm4" firstAttribute="leading" secondItem="hjb-Ke-B1U" secondAttribute="leading" id="hqq-fc-RzX"/>
                                 <constraint firstItem="trQ-OE-sTx" firstAttribute="leading" secondItem="DqC-B0-kkG" secondAttribute="leading" id="w6x-Zg-aen"/>
                             </constraints>
                         </view>
@@ -138,6 +161,7 @@
         </view>
     </objects>
     <resources>
+        <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

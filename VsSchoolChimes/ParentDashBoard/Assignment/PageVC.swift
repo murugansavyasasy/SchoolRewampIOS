@@ -2,103 +2,109 @@
 //  PageVC.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 21/11/24.
+//  Created by chandhru on 21/11/24.
 //
-
 import UIKit
 
-protocol DidSelectDelegate: AnyObject { // Use `AnyObject` for class-only conformance
-    func select(index: Int, value: String?,Img:[String],Pdf:String?,text:String?,type:String)
+protocol DidSelectDelegate: AnyObject {
+    func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String)
 }
 
-class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, DidSelectDelegate{
-    func backtohome() {
-        guard 0 >= 0 && 0 < pages.count else {
-            print("Index out of bounds")
-            return
-        }
-        let currentIndex = viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-        let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
+class PageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
-        // Using UIView.animate to adjust the duration of the transition
-        UIView.animate(withDuration: 2.5, animations: {
-            // Set the target view controller with the desired animation
-            self.setViewControllers([self.pages[0]], direction: direction, animated: true, completion: nil)
-        })
-    }
-    
-
+    // MARK: - IBOutlets
+    @IBOutlet weak var presentView: UIView!
+    @IBOutlet weak var segmentController: UISegmentedControl!
+    @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
+    // MARK: - Properties
+    private var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
-    
-    let imgs: [String] = [ "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388508860765.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388492478013.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388509938245.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388496770445.png"]
+    var studentDetails = UserDefaultFileManager.get_child_Details()
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Set delegate and data source
-        self.delegate = self
-        self.dataSource = self
-
-        // Load pages
-        loadPages()
-
-        // Set the initial page
-        if let firstPage = pages.first {
-            setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
+        setupPageViewController()
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        if let first = pages.first {
+            pageViewController.setViewControllers([first], direction: .forward, animated: true)
         }
-        for view in self.view.subviews {
-               if let scrollView = view as? UIScrollView {
-                   scrollView.isUserInteractionEnabled = false
-               }
-           }
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        for gesture in self.gestureRecognizers {
+        view
+            .applyGradient(
+                colors: [Colornames.gradientgreen,Colornames.gradientBlue],
+                startPoint: CGPoint(x: 1, y: 0.2),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+    }
+    // MARK: - Setup Page View Controller
+    private func setupPageViewController() {
+        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
+
+        // Disable swipe
+        for view in pageViewController.view.subviews {
+            if let scrollView = view as? UIScrollView {
+                scrollView.isScrollEnabled = false
+            }
+        }
+        for gesture in pageViewController.gestureRecognizers {
             gesture.isEnabled = false
         }
+
+        // Add as child
+        addChild(pageViewController)
+        pageViewController.view.frame = presentView.bounds
+        presentView.addSubview(pageViewController.view)
+        pageViewController.didMove(toParent: self)
     }
 
-    func loadPages() {
-        // Initialize view controllers from nibs
-        let page1 = AssignmentListVC(nibName: "AssignmentListVC", bundle: nil)
-        page1.didSelectDelegate = self // Assign delegate
-
-        let page2 = ImageShowVc(nibName: nil, bundle: nil)
-        page2.delegate = self
-
-        // Add pages to the array
-        pages = [page1, page2]
+    // MARK: - Public Configure
+    func configure(with viewControllers: [UIViewController]) {
+        self.pages = viewControllers
     }
 
-    // MARK: - DidSelectDelegate Method
-    
-    func select(index: Int, value: String?,Img:[String],Pdf:String?,text:String?,type:String) {
-        // Ensure the index is within bounds
-        guard index >= 0 && index < pages.count else {
-            print("Index out of bounds")
-            return
-        }
+    // MARK: - Segment Control
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        let index = sender.selectedSegmentIndex
+        guard index >= 0 && index < pages.count else { return }
 
-        // Check if the target view controller can accept the value
-        if let value = value,
-           let targetVC = pages[index] as? ImageShowVc {
-            targetVC.pageName = "Assigment"
-//            targetVC.imageURL = imgs
-            targetVC.type = Int(value) ?? 0
-        }
-        // Determine navigation direction based on current index
-        let currentIndex = viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
 
-        // Using UIView.animate to adjust the duration of the transition
-        UIView.animate(withDuration: 2.5, animations: {
-            // Set the target view controller with the desired animation
-            self.setViewControllers([self.pages[index]], direction: direction, animated: true, completion: nil)
-        })
+        pageViewController.setViewControllers([pages[index]], direction: direction, animated: true)
     }
 
+    // MARK: - Back Action
+    @IBAction func backBtn(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 
-    // MARK: - UIPageViewController Data Source Methods
+    // MARK: - Navigation Helpers
+    func goToPage(index: Int) {
+        guard index >= 0 && index < pages.count else { return }
 
+        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
+
+        pageViewController.setViewControllers([pages[index]], direction: direction, animated: true)
+    }
+
+    func backtohome() {
+        goToPage(index: 0)
+    }
+
+    // MARK: - Page View Controller Data Source
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let currentIndex = pages.firstIndex(of: viewController), currentIndex > 0 else {
             return nil
@@ -113,16 +119,13 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
         return pages[currentIndex + 1]
     }
 
-    // Optional: Page Indicator
+    // HIDE Page Indicator (dot control)
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return pages.count
+        return 0 // Set to 0 to HIDE dot indicators
     }
 
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let currentVC = viewControllers?.first,
-              let currentIndex = pages.firstIndex(of: currentVC) else {
-            return 0
-        }
-        return currentIndex
+        return 0
     }
 }
+

@@ -107,6 +107,14 @@ struct ServiceUrl{
     static let interaction_student_ask_question = "comm/api/interaction/student-ask-question" 
     
     static let interaction_staff_get_questions = "comm/api/interaction/staff-get-questions"
+    static let lms_api_time_table_get_schedule = "lms/api/time-table/get-schedule"
+    static let comm_api_certificate_request_list = "comm/api/certificate/request-list"
+    static let comm_api_certificate_types = "comm/api/certificate/types"
+    static let comm_api_certificate_send_request = "comm/api/certificate/send-request"
+    static let exam_api_exam_get_exams = "exam/api/exam/get-exams"
+    static let exam_api_exam_list = "exam/api/exam/list"
+    static let exam_api_exam_view_marks = "exam/api/exam/view-marks"
+    static let exam_api_get_progress_card = "exam/api/get-progress-card"
     
 }
 

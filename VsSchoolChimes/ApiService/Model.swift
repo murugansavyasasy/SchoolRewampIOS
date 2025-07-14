@@ -1223,3 +1223,115 @@ struct ManagemantMessageData: Codable {
     let duration: Int?
     var isExpand:Bool?
     }
+//MARK: CLASS TIMETABLE
+struct TimetableResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [TimetableHour]?
+}
+
+struct TimetableHour: Codable {
+    let name: String?
+    let start_time: String?
+    let end_time: String?
+    let duration: String?
+    let order: Int?
+    let hour_type: String?
+    let subject_name: String?
+    let staff_name: String?
+}
+
+//MARK: Certificate
+struct CertificateResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [CertificateRequest]?
+}
+
+struct CertificateRequest: Codable {
+    let url: String?
+    let type: String?
+    let reason: String?
+    let urgency_level: String?
+    let requested_on: String?
+    let status: String?
+    let issued_on: String?
+}
+//MARK: DetailedExamList
+struct DetailedExamListResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [DetailedExamItem]?
+}
+
+struct DetailedExamItem: Codable {
+    var id: String?
+    var name: String?
+    var description: String?
+    var created_on: String?
+    var exam_subject_details: [SubjectDetail]?
+}
+
+struct SubjectDetail: Codable {
+    var subject_name: String?
+    var exam_date: String?
+    var exam_session: String?
+    var max_mark: String?
+    var syllabus: String?
+}
+
+//MARK: ExamList
+struct ExamListResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [ExamItem]?
+}
+
+struct ExamItem: Codable {
+    var id: String?
+    var name: String?
+    var mark_id: String?
+    var is_unread: Bool?
+}
+//MARK: ExamMarks
+struct ExamMarksResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [ExamData]?
+}
+
+struct ExamData: Codable {
+    var subject_marks: [SubjectMark]?
+    var assessments: [Assessment]?
+    var groups: [Groups]?
+    var is_unread: Bool?
+}
+
+struct SubjectMark: Codable {
+    var name: String?
+    var split: [SplitMark]?
+    var max_mark: String?
+    var mark_obtained: String?
+}
+
+struct SplitMark: Codable {
+    var name: String?
+    var max_mark: String?
+    var mark_obtained: String?
+}
+
+struct Assessment: Codable {
+    var name: String?
+    var value: String?
+}
+
+struct Groups: Codable {
+    var name: String?
+    var mark: String?
+    var subgroups: [SubGroup]?
+}
+
+struct SubGroup: Codable {
+    var name: String?
+    var mark: String?
+}

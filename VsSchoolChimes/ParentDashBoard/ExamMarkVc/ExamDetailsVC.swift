@@ -18,7 +18,7 @@ class ExamDetailsVC: UIViewController {
     let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
     let secondChildVC = ExameMarVC()
     var currentChildVC: UIViewController?
-    
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +27,8 @@ class ExamDetailsVC: UIViewController {
         
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        NameLbl.text = studentDetails?.name ?? ""
         currentChildVC = firstChildVC
         add(asChildViewController: firstChildVC)
         
@@ -77,16 +78,8 @@ class ExamDetailsVC: UIViewController {
     
     @IBAction func BackAct(_ sender: Any) {
         
-        if SegmentController.selectedSegmentIndex == 1{
-            if secondChildVC.tv.isHidden == false {
-                secondChildVC.tv.isHidden = true
-                secondChildVC.cv.isHidden = false
-            }
-            else {
+       
                 dismiss(animated: true)
-            }
-        }else{
-            dismiss(animated: true)
-        }
+     
     }
 }

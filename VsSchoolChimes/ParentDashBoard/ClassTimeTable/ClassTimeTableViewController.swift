@@ -1,201 +1,155 @@
+//import UIKit
 //
-//  ClassTimeTableViewController.swift
-//  VsSchoolChimes
+//class ClassTimeTableViewController: UIViewController,UITableViewDataSource, UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+//    
+//    @IBOutlet weak var cv: UICollectionView!
+//    @IBOutlet weak var NameLbl: UILabel!
+//    @IBOutlet weak var StandardLbl: UILabel!
+//    @IBOutlet weak var tv: UITableView!
+//    @IBOutlet weak var backBtn: UIButton!
+//    @IBOutlet weak var bgView: UIView!
+//    
+//    var getTimes: String!
+//    var getCurrentDay: String!
+//    var timeTable: [TimetableHour]?
+//    var selectedIndex: Int = 0 // default to 0 (Monday)
+//    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        // Setup
+//        tv.dataSource = self
+//        tv.delegate = self
+//        cv.dataSource = self
+//        cv.delegate = self
+//        
+//        // Register XIBs
+//        cv.register(UINib(nibName: CellConfingName.WeekDaysNameCollectionViewCell, bundle: nil),
+//                    forCellWithReuseIdentifier: CellConfingName.WeekDaysNameCollectionViewCell)
+//        tv.register(UINib(nibName: CellConfingName.ClassTimeTableTableViewCell, bundle: nil),
+//                    forCellReuseIdentifier: CellConfingName.ClassTimeTableTableViewCell)
+//        
+//        // Styling
+//        backBtn.setTitle(ReceiverMenuItems.ClassTimetable.translated(), for: .normal)
+//        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+//        backBtn.applyBackButton()
+//        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+//        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+//        
+//   
+//    }
+//    
+//    override func viewDidLayoutSubviews() {
+//        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+//                           startPoint: CGPoint(x: 1, y: 0.5),
+//                           endPoint: CGPoint(x: 0, y: 0.5))
+//        bgView.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+//                             startPoint: CGPoint(x: 1, y: 0.5),
+//                             endPoint: CGPoint(x: 0, y: 0.5))
+//    }
+//    
+//    // MARK: - API Call
+//    
+//    func daily_collectionApi(type: Int) {
+//        APIService.shared.makeApi(
+//            url: ServiceUrl.lms_api_time_table_get_schedule,
+//            parameters: ["day_id": type],
+//            type: ApitTypeSringFile.GET,
+//            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+//        ) { [weak self] (result: Result<TimetableResponse, Error>) in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let response):
+//                    self?.tv.isHidden = false
+//                    self?.timeTable = response.data
+//                    
+//                    self?.tv.reloadData()
+//                case .failure(let error):
+//                    print("API Error:", error)
+//                }
+//            }
+//        }
+//    }
+//    
+//    // MARK: - Table View
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return timeTable?.count ?? 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let item = timeTable?[indexPath.row],
+//              let cell = tableView.dequeueReusableCell(
+//                withIdentifier: CellConfingName.ClassTimeTableTableViewCell,
+//                for: indexPath
+//              ) as? ClassTimeTableTableViewCell else {
+//            return UITableViewCell()
+//        }
+//        
+//        cell.fromLbl.text = item.start_time
+//        cell.toLbl.text = item.end_time
+//        cell.subNameLbl.text = item.subject_name
+//        cell.durationNameLbl.text = item.duration
+//        cell.staffNameLbl.text = item.name
+//        
+//        if hasCurrentTimeCrossed(endTimeString: item.end_time) {
+//            cell.animateView.backgroundColor = .gray
+//            cell.fromImg.image = UIImage(named: "circle")
+//        } else {
+//            cell.animateView.backgroundColor = .green
+//            cell.fromImg.image = UIImage(named: "round")
+//        }
+//        
+//        return cell
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//    
+//    // MARK: - Collection View
+//    
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return classTimeTableStrings.weekDaysShort.count
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(
+//            withReuseIdentifier: CellConfingName.WeekDaysNameCollectionViewCell,
+//            for: indexPath
+//        ) as! WeekDaysNameCollectionViewCell
+//        
+//        let day = classTimeTableStrings.weekDaysShort[indexPath.row]
+//        cell.weekDaysNameLbl.text = day
+//        
+//        if indexPath.row == selectedIndex {
+//            cell.bgView.backgroundColor = UIColor(named: "priortitClr1") // Highlighted
+//        } else {
+//            cell.bgView.backgroundColor = UIColor(named: "PriorityClr2")
+//        }
+//        
+//        return cell
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        selectedIndex = indexPath.row
+//        daily_collectionApi(type: selectedIndex)
+//        collectionView.reloadData()
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 150, height: 150)
+//    }
+//    
+//    // MARK: - Actions
+//    
+//    @IBAction func back(_ sender: UIButton) {
+//        dismiss(animated: true)
+//    }
+//}
 //
-//  Created by Apple on 12/17/24.
+//// MARK: - Helper Functions
 //
-
-import UIKit
-
-class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
-    
-  
-    
-    @IBOutlet weak var cv: UICollectionView!
-    @IBOutlet weak var dayLbl: UILabel!
-    @IBOutlet weak var dateLBl: UILabel!
-    @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var bgView: UIView!
-    var getTimes : String!
-    var getCurrentDay : String!
-   
-    let dateFormatter1 = DateFormatter()
-    
-   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tv.dataSource = self
-        tv.delegate = self
-        cv.dataSource = self
-        cv.delegate = self
-        
-        let currentDate = Date()
-
-        let calendar = Calendar.current
-        let day = calendar.component(.day, from: currentDate)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss" 
-        dateFormatter1.dateFormat = "h a"
-
-        cv.register(UINib(nibName: CellConfingName.WeekDaysNameCollectionViewCell, bundle: nil), forCellWithReuseIdentifier:  CellConfingName.WeekDaysNameCollectionViewCell)
-    
-        dateFormatter.dateFormat = "EEEE"
-        let currentDayName = dateFormatter.string(from: Date())
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        let formattedDate = dateFormatter.string(from: currentDate)
-        dayLbl.text = formattedDate
-        dateLBl.text = currentDayName
-        getCurrentDay = currentDayName
-        print("day",day)
-        backBtn.setTitle(ReceiverMenuItems.ClassTimetable.translated(), for: .normal)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        backBtn.applyBackButton()
-        tv.register(UINib(nibName: CellConfingName.ClassTimeTableTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTimeTableTableViewCell)
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-            
-    }
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("classTimeTableStrings.timeArr.count",classTimeTableStrings.timeArr.count)
-        print("classTimeTableStrings.TotimeArr.count",classTimeTableStrings.toTimeArr.count)
-        return classTimeTableStrings.timeArr.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ClassTimeTableTableViewCell, for: indexPath) as! ClassTimeTableTableViewCell
-        cell.fromLbl.text = classTimeTableStrings.timeArr[indexPath.row]
-        cell.toLbl.text = classTimeTableStrings.toTimeArr[indexPath.row]
-        
-//        classTimeTableStrings.timeArr.append(contentsOf: classTimeTableStrings.toTimeArr)
-        let item = classTimeTableStrings.timetable[indexPath.row]
-        cell.staffNameLbl.text = item.techer
-        cell.durationNameLbl.text  = item.subDuration
-        cell.subNameLbl.text  = item.subName
-               
-    
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h a"
-
-        let compareTime = convertToDate("11 AM")!
-
-        let filteredTimes = classTimeTableStrings.timeArr.filter { time in
-            if let timeDate = convertToDate(time) {
-                return timeDate < compareTime
-            }
-            return false
-        }
-
-        var result = [String: String]()
-        for time in classTimeTableStrings.timeArr {
-            print("timtimeArre",time)
-            if filteredTimes.contains(time) {
-                result[time] = "blue"
-            } else {
-                result[time] = "red"
-            }
-        }
-
-        
-        for (time, color) in result {
-            let colorString = color
-            let color = colorFromString(colorString)
-            cell.animateView.backgroundColor = color
-            
-            
-           if cell.animateView.backgroundColor == .red {
-               cell.fromImg.image = UIImage(named: "circle")
-            }else{
-                cell.fromImg.image = UIImage(named: "round")
-            }
-                
-        }
-        
-        
-        return cell
-        
-    }
-    
-    func colorFromString(_ colorString: String) -> UIColor {
-        switch colorString.lowercased() {
-        case "blue":
-            return .blue
-        case "red":
-            return .red
-        default:
-            return .clear
-        }
-    }
-    func convertToDate(_ time: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h a"
-        return formatter.date(from: time)
-    }
-
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return classTimeTableStrings.weekDays.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:CellConfingName.WeekDaysNameCollectionViewCell , for: indexPath)as! WeekDaysNameCollectionViewCell
-        
-        cell.weekDaysNameLbl.text = classTimeTableStrings.weekDays[indexPath.row]
-        if classTimeTableStrings.weekDays[indexPath.row] ==  getCurrentDay {
-            cell.bgView.backgroundColor = UIColor(named: "priortitClr1")
-        } else {
-            cell.bgView.backgroundColor = UIColor(named: "PriorityClr2")
-        }
-        
-        
-        
-        let tapGes = TimeTableGesture(target: self, action: #selector(timeTableTap))
-        tapGes.bgView = cell.bgView
-        cell.bgView.addGestureRecognizer(tapGes)
 //
-        
-        return cell
-        
-    }
-    
-    
-    
-    @IBAction func timeTableTap( ges : TimeTableGesture) {
-        ges.bgView.backgroundColor = UIColor(named: "Priority")
-        tv.reloadData()
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 150)
-    }
-    
-    @IBAction func back(_ sender: UIButton) {
-        dismiss(animated: true)
-    }
-
-}
-struct SubItem {
-    let subName: String!
-    var subDuration: String!
-    var techer: String!
-}
-
-
-
-class TimeTableGesture : UITapGestureRecognizer {
-    var bgView : UIView!
-}

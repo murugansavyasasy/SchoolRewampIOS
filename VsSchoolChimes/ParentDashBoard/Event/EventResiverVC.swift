@@ -12,28 +12,19 @@ class EventResiverVC: UIViewController, SelectNotice{
     
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var segment: UISegmentedControl!
-    @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var TitleHederLbl: UILabel!
-    @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var searchHeight: NSLayoutConstraint!
     
     @IBOutlet weak var noDataImg: UIImageView!
     
-    @IBOutlet weak var StandardLbl: UILabel!
- 
     var titleLbl = "Event"
     var button1 = "Event/Holidays".translated()
     var button2 = "Holiday".translated()
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
     let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
-    var section = 0
     var shouldShowFooter = true
     var event:[EventList]?
-    var eventHolidayData : [EventHolidayData]?
     let dateFormatter = DateFormatter()
     var playIndex : Int = 0
     var studentDetails = UserDefaultFileManager.get_child_Details()
@@ -41,43 +32,24 @@ class EventResiverVC: UIViewController, SelectNotice{
     var FilteredData: [EventList]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        NameLbl.text = studentDetails?.name ?? ""
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        backBtn.setTitle(button1.translated(), for: .normal)
-        backBtn.applyBackButton()
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.applyRightTxt()
         searchbar.delegate = self
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         searchbar.addDoneButton()
-        uiConficration()
         GetEvent()
         tabelViewRegister()
     }
     
-    @IBAction func backbtn(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        view
-            .applyGradient(
-                colors: [Colornames.gradientgreen,Colornames.gradientBlue],
-                startPoint: CGPoint(x: 1, y: 0.2),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-//        bgView
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        
+//        view
 //            .applyGradient(
 //                colors: [Colornames.gradientgreen,Colornames.gradientBlue],
-//                startPoint: CGPoint(x: 1, y: 0.5),
+//                startPoint: CGPoint(x: 1, y: 0.2),
 //                endPoint: CGPoint(x: 0, y: 0.5)
 //            )
-        
-    }
+//    }
     
     //MARK: Cell Registration
     func tabelViewRegister() {
@@ -92,44 +64,24 @@ class EventResiverVC: UIViewController, SelectNotice{
         tableview.register(nib3, forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
     
-    func uiConficration(){
-        TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
-    }
-   
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
         
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-               
-               // Create and configure the gradient layer
-               let gradientLayer = CAGradientLayer()
+        
+        // Create and configure the gradient layer
+        let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colours
-               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-               gradientLayer.frame = button.bounds
-               gradientLayer.cornerRadius = button.layer.cornerRadius
-               
-               // Insert the gradient layer into the button's layer
-               button.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = button.layer.cornerRadius
+        
+        // Insert the gradient layer into the button's layer
+        button.layer.insertSublayer(gradientLayer, at: 0)
         
     }
-    @IBAction func back(_ sender: UIButton) {
-        dismiss(animated: true)
-    }
-    @IBAction func selectionController(_ sender: UISegmentedControl) {
-        section = sender.selectedSegmentIndex
-        if sender.selectedSegmentIndex != 0{
-            shouldShowFooter = false
-            event_holiday()
-            
-        }else{
-            shouldShowFooter = true
-            GetEvent()
-        }
-        
-       
-    }
-  
+    
     func GetEvent() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
@@ -161,7 +113,7 @@ class EventResiverVC: UIViewController, SelectNotice{
                         }else{
                             self.noDataLbl.isHidden = true
                             self.noDataImg.isHidden = true
-//                            self.searchHeight.constant = 56
+                            //                            self.searchHeight.constant = 56
                             self.searchHeight.constant = 0
                             self.tableview.isHidden = false
                         }
@@ -180,180 +132,92 @@ class EventResiverVC: UIViewController, SelectNotice{
             }
     }
     
-    
-    func event_holiday() {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
-        APIService.shared.makeApi(
-            url: ServiceUrl.school_event_view_holidays,
-            parameters: [:],
-            type: ApitTypeSringFile.GET,
-            token:studentDetails?.access_token ?? "") { [self] (
-                result: Result<EventHolidayResponse,
-                Error>
-            ) in
-                DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
-                    
-                    switch result {
-                    case .success(let successMessage):
-                        self.eventHolidayData = successMessage.data
-                        print("eventHolidayData",eventHolidayData)
-                        self.tableview.reloadData()
-                        if self.eventHolidayData?.count == 0{
-                            self.noDataLbl.text = successMessage.message
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            
-                            self.tableview.isHidden = true
-                            self.searchbar.isHidden = true
-                            self.searchHeight.constant = 0
-                        }else{
-                            if self.eventHolidayData?.count != 0{
-                                let vc = HolidayVC()
-                                vc.eventHolidayData = self.eventHolidayData
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            }
-                            self.noDataLbl.isHidden = true
-                            self.noDataImg.isHidden = true
-                            self.searchHeight.constant = 0
-                            self.searchbar.isHidden = true
-                            self.tableview.isHidden = false
-                        }
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        if self.event?.count == 0{
-                            self.noDataLbl.text = error.localizedDescription
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            self.tableview.isHidden = true
-                            self.searchbar.isHidden = true
-                        }
-                        
-                    }
-                }
-            }
-    }
-
 }
 
 //MARK: Tableview Functions
 @available(iOS 14.0, *)
 extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.section == 0 ? FilteredData?.count ?? 0:eventHolidayData?.count ?? 0
+        return FilteredData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        if section == 0{
+        let event = FilteredData?[indexPath.row]
+        if event?.file_path.first?.type?.uppercased() == "VIDEO"{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+            cell.selectionStyle = .none
+            cell.confic(event?.file_path.first?.url ?? "")
+            cell.descriptContent.setupExpandable(text: event?.description ?? "")
+            cell.descriptContent.onExpandableTap = {
+                cell.descriptContent.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+            cell.newImg.isHidden = true
+            cell.datelbl.isHidden = true
+            cell.dateAndtimeLbl.isHidden = false
+            let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
+            cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
+                event?.time ?? ""
+            ) + " , " + "   🗓️   " + formattedDateString
+            cell.titleLbl.text = event?.title
+            cell.subjectName.text = "📍" + (event?.venue ?? "")
+            cell.subjectName.isHidden = false
+            cell.forwardBtn.isHidden = true
             
-            let event = FilteredData?[indexPath.row]
-            if event?.file_path.first?.type?.uppercased() == "VIDEO"{
-                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-                cell.selectionStyle = .none
-                cell.confic(event?.file_path.first?.url ?? "")
-                cell.descriptContent.setupExpandable(text: event?.description ?? "")
-                cell.descriptContent.onExpandableTap = {
-                    cell.descriptContent.isExpanded.toggle()
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
+            cell.configure(indexPath: indexPath)
+            
+            // Handle the tap event with closure
+            cell.onVideoTapped = { tappedIndexPath in
+                if let item = self.FilteredData?[tappedIndexPath.row]{
+                    self.playVideo(for: item)
                 }
-                cell.newImg.isHidden = true
-                cell.datelbl.isHidden = true
-                cell.dateAndtimeLbl.isHidden = false
-                let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
-                cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
-                    event?.time ?? ""
-                ) + " , " + "   🗓️   " + formattedDateString
-                cell.titleLbl.text = event?.title
-                cell.subjectName.text = "📍" + (event?.venue ?? "")
-                cell.subjectName.isHidden = false
-                cell.forwardBtn.isHidden = true
-               
-                cell.configure(indexPath: indexPath)
-
-                    // Handle the tap event with closure
-                cell.onVideoTapped = { tappedIndexPath in
-                    if let item = self.FilteredData?[tappedIndexPath.row]{
-                        self.playVideo(for: item)
-                    }
-                }
-                return cell
-            }else{
-                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
-                cell.selectionStyle = .none
-                cell.ImageCollectionView.isHidden = true
-                cell.withofImageView.constant = 0
-                cell.dateLblHeight.constant = 0
-                // Configure cell data
-                cell.subjectName.text = "📍" + (event?.venue ?? "")
-                cell.topics.text = event?.title ?? ""
-                cell.eventTimeLbl.isHidden = false
-                let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
-                cell.eventTimeLbl.text = "🕒 Event starts at: " + (
-                    event?.time ?? ""
-                ) + " , " + "   🗓️   " + formattedDateString
-                cell.dateLble.isHidden = true
-//                cell.dateLble.text = ""
-                cell.forwordBtn.isHidden = true
-                cell.SelectBtnHeight.constant = 0
-                cell.newView.isHidden = true
-                // Load image if available
-                if let urls = event?.file_path, urls.count != 0{
-                    cell.ImageCollectionView.isHidden = false
-                    cell.pageViewController.isHidden = urls.count <= 1
-                    cell.CvHeight.constant = 100
-                    cell.loadImage(urls: urls)
-                }
-                let contentText = event?.description ?? ""
-                cell.descriptionLbl.setupExpandable(text: contentText)
-                
-                
-//                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
-//                cell.newView.isHidden = contentText.count <= 100
-                    cell.descriptionLbl.onExpandableTap = { [weak tableView] in
-                    cell.descriptionLbl.isExpanded.toggle()
-                    cell.newView.isHidden = true
-                    tableView?.beginUpdates()
-                    tableView?.endUpdates()
-                }
-                
-                cell.cellview.layoutIfNeeded()
-                return cell
             }
-//            cell.CvHeight.constant = 0
-           
+            return cell
         }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
-            cell.TakenLbl.text = eventHolidayData?[indexPath.row].name
-            let dateStr = eventHolidayData?[indexPath.row].date ?? ""
-            let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "yyyy-MM-dd"
-
-            if let date = inputFormatter.date(from: dateStr) {
-                let outputFormatter = DateFormatter()
-                
-                // Get full month name
-                outputFormatter.dateFormat = "MMM"
-                let monthName = outputFormatter.string(from: date)
-                cell.monthLbl.text = monthName
-
-                // Get day only
-                let calendar = Calendar.current
-                let day = calendar.component(.day, from: date)
-                cell.DateLbl.text = "\(day)"
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
+            cell.selectionStyle = .none
+            cell.ImageCollectionView.isHidden = true
+            cell.withofImageView.constant = 0
+            cell.dateLblHeight.constant = 0
+            // Configure cell data
+            cell.subjectName.text = "📍" + (event?.venue ?? "")
+            cell.topics.text = event?.title ?? ""
+            cell.eventTimeLbl.isHidden = false
+            let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
+            cell.eventTimeLbl.text = "🕒 Event starts at: " + (
+                event?.time ?? ""
+            ) + " , " + "   🗓️   " + formattedDateString
+            cell.dateLble.isHidden = true
+            //                cell.dateLble.text = ""
+            cell.forwordBtn.isHidden = true
+            cell.SelectBtnHeight.constant = 0
+            cell.newView.isHidden = true
+            // Load image if available
+            if let urls = event?.file_path, urls.count != 0{
+                cell.ImageCollectionView.isHidden = false
+                cell.pageViewController.isHidden = urls.count <= 1
+                cell.CvHeight.constant = 100
+                cell.loadImage(urls: urls)
             }
-            cell.MonthView.backgroundColor =  UIColor.red1
-            cell.DateView.backgroundColor =  .white
-            cell.DateView.layer.borderWidth = 0.5
-            cell.StatusView.isHidden = true
+            let contentText = event?.description ?? ""
+            cell.descriptionLbl.setupExpandable(text: contentText)
+            
+            
+            //                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
+            //                cell.newView.isHidden = contentText.count <= 100
+            cell.descriptionLbl.onExpandableTap = { [weak tableView] in
+                cell.descriptionLbl.isExpanded.toggle()
+                cell.newView.isHidden = true
+                tableView?.beginUpdates()
+                tableView?.endUpdates()
+            }
+            
+            cell.cellview.layoutIfNeeded()
             return cell
         }
+        //            cell.CvHeight.constant = 0
+        
     }
     
     
@@ -381,12 +245,12 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
         previousOffset = contentOffsetY
     }
     
-   
+    
     
     //MARK: TEXT ADD SEE MORE
     
     
-   
+    
     
     func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
@@ -394,45 +258,45 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     
-//    // Method to load the footer from nib and set it as tableFooterView
-//    func setupTableFooter() {
-//        if shouldShowFooter {
-//            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-//                // Adjust the frame based on your needs.
-//                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
-//                
-//                // Add a tap gesture recognizer to the button to trigger the hide action.
-//                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-//                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-//                footer.SeeMoreBtn.isUserInteractionEnabled = true
-//                
-//                // Set the footer view.
-//                tableview.tableFooterView = footer
-//            }
-//        } else {
-//            tableview.tableFooterView = nil
-//        }
-//    }
-//    
-//    @objc func seeMoreAction() {
-//        print("Footer button tapped. Hiding the footer.")
-//        
-//        // Animate the footer fade-out if desired.
-//        if let footer = tableview.tableFooterView {
-//            UIView.animate(withDuration: 0.3, animations: {
-//                footer.alpha = 0
-//            }, completion: {[self] _ in
-//                // Hide the footer after animation completes.
-//                tableview.tableFooterView = nil
-//                shouldShowFooter = false
-//                
-//                tableview.reloadData()
-//            })
-//        } else {
-//            // In case footer is already nil.
-//            shouldShowFooter = false
-//        }
-//    }
+    //    // Method to load the footer from nib and set it as tableFooterView
+    //    func setupTableFooter() {
+    //        if shouldShowFooter {
+    //            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+    //                // Adjust the frame based on your needs.
+    //                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
+    //
+    //                // Add a tap gesture recognizer to the button to trigger the hide action.
+    //                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+    //                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+    //                footer.SeeMoreBtn.isUserInteractionEnabled = true
+    //
+    //                // Set the footer view.
+    //                tableview.tableFooterView = footer
+    //            }
+    //        } else {
+    //            tableview.tableFooterView = nil
+    //        }
+    //    }
+    //
+    //    @objc func seeMoreAction() {
+    //        print("Footer button tapped. Hiding the footer.")
+    //
+    //        // Animate the footer fade-out if desired.
+    //        if let footer = tableview.tableFooterView {
+    //            UIView.animate(withDuration: 0.3, animations: {
+    //                footer.alpha = 0
+    //            }, completion: {[self] _ in
+    //                // Hide the footer after animation completes.
+    //                tableview.tableFooterView = nil
+    //                shouldShowFooter = false
+    //
+    //                tableview.reloadData()
+    //            })
+    //        } else {
+    //            // In case footer is already nil.
+    //            shouldShowFooter = false
+    //        }
+    //    }
     
 }
 
@@ -445,7 +309,7 @@ extension EventResiverVC: UISearchBarDelegate{
         
         searchbar.resignFirstResponder()
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText.isEmpty {

@@ -20,29 +20,31 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cWj-oK-Y9a">
                         <rect key="frame" x="0.0" y="0.0" width="436" height="237"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHc-pY-21Z">
-                                <rect key="frame" x="10" y="10" width="416" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="J0u-TJ-vEU">
-                                <rect key="frame" x="10" y="41" width="416" height="186"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="186" id="1lf-WR-uCt"/>
-                                </constraints>
-                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iQt-EE-l5b">
+                                <rect key="frame" x="10" y="10" width="416" height="216.33333333333334"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHc-pY-21Z">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="J0u-TJ-vEU">
+                                        <rect key="frame" x="0.0" y="30.333333333333346" width="416" height="186.00000000000003"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="186" id="1lf-WR-uCt"/>
+                                        </constraints>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="J0u-TJ-vEU" secondAttribute="bottom" constant="10" id="7K3-Id-WV0"/>
-                            <constraint firstAttribute="trailing" secondItem="eHc-pY-21Z" secondAttribute="trailing" constant="10" id="B3t-QY-5SN"/>
-                            <constraint firstItem="J0u-TJ-vEU" firstAttribute="leading" secondItem="cWj-oK-Y9a" secondAttribute="leading" constant="10" id="QxR-D1-YHQ"/>
-                            <constraint firstItem="J0u-TJ-vEU" firstAttribute="top" secondItem="eHc-pY-21Z" secondAttribute="bottom" constant="10" id="XOt-4R-och"/>
-                            <constraint firstItem="eHc-pY-21Z" firstAttribute="leading" secondItem="cWj-oK-Y9a" secondAttribute="leading" constant="10" id="hEK-At-lJs"/>
-                            <constraint firstAttribute="trailing" secondItem="J0u-TJ-vEU" secondAttribute="trailing" constant="10" id="oMz-kp-0YP"/>
-                            <constraint firstItem="eHc-pY-21Z" firstAttribute="top" secondItem="cWj-oK-Y9a" secondAttribute="top" constant="10" id="ycL-z0-dbv"/>
+                            <constraint firstItem="iQt-EE-l5b" firstAttribute="top" secondItem="cWj-oK-Y9a" secondAttribute="top" constant="10" id="4Rc-NY-ii2"/>
+                            <constraint firstAttribute="trailing" secondItem="iQt-EE-l5b" secondAttribute="trailing" constant="10" id="8O3-zW-vH0"/>
+                            <constraint firstItem="iQt-EE-l5b" firstAttribute="leading" secondItem="cWj-oK-Y9a" secondAttribute="leading" constant="10" id="ubC-0x-W6u"/>
+                            <constraint firstAttribute="bottom" secondItem="iQt-EE-l5b" secondAttribute="bottom" constant="10.666666666666657" id="z9R-Yf-bOA"/>
                         </constraints>
                     </view>
                 </subviews>

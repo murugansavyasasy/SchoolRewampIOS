@@ -374,9 +374,10 @@ class MenuRedirectHandler {
     }
     
     func receiverAssignmentNavigate(from viewController: UIViewController) {
-        let vc = PageVC(nibName: nil, bundle: nil)
+        let vc = AssignmentListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
+        
     }
     
     func receiverLeaveRequestNavigate(from viewController: UIViewController) {
@@ -432,9 +433,13 @@ class MenuRedirectHandler {
         
     }
     func receiverEvent(from viewController: UIViewController){
-        let vc = EventResiverVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+
+        let pageVC = PageVC(nibName: "PageVC", bundle: nil)  // Make sure your XIB is named PageVC.xib
+            pageVC.modalPresentationStyle = .fullScreen
+            let assignmentVC = EventResiverVC()
+            let imageVC = HolidayVC()
+            pageVC.configure(with: [assignmentVC, imageVC])
+            viewController.present(pageVC, animated: true, completion: nil)
     }
     
     func receiverOnlineNavigate(from viewController: UIViewController) {

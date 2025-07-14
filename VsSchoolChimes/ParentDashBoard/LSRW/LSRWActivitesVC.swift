@@ -10,531 +10,135 @@ import WebKit
 import AVFoundation
 
 @available(iOS 15.0, *)
-class LSRWActivitesVC: UIViewController, AVAudioRecorderDelegate, DeleteImge, UITableViewDataSource, UITableViewDelegate {
+class LSRWActivitesVC: UIViewController {
     
-    @IBOutlet weak var attachmentHeight: NSLayoutConstraint!
-    @IBOutlet weak var subjectView: UIView!
-    @IBOutlet weak var senderView: UIView!
-    @IBOutlet weak var taskTypeView: UIView!
-    @IBOutlet weak var dateView: UIView!
-    @IBOutlet weak var deleteBtn: UIButton!
-    @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
-    @IBOutlet weak var videoWeb: WKWebView!
-    @IBOutlet weak var imageCollection: UICollectionView!
-    @IBOutlet weak var attachmentView: UIView!
-    @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var descriptionLbl: UILabel!
-    @IBOutlet weak var senderLbl: UILabel!
-    @IBOutlet weak var SubjectLbl: UILabel!
-    @IBOutlet weak var typeLbl: UILabel!
-    @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var imageView: UIView!
-    @IBOutlet weak var dateLbl: UILabel!
-    @IBOutlet weak var vicecImg: UIImageView!
-    @IBOutlet weak var timerLbl: UILabel!
-    @IBOutlet weak var waveView: AudioView!
-    @IBOutlet weak var playerView: UIView!
-    @IBOutlet weak var outerplayerView: UIView!
-    @IBOutlet weak var recoderTime: UILabel!
-    @IBOutlet weak var durationLbl: UILabel!
-    @IBOutlet weak var playBtn: UIButton!
-    @IBOutlet weak var testView: UIView!
+    // MARK: - IBOutlets
     @IBOutlet weak var testTable: UITableView!
-    @IBOutlet weak var tableHeight: NSLayoutConstraint!
-    @IBOutlet weak var addAttachmentView: ImageSelection!
-    @IBOutlet weak var recordingView: UIView!
     
     // MARK: - Properties
     var lsrw: LSRW?
-    private let audioManager = AudioManager()
-    private var attachments: [AttachmentItem] = []
-    private var isRecording = false
-    private var playVoiceActive = false
-    private let photoPickManager = PhotoPickerManager.shared
-    private var recordingTimer: Timer?
-    private var recordingStartTime: Date?
-    
+    var captions = ["","","",""]
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupAudio()
-        setupCollectionViews()
         setupTableView()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        audioManager.stopPlayback()
-        audioManager.stopRecording { _, _ in }
-        audioManager.invalidateTimer()
-        recordingTimer?.invalidate()
-        recordingTimer = nil
-        UIApplication.shared.isIdleTimerDisabled = false
-    }
-    
-    // MARK: - Setup Methods
-    private func setupUI() {
-        titleLbl.text = lsrw?.title
-        descriptionLbl.text = lsrw?.description
-        SubjectLbl.text = lsrw?.subject
-        dateLbl.text = lsrw?.submitedOn
-        typeLbl.text = lsrw?.type
-        attachmentView.isHidden = lsrw?.filePath.isEmpty ?? true
-        deleteBtn.isHidden = true
-        configureViews(for: lsrw?.type, fileType: lsrw?.filePath.first?.type)
-        applyShadowAndCornerRadius(to: [playerView, taskTypeView, dateView, subjectView, senderView])
-    }
-    
-    private func configureViews(for taskType: String?, fileType: String?) {
-        let isVideo = fileType == "video"
-        let isAudio = fileType == "audio"
-        
-        videoView.isHidden = !isVideo
-        imageView.isHidden = isVideo || isAudio
-        outerplayerView.isHidden = !isAudio
-        if isAudio, let audioURLString = lsrw?.filePath.first?.url, let audioURL = URL(string: audioURLString) {
-            audioManager.setupPlayer(with: audioURL)
-        }
-        
-        switch taskType {
-        case "listen":
-            recordingView.isHidden = true
-            addAttachmentView.isHidden = true
-            testView.isHidden = true
-        case "read":
-            recordingView.isHidden = true
-            addAttachmentView.isHidden = true
-            testView.isHidden = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.testTable.reloadData()
-                self.updateTableHeight()
-            }
-            imageView.isHidden = false
-        case "write":
-            recordingView.isHidden = true
-            addAttachmentView.isHidden = false
-            testView.isHidden = true
-        case "speak":
-            recordingView.isHidden = false
-            addAttachmentView.isHidden = true
-            testView.isHidden = true
-        default:
-            break
-        }
-    }
-    
-    private func setupAudio() {
-        audioManager.delegate = self
-        audioManager.checkRecordPermission { [weak self] granted in
-            if !granted {
-                DispatchQueue.main.async {
-                    self?.showMicPermissionAlert()
-                }
-            }
-        }
-    }
-    
-    private func setupCollectionViews() {
-        imageCollection.delegate = self
-        imageCollection.dataSource = self
-        addAttachmentView.imageCollectionview.delegate = self
-        addAttachmentView.imageCollectionview.dataSource = self
-        addAttachmentView.imageCollectionview.backgroundColor = .clear
-        
-        let imagePdfCellNib = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
-        imageCollection.register(imagePdfCellNib, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
-        
-        let attachmentCellNib = UINib(nibName: CellConfingName.AttachmentCVCell, bundle: nil)
-        addAttachmentView.imageCollectionview.register(attachmentCellNib, forCellWithReuseIdentifier: CellConfingName.AttachmentCVCell)
-        
-        let imageCellNib = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
-        addAttachmentView.imageCollectionview.register(imageCellNib, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
-        // Update table height after reload
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.attachmentHeight.constant = self.imageCollection.collectionViewLayout.collectionViewContentSize.height
-            self.testTable.reloadData()
-            self.updateTableHeight()
-        }
-        
-        //        self.imageCollection.collectionViewLayout.invalidateLayout()
-        //        self.imageCollection.performBatchUpdates(nil) { _ in
-        //            self.imageCollection.layoutIfNeeded()
-        //            self.attachmentHeight.constant = self.imageCollection.collectionViewLayout.collectionViewContentSize.height
-        //        }
-        setupImageSelection()
-    }
-    private func updateTableHeight() {
-        self.testTable.layoutIfNeeded()
-        self.tableHeight.constant = self.testTable.contentSize.height
-    }
     private func setupTableView() {
         testTable.register(UINib(nibName: "TestTVC", bundle: nil), forCellReuseIdentifier: "TestTVC")
+        testTable.register(UINib(nibName: "RecorderTVC", bundle: nil), forCellReuseIdentifier: "RecorderTVC")
+        testTable.register(UINib(nibName: "AddAttachmentTVC", bundle: nil), forCellReuseIdentifier: "AddAttachmentTVC")
+        testTable.register(UINib(nibName: "LSWTaskTVC", bundle: nil), forCellReuseIdentifier: "LSWTaskTVC")
+        testTable.register(UINib(nibName: "LSWViewAttachmentTVC", bundle: nil), forCellReuseIdentifier: "LSWViewAttachmentTVC")
         testTable.delegate = self
         testTable.dataSource = self
     }
-    
-    private func setupImageSelection() {
-        photoPickManager.onCameraImagePicked = { [weak self] image in
-            guard let self = self else { return }
-            self.addAttachment(.init(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-        }
-        
-        photoPickManager.onImagesPicked = { [weak self] images in
-            guard let self = self else { return }
-            let imageItems = images.map { AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE) }
-            self.addAttachments(imageItems)
-        }
-        
-        photoPickManager.onFilePicked = { [weak self] url in
-            guard let self = self else { return }
-            self.addAttachment(.init(image: nil, imageURL: url.absoluteString, fileType: CommonStringFile.pdf))
-        }
-    }
-    
-    private func applyShadowAndCornerRadius(to views: [UIView]) {
-        views.forEach { view in
-            view.layer.cornerRadius = 8
-            view.layer.shadowColor = UIColor.black.cgColor
-            view.layer.shadowOpacity = 0.2
-            view.layer.shadowOffset = CGSize(width: 0, height: 2)
-            view.layer.shadowRadius = 4
-            view.layer.masksToBounds = false
-        }
-    }
-    
+
     // MARK: - Actions
-    @IBAction private func recorderTapped(_ sender: UIButton) {
-        if isRecording {
-            stopRecording()
-        } else {
-            startRecording()
-        }
-    }
-    
-    private func startRecording() {
-        audioManager.checkRecordPermission { [weak self] granted in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                if granted {
-                    self.recordingStartTime = Date()
-                    self.timerLbl.text = "00:00"
-                    self.recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateRecordingTime), userInfo: nil, repeats: true)
-                    self.audioManager.startRecording()
-                    self.isRecording = true
-                    self.outerplayerView.isHidden = true
-                    self.playBtn.setImage(ImageName.playbutton, for: .normal)
-                    self.vicecImg.image = UIImage.gifImageWithName("Mic")
-                    UIApplication.shared.isIdleTimerDisabled = true
-                } else {
-                    self.showMicPermissionAlert()
-                }
-            }
-        }
-    }
-    
-    private func stopRecording() {
-        recordingTimer?.invalidate()
-        recordingTimer = nil
-        
-        audioManager.stopRecording { [weak self] url, duration in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.isRecording = false
-                self.playBtn.setImage(ImageName.playbutton, for: .normal)
-                self.vicecImg.image = ImageName.mic1
-                self.deleteBtn.isHidden = false
-                self.durationLbl.text = self.formatTime(Double(duration ?? 0))
-                if let url = url {
-                    self.audioManager.setupPlayer(with: url)
-                    self.outerplayerView.isHidden = false
-                }
-                UIApplication.shared.isIdleTimerDisabled = false
-            }
-        }
-    }
-    
-    // MARK: - UPDATE RECORDING DURATION
-    @objc private func updateRecordingTime() {
-        guard let startTime = recordingStartTime else { return }
-        
-        let elapsed = Date().timeIntervalSince(startTime)
-        if elapsed >= 180 {
-            stopRecording()
-            timerLbl.text = "03:00"
-        } else {
-            let minutes = Int(elapsed) / 60
-            let seconds = Int(elapsed) % 60
-            timerLbl.text = String(format: "%02d:%02d", minutes, seconds)
-        }
-    }
-    
-    @IBAction private func playVoice(_ sender: UIButton) {
-        audioManager.togglePlayback { [weak self] isPlaying in
-            DispatchQueue.main.async {
-                self?.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-                self?.playVoiceActive = isPlaying
-                self?.waveView.isAnimating = isPlaying
-            }
-        }
-    }
-    
     @IBAction func submit(_ sender: UIButton) {
         sender.setTitle("Submit", for: .normal)
+        // Handle submit action here
     }
-    
-    @IBAction private func deleteAudio(_ sender: UIButton) {
-        audioManager.deleteRecording()
-        outerplayerView.isHidden = true
-    }
-    
+
     @IBAction private func back(_ sender: UIButton) {
         dismiss(animated: true)
-    }
-    
-    // MARK: - Helpers
-    private func formatTime(_ seconds: Double) -> String {
-        let mins = Int(seconds) / 60
-        let secs = Int(seconds) % 60
-        return String(format: "%02d:%02d", mins, secs)
-    }
-    
-    private func showMicPermissionAlert() {
-        let alert = UIAlertController(
-            title: "Error",
-            message: "Please allow microphone usage from settings",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
-            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(settingsURL)
-            }
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        present(alert, animated: true)
-    }
-    
-    private func addAttachment(_ item: AttachmentItem) {
-        attachments.removeAll { $0.fileType != item.fileType }
-        attachments.append(item)
-        user_inputs.selectedFileType = item.fileType
-        addAttachmentView.imageCollectionview.reloadData()
-        updateCollectionViewHeight()
-    }
-    
-    private func addAttachments(_ items: [AttachmentItem]) {
-        if !items.isEmpty {
-            attachments.removeAll { $0.fileType != items.first?.fileType }
-            attachments.append(contentsOf: items)
-            user_inputs.selectedFileType = items.first?.fileType ?? CommonStringFile.IMAGE
-            addAttachmentView.imageCollectionview.reloadData()
-            updateCollectionViewHeight()
-        }
-    }
-    
-    private func updateCollectionViewHeight() {
-        let totalItems = attachments.count
-        collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
-    }
-}
-// MARK: - DeleteImageDelegate
-@available(iOS 15.0, *)
-extension LSRWActivitesVC: DeleteImge {
-    func deleteImage(index: Int) {
-        guard index < attachments.count else { return }
-        attachments.remove(at: index)
-        addAttachmentView.imageCollectionview.reloadData()
-        updateCollectionViewHeight()
     }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 @available(iOS 15.0, *)
-extension LSRWActivitesVC {
+extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        switch lsrw?.filePath.first?.type {
+//        case "":
+//            <#code#>
+//        case "":
+//            <#code#>
+//        case .none:
+//            <#code#>
+//        case .some(_):
+//            <#code#>
+//        }
         return lsrw?.test.count ?? 0
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
-        if let test = lsrw?.test[indexPath.row] {
-            cell.test = test
-            cell.questionLbl.text = test.question
-            cell.layoutIfNeeded()
-        }
-        self.tableHeight.constant = self.testTable.contentSize.height
-        return cell
-    }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let lsrwType = lsrw?.type.lowercased(),
+              let test = lsrw?.test[indexPath.row] else {
+            return UITableViewCell()
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
+        cell.titleLbl.text = lsrw?.title
+        cell.descriptionLbl.text = lsrw?.description
+        cell.collectionView.reloadData()
+//        switch lsrwType {
+//        case "listen":
+//            switch lsrw?.filePath.first?.type {
+//            case "image":
+//            case "video":
+//            case "audio":
+//            default:
+//                break
+//            }
+//            
+//            return cell
+//
+//        case "read":
+////            if LSWViewAttachmentTVC
+//            switch lsrw?.filePath.first?.type {
+//            case "image":
+//            case "video":
+//            case "audio":
+//            default:
+//                break
+//            }
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
+//            cell.test = test
+//            cell.questionLbl.text = test.question
+//            return cell
+//
+//        case "write":
+//            switch lsrw?.filePath.first?.type {
+//            case "image":
+//            case "video":
+//            case "audio":
+//            default:
+//                break
+//            }
+//            // Use AddAttachmentTVC for file upload (PDF, Image, etc.)
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "AddAttachmentTVC", for: indexPath) as! AddAttachmentTVC
+//            cell.attachments = []
+//            return cell
+//
+//        case "speak":
+//            switch lsrw?.filePath.first?.type {
+//            case "image":
+//            case "video":
+//            case "audio":
+//            default:
+//                break
+//            }
+//            // Use RecorderTVC for audio recording
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "RecorderTVC", for: indexPath) as! RecorderTVC
+//            cell.recoderTime.text = test.question
+//            cell.audioURLString = lsrw?.filePath.first?.url
+//            return cell
+//
+//        default:
+//            // Fallback to TestTVC
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
+//            cell.test = test
+//            cell.questionLbl.text = test.question
+            return cell
+//        }
+    }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-@available(iOS 15.0, *)
-extension LSRWActivitesVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == imageCollection {
-            return lsrw?.filePath.count ?? 0
-        } else {
-            return 1 + attachments.count
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == imageCollection {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-            
-            if let file = lsrw?.filePath[indexPath.row], let fileURL = URL(string: file.url) {
-                let iconName = getFileIconName(for: fileURL)
-                if iconName != "image" {
-                    cell.hide = false
-                    cell.webView.load(URLRequest(url: fileURL))
-                    cell.webView.isHidden = false
-                    cell.imageView.isHidden = true
-                } else {
-                    cell.hide = false
-                    cell.webView.isHidden = true
-                    cell.imageView.isHidden = false
-                    cell.imageView.kf.setImage(with: fileURL, placeholder: ImageName.placeholder)
-                }
-                cell.IndicaterImageView.image = UIImage(named: iconName)
-            }
-            return cell
-        } else {
-            if indexPath.item == 0 {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
-                cell.layer.cornerRadius = 20
-                return cell
-            } else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-                let adjustedIndex = indexPath.item - 1
-                
-                guard adjustedIndex < attachments.count else { return cell }
-                
-                let item = attachments[adjustedIndex]
-                cell.delegate = self
-                cell.deleteBtn.tag = adjustedIndex
-                
-                if let image = item.image {
-                    cell.imageViews.image = image
-                } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                    if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                        cell.imageViews.image = UIImage(named: getFileIconName(for: url))
-                    } else {
-                        cell.imageViews.kf.setImage(with: url)
-                    }
-                } else {
-                    cell.imageViews.image = nil
-                }
-                return cell
-            }
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == imageCollection{
-            let width = (imageCollection.frame.width - 30) / 3
-            return CGSize(width: width, height: 100)
-        }else{
-            let width = (addAttachmentView.imageCollectionview.frame.width - 30) / 3
-            return CGSize(width: width, height: 100)
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard collectionView == addAttachmentView.imageCollectionview else { return }
-        
-        if indexPath.item == 0 {
-            showAttachmentOptions()
-        } else {
-            let adjustedIndex = indexPath.item - 1
-            guard adjustedIndex < attachments.count else { return }
-            
-            let item = attachments[adjustedIndex]
-            guard item.fileType != "video" else { return }
-            
-            let vc = PreviewImageVC()
-            vc.modalPresentationStyle = .fullScreen
-            
-            if item.fileType != CommonStringFile.IMAGE {
-                if let url = item.imageURL, let fileURL = URL(string: url) {
-                    vc.selectedFileURL = fileURL
-                }
-            } else {
-                if let image = item.image {
-                    vc.img = image
-                } else if let urlString = item.imageURL, let url = URL(string: urlString) {
-                    vc.selectedFileURL = url
-                }
-            }
-            vc.type = item.fileType
-            present(vc, animated: true)
-        }
-    }
-    
-    private func showAttachmentOptions() {
-        let alertController = UIAlertController(
-            title: "Select".translated(),
-            message: "Choose an option".translated(),
-            preferredStyle: .actionSheet
-        )
-        
-        alertController.addAction(UIAlertAction(title: "Camera".translated(), style: .default) { [weak self] _ in
-            self?.openCamera()
-        })
-        
-        alertController.addAction(UIAlertAction(title: "Gallery".translated(), style: .default) { [weak self] _ in
-            self?.selectImages()
-        })
-        
-        alertController.addAction(UIAlertAction(title: "Document".translated(), style: .default) { [weak self] _ in
-            self?.selectPDF()
-        })
-        
-        alertController.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
-        present(alertController, animated: true)
-    }
-    
-    private func selectImages() {
-        let imageCount = attachments.filter { $0.fileType == CommonStringFile.IMAGE }.count
-        guard imageCount < 5 else {
-            showLimitReachedAlert()
-            return
-        }
-        photoPickManager.presentPicker(ofType: .gallery(selectionLimit: 5 - imageCount), from: self)
-    }
-    
-    private func openCamera() {
-        let imageCount = attachments.filter { $0.fileType == CommonStringFile.IMAGE }.count
-        guard imageCount < 5 else {
-            showLimitReachedAlert()
-            return
-        }
-        photoPickManager.presentPicker(ofType: .camera, from: self)
-    }
-    
-    private func selectPDF() {
-        let pdfCount = attachments.filter { $0.fileType == CommonStringFile.pdf }.count
-        guard pdfCount < 5 else {
-            showLimitReachedAlert()
-            return
-        }
-        photoPickManager.presentPicker(ofType: .file, from: self)
-        photoPickManager.limiSelection = 5 - pdfCount
-    }
-    
-    private func showLimitReachedAlert() {
-        let alert = CustomAlert()
-        alert.showAlert(title: "", message: "Already reached your limit".translated(), on: self)
-    }
-}
 
 // MARK: - AudioManager
 protocol AudioManagerDelegate: AnyObject {
@@ -1138,106 +742,4 @@ class AudioManager: NSObject, AVAudioRecorderDelegate {
     }
 }
 
-// MARK: - Updated LSRWActivitesVC Integration
-@available(iOS 15.0, *)
-extension LSRWActivitesVC {
-    
-    private func setupAudioWithWaveform() {
-        audioManager.delegate = self
-        
-        // Setup level monitoring for waveform
-        audioManager.onLevelUpdate = { [weak self] level in
-            DispatchQueue.main.async {
-                self?.waveView.updateRecordingLevel(level)
-            }
-        }
-        
-        // Setup waveform callbacks
-        waveView.onProgressChanged = { [weak self] progress in
-            // Handle seeking during playback
-            guard let self = self, let player = self.audioManager.player else { return }
-            let duration = CMTimeGetSeconds(player.currentItem?.duration ?? .zero)
-            let seekTime = CMTime(seconds: Double(progress) * duration, preferredTimescale: 600)
-            player.seek(to: seekTime)
-        }
-        
-        waveView.onSeekingStarted = { [weak self] in
-            // Pause during seeking
-            self?.audioManager.player?.pause()
-        }
-        
-        waveView.onSeekingEnded = { [weak self] in
-            // Resume if was playing
-            if self?.playVoiceActive == true {
-                self?.audioManager.player?.play()
-            }
-        }
-    }
-    
-    // Update your existing recording methods
-    private func startRecordingWithWaveform() {
-        audioManager.checkRecordPermission { [weak self] granted in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                if granted {
-                    self.recordingStartTime = Date()
-                    self.timerLbl.text = "00:00"
-                    self.recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateRecordingTime), userInfo: nil, repeats: true)
-                    
-                    // Start waveform recording animation
-                    self.waveView.startRecording()
-                    
-                    self.audioManager.startRecording()
-                    self.isRecording = true
-                    self.outerplayerView.isHidden = true
-                    self.playBtn.setImage(ImageName.playbutton, for: .normal)
-                    self.vicecImg.image = UIImage.gifImageWithName("Mic")
-                    UIApplication.shared.isIdleTimerDisabled = true
-                } else {
-                    self.showMicPermissionAlert()
-                }
-            }
-        }
-    }
-    
-    private func stopRecordingWithWaveform() {
-        recordingTimer?.invalidate()
-        recordingTimer = nil
-        
-        waveView.stopRecording()
-        
-        audioManager.stopRecording { [weak self] url, duration in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.isRecording = false
-                self.playBtn.setImage(ImageName.playbutton, for: .normal)
-                self.vicecImg.image = ImageName.mic1
-                self.durationLbl.text = self.formatTime(Double(duration ?? 0))
-                if let url = url {
-                    self.audioManager.setupPlayer(with: url)
-                    self.waveView.loadAudio(from: url)
-                    self.outerplayerView.isHidden = false
-                }
-                UIApplication.shared.isIdleTimerDisabled = false
-            }
-        }
-    }
-}
 
-// MARK: - Enhanced AudioManagerDelegate
-@available(iOS 15.0, *)
-extension LSRWActivitesVC: AudioManagerDelegate {
-    func audioManagerDidFinishPlaying() {
-        playBtn.setImage(ImageName.playbutton, for: .normal)
-        playVoiceActive = false
-        waveView.pausePlayback()
-        waveView.setProgress(0, animated: true)
-    }
-    
-    func audioManagerDidUpdateTime(currentTime: Double, duration: Double) {
-        guard duration.isFinite && duration > 0 else { return }
-        let progress = currentTime / duration
-        waveView.setProgress(CGFloat(progress), animated: false)
-        durationLbl.text = "\(formatTime(currentTime)) / \(formatTime(duration))"
-    }
-}
