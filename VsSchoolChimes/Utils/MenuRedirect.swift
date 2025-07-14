@@ -216,8 +216,7 @@ class MenuRedirectHandler {
     }
     
     func Senderchat(from viewController: UIViewController){
-        let vc = InteractionVC(nibName: nil, bundle: nil)
-        vc.passvalue = 2
+        let vc = IntractwithStudentVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

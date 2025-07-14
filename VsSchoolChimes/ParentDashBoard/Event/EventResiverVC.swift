@@ -213,10 +213,10 @@ class EventResiverVC: UIViewController, SelectNotice{
                             self.searchHeight.constant = 0
                         }else{
                             if self.eventHolidayData?.count != 0{
-                                let vc = HolidayVC()
-                                vc.eventHolidayData = self.eventHolidayData
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
+//                                let vc = HolidayVC()
+//                                vc.eventHolidayData = self.eventHolidayData
+//                                vc.modalPresentationStyle = .fullScreen
+//                                self.present(vc, animated: true)
                             }
                             self.noDataLbl.isHidden = true
                             self.noDataImg.isHidden = true

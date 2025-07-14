@@ -57,7 +57,7 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         pageViewController.delegate = self
         pageViewController.dataSource = self
-
+        
         addChild(pageViewController)
         presentView.addSubview(pageViewController.view)
 

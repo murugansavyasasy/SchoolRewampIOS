@@ -124,18 +124,18 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     func pickVideoFromGallery(){
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        } 
+//        if #available(iOS 15.0, *) {
+//            showLottieProgressLoader(animationName: "loader (2)")
+//        } 
         videoPicker?.pickVideo()
     }
 
     
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
-        if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
-        }
+//        if #available(iOS 15.0, *) {
+//            self.hideLottieProgressLoader()
+//        }
         videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         uploadAttachmentView.isHidden = true

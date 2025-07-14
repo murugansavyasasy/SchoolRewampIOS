@@ -10,7 +10,7 @@ import UIKit
 
 struct ServiceUrl{
     static var baseurl = "http://apiv7.schoolchimes.net/"
-    static var Pacukt_baseurl = "http://api.pauket.com/api/partner/"
+    static var Pacukt_baseurl = "https://api.pauket.com/api/partner/"
     static var report_url = ""
     static var token = ""
     static var awsBucketName = ""
@@ -70,10 +70,10 @@ struct ServiceUrl{
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
-    static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type" 
+    static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
     static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
     static let  stud_attd_api_attendance_get_absentees_count_by_date = "stud-attd/api/attendance/get-absentees-count-by-date"
-    static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date" 
+    static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date"
     static let   comm_assignment_send_assignment = "comm/api/assignment/send-assignment"
     static let comm_api_assignment_submit_assignment = "comm/api/assignment/submit-assignment"
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
@@ -85,7 +85,6 @@ struct ServiceUrl{
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
     static let comm_api_assignment_submissions_list_archive = "comm/api/assignment/submissions-list-archive"
-  
     static let lms_api_lesson_plan_staff_report = "lms/api/lesson-plan/staff-report"
     static let lms_api_lesson_plan_view = "lms/api/lesson-plan/view"
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"
@@ -102,11 +101,11 @@ struct ServiceUrl{
     static let comm_api_assignment_delete = "comm/api/assignment/delete"
     static let comm_api_msg_from_management_get_messages_staff = "comm/api/msg-from-management/get-messages-staff"
     static let comm_api_msg_from_management_get_messages_staff_archive = "comm/api/msg-from-management/get-messages-staff-archive"
-    static let interaction_staff_details_for_chat = "comm/api/interaction/staff-details-for-chat" 
-    static let interaction_get_staff_answers = "comm/api/interaction/get-staff-answers" 
-    static let interaction_student_ask_question = "comm/api/interaction/student-ask-question" 
-    
+    static let interaction_staff_details_for_chat = "comm/api/interaction/staff-details-for-chat"
+    static let interaction_get_staff_answers = "comm/api/interaction/get-staff-answers"
+    static let interaction_student_ask_question = "comm/api/interaction/student-ask-question"
     static let interaction_staff_get_questions = "comm/api/interaction/staff-get-questions"
+    static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"
     
 }
 
@@ -154,6 +153,7 @@ struct Menu_id{
     static let  AbsenteeismReport = 1
     static let  LessonPlan = 19
     static let  MessageFromManagement = 22
+    static let  senderChat = 17
 }
 struct TargetTypes{
     

@@ -503,13 +503,11 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderCommunicationNavigate(from: self)
                 
             case 8:
-                
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
                 }else{
                     MenuRedirect.senderDailyCollectionNavigate(from: self)
                 }
-                
             case 9:
                 MenuRedirect.senderEventNavigate(from: self)
                 
@@ -526,7 +524,11 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     MenuRedirect.senderHomeWorkNavigate(from: self)
                 }
             case 17:
-                MenuRedirect.Senderchat(from: self)
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.Senderchat(from: self)
+                }
             case 18:
                 MenuRedirect.senderLeaveRequestNavigate(from: self)
             case 19:

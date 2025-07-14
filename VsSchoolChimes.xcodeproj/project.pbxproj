@@ -310,6 +310,8 @@
 		8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848108792E164CFE004A0F87 /* VideoPreviewVc.xib */; };
 		848108B22E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848108B02E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift */; };
 		848108B32E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848108B12E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib */; };
+		848108BE2E1CFD13004A0F87 /* attendanceRepTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848108BC2E1CFD13004A0F87 /* attendanceRepTv.swift */; };
+		848108BF2E1CFD13004A0F87 /* attendanceRepTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848108BD2E1CFD13004A0F87 /* attendanceRepTv.xib */; };
 		848126D82D91820500BE6979 /* CountryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126D72D91820500BE6979 /* CountryListVC.xib */; };
 		848126D92D91820500BE6979 /* CountryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126D62D91820500BE6979 /* CountryListVC.swift */; };
 		848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126DB2D9182E100BE6979 /* CountryListCVC.xib */; };
@@ -1014,6 +1016,8 @@
 		848108792E164CFE004A0F87 /* VideoPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPreviewVc.xib; sourceTree = "<group>"; };
 		848108B02E1BF05A004A0F87 /* punchIntTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = punchIntTvcellTableViewCell.swift; sourceTree = "<group>"; };
 		848108B12E1BF05A004A0F87 /* punchIntTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = punchIntTvcellTableViewCell.xib; sourceTree = "<group>"; };
+		848108BC2E1CFD13004A0F87 /* attendanceRepTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = attendanceRepTv.swift; sourceTree = "<group>"; };
+		848108BD2E1CFD13004A0F87 /* attendanceRepTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = attendanceRepTv.xib; sourceTree = "<group>"; };
 		848126D62D91820500BE6979 /* CountryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListVC.swift; sourceTree = "<group>"; };
 		848126D72D91820500BE6979 /* CountryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListVC.xib; sourceTree = "<group>"; };
 		848126DA2D9182E100BE6979 /* CountryListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListCVC.swift; sourceTree = "<group>"; };
@@ -2480,6 +2484,8 @@
 				849ACFFA2D1A8369002DEC07 /* ReciverAttendanceReportVC.xib */,
 				849ACFFB2D1A8369002DEC07 /* ReciverAttendReportTV.swift */,
 				849ACFFC2D1A8369002DEC07 /* ReciverAttendReportTV.xib */,
+				848108BC2E1CFD13004A0F87 /* attendanceRepTv.swift */,
+				848108BD2E1CFD13004A0F87 /* attendanceRepTv.xib */,
 			);
 			path = ReciverAttendanceReport;
 			sourceTree = "<group>";
@@ -3770,6 +3776,7 @@
 				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
+				848108BF2E1CFD13004A0F87 /* attendanceRepTv.xib in Resources */,
 				8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */,
 				84BB5EAF2D11337E00AD0C87 /* ExamsListCVCell.xib in Resources */,
 				849970B42CF8750B00800B07 /* AssignmentListVC.xib in Resources */,
@@ -4287,6 +4294,7 @@
 				8435EA172DE9C6B200F02CB9 /* videoPickAndPlay.swift in Sources */,
 				84B57EBB2D1437EC00E0EA29 /* EventResiverVC.swift in Sources */,
 				8474CBA22D9A6F6000DA0951 /* RecipientCVcell.swift in Sources */,
+				848108BE2E1CFD13004A0F87 /* attendanceRepTv.swift in Sources */,
 				18D718AD2D0D477900E9EDA3 /* deleteTV.swift in Sources */,
 				18D718AE2D0D477900E9EDA3 /* DeleteResp.swift in Sources */,
 				18D718AF2D0D477900E9EDA3 /* PreviousCvcell.swift in Sources */,

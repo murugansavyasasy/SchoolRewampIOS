@@ -58,7 +58,7 @@ class BottomView: UIViewController, AddCoupen{
     @IBOutlet weak var QrcodeHeight: NSLayoutConstraint!
     
     var coupenAdded = false
-    var campian : [CampaignDetails] = []
+    var campian : CampaignDetails?
     var source_link : String?
     var DataArray : [String] = []
     var category : String?
@@ -122,9 +122,9 @@ class BottomView: UIViewController, AddCoupen{
         
         CouponCodeFld.isEnabled = false
         
-       // GetcampaigsDetails()
+//        GetcampaigsDetails()
         
-    
+        get_campaign_details()
         
         CategoryLbl.text = category
         
@@ -240,13 +240,12 @@ class BottomView: UIViewController, AddCoupen{
     }
     @IBAction func Add(_ sender: UIButton) {
         coupenAdded = true
-//        ActivateCoupon{ success in
-//            if success {
-////                self.spend_coin()
-//            }
-//        }
-        
-//        tv.reloadData()
+        activate_coupon{ success in
+            if success {
+//                self.spend_coin()
+            }
+        }
+    
         reedimFullView.isHidden = false
         qrCodeView.isHidden = false
         QrcodeImage.isHidden = true
@@ -288,175 +287,156 @@ class BottomView: UIViewController, AddCoupen{
     
     func get_campaign_details(){
         
-        let param: [String: Any] = [PaucketHeader.source_link:sourceLink ?? "", PaucketHeader.mobile_no: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""]
-        
-        APIService.shared.makeApi(url: ServiceUrl.get_campaign_details, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket) {[self] (result: Result<CampaignResponse,Error>) in
+        let params: [String: Any] = [PaucketHeader.source_link:sourceLink ?? "", PaucketHeader.mobile_no: "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
+        APIService.shared
+            .makeApi(url: ServiceUrl.get_campaign_details, parameters: params, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
+                result: Result<CampaignResponse,
+                Error>
+            ) in
             
             switch result{
                 
             case .success(let success):
                 DispatchQueue.main.async { [self] in
                         
-                    campaignData = success.data?.campaign_details
+                 
+                    campian = success.data?.campaign_details
+                    
+//                    campaignData.append((getattendace.data?.campaign_details)!)
+
+                    
+                    let htmlString = campian?.terms_and_conditions
+                    let plainText = convertHTMLToTextWithBullets(htmlString: htmlString ?? "")
+                    print(plainText)
+                    temsAndCondionsLbl.text = plainText
+                    
+                    let htmlString1 = campian?.how_to_use
+                    let plainText1 = convertHTMLToTextWithBullets(htmlString: htmlString1 ?? "")
+                    howTouseLbl.text = plainText1
+
+                    activateDiscound.text = campian?.offer_to_show
+                    
+                    if campian?.expiry_type == "valid_for" {
+                        activateValidateLbl.text = "Valid for " + String(campian?.coupon_valid_for ?? "") + "days"
+                    }else{
+                        activateValidateLbl.text = "Valid Until " + (
+                            campian?.expiry_date ?? ""
+                        )
+                    }
+                   
+                    activateImageView.layer.cornerRadius = 5
+                    activateCuponTitleLbl.text = campian?.merchant_name
+                    
+                    activateImageView.sd_setImage(with: URL(string: campian?.merchant_logo ?? ""), placeholderImage: UIImage(named: "placeHolder.png"), options: SDWebImageOptions.refreshCached)
                     
                 }
             case .failure(let error):
                 
                 DispatchQueue.main.async {
                     print("Error:",error.localizedDescription)
+                    if let error = error as? DecodingError {
+                        switch error {
+                        case .typeMismatch(let type, let context):
+                            print("Type mismatch:", type, context)
+                        case .valueNotFound(let type, let context):
+                            print("Value not found:", type, context)
+                        case .keyNotFound(let key, let context):
+                            print("Key '\(key)' not found:", context)
+                        case .dataCorrupted(let context):
+                            print("Data corrupted:", context)
+                        default:
+                            print("Other decoding error:", error)
+                        }
+                    }
                 }
             }
         }
     }
     
-    func activate_coupon(){
+   
         
-        let param: [String: Any] = [PaucketHeader.source_link:sourceLink ?? "", PaucketHeader.mobile_no: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""]
+    func activate_coupon(onComplete: @escaping (Bool) -> Void) {
         
-        APIService.shared.makeApi(url: ServiceUrl.activate_coupon, parameters: param, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (result: Result<ActivateCouponResponse,Error>) in
+        let param: [String: Any] = [
+            PaucketHeader.source_link: sourceLink ?? "",
+            PaucketHeader.mobile_no: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
+        ]
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.activate_coupon,
+            parameters: param,
+            type: ApitTypeSringFile.POST,
+            token: PaucketHeader.Paucket
+        ) { [weak self] (result: Result<ActivateCouponResponse, Error>) in
+            guard let self = self else { return }
             
-            switch result{
-                
+            switch result {
             case .success(let success):
-                DispatchQueue.main.async { [self] in
-                        
-                    ActivatedCoupon = success.data
-                }
-            case .failure(let error):
-                
                 DispatchQueue.main.async {
-                    print("Error:",error.localizedDescription)
+                    self.ActivatedCoupon = success.data
+                    guard let couponDetails = self.ActivatedCoupon,
+                          let coupons = couponDetails.coupons,
+                          let firstCoupon = coupons.first else {
+                        onComplete(false)
+                        return
+                    }
+                    self.ActiveBrandName.text = self.campian?.merchant_name
+                    self.ActiveCategoryLbl.text = self.category
+                    // Format expiry date
+                    if let dateString = firstCoupon.expiry_date {
+                        let inputFormatter = DateFormatter()
+                        inputFormatter.dateFormat = "yyyy-MM-dd"
+                        
+                        if let date = inputFormatter.date(from: dateString) {
+                            let day = Calendar.current.component(.day, from: date)
+                            let daySuffix: String
+                            switch day {
+                            case 1, 21, 31: daySuffix = "st"
+                            case 2, 22: daySuffix = "nd"
+                            case 3, 23: daySuffix = "rd"
+                            default: daySuffix = "th"
+                            }
+                            
+                            let monthFormatter = DateFormatter()
+                            monthFormatter.dateFormat = "MMMM"
+                            let month = monthFormatter.string(from: date)
+                            
+                            self.ActiveEpiryDateLbl.text = "Expires on \(day)\(daySuffix) \(month)"
+                        }
+                    }
+                    if let offerText = couponDetails.offer {
+                        self.ActiveOfferDetailsLbl.text = "Get \(offerText) Off"
+                    }
+                    if let logoURL = self.campian?.merchant_logo {
+                        self.ActiveBrrandLogoImg.sd_setImage(
+                            with: URL(string: logoURL),
+                            placeholderImage: UIImage(named: "placeHolder.png"),
+                            options: .refreshCached
+                        )
+                    }
+                    self.CouponCodeFld.text = firstCoupon.coupon_code
+                    
+                    let howToUseHTML = self.campian?.how_to_use ?? ""
+                    self.ActivatedUsageDetails.text = self.convertHTMLToTextWithBullets(htmlString: howToUseHTML)
+                    
+                    self.RedirectURL = couponDetails.CTAredirect
+                    
+                    onComplete(true)
+                }
+                
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("Error:", error.localizedDescription)
+                    //                    onComplete(false)
                 }
             }
         }
     }
     
-//    func ActivateCoupon(onComplete : @escaping(Bool) -> Void){
-//        let param : [String : Any] =
-//        [
-//            PaucketHeader.source_link: sourceLink ?? "",
-//            PaucketHeader.mobile_no: "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")
-//        ]
-//        
-//        
-//        Activate_coupon_Request
-//            .call_request(param: param, headers: DefaultsKeys.packut_Headers ){ [self]
-//            (res) in
-//            
-//            let GetActivateCoupon : ActivateCoupenResponse = Mapper<ActivateCoupenResponse>().map(JSONString: res)!
-//            
-//            if GetActivateCoupon.status == true {
-//                
-//                if let couponDetails = GetActivateCoupon.data, let coupons = couponDetails.couponData, !coupons.isEmpty {
-//                    let firstCoupon = coupons.first
-//                    
-//                    self.ActiveBrandName.text = self.campian.first?.merchantName
-//                    self.ActiveCategoryLbl.text = self.category
-//                    
-//                    let dateString = firstCoupon?.expiry_date
-//                    let inputFormatter = DateFormatter()
-//                    inputFormatter.dateFormat = "yyyy-MM-dd"
-//                    
-//                    if let date = inputFormatter.date(from: dateString ?? "") {
-//                        let calendar = Calendar.current
-//                        let day = calendar.component(.day, from: date)
-//                        let daySuffix: String
-//                        switch day {
-//                        case 1, 21, 31:
-//                            daySuffix = "st"
-//                        case 2, 22:
-//                            daySuffix = "nd"
-//                        case 3, 23:
-//                            daySuffix = "rd"
-//                        default:
-//                            daySuffix = "th"
-//                        }
-//                        
-//                        let monthFormatter = DateFormatter()
-//                        monthFormatter.dateFormat = "MMMM" // Get the month name
-//                        let month = monthFormatter.string(from: date)
-//                        
-//                        let formattedDate = "\(day)\(daySuffix) \(month)"
-//                        self.ActiveEpiryDateLbl.text = "Expires on " + formattedDate
-//                    }
-//                    
-//                    
-//                    self.ActiveOfferDetailsLbl.text = "Get " + couponDetails.offer! + " Off"
-//                    
-//                    
-//                    self.ActiveBrrandLogoImg.sd_setImage(with: URL(string: self.campian.first?.merchant_logo ?? ""), placeholderImage: UIImage(named: "placeHolder.png"), options: SDWebImageOptions.refreshCached)
-//                    
-////                    QrcodeImage
-////                        .sd_setImage(
-////                            with: URL(string: firstCoupon?.qr_code ?? ""),
-////                            placeholderImage: UIImage(named: "placeHolder.png"),
-////                            options: SDWebImageOptions.refreshCached
-////                        )
-//                    
-//                    self.CouponCodeFld.text = firstCoupon?.coupon_code
-//                    let plainText = self.convertHTMLToTextWithBullets(htmlString: self.campian.first?.howToUse ?? "")
-//                    self.ActivatedUsageDetails.text = plainText
-//                    
-//                    self.RedirectURL = couponDetails.CTAredirect
-//                    
-//                    onComplete(true)
-//                }
-//                
-//            } else{
-//                print("Coupon activation failed: \(GetActivateCoupon.message ?? "Unknown error")")
-//                onComplete(false)
-//            }
-//        }
-//    }
     
     
-//    func GetcampaigsDetails(){
-//        
-//        let param : [String : Any] =
-//        ["source_link": sourceLink ?? "","mobile_no": "91" + (mobileNumber ?? "")]
-//       
-//        
-//        print("paramparamm,nc",param)
-//        Get_Campaign_details_Request.call_request(param: param,headers: DefaultsKeys.packut_Headers ){ [self]
-//            (res) in
-//            
-//            print("resres",res)
-//            let getattendace : CampaignResponse = Mapper<CampaignResponse>().map(JSONString: res)!
-//            
-//            if getattendace.status == true  {
-//                
-//                
-//                campian.append((getattendace.data?.campaignDetails)!)
-//
-//                
-//                let htmlString = campian.first?.termsAndConditions
-//                let plainText = convertHTMLToTextWithBullets(htmlString: htmlString ?? "")
-//                print(plainText)
-//                temsAndCondionsLbl.text = plainText
-//                
-//                let htmlString1 = campian.first?.howToUse
-//                let plainText1 = convertHTMLToTextWithBullets(htmlString: htmlString1 ?? "")
-//                howTouseLbl.text = plainText1
-//
-//                activateDiscound.text = campian.first?.offer_to_show
-//                
-//                if campian.first?.expiry_type == "valid_for" {
-//                    activateValidateLbl.text = "Valid for " + String(campian.first?.coupon_valid_for ?? 0) + "days"
-//                }else{
-//                    activateValidateLbl.text = "Valid Until " + (campian.first?.expiryDate ?? "")
-//                }
-//               
-//                activateImageView.layer.cornerRadius = 5
-//                activateCuponTitleLbl.text = campian.first?.merchantName
-//                
-//                activateImageView.sd_setImage(with: URL(string: campian.first?.merchant_logo ?? ""), placeholderImage: UIImage(named: "placeHolder.png"), options: SDWebImageOptions.refreshCached)
-//            }else{
-//                
-//            }
-//        }
-//        
-//    }
-    
+
 //    func spend_coin(){
 //        
 //        let param : [String : Any] =

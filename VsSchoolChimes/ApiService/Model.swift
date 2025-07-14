@@ -893,6 +893,9 @@ struct Coupons: Codable {
 }
 
 
+
+
+
 struct CampaignResponse: Codable {
     var status: Bool?
     var message: String?
@@ -907,7 +910,6 @@ struct CampaignDetails: Codable {
     var campaign_name: String?
     var expiry_date: String?
     var cover_image: String?
-    var template_les: String?
     var merchant_name: String?
     var threshold_amount: String?
     var offer_text: String?
@@ -915,15 +917,15 @@ struct CampaignDetails: Codable {
     var discount: Int?
     var how_to_use: String?
     var terms_and_conditions: String?
-    var template_le: String?
     var merchant_logo: String?
     var campaign_type: String?
-    var coupon_valid_for: Int?
+    var coupon_valid_for: String?
     var customer_buys_value: String?
     var customer_gets_value: String?
     var template_file: String?
     var offer_to_show: String?
     var expiry_type: String?
+    var points: String?
 }
 
 
@@ -946,9 +948,10 @@ struct CampaignPagination: Codable {
     var from: Int?
     var next_page_url: String?
     var path: String?
-    var per_page: Int?
+    var per_page: String?
     var prev_page_url: String?
     var to: Int?
+
 }
 
 struct Campaign: Codable {
@@ -966,6 +969,7 @@ struct Campaign: Codable {
     var merchant_name: String?
     var category_name: String?
     var category_image: String?
+    var points: String?
     var merchant_logo: String?
     var offer_to_show: String?
     var coupon_status: String?
@@ -1144,6 +1148,8 @@ struct StaffMember: Codable {
     let is_assigned: Bool?
     let is_class_teacher: Bool?
     let unread_count: String?
+    let section_id: String?
+    let section_name: String?
     init() {
            self.id = nil
            self.name = nil
@@ -1152,9 +1158,14 @@ struct StaffMember: Codable {
            self.is_assigned = nil
            self.is_class_teacher = nil
            self.unread_count = nil
+           self.section_id = nil
+           self.section_name = nil
        }
 
 }
+
+
+
 
 struct ChatMessageSuc: Codable {
     
@@ -1179,6 +1190,17 @@ struct ChatMessage: Codable {
 
     
 }
+struct MediaFile: Codable {
+    let url: String
+    let type: String  // Example: "IMAGE", "PDF", etc.
+}
+
+struct ChatSection {
+    let date: String              // e.g. "03 Jul 2025"
+    let messages: [ChatMessage]  // messages under that date
+}
+
+
 
 
 struct MessageSuc: Codable {
@@ -1198,10 +1220,7 @@ struct MessageSucResp: Codable {
 }
 
 
-struct MediaFile: Codable {
-    let url: String
-    let type: String  // Example: "IMAGE", "PDF", etc.
-}
+
 
 
 struct ManagemantMessageData: Codable {

@@ -50,6 +50,10 @@ class  commonApi_forSending {
                     let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
                     
                     
+//                    compressVideo(inputURL: videoURL) { [weak self] compressedURL in
+//                        //            guard let self = self, let compressedURL = compressedURL else { return }
+//
+//                    }
                     startUpload(
                         from: viewController,
                         videoURL: videoURL,
@@ -146,56 +150,53 @@ class  commonApi_forSending {
         selectedAcadimicYearId : Int,
         Common_request_params: [String: Any]? = nil,
         subjectId: String, onComplete : @escaping(Send_AttachmentResponse) -> Void) {
-        
-        
-        var parameters: [String: Any] = [
-            SendAttachmentStringFile.file_path: uploadedFiles,
-            SendAttachmentStringFile.iframe: iframe,
-            SendAttachmentStringFile.file_size: filesize,
-            SendAttachmentStringFile.target_code: array_selectedId,
-            SendAttachmentStringFile.target_type: target_type,
-            SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId
-        ]
-        
-        
-        
-        // Conditionally add value
-        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
-            parameters[UploadMessageKeys.subjectId] = subjectId
-        }
-        
-        
-        var finalParams = parameters
-        if let common = Common_request_params {
-            finalParams.merge(common) { (_, new) in new }
-        }
-        
-        print("📤 Sending parameters Request : \(finalParams)")
-        
-        APIService.shared.makeApi(
-            url: baseURl,
-            parameters: finalParams,
-            type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-        ) { [] (result: Result<Send_AttachmentResponse, Error>) in
-            switch result {
-            case .success(let successMessage):
-                onComplete(successMessage)
-                
-            case .failure(let error):
-                print("❌ API error: \(error.localizedDescription)")
-                // Optional: Add alert for failure
-                let alert = UIAlertController(
-                    title: "Error",
-                    message: error.localizedDescription,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                viewController.present(alert, animated: true)
+            
+            
+            var parameters: [String: Any] = [
+                SendAttachmentStringFile.file_path: uploadedFiles,
+                SendAttachmentStringFile.iframe: iframe,
+                SendAttachmentStringFile.file_size: filesize,
+                SendAttachmentStringFile.target_code: array_selectedId,
+                SendAttachmentStringFile.target_type: target_type,
+                SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId
+            ]
+            
+            // Conditionally add value
+            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+                parameters[UploadMessageKeys.subjectId] = subjectId
             }
+            
+            var finalParams = parameters
+            if let common = Common_request_params {
+                finalParams.merge(common) { (_, new) in new }
+            }
+            
+            print("📤 Sending parameters Request : \(finalParams)")
+            
+            APIService.shared.makeApi(
+                url: baseURl,
+                parameters: finalParams,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            ) { [] (result: Result<Send_AttachmentResponse, Error>) in
+                switch result {
+                case .success(let successMessage):
+                    onComplete(successMessage)
+                    
+                case .failure(let error):
+                    print("❌ API error: \(error.localizedDescription)")
+                    // Optional: Add alert for failure
+                    let alert = UIAlertController(
+                        title: "Error",
+                        message: error.localizedDescription,
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    viewController.present(alert, animated: true)
+                }
+            }
+            
         }
-        
-    }
     
     
     
