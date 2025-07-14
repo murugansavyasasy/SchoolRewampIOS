@@ -70,7 +70,7 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
+        let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! attendanceRepTv
         
         let dateStr = attendanceReportData?[indexPath.row].date ?? ""
         let inputFormatter = DateFormatter()
@@ -82,30 +82,32 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
             // Get full month name
             outputFormatter.dateFormat = "MMMM"
             let monthName = outputFormatter.string(from: date)
-            cell.monthLbl.text = monthName
+            
 
             // Get day only
             let calendar = Calendar.current
             let day = calendar.component(.day, from: date)
-            cell.DateLbl.text = "\(day)"
+//            cell.dayLbl.text = "\(day)"
+            cell.datelbl.text = "\(monthName) \n \(day)"
         }
         
         let formattedDateString = dateFormatter.convertDate(
             attendanceReportData?[indexPath.row].date ?? ""
         ) ?? ""
-        cell.TakenLbl.text = formattedDateString
+        cell.dateYrLbl.text = formattedDateString
         cell.dayLbl.text = attendanceReportData?[indexPath.row].day
-        cell.statusLbl.textColor = .white
-        if attendanceReportData?[indexPath.row].type == "present" {
-            cell.statusLbl.text = CommonStringFile.Present.translated()
-            cell.StatusView.backgroundColor = .systemGreen
-        }else{
-            cell.statusLbl.text = CommonStringFile.Absent.translated()
-            cell.StatusView.backgroundColor = .systemRed
-            cell.MonthView.backgroundColor =  UIColor.red1
-            cell.DateView.backgroundColor =  .white
-            cell.DateView.layer.borderWidth = 0.5
-        }
+//        cell.statusLbl.textColor = .white
+//        
+//        if attendanceReportData?[indexPath.row].type == "present" {
+//            cell.statusLbl.text = CommonStringFile.Present.translated()
+//            cell.StatusView.backgroundColor = .systemGreen
+//        }else{
+//            cell.statusLbl.text = CommonStringFile.Absent.translated()
+//            cell.StatusView.backgroundColor = .systemRed
+//            cell.MonthView.backgroundColor =  UIColor.red1
+//            cell.DateView.backgroundColor =  .white
+//            cell.DateView.layer.borderWidth = 0.5
+//        }
         
         return cell
     }

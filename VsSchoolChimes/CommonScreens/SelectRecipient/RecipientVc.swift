@@ -963,6 +963,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
         
     }
+    
     func getSubjectListAPI(_ id:String){
         subjectList.removeAll()
         
@@ -998,9 +999,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    
-   
-    
+  
     func getacadmicYr(onComplete:  @escaping() -> Void){
         
         if localData.accidamic_year_data?.status == true{
@@ -1018,7 +1017,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         self?.segmentName.isUserInteractionEnabled = hasCurrentYear
                         onComplete()
                         break
-                    
+                        
                     }
                 }
                 
@@ -1053,7 +1052,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     self?.noRecordLbl.addGestureRecognizer(tapGesture)
                     
                 }
-               
+                
             }
             
         }else{

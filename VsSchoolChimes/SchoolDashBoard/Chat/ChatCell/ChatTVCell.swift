@@ -12,6 +12,8 @@ protocol ChatTableViewCellDelegate: AnyObject {
 }
 class ChatTVCell: UITableViewCell {
 
+    @IBOutlet weak var studentName: UILabel!
+    @IBOutlet weak var sendByStack: UIStackView!
     @IBOutlet weak var imageview: UIImageView!
     @IBOutlet weak var imageStack: UIStackView!
     @IBOutlet weak var timeStampLbl: UILabel!
@@ -42,30 +44,44 @@ class ChatTVCell: UITableViewCell {
                 )
         }
     }
-       func configure(with message: String, timeStamp: String, isSender: Bool) {
-           messageLabel.text = message
-           timeStampLbl.text = timeStamp
-           if isSender {
-               bubbleView.backgroundColor = .gradient1
-               bubbleView.layer.shadowOpacity = 2
-               bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
-               bubbleView.layer.shadowRadius = 1
-               bubbleView.layer.shadowOffset = .init(width: 2.0, height: 2.0)
-               bubbleTrailingConstraint.constant = 16
-               bubbleLeadingConstraint.constant = 100
-           } else {
-               bubbleView.backgroundColor = .topBackgroundCLr
-               bubbleView.layer.shadowOpacity = 2
-               bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
-               bubbleView.layer.shadowRadius = 1
-               bubbleView.layer.shadowOffset = .init(width: 2.0, height: 2.0)
-               bubbleTrailingConstraint.constant = 100
-               bubbleLeadingConstraint.constant = 16
-           }
-           
-           panGestureRecognizer.isEnabled = !isSender
-          
-       }
+    func configure(with message: String, timeStamp: String, isSender: Bool) {
+        messageLabel.text = message
+        timeStampLbl.text = timeStamp
+
+        let totalLength = message.count + timeStamp.count
+
+        // Optional: adjust based on total character count
+        var leadingConstant: CGFloat = 130
+        let trailingConstant: CGFloat = 16
+
+        if totalLength <= 20 {
+            leadingConstant = 200
+        } else if totalLength <= 40 {
+            leadingConstant = 150
+        } else {
+            leadingConstant = 100
+        }
+
+        if isSender {
+            bubbleView.backgroundColor = .gradient1
+            bubbleTrailingConstraint.constant = trailingConstant
+            bubbleLeadingConstraint.constant = leadingConstant
+        } else {
+            bubbleView.backgroundColor = .topBackgroundCLr
+            bubbleTrailingConstraint.constant = leadingConstant
+            bubbleLeadingConstraint.constant = trailingConstant
+        }
+
+        // Common shadow styling
+        bubbleView.layer.shadowOpacity = 2
+        bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
+        bubbleView.layer.shadowRadius = 1
+        bubbleView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+
+        // Only receiver (e.g. staff) allows swipe gesture
+        panGestureRecognizer.isEnabled = !isSender
+    }
+
        
        private func setupGesture() {
            panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))

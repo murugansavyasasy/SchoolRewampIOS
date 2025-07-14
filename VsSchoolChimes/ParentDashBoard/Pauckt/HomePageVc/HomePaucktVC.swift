@@ -313,7 +313,7 @@ class HomePaucktVC: UIViewController
         
         
         APIService.shared
-            .makeApi(url: ServiceUrl.get_category_list, parameters: parameter, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
+            .makeApi(url: ServiceUrl.get_campaigns, parameters: parameter, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
                 result: Result<CampaignsResponse,
                 Error>
             ) in
@@ -321,6 +321,7 @@ class HomePaucktVC: UIViewController
             switch result{
                 
             case .success(let success):
+                print("successseadasadad`",success)
                 DispatchQueue.main.async { [self] in
                     if success.data?.campaigns?.data?.count ?? 0 == 0 {
                         norecordLbl.isHidden = false

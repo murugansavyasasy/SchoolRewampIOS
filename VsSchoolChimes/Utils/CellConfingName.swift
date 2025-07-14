@@ -87,7 +87,7 @@ class CellConfingName {
     static let  CertificateTableViewCell = "CertificateTableViewCell"
     static let  LeveHistoryTV = "LeveHistoryTV"
     static let  SenderLeaveTV = "SenderLeaveTV"
-    static let  ReciverAttendReportTV = "ReciverAttendReportTV"
+    static let  ReciverAttendReportTV = "attendanceRepTv"
     static let  ReciverHomeworkHeader = "ReciverHomeworkHeader"
     static let  ExamMarkTV = "ExamMarkTV"
     static let  ExammarkFooterView = "ExammarkFooterView"

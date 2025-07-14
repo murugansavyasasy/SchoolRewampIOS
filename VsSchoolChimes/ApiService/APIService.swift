@@ -61,10 +61,15 @@ class APIService: NSObject, URLSessionDelegate {
             }
         }
         
+        
+        
         session.dataTask(with: request) { data, response, error in
             if let httpResponse = response as? HTTPURLResponse, let data = data {
                 do {
                     let result = try JSONDecoder().decode(T.self, from: data)
+                    if let raw = String(data: data, encoding: .utf8) {
+                        print("🔥 RAW SERVER RESPONSE:\n\(raw)")
+                    }
                     completionHandler(.success(result))
                 } catch let decodeError {
                     if let resultJson = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any],

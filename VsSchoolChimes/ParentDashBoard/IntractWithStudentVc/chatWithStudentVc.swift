@@ -26,6 +26,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
         super.viewDidLoad()
         
         MessgeTextview.addDoneButton()
+        ViewAnimator.hideFade(TextViewFullView)
         let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
         ReplyTextFild.layer.cornerRadius = Colornames.CORadius5
@@ -92,6 +93,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
      ReplyTextFild.isUserInteractionEnabled = false
      ReplyTextFild.text = ""
      replayStackView.isHidden = true
+     ViewAnimator.hideFade(TextViewFullView)
         return true
     }
  
@@ -148,9 +150,11 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
              
              cell
                  .configure(
-                     with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
-                     isSender: false
+                    with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
+                    isSender: false
                  )
+//             cell.sendByStack.isHidden = false
+//             cell.studentName.text = message?.student_name
          }
      }else{
          
@@ -204,7 +208,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
      //           ReplyTextFild.isUserInteractionEnabled = false
      replayStackView.isHidden = false
      ReplyTextFild.text = message
-     
+     ViewAnimator.showFade(TextViewFullView)
      //
      //           let alert = UIAlertController(title: "Reply", message: "Replying to: \(message)", preferredStyle: .alert)
      //           alert.addTextField { textField in
@@ -286,7 +290,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
  
  func getChat(){
      APIService.shared
-         .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: ["section_id" : staffMembersData.id ?? "","subject_id":staffMembersData.subject_id ?? "","offset":0,"is_class_teacher":staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+         .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: ["section_id" : staffMembersData.section_id ?? "","subject_id":staffMembersData.subject_id ?? "","offset":0,"is_class_teacher":staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
              result:Result <ChatMessageSuc,
              Error>
          ) in
