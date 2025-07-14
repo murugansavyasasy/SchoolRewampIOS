@@ -272,6 +272,12 @@
 		8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */; };
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */; };
+		8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451EC8F2E24E55B00D6DBB4 /* HolidayTVC.xib */; };
+		8451EC932E24E55B00D6DBB4 /* CalanderDateCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451EC912E24E55B00D6DBB4 /* CalanderDateCVC.xib */; };
+		8451EC942E24E55B00D6DBB4 /* HolidayVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451EC8D2E24E55B00D6DBB4 /* HolidayVC.xib */; };
+		8451EC952E24E55B00D6DBB4 /* CalanderDateCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EC902E24E55B00D6DBB4 /* CalanderDateCVC.swift */; };
+		8451EC962E24E55B00D6DBB4 /* HolidayTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EC8E2E24E55B00D6DBB4 /* HolidayTVC.swift */; };
+		8451EC972E24E55B00D6DBB4 /* HolidayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451EC8C2E24E55B00D6DBB4 /* HolidayVC.swift */; };
 		845988412DD61382007CDB23 /* EventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845988402DD61382007CDB23 /* EventTVC.xib */; };
 		845988422DD61382007CDB23 /* EventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459883F2DD61382007CDB23 /* EventTVC.swift */; };
 		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
@@ -989,6 +995,12 @@
 		8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangTvCellTableViewCell.xib; sourceTree = "<group>"; };
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		8451EC8C2E24E55B00D6DBB4 /* HolidayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayVC.swift; sourceTree = "<group>"; };
+		8451EC8D2E24E55B00D6DBB4 /* HolidayVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayVC.xib; sourceTree = "<group>"; };
+		8451EC8E2E24E55B00D6DBB4 /* HolidayTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayTVC.swift; sourceTree = "<group>"; };
+		8451EC8F2E24E55B00D6DBB4 /* HolidayTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayTVC.xib; sourceTree = "<group>"; };
+		8451EC902E24E55B00D6DBB4 /* CalanderDateCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalanderDateCVC.swift; sourceTree = "<group>"; };
+		8451EC912E24E55B00D6DBB4 /* CalanderDateCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalanderDateCVC.xib; sourceTree = "<group>"; };
 		8459883F2DD61382007CDB23 /* EventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTVC.swift; sourceTree = "<group>"; };
 		845988402DD61382007CDB23 /* EventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTVC.xib; sourceTree = "<group>"; };
 		845FED3D2D129A0D0090296B /* ExamCreatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreatVC.swift; sourceTree = "<group>"; };
@@ -2968,6 +2980,12 @@
 			isa = PBXGroup;
 			children = (
 				84B57EB82D1437EC00E0EA29 /* EventResiverVC.swift */,
+				8451EC8C2E24E55B00D6DBB4 /* HolidayVC.swift */,
+				8451EC8D2E24E55B00D6DBB4 /* HolidayVC.xib */,
+				8451EC8E2E24E55B00D6DBB4 /* HolidayTVC.swift */,
+				8451EC8F2E24E55B00D6DBB4 /* HolidayTVC.xib */,
+				8451EC902E24E55B00D6DBB4 /* CalanderDateCVC.swift */,
+				8451EC912E24E55B00D6DBB4 /* CalanderDateCVC.xib */,
 				84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */,
 			);
 			path = Event;
@@ -3735,6 +3753,9 @@
 				84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */,
 				8442A86F2CDB787A0006068E /* SchoolTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
+				8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */,
+				8451EC932E24E55B00D6DBB4 /* CalanderDateCVC.xib in Resources */,
+				8451EC942E24E55B00D6DBB4 /* HolidayVC.xib in Resources */,
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
 				849757122D2BA575006A27FD /* Std_Grp_header.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
@@ -3857,7 +3878,6 @@
 				FAFF9E082D6C7B7A00498368 /* CheckAviableViewController.xib in Resources */,
 				FAFF9E092D6C7B7A00498368 /* SlotHeader.xib in Resources */,
 				8420317A2D390FF3003C4076 /* TimetableTv.xib in Resources */,
-				84726D452E1BF457000BCDDC /* CalanderDateCVC.xib in Resources */,
 				84235A0E2E1E27F4002F2E1D /* RecorderTVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
 				849970C92CF8752400800B07 /* DateCVC.xib in Resources */,
@@ -4354,6 +4374,9 @@
 				84EFFA392CCCB44300C11C26 /* ContactUsVc.swift in Sources */,
 				840A7CEC2D24FDAA0061EAEA /* ExamMarkTV.swift in Sources */,
 				840A7CED2D24FDAA0061EAEA /* MarkTvCell.swift in Sources */,
+				8451EC952E24E55B00D6DBB4 /* CalanderDateCVC.swift in Sources */,
+				8451EC962E24E55B00D6DBB4 /* HolidayTVC.swift in Sources */,
+				8451EC972E24E55B00D6DBB4 /* HolidayVC.swift in Sources */,
 				840A7CEE2D24FDAA0061EAEA /* ExammarkFooterView.swift in Sources */,
 				840A7CF02D24FDAA0061EAEA /* ExamMarkCV.swift in Sources */,
 				84A5BE8E2C197C3000E32496 /* Toast.swift in Sources */,
