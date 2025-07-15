@@ -10,7 +10,13 @@ protocol ConfirmDelegate{
     func confirm(index:Int,status:Bool)
 }
 @available(iOS 14.0, *)
-class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
+class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
+    func edit(edit: Int?, delete: Int?) {
+//        guard let studentId = filterData?[index].id else { return }
+//        if let originalIndex = LeaveRequestData?.firstIndex(where: { $0.id == studentId }) {
+//        }
+    }
+    
     
     
     func confirm(index: Int, status: Bool) {
@@ -62,7 +68,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
 
         GetLeaveRequestAPI()
         
-        leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
+        leaveRequestTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
         
         leaveRequestTable.delegate = self
         leaveRequestTable.dataSource = self
@@ -174,54 +180,61 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.SenderLeaveTV, for: indexPath) as! SenderLeaveTV
+        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as! LeveHistoryTV
         
         let LeaveRequest = SearchLeavetData?[indexPath.row]
+        guard let leaveData = SearchLeavetData?[indexPath.row] else { return cell }
 
-        cell.applyedTimeLbl.text = ConvertDateStringSmart(LeaveRequest?.applied_on, toFormat: "dd MMM yyyy hh:mm a")
-        cell.studentName.text = LeaveRequest?.student_name
-        cell.studentClass.text = (LeaveRequest?.class_name ?? "") + " " + (LeaveRequest?.section_name ?? "")
-        cell.fromDate.text =   convertDate(LeaveRequest?.leave_from ?? "", toFormat: "dd MMM yyyy")
-        cell.toDate.text =  convertDate(LeaveRequest?.leave_to ?? "", toFormat: "dd MMM yyyy")
-        cell.resonLbl.text = LeaveRequest?.reason
-        cell.NoOfDaysLbl.text = LeaveRequest?.no_of_days
+        cell.nameLbl.text = leaveData.student_name
+        cell.dateLbl.text = "\(convertDate(leaveData.leave_from, toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to, toFormat: DateFormatString.StandardFormat) ?? "")"
+        cell.resonLbl.text = leaveData.reason
+        cell.aproveBtn.setTitle(leaveData.status, for: .normal)
+        let firstLetter = leaveData.student_name.first.map { String($0) } ?? ""
+        cell.iconBtn.setTitle(firstLetter.uppercased(), for: .normal)
         cell.delegate = self
-        cell.aproveBtn.tag = indexPath.row
-        cell.rejectBtn.tag = indexPath.row
-        
-        if LeaveRequest?.status == "Approved" {
-            cell.UpdatedOnBtn.isHidden = false
-            cell.UpdatedOnBtn.backgroundColor = .systemGreen.withAlphaComponent(0.25)
-            cell.UpdatedOnBtn.setTitleColor(.systemGreen, for: .normal)
-            cell.ApproveRejectStack.isHidden = true
-            cell.StatusBtn.backgroundColor = .systemGreen.withAlphaComponent(0.8)
-            cell.StatusBtn.setTitle(LeaveRequest?.status, for: .normal)
-            
-        } else if LeaveRequest?.status == "Rejected" {
-            cell.UpdatedOnBtn.isHidden = false
-            cell.UpdatedOnBtn.backgroundColor = .systemRed.withAlphaComponent(0.3)
-            cell.UpdatedOnBtn.setTitleColor(.systemRed, for: .normal)
-            cell.ApproveRejectStack.isHidden = true
-            cell.StatusBtn.setTitle(LeaveRequest?.status, for: .normal)
-            cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.8)
-            
+        cell.aproveBtn.isUserInteractionEnabled = true
+        cell.rejectBtn.isUserInteractionEnabled = true
+        cell.aproveBtn.tag = Int(leaveData.id) ?? 0
+        cell.rejectBtn.tag = Int(leaveData.id) ?? 0
+        cell.durationLbl.text = daysBetweenLabel(start: leaveData.leave_from, end: leaveData.leave_to)
+        if leaveData.status == "Approved" {
+            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
+            cell.aproveBtn.isHidden = false
+            cell.rejectBtn.isHidden = true
+        } else if leaveData.status == "Rejected" {
+            cell.aproveBtn.backgroundColor = .red
+            cell.aproveBtn.isHidden = true
+            cell.rejectBtn.isHidden = false
         } else {
-            // Default/reset state (e.g., Pending or undefined status)
-            cell.UpdatedOnBtn.isHidden = true
-            cell.ApproveRejectStack.isHidden = false
-            cell.StatusBtn.setTitle("", for: .normal)
-            cell.StatusBtn.backgroundColor = .clear
-            cell.UpdatedOnBtn.setTitle("", for: .normal)
-            cell.UpdatedOnBtn.backgroundColor = .clear
+            cell.aproveBtn.backgroundColor = Colornames.pendingClr
+            cell.aproveBtn.setTitle("Waiting", for: .normal)
+            cell.aproveBtn.isHidden = false
+            cell.rejectBtn.isHidden = false
         }
-
-        let btnTitle = (LeaveRequest?.status ?? "") + " on " + (ConvertDateStringSmart(LeaveRequest?.updated_on, toFormat: "dd MMM yyyy hh:mm a"))
-        cell.UpdatedOnBtn.setTitle(btnTitle, for: .normal)
+        
+        cell.showPopup.isHidden = true
+        cell.editClickBtn.isHidden = true
         
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    func daysBetweenLabel(start: String, end: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        guard let fromDate = formatter.date(from: start),
+              let toDate = formatter.date(from: end) else {
+            return "Invalid date"
+        }
+
+        let calendar = Calendar.current
+        let diff = calendar.dateComponents([.day], from: fromDate, to: toDate).day ?? 0
+        let totalDays = diff + 1 // Include both from and to dates
+
+        return totalDays == 1 ? "( 1 day )" : "( \(totalDays) days )"
     }
 }
 

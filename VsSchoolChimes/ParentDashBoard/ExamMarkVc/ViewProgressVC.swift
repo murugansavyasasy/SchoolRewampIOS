@@ -24,7 +24,7 @@ class ViewProgressVC: UIViewController {
 
     func markListApi(exam_id: String) {
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_view_marks,
+            url: ServiceUrl.exam_api_get_progress_card,
             parameters: ["exam_id": exam_id],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
@@ -32,8 +32,12 @@ class ViewProgressVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self?.urlString = response.data?.first
-                    self?.loadRequestedURL() // ✅ Call after setting urlString
+                    if response.status ?? false{
+                        self?.urlString = response.data?.first
+                        self?.loadRequestedURL()
+                    }else{
+                        
+                    }
                 case .failure(let error):
                     print("API Error:", error)
                     self?.showError("Failed to fetch URL from server")

@@ -126,6 +126,38 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         cell.TotalMarkLbl.setFont(style: .title, size: FontSize.TitleSize)
         cell.RankLbl.setFont(style: .title, size: FontSize.TitleSize)
         cell.RankNumLbl.setFont(style: .title, size: FontSize.TitleSize)
+        // ✅ Safely unwrap assessments array
+         if let assessments = assessments {
+             for item in assessments {
+                 let key = item.name ?? ""
+                 let value = item.value ?? ""
+                 switch key {
+                 case "Total":
+                     cell.TotalLbl.text = "Total"
+                     cell.TotalMarkLbl.text = value
+                     let parts = value.components(separatedBy: "/")
+
+                     if parts.count == 2 {
+                         let obtainedStr = parts[0].trimmingCharacters(in: .whitespaces)
+                         let maxStr = parts[1].trimmingCharacters(in: .whitespaces)
+
+                         // Step 2: Convert to Double
+                         if let obtained = Double(obtainedStr), let total = Double(maxStr), total != 0 {
+                             let percentage = (obtained / total)
+                             cell.TotalProgressBar.progress = Float(percentage)
+                         }
+                     }
+
+                 case "Rank":
+                     cell.RankLbl.text = "Rank : \(value)"
+                     cell.RankNumLbl.text = value
+                     cell.medalImagView.isHidden = value == "NA"
+                     cell.RankNumLbl.isHidden = value == "NA"
+                 default:
+                     break
+                 }
+             }
+         }
         return cell
     }
 
@@ -156,7 +188,7 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
                       let label = UILabel()
                       label.text = "\(splits[index].name ?? "") - \(splits[index].mark_obtained ?? "") /  \(splits[index].max_mark ?? "")"
                       label.textColor = .darkGray
-                      
+                      label.setFont(style: .body, size: FontSize.BodySize)
                       cell.MarksStackview.addArrangedSubview(label)
                       
                   }

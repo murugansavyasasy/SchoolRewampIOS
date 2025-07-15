@@ -99,7 +99,7 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         cell.subjectTitleLbl.text = subject?.subject_name ?? "-"
         cell.dateLbl.text = subject?.exam_date?.convertToTargetDateFormat() ?? "-"
         cell.syllabusLbl.text = subject?.syllabus ?? "-"
-//        cell.markLbl.text = "Max Mark \(subject?.max_mark ?? "-")"
+        cell.markBtn.setTitle("Max Mark \(subject?.max_mark ?? "-")", for: .normal)
         return cell
     }
 

@@ -27,6 +27,9 @@ class TimetableTv: UITableViewCell {
         hrsType.clipsToBounds = true
         DetailsView.layer.borderWidth = 0.5
         DetailsView.layer.borderColor = UIColor.gray.cgColor
+        SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
+        StaffNameLbl.setFont(style: .body, size: FontSize.BodySize)
+        DurationLbl.setFont(style: .body, size: FontSize.BodySize)
     }
     
 }
@@ -53,12 +56,12 @@ class VerticalProgressView: UIView {
         layer.masksToBounds = true
         
         // Track background
-        trackLayer.backgroundColor = UIColor.lightGray.cgColor
+        trackLayer.backgroundColor = UIColor.systemGreen.cgColor
         trackLayer.cornerRadius = 2
         layer.addSublayer(trackLayer)
         
         // Progress fill
-        progressLayer.backgroundColor = UIColor.systemBlue.cgColor
+        progressLayer.backgroundColor = UIColor.lightGray.cgColor
         progressLayer.cornerRadius = 2
         layer.addSublayer(progressLayer)
     }
@@ -71,7 +74,7 @@ class VerticalProgressView: UIView {
     
     func setProgress(_ progress: Float, animated: Bool = true) {
         currentProgress = max(0.0, min(1.0, progress))
-        progressLayer.backgroundColor = currentProgress >= 1.0 ? UIColor.systemGreen.cgColor : UIColor.systemBlue.cgColor
+        progressLayer.backgroundColor = currentProgress >= 1.0 ? UIColor.systemGreen.cgColor : UIColor.lightGray.cgColor
         updateProgressLayer(animated: animated)
     }
     

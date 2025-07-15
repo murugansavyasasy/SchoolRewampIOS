@@ -112,8 +112,10 @@ struct ServiceUrl{
     static let exam_api_exam_get_exams = "exam/api/exam/get-exams"
     static let exam_api_exam_list = "exam/api/exam/list"
     static let exam_api_exam_view_marks = "exam/api/exam/view-marks"
-    static let exam_api_get_progress_card = "exam/api/get-progress-card"
+    static let exam_api_get_progress_card = "exam/api/exam/get-progress-card"
     static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"
+    static let comm_api_leave_req_delete = "comm/api/leave-req/delete"
+    static let comm_api_leave_req_update = "comm/api/leave-req/update"
     
 }
 

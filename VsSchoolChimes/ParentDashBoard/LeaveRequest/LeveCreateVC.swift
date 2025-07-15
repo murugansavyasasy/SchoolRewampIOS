@@ -8,7 +8,6 @@
 import UIKit
 @available(iOS 14.0, *)
 class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
-    
     func date(date: String) {
         
         dateFormatter.dateFormat = dateFormat1
@@ -69,7 +68,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     var isKeyboardVisible = false
     var childDetails = UserDefaultFileManager.get_child_Details()
     let alert = CustomAlert()
-    
+    var leave:editLeave?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,6 +95,17 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
                                                selector: #selector(keyboardWillHide(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+        
+        
+        if let leave = leave{
+            ToDateLbl.setFormattedDate(from: leave.toDate)
+                FromDateLbl.setFormattedDate(from: leave.fromDate)
+            contentTxtView.text = leave.reson
+            updateDayCountLabel(startDateStr: FromDateLbl.text ?? "", endDateStr: ToDateLbl.text ?? "", dayCount: dayCount)
+            placeholderLabel.isHidden = !leave.reson.isEmpty
+            contentCount.text = "\(leave.reson.count) / 500"
+        }
+           
     }
     
     override func viewDidLayoutSubviews() {
@@ -147,12 +157,15 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
         ReasonLbl.setRequiredText(CommonStringFile.Reason)
     }
-    
-    
+
     @IBAction func SubmitAct(_ sender: Any) {
-        
+       
         if contentTxtView.text != ""{
-           ApplyLeave()
+            if let leave = leave{
+                updateLeave()
+            }else{
+                ApplyLeave()
+            }
         }else{
             alert.showAlert(title: "", message: AlertstringFile.Enter_reason, on: self)
         }
@@ -207,6 +220,52 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         }
         )
     }
+    
+    func updateLeave(){
+        
+        let LeaveFrom = ConvertDateStringSmart(FromDateLbl.text)
+        let LeaveTo = ConvertDateStringSmart(ToDateLbl.text)
+        let param: [String:Any] = [LeaveRequestStringFile.leave_from:leave?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
+        
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
+                              
+            onOk: {
+                  
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_update, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+                
+                DispatchQueue.main.async { [weak self] in
+                    
+                    guard let self = self else {return}
+                    
+                    switch result{
+                        
+                    case .success(let success):
+                        
+                        if success.status == true{
+                            
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
+                                self.dismiss(animated: true)
+                            }
+                        }else {
+                            
+                            alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        }
+                        
+                    case .failure(let error):
+                        
+                        alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                    }
+                }
+            }
+            
+        }, onNo: {
+            
+            print("user Canceled Action")
+        }
+        )
+    }
+    
+   
     
     //MARK: BUTTON TITLE CURRENT TIME
     func setInitialDate() {
@@ -392,5 +451,27 @@ extension UILabel {
         self.attributedText = attributedText
         self.numberOfLines = 0
         self.textAlignment = .center
+    }
+    func setFormattedDate(from dateString: String) {
+        let formats = ["dd MMM yyyy", "dd-MM-yyyy"]
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        var date: Date? = nil
+        
+        for format in formats {
+            formatter.dateFormat = format
+            if let parsedDate = formatter.date(from: dateString) {
+                date = parsedDate
+                break
+            }
+        }
+        
+        guard let validDate = date else {
+            self.text = dateString // fallback
+            return
+        }
+        
+        setFormattedDate(from: validDate)
     }
 }

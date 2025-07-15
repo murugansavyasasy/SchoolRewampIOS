@@ -6,98 +6,87 @@
 //
 
 import UIKit
+
+protocol editDelete: AnyObject {
+    func edit(edit: Int?, delete: Int?)
+}
+
 class LeveHistoryTV: UITableViewCell {
 
-    @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var fromDateLbl: UILabel!
-    @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var ReasonLbl: UILabel!
-    @IBOutlet weak var statusBtn: UIView!
-    @IBOutlet weak var StatusLbl: UILabel!
-    @IBOutlet weak var edit: UIButton!
-    @IBOutlet weak var satusImg: UIImageView!
-    @IBOutlet weak var botomSts: NSLayoutConstraint!
-    @IBOutlet weak var ShowPopup: UIView!
-    @IBOutlet weak var editHeight: NSLayoutConstraint!
-    @IBOutlet weak var deltBtn: UIButton!
+    @IBOutlet weak var showPopup: UIView!
+    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
-    @IBOutlet weak var NoOfDaysLbl: UILabel!
-    @IBOutlet weak var NoOfdaysDefLbl: UILabel!
-    @IBOutlet weak var AppliedonDefLbl: UILabel!
-    @IBOutlet weak var UpdatedonDefLbl: UILabel!
-    @IBOutlet weak var AppliedonLbl: UILabel!
-    @IBOutlet weak var UpdatedonLbl: UILabel!
-    @IBOutlet weak var ReasonDefLbl: UILabel!
-    @IBOutlet weak var UpdatedOnColon: UILabel!
+    @IBOutlet weak var rejectBtn: UIButton!
+    @IBOutlet weak var aproveBtn: UIButton!
+    @IBOutlet weak var iconBtn: UIButton!
+    @IBOutlet weak var resonLbl: UILabel!
+    @IBOutlet weak var durationLbl: UILabel!
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var outerView: UIView!
+    @IBOutlet weak var editClickBtn: UIButton!
     
+    weak var delegate: editDelete?
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        ShowPopup.isHidden = true
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
+
+        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        dateLbl.setFont(style: .body, size: FontSize.BodySize)
+        durationLbl.setFont(style: .body, size: FontSize.BodySize)
+        resonLbl.setFont(style: .body, size: FontSize.BodySize)
         
-        ShowPopup.layer.cornerRadius = 10
-        ShowPopup.layer.shadowColor = UIColor.black.cgColor
-        ShowPopup.layer.shadowOffset = CGSize(width: 0, height: 2)
-        ShowPopup.layer.shadowRadius = 5
-        ShowPopup.layer.shadowOpacity = 0.3
-        statusBtn.layer.cornerRadius = 8
-        statusBtn.layer.shadowColor = UIColor.black.cgColor
-        statusBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
-        statusBtn.layer.shadowRadius = 5
-        statusBtn.layer.shadowOpacity = 0.3
+        aproveBtn.setShadow()
+        rejectBtn.setShadow()
+        showPopup.setShadow()
+        iconBtn.setShadow(cornerRadius: iconBtn.frame.width / 2)
         
-        edit.isHidden = true
-        
-//        styleLabel(toDateLbl)
-//        styleLabel(fromDateLbl)
-     
-        fromDateLbl.setFont(style:.title, size: FontSize.TitleSize)
-        toDateLbl.setFont(style:.title, size: FontSize.TitleSize)
-        StatusLbl.setFont(style:.body, size: FontSize.BodySize)
-        //ReasonLbl.setFont(style:.body, size: FontSize.BodySize)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
-        contentView.isUserInteractionEnabled = true // Ensure interaction is enabled
-        contentView.addGestureRecognizer(tapGesture)
-//        approvedBy.text = ""
+        showPopup.isHidden = true
     }
-    func styleLabel(_ label: UILabel) {
-        label.layer.cornerRadius = 8
-        label.layer.shadowColor = UIColor.black.cgColor
-        label.layer.shadowOffset = CGSize(width: 0, height: 2)
-        label.layer.shadowRadius = 5
-        label.layer.shadowOpacity = 0.3
-        label.clipsToBounds = false // To ensure shadows are visible outside the label bounds
+
+    func hidePopup() {
+        showPopup.isHidden = true
+        iconBtn.isSelected = false
+        aproveBtn.isHidden = false
     }
-    // Action to be triggered when the contentView is tapped
-    @objc func contentViewTapped() {
-        ShowPopup.isHidden = true
-    }
-    @IBAction func shoPopup(_ sender: UIButton) {
+
+    @IBAction func iconBtnTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
-        ShowPopup.isHidden = !sender.isSelected
+        if sender.isSelected{
+            delegate?.edit(edit: sender.tag, delete: -999)
+        }else{
+            hidePopup()
+        }
     }
-    @IBAction func deleteRequest(_ sender: UIButton) {
-//        guard let leaveRequest = leaverequest else {
-//            print("Leave request is nil")
-//            return
-//        }
-//       // delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: false)
-//        ShowPopup.isHidden = true
+
+    @IBAction func editAct(_ sender: UIButton) {
+        delegate?.edit(edit: sender.tag, delete: nil)
     }
-    @IBAction func edit(_ sender: UIButton) {
-//        guard let leaveRequest = leaverequest else {
-//            print("Leave request is nil")
-//            return
-//        }
-//        delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: true)
-//        ShowPopup.isHidden = true
+
+    @IBAction func deleteAct(_ sender: UIButton) {
+        delegate?.edit(edit: nil, delete: sender.tag)
+    }
+    @IBAction func aprove(_ sender: UIButton) {
+        delegate?.edit(edit: sender.tag, delete:nil)
+    }
+    @IBAction func rejectAct(_ sender: UIButton) {
+        delegate?.edit(edit: sender.tag, delete: nil)
     }
     
-    
-    
+}
+
+extension UIView {
+    func setShadow(cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowOffset: CGSize = CGSize(width: 0, height: 2), shadowRadius: CGFloat = 4) {
+        self.layer.cornerRadius = cornerRadius
+        self.layer.shadowColor = shadowColor.cgColor
+        self.layer.shadowOpacity = shadowOpacity
+        self.layer.shadowOffset = shadowOffset
+        self.layer.shadowRadius = shadowRadius
+        self.layer.masksToBounds = false
+    }
 }

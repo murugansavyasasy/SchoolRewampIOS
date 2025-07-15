@@ -6,10 +6,16 @@
 //
 
 import UIKit
-
+protocol EditObject{
+    func edit(edit:editLeave?)
+}
 @available(iOS 14.0, *)
-class NavigationVC: UIViewController {
-  
+
+class NavigationVC: UIViewController, EditObject {
+    func edit(edit: editLeave?) {
+        SegmentControl.selectedSegmentIndex = 0
+        displaySegment(index: SegmentControl.selectedSegmentIndex, edit:edit)
+    }
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var presentView: UIView! //
     @IBOutlet weak var StandardLbl: UILabel!
@@ -24,7 +30,7 @@ class NavigationVC: UIViewController {
         
         uiConficration()
         backBtn.applyBackButton()
-        displaySegment(index: SegmentControl.selectedSegmentIndex)
+        displaySegment(index: SegmentControl.selectedSegmentIndex, edit: nil)
        
     }
     
@@ -43,26 +49,32 @@ class NavigationVC: UIViewController {
     }
     
     @IBAction func SegmentAct(_ sender: Any) {
-        
-        displaySegment(index: SegmentControl.selectedSegmentIndex)
+        displaySegment(index: SegmentControl.selectedSegmentIndex, edit: nil)
     }
     
-    func displaySegment(index: Int) {
+    func displaySegment(index: Int,edit:editLeave?) {
         // Remove current child VC if exists
         if let current = currentChildVC {
             current.willMove(toParent: nil)
             current.view.removeFromSuperview()
             current.removeFromParent()
         }
-
-        // Instantiate the new child VC
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var newVC: UIViewController
 
         if index == 0 {
             newVC = LeveCreateVC(nibName: nil, bundle: nil)
         } else {
             newVC = LeveHistoryVC(nibName: nil, bundle: nil)
+            if let vc = newVC as? LeveHistoryVC{
+                vc.delegate = self
+            }
+            
+            
+        }
+        if let edit = edit {
+            if let vc = newVC as? LeveCreateVC{
+                vc.leave = edit
+            }
         }
 
         // Add new child VC
@@ -82,4 +94,10 @@ class NavigationVC: UIViewController {
         dismiss(animated: true)
     }
 
+}
+struct editLeave{
+    let id :String?
+    var fromDate:String
+    var toDate:String
+    var reson:String
 }

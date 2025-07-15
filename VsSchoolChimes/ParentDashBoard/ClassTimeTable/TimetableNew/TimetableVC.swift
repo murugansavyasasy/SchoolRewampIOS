@@ -241,7 +241,8 @@ class TimetableVC: UIViewController {
     let id2 = "LastCell"
 
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    let colours = ["AttendenceColor", "Clr", "Color", "lesson1", "lesson3"]
+//    let colours = ["AttendenceColor", "Clr", "Color", "lesson1", "lesson3"]
+    let colours = ["AttendenceColor"]
 
     var getCurrentDay: String!
     var selectedIndex: Int = 0
