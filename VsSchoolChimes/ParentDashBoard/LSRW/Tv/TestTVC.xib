@@ -23,19 +23,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iQt-EE-l5b">
                                 <rect key="frame" x="10" y="10" width="416" height="216.33333333333334"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHc-pY-21Z">
-                                        <rect key="frame" x="0.0" y="0.0" width="416" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHc-pY-21Z">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="15.666666666666666"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="J0u-TJ-vEU">
-                                        <rect key="frame" x="0.0" y="30.333333333333346" width="416" height="186.00000000000003"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="186" id="1lf-WR-uCt"/>
-                                        </constraints>
-                                    </tableView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Rnw-Ol-HdT">
+                                        <rect key="frame" x="0.0" y="25.666666666666671" width="416" height="190.66666666666663"/>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -59,10 +55,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="optionsStack" destination="Rnw-Ol-HdT" id="ShE-bk-syQ"/>
                 <outlet property="outerView" destination="cWj-oK-Y9a" id="asg-p4-mR4"/>
                 <outlet property="questionLbl" destination="eHc-pY-21Z" id="ntg-GQ-ydF"/>
-                <outlet property="tableHeight" destination="1lf-WR-uCt" id="23e-Qw-SEp"/>
-                <outlet property="tableView" destination="J0u-TJ-vEU" id="jsR-O3-zWT"/>
             </connections>
             <point key="canvasLocation" x="175.57251908396947" y="53.169014084507047"/>
         </tableViewCell>

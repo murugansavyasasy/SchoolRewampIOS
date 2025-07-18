@@ -60,6 +60,10 @@ class ExamTmTblVCViewController: UIViewController {
 
     // MARK: - API Call
     func examDetailApi() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_exam_get_exams,
             parameters: [:],
@@ -67,6 +71,7 @@ class ExamTmTblVCViewController: UIViewController {
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<DetailedExamListResponse, Error>) in
             DispatchQueue.main.async {
+                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
                 switch result {
                 case .success(let response):
                     self?.examDetails = response.data

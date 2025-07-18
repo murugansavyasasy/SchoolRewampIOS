@@ -45,7 +45,6 @@ class LeveHistoryTV: UITableViewCell {
         rejectBtn.setShadow()
         showPopup.setShadow()
         iconBtn.setShadow(cornerRadius: iconBtn.frame.width / 2)
-        
         showPopup.isHidden = true
     }
 
@@ -65,23 +64,25 @@ class LeveHistoryTV: UITableViewCell {
     }
 
     @IBAction func editAct(_ sender: UIButton) {
-        delegate?.edit(edit: sender.tag, delete: nil)
+            delegate?.edit(edit: sender.tag, delete: nil)
+        
     }
 
     @IBAction func deleteAct(_ sender: UIButton) {
-        delegate?.edit(edit: nil, delete: sender.tag)
+            delegate?.edit(edit: nil, delete: sender.tag)
+        
     }
     @IBAction func aprove(_ sender: UIButton) {
-        delegate?.edit(edit: sender.tag, delete:nil)
+        delegate?.edit(edit: sender.tag, delete:0)
     }
     @IBAction func rejectAct(_ sender: UIButton) {
-        delegate?.edit(edit: sender.tag, delete: nil)
+        delegate?.edit(edit: sender.tag, delete: 1)
     }
     
 }
 
 extension UIView {
-    func setShadow(cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowOffset: CGSize = CGSize(width: 0, height: 2), shadowRadius: CGFloat = 4) {
+    func setShadow(cornerRadius: CGFloat = 15, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowOffset: CGSize = CGSize(width: 0, height: 2), shadowRadius: CGFloat = 4) {
         self.layer.cornerRadius = cornerRadius
         self.layer.shadowColor = shadowColor.cgColor
         self.layer.shadowOpacity = shadowOpacity

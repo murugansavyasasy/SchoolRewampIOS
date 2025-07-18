@@ -30,6 +30,9 @@ class ExameMarVC: UIViewController {
     }
 
     func examListApi() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_exam_list,
             parameters: [:],
@@ -37,6 +40,7 @@ class ExameMarVC: UIViewController {
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<ExamListResponse, Error>) in
             DispatchQueue.main.async {
+                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
                 switch result {
                 case .success(let response):
                     self?.exameList = response.data
@@ -76,6 +80,7 @@ class ExameMarVC: UIViewController {
         let vc = ViewProgressVC()
         vc.modalPresentationStyle = .fullScreen
         vc.examId = examID
+        vc.backBtnTitle = exameList?[index].name ?? ""
         present(vc, animated: false)
        
     }

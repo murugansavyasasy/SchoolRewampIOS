@@ -35,8 +35,8 @@
                                 <constraint firstAttribute="height" constant="40" id="G4S-vM-faV"/>
                             </constraints>
                             <segments>
-                                <segment title="Create"/>
-                                <segment title="Reports"/>
+                                <segment title="Events"/>
+                                <segment title="Holidays"/>
                             </segments>
                             <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>

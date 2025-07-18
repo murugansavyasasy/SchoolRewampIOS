@@ -12,9 +12,32 @@ protocol ConfirmDelegate{
 @available(iOS 14.0, *)
 class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
     func edit(edit: Int?, delete: Int?) {
-//        guard let studentId = filterData?[index].id else { return }
-//        if let originalIndex = LeaveRequestData?.firstIndex(where: { $0.id == studentId }) {
-//        }
+        guard let studentId = SearchLeavetData?[edit ?? 0].id else { return }
+        if delete == 0{
+            
+            let message = "Are you sure you want to approve this leave request?"
+            
+            alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                self.Leave_Update_status(id: studentId, status:true, index:edit ?? 0)
+                
+            }, onNo: {
+                
+            }
+            )
+            
+        }else{
+            let message = "Are you sure you want to reject this leave request?"
+            
+            alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                
+                self.Leave_Update_status(id: studentId, status:true, index:edit ?? 0)
+                
+            }, onNo: {
+                
+            }
+            )
+            
+        }
     }
     
     
@@ -46,14 +69,14 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
     var SearchLeavetData: [LeaveInfo]?
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     let alert = CustomAlert()
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
-      
-       // BackBtn.setTitle(MenuStringFile.LeaveRequest.translated(), for: .normal)
+        
+        // BackBtn.setTitle(MenuStringFile.LeaveRequest.translated(), for: .normal)
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
-       // BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        // BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
@@ -65,7 +88,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
         
         leaveRequestTable.showsVerticalScrollIndicator = false
         leaveRequestTable.showsHorizontalScrollIndicator = false
-
+        
         GetLeaveRequestAPI()
         
         leaveRequestTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
@@ -97,7 +120,6 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
                     
                     LeaveRequestData = Success.data
                     SearchLeavetData = LeaveRequestData
-
                     NodateLbl.text = Success.message
                     NodataImage.isHidden = !(LeaveRequestData?.isEmpty ?? false)
                     NodateLbl.isHidden = !(LeaveRequestData?.isEmpty ?? false)
@@ -119,52 +141,62 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
         }
     }
     
-    func Leave_Update_status(id: String, status: Bool,index: Int) {
+    func Leave_Update_status(id: String, status: Bool, index: Int) {
         
-        let param: [String:Any] = [LeaveRequestStringFile.id: id,LeaveRequestStringFile.is_approve: status]
+        let param: [String: Any] = [
+            LeaveRequestStringFile.id: id,
+            LeaveRequestStringFile.is_approve: status
+        ]
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_update_status, parameters: param, type: ApitTypeSringFile.Put, token: StaffDetails?.access_token ?? "") { [self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_leave_req_update_status,
+            parameters: param,
+            type: ApitTypeSringFile.Put,
+            token: StaffDetails?.access_token ?? ""
+        ) { [self] (result: Result<CommonApiSuc, Error>) in
             
-            switch result{
-                
+            switch result {
             case .success(let success):
-                
-                DispatchQueue.main.async {[self] in
-                    
+                DispatchQueue.main.async {
                     if success.status == true {
-                        
                         let title = AlertstringFile.Success
+                        let message = success.message ?? ""
+                        let newStatus = status ? "Approved" : "Rejected"
                         
-                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self){
-                            
-                            //self.GetLeaveRequestAPI()
-                            let leaveStatus = status == true ? "Approved" : "Rejected"
-                            self.SearchLeavetData?[index].status = leaveStatus
-                            let formatter = DateFormatter()
-                                    formatter.dateFormat = "dd MMM yyyy hh:mm a"
-                                    let currentDate = Date()
-                                    let formattedDate = formatter.string(from: currentDate)
-                            self.SearchLeavetData?[index].updated_on = formattedDate
-                            self.leaveRequestTable.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                        // Get formatted date
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd MMM yyyy hh:mm a"
+                        let formattedDate = formatter.string(from: Date())
+                        
+                       self.SearchLeavetData?[index].status = newStatus
+                        self.SearchLeavetData?[index].updated_on = formattedDate
+                        if let idToUpdate = self.SearchLeavetData?[index].id,
+                           let originalIndex = self.LeaveRequestData?.firstIndex(where: { $0.id == idToUpdate }) {
+                            self.LeaveRequestData?[originalIndex].status = newStatus
+                            self.LeaveRequestData?[originalIndex].updated_on = formattedDate
                         }
-                    }else {
                         
+                        // ✅ Reload updated row
+                        self.leaveRequestTable.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                        
+                        // ✅ Show success
+                        CustomAlert.showAlertWithOkAction(title: title, message: message, on: self) {}
+                    } else {
                         let title = AlertstringFile.Failed
-                        alert.showAlert(title: title, message: success.message ?? "", on: self)
+                        self.alert.showAlert(title: title, message: success.message ?? "", on: self)
                     }
                 }
                 
             case .failure(let error):
-                DispatchQueue.main.async {[self] in
-                    
-                    print("Error: ",error.localizedDescription)
-                    
-                    alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                DispatchQueue.main.async {
+                    print("Error:", error.localizedDescription)
+                    self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
             }
         }
     }
-
+    
+    
     
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -184,7 +216,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         
         let LeaveRequest = SearchLeavetData?[indexPath.row]
         guard let leaveData = SearchLeavetData?[indexPath.row] else { return cell }
-
+        
         cell.nameLbl.text = leaveData.student_name
         cell.dateLbl.text = "\(convertDate(leaveData.leave_from, toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to, toFormat: DateFormatString.StandardFormat) ?? "")"
         cell.resonLbl.text = leaveData.reason
@@ -194,8 +226,8 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         cell.delegate = self
         cell.aproveBtn.isUserInteractionEnabled = true
         cell.rejectBtn.isUserInteractionEnabled = true
-        cell.aproveBtn.tag = Int(leaveData.id) ?? 0
-        cell.rejectBtn.tag = Int(leaveData.id) ?? 0
+        cell.aproveBtn.tag = indexPath.row
+        cell.rejectBtn.tag = indexPath.row
         cell.durationLbl.text = daysBetweenLabel(start: leaveData.leave_from, end: leaveData.leave_to)
         if leaveData.status == "Approved" {
             cell.aproveBtn.backgroundColor = Colornames.AprovedClr
@@ -206,8 +238,9 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             cell.aproveBtn.isHidden = true
             cell.rejectBtn.isHidden = false
         } else {
-            cell.aproveBtn.backgroundColor = Colornames.pendingClr
-            cell.aproveBtn.setTitle("Waiting", for: .normal)
+            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
+            cell.aproveBtn.setTitle("Approve", for: .normal)
+            cell.rejectBtn.setTitle("Reject", for: .normal)
             cell.aproveBtn.isHidden = false
             cell.rejectBtn.isHidden = false
         }
@@ -224,16 +257,16 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
         formatter.locale = Locale(identifier: "en_US_POSIX")
-
+        
         guard let fromDate = formatter.date(from: start),
               let toDate = formatter.date(from: end) else {
             return "Invalid date"
         }
-
+        
         let calendar = Calendar.current
         let diff = calendar.dateComponents([.day], from: fromDate, to: toDate).day ?? 0
         let totalDays = diff + 1 // Include both from and to dates
-
+        
         return totalDays == 1 ? "( 1 day )" : "( \(totalDays) days )"
     }
 }

@@ -75,6 +75,7 @@ class VerticalProgressView: UIView {
     func setProgress(_ progress: Float, animated: Bool = true) {
         currentProgress = max(0.0, min(1.0, progress))
         progressLayer.backgroundColor = currentProgress >= 1.0 ? UIColor.systemGreen.cgColor : UIColor.lightGray.cgColor
+
         updateProgressLayer(animated: animated)
     }
     

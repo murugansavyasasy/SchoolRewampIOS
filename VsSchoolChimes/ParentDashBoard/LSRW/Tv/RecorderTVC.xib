@@ -66,31 +66,19 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHn-M7-P1V">
                                         <rect key="frame" x="50" y="10" width="682" height="65"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.30 am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uG8-c4-t3i">
-                                                <rect key="frame" x="65" y="46.666666666666629" width="47.666666666666657" height="13.333333333333336"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6J-oe-36C">
-                                                <rect key="frame" x="648.33333333333337" y="46.666666666666629" width="23.666666666666629" height="13.333333333333336"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pg5-rX-2ak" customClass="AudioView" customModule="School_Chimes" customModuleProvider="target">
-                                                <rect key="frame" x="65" y="1" width="612" height="50.666666666666664"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pg5-rX-2ak" customClass="AudioMessageView" customModule="School_Chimes" customModuleProvider="target">
+                                                <rect key="frame" x="65" y="5" width="612" height="55"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufN-RX-HQT">
-                                                <rect key="frame" x="5" y="6.3333333333333712" width="40" height="40"/>
+                                                <rect key="frame" x="5" y="12.666666666666629" width="40" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="0Zh-aS-fJa"/>
                                                     <constraint firstAttribute="width" constant="40" id="von-5E-kNt"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="play-button">
+                                                <state key="normal" image="pause-button">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                                 </state>
                                                 <connections>
@@ -104,13 +92,9 @@
                                             <constraint firstAttribute="height" constant="65" id="3Iq-6R-BQG"/>
                                             <constraint firstItem="Pg5-rX-2ak" firstAttribute="leading" secondItem="ufN-RX-HQT" secondAttribute="trailing" constant="20" id="6WZ-41-gR3"/>
                                             <constraint firstItem="ufN-RX-HQT" firstAttribute="centerY" secondItem="Pg5-rX-2ak" secondAttribute="centerY" id="7fD-8C-3uf"/>
-                                            <constraint firstItem="uG8-c4-t3i" firstAttribute="leading" secondItem="Pg5-rX-2ak" secondAttribute="leading" id="MHK-Rj-iAJ"/>
-                                            <constraint firstAttribute="bottom" secondItem="U6J-oe-36C" secondAttribute="bottom" constant="5" id="Rer-lV-mn5"/>
-                                            <constraint firstItem="Pg5-rX-2ak" firstAttribute="top" secondItem="VHn-M7-P1V" secondAttribute="top" constant="1" id="YXc-UG-9p9"/>
+                                            <constraint firstAttribute="bottom" secondItem="Pg5-rX-2ak" secondAttribute="bottom" constant="5" id="LQM-Ue-Ltv"/>
+                                            <constraint firstItem="Pg5-rX-2ak" firstAttribute="top" secondItem="VHn-M7-P1V" secondAttribute="top" constant="5" id="YXc-UG-9p9"/>
                                             <constraint firstItem="ufN-RX-HQT" firstAttribute="leading" secondItem="VHn-M7-P1V" secondAttribute="leading" constant="5" id="Z8i-BE-rGv"/>
-                                            <constraint firstItem="U6J-oe-36C" firstAttribute="trailing" secondItem="Pg5-rX-2ak" secondAttribute="trailing" constant="-5" id="aDa-LE-knt"/>
-                                            <constraint firstItem="uG8-c4-t3i" firstAttribute="top" secondItem="Pg5-rX-2ak" secondAttribute="bottom" constant="-5" id="nYk-Po-hPp"/>
-                                            <constraint firstAttribute="bottom" secondItem="uG8-c4-t3i" secondAttribute="bottom" constant="5" id="yM4-tT-EMB"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKn-RY-SPw">
@@ -134,12 +118,15 @@
                                     <constraint firstAttribute="bottom" secondItem="VHn-M7-P1V" secondAttribute="bottom" constant="10" id="MWm-k9-qJP"/>
                                     <constraint firstItem="kKn-RY-SPw" firstAttribute="top" secondItem="7GS-0J-O8u" secondAttribute="top" id="cjL-0F-Jjr"/>
                                     <constraint firstAttribute="trailing" secondItem="VHn-M7-P1V" secondAttribute="trailing" constant="50" id="fZn-52-1Cm"/>
+                                    <constraint firstAttribute="height" constant="85" id="rTf-PU-t7A"/>
                                     <constraint firstItem="VHn-M7-P1V" firstAttribute="top" secondItem="7GS-0J-O8u" secondAttribute="top" constant="10" id="y9E-1n-saa"/>
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </stackView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="JJ3-8X-HSg" secondAttribute="bottom" constant="20" id="MBh-Bb-RtB"/>
                     <constraint firstItem="JJ3-8X-HSg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="ZQX-dq-n0K"/>
@@ -148,16 +135,15 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="deleteBtn" destination="kKn-RY-SPw" id="kZB-VK-YLj"/>
-                <outlet property="durationLbl" destination="U6J-oe-36C" id="8sK-24-aDh"/>
-                <outlet property="outerplayerView" destination="7GS-0J-O8u" id="8Rl-gY-v3r"/>
+                <outlet property="outerplayerView" destination="7GS-0J-O8u" id="Tgl-D0-iX7"/>
                 <outlet property="playBtn" destination="ufN-RX-HQT" id="nQl-7F-vKq"/>
                 <outlet property="playerView" destination="VHn-M7-P1V" id="PIY-pU-DOd"/>
                 <outlet property="recoderTime" destination="wCv-pq-VXv" id="Hzg-tO-4je"/>
-                <outlet property="timerLbl" destination="uG8-c4-t3i" id="Moa-w1-ze8"/>
-                <outlet property="vicecImg" destination="Bm0-MQ-ukP" id="dN9-qQ-cPf"/>
-                <outlet property="waveView" destination="Pg5-rX-2ak" id="SC8-pn-E2I"/>
+                <outlet property="vicecImg" destination="Bm0-MQ-ukP" id="JmA-gG-8mk"/>
+                <outlet property="waveView" destination="Pg5-rX-2ak" id="ElT-WG-Lhb"/>
             </connections>
             <point key="canvasLocation" x="249" y="102"/>
         </tableViewCell>
@@ -165,7 +151,7 @@
     <resources>
         <image name="mic 1" width="26" height="26"/>
         <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="play-button" width="75" height="75"/>
+        <image name="pause-button" width="64" height="64"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
