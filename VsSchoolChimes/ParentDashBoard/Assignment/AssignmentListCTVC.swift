@@ -278,7 +278,6 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             vcc.modalPresentationStyle = .fullScreen
             vc?.present(vcc, animated: true)
         }
-               
     }
     func playVimeoVideo(from url: String) {
         if let videoID = extractVimeoID(from: url) {

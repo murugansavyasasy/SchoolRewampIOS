@@ -10,9 +10,12 @@ import WebKit
 
 class ViewProgressVC: UIViewController {
 
+    @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var dowloadBtn: UIButton!
     @IBOutlet weak var webView: WKWebView!
     var examId: String?
     var urlString: String?
+    var backBtnTitle:String?
     private var activityIndicator: UIActivityIndicatorView!
 
     override func viewDidLoad() {
@@ -20,11 +23,15 @@ class ViewProgressVC: UIViewController {
         setupActivityIndicator()
         webView.navigationDelegate = self
         markListApi(exam_id: examId ?? "")
+        BackBtn.applyBackButton()
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        BackBtn.setTitle(backBtnTitle ?? "", for: .normal)
+        dowloadBtn.layer.cornerRadius = 10
     }
 
     func markListApi(exam_id: String) {
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_view_marks,
+            url: ServiceUrl.exam_api_get_progress_card,
             parameters: ["exam_id": exam_id],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
@@ -32,8 +39,12 @@ class ViewProgressVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self?.urlString = response.data?.first
-                    self?.loadRequestedURL() // ✅ Call after setting urlString
+                    if response.status ?? false{
+                        self?.urlString = response.data?.first
+                        self?.loadRequestedURL()
+                    }else{
+                        
+                    }
                 case .failure(let error):
                     print("API Error:", error)
                     self?.showError("Failed to fetch URL from server")
@@ -64,6 +75,39 @@ class ViewProgressVC: UIViewController {
         webView.load(request)
     }
 
+    @IBAction func dowloadBtn(_ sender: UIButton) {
+        guard let fileURL = urlString, let filename = getFileName(from: fileURL) else {
+            print("❌ Invalid file URL or file name")
+            sender.isEnabled = true
+            return
+        }
+        let downloader = FileDownloader()
+        downloader.downloadFile(
+            from: fileURL,
+            folderName: "Document",
+            fileName: filename
+        ) { result in
+            DispatchQueue.main.async { [self] in
+                sender.isEnabled = true
+                switch result {
+                case .success(let filePath):
+                    CustomAlert.showAlertWithOkAction(
+                        title:"",
+                        message: "\(filename) Downloaded successfully ✅",
+                        on: self)
+                case .failure(let error):
+                    CustomAlert.showAlertWithOkAction(
+                        title:"",
+                        message: "\(filename) Download Failed ❌",
+                        on: self)
+                }
+            }
+        }
+    }
+    func getFileName(from urlString: String) -> String? {
+        guard let url = URL(string: urlString) else { return nil }
+        return url.lastPathComponent
+    }
     private func showError(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .cancel))

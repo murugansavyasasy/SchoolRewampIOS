@@ -9,6 +9,32 @@ import UIKit
 import WebKit
 
 class LSWViewAttachmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+    @IBOutlet weak var pageViewController: UIPageControl!
+    @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var imagesView: UIView!
+    @IBOutlet weak var videoPlayer: WKWebView!
+    @IBOutlet weak var imageCollection: UICollectionView!
+    var filePath: [FileData]?
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
+        imageCollection.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
+        imageCollection.delegate = self
+        imageCollection.dataSource = self
+    }
+    func loadFilePath(_ filePath:[FileData]){
+        self.filePath = filePath
+        if filePath.first?.type.uppercased() == "VIDEO"{
+            if let url = URL(string: filePath.first?.url ?? "") {
+             let request = URLRequest(url: url)
+             videoPlayer.load(request)
+             }
+        }
+        pageViewController.numberOfPages = filePath.count
+        pageViewController.currentPage = 0
+        imageCollection.reloadData()
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filePath?.count ?? 0
     }
@@ -43,19 +69,12 @@ class LSWViewAttachmentTVC: UITableViewCell, UICollectionViewDelegate, UICollect
         }
         return cell
     }
-    
-
-    @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var imagesView: UIView!
-    @IBOutlet weak var videoPlayer: WKWebView!
-    @IBOutlet weak var imageCollection: UICollectionView!
-    var filePath: [FileData]?
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
-        imageCollection.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
-        imageCollection.delegate = self
-        imageCollection.dataSource = self
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let maxVisibleIndex = collectionView.indexPathsForVisibleItems.map({ $0.item }).max() {
+            pageViewController.currentPage = maxVisibleIndex
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 100)
     }
 }

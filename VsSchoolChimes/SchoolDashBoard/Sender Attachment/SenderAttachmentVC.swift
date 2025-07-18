@@ -464,7 +464,6 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
-
             return cell
         }
     }

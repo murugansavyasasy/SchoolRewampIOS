@@ -300,6 +300,8 @@
 		846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83DD2D02D91000B69344 /* SideTvcell.swift */; };
 		846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E02D02D91000B69344 /* Tvcell.swift */; };
 		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
+		846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */; };
+		846E7FAD2E2785CC00BC954B /* AudioPlayerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846E7FAA2E2785CC00BC954B /* AudioPlayerTVC.swift */; };
 		8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */; };
 		8474CB9E2D9A6D0400DA0951 /* RecipientVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */; };
 		8474CBA22D9A6F6000DA0951 /* RecipientCVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */; };
@@ -1028,6 +1030,8 @@
 		846D83E12D02D91000B69344 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
 		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
+		846E7FAA2E2785CC00BC954B /* AudioPlayerTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTVC.swift; sourceTree = "<group>"; };
+		846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPlayerTVC.xib; sourceTree = "<group>"; };
 		8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientVc.swift; sourceTree = "<group>"; };
 		8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientVc.xib; sourceTree = "<group>"; };
 		8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientCVcell.swift; sourceTree = "<group>"; };
@@ -1630,6 +1634,8 @@
 				84235A152E1E287F002F2E1D /* LSWTaskTVC.xib */,
 				84235A182E1E3C9C002F2E1D /* LSWViewAttachmentTVC.swift */,
 				84235A192E1E3C9C002F2E1D /* LSWViewAttachmentTVC.xib */,
+				846E7FAA2E2785CC00BC954B /* AudioPlayerTVC.swift */,
+				846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */,
 			);
 			path = Tv;
 			sourceTree = "<group>";
@@ -3875,6 +3881,7 @@
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				84235A122E1E2819002F2E1D /* AddAttachmentTVC.xib in Resources */,
 				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
+				846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */,
 				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
 				843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */,
 				848047722E02A7D90042BC5D /* AssignmentReport.xib in Resources */,
@@ -4217,6 +4224,7 @@
 				FAFF9DD82D6C7B7A00498368 /* SlotsCollectionViewCell.swift in Sources */,
 				FAFF9DD92D6C7B7A00498368 /* CalendarHelper.swift in Sources */,
 				FAFF9DDA2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift in Sources */,
+				846E7FAD2E2785CC00BC954B /* AudioPlayerTVC.swift in Sources */,
 				FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */,
 				FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */,
 				FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
