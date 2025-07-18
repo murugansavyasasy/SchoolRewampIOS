@@ -39,8 +39,13 @@ class ExameMarVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self?.exameList = response.data
-                    self?.cv.reloadData()
+//                    if response.status{
+                        self?.exameList = response.data
+                        self?.cv.reloadData()
+//                    }else{
+//                        not
+//                    }
+                   
                 case .failure(let error):
                     print("API Error:", error)
                 }
