@@ -788,8 +788,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func getFileUrl() -> URL {
         let filename = "RecordedAudio.m4a"
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
-
-        // Delete if it already exists
         if FileManager.default.fileExists(atPath: filePath.path) {
             try? FileManager.default.removeItem(at: filePath)
         }

@@ -14,7 +14,7 @@ class LSWViewAttachmentTVC: UITableViewCell, UICollectionViewDelegate, UICollect
     @IBOutlet weak var imagesView: UIView!
     @IBOutlet weak var videoPlayer: WKWebView!
     @IBOutlet weak var imageCollection: UICollectionView!
-    var filePath: [FileData]?
+    var filePath: [FilePath]?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,9 +23,9 @@ class LSWViewAttachmentTVC: UITableViewCell, UICollectionViewDelegate, UICollect
         imageCollection.delegate = self
         imageCollection.dataSource = self
     }
-    func loadFilePath(_ filePath:[FileData]){
+    func loadFilePath(_ filePath:[FilePath]){
         self.filePath = filePath
-        if filePath.first?.type.uppercased() == "VIDEO"{
+        if filePath.first?.type?.uppercased() == "VIDEO"{
             if let url = URL(string: filePath.first?.url ?? "") {
              let request = URLRequest(url: url)
              videoPlayer.load(request)
@@ -42,11 +42,11 @@ class LSWViewAttachmentTVC: UITableViewCell, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = filePath?[indexPath.row] {
-            let fileURL = URL(fileURLWithPath: img.url)
+            let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             
             if iconName != "image"{
-                if let pdfURL = URL(string: img.url) {
+                if let pdfURL = URL(string: img.url ?? "") {
                     cell.hide = false
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
@@ -60,7 +60,7 @@ class LSWViewAttachmentTVC: UITableViewCell, UICollectionViewDelegate, UICollect
                 cell.hide = false
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.url), placeholderImage: ImageName.placeholder)
+                cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
                 
               
             }

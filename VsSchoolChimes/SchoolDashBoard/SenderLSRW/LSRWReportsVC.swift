@@ -194,7 +194,7 @@ class LSRWReportsVC: UIViewController ,UITableViewDelegate,UITableViewDataSource
         if #available(iOS 15.0, *) {
             let vc = LSRWActivitesVC(nibName: nil, bundle: nil)
             
-            vc.lsrw = tasks[index]
+//            vc.lsrw = tasks[index]
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             

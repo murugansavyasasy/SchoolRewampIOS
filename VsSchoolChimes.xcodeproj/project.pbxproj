@@ -294,6 +294,14 @@
 		8466E83F2D6ED0CB004F4EFC /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
 		846BDD752DB60387001DB91A /* TAttacmentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846BDD732DB60387001DB91A /* TAttacmentTVC.swift */; };
 		846BDD762DB60387001DB91A /* TAttacmentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846BDD742DB60387001DB91A /* TAttacmentTVC.xib */; };
+		846CF73A2E2F5654000361CE /* ReciverEventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846CF7392E2F5654000361CE /* ReciverEventTVC.xib */; };
+		846CF73B2E2F5654000361CE /* ReciverEventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846CF7382E2F5654000361CE /* ReciverEventTVC.swift */; };
+		846CF73E2E2F5A98000361CE /* OngoingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846CF73D2E2F5A98000361CE /* OngoingCVC.xib */; };
+		846CF73F2E2F5A98000361CE /* OngoingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846CF73C2E2F5A98000361CE /* OngoingCVC.swift */; };
+		846CF7422E2F5AC7000361CE /* CatogoryCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846CF7412E2F5AC7000361CE /* CatogoryCVC.xib */; };
+		846CF7432E2F5AC7000361CE /* CatogoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846CF7402E2F5AC7000361CE /* CatogoryCVC.swift */; };
+		846CF7462E2F5B01000361CE /* OngoingTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846CF7452E2F5B01000361CE /* OngoingTVC.xib */; };
+		846CF7472E2F5B01000361CE /* OngoingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846CF7442E2F5B01000361CE /* OngoingTVC.swift */; };
 		846D83E62D02D91000B69344 /* Tvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83E12D02D91000B69344 /* Tvcell.xib */; };
 		846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */; };
 		846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83DE2D02D91000B69344 /* SideTvcell.xib */; };
@@ -1024,6 +1032,14 @@
 		8466E83D2D6ED0CB004F4EFC /* PopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupVC.xib; sourceTree = "<group>"; };
 		846BDD732DB60387001DB91A /* TAttacmentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAttacmentTVC.swift; sourceTree = "<group>"; };
 		846BDD742DB60387001DB91A /* TAttacmentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TAttacmentTVC.xib; sourceTree = "<group>"; };
+		846CF7382E2F5654000361CE /* ReciverEventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReciverEventTVC.swift; sourceTree = "<group>"; };
+		846CF7392E2F5654000361CE /* ReciverEventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReciverEventTVC.xib; sourceTree = "<group>"; };
+		846CF73C2E2F5A98000361CE /* OngoingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingCVC.swift; sourceTree = "<group>"; };
+		846CF73D2E2F5A98000361CE /* OngoingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OngoingCVC.xib; sourceTree = "<group>"; };
+		846CF7402E2F5AC7000361CE /* CatogoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatogoryCVC.swift; sourceTree = "<group>"; };
+		846CF7412E2F5AC7000361CE /* CatogoryCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatogoryCVC.xib; sourceTree = "<group>"; };
+		846CF7442E2F5B01000361CE /* OngoingTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingTVC.swift; sourceTree = "<group>"; };
+		846CF7452E2F5B01000361CE /* OngoingTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OngoingTVC.xib; sourceTree = "<group>"; };
 		846D83DD2D02D91000B69344 /* SideTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideTvcell.swift; sourceTree = "<group>"; };
 		846D83DE2D02D91000B69344 /* SideTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideTvcell.xib; sourceTree = "<group>"; };
 		846D83E02D02D91000B69344 /* Tvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tvcell.swift; sourceTree = "<group>"; };
@@ -2999,6 +3015,14 @@
 				8451EC902E24E55B00D6DBB4 /* CalanderDateCVC.swift */,
 				8451EC912E24E55B00D6DBB4 /* CalanderDateCVC.xib */,
 				84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */,
+				846CF7382E2F5654000361CE /* ReciverEventTVC.swift */,
+				846CF7392E2F5654000361CE /* ReciverEventTVC.xib */,
+				846CF73C2E2F5A98000361CE /* OngoingCVC.swift */,
+				846CF73D2E2F5A98000361CE /* OngoingCVC.xib */,
+				846CF7402E2F5AC7000361CE /* CatogoryCVC.swift */,
+				846CF7412E2F5AC7000361CE /* CatogoryCVC.xib */,
+				846CF7442E2F5B01000361CE /* OngoingTVC.swift */,
+				846CF7452E2F5B01000361CE /* OngoingTVC.xib */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -3771,6 +3795,7 @@
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
 				849757122D2BA575006A27FD /* Std_Grp_header.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
+				846CF73A2E2F5654000361CE /* ReciverEventTVC.xib in Resources */,
 				848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */,
 				84235A1A2E1E3C9C002F2E1D /* LSWViewAttachmentTVC.xib in Resources */,
 				848126D82D91820500BE6979 /* CountryListVC.xib in Resources */,
@@ -3844,6 +3869,7 @@
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
+				846CF7422E2F5AC7000361CE /* CatogoryCVC.xib in Resources */,
 				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
@@ -3866,6 +3892,7 @@
 				84F9863B2D3A6E8E009FF065 /* PlayQuizVc.xib in Resources */,
 				84D85FF02DE5815200633784 /* SectionStregnthCVC.xib in Resources */,
 				849970B82CF8750B00800B07 /* PageVC.xib in Resources */,
+				846CF7462E2F5B01000361CE /* OngoingTVC.xib in Resources */,
 				FAFF9DFB2D6C7B7A00498368 /* StaffPtmViewController.xib in Resources */,
 				FAFF9DFC2D6C7B7A00498368 /* CheckAviableTvHeader.xib in Resources */,
 				FAFF9DFD2D6C7B7A00498368 /* parentPTMcell.xib in Resources */,
@@ -4013,6 +4040,7 @@
 				84127AFA2E03C8F00092159D /* ClaimCouponVc.xib in Resources */,
 				84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */,
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
+				846CF73E2E2F5A98000361CE /* OngoingCVC.xib in Resources */,
 				8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */,
 				18D718E42D0D479B00E9EDA3 /* ClassTableViewCell.xib in Resources */,
 				18D718E52D0D479B00E9EDA3 /* SectionTvTableViewCell.xib in Resources */,
@@ -4343,6 +4371,7 @@
 				18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */,
 				18D718A12D0D477900E9EDA3 /* PunchReq.swift in Sources */,
 				18D718A22D0D477900E9EDA3 /* PunchHistoryListVC.swift in Sources */,
+				846CF73B2E2F5654000361CE /* ReciverEventTVC.swift in Sources */,
 				18D718A32D0D477900E9EDA3 /* CreateLocationViewController.swift in Sources */,
 				18D718A42D0D477900E9EDA3 /* EditLocResp.swift in Sources */,
 				84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */,
@@ -4406,6 +4435,7 @@
 				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */,
+				846CF7432E2F5AC7000361CE /* CatogoryCVC.swift in Sources */,
 				FA2A3FBA2DB0CABB0000AF55 /* SenderAttachmentVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
@@ -4470,6 +4500,7 @@
 				849AD0332D1A841C002DEC07 /* StrengthTvCell.swift in Sources */,
 				849AD0342D1A841C002DEC07 /* SchoolStrengthVC.swift in Sources */,
 				FA8535492D9BC91400E0379C /* NewShimmerView.swift in Sources */,
+				846CF7472E2F5B01000361CE /* OngoingTVC.swift in Sources */,
 				84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */,
 				849F313C2D00613B00BACEC7 /* EventPageVC.swift in Sources */,
 				84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */,
@@ -4515,6 +4546,7 @@
 				84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */,
 				84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */,
 				84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */,
+				846CF73F2E2F5A98000361CE /* OngoingCVC.swift in Sources */,
 				FAF43B602E02811E00F28A16 /* ViewLessonVC.swift in Sources */,
 				849970D02CF8752400800B07 /* HistoryTC.swift in Sources */,
 				849970D12CF8752400800B07 /* ComunicationVC.swift in Sources */,

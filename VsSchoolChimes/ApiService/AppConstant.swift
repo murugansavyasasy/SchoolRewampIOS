@@ -116,6 +116,8 @@ struct ServiceUrl{
     static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"
     static let comm_api_leave_req_delete = "comm/api/leave-req/delete"
     static let comm_api_leave_req_update = "comm/api/leave-req/update"
+    static let lms_api_lsrw_skill_list = "lms/api/lsrw/skill-list"
+    static let lms_api_lsrw_submit_skill = "lms/api/lsrw/submit-skill"
     
 }
 

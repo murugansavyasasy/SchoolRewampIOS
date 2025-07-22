@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="OngoingCVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="395" height="203"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="395" height="203"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8B-g8-zUV">
+                        <rect key="frame" x="10" y="10" width="375" height="193"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="buk-2k-eee">
+                                <rect key="frame" x="10" y="10" width="355" height="118"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okT-X5-Kqv">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="39.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNB-AL-h2F">
+                                        <rect key="frame" x="0.0" y="39.333333333333329" width="355" height="39.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGj-Bm-u2N">
+                                        <rect key="frame" x="0.0" y="78.666666666666671" width="355" height="39.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MK-4S-bgP">
+                                <rect key="frame" x="10" y="138" width="75" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="4sd-rY-3X3"/>
+                                    <constraint firstAttribute="width" constant="75" id="w9l-7y-s1h"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Going">
+                                    <backgroundConfiguration key="background" cornerRadius="16">
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
+                                </buttonConfiguration>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.1764705882" blue="0.71235076980000001" alpha="0.40129078979999999" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="buk-2k-eee" firstAttribute="leading" secondItem="Z8B-g8-zUV" secondAttribute="leading" constant="10" id="JF7-Gf-hfD"/>
+                            <constraint firstItem="9MK-4S-bgP" firstAttribute="leading" secondItem="Z8B-g8-zUV" secondAttribute="leading" constant="10" id="kmt-yX-o9f"/>
+                            <constraint firstItem="9MK-4S-bgP" firstAttribute="top" secondItem="buk-2k-eee" secondAttribute="bottom" constant="10" id="mO3-Li-ZuP"/>
+                            <constraint firstAttribute="trailing" secondItem="buk-2k-eee" secondAttribute="trailing" constant="10" id="o02-Og-Nqs"/>
+                            <constraint firstItem="buk-2k-eee" firstAttribute="top" secondItem="Z8B-g8-zUV" secondAttribute="top" constant="10" id="v4d-vF-f9x"/>
+                            <constraint firstAttribute="bottom" secondItem="9MK-4S-bgP" secondAttribute="bottom" constant="20" id="yYg-LB-3js"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Z8B-g8-zUV" secondAttribute="trailing" constant="10" id="4aX-vM-pML"/>
+                <constraint firstItem="Z8B-g8-zUV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="9GK-lq-uN6"/>
+                <constraint firstItem="Z8B-g8-zUV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="G6d-Tg-E0M"/>
+                <constraint firstAttribute="bottom" secondItem="Z8B-g8-zUV" secondAttribute="bottom" id="ocb-vb-BMB"/>
+            </constraints>
+            <size key="customSize" width="395" height="203"/>
+            <point key="canvasLocation" x="318.32061068702291" y="73.591549295774655"/>
+        </collectionViewCell>
+    </objects>
+</document>

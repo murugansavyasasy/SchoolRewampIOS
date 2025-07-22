@@ -1354,3 +1354,56 @@ struct SubGroup: Codable {
     var name: String?
     var mark: String?
 }
+
+struct FileData: Codable {
+    var url: String
+    var type: String // "image", "video", "audio", "document", etc.
+}
+
+struct LSRW: Codable {
+    var title: String
+    var description: String
+    var subject: String
+    var submitedOn: String
+    var duration: String
+    var recording: String
+    var iframe:String
+    var type:String //read ,write,listen,speach
+    var filePath: [FileData]
+    var test:[TestQuestion]
+}
+
+struct SkillListResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SkillData]?
+}
+
+struct SkillData: Codable {
+    let id: String?
+    let detail_id: String?
+    let title: String?
+    let description: String?
+    let activity_type: String?
+    let subject: String?
+    let date: String?
+    let time: String?
+    let submitted_date: String?
+    let is_submitted: Bool?
+    let is_unread: Bool?
+    let sent_by: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let file_path: [FilePath]?
+    var test:[TestQuestion]?
+    var duration: String?
+}
+
+
+
+
+struct TestQuestion: Codable {
+    var question: String
+    var options: [String]
+}
