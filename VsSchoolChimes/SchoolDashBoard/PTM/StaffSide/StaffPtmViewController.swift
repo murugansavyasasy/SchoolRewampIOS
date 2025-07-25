@@ -12,6 +12,7 @@ import UIKit
 class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, Datepicker, ShowPopupDelegate, UIPopoverPresentationControllerDelegate {
     func showPopup(sender: UIButton) {
         let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
+        popoverContentVC.ptm = true
         popoverContentVC.view.backgroundColor = .white
         popoverContentVC.preferredContentSize = CGSize(width: 150, height: 100)
         popoverContentVC.modalPresentationStyle = .popover
