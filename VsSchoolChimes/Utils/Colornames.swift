@@ -44,12 +44,14 @@ class Colornames {
     static  var AprovedClr =  UIColor(named: "Aproved")
     static  var gradientBlue1 =  UIColor(named: "gradientBlue1")
     static  var gradientgreen1 =  UIColor(named: "gradientgreen1")
-    static  var gradientBlue =  UIColor(hex: "#7ed957")
-    static  var gradientgreen =  UIColor(hex: "#0097b2")
-    static  var stafGradient =  UIColor(hex: "#33a8cd")
-    static  var stafGradient1 =  UIColor(hex: "#a6dadf")
+    static  var gradientBlue =  UIColor.white//UIColor(hex: "#7ed957")
+    static  var gradientgreen =  UIColor.white//UIColor(hex: "#0097b2")
+    static  var stafGradient =  UIColor.white//UIColor(hex: "#33a8cd")
+    static  var stafGradient1 =  UIColor.white//UIColor(hex: "#a6dadf")
 //    static  var stafGradient =  UIColor(hex: "#06B6D4")
 //    static  var stafGradient1 =  UIColor(hex: "#3B82F6")
+    //static var Timetable = UIColor(hex: "#ED6E68")
+    static var Timetable = UIColor(hex: "#ff6861")
    
 }
 class ImageName{

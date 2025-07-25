@@ -1258,6 +1258,7 @@ struct TimetableHour: Codable {
     let hour_type: String?
     let subject_name: String?
     let staff_name: String?
+    let facalty_name: String?
 }
 
 //MARK: Certificate
@@ -1331,6 +1332,7 @@ struct SubjectMark: Codable {
     var split: [SplitMark]?
     var max_mark: String?
     var mark_obtained: String?
+    var percentage: String?
 }
 
 struct SplitMark: Codable {
@@ -1340,8 +1342,12 @@ struct SplitMark: Codable {
 }
 
 struct Assessment: Codable {
-    var name: String?
-    var value: String?
+    var Rank: String?
+    var Total: String?
+    var PresentDays: String?
+    var TotalWorkingDays: String?
+    var Remarks: String?
+    var Percentage: String?
 }
 
 struct Groups: Codable {

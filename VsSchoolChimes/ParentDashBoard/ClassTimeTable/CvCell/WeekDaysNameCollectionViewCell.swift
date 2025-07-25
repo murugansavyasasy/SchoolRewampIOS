@@ -14,9 +14,10 @@ class WeekDaysNameCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        weekDaysNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         bgView.layer.cornerRadius = 10
-        bgView.layer.borderWidth = 0.5
-        bgView.layer.borderColor = UIColor.gray.cgColor
+        bgView.layer.borderWidth = 1
+        bgView.layer.borderColor = UIColor.white.cgColor
     }
 
 }
