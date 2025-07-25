@@ -807,4 +807,39 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             }
         }
     }
+    
+    
+    func showConfetti() {
+        let emitter = CAEmitterLayer()
+        emitter.emitterPosition = CGPoint(x: view.center.x, y: -10)
+        emitter.emitterShape = .line
+        emitter.emitterSize = CGSize(width: view.bounds.size.width, height: 1)
+
+        let colors: [UIColor] = [.systemRed, .systemGreen, .systemBlue, .systemPink, .systemOrange]
+        var cells = [CAEmitterCell]()
+
+        for color in colors {
+            let cell = CAEmitterCell()
+            cell.birthRate = 6
+            cell.lifetime = 7.0
+            cell.velocity = 200
+            cell.velocityRange = 50
+            cell.emissionLongitude = .pi
+            cell.spin = 3.5
+            cell.spinRange = 1.0
+            cell.color = color.cgColor
+            cell.contents = UIImage(systemName: "star.fill")?.withTintColor(color, renderingMode: .alwaysOriginal).cgImage
+            cells.append(cell)
+        }
+
+        emitter.emitterCells = cells
+        view.layer.addSublayer(emitter)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            emitter.birthRate = 0
+            emitter.removeFromSuperlayer()
+        }
+    }
+
 }
+

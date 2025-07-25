@@ -125,7 +125,7 @@ class AssignmentReport: UIViewController, UITableViewDelegate, UITableViewDataSo
                 APIService.shared.makeApi(
                     url: ServiceUrl.comm_api_assignment_delete,
                     parameters: ["id": idToRemove],
-                    type: ApitTypeSringFile.Put,
+                    type: ApitTypeSringFile.PUT,
                     token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
                 ) { (result: Result<Send_AttachmentResponse, Error>) in
                     switch result {

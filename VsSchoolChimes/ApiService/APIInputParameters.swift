@@ -37,7 +37,7 @@ class ApitTypeSringFile{
     static var POST = "POST"
     static var GET = "GET"
     static var Delete = "DELETE"
-    static var Put = "PUT"
+    static var PUT = "PUT"
 }
  
 class CreateNewPasswordStringFile{

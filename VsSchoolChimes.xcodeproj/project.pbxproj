@@ -233,6 +233,13 @@
 		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		843960252D11938000FC3242 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960242D11938000FC3242 /* LanguageManager.swift */; };
 		843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960262D1193AD00FC3242 /* Bundle+Language.swift */; };
+		843BCD352E2E65ED00D4364A /* homeWorkVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843BCD342E2E65ED00D4364A /* homeWorkVc.xib */; };
+		843BCD362E2E65ED00D4364A /* homeWorkVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD332E2E65ED00D4364A /* homeWorkVc.swift */; };
+		843BCD812E2FAF9200D4364A /* PrivewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843BCD802E2FAF9200D4364A /* PrivewVc.xib */; };
+		843BCD822E2FAF9200D4364A /* PrivewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD7F2E2FAF9200D4364A /* PrivewVc.swift */; };
+		843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD832E2FB1B700D4364A /* CustomTransition.swift */; };
+		843BCD882E2FBCBA00D4364A /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843BCD872E2FBCBA00D4364A /* PreviewCell.xib */; };
+		843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD862E2FBCBA00D4364A /* PreviewCell.swift */; };
 		843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE472C19719700E32496 /* Main.storyboard */; };
 		843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */; };
 		843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */; };
@@ -953,6 +960,13 @@
 		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
 		843960242D11938000FC3242 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		843960262D1193AD00FC3242 /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
+		843BCD332E2E65ED00D4364A /* homeWorkVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeWorkVc.swift; sourceTree = "<group>"; };
+		843BCD342E2E65ED00D4364A /* homeWorkVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = homeWorkVc.xib; sourceTree = "<group>"; };
+		843BCD7F2E2FAF9200D4364A /* PrivewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivewVc.swift; sourceTree = "<group>"; };
+		843BCD802E2FAF9200D4364A /* PrivewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivewVc.xib; sourceTree = "<group>"; };
+		843BCD832E2FB1B700D4364A /* CustomTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
+		843BCD862E2FBCBA00D4364A /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
+		843BCD872E2FBCBA00D4364A /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequestVC.swift; sourceTree = "<group>"; };
 		843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateRequestVC.xib; sourceTree = "<group>"; };
 		843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderHomeWorkVC.swift; sourceTree = "<group>"; };
@@ -1430,6 +1444,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		8405884C2DE18CE100A7384E /* FeeDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeeDetail; sourceTree = "<group>"; };
+		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
@@ -2249,6 +2264,25 @@
 			path = ChatCell;
 			sourceTree = "<group>";
 		};
+		843BCD7E2E2FAF6700D4364A /* PrivewVc */ = {
+			isa = PBXGroup;
+			children = (
+				843BCD852E2FBC9100D4364A /* PreViewCvCell */,
+				843BCD7F2E2FAF9200D4364A /* PrivewVc.swift */,
+				843BCD802E2FAF9200D4364A /* PrivewVc.xib */,
+			);
+			path = PrivewVc;
+			sourceTree = "<group>";
+		};
+		843BCD852E2FBC9100D4364A /* PreViewCvCell */ = {
+			isa = PBXGroup;
+			children = (
+				843BCD862E2FBCBA00D4364A /* PreviewCell.swift */,
+				843BCD872E2FBCBA00D4364A /* PreviewCell.xib */,
+			);
+			path = PreViewCvCell;
+			sourceTree = "<group>";
+		};
 		8442A8672CDB787A0006068E /* Priority */ = {
 			isa = PBXGroup;
 			children = (
@@ -2553,10 +2587,14 @@
 		849AD0062D1A837A002DEC07 /* ReciverHomework */ = {
 			isa = PBXGroup;
 			children = (
+				843BCD7E2E2FAF6700D4364A /* PrivewVc */,
+				843BCD752E2E71EA00D4364A /* CalanderCv */,
 				849AD0022D1A837A002DEC07 /* ReciverHomeworkHeader.swift */,
 				849AD0032D1A837A002DEC07 /* ReciverHomeworkHeader.xib */,
 				849AD0042D1A837A002DEC07 /* ReciverHomeworkVC.swift */,
 				849AD0052D1A837A002DEC07 /* ReciverHomeworkVC.xib */,
+				843BCD332E2E65ED00D4364A /* homeWorkVc.swift */,
+				843BCD342E2E65ED00D4364A /* homeWorkVc.xib */,
 			);
 			path = ReciverHomework;
 			sourceTree = "<group>";
@@ -2910,6 +2948,7 @@
 				FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */,
 				84A0D16D2DCA0E510037E1BF /* ImageCell.swift */,
 				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
+				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3597,6 +3636,7 @@
 			fileSystemSynchronizedGroups = (
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
+				843BCD752E2E71EA00D4364A /* CalanderCv */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
@@ -3848,7 +3888,9 @@
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
 				848108BF2E1CFD13004A0F87 /* attendanceRepTv.xib in Resources */,
+				843BCD812E2FAF9200D4364A /* PrivewVc.xib in Resources */,
 				8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */,
+				843BCD352E2E65ED00D4364A /* homeWorkVc.xib in Resources */,
 				84BB5EAF2D11337E00AD0C87 /* ExamsListCVCell.xib in Resources */,
 				849970B42CF8750B00800B07 /* AssignmentListVC.xib in Resources */,
 				849970B52CF8750B00800B07 /* AssignmentListCTVC.xib in Resources */,
@@ -3968,6 +4010,7 @@
 				FA31A7C42D7023890069C954 /* VideoPlayerVC.xib in Resources */,
 				FA31A7C52D7023890069C954 /* VideoTVCell.xib in Resources */,
 				FA31A7C62D7023890069C954 /* VideoVC.xib in Resources */,
+				843BCD882E2FBCBA00D4364A /* PreviewCell.xib in Resources */,
 				849AD02D2D1A840E002DEC07 /* MeetingsTVcell.xib in Resources */,
 				18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */,
 				18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */,
@@ -4248,6 +4291,7 @@
 				FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
 				FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */,
 				FA3230962D95292B0070BA51 /* ExamDetailsVC.swift in Sources */,
+				843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */,
 				FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */,
 				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
 				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
@@ -4338,6 +4382,7 @@
 				18D7189D2D0D477900E9EDA3 /* locationReq.swift in Sources */,
 				84235A132E1E2819002F2E1D /* AddAttachmentTVC.swift in Sources */,
 				187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */,
+				843BCD362E2E65ED00D4364A /* homeWorkVc.swift in Sources */,
 				18D7189E2D0D477900E9EDA3 /* PunchHistTableViewCell.swift in Sources */,
 				18D7189F2D0D477900E9EDA3 /* LocationViewController.swift in Sources */,
 				18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */,
@@ -4466,6 +4511,7 @@
 				84235A1B2E1E3C9C002F2E1D /* LSWViewAttachmentTVC.swift in Sources */,
 				84D7858F2DFD3A3900A7B9E9 /* PaymentTypeTVC.swift in Sources */,
 				FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */,
+				843BCD822E2FAF9200D4364A /* PrivewVc.swift in Sources */,
 				84BB5EAC2D11334400AD0C87 /* ScheduleExamsList.swift in Sources */,
 				849AD0332D1A841C002DEC07 /* StrengthTvCell.swift in Sources */,
 				849AD0342D1A841C002DEC07 /* SchoolStrengthVC.swift in Sources */,
@@ -4527,6 +4573,7 @@
 				84235A172E1E287F002F2E1D /* LSWTaskTVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
 				84D1FF1C2D4CE00A003ACC04 /* ParentDashboardVc.swift in Sources */,
+				843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */,
 				8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */,
 				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,

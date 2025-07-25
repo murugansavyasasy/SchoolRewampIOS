@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HomeWorkCvCell" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="186" height="242"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="186" height="242"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aVG-6Q-qyK">
+                        <rect key="frame" x="10" y="10" width="166" height="222"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IWe-RB-oCw">
+                                <rect key="frame" x="10" y="10" width="146" height="202"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="zci-ja-38B">
+                                        <rect key="frame" x="2" y="0.0" width="89" height="55"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="na9-oF-gQ8">
+                                                <rect key="frame" x="0.0" y="0.0" width="89" height="55"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Sciencee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijZ-3u-185">
+                                                        <rect key="frame" x="0.0" y="0.0" width="89" height="41"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="SaranRaj" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FJ1-PA-kCR">
+                                                        <rect key="frame" x="0.0" y="43" width="89" height="12"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="complete_homework" translatesAutoresizingMaskIntoConstraints="NO" id="5lT-mf-F2G">
+                                                <rect key="frame" x="0.0" y="0.0" width="45.666666666666664" height="55"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="45.666666666666671" id="8Dh-dX-q6o"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="female-teacher-teaching-boy-in-school" translatesAutoresizingMaskIntoConstraints="NO" id="pe8-RW-gsi">
+                                        <rect key="frame" x="0.0" y="55" width="146" height="147"/>
+                                    </imageView>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PzC-uw-47P" customClass="PieChartView" customModule="Charts">
+                                        <rect key="frame" x="96" y="-25" width="80" height="80"/>
+                                        <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="36U-eQ-4VF"/>
+                                            <constraint firstAttribute="height" constant="80" id="7FA-0d-ILg"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="pe8-RW-gsi" secondAttribute="bottom" id="0Fn-1l-G1q"/>
+                                    <constraint firstItem="pe8-RW-gsi" firstAttribute="top" secondItem="zci-ja-38B" secondAttribute="bottom" id="CfK-gz-Flg"/>
+                                    <constraint firstAttribute="trailing" secondItem="PzC-uw-47P" secondAttribute="trailing" constant="-30" id="H2j-MU-wzb"/>
+                                    <constraint firstItem="PzC-uw-47P" firstAttribute="top" secondItem="IWe-RB-oCw" secondAttribute="top" constant="-25" id="MvB-2M-Zz3"/>
+                                    <constraint firstItem="zci-ja-38B" firstAttribute="top" secondItem="IWe-RB-oCw" secondAttribute="top" id="TCB-n1-qYX"/>
+                                    <constraint firstItem="PzC-uw-47P" firstAttribute="leading" secondItem="zci-ja-38B" secondAttribute="trailing" constant="5" id="VSL-9n-Tkx"/>
+                                    <constraint firstAttribute="trailing" secondItem="pe8-RW-gsi" secondAttribute="trailing" id="b89-kE-36P"/>
+                                    <constraint firstItem="zci-ja-38B" firstAttribute="leading" secondItem="IWe-RB-oCw" secondAttribute="leading" constant="2" id="glt-KN-4oE"/>
+                                    <constraint firstItem="pe8-RW-gsi" firstAttribute="leading" secondItem="IWe-RB-oCw" secondAttribute="leading" id="wEg-px-Eab"/>
+                                    <constraint firstItem="pe8-RW-gsi" firstAttribute="top" secondItem="PzC-uw-47P" secondAttribute="bottom" id="zEq-eV-BzO"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwH-SS-1gm">
+                                <rect key="frame" x="0.0" y="-2" width="10" height="10"/>
+                                <color key="backgroundColor" name="Red1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="B0x-7R-h2m"/>
+                                    <constraint firstAttribute="width" constant="10" id="GFd-DI-Pow"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="IWe-RB-oCw" secondAttribute="bottom" constant="10" id="BOo-dZ-kYO"/>
+                            <constraint firstItem="JwH-SS-1gm" firstAttribute="leading" secondItem="aVG-6Q-qyK" secondAttribute="leading" id="Gfe-3N-Xap"/>
+                            <constraint firstItem="IWe-RB-oCw" firstAttribute="leading" secondItem="aVG-6Q-qyK" secondAttribute="leading" constant="10" id="LE9-sB-IOo"/>
+                            <constraint firstItem="IWe-RB-oCw" firstAttribute="top" secondItem="aVG-6Q-qyK" secondAttribute="top" constant="10" id="Lfe-uf-91i"/>
+                            <constraint firstItem="JwH-SS-1gm" firstAttribute="top" secondItem="aVG-6Q-qyK" secondAttribute="top" constant="-2" id="ewx-dA-Zkg"/>
+                            <constraint firstAttribute="trailing" secondItem="IWe-RB-oCw" secondAttribute="trailing" constant="10" id="ryU-zQ-jmp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="aVG-6Q-qyK" secondAttribute="trailing" constant="10" id="Hr7-5J-Ta5"/>
+                <constraint firstItem="aVG-6Q-qyK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Lgy-Np-0UI"/>
+                <constraint firstAttribute="bottom" secondItem="aVG-6Q-qyK" secondAttribute="bottom" constant="10" id="dZ3-ho-Qu9"/>
+                <constraint firstItem="aVG-6Q-qyK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="lP2-I9-5V1"/>
+            </constraints>
+            <size key="customSize" width="186" height="242"/>
+            <connections>
+                <outlet property="PieChartTrailling" destination="H2j-MU-wzb" id="xRN-Dq-J5Y"/>
+                <outlet property="SubjectLbl" destination="ijZ-3u-185" id="h50-mF-ZU3"/>
+                <outlet property="homeWorkCompletImg" destination="5lT-mf-F2G" id="6VS-Yn-BL2"/>
+                <outlet property="pieChart" destination="PzC-uw-47P" id="fKZ-wi-GE3"/>
+                <outlet property="pieChartHeight" destination="7FA-0d-ILg" id="h9s-kF-kyx"/>
+                <outlet property="pieChartWidth" destination="36U-eQ-4VF" id="KK8-IB-1uz"/>
+                <outlet property="roundview" destination="JwH-SS-1gm" id="FCJ-aF-kX7"/>
+                <outlet property="stafNamLbl" destination="FJ1-PA-kCR" id="eqP-9d-fmv"/>
+            </connections>
+            <point key="canvasLocation" x="254.96183206106869" y="85.91549295774648"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="complete_homework" width="512" height="512"/>
+        <image name="female-teacher-teaching-boy-in-school" width="1400" height="1400"/>
+        <namedColor name="Red1">
+            <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

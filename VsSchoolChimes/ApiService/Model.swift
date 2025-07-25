@@ -353,8 +353,13 @@ struct Homework: Codable {
     let title: String?
     let description: String?
     let subject_name: String?
-    let created_by: String?
-    let file_path: [FilePath]? 
+    let sent_by: String?
+    let file_path: [FilePath]?
+    let is_completed : Bool?
+    let id : String?
+    let is_unread : Bool?
+    let detail_id : String?
+ 
 }
 struct HomeworListkResponse: Codable {
     let status: Bool?
@@ -363,6 +368,7 @@ struct HomeworListkResponse: Codable {
 }
 struct HomeworkList: Codable {
     let date: String?
+    let completed_count: Int?
     let homework: [Homework]?
 }
 

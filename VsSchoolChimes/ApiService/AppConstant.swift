@@ -39,6 +39,7 @@ struct ServiceUrl{
     static let comm_homework_get_homework_report  = "comm/api/homework/report"
     static let comm_homework_get_homework_list_archive  = "comm/api/homework/list-archive"
     static let comm_homework_get_homework_list  = "comm/api/homework/list"
+    static let homework_mark_complete  = "comm/api/homework/mark-complete"
     static let comm_homework_sendhomework  = "comm/api/homework/send-homework"
     static let comm_recipient_get_academic_year_list  = "comm/api/recipient/get-academic-year-list"
     static let comm_communication_list  = "comm/api/communication/list"
