@@ -32,7 +32,7 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         uiConficration()
         setupPageViewController()
         loadPages([page1, page2])
-        disableSwipeGesture()
+//        disableSwipeGesture()
 
         if let firstPage = pages.first {
             pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
@@ -134,13 +134,13 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         return pages[currentIndex + 1]
     }
 
-    private func disableSwipeGesture() {
-        for view in pageViewController.view.subviews {
-            if let scrollView = view as? UIScrollView {
-                scrollView.isScrollEnabled = false
-            }
-        }
-    }
+//    private func disableSwipeGesture() {
+//        for view in pageViewController.view.subviews {
+//            if let scrollView = view as? UIScrollView {
+//                scrollView.isScrollEnabled = false
+//            }
+//        }
+//    }
 
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return pages.count

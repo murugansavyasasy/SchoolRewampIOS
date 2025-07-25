@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import EventKit
 
-class ExamTmTblVCViewController: UIViewController {
+class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet weak var examCVC: UICollectionView!
@@ -17,14 +18,14 @@ class ExamTmTblVCViewController: UIViewController {
     var selectedIndex: IndexPath?
     var examDetails: [DetailedExamItem]?
     var subject_details: [SubjectDetail]?
+    let eventStore = EKEventStore()
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tv.register(UINib(nibName: "ExamListTV", bundle: nil), forCellReuseIdentifier: "ExamListTV")
         setupCollectionView()
         setupTableView()
-        
         selectedIndex = IndexPath(row: 0, section: 0)
         examDetailApi()
     }
@@ -90,26 +91,143 @@ class ExamTmTblVCViewController: UIViewController {
 // MARK: - UITableView Delegate & DataSource
 extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return subject_details?.count ?? 0
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return examDetails?.count ?? 0
     }
-
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerview = UIView()
+        headerview.backgroundColor = .clear
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .label
+        label.setFont(style: .title, size: 20)
+        label.text = examDetails?[section].name
+        
+        headerview.addSubview(label)
+        
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)])
+        
+        return headerview
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return examDetails?[section].exam_subject_details?.count ?? 0//subject_details?.count ?? 0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CellConfingName.Tvcell, for: indexPath
-        ) as? Tvcell else {
-            return UITableViewCell()
-        }
-        let subject = subject_details?[indexPath.row]
-        cell.subjectTitleLbl.text = subject?.subject_name ?? "-"
-        cell.dateLbl.text = subject?.exam_date?.convertToTargetDateFormat() ?? "-"
-        cell.syllabusLbl.text = subject?.syllabus ?? "-"
-        cell.markBtn.setTitle("Max Mark \(subject?.max_mark ?? "-")", for: .normal)
+        
+        let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
+        
+        let data = examDetails?[indexPath.section].exam_subject_details?[indexPath.row]
+        cell.SubjectLbl.text = data?.subject_name
+        cell.syllabusLbl.text = data?.syllabus
+        cell.DateBtn.setTitle(data?.exam_date, for: .normal)
+        cell.MaxMarkBtn.setTitle("Marks : " + (data?.max_mark ?? ""), for: .normal)
+       // cell.TimeBtn.setTitle(data?., for: .normal)
+        cell.indexPath = indexPath
+        cell.delegate = self
         return cell
     }
 
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(
+//            withIdentifier: CellConfingName.Tvcell, for: indexPath
+//        ) as? Tvcell else {
+//            return UITableViewCell()
+//        }
+//        let subject = subject_details?[indexPath.row]
+//        cell.subjectTitleLbl.text = subject?.subject_name ?? "-"
+//        cell.dateLbl.text = subject?.exam_date?.convertToTargetDateFormat() ?? "-"
+//        cell.syllabusLbl.text = subject?.syllabus ?? "-"
+//        cell.markBtn.setTitle("Max Mark \(subject?.max_mark ?? "-")", for: .normal)
+//        return cell
+//    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    
+    func createReminder(for task: String) {
+        eventStore.requestAccess(to: .reminder) { [weak self] (granted, error) in
+            if let error = error {
+                print("Error requesting access: \(error.localizedDescription)")
+                return
+            }
+            
+            if granted {
+                self?.addReminder(task: task)
+            } else {
+                print("Access to reminders not granted.")
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(
+                        title: AlertstringFile.PermissionDenied,
+                        message: AlertstringFile.enableRemindersAccess,
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self?.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
+    func addReminder(task: String) {
+        let reminder = EKReminder(eventStore: eventStore)
+        reminder.title = task
+        reminder.notes = "Task reminder for \(task)"
+        reminder.dueDateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: Date().addingTimeInterval(3600)) // Due in 1 hour
+        reminder.calendar = eventStore.defaultCalendarForNewReminders()
+        
+        do {
+            try eventStore.save(reminder, commit: true)
+            print("Reminder added for \(task).")
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "Success",
+                    message: "Reminder added for \(task).",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
+            }
+        } catch {
+            print("Failed to save reminder: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: "Failed to create reminder.",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
+            }
+        }
+    }
+    
+    func didTapCreateReminder(at indexPath: IndexPath) {
+        let taskName = examDetails?[indexPath.section].exam_subject_details?[indexPath.row].subject_name
+        
+        // Show confirmation alert
+        let alert = UIAlertController(
+            title: "Set Reminder",
+            message: "Do you want to set a reminder for \(taskName ?? "")?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.createReminder(for: taskName ?? "")
+        }))
+        alert.addAction(UIAlertAction(title: AlertstringFile.No, style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

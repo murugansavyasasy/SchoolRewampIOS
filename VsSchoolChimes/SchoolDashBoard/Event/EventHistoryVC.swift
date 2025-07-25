@@ -43,7 +43,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     }
                     switch result {
                     case .success(let successMessage):
-                        self.event = successMessage.data
+//                        self.event = successMessage.data
                         self.historyTable.reloadData()
                         if self.event?.count == 0{
                             self.noDataLbl.text = successMessage.message

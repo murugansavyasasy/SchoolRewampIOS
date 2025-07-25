@@ -22,7 +22,7 @@ class ExamDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.setTitle("Exam/Test", for: .normal)
+        //BackBtn.setTitle("Exam/Test", for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
         NameLbl.setFont(style: .body, size: FontSize.BodySize)

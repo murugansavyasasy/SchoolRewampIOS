@@ -19,7 +19,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome {
     @IBOutlet weak var testTable: UITableView!
     
     // MARK: - Properties
-    var lsrw: LSRW?
+    var lsrw: SkillData?
     private var captions: [CaptionType] = []
     
     override func viewDidLoad() {
@@ -33,14 +33,14 @@ class LSRWActivitesVC: UIViewController, BaktoHome {
         guard let lsrw = lsrw else { return }
         
         // Add initial attachment type if available
-        if let firstAttachmentType = lsrw.filePath.first?.type {
+        if let firstAttachmentType = lsrw.file_path?.first?.type {
             captions.append(firstAttachmentType == "audio" ? .audio : .attachments)
         }
         
         // Configure captions based on LSRW type
-        switch lsrw.type.lowercased() {
+        switch lsrw.activity_type?.lowercased() {
         case "read", "listen":
-            captions += Array(repeating: .test, count: lsrw.test.count)
+            captions += Array(repeating: .test, count: lsrw.test?.count ?? 0)
         case "write":
             captions.append(.addAttachment)
         case "speak":
@@ -95,22 +95,22 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             
         case .attachments:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSWViewAttachmentTVC", for: indexPath) as! LSWViewAttachmentTVC
-            let type = lsrw?.filePath.first?.type ?? ""
+            let type = lsrw?.file_path?.first?.type ?? ""
             cell.videoView.isHidden = (type != "video")
             cell.imagesView.isHidden = (type != "image")
-            cell.loadFilePath(lsrw?.filePath ?? [])
+            cell.loadFilePath(lsrw?.file_path ?? [])
             return cell
             
         case .audio:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AudioPlayerTVC", for: indexPath) as! AudioPlayerTVC
-            if let urlString = lsrw?.filePath.first?.url, let url = URL(string: urlString) {
+            if let urlString = lsrw?.file_path?.first?.url, let url = URL(string: urlString) {
                 cell.audioURL = url
             }
             return cell
             
         case .test:
             let index = captions[..<indexPath.row].filter { $0 == .test }.count
-            guard let test = lsrw?.test[safe: index] else {
+            guard let test = lsrw?.test?[safe: index] else {
                 let cell = UITableViewCell()
                 cell.textLabel?.text = "No Test Available"
                 return cell
@@ -128,7 +128,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         case .record:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecorderTVC", for: indexPath) as! RecorderTVC
 //            cell.audioURLString = lsrw?.filePath.first?.url
-            cell.recoderTime.text = lsrw?.test.first?.question ?? "00:00"
+            cell.recoderTime.text = lsrw?.test?.first?.question ?? "00:00"
             return cell
         }
     }

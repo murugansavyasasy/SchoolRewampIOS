@@ -7,7 +7,7 @@
 
 import UIKit
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 class LSRWPagenationVC:  UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
     @IBOutlet weak var segmentController: UISegmentedControl!

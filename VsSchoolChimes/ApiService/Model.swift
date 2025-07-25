@@ -582,23 +582,38 @@ struct AttenenceReportData: Codable{
     let att_status: String?
     let absent_on: String?
 }
-// MARK: - Root Response
+
 struct EventResponse: Codable {
     let status: Bool
     let message: String
-    let data: [EventList]
+    let data: [EventSection]
 }
 
-// MARK: - Event
+struct EventSection: Codable {
+    let categories: [EventCategory]
+    let on_going: [EventList]
+    let up_coming: [EventList]
+    let completed: [EventList]
+}
+
+struct EventCategory: Codable {
+    let id: Int?
+    let name: String?
+    let url: String?
+}
+
 struct EventList: Codable {
     let title: String
+    let category: String
     let description: String
     let date: String
     let time: String
     let venue: String
+    let iframe: String
+    let file_size: String
+    let thumbnail: String
     let file_path: [FilePath]
 }
-
 struct PendingReportsResponse: Codable {
     let status: Bool?
     let message: String?
@@ -1264,6 +1279,7 @@ struct TimetableHour: Codable {
     let hour_type: String?
     let subject_name: String?
     let staff_name: String?
+    let facalty_name: String?
 }
 
 //MARK: Certificate
@@ -1337,6 +1353,7 @@ struct SubjectMark: Codable {
     var split: [SplitMark]?
     var max_mark: String?
     var mark_obtained: String?
+    var percentage: String?
 }
 
 struct SplitMark: Codable {
@@ -1346,8 +1363,12 @@ struct SplitMark: Codable {
 }
 
 struct Assessment: Codable {
-    var name: String?
-    var value: String?
+    var Rank: String?
+    var Total: String?
+    var PresentDays: String?
+    var TotalWorkingDays: String?
+    var Remarks: String?
+    var Percentage: String?
 }
 
 struct Groups: Codable {
@@ -1359,4 +1380,57 @@ struct Groups: Codable {
 struct SubGroup: Codable {
     var name: String?
     var mark: String?
+}
+
+struct FileData: Codable {
+    var url: String
+    var type: String // "image", "video", "audio", "document", etc.
+}
+
+struct LSRW: Codable {
+    var title: String
+    var description: String
+    var subject: String
+    var submitedOn: String
+    var duration: String
+    var recording: String
+    var iframe:String
+    var type:String //read ,write,listen,speach
+    var filePath: [FileData]
+    var test:[TestQuestion]
+}
+
+struct SkillListResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SkillData]?
+}
+
+struct SkillData: Codable {
+    let id: String?
+    let detail_id: String?
+    let title: String?
+    let description: String?
+    let activity_type: String?
+    let subject: String?
+    let date: String?
+    let time: String?
+    let submitted_date: String?
+    let is_submitted: Bool?
+    let is_unread: Bool?
+    let sent_by: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let file_path: [FilePath]?
+    var test:[TestQuestion]?
+    var duration: String?
+}
+
+
+
+
+struct TestQuestion: Codable {
+    var question: String
+    var options: [String]
 }

@@ -7,23 +7,33 @@
 
 import UIKit
 import PDFKit
-@available(iOS 14.0, *)
-class SenderLSRWVC:  UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate, UITextFieldDelegate {
+import UniformTypeIdentifiers
+
+@available(iOS 15.0, *)
+class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate, UITextFieldDelegate, UIDocumentPickerDelegate{
+    
+    // MARK: - Protocol Methods
     func didTapButton(title: String, content: String, items: [FilePath]) {
-        print("sdhbh")
+        print("Button tapped with title: \(title)")
     }
+    
     func deleteImage(index: Int) {
+        guard index < attachments.count else { return }
         attachments.remove(at: index)
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
-    @IBOutlet weak var durationLbl: UILabel!
-    @IBOutlet weak var sendTime: UILabel!
-    @IBOutlet weak var waveView: WaveView!
-    @IBOutlet weak var audioPlaayerView: UIView!
-    @IBOutlet weak var recodingDuration: UILabel!
-    @IBOutlet weak var recoderImage: UIImageView!
+    // MARK: - IBOutlets
+    @IBOutlet weak var recordingView: UIView!
+    @IBOutlet weak var waveView: AudioMessageView!
+    @IBOutlet weak var voiceImg: UIImageView!
     @IBOutlet weak var audioFile: UIView!
+    @IBOutlet weak var outerplayerView: UIView!
+    @IBOutlet weak var playerView: UIView!
+    @IBOutlet weak var recorderTime: UILabel! // Fixed typo: recoderTime -> recorderTime
+    @IBOutlet weak var playBtn: UIButton!
+    @IBOutlet weak var deleteBtn: UIButton!
+    @IBOutlet var skillButtons: [UIButton]!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ToStdOrSecBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
@@ -40,12 +50,16 @@ class SenderLSRWVC:  UIViewController, DeleteImge, SelectNotice, VideoPickerMana
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
     @IBOutlet weak var VideoView: UIView!
+    
+    @IBOutlet weak var recordingStack: UIStackView!
+    
+    // MARK: - Properties
     var attachments: [AttachmentItem] = []
     let photoPickManager = PhotoPickerManager.shared
     let Img = ImageName()
     let formatter = DateFormatter()
     var image = "image/pdf"
-    var delegate : HistorySelectDelegate?
+    var delegate: HistorySelectDelegate?
     let customdate = DateFormatter()
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
@@ -55,53 +69,125 @@ class SenderLSRWVC:  UIViewController, DeleteImge, SelectNotice, VideoPickerMana
     var alert = CustomAlert()
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
+    
+    // Audio Properties
+    private var recordingTimer: Timer?
+    private var recordingStartTime: Date?
+    private var isRecording = false
+    private let audioManager = AudioManager()
+    private var audioURL: URL?
+    private var isRemoteAudio = false
+    
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
-        DetailsTxtview.applyRightTxt()
-        TitleTxtfield.applyRightTxt()
-        wordsCountLbl.applyRightTxt()
-        NotificationCenter.default.addObserver( self,selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification,object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
-        TitleTxtfield.addDoneButton()
-        DetailsTxtview.addDoneButton()
-        StyleAndTranslater()
-        uploadAttachmentView.imageCollectionview.delegate = self
-        uploadAttachmentView.imageCollectionview.dataSource = self
-        DetailsTxtview.delegate = self
-        TitleTxtfield.delegate = self
-        VideoView.isHidden = true
-        imageSelection()
-        
+        setupInitialConfiguration()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        recordingTimer?.invalidate()
     }
     
-    func setSelectedHomeWork(title:String,content:String,imageUrls:[FilePath]){
-        DetailsTxtview.text = content
-        DetailsTxtview.textColor = content != "" ? .black:.lightGray
-        TitleTxtfield.text = title
-        let imageItems = imageUrls.map {
-            AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
+    // MARK: - Setup Methods
+    private func setupInitialConfiguration() {
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+        setupTextViews()
+        setupNotifications()
+        setupCollectionView()
+        setupAudioUI()
+        styleAndTranslate()
+        imageSelection()
+        VideoView.isHidden = true
+        // Apply selected style
+        skillButtons.first?.layer.borderWidth = 2
+        skillButtons.first?.layer.cornerRadius = 10
+        skillButtons.first?.layer.borderColor = UIColor.systemBlue.cgColor
+        skillButtons.first?.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.2)
+        skillButtons.first?.setTitleColor(.systemBlue, for: .normal)
+    }
+    
+    private func setupTextViews() {
+        DetailsTxtview.applyRightTxt()
+        TitleTxtfield.applyRightTxt()
+        wordsCountLbl.applyRightTxt()
+        TitleTxtfield.addDoneButton()
+        DetailsTxtview.addDoneButton()
+        DetailsTxtview.delegate = self
+        TitleTxtfield.delegate = self
+    }
+    
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func setupCollectionView() {
+        uploadAttachmentView.imageCollectionview.delegate = self
+        uploadAttachmentView.imageCollectionview.dataSource = self
+    }
+    
+    private func setupAudioUI() {
+        outerplayerView.setShadow(cornerRadius: 10)
+        deleteBtn.isHidden = true
+        playerView.isHidden = true
+        voiceImg.image = UIImage(named: "mic 1")
+        audioManager.delegate = self
+    }
+    @IBAction func selectSkillTypes(_ sender: UIButton) {
+        for button in skillButtons {
+            button.layer.borderWidth = 1
+            button.layer.cornerRadius = 10
+            button.layer.borderColor = UIColor.lightGray.cgColor
+            button.backgroundColor = .white
+            button.setTitleColor(.black, for: .normal)
         }
-        let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
-        let newHeight = min(max(size.height, initialHeight), maxHeight)
-        TextViewheight.constant = newHeight
+        
+        // Apply selected style
+        sender.layer.borderWidth = 2
+        sender.layer.cornerRadius = 10
+        sender.layer.borderColor = UIColor.systemBlue.cgColor
+        sender.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.2)
+        sender.setTitleColor(.systemBlue, for: .normal)
+        recordingStack.isHidden = sender.tag != 3 
+    }
+    
+    // MARK: - Public Methods
+    func setSelectedHomeWork(title: String, content: String, imageUrls: [FilePath]) {
+        DetailsTxtview.text = content
+        DetailsTxtview.textColor = content.isEmpty ? .lightGray : .black
+        TitleTxtfield.text = title
+        
+        let imageItems = imageUrls.map {
+            AttachmentItem(image: nil, imageURL: $0.url, fileType: $0.type ?? "")
+        }
+        
+        updateTextViewHeight()
         attachments.removeAll()
         attachments.append(contentsOf: imageItems)
         wordsCountLbl.text = "\(content.count) / 500"
+        titleCountLbl.text = "\(title.count) / 50"
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
-    func StyleAndTranslater(){
-        
-        //MARK: UI Update
+    private func updateTextViewHeight() {
+        let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        let newHeight = min(max(size.height, initialHeight), maxHeight)
+        TextViewheight.constant = newHeight
+    }
+    
+    func styleAndTranslate() {
         TextViewheight.constant = initialHeight
         DetailsTxtview.layer.cornerRadius = 10
         DetailsTxtview.layer.borderWidth = 1
@@ -112,66 +198,39 @@ class SenderLSRWVC:  UIViewController, DeleteImge, SelectNotice, VideoPickerMana
         customdate.dateFormat = "EEE d"
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        //MARK: Label Font Style
+        // Label Font Style
         titleLbl.setRequiredText(CommonStringFile.Title)
         DetailsLbl.setRequiredText(CommonStringFile.Description)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         titleCountLbl.setFont(style: .body, size: FontSize.BodySize)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
-        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
-        setAttributedText(for: recordingTimeLbl, with: CommonStringFile.Recording_Time.translated(), firstString: CommonStringFile.RTime.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
-    }
-    @IBAction func recording(_ sender: UIButton) {
-//        audioManager.checkRecordPermission { [weak self] granted in
-//                    guard let self else { return }
-//                    DispatchQueue.main.async {
-//                        if granted {
-//                            if self.isRecording {
-//                                self.audioManager.stopRecording { url, duration in
-//                                    guard let url, let duration else {
-//                                        self.alert.showAlert(title: "", message: "Recording failed", on: self)
-//                                        return
-//                                    }
-//                                    self.audioPlaayerView.isHidden = false
-//                                    self.recodingDuration.text = String(format: "%.2f", Float(duration) / 60.0)
-//                                    self.isRecording = false
-//                                    self.recoderImage.image = UIImage(named: "play_icon")
-//                                    AudioProcessor.extractAmplitudes(from: url, sampleCount: self.waveView.numberOfBars) { amplitudes in
-//                                        self.waveView.setStaticAmplitudes(amplitudes)
-//                                    }
-//                                }
-//                            } else {
-//                                self.audioManager.startRecording()
-//                                self.audioPlaayerView.isHidden = false
-//                                self.isRecording = true
-//                                self.recoderImage.image = UIImage(named: "stop_icon")
-//                                self.waveView.clearStaticAmplitudes()
-//                            }
-//                        } else {
-//                            self.alert.showAlert(title: "", message: "Microphone access denied", on: self)
-//                        }
-//                    }
-//                }
-//    }
-//    // MARK: - AudioManagerDelegate
-//        func audioManagerDidUpdateTime(currentTime: Double, duration: Double) {
-//            waveView.progress = duration > 0 ? CGFloat(currentTime / duration) : 0
-//            durationLbl.text = String(format: "%.2f / %.2f", currentTime, duration)
-//        }
-//
-//        func audioManagerDidFinishPlaying() {
-//            waveView.progress = 0
-//            recoderImage.image = UIImage(named: "play_icon")
-//        }
-//
-//        @objc func handleWaveSliderChanged(_ notification: Notification) {
-//            guard let progress = notification.object as? CGFloat, let player = audioManager.player else { return }
-//            let duration = CMTimeGetSeconds(player.currentItem?.duration ?? .zero)
-//            let seekTime = CMTime(seconds: Double(progress) * duration, preferredTimescale: 1000)
-//            player.seek(to: seekTime)
-        }
-    @IBAction func deleteVideo(){
         
+        setAttributedText(
+            for: uploadattachmentLbl,
+            with: CommonStringFile.Add_attachment_optional.translated(),
+            firstString: CommonStringFile.Add_attachment.translated(),
+            secondString: CommonStringFile.Optional.translated(),
+            color1: .black,
+            color2: .lightGray
+        )
+        
+        setAttributedText(
+            for: recordingTimeLbl,
+            with: CommonStringFile.Recording_Time.translated(),
+            firstString: CommonStringFile.RTime.translated(),
+            secondString: CommonStringFile.Optional.translated(),
+            color1: .black,
+            color2: .lightGray
+        )
+    }
+    
+    // MARK: - IBActions
+    @IBAction func recording(_ sender: UIButton) {
+        recordingView.isHidden = false
+        isRecording ? stopRecording() : startRecording()
+    }
+    
+    @IBAction func deleteVideo() {
         videoPickerManagerDidCloseVideo()
     }
     
@@ -179,19 +238,274 @@ class SenderLSRWVC:  UIViewController, DeleteImge, SelectNotice, VideoPickerMana
         videoPicker?.pickVideo()
     }
     
-    func pickVideoFromGallery(){
-//        if #available(iOS 15.0, *) {
-//            showLottieProgressLoader(animationName: "loader (2)")
-//        }
+    @IBAction private func playVoice(_ sender: UIButton) {
+        do {
+            let isPlaying = try audioManager.togglePlayback()
+            playBtn.setImage(UIImage(named: isPlaying ? "pause-button" : "play-button"), for: .normal)
+            
+            if isPlaying {
+                waveView.startPlaybackAnimation()
+            } else {
+                waveView.stopPlaybackAnimation()
+            }
+        } catch {
+            print("Playback error: \(error.localizedDescription)")
+            showErrorAlert(message: error.localizedDescription)
+        }
+    }
+    
+    @IBAction private func deleteAudio(_ sender: UIButton) {
+        if !isRemoteAudio {
+            audioManager.deleteRecording()
+            playerView.isHidden = true
+            deleteBtn.isHidden = true
+            waveView.reset()
+            audioURL = nil
+        }
+    }
+    
+    @IBAction func recipientBtnAction(_ sender: Any) {
+        guard let title = TitleTxtfield.text, !title.isEmpty,
+              let description = DetailsTxtview.text, !description.isEmpty,
+              description != CommonStringFile.Description else {
+            alert.showAlert(
+                title: "",
+                message: AlertstringFile.enter_title_description,
+                on: self
+            )
+            return
+        }
+        
+        user_inputs.SelectedUrls = attachments
+        user_inputs.VideoPath = selectedVideoURL
+        
+        let params: [String: Any] = [
+            assignmentResquestStringKey.title: title,
+            assignmentResquestStringKey.description: description,
+        ]
+        
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        vc.ScreenType = Menu_id.homeWorkMenuId
+        vc.Common_request_params = params
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    // MARK: - Audio Methods
+    private func setupPlayerWithURL(_ url: URL) {
+        do {
+            try audioManager.setupPlayer(with: url)
+            playerView.isHidden = false
+            deleteBtn.isHidden = !url.isFileURL
+            waveView.audioURL = url
+        } catch {
+            print("Failed to setup player: \(error.localizedDescription)")
+            showErrorAlert(message: "Failed to load audio file")
+        }
+    }
+    
+    private func startRecording() {
+        audioManager.checkRecordPermission { [weak self] granted in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                granted ? self.beginRecording() : self.showMicPermissionAlert()
+            }
+        }
+    }
+    
+    private func beginRecording() {
+        recordingStartTime = Date()
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.updateRecordingTime()
+        }
+        
+        audioManager.startRecording()
+        isRecording = true
+        playerView.isHidden = true
+        playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+        deleteBtn.isHidden = true
+        voiceImg.image = UIImage.gifImageWithName("Mic")
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
+    private func stopRecording() {
+        recordingTimer?.invalidate()
+        recordingTimer = nil
+        
+        audioManager.stopRecording { [weak self] url, duration in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.isRecording = false
+                self.recordingView.isHidden = true
+                self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+                self.voiceImg.image = UIImage(named: "mic 1")
+                self.deleteBtn.isHidden = false
+                
+                if let url = url {
+                    self.audioURL = url
+                    self.isRemoteAudio = false
+                    self.setupPlayerWithURL(url)
+                }
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        }
+    }
+    
+    @objc private func updateRecordingTime() {
+        guard let startTime = recordingStartTime, isRecording else { return }
+        let elapsed = Date().timeIntervalSince(startTime)
+        DispatchQueue.main.async {
+            self.recorderTime.text = self.formatTime(elapsed)
+        }
+    }
+    
+    private func formatTime(_ seconds: Double) -> String {
+        let mins = Int(seconds) / 60
+        let secs = Int(seconds) % 60
+        return String(format: "%02d:%02d", mins, secs)
+    }
+    
+    // MARK: - Alert Methods
+    private func showMicPermissionAlert() {
+        let alert = UIAlertController(
+            title: "Microphone Access Required",
+            message: "Please allow microphone access in Settings to record audio",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL)
+            }
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    // MARK: - Public Audio Methods
+    func setRemoteAudioURL(_ url: URL) {
+        audioURL = url
+        isRemoteAudio = true
+        setupPlayerWithURL(url)
+    }
+    
+    func setLocalAudioURL(_ url: URL) {
+        audioURL = url
+        isRemoteAudio = false
+        setupPlayerWithURL(url)
+    }
+    
+    // MARK: - Video Methods
+    func pickVideoFromGallery() {
         videoPicker?.pickVideo()
     }
-
     
-    // MARK: - Delegate Methods
+    // MARK: - Helper Methods
+    func isStaff() -> Bool {
+        guard let staffDetailsCount = staffDetailsCount, staffDetailsCount.count > 1 else {
+            return false
+        }
+        
+        return staff_role == PriorityType.is_principal ||
+        staff_role == PriorityType.is_grouphead ||
+        staff_role == PriorityType.is_admin
+    }
+    
+    func gradientColours(button: UIButton, colours: [CGColor]) {
+        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colours
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = button.layer.cornerRadius
+        
+        button.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    // MARK: - File Attachment Methods
+    func selectImages() {
+        let imageAttachments = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        guard imageAttachments.count < 5 else {
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return
+        }
+        
+        PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - imageAttachments.count), from: self)
+    }
+    
+    func openCamera() {
+        let imageAttachments = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        guard imageAttachments.count < 5 else {
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return
+        }
+        
+        PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+    }
+    
+    func selectPDF() {
+        let pdfAttachments = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+        guard pdfAttachments.count < 5 else {
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return
+        }
+        
+        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+        PhotoPickerManager.shared.limiSelection = 5 - pdfAttachments.count
+    }
+    
+    func imageSelection() {
+        PhotoPickerManager.shared.onCameraImagePicked = { [weak self] image in
+            guard let self = self else { return }
+            
+            self.attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            self.attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            self.uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        
+        PhotoPickerManager.shared.onImagesPicked = { [weak self] images in
+            guard let self = self else { return }
+            
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
+            }
+            self.attachments.append(contentsOf: imageItems)
+            
+            if !imageItems.isEmpty {
+                self.attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            }
+            self.uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        
+        PhotoPickerManager.shared.onFilePicked = { [weak self] data in
+            guard let self = self else { return }
+            
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            self.attachments.append(AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            self.attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            
+            self.uploadAttachmentView.imageCollectionview.reloadData()
+        }
+    }
+}
+
+// MARK: - VideoPickerManagerDelegate
+@available(iOS 15.0, *)
+extension SenderLSRWVC {
     func videoPickerManager(didPickVideo url: URL) {
-//        if #available(iOS 15.0, *) {
-//            self.hideLottieProgressLoader()
-//        }
         videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         uploadAttachmentView.isHidden = true
@@ -200,174 +514,29 @@ class SenderLSRWVC:  UIViewController, DeleteImge, SelectNotice, VideoPickerMana
         VideoView.isHidden = false
         RecipientBtn.isHidden = false
     }
-
     
     func videoPickerManagerDidCloseVideo() {
-        if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
-        }
         selectedVideoURL = nil
         VideoView.isHidden = true
         uploadAttachmentView.isHidden = false
         collectionViewHeight.constant = 120
         uploadAttachmentView.imageCollectionview.reloadData()
     }
-    
-    
-    func imageSelection(){
-        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
-            uploadAttachmentView.imageCollectionview.reloadData()
-        }
-        
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
-            
-            let imageItems = images.map {
-                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
-            }
-            attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            }
-            uploadAttachmentView.imageCollectionview.reloadData()
-        }
-        
-        PhotoPickerManager.shared.onFilePicked = { [self] data in
-            // handle picked PDF
-            user_inputs.selectedFileType = CommonStringFile.pdf
-            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            
-            uploadAttachmentView.imageCollectionview.reloadData()
-        }
-        
-    }
-    
-    
-    
-    @available(iOS 15.0, *)
-    @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
-            user_inputs.SelectedUrls = attachments
-            user_inputs.VideoPath = selectedVideoURL
-            let params: [String: Any] = [
-                assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
-                assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
-            ]
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.homeWorkMenuId
-            vc.Common_request_params = params
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }else{
-            alert
-                .showAlert(
-                    title: "",
-                    message: AlertstringFile.enter_title_description,
-                    on: self)
-        }
-        
-    }
-    
-    func isStaff() -> Bool {
-        if (staffDetailsCount?.count ?? 0 > 1) {
-            if staff_role == PriorityType.is_principal ||
-                staff_role == PriorityType.is_grouphead ||
-                staff_role == PriorityType.is_admin {
-                return true
-            } else {
-                
-                return false
-            }
-        } else {
-            return false
-        }
-    }
-    
-    
-    
-    
-    // MARK: Set gradient colours for Button
-    func gradientcolours(button : UIButton,colours : [CGColor]) {
-        
-        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
-        // Create and configure the gradient layer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = button.bounds
-        gradientLayer.cornerRadius = button.layer.cornerRadius
-        
-        // Insert the gradient layer into the button's layer
-        button.layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
-    
-    // MARK: File Attachments Actions
-    func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
-            
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-        
-    }
-    func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-    }
-    func selectPDF() {
-        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
-        if pdf.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
-        }else{
-            
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-        }
-        
-    }
-    
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
 }
 
-@available(iOS 14.0, *)
-extension  SenderLSRWVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    
+// MARK: - UICollectionView DataSource & Delegate
+@available(iOS 15.0, *)
+extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
+        return 1 + attachments.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // First cell is the "Add Attachment" button cell
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.AttachmentCVCell,
@@ -382,6 +551,8 @@ extension  SenderLSRWVC: UICollectionViewDelegate,UICollectionViewDataSource,UIC
             ) as! ImageCvCell
             
             let adjustedIndex = indexPath.item - 1
+            guard adjustedIndex < attachments.count else { return cell }
+            
             let item = attachments[adjustedIndex]
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
@@ -399,9 +570,6 @@ extension  SenderLSRWVC: UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 cell.imageViews.image = nil
             }
             
-            // Assuming you have an array of UIImage from selected files
-            
-            
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeight.constant = totalItems <= 2 ? 120 : 220
@@ -410,77 +578,92 @@ extension  SenderLSRWVC: UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
-        
+        let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3
         return CGSize(width: width, height: 100)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            //
-            // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-                //
-                openCamera()
-            }
-            alertController.addAction(cameraAction)
+        if indexPath.row == 0 {
+            presentAttachmentOptions()
+        } else {
+            let adjustedIndex = indexPath.item - 1
+            guard adjustedIndex < attachments.count else { return }
             
-            // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                selectImages()
-                //
-            }
-            alertController.addAction(galleryAction)
+            let vc = PreviewImageVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
             
-            //             PDF option
-            let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
-                selectPDF()
-            }
-            alertController.addAction(pdfAction)
-            
-            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
-                
-                pickVideoFromGallery()
-            }
-            alertController.addAction(VideoAction)
-            // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-        }else{
-            if attachments.count > indexPath.item - 1 {
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
-                    if let url = attachments[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-                } else{
-                    if let img = attachments[indexPath.item - 1].image {
-                        vc.img = attachments[indexPath.item - 1].image
-                    }else{
-                        vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
-                    }
-                    
+            let attachment = attachments[adjustedIndex]
+            if attachment.fileType != CommonStringFile.IMAGE {
+                if let url = attachment.imageURL {
+                    vc.selectedFileURL = URL(string: url)
                 }
-                vc.type = attachments[indexPath.item - 1].fileType
-                present(vc, animated: true)
+            } else {
+                if let img = attachment.image {
+                    vc.img = attachment.image
+                } else {
+                    vc.selectedFileURL = URL(string: attachment.imageURL ?? "")
+                }
             }
+            vc.type = attachment.fileType
+            present(vc, animated: true)
         }
-        
-        
-        
-        
     }
     
+    private func presentAttachmentOptions() {
+        let alertController = UIAlertController(
+            title: "Select".translated(),
+            message: "Choose an option".translated(),
+            preferredStyle: .actionSheet
+        )
+        
+        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [weak self] _ in
+            self?.openCamera()
+        }
+        alertController.addAction(cameraAction)
+        
+        let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [weak self] _ in
+            self?.selectImages()
+        }
+        alertController.addAction(galleryAction)
+        
+        let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [weak self] _ in
+            self?.selectPDF()
+        }
+        alertController.addAction(pdfAction)
+        let recording = UIAlertAction(title: "Recording".translated(), style: .default) { [weak self] _ in
+            self?.recodeing()
+        }
+        alertController.addAction(recording)
+        let audio = UIAlertAction(title: "Audio".translated(), style: .default) { [weak self] _ in
+            self?.audio()
+        }
+        alertController.addAction(audio)
+        let videoAction = UIAlertAction(title: "Video", style: .default) { [weak self] _ in
+            self?.pickVideoFromGallery()
+        }
+        alertController.addAction(videoAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    func recodeing(){
+        playerView.isHidden = true
+        recordingView.isHidden = false
+    }
+    func audio(){
+        let supportedTypes: [UTType] = [.audio]
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
+        present(documentPicker, animated: true, completion: nil)
+    }
 }
 
-
-@available(iOS 14.0, *)
+// MARK: - UITextViewDelegate
+@available(iOS 15.0, *)
 extension SenderLSRWVC: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -489,96 +672,79 @@ extension SenderLSRWVC: UITextViewDelegate {
             DetailsTxtview.textColor = .black
         }
     }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
-        if DetailsTxtview.text == "" {
+        if DetailsTxtview.text.isEmpty {
             DetailsTxtview.text = CommonStringFile.Description
             DetailsTxtview.textColor = .gray
         }
     }
+    
     func textViewDidChange(_ textView: UITextView) {
         let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
         TextViewheight.constant = newHeight
         DetailsTxtview.isScrollEnabled = size.height > maxHeight
         
-        // Ensure layout updates
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
         
-        // Adjust view position with keyboard
         if DetailsTxtview.isFirstResponder {
-            self.adjustForKeyboardHeight()
+            adjustForKeyboardHeight()
         }
     }
     
-    // Helper to adjust outerView position dynamically
     private func adjustForKeyboardHeight() {
-        guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
-        let availableSpace = self.view.frame.height - keyboardFrame.height
-        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-        
-        if textViewBottom > availableSpace {
-            let overlap = textViewBottom - availableSpace + 20 // Add some padding
-            UIView.animate(withDuration: 0.3) {
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
-            }
-        }
+        // Implementation would depend on your specific keyboard handling needs
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Current text in the UITextView
         let currentText = textView.text ?? ""
-        
-        // Compute the new text length
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if newText.count <= 500 {
-            wordsCountLbl.text = "\(newText.count) / 500" // Update the character count label
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false // Reject the change
-        }
-    }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Current text
-        let currentText = textField.text ?? ""
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        
-        if newText.count <= 50 {
-            titleCountLbl.text = "\(newText.count) / 50" // Update count label
+            wordsCountLbl.text = "\(newText.count) / 500"
             return true
         } else {
-            let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             return false
         }
     }
-
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        if newText.count <= 50 {
+            titleCountLbl.text = "\(newText.count) / 50"
+            return true
+        } else {
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return false
+        }
+    }
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 30, right: 0)
             scrollView.scrollIndicatorInsets = scrollView.contentInset
             scrollToView(DetailsTxtview)
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        // Reset the scroll view content inset
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
     }
     
     func scrollToView(_ view: UIView) {
-        // Calculate the frame of the view relative to the UIScrollView
         let rect = view.convert(view.bounds, to: scrollView)
         scrollView.scrollRectToVisible(rect, animated: true)
     }
     
+    // MARK: - PDF Helper Methods
     func createMultiPagePDF(from images: [UIImage]) -> Data? {
         guard !images.isEmpty else { return nil }
         
@@ -597,7 +763,6 @@ extension SenderLSRWVC: UITextViewDelegate {
         return data
     }
     
-    
     func previewPDF(data: Data, in containerView: UIView) {
         let pdfView = PDFView(frame: containerView.bounds)
         pdfView.translatesAutoresizingMaskIntoConstraints = false
@@ -612,5 +777,96 @@ extension SenderLSRWVC: UITextViewDelegate {
             pdfView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
         ])
     }
+    //MARK: DOCUMENT PICKER
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let selectedFileURL = urls.first else {
+            print("No file selected.")
+            return
+        }
+        if selectedFileURL.isFileURL {
+            do {
+                try audioManager.setupPlayer(with: selectedFileURL)
+                waveView.audioURL = selectedFileURL
+            } catch {
+                print("❌ Failed to set up audio player:", error)
+            }
+        } else {
+            // Remote URL - download it first
+            downloadAndPrepareAudio(from: selectedFileURL)
+        }
+        playerView.isHidden = false
+        recordingView.isHidden = true
+    }
+    private func downloadAndPrepareAudio(from remoteURL: URL) {
+        let session = URLSession.shared
+        let task = session.downloadTask(with: remoteURL) { [weak self] (tempURL, response, error) in
+            guard let self = self else { return }
+            if let tempURL = tempURL {
+                do {
+                    try self.audioManager.setupPlayer(with: tempURL)
+                    DispatchQueue.main.async {
+                        self.waveView.audioURL = tempURL
+                    }
+                } catch {
+                    print("Failed to setup player: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self.showErrorAlert(message: "Failed to load audio file")
+                    }
+                }
+            } else {
+                print("Download error: \(error?.localizedDescription ?? "Unknown error")")
+                DispatchQueue.main.async {
+                    self.showErrorAlert(message: "Audio download failed.")
+                }
+            }
+        }
+        task.resume()
+    }
+
+    // Handle cancellation
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("Document picker was cancelled.")
+    }
+}
+
+// MARK: - AudioManagerDelegate
+@available(iOS 15.0, *)
+extension SenderLSRWVC: AudioManagerDelegate {
+    func audioManagerDidUpdateTime(currentTime: Double, duration: Double) {
+        DispatchQueue.main.async {
+            // Update progress if you have a progress indicator
+            let progress = duration > 0 ? Float(currentTime / duration) : 0
+            // self.progressSlider.value = progress
+        }
+    }
     
+    func audioManagerDidFailWithError(_ error: any Error) {
+        DispatchQueue.main.async {
+            self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+            self.playBtn.isEnabled = true
+            self.waveView.stopPlaybackAnimation()
+            self.showErrorAlert(message: error.localizedDescription)
+        }
+    }
+    
+    func audioManagerDidStartBuffering() {
+        DispatchQueue.main.async {
+            self.playBtn.isEnabled = false
+            // Optionally show loading indicator
+        }
+    }
+    
+    func audioManagerDidFinishBuffering() {
+        DispatchQueue.main.async {
+            self.playBtn.isEnabled = true
+            self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+        }
+    }
+    
+    func audioManagerDidFinishPlaying() {
+        DispatchQueue.main.async {
+            self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+            self.waveView.stopPlaybackAnimation()
+        }
+    }
 }

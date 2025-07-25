@@ -877,8 +877,6 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     }
 
     @IBAction func AttachmentRedirect(ges : LsrwListShowGesture) {
-        
-        
         let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
         vc.skillId = ges.getSkillId
         vc.modalPresentationStyle = .fullScreen

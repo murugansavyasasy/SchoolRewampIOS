@@ -387,7 +387,7 @@ class AudioManager: NSObject {
     private func setupRecorder() -> Bool {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let timestamp = Int(Date().timeIntervalSince1970)
-        let fileURL = documentsPath.appendingPathComponent("RecordedAudio_\(timestamp).m4a")
+        let fileURL = documentsPath.appendingPathComponent("RecordedAudio.m4a")
         
         if FileManager.default.fileExists(atPath: fileURL.path) {
             try? FileManager.default.removeItem(at: fileURL)
