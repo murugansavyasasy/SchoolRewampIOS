@@ -9,6 +9,7 @@ import UIKit
 
 class CatogoryCVC: UICollectionViewCell {
 
+    @IBOutlet weak var iconheight: NSLayoutConstraint!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var outerView: UIView!

@@ -566,7 +566,7 @@ func getFileIconName(for fileURL: URL) -> String {
     case "ppt", "pptx":
         return "ppt"                // 📽 PowerPoint icon
     default:
-        return "txt-file"  // 🔄 Fallback icon
+        return "play-button"  // 🔄 Fallback icon
     }
 }
 extension String {

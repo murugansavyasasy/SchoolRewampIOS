@@ -373,7 +373,8 @@ class MenuRedirectHandler {
     
     @available(iOS 14.0, *)
     func receiverNoticeBoardNavigate(from viewController: UIViewController) {
-        let vc = ParentNoticeBoardVc(nibName: nil, bundle: nil)
+//        let vc = ParentNoticeBoardVc(nibName: nil, bundle: nil)
+        let vc = ReciverNoticeBoardVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -439,11 +440,11 @@ class MenuRedirectHandler {
     }
     func receiverEvent(from viewController: UIViewController){
 
-        let pageVC = PageVC(nibName: "PageVC", bundle: nil)  // Make sure your XIB is named PageVC.xib
+        let pageVC = EventResiverVC(nibName: nil, bundle: nil)  // Make sure your XIB is named PageVC.xib
             pageVC.modalPresentationStyle = .fullScreen
-            let assignmentVC = EventResiverVC()
-            let imageVC = HolidayVC()
-            pageVC.configure(with: [assignmentVC, imageVC])
+//            let assignmentVC = EventResiverVC()
+//            let imageVC = HolidayVC()
+//            pageVC.configure(with: [assignmentVC, imageVC])
             viewController.present(pageVC, animated: true, completion: nil)
     }
     

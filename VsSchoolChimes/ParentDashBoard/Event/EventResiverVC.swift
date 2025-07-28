@@ -2,332 +2,358 @@
 //  EventResiverVC.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 19/12/24.
+//  Created by chandhru on 20/07/25.
 //
 
 import UIKit
 
+// MARK: - Display Enum
+enum EventDisplaySection {
+    case featured([EventList])
+    case categories([EventCategory])
+    case upcoming([EventList])
+    case completed([EventList])
+}
+
+protocol FilterCatagories {
+    func filterCatagories(name: String)
+}
+
 @available(iOS 14.0, *)
-class EventResiverVC: UIViewController, SelectNotice{
-    
+class EventResiverVC: UIViewController {
+    // MARK: - Outlets
+    @IBOutlet weak var searchStack: UIStackView!
+    @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var sectionLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var noDataLbl: UILabel!
-    @IBOutlet weak var searchHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var noDataImg: UIImageView!
-    
+
+    // MARK: - Properties
     var titleLbl = "Event"
     var button1 = "Event/Holidays".translated()
     var button2 = "Holiday".translated()
-    var previousOffset: CGFloat = 0.0
-    var delegate : HistorySelectDelegate?
-    let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
-    var shouldShowFooter = true
-    var event:[EventList]?
-    let dateFormatter = DateFormatter()
-    var playIndex : Int = 0
+    var delegate: HistorySelectDelegate?
+
+    var allEventSections: [EventDisplaySection] = []
+    var filteredSections: [EventDisplaySection] = []
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var SearchData: [EventList]?
-    var FilteredData: [EventList]?
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupStudentInfo()
+        setupUI()
+        registerTableView()
+        GetEvent()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        filteredSections = allEventSections
+        tableview.reloadData()
+    }
+
+    // MARK: - Setup Methods
+    private func setupStudentInfo() {
+        studentNameLbl.setFont(style: .body, size: FontSize.BodySize)
+        sectionLbl.setFont(style: .body, size: FontSize.BodySize)
+        studentNameLbl.text = studentDetails?.name
+        sectionLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+    }
+
+    private func setupUI() {
+        searchBtn.isHidden = false
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.applyRightTxt()
+        searchbar.backgroundImage = UIImage()
+        searchbar.barTintColor = .clear
+        searchbar.backgroundColor = .clear
         searchbar.delegate = self
         searchbar.addDoneButton()
-        GetEvent()
-        tabelViewRegister()
     }
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        
-//        view
-//            .applyGradient(
-//                colors: [Colornames.gradientgreen,Colornames.gradientBlue],
-//                startPoint: CGPoint(x: 1, y: 0.2),
-//                endPoint: CGPoint(x: 0, y: 0.5)
-//            )
-//    }
-    
-    //MARK: Cell Registration
-    func tabelViewRegister() {
+
+    private func registerTableView() {
         tableview.delegate = self
         tableview.dataSource = self
-        
-        let nib = UINib(nibName:CellConfingName.EventTVC, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.EventTVC)
-        let nib2 = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
-        let nib3 = UINib(nibName: CellConfingName.VideoTVCell, bundle: nil)
-        tableview.register(nib2, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
-        tableview.register(nib3, forCellReuseIdentifier: CellConfingName.VideoTVCell)
+        tableview.register(UINib(nibName: CellConfingName.EventTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.EventTVC)
+        tableview.register(UINib(nibName: "OngoingTVC", bundle: nil), forCellReuseIdentifier: "OngoingTVC")
+        tableview.register(UINib(nibName: "ReciverEventTVC", bundle: nil), forCellReuseIdentifier: "ReciverEventTVC")
+        tableview.register(UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil), forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
+        tableview.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
-    
-    func gradientcolours(button : UIButton,colours : [CGColor]){
-        
-        
-        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
-        // Create and configure the gradient layer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = button.bounds
-        gradientLayer.cornerRadius = button.layer.cornerRadius
-        
-        // Insert the gradient layer into the button's layer
-        button.layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
-    
+
+    // MARK: - API Call
     func GetEvent() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
+
         APIService.shared.makeApi(
             url: ServiceUrl.api_school_event_get_event,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token:studentDetails?.access_token ?? "") { [self] (result: Result<EventResponse, Error>) in
-                DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
-                    
-                    switch result {
-                    case .success(let successMessage):
-                        self.event = successMessage.data
-                        self.FilteredData = self.event
-                        self.SearchData = self.event
-                        self.tableview.reloadData()
-                        if self.event?.count == 0{
-                            self.noDataLbl.text = successMessage.message
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            
-                            self.tableview.isHidden = true
-                            self.searchbar.isHidden = true
-                            self.searchHeight.constant = 0
-                        }else{
-                            self.noDataLbl.isHidden = true
-                            self.noDataImg.isHidden = true
-                            //                            self.searchHeight.constant = 56
-                            self.searchHeight.constant = 0
-                            self.tableview.isHidden = false
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self?.hideLottieProgressLoader()
+                }
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    self.allEventSections = []
+                    if let firstSection = response.data.first {
+                        if !firstSection.on_going.isEmpty {
+                            self.allEventSections.append(.featured(firstSection.on_going))
                         }
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        if self.event?.count == 0{
-                            self.noDataLbl.text = error.localizedDescription
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            self.tableview.isHidden = true
-                            self.searchbar.isHidden = true
+                        if !firstSection.categories.isEmpty {
+                            var updatedCategories = firstSection.categories
+                            let allCategory = EventCategory(id: nil, name: "All", url: "")
+                            updatedCategories.insert(allCategory, at: 0)
+                            self.allEventSections.append(.categories(updatedCategories))
                         }
-                        
+                        if !firstSection.up_coming.isEmpty {
+                            self.allEventSections.append(.upcoming(firstSection.up_coming))
+                        }
+                        if !firstSection.completed.isEmpty {
+                            self.allEventSections.append(.completed(firstSection.completed))
+                        }
                     }
+                    self.filteredSections = self.allEventSections
+                    self.noDataLbl.isHidden = true
+                    self.noDataImg.isHidden = true
+                    self.searchbar.isHidden = false
+                    self.tableview.isHidden = false
+                    self.tableview.reloadData()
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.noDataLbl.text = error.localizedDescription
+                    self.noDataLbl.isHidden = false
+                    self.noDataImg.isHidden = false
+                    self.tableview.isHidden = true
+                    self.searchbar.isHidden = true
                 }
             }
+        }
     }
-    
+
+    // MARK: - Actions
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+
+    @IBAction func search(_ sender: UIButton) {
+        searchbar.becomeFirstResponder()
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        searchStack.isHidden = !sender.isSelected
+    }
+
+    func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
+
+        for (index, item) in files.enumerated() {
+            guard let urlString = item.url, let url = URL(string: urlString) else { continue }
+            let imageView: UIImageView? = [cell.img1, cell.img2, cell.img3][safe: index]
+            imageView?.isHidden = false
+
+            if item.type?.lowercased() != "image" {
+                let iconName = getFileIconName(for: url)
+                imageView?.image = UIImage(named: iconName)
+            } else {
+                imageView?.kf.setImage(with: url)
+            }
+        }
+
+        if files.count > 3 {
+            let extraCount = files.count - 3
+            if let button = cell.imgCount as? UIButton {
+                button.setTitle("+\(extraCount)", for: .normal)
+            }
+            cell.imgCount.isHidden = false
+        }
+    }
 }
 
-//MARK: Tableview Functions
+// MARK: - UITableViewDelegate & DataSource
 @available(iOS 14.0, *)
-extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
+extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return filteredSections.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return FilteredData?.count ?? 0
+        switch filteredSections[section] {
+        case .featured, .categories: return 1
+        case .upcoming(let events), .completed(let events): return events.count
+        }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let event = FilteredData?[indexPath.row]
-        if event?.file_path.first?.type?.uppercased() == "VIDEO"{
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-            cell.selectionStyle = .none
-            cell.confic(event?.file_path.first?.url ?? "")
-            cell.descriptContent.setupExpandable(text: event?.description ?? "")
-            cell.descriptContent.onExpandableTap = {
-                cell.descriptContent.isExpanded.toggle()
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            cell.newImg.isHidden = true
-            cell.datelbl.isHidden = true
-            cell.dateAndtimeLbl.isHidden = false
-            let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
-            cell.dateAndtimeLbl.text =  "🕒 Event starts at: " + (
-                event?.time ?? ""
-            ) + " , " + "   🗓️   " + formattedDateString
-            cell.titleLbl.text = event?.title
-            cell.subjectName.text = "📍" + (event?.venue ?? "")
-            cell.subjectName.isHidden = false
-            cell.forwardBtn.isHidden = true
-            
-            cell.configure(indexPath: indexPath)
-            
-            // Handle the tap event with closure
-            cell.onVideoTapped = { tappedIndexPath in
-                if let item = self.FilteredData?[tappedIndexPath.row]{
-                    self.playVideo(for: item)
-                }
-            }
+        let sectionData = filteredSections[indexPath.section]
+
+        switch sectionData {
+        case .featured(let events):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
+            cell.config(category: nil, onGoing: events, type: false)
+            cell.pageController.numberOfPages = events.count
             return cell
-        }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
-            cell.selectionStyle = .none
-            cell.ImageCollectionView.isHidden = true
-            cell.withofImageView.constant = 0
-            cell.dateLblHeight.constant = 0
-            // Configure cell data
-            cell.subjectName.text = "📍" + (event?.venue ?? "")
-            cell.topics.text = event?.title ?? ""
-            cell.eventTimeLbl.isHidden = false
-            let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
-            cell.eventTimeLbl.text = "🕒 Event starts at: " + (
-                event?.time ?? ""
-            ) + " , " + "   🗓️   " + formattedDateString
-            cell.dateLble.isHidden = true
-            //                cell.dateLble.text = ""
-            cell.forwordBtn.isHidden = true
-            cell.SelectBtnHeight.constant = 0
-            cell.newView.isHidden = true
-            // Load image if available
-            if let urls = event?.file_path, urls.count != 0{
-                cell.ImageCollectionView.isHidden = false
-                cell.pageViewController.isHidden = urls.count <= 1
-                cell.CvHeight.constant = 100
-                cell.loadImage(urls: urls)
-            }
-            let contentText = event?.description ?? ""
-            cell.descriptionLbl.setupExpandable(text: contentText)
-            
-            
-            //                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
-            //                cell.newView.isHidden = contentText.count <= 100
-            cell.descriptionLbl.onExpandableTap = { [weak tableView] in
-                cell.descriptionLbl.isExpanded.toggle()
-                cell.newView.isHidden = true
-                tableView?.beginUpdates()
-                tableView?.endUpdates()
-            }
-            
-            cell.cellview.layoutIfNeeded()
+
+        case .categories(let categories):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
+            cell.config(category: categories, onGoing: nil, type: true)
+            cell.delegate = self
+            return cell
+
+        case .upcoming(let events):
+            let event = events[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReciverEventTVC", for: indexPath) as! ReciverEventTVC
+            cell.titleLbl.text = event.title
+            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
+            cell.placeLbl.text = event.venue
+            cell.descriptionLbl.text = event.description
+            cell.date = event.date
+            cell.time = event.time
+            cell.reminderBtn.isHidden = false
+            cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
+            loadFiles(into: cell, files: event.file_path)
+            return cell
+        case .completed(let events):
+            let event = events[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReciverEventTVC", for: indexPath) as! ReciverEventTVC
+            cell.titleLbl.text = event.title
+            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
+            cell.placeLbl.text = event.venue
+            cell.descriptionLbl.text = event.description
+            cell.date = event.date
+            cell.time = event.time
+            cell.reminderBtn.isHidden = true
+            cell.outerView.backgroundColor = .black
+            loadFiles(into: cell, files: event.file_path)
             return cell
         }
-        //            cell.CvHeight.constant = 0
-        
     }
-    
-    
-    func playVideo(for item: EventList) {
-        
-        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-        vc.url = item.file_path.first?.url
-        vc.titles = item.title
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-        
-    }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        
-        // Check for scroll direction
-        if contentOffsetY > previousOffset && contentOffsetY > 0 {
+        switch filteredSections[indexPath.section] {
+        case .featured: return 220
+        case .categories: return 130
+        case .upcoming, .completed: return UITableView.automaticDimension
         }
-        previousOffset = contentOffsetY
     }
-    
-    
-    
-    //MARK: TEXT ADD SEE MORE
-    
-    
-    
-    
-    func didTapButton(title: String, content: String, items: [FilePath]) {
-        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
-        
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
+
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 17)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        switch filteredSections[section] {
+        case .featured: label.text = "Today's Events"
+        case .categories: label.text = "Event Categories"
+        case .upcoming: label.text = "Upcoming Events"
+        case .completed: label.text = "Completed Events"
+        }
+
+        headerView.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
+            label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8)
+        ])
+        return headerView
     }
-    
-    
-    //    // Method to load the footer from nib and set it as tableFooterView
-    //    func setupTableFooter() {
-    //        if shouldShowFooter {
-    //            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-    //                // Adjust the frame based on your needs.
-    //                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
-    //
-    //                // Add a tap gesture recognizer to the button to trigger the hide action.
-    //                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-    //                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-    //                footer.SeeMoreBtn.isUserInteractionEnabled = true
-    //
-    //                // Set the footer view.
-    //                tableview.tableFooterView = footer
-    //            }
-    //        } else {
-    //            tableview.tableFooterView = nil
-    //        }
-    //    }
-    //
-    //    @objc func seeMoreAction() {
-    //        print("Footer button tapped. Hiding the footer.")
-    //
-    //        // Animate the footer fade-out if desired.
-    //        if let footer = tableview.tableFooterView {
-    //            UIView.animate(withDuration: 0.3, animations: {
-    //                footer.alpha = 0
-    //            }, completion: {[self] _ in
-    //                // Hide the footer after animation completes.
-    //                tableview.tableFooterView = nil
-    //                shouldShowFooter = false
-    //
-    //                tableview.reloadData()
-    //            })
-    //        } else {
-    //            // In case footer is already nil.
-    //            shouldShowFooter = false
-    //        }
-    //    }
-    
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
 }
 
-
-//MARK: Searchbar Delegate
+// MARK: - UISearchBarDelegate
 @available(iOS 14.0, *)
-extension EventResiverVC: UISearchBarDelegate{
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        searchbar.resignFirstResponder()
+extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
+
+    func filterCatagories(name: String) {
+        self.filteredSections = filterEventListsByTitle(searchText: name)
+        self.tableview.reloadData()
     }
-    
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        if searchText.isEmpty {
-            SearchData = FilteredData
-        } else {
-            SearchData = FilteredData?.filter { notice in
-                (notice.title.lowercased().contains(searchText.lowercased()) ?? false) ||
-                (notice.description.lowercased().contains(searchText.lowercased()) ?? false) ||
-                (
-                    notice.date
-                        .lowercased()
-                        .contains(searchText.lowercased()) ?? false
-                )
+        DispatchQueue.main.async {
+            if searchText.isEmpty {
+                self.filteredSections = self.allEventSections
+            } else {
+                self.filteredSections = self.allEventSections.compactMap { section in
+                    switch section {
+                    case .featured(let events):
+                        let matched = events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+                        return matched.isEmpty ? nil : .featured(matched)
+
+                    case .categories(let categories):
+                        let matched = categories.filter { $0.name?.localizedCaseInsensitiveContains(searchText) ?? false }
+                        return matched.isEmpty ? nil : .categories(matched)
+
+                    case .upcoming(let events):
+                        let matched = events.filter {
+                            $0.title.localizedCaseInsensitiveContains(searchText) ||
+                            $0.description.localizedCaseInsensitiveContains(searchText)
+                        }
+                        return matched.isEmpty ? nil : .upcoming(matched)
+
+                    case .completed(let events):
+                        let matched = events.filter {
+                            $0.title.localizedCaseInsensitiveContains(searchText) ||
+                            $0.description.localizedCaseInsensitiveContains(searchText)
+                        }
+                        return matched.isEmpty ? nil : .completed(matched)
+                    }
+                }
             }
+            self.tableview.reloadData()
         }
-        
-        noDataImg.isHidden = !(SearchData?.isEmpty ?? false)
-        noDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-        tableview.reloadData()
+    }
+
+    func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
+        var filtered: [EventDisplaySection] = []
+
+        let upcoming = allEventSections.compactMap { section -> [EventList]? in
+            if case .upcoming(let events) = section {
+                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+            }
+            return nil
+        }.flatMap { $0 }
+
+        if !upcoming.isEmpty {
+            filtered.append(.upcoming(upcoming))
+        }
+
+        let completed = allEventSections.compactMap { section -> [EventList]? in
+            if case .completed(let events) = section {
+                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+            }
+            return nil
+        }.flatMap { $0 }
+
+        if !completed.isEmpty {
+            filtered.append(.completed(completed))
+        }
+
+        return filtered
     }
 }
