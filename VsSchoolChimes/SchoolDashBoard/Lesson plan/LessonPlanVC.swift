@@ -16,6 +16,10 @@ class LessonPlanVC: UIViewController {
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var ButtonStack: UIStackView!
+    @IBOutlet weak var AllClassBtn: UIButton!
+    @IBOutlet weak var MyClassBtn: UIButton!
+    
     
     let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
     let colours1 = ["AttendenceColor","Clr","Color","lesson1","lesson3"]
@@ -34,10 +38,17 @@ class LessonPlanVC: UIViewController {
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+        searchBar.isHidden = true
+        MyClassBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
+        AllClassBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
+        
+        addUnderline(to: AllClassBtn, unselectedButton: MyClassBtn)
         
         if staffRole == "p3" {
             ReqestType = LessonPlanStringFile.myclass
             segmentControl.isHidden = true
+            ButtonStack.isHidden = true
+            
         }else{
             ReqestType = LessonPlanStringFile.allclass
         }
@@ -107,7 +118,7 @@ class LessonPlanVC: UIViewController {
                     let Hidden = SearchData?.isEmpty ?? false
                     self.NodataImage.isHidden = !Hidden
                     self.NodataLbl.isHidden = !Hidden
-                    self.searchBar.isHidden = Hidden
+                    //self.searchBar.isHidden = Hidden
                     self.tableview.reloadData()
                     
                 case .failure(let error):
@@ -122,6 +133,30 @@ class LessonPlanVC: UIViewController {
         }
     }
     
+    func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
+        // Remove underline from both buttons
+        [selectedButton, unselectedButton].forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+
+        // Add underline to the selected button
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
+
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
+    }
+
+    
     
     @IBAction func SegmentAct(_ sender: Any) {
         
@@ -133,6 +168,24 @@ class LessonPlanVC: UIViewController {
         
         lesson_plan_staff_report_Api()
     }
+    
+    @IBAction func AllClassAct(_ sender: Any) {
+        addUnderline(to: AllClassBtn, unselectedButton: MyClassBtn)
+        ReqestType = LessonPlanStringFile.allclass
+        lesson_plan_staff_report_Api()
+    }
+    
+    @IBAction func MyClassAct(_ sender: Any) {
+        addUnderline(to: MyClassBtn, unselectedButton: AllClassBtn)
+        ReqestType = LessonPlanStringFile.myclass
+        lesson_plan_staff_report_Api()
+    }
+    
+    @IBAction func SearchButtonAct(_ sender: Any) {
+        
+        searchBar.isHidden.toggle()
+    }
+    
     
     @IBAction func BackBtnAct(_ sender: Any) {
         
@@ -154,6 +207,12 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDashboardTv, for: indexPath) as! LessonDashboardTv
         
         let Lesson =  SearchData?[indexPath.row]
+        
+        if (indexPath.row % 2) == 0 {
+            cell.Cellview.backgroundColor = UIColor(hex: "#F4E5E7")
+        }else {
+            cell.Cellview.backgroundColor = UIColor(hex: "#FCF1CE")
+        }
         
         cell.SubjectLbl.text = Lesson?.subject_name
         cell.StandardLbl.text = (Lesson?.class_name ?? "") + " - " + (Lesson?.section_name ?? "")

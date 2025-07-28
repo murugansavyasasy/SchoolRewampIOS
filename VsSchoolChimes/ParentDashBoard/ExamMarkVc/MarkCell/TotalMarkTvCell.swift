@@ -14,6 +14,7 @@ class TotalMarkTvCell: UITableViewCell {
     @IBOutlet weak var totalMarkLbl: UILabel!
     @IBOutlet weak var GradeLbl: UILabel!
     @IBOutlet weak var RemarksLbl: UILabel!
+    @IBOutlet weak var ExamTitleLbl: UILabel!
     
     private var dotsAdded = false
     
@@ -22,6 +23,7 @@ class TotalMarkTvCell: UITableViewCell {
        
         CircleView.layer.cornerRadius = CircleView.frame.width / 2
         
+        ExamTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         obtainedMarkLbl.setFont(style: .header, size: 40)
         totalMarkLbl.setFont(style: .body, size: FontSize.BodySize)
         GradeLbl.setFont(style: .title, size: FontSize.TitleSize)

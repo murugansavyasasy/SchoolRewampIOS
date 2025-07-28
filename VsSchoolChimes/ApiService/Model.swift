@@ -1298,6 +1298,8 @@ struct SubjectDetail: Codable {
     var exam_session: String?
     var max_mark: String?
     var syllabus: String?
+    var start_time: String?
+    var end_time: String?
 }
 
 //MARK: ExamList

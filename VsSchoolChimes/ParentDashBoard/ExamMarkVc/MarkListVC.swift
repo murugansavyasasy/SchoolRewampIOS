@@ -24,11 +24,14 @@ class MarkListVC: UIViewController {
     var ArrayCount: Int?
     var ExamMarkTvCell = "ExamMarkTvCell"
     var TotalMarkTvCell = "TotalMarkTvCell"
+    var ExamTitle:String?
 
     var studentDetails = UserDefaultFileManager.get_child_Details()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -94,17 +97,6 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         return 3
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        if section == 2 {
-//            if let cell = NewTv.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.SettingHeaderView) as? SettingHeaderView {
-//                cell.headerLabel.text = "Other Activities"
-//                cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
-//                return cell
-//            }
-//        }
-//        return nil
-//    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 0 {
@@ -120,17 +112,12 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         label.textColor = .label
         label.text = section == 1 ? "Subjects & Marks" : "Other Activities"
         headerView.addSubview(label)
-
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
-            label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
-        ])
+        
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])
 
         return headerView
     }
 
-
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
@@ -153,6 +140,7 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         case 0:
             let cell = NewTv.dequeueReusableCell(withIdentifier: "TotalMarkTvCell", for: indexPath) as! TotalMarkTvCell
             
+            cell.ExamTitleLbl.text = ExamTitle
             return cell
             
         case 1:
@@ -185,28 +173,10 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         default:
             return UITableViewCell()
         }
-        
-//        if indexPath.section == 0 {
-//            
-//            let cell = NewTv.dequeueReusableCell(withIdentifier: "TotalMarkTvCell", for: indexPath) as! TotalMarkTvCell
-//            
-//            return cell
-//            
-//        }else {
-//            let cell = NewTv.dequeueReusableCell(withIdentifier: ExamMarkTvCell, for: indexPath) as! ExamMarkTvCell
-//            let data = subject_marks?[indexPath.row]
-//            let mark = ("\(data?.mark_obtained ?? "") / \(data?.max_mark ?? "")")
-//            cell.subjectLbl.text = mark//data?.name
-//            cell.SubjectMarkBtn.setTitle(data?.name, for: .normal)
-//            if data?.split?.count ?? 0 > 1{
-//                cell.configure(data: data?.split ?? [])
-//            }
-//            return cell
-//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? CGFloat.leastNormalMagnitude : 32 // Or your desired height
+        return section == 0 ? CGFloat.leastNormalMagnitude : 40 // Or your desired height
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

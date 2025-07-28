@@ -68,6 +68,7 @@ class ExameMarVC: UIViewController {
         guard let examID = exameList?[index].id else { return }
         let vc = MarkListVC()
         vc.modalPresentationStyle = .fullScreen
+        vc.ExamTitle = exameList?[index].name
         vc.examId = examID
         present(vc, animated: false)
        

@@ -26,14 +26,14 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zb0-xl-efz">
-                    <rect key="frame" x="10" y="69" width="66" height="40"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zb0-xl-efz">
+                    <rect key="frame" x="10" y="69" width="373" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="bfZ-Nc-jhb"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Marks">
+                    <state key="normal">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
@@ -42,30 +42,10 @@
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="LxR-Cs-0VR"/>
                     </connections>
                 </button>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DuO-FM-N8d">
-                    <rect key="frame" x="215.66666666666663" y="69" width="167.33333333333337" height="45"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZS-Lt-TUg">
-                            <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbi-ci-qNP">
-                            <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="19.666666666666671" id="KJE-vC-wY4"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                </stackView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kXG-iP-8SA">
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kXG-iP-8SA">
                     <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Hx0-CK-9VQ">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Hx0-CK-9VQ">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="694"/>
                         </tableView>
                     </subviews>
@@ -78,10 +58,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sZ-DF-On2">
-                    <rect key="frame" x="0.0" y="124" width="393" height="694"/>
+                    <rect key="frame" x="0.0" y="117" width="393" height="701"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="u2f-4L-eyf">
-                            <rect key="frame" x="20" y="0.0" width="353" height="694"/>
+                            <rect key="frame" x="20" y="0.0" width="353" height="701"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
@@ -97,15 +77,13 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="3sZ-DF-On2" firstAttribute="top" secondItem="DuO-FM-N8d" secondAttribute="bottom" constant="10" id="06W-yA-kHm"/>
                 <constraint firstItem="Zb0-xl-efz" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="12f-xH-f4b"/>
                 <constraint firstItem="Zb0-xl-efz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="89x-6U-kYR"/>
-                <constraint firstItem="kXG-iP-8SA" firstAttribute="top" secondItem="DuO-FM-N8d" secondAttribute="bottom" constant="10" id="9cs-hF-76r"/>
-                <constraint firstItem="DuO-FM-N8d" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="HeE-1l-2VP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kXG-iP-8SA" secondAttribute="trailing" id="OU9-5F-aBW"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DuO-FM-N8d" secondAttribute="trailing" constant="10" id="P5Z-cv-HyG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kXG-iP-8SA" secondAttribute="bottom" id="g9T-mK-cON"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zb0-xl-efz" secondAttribute="trailing" constant="10" id="hfS-0w-sKt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3sZ-DF-On2" secondAttribute="bottom" id="kY1-C6-Od4"/>
+                <constraint firstItem="3sZ-DF-On2" firstAttribute="top" secondItem="Zb0-xl-efz" secondAttribute="bottom" constant="8" id="q7X-5T-X9f"/>
                 <constraint firstItem="kXG-iP-8SA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="q8p-MK-qSE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3sZ-DF-On2" secondAttribute="trailing" id="vb7-LQ-Ifz"/>
                 <constraint firstItem="3sZ-DF-On2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="vdM-pV-Gow"/>
@@ -172,6 +150,37 @@
                 </constraints>
             </view>
             <point key="canvasLocation" x="775" y="37"/>
+        </viewController>
+        <viewController id="Tq5-IM-xtD">
+            <view key="view" contentMode="scaleToFill" id="cuU-uE-vGh">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DuO-FM-N8d">
+                        <rect key="frame" x="100" y="152" width="167.33333333333337" height="45"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZS-Lt-TUg">
+                                <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbi-ci-qNP">
+                                <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19.666666666666671" id="KJE-vC-wY4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <viewLayoutGuide key="safeArea" id="RwI-1P-TpJ"/>
+                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            </view>
+            <point key="canvasLocation" x="894" y="20"/>
         </viewController>
     </objects>
     <resources>
