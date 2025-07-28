@@ -50,6 +50,15 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
 
                    // Filter from cached API response
                    FilterHomeWorkList = filterHomeworkGroupByDate(from: allHomeworkData, date: selectedDate)
+            
+            let isEmpty = FilterHomeWorkList.isEmpty
+    //                    self.noDataLbl.text = response.message
+    //                    self.noDataLbl.isHidden = !isEmpty
+            noDataImage.isHidden = !isEmpty
+            NodataFoundLbl.isHidden = !isEmpty
+          homeWorkDefaultLbl.isHidden = isEmpty
+            bottomCV.isHidden  = isEmpty
+        
                    bottomCV.reloadData() // reload homework list
                    cv.reloadData() // optional: refresh selection UI
                
@@ -166,6 +175,8 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             }
         }
 
+    @IBOutlet weak var NodataFoundLbl: UILabel!
+    @IBOutlet weak var homeWorkDefaultLbl: UILabel!
     @IBOutlet weak var searchBtnName: UIButton!
    
     @IBOutlet weak var noDataImage: UIImageView!
@@ -185,11 +196,12 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     var selectedDate  : String?
     var allHomeworkData: [HomeworkList] = []
     var isReadStatus : Bool?
-    var toggle = false
+    var toggle = true
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        searchbar.isHidden = true
         searchbar.delegate = self
         searchbar.searchTextField.addDoneButton()
         topView.layer.cornerRadius = 30
@@ -280,11 +292,12 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     self.bottomCV.reloadData()
 
                     let isEmpty = filteredHomework.isEmpty
-//                    self.noDataLbl.text = response.message
-//                    self.noDataLbl.isHidden = !isEmpty
+                    self.NodataFoundLbl.text = response.message
+                    self.NodataFoundLbl.isHidden = !isEmpty
+                    
                     self.noDataImage.isHidden = !isEmpty
-                    self.searchbar.isHidden = isEmpty
-             
+//                    self.searchbar.isHidden = isEmpty
+                    self.homeWorkDefaultLbl.isHidden = isEmpty
 
                 case .failure(let error):
 
@@ -337,6 +350,9 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         if let matchedGroup = data.first(where: { $0.date == date }) {
             return matchedGroup.homework ?? []
         }
+        
+        
+        
         return []
     }
 
@@ -365,29 +381,33 @@ extension homeWorkVc: UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
-                // No search text? Just return the full filtered list for the selected date
-            self.FilterHomeWorkList = self
-                .filterHomeworkGroupByDate(
-                    from: self.allHomeworkData,
-                    date: self.selectedDate ?? ""
-                )
-                self.bottomCV.reloadData()
-                return
-            }
+            // Reset to full filtered list for selected date
+            self.FilterHomeWorkList = self.filterHomeworkGroupByDate(
+                from: self.allHomeworkData,
+                date: self.selectedDate ?? ""
+            )
+            self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+            self.bottomCV.reloadData()
+            return
+        }
 
         let allItems = self.filterHomeworkGroupByDate(
             from: self.allHomeworkData,
             date: self.selectedDate ?? ""
         )
 
-            self.FilterHomeWorkList = allItems.filter {
-                ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||
-                ($0.description ?? "").localizedCaseInsensitiveContains(searchText) ||
-                ($0.subject_name ?? "").localizedCaseInsensitiveContains(searchText)
-            }
+        self.FilterHomeWorkList = allItems.filter {
+            ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||
+            ($0.sent_by ?? "").localizedCaseInsensitiveContains(searchText) ||
+            ($0.subject_name ?? "").localizedCaseInsensitiveContains(searchText)
+        }
 
-            self.bottomCV.reloadData()
+        // Show/hide no results label
+        self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+        self.homeWorkDefaultLbl.isHidden = self.FilterHomeWorkList.isEmpty
+        self.bottomCV.reloadData()
     }
+
 
 
     

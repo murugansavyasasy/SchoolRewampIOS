@@ -580,5 +580,6 @@ extension String {
 struct AttachmentItem {
     var image: UIImage?         // for local images
     var imageURL: String?       // for remote
-    var fileType: String        // "image", "pdf", etc.
+    var fileType: String
+    var VideoURl : URL?// "image", "pdf", etc.
 }

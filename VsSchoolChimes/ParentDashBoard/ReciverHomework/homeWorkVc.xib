@@ -11,8 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="homeWorkVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="NodataFoundLbl" destination="AzT-dZ-GF7" id="Mzm-Oo-wjm"/>
                 <outlet property="bottomCV" destination="MhQ-8b-fNe" id="t8C-N2-wZO"/>
                 <outlet property="cv" destination="XAf-VB-6gG" id="veI-MX-jZg"/>
+                <outlet property="homeWorkDefaultLbl" destination="kUu-fd-anw" id="M8V-B1-xah"/>
                 <outlet property="noDataImage" destination="p8q-Do-4HR" id="5Aj-Yo-Uc8"/>
                 <outlet property="searchBtnName" destination="sjs-HF-nx5" id="BaG-gi-RID"/>
                 <outlet property="searchbar" destination="y91-QB-kU6" id="X05-lb-mYl"/>
@@ -99,7 +101,7 @@
                             <rect key="frame" x="0.0" y="200" width="393" height="466"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6jU-M6-Iof">
-                                    <rect key="frame" x="10" y="8" width="373" height="338"/>
+                                    <rect key="frame" x="10" y="8" width="373" height="374.33333333333331"/>
                                     <subviews>
                                         <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="y91-QB-kU6">
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="0.0"/>
@@ -115,8 +117,14 @@
                                                 <constraint firstAttribute="height" constant="300" id="Onk-zS-oU3"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzT-dZ-GF7">
+                                            <rect key="frame" x="0.0" y="316" width="373" height="20.333333333333314"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Homework" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUu-fd-anw">
-                                            <rect key="frame" x="0.0" y="316" width="373" height="22"/>
+                                            <rect key="frame" x="0.0" y="352.33333333333337" width="373" height="22"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -124,7 +132,7 @@
                                     </subviews>
                                 </stackView>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="MhQ-8b-fNe">
-                                    <rect key="frame" x="0.0" y="356" width="393" height="100"/>
+                                    <rect key="frame" x="0.0" y="392.33333333333337" width="393" height="63.666666666666686"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hGs-bf-K9M">
                                         <size key="itemSize" width="128" height="128"/>

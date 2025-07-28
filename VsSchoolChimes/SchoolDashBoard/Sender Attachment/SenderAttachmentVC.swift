@@ -176,7 +176,15 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0
            selectedVideoURL = url
-          
+           attachments
+               .append(
+                AttachmentItem(
+                    image: nil,
+                    imageURL: nil,
+                    fileType: CommonStringFile.VIDEO,
+                    VideoURl: selectedVideoURL
+                )
+               )
            VideoView.isHidden = false
            chooseRecipientsBtn.isHidden = false
        }
@@ -201,7 +209,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+//            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
@@ -214,9 +222,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            }
+//            if imageItems.count != 0{
+//                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+//            }
             
             selectImgPdfview.imageCollectionview.reloadData()
         }
@@ -225,7 +233,23 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+        PhotoPickerManager.shared.onVideoPicked = { [self] data in
+            // handle picked PDF
+            user_inputs.selectedFileType = CommonStringFile.VIDEO
+            attachments
+                .append(
+                    AttachmentItem(
+                        image:nil,
+                        imageURL: nil,
+                        fileType: CommonStringFile.VIDEO,
+                        VideoURl: data
+                    )
+                )
+//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             
             selectImgPdfview.imageCollectionview.reloadData()
         }
@@ -259,6 +283,18 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         if attachments.count < 5{
             PhotoPickerManager.shared.limiSelection = 5 - attachments.count
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+           
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+    }
+    
+    func VideoPick() {
+        
+        if attachments.count < 5{
+            PhotoPickerManager.shared.limiSelection = 5 - attachments.count
+            PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
            
         }else{
             let alert = CustomAlert()
@@ -457,7 +493,12 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                    } else {
                        cell.imageViews.kf.setImage(with: url)
                    }
-               } else {
+               } else if let vido = item.VideoURl{
+                   let iconName = getFileIconName(for: vido)
+                   cell.imageViews.image = UIImage(named: iconName)
+                   
+               }else{
+                   
                    cell.imageViews.image = nil
                }
             
@@ -501,7 +542,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             
             let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
                 
-                pickVideoFromGallery()
+                VideoPick()
             }
             alertController.addAction(VideoAction)
             // Cancel action

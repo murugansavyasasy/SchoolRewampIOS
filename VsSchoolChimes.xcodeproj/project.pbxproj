@@ -538,6 +538,8 @@
 		84D85FF12DE5815200633784 /* SectionStregnthCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85FEE2DE5815200633784 /* SectionStregnthCVC.swift */; };
 		84D85FF42DE5967A00633784 /* SectionStregnthTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */; };
 		84D85FF52DE5967A00633784 /* SectionStregnthTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */; };
+		84E0A97A2E374B7C002BF40A /* AttachmentsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */; };
+		84E0A97B2E374B7C002BF40A /* AttachmentsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */; };
 		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
 		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
 		84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */; };
@@ -1300,6 +1302,8 @@
 		84D85FEF2DE5815200633784 /* SectionStregnthCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionStregnthCVC.xib; sourceTree = "<group>"; };
 		84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionStregnthTVC.swift; sourceTree = "<group>"; };
 		84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionStregnthTVC.xib; sourceTree = "<group>"; };
+		84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsVc.swift; sourceTree = "<group>"; };
+		84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentsVc.xib; sourceTree = "<group>"; };
 		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
 		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
 		84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
@@ -2115,6 +2119,8 @@
 				84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */,
 				846BDD732DB60387001DB91A /* TAttacmentTVC.swift */,
 				846BDD742DB60387001DB91A /* TAttacmentTVC.xib */,
+				84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */,
+				84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -4096,6 +4102,7 @@
 				84B2C71A2E2247F200A69A1B /* MarkListVC.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
+				84E0A97B2E374B7C002BF40A /* AttachmentsVc.xib in Resources */,
 				8480A4172E320DD6009A7DED /* ReciverNoticeBoardVC.xib in Resources */,
 				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
@@ -4307,6 +4314,7 @@
 				18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */,
 				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
 				843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */,
+				84E0A97A2E374B7C002BF40A /* AttachmentsVc.swift in Sources */,
 				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
 				8451ECFA2E25076300D6DBB4 /* ViewProgressVC.swift in Sources */,
 				18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */,

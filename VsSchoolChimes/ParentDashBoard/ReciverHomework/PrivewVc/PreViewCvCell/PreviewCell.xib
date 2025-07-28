@@ -11,20 +11,24 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PreviewCell" customModule="School_Chimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="173" height="153"/>
+            <rect key="frame" x="0.0" y="0.0" width="173" height="172"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="173" height="153"/>
+                <rect key="frame" x="0.0" y="0.0" width="173" height="172"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NrD-Zc-15F">
-                        <rect key="frame" x="10" y="10" width="153" height="133"/>
+                        <rect key="frame" x="26.666666666666671" y="26" width="120.00000000000001" height="120"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pa3-g9-ZMB">
-                                <rect key="frame" x="0.0" y="0.0" width="153" height="133"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pdf (1)" translatesAutoresizingMaskIntoConstraints="NO" id="Pa3-g9-ZMB">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="fpU-z1-DHU"/>
+                                    <constraint firstAttribute="height" constant="120" id="kmt-YK-CRi"/>
+                                </constraints>
                             </imageView>
                             <wkWebView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJ2-Fc-mZa">
-                                <rect key="frame" x="0.0" y="0.0" width="153" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="0.0"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -32,26 +36,23 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="133" id="3m9-IG-4X2"/>
-                            <constraint firstAttribute="width" constant="153" id="K8X-oA-4na"/>
-                        </constraints>
                     </stackView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="NrD-Zc-15F" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="FdE-9b-kUX"/>
-                <constraint firstAttribute="bottom" secondItem="NrD-Zc-15F" secondAttribute="bottom" constant="10" id="J7x-Ks-Mu7"/>
-                <constraint firstAttribute="trailing" secondItem="NrD-Zc-15F" secondAttribute="trailing" constant="10" id="P6U-Oa-WtX"/>
-                <constraint firstItem="NrD-Zc-15F" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="fE0-iA-T9J"/>
+                <constraint firstItem="NrD-Zc-15F" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Grs-TX-l7l"/>
+                <constraint firstItem="NrD-Zc-15F" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Ov8-IN-tL4"/>
             </constraints>
-            <size key="customSize" width="173" height="153"/>
+            <size key="customSize" width="173" height="172"/>
             <connections>
                 <outlet property="imageView" destination="Pa3-g9-ZMB" id="hyW-E0-KYx"/>
                 <outlet property="webview" destination="aJ2-Fc-mZa" id="Bz1-yn-aTZ"/>
             </connections>
-            <point key="canvasLocation" x="173.2824427480916" y="55.985915492957751"/>
+            <point key="canvasLocation" x="173.2824427480916" y="62.676056338028175"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="pdf (1)" width="512" height="512"/>
+    </resources>
 </document>
