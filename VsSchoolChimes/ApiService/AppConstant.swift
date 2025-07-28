@@ -69,6 +69,7 @@ struct ServiceUrl{
     static let api_fee_report_detailed_class_wise_pending_report = "fee/api/fee-report/detailed-class-wise-pending-report"
     static let  api_get_student_report = "admin/api/get-student-report"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
+    static let  admin_api_school_event_categories = "admin/api/school-event/categories"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
     static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type"

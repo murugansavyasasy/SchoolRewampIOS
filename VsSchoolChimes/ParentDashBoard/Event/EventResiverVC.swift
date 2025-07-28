@@ -155,14 +155,9 @@ class EventResiverVC: UIViewController {
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         searchStack.isHidden = !sender.isSelected
-        searchBtn.isHidden = sender.isSelected
     }
 
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
-//        cell.img1.isHidden = true
-//        cell.img2.isHidden = true
-//        cell.img3.isHidden = true
-//        cell.imgCount.isHidden = true
 
         for (index, item) in files.enumerated() {
             guard let urlString = item.url, let url = URL(string: urlString) else { continue }
@@ -181,8 +176,6 @@ class EventResiverVC: UIViewController {
             let extraCount = files.count - 3
             if let button = cell.imgCount as? UIButton {
                 button.setTitle("+\(extraCount)", for: .normal)
-            } else if let label = cell.imgCount as? UILabel {
-                label.text = "+\(extraCount)"
             }
             cell.imgCount.isHidden = false
         }

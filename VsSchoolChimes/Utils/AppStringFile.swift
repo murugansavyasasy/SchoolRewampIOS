@@ -316,6 +316,7 @@ class CommonStringFile{
     static let Proceed = "Proceed".translated()
     static let CreateEvent = "Create Event".translated()
     static let Title = "Title".translated()
+    static let SelectCatagorie = "Select Catagorie".translated()
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
     static let Add_attachment_optional = "Add attachment (Optional?)".translated()
     static let Recording_Time = "Recording Time (Optional?)".translated()

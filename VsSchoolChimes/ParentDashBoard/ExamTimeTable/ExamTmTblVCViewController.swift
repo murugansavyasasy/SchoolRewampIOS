@@ -121,13 +121,19 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
-        
+        if (indexPath.row % 2) == 0 {
+           // cell.cellView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.15)
+            cell.cellView.backgroundColor = UIColor(hex: "#DEECFD")
+        }else {
+            //cell.cellView.backgroundColor = UIColor.systemPink.withAlphaComponent(0.12)
+            cell.cellView.backgroundColor = UIColor(hex: "#F1EBFC")
+        }
         let data = examDetails?[indexPath.section].exam_subject_details?[indexPath.row]
         cell.SubjectLbl.text = data?.subject_name
         cell.syllabusLbl.text = data?.syllabus
-        cell.DateBtn.setTitle(data?.exam_date, for: .normal)
+        cell.DateBtn.setTitle(data?.exam_date?.convertToTargetDateFormat(), for: .normal)
         cell.MaxMarkBtn.setTitle("Marks : " + (data?.max_mark ?? ""), for: .normal)
-       // cell.TimeBtn.setTitle(data?., for: .normal)
+        cell.TimeBtn.setTitle(data?.start_time, for: .normal)
         cell.indexPath = indexPath
         cell.delegate = self
         return cell

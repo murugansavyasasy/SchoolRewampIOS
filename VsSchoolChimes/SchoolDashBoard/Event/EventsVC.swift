@@ -9,6 +9,7 @@ import UIKit
 import AWSCore
 import AWSS3
 import AVFoundation
+import DropDown
 
 protocol DeleteImge{
     func deleteImage(index:Int)
@@ -39,6 +40,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     var effect:UIVisualEffect!
     
+    @IBOutlet weak var selectCatagoriesTitle: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tittleCountLbl: UILabel!
     @IBOutlet weak var eventTxt: UITextField!
@@ -59,6 +61,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var Totime: UIButton!
+    @IBOutlet weak var catagoryDropDownView: UIView!
+    @IBOutlet weak var selectedCatagoryImg: UIImageView!
+    @IBOutlet weak var selecctedCatagory: UILabel!
     @IBOutlet weak var VideoView: UIView!
     
     var placeholderLabel: UILabel!
@@ -80,9 +85,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var attachments: [AttachmentItem] = []
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
-    
+    var images = [String]()
+    var dropDownList = [String]()
+    var eventListRespons : [EventCategory]?
+    let dropDown = DropDown()
     override func viewDidLoad() {
         super.viewDidLoad()
+        get_CatagoryListApi()
         eventTxt.delegate = self
         contentTxtView.delegate = self
         eventTxt.applyRightTxt()
@@ -106,7 +115,10 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         contentTxtView.addDoneButton()
         imageSelection()
         videoPicker = VideoPickerManager(presenter: self, delegate: self)
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
+        catagoryDropDownView.isUserInteractionEnabled = true
+        catagoryDropDownView.addGestureRecognizer(tapGesture)
+
         VideoView.isHidden = true
         
         // Add observers for keyboard notifications
@@ -127,6 +139,42 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     deinit {
         // Remove observers
         NotificationCenter.default.removeObserver(self)
+    }
+    func get_CatagoryListApi() {
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_school_event_categories, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<EventCategoryResponse, Error>) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                if response.status {
+                    DispatchQueue.main.async {
+                        self.eventListRespons = response.data
+                        self.dropDownList.removeAll()
+                        self.images.removeAll()
+                        self.selecctedCatagory.text = self.eventListRespons?.first?.name
+                        self.selectedCatagoryImg.kf.setImage(with: URL(string: response.data.first?.url ?? ""))
+                        for item in response.data {
+                            self.dropDownList.append(item.name ?? "")
+                            self.images.append(item.url ?? "")
+                        }
+                        
+                        self.dropDown.dataSource = self.dropDownList
+                        self.dropDown.imageURLs = self.images
+                        
+                        for index in 0..<self.images.count {
+                            if let cell = self.dropDown.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? DropDownCell {
+                                self.dropDown.configureCell(cell, at: index)
+                            }
+                        }
+                    }
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error: \(error.localizedDescription)")
+                }
+            }
+        }
     }
     
     
@@ -165,40 +213,51 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
         
     }
-    
-
-    func pickVideoFromGallery(){
-//        if #available(iOS 15.0, *) {
-//            showLottieProgressLoader(animationName: "loader (2)")
-//        } 
-        videoPicker?.pickVideo()
+    @objc func catagoryTapped() {
+        print("Category View Tapped")
+        dropDown.anchorView = catagoryDropDownView
+        dropDown.show()
+        dropDown.bottomOffset = CGPoint(x: 0, y: catagoryDropDownView.bounds.height)
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+            selectedCatagoryImg.kf.setImage(with: URL(string: images[index]))
+            selecctedCatagory.text = item
+           
+        }
     }
 
+    
+    func pickVideoFromGallery(){
+        //        if #available(iOS 15.0, *) {
+        //            showLottieProgressLoader(animationName: "loader (2)")
+        //        }
+        videoPicker?.pickVideo()
+    }
+    
     // MARK: - Delegate Methods
-       func videoPickerManager(didPickVideo url: URL) {
-//           if #available(iOS 15.0, *) {
-//               self.hideLottieProgressLoader()
-//           }
-           videoPicker?.playVideo(from: url, in: VideoView)
-           attachments.removeAll()
-           costomView.isHidden = true
-           collectionViewHeght.constant = 0
-           selectedVideoURL = url
-           VideoView.isHidden = false
-       }
-
-
-       func videoPickerManagerDidCloseVideo() {
-           if #available(iOS 15.0, *) {
-               self.hideLottieProgressLoader()
-           }
-           selectedVideoURL = nil
-           VideoView.isHidden = true
-//          / chooseRecipientsBtn.isHidden = true
-           costomView.isHidden = false
-           collectionViewHeght.constant = 120
-           costomView.imageCollectionview.reloadData()
-       }
+    func videoPickerManager(didPickVideo url: URL) {
+        //           if #available(iOS 15.0, *) {
+        //               self.hideLottieProgressLoader()
+        //           }
+        videoPicker?.playVideo(from: url, in: VideoView)
+        attachments.removeAll()
+        costomView.isHidden = true
+        collectionViewHeght.constant = 0
+        selectedVideoURL = url
+        VideoView.isHidden = false
+    }
+    
+    
+    func videoPickerManagerDidCloseVideo() {
+        if #available(iOS 15.0, *) {
+            self.hideLottieProgressLoader()
+        }
+        selectedVideoURL = nil
+        VideoView.isHidden = true
+        //          / chooseRecipientsBtn.isHidden = true
+        costomView.isHidden = false
+        collectionViewHeght.constant = 120
+        costomView.imageCollectionview.reloadData()
+    }
     
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
@@ -235,12 +294,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         TxtOuterview.layer.cornerRadius = 10
         TxtOuterview.layer.borderWidth = 0.5
         TxtOuterview.layer.borderColor = UIColor.black.cgColor
-        outerView.layer.cornerRadius = 10
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        outerView.layer.shadowRadius = 5
-        outerView.layer.shadowOpacity = 0.3
-       
+        catagoryDropDownView.setShadow(cornerRadius: 8)
         calander2Btn.layer.borderWidth = 1 // Border width
         calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
         calander2Btn.layer.cornerRadius = 10
@@ -252,6 +306,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         todate.setTitleFont(style: .body, size: 12)
         placeLbl.setRequiredText(CommonStringFile.Venue.translated())
         EventTtleLbl.setRequiredText(CommonStringFile.Title.translated())
+        selectCatagoriesTitle.setRequiredText(CommonStringFile.SelectCatagorie.translated())
         eventDeatail.setRequiredText(CommonStringFile.Description.translated())
         fromLbl.setRequiredText(CommonStringFile.Starts_on.translated())
         addPhotoLbl.text = CommonStringFile.UploadImagepdfoptional.translated()
@@ -305,7 +360,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         label.attributedText = createAttributedText(from: date)
         label.numberOfLines = 0
     }
-
+    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()
@@ -417,7 +472,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBAction func chooseSchool(_ sender: UIButton) {
         
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
-           
+            
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
             let date = convertDate(todate.titleLabel?.text ?? "")
@@ -426,14 +481,15 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.description: contentTxtView.text ?? "",
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
                 assignmentResquestStringKey.event_time: Totime.titleLabel?.text ?? "",
-                assignmentResquestStringKey.event_date:date ?? ""
+                assignmentResquestStringKey.event_date:date ?? "",
+                assignmentResquestStringKey.category:selecctedCatagory.text ?? ""
             ]
             
             let vc = RecipientVc(nibName: nil, bundle: nil)
             vc.ScreenType = Menu_id.event
             vc.Common_request_params = params
             vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
+            present(vc, animated: true)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "Alert", message: AlertstringFile.Fill_All_Required_Fields, on: self)
@@ -501,7 +557,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let width = (costomView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
         
         return CGSize(width: width, height: 100)
@@ -529,7 +584,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 selectPDF()
             }
             alertController.addAction(pdfAction)
-//            //             Video option
+            //            //             Video option
             let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
                 pickVideoFromGallery()
             }
@@ -602,19 +657,19 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         
     }
     
-//    func pickVideoFromGallery() {
-//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-//            let imagePickerController = UIImagePickerController()
-//            imagePickerController.delegate = self
-//            imagePickerController.sourceType = .photoLibrary
-//            imagePickerController.mediaTypes = ["public.movie"] // Only show videos
-//            imagePickerController.allowsEditing = true // Optional: allows users to edit video
-//            
-//            present(imagePickerController, animated: true, completion: nil)
-//        } else {
-//            print("Photo library not available.")
-//        }
-//    }
+    //    func pickVideoFromGallery() {
+    //        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+    //            let imagePickerController = UIImagePickerController()
+    //            imagePickerController.delegate = self
+    //            imagePickerController.sourceType = .photoLibrary
+    //            imagePickerController.mediaTypes = ["public.movie"] // Only show videos
+    //            imagePickerController.allowsEditing = true // Optional: allows users to edit video
+    //
+    //            present(imagePickerController, animated: true, completion: nil)
+    //        } else {
+    //            print("Photo library not available.")
+    //        }
+    //    }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)
@@ -649,7 +704,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             print("Error generating thumbnail: \(error)")
         }
     }
-
+    
     
 }
 //MARK: Text view delegate Functions
@@ -661,32 +716,33 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
-            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
+//        if updatedText.count <= 500 {
+//            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
             return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            //            contentTxtView.isEditable = false // Optionally disable editing
+//            return false // Reject the change
+//        }
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        if updatedText.count <= 50 {
-            tittleCountLbl.text = "\(updatedText.count) / 50"
-            return true
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
-            return false
-        }
+        
+//        if updatedText.count <= 50 {
+//            tittleCountLbl.text = "\(updatedText.count) / 50"
+//            return true
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
+//            return false
+//        }
+        return true
     }
-
-
+    
+    
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         

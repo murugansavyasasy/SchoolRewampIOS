@@ -24,7 +24,7 @@ class ExamListTV: UITableViewCell {
         super.awakeFromNib()
         
         cellView.layer.cornerRadius = 10
-       // cellView.backgroundColor = .systemIndigo/*.withAlphaComponent(0.6)*/
+        cellView.backgroundColor = .systemIndigo.withAlphaComponent(0.2)
         SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
         syllabusLbl.setFont(style: .body, size: FontSize.BodySize)
         DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)

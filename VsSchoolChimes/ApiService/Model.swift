@@ -588,6 +588,11 @@ struct EventResponse: Codable {
     let message: String
     let data: [EventSection]
 }
+struct EventReportResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [EventData]
+}
 
 struct EventSection: Codable {
     let categories: [EventCategory]
@@ -595,7 +600,12 @@ struct EventSection: Codable {
     let up_coming: [EventList]
     let completed: [EventList]
 }
-
+// MARK: - EventCatagoryResponse
+struct EventCategoryResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [EventCategory]
+}
 struct EventCategory: Codable {
     let id: Int?
     let name: String?
@@ -613,6 +623,21 @@ struct EventList: Codable {
     let file_size: String
     let thumbnail: String
     let file_path: [FilePath]
+}
+struct EventData: Codable {
+    let title: String?
+    let category: String?
+    let description: String?
+    let date: String?
+    let time: String?
+    let venue: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let sent_by: String?
+    let can_edit: Bool?
+    let can_delete: Bool?
+    let file_path: [FilePath]?
 }
 struct PendingReportsResponse: Codable {
     let status: Bool?
@@ -1319,6 +1344,8 @@ struct SubjectDetail: Codable {
     var exam_session: String?
     var max_mark: String?
     var syllabus: String?
+    var start_time: String?
+    var end_time: String?
 }
 
 //MARK: ExamList

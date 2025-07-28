@@ -19,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gC9-qe-YKF">
-                        <rect key="frame" x="10" y="10" width="338" height="399"/>
+                        <rect key="frame" x="10" y="0.0" width="338" height="409"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="53L-fN-bOq">
-                                <rect key="frame" x="94" y="60" width="150" height="150"/>
+                                <rect key="frame" x="94" y="80.333333333333314" width="150" height="150"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="0He-2j-5QC">
                                         <rect key="frame" x="15" y="43" width="120" height="64"/>
@@ -34,7 +34,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="out of 100" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKH-Xk-9Ne">
-                                                <rect key="frame" x="0.0" y="44" width="120" height="20"/>
+                                                <rect key="frame" x="0.0" y="44.000000000000014" width="120" height="20"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -52,14 +52,20 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overall Grade : A+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUf-zw-dwu">
-                                <rect key="frame" x="15" y="285" width="308" height="20.333333333333314"/>
+                                <rect key="frame" x="15" y="305.33333333333331" width="308" height="20.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Well done! Your hard work is paying off - keep it up!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="962-s0-Nbx">
-                                <rect key="frame" x="25" y="325.33333333333331" width="288" height="58.666666666666686"/>
+                                <rect key="frame" x="25" y="345.66666666666669" width="288" height="48.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Marks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4N9-2H-Ia0">
+                                <rect key="frame" x="10" y="0.0" width="318" height="20.333333333333332"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -73,14 +79,17 @@
                             <constraint firstItem="QUf-zw-dwu" firstAttribute="top" secondItem="53L-fN-bOq" secondAttribute="bottom" constant="75" id="TVb-gk-u5R"/>
                             <constraint firstItem="962-s0-Nbx" firstAttribute="top" secondItem="QUf-zw-dwu" secondAttribute="bottom" constant="20" id="USO-Lc-PsJ"/>
                             <constraint firstAttribute="trailing" secondItem="QUf-zw-dwu" secondAttribute="trailing" constant="15" id="Zxr-jn-7Hb"/>
-                            <constraint firstItem="53L-fN-bOq" firstAttribute="top" secondItem="gC9-qe-YKF" secondAttribute="top" constant="60" id="f3F-t0-WPv"/>
+                            <constraint firstItem="4N9-2H-Ia0" firstAttribute="top" secondItem="gC9-qe-YKF" secondAttribute="top" id="bb9-5j-2tb"/>
+                            <constraint firstItem="4N9-2H-Ia0" firstAttribute="leading" secondItem="gC9-qe-YKF" secondAttribute="leading" constant="10" id="so6-5T-3uN"/>
                             <constraint firstItem="53L-fN-bOq" firstAttribute="centerX" secondItem="gC9-qe-YKF" secondAttribute="centerX" id="tL9-i0-7tN"/>
+                            <constraint firstAttribute="trailing" secondItem="4N9-2H-Ia0" secondAttribute="trailing" constant="10" id="ukB-iX-BCy"/>
+                            <constraint firstItem="53L-fN-bOq" firstAttribute="top" secondItem="4N9-2H-Ia0" secondAttribute="bottom" constant="60" id="xRp-LK-Qb0"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="gC9-qe-YKF" secondAttribute="trailing" constant="10" id="CSx-ED-3Cz"/>
-                    <constraint firstItem="gC9-qe-YKF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="FWS-yg-t6x"/>
+                    <constraint firstItem="gC9-qe-YKF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="FWS-yg-t6x"/>
                     <constraint firstAttribute="bottom" secondItem="gC9-qe-YKF" secondAttribute="bottom" constant="10" id="ote-YS-VSp"/>
                     <constraint firstItem="gC9-qe-YKF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="yZD-HK-LrI"/>
                 </constraints>
@@ -88,6 +97,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="CircleView" destination="53L-fN-bOq" id="Myo-Ez-Fgf"/>
+                <outlet property="ExamTitleLbl" destination="4N9-2H-Ia0" id="nJ4-ui-4vN"/>
                 <outlet property="GradeLbl" destination="QUf-zw-dwu" id="HWV-j0-QDV"/>
                 <outlet property="RemarksLbl" destination="962-s0-Nbx" id="ya4-9h-hm2"/>
                 <outlet property="obtainedMarkLbl" destination="vaa-TO-7bw" id="zfE-kF-kP6"/>

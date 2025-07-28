@@ -13,8 +13,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventPageVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="ygH-X9-gex" id="sEz-oX-nVy"/>
+                <outlet property="createBtn" destination="nyY-JM-3Or" id="Gp2-aH-GkW"/>
+                <outlet property="createLbl" destination="BUU-YI-wbg" id="taf-Om-XxQ"/>
                 <outlet property="presentView" destination="eAv-wd-i7x" id="R05-oM-wmF"/>
-                <outlet property="segmentController" destination="mT6-rs-G4I" id="G0f-ot-HXk"/>
+                <outlet property="reportsBtn" destination="SKW-kd-ddF" id="GFH-iH-ucJ"/>
+                <outlet property="reportsLb" destination="kHf-tA-3bC" id="Odt-T2-iAU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,35 +29,76 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpr-Lv-zOq">
                     <rect key="frame" x="0.0" y="109" width="430" height="789"/>
                     <subviews>
-                        <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-rs-G4I">
-                            <rect key="frame" x="20" y="10" width="390" height="1"/>
-                            <color key="backgroundColor" name="AttendenceColor"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2yO-vT-vGo">
+                            <rect key="frame" x="20" y="20" width="390" height="32"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Z1R-py-HpW">
+                                    <rect key="frame" x="0.0" y="0.0" width="195" height="32"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nyY-JM-3Or">
+                                            <rect key="frame" x="0.0" y="0.0" width="195" height="30"/>
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="CreatEvent"/>
+                                            <connections>
+                                                <action selector="switchController:" destination="-1" eventType="touchUpInside" id="bxI-0a-U1I"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUU-YI-wbg">
+                                            <rect key="frame" x="0.0" y="30" width="195" height="2"/>
+                                            <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="ek2-N2-hwV"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Guk-bD-3ZP">
+                                    <rect key="frame" x="195" y="0.0" width="195" height="32"/>
+                                    <subviews>
+                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKW-kd-ddF">
+                                            <rect key="frame" x="0.0" y="0.0" width="195" height="30"/>
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Reports"/>
+                                            <connections>
+                                                <action selector="switchController:" destination="-1" eventType="touchUpInside" id="6Bw-QE-ySD"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHf-tA-3bC">
+                                            <rect key="frame" x="0.0" y="30" width="195" height="2"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="FSC-Yo-CUm"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
                             <constraints>
-                                <constraint firstAttribute="height" id="h6s-gZ-0Xq"/>
+                                <constraint firstAttribute="height" constant="32" id="8Lg-d2-Wkf"/>
                             </constraints>
-                            <segments>
-                                <segment title="Homework"/>
-                                <segment title="Reports"/>
-                            </segments>
-                            <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="switchController:" destination="-1" eventType="valueChanged" id="JkF-qN-X3l"/>
-                            </connections>
-                        </segmentedControl>
+                        </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAv-wd-i7x">
-                            <rect key="frame" x="0.0" y="18" width="430" height="771"/>
+                            <rect key="frame" x="0.0" y="52" width="430" height="737"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="2yO-vT-vGo" firstAttribute="top" secondItem="xpr-Lv-zOq" secondAttribute="top" constant="20" id="C1T-DP-OhR"/>
                         <constraint firstAttribute="bottom" secondItem="eAv-wd-i7x" secondAttribute="bottom" id="Eaq-K0-Fmj"/>
-                        <constraint firstItem="mT6-rs-G4I" firstAttribute="leading" secondItem="xpr-Lv-zOq" secondAttribute="leading" constant="20" id="P1u-uW-3Mi"/>
+                        <constraint firstItem="eAv-wd-i7x" firstAttribute="top" secondItem="2yO-vT-vGo" secondAttribute="bottom" id="HzF-CA-uQT"/>
                         <constraint firstAttribute="trailing" secondItem="eAv-wd-i7x" secondAttribute="trailing" id="TaX-Bo-21m"/>
-                        <constraint firstItem="eAv-wd-i7x" firstAttribute="top" secondItem="mT6-rs-G4I" secondAttribute="bottom" constant="8" symbolic="YES" id="Vat-Ad-rmi"/>
-                        <constraint firstItem="mT6-rs-G4I" firstAttribute="top" secondItem="xpr-Lv-zOq" secondAttribute="top" constant="10" id="aC5-fP-lZc"/>
                         <constraint firstItem="eAv-wd-i7x" firstAttribute="leading" secondItem="xpr-Lv-zOq" secondAttribute="leading" id="bOH-T4-XAy"/>
-                        <constraint firstAttribute="trailing" secondItem="mT6-rs-G4I" secondAttribute="trailing" constant="20" id="dBS-9F-AUc"/>
+                        <constraint firstItem="2yO-vT-vGo" firstAttribute="leading" secondItem="xpr-Lv-zOq" secondAttribute="leading" constant="20" id="djm-tC-hvR"/>
+                        <constraint firstAttribute="trailing" secondItem="2yO-vT-vGo" secondAttribute="trailing" constant="20" id="yBh-Ds-Iro"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygH-X9-gex">
@@ -90,11 +134,8 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="AttendenceColor">
-            <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

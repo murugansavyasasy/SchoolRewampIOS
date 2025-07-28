@@ -14,6 +14,9 @@ class ExamDetailsVC: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var SegmentController: UISegmentedControl!
     @IBOutlet weak var PresentView: UIView!
+    @IBOutlet weak var TimeTableBtn: UIButton!
+    @IBOutlet weak var MarksBtn: UISegmentedControl!
+    @IBOutlet weak var ExamMarksBtn: UIButton!
     
     let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
     let secondChildVC = ExameMarVC()
@@ -24,6 +27,11 @@ class ExamDetailsVC: UIViewController {
         
         //BackBtn.setTitle("Exam/Test", for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        TimeTableBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+        ExamMarksBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
+        
+        addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
         
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -37,6 +45,30 @@ class ExamDetailsVC: UIViewController {
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
+    
+    func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
+        // Remove underline from both buttons
+        [selectedButton, unselectedButton].forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+
+        // Add underline to the selected button
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
+
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
+    }
+
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -82,4 +114,16 @@ class ExamDetailsVC: UIViewController {
                 dismiss(animated: true)
      
     }
+    
+    @IBAction func TimetableBtnAct(_ sender: Any) {
+        
+        addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
+        transition(to: firstChildVC)
+    }
+    @IBAction func ExamMarkBtnAct(_ sender: Any) {
+        
+        addUnderline(to: ExamMarksBtn, unselectedButton: TimeTableBtn)
+        transition(to: secondChildVC)
+    }
+    
 }
