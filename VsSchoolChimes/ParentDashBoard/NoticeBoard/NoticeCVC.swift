@@ -7,7 +7,19 @@
 import UIKit
 import EventKit
 
-class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate {
+class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, TimePicker {
+    func timepicker(dateTime: String?) {
+        let formatter = DateFormatter()
+           formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+           formatter.locale = Locale(identifier: "en_US_POSIX")
+           
+           if let reminderDate = formatter.date(from: dateTime ?? "") {
+               saveReminder(date: reminderDate)
+           } else {
+               print("Invalid date format")
+           }
+    }
+    
     
     // MARK: - IBOutlets
     @IBOutlet weak var outerView: UIView!
@@ -67,7 +79,9 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate {
         eventStore.requestAccess(to: .reminder) { granted, error in
             if granted {
                 DispatchQueue.main.async {
-                    self.addReminderToReminderApp()
+                    if let topVC = self.getCurrentViewController() {
+                        self.showTimePickerAndCreateReminder(from: topVC.view)
+                    }
                 }
             } else {
                 DispatchQueue.main.async {
@@ -78,41 +92,97 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate {
             }
         }
     }
-    
-    private func addReminderToReminderApp() {
-        guard let dateString = date else {
-            print("Date or time is nil")
-            return
+    func showTimePickerAndCreateReminder(from sourceView: UIView) {
+        let popoverContentVC = RiminderTimePicker(nibName: nil, bundle: nil)
+        popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.modalPresentationStyle = .popover
+        popoverContentVC.preferredContentSize = CGSize(width: 300, height: 300)
+        popoverContentVC.maximumDate = "31-07-2025"
+        popoverContentVC.delegate = self
+        if let popoverPresentationController = popoverContentVC.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = []
+            popoverPresentationController.sourceView = sourceView
+            popoverPresentationController.sourceRect = sourceView.bounds
+            popoverPresentationController.delegate = self
+            popoverPresentationController.backgroundColor = .white
         }
 
-        let fullString = "\(dateString)"
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd h:mm a" // Match formatted label format
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-
-        guard let reminderDate = formatter.date(from: fullString) else {
-            print("Invalid date/time format")
-            return
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            // On iPhone, present modally with dimmed background
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         }
 
-        let reminder = EKReminder(eventStore: eventStore)
-        reminder.title = titleLbl.text ?? "Event Reminder"
-        reminder.notes = ""
-        reminder.calendar = eventStore.defaultCalendarForNewReminders()
-        reminder.addAlarm(EKAlarm(absoluteDate: reminderDate))
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
+    }
 
-        do {
-            try eventStore.save(reminder, commit: true)
-            if let topVC = getCurrentViewController() {
-                alert.showAlert(title: "Reminder Saved", message: "Saved to Reminder app for \(formatter.string(from: reminderDate))", on: topVC)
-            }
-        } catch {
-            print("Error saving reminder: \(error.localizedDescription)")
-            if let topVC = getCurrentViewController() {
-                alert.showAlert(title: "Error", message: "Failed to save reminder.", on: topVC)
+
+    func saveReminder(date: Date) {
+        eventStore.requestAccess(to: .reminder) { granted, error in
+            if granted {
+                let reminder = EKReminder(eventStore: self.eventStore)
+                reminder.title = self.titleLbl.text ?? "Reminder"
+                reminder.notes = ""
+                reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+                reminder.addAlarm(EKAlarm(absoluteDate: date))
+
+                do {
+                    try self.eventStore.save(reminder, commit: true)
+                    DispatchQueue.main.async {
+                        if let topVC = self.getCurrentViewController() {
+                            if #available(iOS 15.0, *) {
+                                self.alert.showAlert(title: "Reminder Saved", message: "Reminder set for \(date.formatted(date: .abbreviated, time: .shortened))", on: topVC)
+                            }
+                        }
+                    }
+                } catch {
+                    print("Failed to save reminder: \(error.localizedDescription)")
+                }
+            } else {
+                DispatchQueue.main.async {
+                    if let topVC = self.getCurrentViewController() {
+                        self.alert.showAlert(title: "Permission Denied", message: "Please enable Reminder access in Settings", on: topVC)
+                    }
+                }
             }
         }
     }
+//    private func addReminderToReminderApp() {
+//        guard let dateString = date else {
+//            print("Date or time is nil")
+//            return
+//        }
+//
+//        let fullString = "\(dateString)"
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "MMM dd h:mm a" // Match formatted label format
+//        formatter.locale = Locale(identifier: "en_US_POSIX")
+//
+//        guard let reminderDate = formatter.date(from: fullString) else {
+//            print("Invalid date/time format")
+//            return
+//        }
+//
+//        let reminder = EKReminder(eventStore: eventStore)
+//        reminder.title = titleLbl.text ?? "Event Reminder"
+//        reminder.notes = ""
+//        reminder.calendar = eventStore.defaultCalendarForNewReminders()
+//        reminder.addAlarm(EKAlarm(absoluteDate: reminderDate))
+//
+//        do {
+//            try eventStore.save(reminder, commit: true)
+//            if let topVC = getCurrentViewController() {
+//                alert.showAlert(title: "Reminder Saved", message: "Saved to Reminder app for \(formatter.string(from: reminderDate))", on: topVC)
+//            }
+//        } catch {
+//            print("Error saving reminder: \(error.localizedDescription)")
+//            if let topVC = getCurrentViewController() {
+//                alert.showAlert(title: "Error", message: "Failed to save reminder.", on: topVC)
+//            }
+//        }
+//    }
 
     private func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes
@@ -139,7 +209,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate {
         timeBtn.text = formattedTime(from: notice.created_on)
         date = notice.visible_from
         // Show/hide reminder button based on future date
-        if isFutureDateTime(notice.visible_from) {
+        if isFutureDateTime(notice.visible_to) {
 //            reminderBtn.isHidden = false
             reminderBtn.isEnabled = true
             reminderBtn.alpha = 1.0
