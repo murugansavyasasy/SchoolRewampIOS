@@ -90,4 +90,11 @@ extension UIView {
         self.layer.shadowRadius = shadowRadius
         self.layer.masksToBounds = false
     }
+    func clearShadow() {
+            self.layer.shadowColor = nil
+            self.layer.shadowOpacity = 0
+            self.layer.shadowOffset = .zero
+            self.layer.shadowRadius = 0
+            self.layer.shadowPath = nil
+        }
 }

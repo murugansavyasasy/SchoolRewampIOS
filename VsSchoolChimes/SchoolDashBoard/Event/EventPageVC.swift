@@ -12,7 +12,20 @@ protocol HistorySelectDelegate {
 }
 
 @available(iOS 14.0, *)
-class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate {
+class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate, EditObjectDelegate {
+    func editDta(edit: Any) {
+        if pages.count > 0, let senderVC = pages[0] as? SenderNoticeBoardVC{
+            senderVC.fetchData(notice: edit as? Notice)
+        }
+        if pages.count > 0, let senderVC = pages[0] as? EventsVC{
+            senderVC.fetchData(eventList: edit as? EventList) 
+        }
+        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 1
+        let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .reverse : .forward
+        updateTabUI(for: 0)
+        pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
+    }
+    
     
     // MARK: - IBOutlets
     @IBOutlet weak var BackBtn: UIButton!
@@ -90,6 +103,9 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     func loadPages(_ CV: [UIViewController]) {
         pages = CV
         if let historyVC = pages[1] as? NoticeBoardVc {
+            historyVC.delegate = self
+        }
+        if let historyVC = pages[1] as? EventHistoryVC {
             historyVC.delegate = self
         }
     }

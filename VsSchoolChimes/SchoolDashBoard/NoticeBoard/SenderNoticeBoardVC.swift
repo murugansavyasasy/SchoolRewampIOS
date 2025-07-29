@@ -94,7 +94,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     let standardDateFormat = DateFormatString.StandardFormat
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,7 +174,19 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
-    
+    func fetchData(notice:Notice?){
+        attachments.removeAll()
+        if let notice = notice{
+            TitleTextfield.text = notice.title
+            textview.text = notice.description
+            placeholderLabel.isHidden = !textview.text.isEmpty
+            let imageItems = notice.file_path?.map{
+                AttachmentItem(image:nil, imageURL: $0.url, fileType: $0.type ?? "")
+            } ?? []
+            attachments.append(contentsOf: imageItems)
+            Attachmentview.imageCollectionview.reloadData()
+        }
+    }
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             

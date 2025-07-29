@@ -140,6 +140,36 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
+    func fetchData(eventList:EventList?){
+        attachments.removeAll()
+        if let eventList = eventList{
+            placeTxt.text = eventList.venue
+            eventTxt.text = eventList.title
+            contentTxtView.text = eventList.description
+            placeholderLabel.isHidden = !contentTxtView.text.isEmpty
+            
+            let imageItems = eventList.file_path.map {
+                AttachmentItem(image:nil, imageURL: $0.url, fileType: $0.type ?? "")
+            }
+            attachments.append(contentsOf: imageItems)
+            costomView.imageCollectionview.reloadData()
+            
+            if let event = self.eventListRespons?.first(where: { $0.name == eventList.category }) {
+                self.selecctedCatagory.text = event.name
+                self.selectedCatagoryImg.kf.setImage(with: URL(string: event.url ?? ""))
+            }
+            updateTextViewHeight(contentTxtView)
+        }
+    }
+    func updateTextViewHeight(_ textView: UITextView) {
+        let size = textView.contentSize
+        let newHeight = min(size.height, maxHeight)
+        textViewHeightConstraint.constant = newHeight
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
     func get_CatagoryListApi() {
         APIService.shared.makeApi(url: ServiceUrl.admin_api_school_event_categories, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<EventCategoryResponse, Error>) in
             guard let self = self else { return }

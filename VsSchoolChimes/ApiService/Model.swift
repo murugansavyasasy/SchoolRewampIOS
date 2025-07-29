@@ -548,12 +548,13 @@ struct FeeData: Codable {
 
 //MARK: Get noticeboard
 struct NoticeResponse: Codable {
- let status: Bool?
- let message: String?
- let data: [Notice]?
+    let status: Bool?
+    let message: String?
+    let data: [Notice]?
 }
 
 struct Notice: Codable {
+    let id:String?
     let title: String?
     let description: String?
     let created_on: String?
@@ -563,8 +564,13 @@ struct Notice: Codable {
     let intended_for: String?
     let is_management: Bool?
     let file_path: [FilePath]?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let sent_by: String?
+    let can_edit: Bool?
+    let can_delete: Bool?
 }
-
 
 //MARK: Attendence
 
@@ -584,21 +590,17 @@ struct AttenenceReportData: Codable{
 }
 
 struct EventResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [EventSection]
-}
-struct EventReportResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [EventData]
+    let status: Bool?
+    let message: String?
+    let data: [EventSection]?
 }
 
+
 struct EventSection: Codable {
-    let categories: [EventCategory]
-    let on_going: [EventList]
-    let up_coming: [EventList]
-    let completed: [EventList]
+    let categories: [EventCategory]?
+    let on_going: [EventList]?
+    let up_coming: [EventList]?
+    let completed: [EventList]?
 }
 // MARK: - EventCatagoryResponse
 struct EventCategoryResponse: Codable {
@@ -611,8 +613,8 @@ struct EventCategory: Codable {
     let name: String?
     let url: String?
 }
-
 struct EventList: Codable {
+    let id :String?
     let title: String
     let category: String
     let description: String
@@ -622,22 +624,10 @@ struct EventList: Codable {
     let iframe: String
     let file_size: String
     let thumbnail: String
-    let file_path: [FilePath]
-}
-struct EventData: Codable {
-    let title: String?
-    let category: String?
-    let description: String?
-    let date: String?
-    let time: String?
-    let venue: String?
-    let iframe: String?
-    let file_size: String?
-    let thumbnail: String?
     let sent_by: String?
     let can_edit: Bool?
     let can_delete: Bool?
-    let file_path: [FilePath]?
+    let file_path: [FilePath]
 }
 struct PendingReportsResponse: Codable {
     let status: Bool?

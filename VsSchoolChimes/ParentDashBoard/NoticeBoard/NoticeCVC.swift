@@ -7,7 +7,11 @@
 import UIKit
 import EventKit
 
-class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, TimePicker {
+class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, TimePicker, SelectedId {
+    func selectId(id: String?,edit:Bool?) {
+        delegate?.selectId(id: id, edit: edit)
+    }
+    
     func timepicker(dateTime: String?) {
         let formatter = DateFormatter()
            formatter.dateFormat = "dd-MM-yyyy hh:mm a"
@@ -31,6 +35,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
     @IBOutlet weak var img3: UIImageView!
     @IBOutlet weak var imgCount: UIButton!
     @IBOutlet weak var iconBtn: UIButton!
+    @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var descriptionLbl: UITextView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
@@ -39,6 +44,10 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
     let eventStore = EKEventStore()
     let alert = CustomAlert()
     var date:String?
+    var edit:Bool?
+    var delete:Bool?
+    var delegate:SelectedId?
+    var selectedId:String?
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -55,6 +64,11 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
         
         let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
         popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.delegate = self
+        popoverContentVC.edit = edit
+        popoverContentVC.delete = delete
+        popoverContentVC.selectedId = selectedId
+        
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: 70)
         popoverContentVC.modalPresentationStyle = .popover
         if let popoverController = popoverContentVC.popoverPresentationController {
@@ -120,20 +134,28 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
 
 
     func saveReminder(date: Date) {
-        eventStore.requestAccess(to: .reminder) { granted, error in
+        eventStore.requestAccess(to: .reminder) { [weak self] granted, error in
+            guard let self = self else { return }
+
             if granted {
                 let reminder = EKReminder(eventStore: self.eventStore)
                 reminder.title = self.titleLbl.text ?? "Reminder"
                 reminder.notes = ""
                 reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
                 reminder.addAlarm(EKAlarm(absoluteDate: date))
-
+                
                 do {
                     try self.eventStore.save(reminder, commit: true)
-                    DispatchQueue.main.async {
-                        if let topVC = self.getCurrentViewController() {
-                            if #available(iOS 15.0, *) {
-                                self.alert.showAlert(title: "Reminder Saved", message: "Reminder set for \(date.formatted(date: .abbreviated, time: .shortened))", on: topVC)
+                    
+                    // Only dispatch to main if UI alert needs to be shown
+                    if let topVC = self.getCurrentViewController() {
+                        if #available(iOS 15.0, *) {
+                            DispatchQueue.main.async {
+                                self.alert.showAlert(
+                                    title: "Reminder Saved",
+                                    message: "Reminder set for \(date.formatted(date: .abbreviated, time: .shortened))",
+                                    on: topVC
+                                )
                             }
                         }
                     }
@@ -141,14 +163,19 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
                     print("Failed to save reminder: \(error.localizedDescription)")
                 }
             } else {
-                DispatchQueue.main.async {
-                    if let topVC = self.getCurrentViewController() {
-                        self.alert.showAlert(title: "Permission Denied", message: "Please enable Reminder access in Settings", on: topVC)
+                if let topVC = self.getCurrentViewController() {
+                    DispatchQueue.main.async {
+                        self.alert.showAlert(
+                            title: "Permission Denied",
+                            message: "Please enable Reminder access in Settings",
+                            on: topVC
+                        )
                     }
                 }
             }
         }
     }
+
 //    private func addReminderToReminderApp() {
 //        guard let dateString = date else {
 //            print("Date or time is nil")
