@@ -95,6 +95,8 @@
 import UIKit
 import WebKit
 import Kingfisher
+import AVFoundation
+import AVKit
 
 class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelegate {
     
@@ -139,14 +141,38 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
             } else if let url = selectedFileURL {
                 imgView.kf.setImage(with: url)
             }
-        } else {
+        } else if type?.uppercased() == AttachmentTypeString.VIDEO{
+            
+            if let url = selectedFileURL {
+                playLocalVideo(filePath: url.absoluteString, from: self)
+            }
+        }
+            else {
             scrollView.isHidden = true
             pdfView.isHidden = false
+                
             if let url = selectedFileURL {
                 loadPDF(from: url.absoluteString)
             }
+            //            if let url = selectedFileURL {
+            //                loadPDF(from: url.absoluteString)
+            //            }
         }
     }
+    
+    
+    func playLocalVideo(filePath: String, from viewController: UIViewController) {
+        let fileURL = URL(fileURLWithPath: filePath)
+
+        let player = AVPlayer(url: fileURL)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+
+        viewController.present(playerViewController, animated: true) {
+            player.play()
+        }
+    }
+
     
     // Zoom delegate
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

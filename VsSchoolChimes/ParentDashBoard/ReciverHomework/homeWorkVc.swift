@@ -56,11 +56,10 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     //                    self.noDataLbl.isHidden = !isEmpty
             noDataImage.isHidden = !isEmpty
             NodataFoundLbl.isHidden = !isEmpty
-          homeWorkDefaultLbl.isHidden = isEmpty
+            homeWorkDefaultLbl.isHidden = isEmpty
             bottomCV.isHidden  = isEmpty
-        
-                   bottomCV.reloadData() // reload homework list
-                   cv.reloadData() // optional: refresh selection UI
+            bottomCV.reloadData() // reload homework list
+            cv.reloadData() // optional: refresh selection UI
                
 
             
@@ -212,7 +211,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                    layout.scrollDirection = .horizontal
                    layout.minimumLineSpacing = 0
                }
-        
+    
         calendarItems = getAllDatesPast1MonthPlus1Month()
         cv.register(UINib(nibName: "CalanderCvCell", bundle: nil), forCellWithReuseIdentifier: "CalanderCvCell")
         

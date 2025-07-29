@@ -74,8 +74,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 detail_id: FilterHomeWorkList.first?.detail_id ?? ""
             )
         }
+       
+        
         
         doneHomeWorkBtnName.isHidden = FilterHomeWorkList.first?.is_completed ?? false
+        
         backBtn
             .setTitle( FilterHomeWorkList.first?.subject_name, for: .normal)
         backBtn.setImage(UIImage(systemName: "chevron.backward"), for: .normal) // Use your own image if needed
@@ -109,29 +112,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     
-    func formattedDateStatus(from selectedDateString: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "dd-MM-yyyy"
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        guard let selectedDate = inputFormatter.date(from: selectedDateString) else {
-            return selectedDateString // Fallback if parsing fails
-        }
-        
-        let calendar = Calendar.current
-        let today = Date()
-        
-        if calendar.isDate(selectedDate, inSameDayAs: today) {
-            return "Today"
-        } else if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
-                  calendar.isDate(selectedDate, inSameDayAs: yesterday) {
-            return "Yesterday"
-        } else {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "dd MMMM, yyyy" // e.g., 24 July, 2025
-            return outputFormatter.string(from: selectedDate)
-        }
-    }
+    
     
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: false)

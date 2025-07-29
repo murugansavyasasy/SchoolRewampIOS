@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttachmentsVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="cv" destination="wUv-Cy-68W" id="cdB-t3-j8G"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,11 +34,14 @@
                                         <constraint firstAttribute="width" constant="40" id="FrZ-hQ-NuK"/>
                                         <constraint firstAttribute="height" constant="40" id="Zh8-zv-y9y"/>
                                     </constraints>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain">
                                         <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                                     </buttonConfiguration>
+                                    <connections>
+                                        <action selector="back:" destination="-1" eventType="touchUpInside" id="aML-YC-wDT"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -46,13 +51,13 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SaranRajShanmugam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGF-Uq-W7d">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="19.333333333333332"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                    <nil key="textColor"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="X-A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLG-Hn-dik">
                                     <rect key="frame" x="0.0" y="24.333333333333346" width="287" height="15.666666666666668"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <nil key="textColor"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -63,7 +68,7 @@
                                 <constraint firstAttribute="width" constant="40" id="0Xr-v6-4Tz"/>
                                 <constraint firstAttribute="height" constant="40" id="ZhQ-kp-Dlo"/>
                             </constraints>
-                            <color key="tintColor" red="0.14901960780000001" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal">
                                 <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="large"/>
@@ -71,6 +76,7 @@
                             </state>
                         </button>
                     </subviews>
+                    <color key="backgroundColor" name="HomeWorkClr"/>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSC-xj-WCb">
                     <rect key="frame" x="0.0" y="158" width="393" height="595"/>
@@ -127,7 +133,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="e0F-0c-aJK"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gyJ-Y1-0T7">
@@ -152,12 +158,12 @@
                                 </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wUv-Cy-68W">
                                     <rect key="frame" x="0.0" y="41" width="393" height="554"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bUU-kg-UBE">
+                                    <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="0.0" id="bUU-kg-UBE">
                                         <size key="itemSize" width="128" height="128"/>
                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                        <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <inset key="sectionInset" minX="3" minY="3" maxX="3" maxY="0.0"/>
                                     </collectionViewFlowLayout>
                                 </collectionView>
                             </subviews>
@@ -176,7 +182,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="HomeWorkClr"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jSC-xj-WCb" secondAttribute="bottom" id="C1z-oC-gSw"/>
                 <constraint firstItem="JYj-H5-pYI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="J0V-6u-G3G"/>
@@ -192,8 +198,14 @@
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <namedColor name="HomeWorkClr">
+            <color red="0.39215686274509803" green="0.40392156862745099" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

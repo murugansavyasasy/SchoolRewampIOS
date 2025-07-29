@@ -122,13 +122,13 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
 
     override func viewDidLayoutSubviews() {
         
-        if passValue == 1{
-            view.backgroundColor = .topBackgroundCLr
-            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-           
-        }else{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }
+//        if passValue == 1{
+//            view.backgroundColor = .topBackgroundCLr
+//            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+//           
+//        }else{
+//            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+//        }
         
         tv.beginUpdates()
         tv.endUpdates()

@@ -554,17 +554,27 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             if attachments.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
-                    if let url = attachments[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-                } else{
+                if attachments[indexPath.item - 1].fileType == CommonStringFile.IMAGE{
+                    //                    if let videoURL = attachments[indexPath.item - 1].VideoURl{
+//                        vc.selectedFileURL = URL(string: url)
+//                    }
+                    
                     if let img = attachments[indexPath.item - 1].image {
                         vc.img = attachments[indexPath.item - 1].image
                     }else{
                         vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
                     }
+                } else if attachments[indexPath.item - 1].fileType == CommonStringFile.pdf{
+                    if let url = attachments[indexPath.item - 1].imageURL{
+                        vc.selectedFileURL = URL(string: url)
+                    }
+
                     
+                }else if attachments[indexPath.item - 1].fileType == CommonStringFile.VIDEO{
+                    
+                    if let VideoURl = attachments[indexPath.item - 1].VideoURl{
+                        vc.selectedFileURL = VideoURl
+                    }
                 }
                 vc.type = attachments[indexPath.item - 1].fileType
                 present(vc, animated: true)
