@@ -8,10 +8,15 @@
 import UIKit
 import EventKit
 
-class ReciverEventTVC: UITableViewCell {
+class ReciverEventTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
+    func selectId(id: String?, edit: Bool?) {
+        delegate?.selectId(id:id, edit: edit)
+    }
+    
     @IBOutlet weak var attacmentView: UIView!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var reminderBtn: UIButton!
+    @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
@@ -27,7 +32,10 @@ class ReciverEventTVC: UITableViewCell {
 
     let alert = CustomAlert()
     let eventStore = EKEventStore()
-
+    var edit:Bool?
+    var delete:Bool?
+    var delegate:SelectedId?
+    var selectedId:String?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Hide all initially
@@ -38,12 +46,18 @@ class ReciverEventTVC: UITableViewCell {
         [img1, img2, img3].forEach {
             setBorderAndCornerRadius(for: $0!, cornerRadius:($0?.frame.width ?? 0)/2)
         }
+        
         attacmentView.setShadow(cornerRadius: 20)
         setBorderAndCornerRadius(for: imgCount, cornerRadius: imgCount.frame.width/2)
         setBorderAndCornerRadius(for: selectBtn)
         setBorderAndCornerRadius(for: outerView)
     }
-
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        editBtn.isHidden = !(edit || delete)
+    }
     func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
         view.layer.cornerRadius = cornerRadius
         view.layer.borderWidth = borderWidth
@@ -67,7 +81,32 @@ class ReciverEventTVC: UITableViewCell {
             }
         }
     }
-
+    @IBAction func edit(_ sender: UIButton) {
+        let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
+        popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.delegate = self
+        popoverContentVC.edit = edit
+        popoverContentVC.delete = delete
+        popoverContentVC.selectedId = selectedId
+        
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 70)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .right
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
+    }
     func addReminderToReminderApp() {
         guard let dateString = date, let timeString = time else {
             print("Date or time is nil")
@@ -112,5 +151,9 @@ class ReciverEventTVC: UITableViewCell {
             .first { $0.isKeyWindow }?
             .rootViewController?
             .topMostViewController()
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
     }
 }

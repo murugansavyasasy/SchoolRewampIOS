@@ -23,7 +23,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var childDetails = UserDefaultFileManager.get_child_Details()
-    
+    let transitionDelegate = TransitioningDelegate()
     // MARK: - Properties
     var searchData: [Notice] = []
     var allNotices: [Notice] = [] // For backup during search
@@ -236,6 +236,7 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
 
         let notice = searchData[indexPath.item]
         cell.configure(with: notice)
+        cell.editBtn.isHidden = true
         cell.outerView.setShadow(cornerRadius: 8)
         if let files = notice.file_path {
             loadFiles(into: cell, files: files)
@@ -246,9 +247,20 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let notice = searchData[indexPath.item]
-        let alert = UIAlertController(title: notice.title, message: notice.description, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+                let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
+        let detailVC = PrivewVc()
+        detailVC.attachmetList = notice.file_path
+        detailVC.selectedDate  = notice.created_on
+        detailVC.titleString  = notice.title
+        detailVC.descriptionString  = notice.description
+//        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
+//        detailVC.postedBy  = notice.sent_by
+           detailVC.modalPresentationStyle = .custom
+           transitionDelegate.originFrame = cellFrameInSuperview
+           detailVC.transitioningDelegate = transitionDelegate
+           present(detailVC, animated: true)
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 30) / 2

@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +24,7 @@
                         <rect key="frame" x="10" y="10" width="428" height="243"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0h0-GQ-Kzk">
-                                <rect key="frame" x="10" y="9.9999999999999982" width="373" height="19.333333333333329"/>
+                                <rect key="frame" x="10" y="9.9999999999999982" width="340" height="19.333333333333329"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -34,19 +35,37 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
-                                <rect key="frame" x="393" y="10" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="OZV-vV-YCz"/>
-                                    <constraint firstAttribute="width" constant="25" id="kel-Vv-QbZ"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
-                                <state key="normal" image="bell.and.waves.left.and.right.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="reminder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xs5-Be-SUw"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RKl-fw-742">
+                                <rect key="frame" x="360" y="10" width="58" height="25"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-c4-x7P">
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="4e4-JJ-pQ9"/>
+                                            <constraint firstAttribute="height" constant="25" id="nd0-ql-tDg"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
+                                        <state key="normal" image="bell.and.waves.left.and.right.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="reminder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qXr-X1-e8F"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
+                                        <rect key="frame" x="33" y="0.0" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="OZV-vV-YCz"/>
+                                            <constraint firstAttribute="width" constant="25" id="kel-Vv-QbZ"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
+                                        <state key="normal" image="three-dot"/>
+                                        <connections>
+                                            <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zoA-my-26G"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KqS-QS-X2l">
                                 <rect key="frame" x="10" y="73" width="408" height="110"/>
                                 <subviews>
@@ -173,19 +192,19 @@
                             <constraint firstItem="0h0-GQ-Kzk" firstAttribute="leading" secondItem="Saa-1g-u5l" secondAttribute="leading" constant="10" id="Jkw-57-cjb"/>
                             <constraint firstAttribute="trailing" secondItem="fmp-wr-LgQ" secondAttribute="trailing" constant="10" id="K5d-fq-K5B"/>
                             <constraint firstItem="KqS-QS-X2l" firstAttribute="top" secondItem="A6B-DG-xFD" secondAttribute="bottom" constant="10" id="KY8-EV-py9"/>
-                            <constraint firstAttribute="trailing" secondItem="rOb-CL-mcg" secondAttribute="trailing" constant="10" id="Ojd-0Y-0vi"/>
+                            <constraint firstItem="RKl-fw-742" firstAttribute="leading" secondItem="0h0-GQ-Kzk" secondAttribute="trailing" constant="10" id="Ode-oo-6bc"/>
                             <constraint firstItem="FYk-o5-WTl" firstAttribute="top" secondItem="KqS-QS-X2l" secondAttribute="bottom" constant="10" id="Ord-Mv-Ypw"/>
                             <constraint firstAttribute="bottom" secondItem="FYk-o5-WTl" secondAttribute="bottom" constant="10" id="Qhc-fa-51t"/>
-                            <constraint firstItem="rOb-CL-mcg" firstAttribute="leading" secondItem="0h0-GQ-Kzk" secondAttribute="trailing" constant="10" id="RU0-Dc-Sbs"/>
                             <constraint firstAttribute="trailing" secondItem="A6B-DG-xFD" secondAttribute="trailing" constant="10" id="SOA-Dm-YTy"/>
                             <constraint firstItem="A6B-DG-xFD" firstAttribute="leading" secondItem="Saa-1g-u5l" secondAttribute="leading" constant="10" id="Ten-h8-H4V"/>
+                            <constraint firstItem="RKl-fw-742" firstAttribute="top" secondItem="Saa-1g-u5l" secondAttribute="top" constant="10" id="UtL-U0-MyA"/>
                             <constraint firstItem="0h0-GQ-Kzk" firstAttribute="top" secondItem="Saa-1g-u5l" secondAttribute="top" constant="10" id="XCr-g6-7Fd"/>
                             <constraint firstItem="FYk-o5-WTl" firstAttribute="leading" secondItem="Saa-1g-u5l" secondAttribute="leading" constant="10" id="YVs-Tr-yH6"/>
                             <constraint firstAttribute="bottom" secondItem="fmp-wr-LgQ" secondAttribute="bottom" constant="16" id="fHs-zc-ICN"/>
                             <constraint firstItem="A6B-DG-xFD" firstAttribute="top" secondItem="0h0-GQ-Kzk" secondAttribute="bottom" constant="10" id="kYH-Sn-mlY"/>
                             <constraint firstItem="KqS-QS-X2l" firstAttribute="leading" secondItem="Saa-1g-u5l" secondAttribute="leading" constant="10" id="meq-tO-qof"/>
-                            <constraint firstItem="rOb-CL-mcg" firstAttribute="top" secondItem="Saa-1g-u5l" secondAttribute="top" constant="10" id="ps5-CG-2eK"/>
                             <constraint firstAttribute="trailing" secondItem="KqS-QS-X2l" secondAttribute="trailing" constant="10" id="y9J-68-jNh"/>
+                            <constraint firstAttribute="trailing" secondItem="RKl-fw-742" secondAttribute="trailing" constant="10" id="yUD-RY-ga7"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -203,13 +222,14 @@
                 <outlet property="attacmentView" destination="FYk-o5-WTl" id="Bzi-Nj-gmt"/>
                 <outlet property="dateLbl" destination="PMd-F0-SpF" id="mz0-oH-1iY"/>
                 <outlet property="descriptionLbl" destination="A6B-DG-xFD" id="C7W-PT-KcK"/>
+                <outlet property="editBtn" destination="rOb-CL-mcg" id="rGZ-bO-6ZM"/>
                 <outlet property="img1" destination="0ai-9x-NMj" id="IFQ-6D-oMi"/>
                 <outlet property="img2" destination="d0K-ZS-pgj" id="LMG-a8-UJO"/>
                 <outlet property="img3" destination="c0K-aV-UBz" id="VjE-EN-w8A"/>
                 <outlet property="imgCount" destination="mdE-cY-aWt" id="UCw-gX-jfd"/>
                 <outlet property="outerView" destination="Saa-1g-u5l" id="nR5-Pv-G3f"/>
                 <outlet property="placeLbl" destination="9h2-jq-Ac5" id="Ul5-am-ouX"/>
-                <outlet property="reminderBtn" destination="rOb-CL-mcg" id="uf5-H2-Xlb"/>
+                <outlet property="reminderBtn" destination="Vno-c4-x7P" id="CJj-Uy-9Wh"/>
                 <outlet property="selectBtn" destination="fmp-wr-LgQ" id="jws-Hn-Eys"/>
                 <outlet property="titleLbl" destination="0h0-GQ-Kzk" id="JFj-hu-Q0X"/>
             </connections>
@@ -222,11 +242,12 @@
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="maps-and-flags" width="512" height="512"/>
         <image name="planning" width="512" height="512"/>
+        <image name="three-dot" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
