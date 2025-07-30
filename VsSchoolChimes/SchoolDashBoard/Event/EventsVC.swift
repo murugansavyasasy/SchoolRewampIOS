@@ -89,6 +89,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var images = [String]()
     var dropDownList = [String]()
     var eventListRespons : [EventCategory]?
+    var editId: String?
     let dropDown = DropDown()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,11 +155,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             }
             attachments.append(contentsOf: imageItems)
             costomView.imageCollectionview.reloadData()
-            
+            editId = eventList.id
             if let event = self.eventListRespons?.first(where: { $0.name == eventList.category }) {
                 self.selecctedCatagory.text = event.name
                 self.selectedCatagoryImg.kf.setImage(with: URL(string: event.url ?? ""))
+                
             }
+            
             nextBtn.setTitle("Update", for: .normal)
             updateTextViewHeight(contentTxtView)
         }
@@ -488,7 +491,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
             let date = convertDate(todate.titleLabel?.text ?? "")
-            let params: [String: Any] = [
+            var params: [String: Any] = [
                 assignmentResquestStringKey.title: eventTxt.text ?? "",
                 assignmentResquestStringKey.description: contentTxtView.text ?? "",
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
@@ -497,7 +500,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.category:selecctedCatagory.text ?? ""
             ]
             if sender.titleLabel?.text == "Update"{
-//                sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+                let com = commonApi_forSending()
+                params[SendAttachmentStringFile.id] = editId
+                sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_school_event_update, Common_request_params: params)
             }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.event
@@ -512,6 +517,36 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
         
     }
+    
+    private func sendAttachmentFlow(
+        via comm: commonApi_forSending,
+        url baseURL: String,
+        Common_request_params: [String: Any]
+    ) {
+        comm.SendingAttachmentFlow(
+            selectedAcadimicYearId: 0,
+            edit: true,
+            target_type:0,
+            selectedId: [],
+            baseURL: baseURL,
+            subjectId: "",
+            message:"",
+            from: self,
+            Common_request_params: Common_request_params
+        ) { response in
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.hide()
+                CustomAlert.showAlertWithOkAction(
+                    title: AlertstringFile.Success,
+                    message: response.message,
+                    on: self
+                ) { [self] in
+                    print("success")
+                }
+            }
+        }
+    }
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }

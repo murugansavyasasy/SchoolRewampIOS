@@ -93,6 +93,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var DocumentpreviewURL: URL?
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
+    var editId: String?
     let standardDateFormat = DateFormatString.StandardFormat
     
     override func viewDidLoad() {
@@ -182,6 +183,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             } ?? []
             attachments.append(contentsOf: imageItems)
             Attachmentview.imageCollectionview.reloadData()
+            editId = notice.id
             NextBtn.setTitle("Update", for: .normal)
         }
     }
@@ -401,14 +403,16 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
         user_inputs.SelectedUrls = attachments
         user_inputs.VideoPath = selectedVideoURL
-        let params: [String: Any] = [
+        var params: [String: Any] = [
             SendAttachmentStringFile.title: textFieldText,
             SendAttachmentStringFile.description: textViewText,
             SendAttachmentStringFile.visible_from : user_inputs.FromDate,
             SendAttachmentStringFile.visible_to : user_inputs.ToDate
         ]
         if sender.titleLabel?.text == "Update"{
-            sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+            let com = commonApi_forSending()
+            params[SendAttachmentStringFile.id] = editId
+            sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_notice_board_update, Common_request_params: params)
         }else{
             let vc = SchoolListVC(nibName: nil, bundle: nil)
             vc.Common_request_params = params
@@ -418,12 +422,13 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     }
     
     private func sendAttachmentFlow(
-        via comm: commonApi_forSending = commonApi_forSending(),
+        via comm: commonApi_forSending,
         url baseURL: String,
         Common_request_params: [String: Any]
     ) {
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: 0,
+            edit: true,
             target_type:0,
             selectedId: [],
             baseURL: baseURL,
@@ -439,6 +444,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                     message: response.message,
                     on: self
                 ) { [self] in
+                    print("success")
                 }
             }
         }
