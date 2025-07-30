@@ -10,6 +10,7 @@ import AWSCore
 import AWSS3
 import AVFoundation
 import DropDown
+import AVKit
 
 protocol DeleteImge{
     func deleteImage(index:Int)
@@ -116,11 +117,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         eventTxt.addDoneButton()
         contentTxtView.addDoneButton()
         imageSelection()
-     
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         catagoryDropDownView.isUserInteractionEnabled = true
         catagoryDropDownView.addGestureRecognizer(tapGesture)
-
+        
         VideoView.isHidden = true
         
         // Add observers for keyboard notifications
@@ -174,7 +175,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             self.view.layoutIfNeeded()
         }
     }
-
+    
     func get_CatagoryListApi() {
         APIService.shared.makeApi(url: ServiceUrl.admin_api_school_event_categories, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<EventCategoryResponse, Error>) in
             guard let self = self else { return }
@@ -268,12 +269,12 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             selectedCatagoryImg.kf.setImage(with: URL(string: images[index]))
             selecctedCatagory.text = item
-           
+            
         }
     }
-
     
-   
+    
+    
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
         
@@ -581,26 +582,25 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
-               cell.delegate = self
-               cell.deleteBtn.tag = adjustedIndex
-
-               if let image = item.image {
-                   cell.imageViews.image = image
-               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                       let iconName = getFileIconName(for: url)
-                       cell.imageViews.image = UIImage(named: iconName)
-                   } else {
-                       cell.imageViews.kf.setImage(with: url)
-                   }
-               } else if let vido = item.VideoURl{
-                   let iconName = getFileIconName(for: vido)
-                   cell.imageViews.image = UIImage(named: iconName)
-                   
-               }else{
-                   
-                   cell.imageViews.image = nil
-               }
+            cell.delegate = self
+            cell.deleteBtn.tag = adjustedIndex
+            
+            if let image = item.image {
+                cell.imageViews.image = image
+            } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                    let iconName = getFileIconName(for: url)
+                    cell.imageViews.image = UIImage(named: iconName)
+                } else {
+                    cell.imageViews.kf.setImage(with: url)
+                }
+            } else if let vido = item.VideoURl{
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }else{
+                cell.imageViews.image = nil
+            }
             
             // Set collection view height dynamically
             let totalItems = attachments.count
@@ -617,70 +617,76 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0{
+        if indexPath.row == 0 {
             let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            //
-            // Camera option
+            
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-                //
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
-            // Gallery option
             let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
                 selectImages()
-                //
             }
             alertController.addAction(galleryAction)
             
-            //             PDF option
             let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
             alertController.addAction(pdfAction)
             
-            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
-                
+            let videoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
                 VideoPick()
             }
-            alertController.addAction(VideoAction)
-            // Cancel action
+            alertController.addAction(videoAction)
+            
             let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             self.present(alertController, animated: true, completion: nil)
-        }else{
-            if attachments.count > indexPath.item - 1 {
+            
+        } else {
+            let attachment = attachments[indexPath.item - 1]
+            
+            switch attachment.fileType {
+            case CommonStringFile.IMAGE:
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType == CommonStringFile.IMAGE{
-                    //                    if let videoURL = attachments[indexPath.item - 1].VideoURl{
-//                        vc.selectedFileURL = URL(string: url)
-//                    }
-                    
-                    if let img = attachments[indexPath.item - 1].image {
-                        vc.img = attachments[indexPath.item - 1].image
-                    }else{
-                        vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
-                    }
-                } else if attachments[indexPath.item - 1].fileType == CommonStringFile.pdf{
-                    if let url = attachments[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-
-                    
-                }else if attachments[indexPath.item - 1].fileType == CommonStringFile.VIDEO{
-                    
-                    if let VideoURl = attachments[indexPath.item - 1].VideoURl{
-                        vc.selectedFileURL = VideoURl
+                
+                if let img = attachment.image {
+                    vc.img = img
+                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
+                }
+                
+                vc.type = CommonStringFile.IMAGE
+                present(vc, animated: true)
+                
+            case CommonStringFile.pdf:
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                
+                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
+                }
+                
+                vc.type = CommonStringFile.pdf
+                present(vc, animated: true)
+                
+            case CommonStringFile.VIDEO:
+                if let videoURL = attachment.VideoURl {
+                    let player = AVPlayer(url: videoURL)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    present(playerViewController, animated: true) {
+                        player.play()
                     }
                 }
-                vc.type = attachments[indexPath.item - 1].fileType
-                present(vc, animated: true)
+                
+            default:
+                break
             }
         }
-        
     }
     
     // MARK: File Attachments Actions
@@ -727,11 +733,11 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
         
         if  video.count != 2{
-          
+            
             if attachments.count <= 10{
                 PhotoPickerManager.shared.limiSelection = 10 - attachments.count
                 PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
-               
+                
             }else{
                 let alert = CustomAlert()
                 alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
@@ -804,29 +810,29 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-//        if updatedText.count <= 500 {
-//            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
-            return true // Allow the change
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            //            contentTxtView.isEditable = false // Optionally disable editing
-//            return false // Reject the change
-//        }
+        //        if updatedText.count <= 500 {
+        //            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
+        return true // Allow the change
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        //            //            contentTxtView.isEditable = false // Optionally disable editing
+        //            return false // Reject the change
+        //        }
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         
-//        if updatedText.count <= 50 {
-//            tittleCountLbl.text = "\(updatedText.count) / 50"
-//            return true
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
-//            return false
-//        }
+        //        if updatedText.count <= 50 {
+        //            tittleCountLbl.text = "\(updatedText.count) / 50"
+        //            return true
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
+        //            return false
+        //        }
         return true
     }
     
@@ -884,13 +890,9 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
 class HalfColorButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        // Create a layer for the 60% background color
         let coloredLayer = CALayer()
         coloredLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.4) // 60% height
-        coloredLayer.backgroundColor = UIColor.white.cgColor // Set the desired color
-        
-        // Remove old layers to avoid duplication
+        coloredLayer.backgroundColor = UIColor.white.cgColor
         self.layer.sublayers?.removeAll(where: { $0 is CALayer })
         // Add the 60% color layer
         self.layer.addSublayer(coloredLayer)

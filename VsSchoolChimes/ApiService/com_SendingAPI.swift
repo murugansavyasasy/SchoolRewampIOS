@@ -569,7 +569,6 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-            
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
             
