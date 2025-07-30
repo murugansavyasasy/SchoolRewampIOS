@@ -27,6 +27,7 @@
                 <outlet property="eventDeatail" destination="uJb-nS-thN" id="sxm-XG-5tf"/>
                 <outlet property="eventTxt" destination="pD7-c9-eA0" id="8As-6y-57H"/>
                 <outlet property="fromLbl" destination="hCh-8J-9IV" id="3TA-wl-lkQ"/>
+                <outlet property="nextBtn" destination="USC-8r-noB" id="aVH-KL-lbU"/>
                 <outlet property="outerView" destination="FYI-dc-NJq" id="6uh-3a-MxN"/>
                 <outlet property="placeLbl" destination="Fe3-dH-NGt" id="yuL-pf-u9U"/>
                 <outlet property="placeTxt" destination="al2-Hb-4Fn" id="6Eb-Vf-7CJ"/>
@@ -612,10 +613,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

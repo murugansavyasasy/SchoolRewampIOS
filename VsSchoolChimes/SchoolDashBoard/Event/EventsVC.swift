@@ -57,6 +57,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var eventDeatail: UILabel!
     @IBOutlet weak var addPhotoLbl: UILabel!
     @IBOutlet weak var todate: UIButton!
+    @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
@@ -158,6 +159,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 self.selecctedCatagory.text = event.name
                 self.selectedCatagoryImg.kf.setImage(with: URL(string: event.url ?? ""))
             }
+            nextBtn.setTitle("Update", for: .normal)
             updateTextViewHeight(contentTxtView)
         }
     }
@@ -514,12 +516,16 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.event_date:date ?? "",
                 assignmentResquestStringKey.category:selecctedCatagory.text ?? ""
             ]
+            if sender.titleLabel?.text == "Update"{
+//                sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+            }else{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = Menu_id.event
+                vc.Common_request_params = params
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
             
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.event
-            vc.Common_request_params = params
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "Alert", message: AlertstringFile.Fill_All_Required_Fields, on: self)
