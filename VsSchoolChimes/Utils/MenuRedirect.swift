@@ -426,8 +426,8 @@ class MenuRedirectHandler {
     
     func receiverAttachment(from viewController: UIViewController){
         
-//        let vc = AttachmentVCViewController(nibName: nil, bundle: nil)
-        let vc = ReciverAttachmentrVC(nibName: nil, bundle: nil)
+//        let vc = ReciverAttachmentrVC(nibName: nil, bundle: nil)
+        let vc = AttachmentsVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -469,7 +469,11 @@ class MenuRedirectHandler {
     }
     
     func receiverHomework(from viewController: UIViewController){
-        let vc = ReciverHomeworkVC(nibName: nil, bundle: nil)
+//        let vc = ReciverHomeworkVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+        
+        let vc = homeWorkVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

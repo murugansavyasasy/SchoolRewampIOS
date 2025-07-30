@@ -18,126 +18,252 @@ class  commonApi_forSending {
     
     
     
+//    func SendingAttachmentFlow(
+//        selectedAcadimicYearId : Int,
+//        target_type : Int,
+//        selectedId : [String] ,
+//        baseURL: String ,
+//        subjectId : String,
+//        message: String,
+//        from viewController: UIViewController,
+//        Common_request_params: [String: Any]? = nil,
+//        onComplete : @escaping(Send_AttachmentResponse) -> Void
+//    ) {
+//        let selectedType = user_inputs.selectedFileType
+//        var uploadedFiles: [[String: String]] = []
+//        var iframeValue = ""
+//        var fileSizeValue = ""
+//        let title = AlertstringFile.Confirm_title
+//        alert.showAlertCancel(
+//            title: title,
+//            message: message,
+//            actionLbl1: AlertstringFile.Yes_Send,
+//            actionLbl2: AlertstringFile.Cancel,
+//            on: viewController,
+//            onOk: { [self] in
+//                if selectedType == AttachmentTypeString.VIDEO {
+//                    guard let videoURL = user_inputs.VideoPath else {
+//                        print("❌ Video path is missing")
+//                        return
+//                    }
+//                    let videoTitle =  Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
+//                    let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
+//                    
+//                    
+////                    compressVideo(inputURL: videoURL) { [weak self] compressedURL in
+////                        //            guard let self = self, let compressedURL = compressedURL else { return }
+////
+////                    }
+//                    startUpload(
+//                        from: viewController,
+//                        videoURL: videoURL,
+//                        title: videoTitle,
+//                        description: videoDescription
+//                    ) {
+//                        videoURLString,
+//                        iframeHTML,
+//                        fileSize,
+//                        finalEmbedUrl in
+//                        
+//                        if let videoURLString = videoURLString {
+//                            uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
+//                            if let iframeHTML = iframeHTML {
+//                                iframeValue = iframeHTML
+//                            }
+//                            if let size = fileSize {
+//                                fileSizeValue = self
+//                                    .convertSize(size)//String(size)
+//                            }
+//                            
+//                            self.sendAttachment(
+//                                from: viewController,
+//                                with: uploadedFiles,
+//                                iframe: iframeValue,
+//                                filesize: fileSizeValue,
+//                                baseURl: baseURL,
+//                                array_selectedId: selectedId,
+//                                target_type: target_type,
+//                                selectedAcadimicYearId: selectedAcadimicYearId,
+//                                Common_request_params: Common_request_params,
+//                                subjectId: subjectId
+//                            ) { response in
+//                                print("✅ Upload complete: \(response)")
+//                                onComplete(response)
+//                            }
+//                            
+//                            
+//                        } else {
+//                            print("❌ Video upload failed")
+//                            // Optionally show alert or retry UI
+//                        }
+//                    }
+//                }else {
+//                    
+//                    
+//                    
+//                    let file: Any = user_inputs.SelectedUrls
+//                    uploadAWSMedia(file: file) { [self] in
+//                        CircularProgressLoader.shared.hide()
+//                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+//                            if let url = URL(string: url) {
+//                                let type = url.pathExtension.lowercased()
+//                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+//                            }
+//                            return [
+//                                CommonStringFile.url: url,
+//                                CommonStringFile.type: user_inputs.selectedFileType
+//                            ]
+//                        }
+//                        
+//                        sendAttachment(
+//                            from: viewController,
+//                            with: uploadedFiles,
+//                            iframe: iframeValue,
+//                            filesize: fileSizeValue,
+//                            baseURl: baseURL,
+//                            array_selectedId: selectedId,
+//                            target_type: target_type,
+//                            selectedAcadimicYearId: selectedAcadimicYearId,
+//                            Common_request_params: Common_request_params,
+//                            subjectId: subjectId
+//                        ) { response in
+//                            print("✅ Upload complete: \(response)")
+//                            onComplete(response)
+//                        }
+//                    }
+//                }
+//            },
+//            
+//            onNo: {
+//                print("User canceled.")
+//            }
+//        )
+//    }
+    
+    
+    
     func SendingAttachmentFlow(
-        selectedAcadimicYearId : Int,
-        target_type : Int,
-        selectedId : [String] ,
-        baseURL: String ,
-        subjectId : String,
+        selectedAcadimicYearId: Int,
+        target_type: Int,
+        selectedId: [String],
+        baseURL: String,
+        subjectId: String,
         message: String,
         from viewController: UIViewController,
         Common_request_params: [String: Any]? = nil,
-        onComplete : @escaping(Send_AttachmentResponse) -> Void
+        onComplete: @escaping(Send_AttachmentResponse) -> Void
     ) {
-        let selectedType = user_inputs.selectedFileType
-        var uploadedFiles: [[String: String]] = []
-        var iframeValue = ""
-        var fileSizeValue = ""
-        let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
-            title: title,
+            title: AlertstringFile.Confirm_title,
             message: message,
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in
-                if selectedType == AttachmentTypeString.VIDEO {
-                    guard let videoURL = user_inputs.VideoPath else {
-                        print("❌ Video path is missing")
+                var uploadedFiles: [[String: String]] = []
+                var iframeValue = ""
+                var fileSizeValue = ""
+
+                let dispatchGroup = DispatchGroup()
+
+               
+                
+                
+
+                
+                // 🎥 Upload all videos to Vimeo
+                
+                let videoFiles = user_inputs.SelectedUrls.filter {
+                    $0.fileType.uppercased() == AttachmentTypeString.VIDEO
+                }
+                
+                for item in videoFiles {
+                    dispatchGroup.enter()
+                    let videoTitle = Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
+                    let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
+
+                    
+                    if let videoURL = item.VideoURl {
+                        startUpload(
+                            from: viewController,
+                            videoURL:videoURL,
+                            title: videoTitle,
+                            description: videoDescription
+                        ) {
+                            [self] videoURLString,
+                            iframeHTML,
+                            fileSize,
+                            finalEmbedUrl in
+
+                            if let finalEmbedUrl = finalEmbedUrl {
+                                uploadedFiles.append(["url": finalEmbedUrl, "type": AttachmentTypeString.VIDEO])
+                                iframeValue = iframeHTML ?? ""
+                                fileSizeValue = convertSize(fileSize ?? 0)
+                            } else {
+                                print("❌ Failed to upload video")
+                            }
+
+                            dispatchGroup.leave()
+                        }
+                    } else {
+                        print("❌ Video URL is nil.")
+                    }
+                    
+                    
+                }
+                
+                
+
+                // 2. Upload images/documents
+                if let files = user_inputs.SelectedUrls as? [Any] {
+                    dispatchGroup.enter()
+                    uploadAWSMedia(file: files) {
+                        CircularProgressLoader.shared.hide()
+
+                        let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
+                            if let url = URL(string: urlString) {
+                                let type = url.pathExtension.lowercased()
+                                let resolvedType = (type == "jpg" || type == "png") ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+                                return [CommonStringFile.url: urlString, CommonStringFile.type: resolvedType]
+                            }
+                            return nil
+                        }
+
+                        uploadedFiles.append(contentsOf: fileEntries)
+                        dispatchGroup.leave()
+                    }
+                }
+
+                // 3. Once all uploads complete, send
+                dispatchGroup.notify(queue: .main) {
+                    if uploadedFiles.isEmpty {
+                        print("❌ No files uploaded.")
                         return
                     }
-                    let videoTitle =  Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
-                    let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
-                    
-                    
-//                    compressVideo(inputURL: videoURL) { [weak self] compressedURL in
-//                        //            guard let self = self, let compressedURL = compressedURL else { return }
-//
-//                    }
-                    startUpload(
+
+                    self.sendAttachment(
                         from: viewController,
-                        videoURL: videoURL,
-                        title: videoTitle,
-                        description: videoDescription
-                    ) {
-                        videoURLString,
-                        iframeHTML,
-                        fileSize,
-                        finalEmbedUrl in
-                        
-                        if let videoURLString = videoURLString {
-                            uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
-                            if let iframeHTML = iframeHTML {
-                                iframeValue = iframeHTML
-                            }
-                            if let size = fileSize {
-                                fileSizeValue = self
-                                    .convertSize(size)//String(size)
-                            }
-                            
-                            self.sendAttachment(
-                                from: viewController,
-                                with: uploadedFiles,
-                                iframe: iframeValue,
-                                filesize: fileSizeValue,
-                                baseURl: baseURL,
-                                array_selectedId: selectedId,
-                                target_type: target_type,
-                                selectedAcadimicYearId: selectedAcadimicYearId,
-                                Common_request_params: Common_request_params,
-                                subjectId: subjectId
-                            ) { response in
-                                print("✅ Upload complete: \(response)")
-                                onComplete(response)
-                            }
-                            
-                            
-                        } else {
-                            print("❌ Video upload failed")
-                            // Optionally show alert or retry UI
-                        }
-                    }
-                }else {
-                    
-                    let file: Any = user_inputs.SelectedUrls
-                    uploadAWSMedia(file: file) { [self] in
-                        CircularProgressLoader.shared.hide()
-                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                            if let url = URL(string: url) {
-                                let type = url.pathExtension.lowercased()
-                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                            }
-                            return [
-                                CommonStringFile.url: url,
-                                CommonStringFile.type: user_inputs.selectedFileType
-                            ]
-                        }
-                        
-                        sendAttachment(
-                            from: viewController,
-                            with: uploadedFiles,
-                            iframe: iframeValue,
-                            filesize: fileSizeValue,
-                            baseURl: baseURL,
-                            array_selectedId: selectedId,
-                            target_type: target_type,
-                            selectedAcadimicYearId: selectedAcadimicYearId,
-                            Common_request_params: Common_request_params,
-                            subjectId: subjectId
-                        ) { response in
-                            print("✅ Upload complete: \(response)")
-                            onComplete(response)
-                        }
+                        with: uploadedFiles,
+                        iframe: iframeValue,
+                        filesize: fileSizeValue,
+                        baseURl: baseURL,
+                        array_selectedId: selectedId,
+                        target_type: target_type,
+                        selectedAcadimicYearId: selectedAcadimicYearId,
+                        Common_request_params: Common_request_params,
+                        subjectId: subjectId
+                    ) { response in
+                        print("✅ All uploads complete")
+                        onComplete(response)
                     }
                 }
             },
-            
             onNo: {
-                print("User canceled.")
+                print("User cancelled.")
             }
         )
     }
-    
+
     
     func sendAttachment(
         from viewController: UIViewController,

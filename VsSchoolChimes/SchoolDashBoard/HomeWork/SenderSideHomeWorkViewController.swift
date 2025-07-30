@@ -161,10 +161,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+//            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
@@ -177,15 +178,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            }
+//            if imageItems.count != 0{
+//                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+//            }
             
-            //            let selectedImages: [UIImage] = images // Your selected images
-            //
-            //            if let pdfData = createMultiPagePDF(from: selectedImages) {
-            //                previewPDF(data: pdfData, in: uploadAttachmentView)
-            //            }
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -193,13 +189,29 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        PhotoPickerManager.shared.onVideoPicked = { [self] data in
+            // handle picked PDF
+            user_inputs.selectedFileType = CommonStringFile.VIDEO
+            attachments
+                .append(
+                    AttachmentItem(
+                        image:nil,
+                        imageURL: nil,
+                        fileType: CommonStringFile.VIDEO,
+                        VideoURl: data
+                    )
+                )
+//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
+        
     }
-    
     
     
     @available(iOS 15.0, *)
@@ -265,8 +277,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     // MARK: File Attachments Actions
     func selectImages() {
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
+        if attachments.count != 10{
+            PhotoPickerManager.shared
+                .presentPicker(
+                    ofType: .gallery(selectionLimit: 10 - attachments.count),
+                    from: self
+                )
             
         }else{
             let alert = CustomAlert()
@@ -277,7 +293,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     func openCamera(){
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
+        if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -287,9 +303,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     func selectPDF() {
         let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
-        if pdf.count != 5{
+        if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
+            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
         }else{
             
             let alert = CustomAlert()
@@ -298,6 +314,27 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
     }
     
+    func VideoPick() {
+        let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
+        
+        if  video.count != 2{
+          
+            if attachments.count <= 10{
+                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
+                PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
+               
+            }else{
+                let alert = CustomAlert()
+                alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+            
+        }else{
+            
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+        
+    }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)
@@ -395,7 +432,8 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             
             let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
                 
-                pickVideoFromGallery()
+                VideoPick()
+              
             }
             alertController.addAction(VideoAction)
             // Cancel action
@@ -580,5 +618,6 @@ extension String {
 struct AttachmentItem {
     var image: UIImage?         // for local images
     var imageURL: String?       // for remote
-    var fileType: String        // "image", "pdf", etc.
+    var fileType: String
+    var VideoURl : URL?// "image", "pdf", etc.
 }

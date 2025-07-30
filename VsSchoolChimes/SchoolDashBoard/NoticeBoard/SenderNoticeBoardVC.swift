@@ -18,34 +18,34 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     func date(date: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = standardDateFormat
-            let DayDate = dateFormatter.date(from: date)!
-            // Change to output format
+        let DayDate = dateFormatter.date(from: date)!
+        // Change to output format
         dateFormatter.dateFormat = DateFormatString.Day_and_date
-            let outputDateString = dateFormatter.string(from: DayDate)
-            
-            if dateSelection == true{
-                fromdateBtn.setTitle(date, for: .normal)
-                setFormattedDate(outputDateString, label: fromDateLbl)
-                NewFromdateLbl.setFormattedDate(from: DayDate)
-                // Check if To Date is set and valid
-                if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
-                    let labelFormatter = DateFormatter()
-                    labelFormatter.dateFormat = DateFormatString.Date_Day_month_year // Matches formatted label
-
-                    if let toDate = labelFormatter.date(from: toText) {
-                        if DayDate > toDate {
-                            // Auto-adjust To Date if From Date is later
-                            NewToDateLbl.setFormattedDate(from: DayDate)
-                        }
+        let outputDateString = dateFormatter.string(from: DayDate)
+        
+        if dateSelection == true{
+            fromdateBtn.setTitle(date, for: .normal)
+            setFormattedDate(outputDateString, label: fromDateLbl)
+            NewFromdateLbl.setFormattedDate(from: DayDate)
+            // Check if To Date is set and valid
+            if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
+                let labelFormatter = DateFormatter()
+                labelFormatter.dateFormat = DateFormatString.Date_Day_month_year // Matches formatted label
+                
+                if let toDate = labelFormatter.date(from: toText) {
+                    if DayDate > toDate {
+                        // Auto-adjust To Date if From Date is later
+                        NewToDateLbl.setFormattedDate(from: DayDate)
                     }
                 }
-
-            }else{
-                todateBtn.setTitle(date, for: .normal)
-                setFormattedDate(outputDateString, label: toDateLbl)
-                NewToDateLbl.setFormattedDate(from: DayDate)
             }
+            
+        }else{
+            todateBtn.setTitle(date, for: .normal)
+            setFormattedDate(outputDateString, label: toDateLbl)
+            NewToDateLbl.setFormattedDate(from: DayDate)
         }
+    }
     
     
     @IBOutlet weak var DisplayRangeLbl: UILabel!
@@ -80,7 +80,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBOutlet weak var NextBtn: UIButton!
     @IBOutlet weak var PopupView: UIView!
     @IBOutlet weak var VideoView: UIView!
-//    @IBOutlet weak var VideoThumbnailImg: UIImageView!
+    //    @IBOutlet weak var VideoThumbnailImg: UIImageView!
     
     let photoPickManager = PhotoPickerManager.shared
     var dateSelection = false
@@ -94,7 +94,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     let standardDateFormat = DateFormatString.StandardFormat
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,21 +174,34 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
-    
+    func fetchData(notice:Notice?){
+        attachments.removeAll()
+        if let notice = notice{
+            TitleTextfield.text = notice.title
+            textview.text = notice.description
+            placeholderLabel.isHidden = !textview.text.isEmpty
+            let imageItems = notice.file_path?.map{
+                AttachmentItem(image:nil, imageURL: $0.url, fileType: $0.type ?? "")
+            } ?? []
+            attachments.append(contentsOf: imageItems)
+            Attachmentview.imageCollectionview.reloadData()
+            NextBtn.setTitle("Update", for: .normal)
+        }
+    }
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             attachments.removeAll { $0.fileType == CommonStringFile.pdf }
             selectedVideoURL = nil
-
+            
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             Attachmentview.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-        
+            
             let imageItems = images.map {
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
@@ -212,18 +224,18 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     }
     
     func pickVideoFromGallery(){
-//        if #available(iOS 15.0, *) {
-//            showLottieProgressLoader(animationName: "loader (2)")
-//        }
+        //        if #available(iOS 15.0, *) {
+        //            showLottieProgressLoader(animationName: "loader (2)")
+        //        }
         videoPicker?.pickVideo()
     }
-
+    
     
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
-//        if #available(iOS 15.0, *) {
-//            self.hideLottieProgressLoader()
-//        }
+        //        if #available(iOS 15.0, *) {
+        //            self.hideLottieProgressLoader()
+        //        }
         videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         Attachmentview.isHidden = true
@@ -231,7 +243,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         selectedVideoURL = url
         VideoView.isHidden = false
     }
-
+    
     
     func videoPickerManagerDidCloseVideo() {
         if #available(iOS 15.0, *) {
@@ -246,7 +258,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     //MARK: Setting Current Date as initial Date
     func setInitialDate() {
-    
+        
         
         let currentDate = Date() // Current date and time
         dateFormatter.dateFormat = standardDateFormat
@@ -320,7 +332,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         TitleTextfield.placeholder = CommonStringFile.Title.translated()
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
-
+    
     
     @IBAction func fromDate(_ sender: Any) {
         //showTimePicker(for: sender, date: true)
@@ -338,91 +350,120 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     @IBAction func toDate(_ sender: Any) {
         
-            dateSelection = false
-            let vc = DatePickerVC(nibName: nil, bundle: nil)
-            dateFormatter.dateFormat = DateFormatString.StandardFormat
-
-            // Set minimum to fromDate
-            if let fromDateString = fromdateBtn.titleLabel?.text,
-               let fromDate = dateFormatter.date(from: fromDateString) {
-                vc.minimumDate = fromDate
-            } else {
-                vc.minimumDate = Date()
-            }
-
-            vc.dateSelection = 2
-            vc.delegate = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            self.present(vc, animated: false)
+        dateSelection = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        dateFormatter.dateFormat = DateFormatString.StandardFormat
+        
+        // Set minimum to fromDate
+        if let fromDateString = fromdateBtn.titleLabel?.text,
+           let fromDate = dateFormatter.date(from: fromDateString) {
+            vc.minimumDate = fromDate
+        } else {
+            vc.minimumDate = Date()
+        }
+        
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     func setFormattedDate(_ date: String, label: UILabel) {
-           let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-           let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-           
-           // Function to create an attributed string from a given date
-           func createAttributedText(from date: String) -> NSMutableAttributedString {
-               let components = date.split(separator: " ")
-               guard components.count > 1 else {
-                   print("Error: Invalid date format")
-                   return NSMutableAttributedString()
-               }
-               
-               let day = components[0]
-               let month = components[1]
-               
-               let attributedText = NSMutableAttributedString()
-               attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
-                   .font: weekdayFont,
-                   .foregroundColor: UIColor.darkGray
-               ]))
-               attributedText.append(NSAttributedString(string: "\(month)", attributes: [
-                   .font: dayFont,
-                   .foregroundColor: UIColor.black
-               ]))
-               
-               // Set paragraph style for centered alignment
-               let paragraphStyle = NSMutableParagraphStyle()
-               paragraphStyle.alignment = .center
-               attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-               
-               return attributedText
-           }
-           
-           // Create attributed text and set to label
-           label.attributedText = createAttributedText(from: date)
-           label.numberOfLines = 0
-       }
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+        
+        // Function to create an attributed string from a given date
+        func createAttributedText(from date: String) -> NSMutableAttributedString {
+            let components = date.split(separator: " ")
+            guard components.count > 1 else {
+                print("Error: Invalid date format")
+                return NSMutableAttributedString()
+            }
+            
+            let day = components[0]
+            let month = components[1]
+            
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                .font: weekdayFont,
+                .foregroundColor: UIColor.darkGray
+            ]))
+            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                .font: dayFont,
+                .foregroundColor: UIColor.black
+            ]))
+            
+            // Set paragraph style for centered alignment
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+            
+            return attributedText
+        }
+        
+        // Create attributed text and set to label
+        label.attributedText = createAttributedText(from: date)
+        label.numberOfLines = 0
+    }
     
     
     @IBAction func next(_ sender: UIButton) {
         let school_count = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    
+        
         guard let textFieldText = TitleTextfield.text, !textFieldText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let textViewText = textview.text, !textViewText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
-                return
-            }
-            
-//        assignmentResquestStringKey.title = TitleTextfield.text ?? ""
-//        assignmentResquestStringKey.description = textview.text
-            user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
-            user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
-            user_inputs.SelectedUrls = attachments
-            user_inputs.VideoPath = selectedVideoURL
+            return
+        }
+        
+        //        assignmentResquestStringKey.title = TitleTextfield.text ?? ""
+        //        assignmentResquestStringKey.description = textview.text
+        user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
+        user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
+        user_inputs.SelectedUrls = attachments
+        user_inputs.VideoPath = selectedVideoURL
         let params: [String: Any] = [
             SendAttachmentStringFile.title: textFieldText,
             SendAttachmentStringFile.description: textViewText,
             SendAttachmentStringFile.visible_from : user_inputs.FromDate,
             SendAttachmentStringFile.visible_to : user_inputs.ToDate
         ]
-           
-                let vc = SchoolListVC(nibName: nil, bundle: nil)
-                vc.Common_request_params = params
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-           
+        if sender.titleLabel?.text == "Update"{
+            sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+        }else{
+            let vc = SchoolListVC(nibName: nil, bundle: nil)
+            vc.Common_request_params = params
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+    }
+    
+    private func sendAttachmentFlow(
+        via comm: commonApi_forSending = commonApi_forSending(),
+        url baseURL: String,
+        Common_request_params: [String: Any]
+    ) {
+        comm.SendingAttachmentFlow(
+            selectedAcadimicYearId: 0,
+            target_type:0,
+            selectedId: [],
+            baseURL: baseURL,
+            subjectId: "",
+            message:"",
+            from: self,
+            Common_request_params: Common_request_params
+        ) { response in
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.hide()
+                CustomAlert.showAlertWithOkAction(
+                    title: AlertstringFile.Success,
+                    message: response.message,
+                    on: self
+                ) { [self] in
+                }
+            }
+        }
     }
     
     // MARK: File Attachments Actions
@@ -492,23 +533,23 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
             
-               cell.delegate = self
-               cell.deleteBtn.tag = adjustedIndex
-
-               if let image = item.image {
-                   cell.imageViews.image = image
-               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                   
-                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                       let iconName = getFileIconName(for: url)
-                       cell.imageViews.image = UIImage(named: iconName)
-                   } else {
-                       cell.imageViews.kf.setImage(with: url)
-                   }
-                   
-               } else {
-                   cell.imageViews.image = nil
-               }
+            cell.delegate = self
+            cell.deleteBtn.tag = adjustedIndex
+            
+            if let image = item.image {
+                cell.imageViews.image = image
+            } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                
+                if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                    let iconName = getFileIconName(for: url)
+                    cell.imageViews.image = UIImage(named: iconName)
+                } else {
+                    cell.imageViews.kf.setImage(with: url)
+                }
+                
+            } else {
+                cell.imageViews.image = nil
+            }
             
             collectionViewHeght.constant = attachments.count <= 2 ? 120 : 220
             
@@ -553,7 +594,7 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             
             self.present(alertController, animated: true, completion: nil)
         }else{
-        
+            
             if  attachments[indexPath.item - 1].fileType != AttachmentTypeString.IMAGE {
                 
                 DocumentpreviewURL = URL(string: attachments[indexPath.item-1].imageURL ?? "")
@@ -576,10 +617,10 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
     }
     
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-       
+        
         attachments.count == 0 ? 0:1
     }
-
+    
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
         
         if let Url = DocumentpreviewURL {
@@ -619,7 +660,7 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
             return false
         }
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         
         placeholderLabel.isHidden = !textView.text.isEmpty

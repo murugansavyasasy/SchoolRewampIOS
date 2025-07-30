@@ -6,145 +6,314 @@
 //
 
 import UIKit
-
-@available(iOS 14.0, *)
-class NoticeBoardVc: UIViewController, SelectNotice {
-    
-    @IBOutlet weak var HeadingLabel: UILabel!
-    @IBOutlet weak var plusImgview: UIImageView!
-    @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var searchbar: UISearchBar!
-    
-    var images : [UIImage] = []
-    var previousOffset: CGFloat = 0.0
-    var delegate : HistorySelectDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-        searchbar.placeholder = CommonStringFile.Search.translated()
-        searchbar.delegate = self
-        searchbar.addDoneButton()
-        HeadingLabel.text = MenuTapbar.Notifications
-        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        tableview.delegate = self
-        tableview.dataSource = self
-        plusImgview.isHidden = true
-        
-        let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
-        plusImgview.isUserInteractionEnabled = false
-        plusImgview.isHidden = true
-        
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableview.reloadData()
-    }
-    @IBAction func Plusclick(_ sender : Any){
-    }
-    
-    @IBAction func BackBtnAct(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+protocol EditObjectDelegate{
+    func editDta(edit:Any)
 }
-
 @available(iOS 14.0, *)
-extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-        
-        cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-        cell.delegate = self
-        cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
-        cell.dicriptContent.isUserInteractionEnabled = true
-        cell.dicriptContent.addGestureRecognizer(tapGesture)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        
-        // Check for scroll direction
-        if contentOffsetY > previousOffset && contentOffsetY > 0 {
-        }
-        previousOffset = contentOffsetY
-    }
-    
-    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel else { return }
-        let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances."
-        
-        // Toggle the label between expanded and collapsed states
-        let isExpanded = label.numberOfLines == 0
-        label.numberOfLines = isExpanded ? 3 : 0
-        
-        // Update the label text with the appropriate "See more" or "See less" state
-        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-        
-        // Animate the cell height change
-        tableview.beginUpdates()
-        tableview.endUpdates()
-    }
-    
-    //MARK: TEXT ADD SEE MORE
-    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        // If expanded, show full text with "See less"
-        if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess.translated()
-            let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See less" text to blue and underline it
-            let seeLessRange = (fullString as NSString).range(of: "See less")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            
-            return attributedText
-        } else {
-            var fullString = ""
-            // Otherwise, truncate and show "See more"
-            if fullDescription.count > 120{
-                let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore.translated()
-            }else{
-                fullString = fullDescription
+class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, SelectedId {
+    func selectId(id: String?, edit: Bool?) {
+        if edit ?? false{
+            if let selectedNotice = self.searchData.first(where: { $0.id == id }) {
+                delegate?.editDta(edit: selectedNotice)
             }
-            let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See more" text to blue and underline it
-            let seeMoreRange = (fullString as NSString).range(of: "See more")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            return attributedText
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.deleteNotice(id:id ?? "")
+            }
         }
     }
     
     func didTapButton(title: String, content: String, items: [FilePath]) {
-        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+        print("dsafersd")
+    }
+    
+    
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var noDataImg: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    let transitionDelegate = TransitioningDelegate()
+    // MARK: - Properties
+    var searchData: [Notice] = []
+    var allNotices: [Notice] = []
+    var delegate:EditObjectDelegate?
+    let alert = CustomAlert()
+    private var isLoading = false
+    private let refreshControl = UIRefreshControl()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        Get_Notice()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    private func setupView() {
+        customizeSearchBar()
+        setupCollectionView()
+        setupRefreshControl()
+        setupLoader()
+    }
+    
+    private func customizeSearchBar() {
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.backgroundImage = UIImage()
+        searchBar.searchTextField.layer.cornerRadius = 8
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+    }
+    
+    private func setupLoader() {
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+    }
+    
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.register(UINib(nibName: "NoticeCVC", bundle: nil), forCellWithReuseIdentifier: "NoticeCVC")
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+    }
+    
+    private func showLoadingState() {
+        activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
+    }
+    
+    private func hideLoadingState() {
+        activityIndicator.stopAnimating()
+        view.isUserInteractionEnabled = true
+    }
+    
+    private func getCurrentDateString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }
+    
+    @objc private func refreshData() {
+        Get_Notice()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
+    func Get_Notice() {
+        showLoadingState()
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_notice_board_report, parameters: [:], type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.hideLoadingState()
+                
+                switch result {
+                case .success(let successResponse):
+                    self.allNotices = successResponse.data ?? []
+                    self.searchData = self.allNotices
+                    self.collectionView.reloadData()
+                    self.noDataLbl.isHidden = !self.searchData.isEmpty
+                    self.noDataImg.isHidden = !self.searchData.isEmpty
+                case .failure(let error):
+                    print("Error fetching notices: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    func deleteNotice(id: String?) {
+        guard let noticeId = id, !noticeId.isEmpty else {
+            print("Invalid notice ID")
+            return
+        }
+        
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm,
+            message: AlertstringFile.deletemessage,
+            actionLbl1: AlertstringFile.delete,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                APIService.shared.makeApi(
+                    url: ServiceUrl.admin_api_notice_board_delete,
+                    parameters: ["id": noticeId],
+                    type: ApitTypeSringFile.PUT,
+                    token: self.staffdetails?.access_token ?? ""
+                ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        self.hideLoadingState()
+                        
+                        switch result {
+                        case .success(let successResponse):
+                            if successResponse.status == true {
+                                CustomAlert.showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                ) {
+                                    self.allNotices.removeAll { $0.id == noticeId }
+                                    self.searchData.removeAll { $0.id == noticeId }
+                                    self.collectionView.reloadData()
+                                }
+                            } else {
+                                self.alert.showAlert(
+                                    title: AlertstringFile.Failed,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                )
+                            }
+                            
+                        case .failure(let error):
+                            print("Error deleting notice: \(error.localizedDescription)")
+                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
+                        }
+                    }
+                }
+            },
+            onNo: {
+                print("User canceled deletion")
+            }
+        )
+    }
+    
+    // MARK: - SearchBar Delegate
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            searchData = allNotices
+        } else {
+            searchData = allNotices.filter {
+                ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
+            }
+        }
+        self.noDataLbl.isHidden = !self.searchData.isEmpty
+        self.noDataImg.isHidden = !self.searchData.isEmpty
+        collectionView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        searchData = allNotices
+        collectionView.reloadData()
+    }
+    
+    // MARK: - Count Buttons
+    @IBAction func totalCountTapped(_ sender: UIButton) {
+        searchData = allNotices
+        collectionView.reloadData()
+    }
+    
+    @IBAction func todayCountTapped(_ sender: UIButton) {
+        let today = getCurrentDateString()
+        searchData = allNotices.filter { $0.created_on?.contains(today) == true }
+        collectionView.reloadData()
+    }
+    
+    @IBAction func withFileCountTapped(_ sender: UIButton) {
+        searchData = allNotices.filter { !($0.file_path?.isEmpty ?? true) }
+        collectionView.reloadData()
+    }
+    
+    @IBAction func withoutFileCountTapped(_ sender: UIButton) {
+        searchData = allNotices.filter { $0.file_path?.isEmpty ?? true }
+        collectionView.reloadData()
     }
 }
 
+// MARK: - UICollectionViewDataSource & Delegate
 @available(iOS 14.0, *)
-extension NoticeBoardVc: UISearchBarDelegate{
+extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchbar.resignFirstResponder()
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return searchData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoticeCVC", for: indexPath) as? NoticeCVC else {
+            return UICollectionViewCell()
+        }
+        
+        let notice = searchData[indexPath.item]
+        cell.configure(with: notice)
+        cell.editBtn.isHidden = false
+        cell.reminderBtn.isHidden = false
+        cell.edit = notice.can_edit
+        cell.delete = notice.can_delete
+        cell.selectedId = notice.id
+        cell.editBtn.isHidden = !(notice.can_edit ?? false || notice.can_delete ?? false)
+        cell.delegate = self
+        cell.outerView.setShadow(cornerRadius: 8)
+        if let files = notice.file_path {
+            loadFiles(into: cell, files: files)
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let notice = searchData[indexPath.item]
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+        let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
+        let detailVC = PrivewVc()
+        detailVC.attachmetList = notice.file_path
+        detailVC.selectedDate  = notice.created_on
+        detailVC.titleString  = notice.title
+        detailVC.descriptionString  = notice.description
+        //        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
+        detailVC.postedBy  = notice.sent_by
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        present(detailVC, animated: true)
+        
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width - 30) / 2
+        
+        return CGSize(width: width, height: 250)
     }
     
 }
 
+// MARK: - File Handling
+@available(iOS 14.0, *)
+extension NoticeBoardVc {
+    private func loadFiles(into cell: NoticeCVC, files: [FilePath]) {
+        for (index, item) in files.enumerated() {
+            guard let urlString = item.url, let url = URL(string: urlString) else { continue }
+            let imageView: UIImageView? = [cell.img1, cell.img2, cell.img3][safe: index]
+            imageView?.isHidden = false
+            
+            if item.type?.lowercased() != "image" {
+                let iconName = getFileIconName(for: url)
+                imageView?.image = UIImage(named: iconName)
+            } else {
+                imageView?.kf.setImage(with: url)
+            }
+        }
+        
+        if files.count > 3 {
+            let extraCount = files.count - 3
+            if let button = cell.imgCount as? UIButton {
+                button.setTitle("+\(extraCount)", for: .normal)
+            }
+            cell.imgCount.isHidden = false
+        }
+    }
+    
+}
 

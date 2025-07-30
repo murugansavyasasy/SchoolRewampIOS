@@ -108,21 +108,21 @@ class EventResiverVC: UIViewController {
                 switch result {
                 case .success(let response):
                     self.allEventSections = []
-                    if let firstSection = response.data.first {
-                        if !firstSection.on_going.isEmpty {
-                            self.allEventSections.append(.featured(firstSection.on_going))
+                    if let firstSection = response.data?.first {
+                        if !(firstSection.on_going?.isEmpty ?? false) {
+                            self.allEventSections.append(.featured(firstSection.on_going ?? []))
                         }
-                        if !firstSection.categories.isEmpty {
+                        if !(firstSection.categories?.isEmpty ?? false) {
                             var updatedCategories = firstSection.categories
                             let allCategory = EventCategory(id: nil, name: "All", url: "")
-                            updatedCategories.insert(allCategory, at: 0)
-                            self.allEventSections.append(.categories(updatedCategories))
+                            updatedCategories?.insert(allCategory, at: 0)
+                            self.allEventSections.append(.categories(updatedCategories ?? []))
                         }
-                        if !firstSection.up_coming.isEmpty {
-                            self.allEventSections.append(.upcoming(firstSection.up_coming))
+                        if !(firstSection.up_coming?.isEmpty ?? false) {
+                            self.allEventSections.append(.upcoming(firstSection.up_coming ?? []))
                         }
-                        if !firstSection.completed.isEmpty {
-                            self.allEventSections.append(.completed(firstSection.completed))
+                        if !(firstSection.completed?.isEmpty ?? false) {
+                            self.allEventSections.append(.completed(firstSection.completed ?? []))
                         }
                     }
                     self.filteredSections = self.allEventSections

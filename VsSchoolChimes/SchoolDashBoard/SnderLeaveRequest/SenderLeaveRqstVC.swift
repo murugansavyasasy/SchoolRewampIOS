@@ -151,7 +151,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_leave_req_update_status,
             parameters: param,
-            type: ApitTypeSringFile.Put,
+            type: ApitTypeSringFile.PUT,
             token: StaffDetails?.access_token ?? ""
         ) { [self] (result: Result<CommonApiSuc, Error>) in
             

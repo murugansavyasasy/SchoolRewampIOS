@@ -60,7 +60,6 @@ class NewAbsenteesViewController: UIViewController {
                     
                     absentData = successMessage.data
                     class_wiseData = absentData?.first?.class_wise ?? []
-                    
                     cvIcon.reloadData()
                     Tv.reloadData()
                 }

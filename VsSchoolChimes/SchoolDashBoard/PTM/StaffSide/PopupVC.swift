@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+protocol SelectedId{
+    func selectId(id:String?,edit:Bool?)
+}
 class PopupVC: UIViewController {
     var selectedIndex:Int?
     @IBOutlet weak var editStack: UIStackView!
@@ -14,12 +16,39 @@ class PopupVC: UIViewController {
     @IBOutlet weak var cancelStack: UIStackView!
     @IBOutlet weak var reopenStack: UIStackView!
     var ptm:Bool = false
+    var delegate: SelectedId?
+    var edit:Bool?
+    var delete:Bool?
+    var selectedId:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         editStack.isHidden = ptm
         deleteStack.isHidden = ptm
         cancelStack.isHidden = !ptm
         reopenStack.isHidden = !ptm
+        if let delete = delete{
+            deleteStack.isHidden = !delete
+        }
+        if let edit = edit{
+            editStack.isHidden = !edit
+        }
+        
+        
     }
-    
+    @IBAction func cancelBtn(_ sender: UIButton) {
+        print("cancelBtn")
+        dismiss(animated: true)
+    }
+    @IBAction func reOpenBtn(_ sender: UIButton) {
+        print("reOpenBtn")
+        dismiss(animated: true)
+    }
+    @IBAction func deleteBtn(_ sender: UIButton) {
+        delegate?.selectId(id: selectedId ?? "", edit: false)
+        dismiss(animated: true)
+    }
+    @IBAction func editBtn(_ sender: UIButton) {
+        delegate?.selectId(id: selectedId ?? "", edit: true)
+        dismiss(animated: true)
+    }
 }

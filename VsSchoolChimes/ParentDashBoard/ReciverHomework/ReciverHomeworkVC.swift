@@ -19,16 +19,18 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
+    
 
     // MARK: - Variables
     var expandedSections: Set<Int> = []
     var delegate: HistorySelectDelegate?
     var homeWorkList: [HomeworkList]?
     var FilterHomeWorkList: [HomeworkList]?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     var playIndex: Int = 0
     var shouldShowFooter = true
     var hasLoadedArchive = false
-    var studentDetails = UserDefaultFileManager.get_child_Details()
+  
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -375,14 +377,22 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
                     hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
                     hw.title?.lowercased().contains(lowercasedSearch) == true ||
                     hw.description?.lowercased().contains(lowercasedSearch) == true ||
-                    hw.created_by?.lowercased().contains(lowercasedSearch) == true
+                    hw.sent_by?.lowercased().contains(lowercasedSearch) == true
                     return matchesStringFields
                 }
                 
                 if !filteredHomework.isEmpty {
-                    return HomeworkList(date: hwList.date, homework: filteredHomework)
+                    return HomeworkList(
+                        date: hwList.date,
+                        completed_count: hwList.completed_count,
+                        homework: filteredHomework
+                    )
                 } else if dateMatches {
-                    return HomeworkList(date: hwList.date, homework: homeworkItems)
+                    return HomeworkList(
+                        date: hwList.date,
+                        completed_count: hwList.completed_count,
+                        homework: homeworkItems
+                    )
                 } else {
                     return nil
                 }

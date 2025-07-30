@@ -235,6 +235,7 @@ class SettingStringFile{
 class CommonStringFile{
     
     static let Search = "Search".translated()
+    static let VIDEO = "VIDEO"
     static let seeLess = "See less".translated()
     static let seemore = " See more".translated()
     static let selectedText = " selected Text".translated()

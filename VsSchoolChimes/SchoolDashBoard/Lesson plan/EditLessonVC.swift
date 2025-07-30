@@ -161,7 +161,11 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         let param : [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.key_value_data:converted]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_update, parameters: param, type: ApitTypeSringFile.Put, token: staffDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared
+            .makeApi(url: ServiceUrl.lms_api_lesson_plan_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") {[weak self] (
+                result: Result<CommonApiSuc,
+                Error>
+            ) in
             
             DispatchQueue.main.async { [weak self] in
                 

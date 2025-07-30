@@ -124,7 +124,11 @@ class ViewLessonVC: UIViewController {
     
     func Delete_LessonPlan_Api(particularID: String){
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_delete, parameters: [LessonPlanStringFile.particular_id: particularID], type: ApitTypeSringFile.Put, token: staffDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared
+            .makeApi(url: ServiceUrl.lms_api_lesson_plan_delete, parameters: [LessonPlanStringFile.particular_id: particularID], type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") {[weak self] (
+                result: Result<CommonApiSuc,
+                Error>
+            ) in
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else{return}

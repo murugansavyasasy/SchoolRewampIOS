@@ -232,6 +232,13 @@
 		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		843960252D11938000FC3242 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960242D11938000FC3242 /* LanguageManager.swift */; };
 		843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960262D1193AD00FC3242 /* Bundle+Language.swift */; };
+		843BCD352E2E65ED00D4364A /* homeWorkVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843BCD342E2E65ED00D4364A /* homeWorkVc.xib */; };
+		843BCD362E2E65ED00D4364A /* homeWorkVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD332E2E65ED00D4364A /* homeWorkVc.swift */; };
+		843BCD812E2FAF9200D4364A /* PrivewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843BCD802E2FAF9200D4364A /* PrivewVc.xib */; };
+		843BCD822E2FAF9200D4364A /* PrivewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD7F2E2FAF9200D4364A /* PrivewVc.swift */; };
+		843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD832E2FB1B700D4364A /* CustomTransition.swift */; };
+		843BCD882E2FBCBA00D4364A /* PreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843BCD872E2FBCBA00D4364A /* PreviewCell.xib */; };
+		843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843BCD862E2FBCBA00D4364A /* PreviewCell.swift */; };
 		843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE472C19719700E32496 /* Main.storyboard */; };
 		843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */; };
 		843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */; };
@@ -533,6 +540,10 @@
 		84D85FF12DE5815200633784 /* SectionStregnthCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85FEE2DE5815200633784 /* SectionStregnthCVC.swift */; };
 		84D85FF42DE5967A00633784 /* SectionStregnthTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */; };
 		84D85FF52DE5967A00633784 /* SectionStregnthTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */; };
+		84E0A97A2E374B7C002BF40A /* AttachmentsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */; };
+		84E0A97B2E374B7C002BF40A /* AttachmentsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */; };
+		84E0A9FE2E389432002BF40A /* AttachmentHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E0A9FD2E389432002BF40A /* AttachmentHeaderCell.xib */; };
+		84E0AA012E3894CB002BF40A /* AttachmentHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */; };
 		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
 		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
 		84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */; };
@@ -979,6 +990,13 @@
 		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
 		843960242D11938000FC3242 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		843960262D1193AD00FC3242 /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
+		843BCD332E2E65ED00D4364A /* homeWorkVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeWorkVc.swift; sourceTree = "<group>"; };
+		843BCD342E2E65ED00D4364A /* homeWorkVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = homeWorkVc.xib; sourceTree = "<group>"; };
+		843BCD7F2E2FAF9200D4364A /* PrivewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivewVc.swift; sourceTree = "<group>"; };
+		843BCD802E2FAF9200D4364A /* PrivewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivewVc.xib; sourceTree = "<group>"; };
+		843BCD832E2FB1B700D4364A /* CustomTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
+		843BCD862E2FBCBA00D4364A /* PreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
+		843BCD872E2FBCBA00D4364A /* PreviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewCell.xib; sourceTree = "<group>"; };
 		843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequestVC.swift; sourceTree = "<group>"; };
 		843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateRequestVC.xib; sourceTree = "<group>"; };
 		843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderHomeWorkVC.swift; sourceTree = "<group>"; };
@@ -1292,6 +1310,10 @@
 		84D85FEF2DE5815200633784 /* SectionStregnthCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionStregnthCVC.xib; sourceTree = "<group>"; };
 		84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionStregnthTVC.swift; sourceTree = "<group>"; };
 		84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionStregnthTVC.xib; sourceTree = "<group>"; };
+		84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsVc.swift; sourceTree = "<group>"; };
+		84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentsVc.xib; sourceTree = "<group>"; };
+		84E0A9FD2E389432002BF40A /* AttachmentHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentHeaderCell.xib; sourceTree = "<group>"; };
+		84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentHeaderCell.swift; sourceTree = "<group>"; };
 		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
 		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
 		84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
@@ -1482,6 +1504,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		8405884C2DE18CE100A7384E /* FeeDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeeDetail; sourceTree = "<group>"; };
+		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
@@ -2110,6 +2133,8 @@
 				84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */,
 				846BDD732DB60387001DB91A /* TAttacmentTVC.swift */,
 				846BDD742DB60387001DB91A /* TAttacmentTVC.xib */,
+				84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */,
+				84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -2309,6 +2334,26 @@
 				84395FED2D1002A900FC3242 /* ChatTVCell.xib */,
 			);
 			path = ChatCell;
+			sourceTree = "<group>";
+		};
+		843BCD7E2E2FAF6700D4364A /* PrivewVc */ = {
+			isa = PBXGroup;
+			children = (
+				843BCD852E2FBC9100D4364A /* PreViewCvCell */,
+				843BCD7F2E2FAF9200D4364A /* PrivewVc.swift */,
+				843BCD802E2FAF9200D4364A /* PrivewVc.xib */,
+			);
+			path = PrivewVc;
+			sourceTree = "<group>";
+		};
+		843BCD852E2FBC9100D4364A /* PreViewCvCell */ = {
+			isa = PBXGroup;
+			children = (
+				84E0A9FF2E389449002BF40A /* CvHeaderCell */,
+				843BCD862E2FBCBA00D4364A /* PreviewCell.swift */,
+				843BCD872E2FBCBA00D4364A /* PreviewCell.xib */,
+			);
+			path = PreViewCvCell;
 			sourceTree = "<group>";
 		};
 		8442A8672CDB787A0006068E /* Priority */ = {
@@ -2617,10 +2662,14 @@
 		849AD0062D1A837A002DEC07 /* ReciverHomework */ = {
 			isa = PBXGroup;
 			children = (
+				843BCD7E2E2FAF6700D4364A /* PrivewVc */,
+				843BCD752E2E71EA00D4364A /* CalanderCv */,
 				849AD0022D1A837A002DEC07 /* ReciverHomeworkHeader.swift */,
 				849AD0032D1A837A002DEC07 /* ReciverHomeworkHeader.xib */,
 				849AD0042D1A837A002DEC07 /* ReciverHomeworkVC.swift */,
 				849AD0052D1A837A002DEC07 /* ReciverHomeworkVC.xib */,
+				843BCD332E2E65ED00D4364A /* homeWorkVc.swift */,
+				843BCD342E2E65ED00D4364A /* homeWorkVc.xib */,
 			);
 			path = ReciverHomework;
 			sourceTree = "<group>";
@@ -2974,6 +3023,7 @@
 				FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */,
 				84A0D16D2DCA0E510037E1BF /* ImageCell.swift */,
 				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
+				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3226,6 +3276,15 @@
 				FA8535482D9BC91400E0379C /* NewShimmerView.swift */,
 			);
 			path = CommonScreens;
+			sourceTree = "<group>";
+		};
+		84E0A9FF2E389449002BF40A /* CvHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				84E0A9FD2E389432002BF40A /* AttachmentHeaderCell.xib */,
+				84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */,
+			);
+			path = CvHeaderCell;
 			sourceTree = "<group>";
 		};
 		84E70DCE2D49F5F700E916D1 /* DatePicker */ = {
@@ -3675,6 +3734,7 @@
 			fileSystemSynchronizedGroups = (
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
+				843BCD752E2E71EA00D4364A /* CalanderCv */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
@@ -3916,6 +3976,7 @@
 				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
 				849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */,
 				187CF5DC2D142D06001422CE /* CertificateRequestViewController.xib in Resources */,
+				84E0A9FE2E389432002BF40A /* AttachmentHeaderCell.xib in Resources */,
 				84EFF9D32CCC7CD000C11C26 /* SchoolDashboardVc.xib in Resources */,
 				84B2C5502E2224C900A69A1B /* ExamCatogoryCVC.xib in Resources */,
 				84BB5EAB2D11334400AD0C87 /* ScheduleExamsList.xib in Resources */,
@@ -3931,7 +3992,9 @@
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
 				848108BF2E1CFD13004A0F87 /* attendanceRepTv.xib in Resources */,
+				843BCD812E2FAF9200D4364A /* PrivewVc.xib in Resources */,
 				8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */,
+				843BCD352E2E65ED00D4364A /* homeWorkVc.xib in Resources */,
 				84BB5EAF2D11337E00AD0C87 /* ExamsListCVCell.xib in Resources */,
 				849970B42CF8750B00800B07 /* AssignmentListVC.xib in Resources */,
 				FACD4D722E30F46F0084B125 /* TimetableBottomVC.xib in Resources */,
@@ -4055,6 +4118,7 @@
 				FA31A7C42D7023890069C954 /* VideoPlayerVC.xib in Resources */,
 				FA31A7C52D7023890069C954 /* VideoTVCell.xib in Resources */,
 				FA31A7C62D7023890069C954 /* VideoVC.xib in Resources */,
+				843BCD882E2FBCBA00D4364A /* PreviewCell.xib in Resources */,
 				849AD02D2D1A840E002DEC07 /* MeetingsTVcell.xib in Resources */,
 				18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */,
 				18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */,
@@ -4066,6 +4130,7 @@
 				84B2C71A2E2247F200A69A1B /* MarkListVC.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
+				84E0A97B2E374B7C002BF40A /* AttachmentsVc.xib in Resources */,
 				8480A4172E320DD6009A7DED /* ReciverNoticeBoardVC.xib in Resources */,
 				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
@@ -4278,6 +4343,7 @@
 				18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */,
 				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
 				843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */,
+				84E0A97A2E374B7C002BF40A /* AttachmentsVc.swift in Sources */,
 				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
 				8451ECFA2E25076300D6DBB4 /* ViewProgressVC.swift in Sources */,
 				18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */,
@@ -4342,6 +4408,7 @@
 				FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
 				FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */,
 				FA3230962D95292B0070BA51 /* ExamDetailsVC.swift in Sources */,
+				843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */,
 				FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */,
 				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
 				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
@@ -4433,6 +4500,7 @@
 				18D7189D2D0D477900E9EDA3 /* locationReq.swift in Sources */,
 				84235A132E1E2819002F2E1D /* AddAttachmentTVC.swift in Sources */,
 				187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */,
+				843BCD362E2E65ED00D4364A /* homeWorkVc.swift in Sources */,
 				18D7189E2D0D477900E9EDA3 /* PunchHistTableViewCell.swift in Sources */,
 				18D7189F2D0D477900E9EDA3 /* LocationViewController.swift in Sources */,
 				18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */,
@@ -4563,6 +4631,7 @@
 				84235A1B2E1E3C9C002F2E1D /* LSWViewAttachmentTVC.swift in Sources */,
 				84D7858F2DFD3A3900A7B9E9 /* PaymentTypeTVC.swift in Sources */,
 				FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */,
+				843BCD822E2FAF9200D4364A /* PrivewVc.swift in Sources */,
 				84BB5EAC2D11334400AD0C87 /* ScheduleExamsList.swift in Sources */,
 				849AD0332D1A841C002DEC07 /* StrengthTvCell.swift in Sources */,
 				849AD0342D1A841C002DEC07 /* SchoolStrengthVC.swift in Sources */,
@@ -4584,6 +4653,7 @@
 				849970CF2CF8752400800B07 /* WaveView .swift in Sources */,
 				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */,
+				84E0AA012E3894CB002BF40A /* AttachmentHeaderCell.swift in Sources */,
 				FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */,
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */,
@@ -4628,6 +4698,7 @@
 				84235A172E1E287F002F2E1D /* LSWTaskTVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
 				84D1FF1C2D4CE00A003ACC04 /* ParentDashboardVc.swift in Sources */,
+				843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */,
 				FA3B30022E2F8BD6003B6E6D /* TotalMarkTvCell.swift in Sources */,
 				8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */,
 				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,

@@ -121,7 +121,7 @@ class LeveHistoryVC: UIViewController, editDelete {
         onOk: {
             APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_delete,
                                       parameters: ["id": id],
-                                      type: ApitTypeSringFile.Put,
+                                      type: ApitTypeSringFile.PUT,
                                       token: self.childDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc, Error>) in
 
                 DispatchQueue.main.async {
