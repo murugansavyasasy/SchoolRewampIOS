@@ -159,16 +159,14 @@ extension AttachmentsVc : UICollectionViewDataSource, UICollectionViewDelegate,U
                     withReuseIdentifier: "AttachmentHeaderCell",
                     for: indexPath) as! AttachmentHeaderCell
 
-                let headerData = attachmentHeaders[indexPath.section]
+            let headerData = attachmentHeaders[indexPath.section]
             header
                 .configure(
                     title:headerData.title ?? "" ,
                     description: headerData.description ?? "", isExpanded: isHeaderExpanded,
                     date: headerData.date ?? ""
                 )
-            
-            
-            
+
             header.delegate = self
             
                 return header

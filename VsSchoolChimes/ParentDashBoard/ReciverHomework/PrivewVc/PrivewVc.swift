@@ -24,7 +24,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     let itemsPerRow: CGFloat = 3
     let spacing: CGFloat = 10
     let sectionInset: CGFloat = 10
-    var FilterHomeWorkList: [Homework] = []
     var attachmetList: [FilePath]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var titleString:String?
@@ -73,18 +72,18 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             postedBy ?? ""
         )
         
-        if FilterHomeWorkList.first?.is_unread == true{
-            ReadStatusUpdateArchive(
-                type: "HOMEWORK",
-                detail_id: homeWorkid ?? ""
-            )
-        }
+//        if FilterHomeWorkList.first?.is_unread == true{
+//            ReadStatusUpdateArchive(
+//                type: "HOMEWORK",
+//                detail_id: homeWorkid ?? ""
+//            )
+//        }
         if let homeWorkid = homeWorkid, !homeWorkid.isEmpty {
             doneHomeWorkBtnName.isHidden = isCompleted
         }
 
         
-        doneHomeWorkBtnName.isHidden = FilterHomeWorkList.first?.is_completed ?? false
+//        doneHomeWorkBtnName.isHidden = FilterHomeWorkList.first?.is_completed ?? false
         
         backBtn
             .setTitle(subject_name ?? "", for: .normal)
@@ -286,9 +285,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             let isImage = fileType == CommonStringFile.IMAGE
             
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-            imageVC.imageURL = FilterHomeWorkList.first?.file_path?.filter { $0.type?.uppercased() == CommonStringFile.IMAGE } ?? []
             let homeworkDocs = attachmetList ?? []
-            
             imageVC.FileURL = homeworkDocs
             imageVC.subjectName = backBtn.title(for: .normal) ?? ""
             imageVC.pdfUrl = file.url
