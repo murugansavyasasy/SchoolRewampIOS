@@ -280,7 +280,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         if attachments.count != 10{
             PhotoPickerManager.shared
                 .presentPicker(
-                    ofType: .gallery(selectionLimit: 5 - attachments.count),
+                    ofType: .gallery(selectionLimit: 10 - attachments.count),
                     from: self
                 )
             
@@ -305,7 +305,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - attachments.count
+            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
         }else{
             
             let alert = CustomAlert()
@@ -320,7 +320,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         if  video.count != 2{
           
             if attachments.count <= 10{
-                PhotoPickerManager.shared.limiSelection = 5 - attachments.count
+                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
                 PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
                
             }else{
