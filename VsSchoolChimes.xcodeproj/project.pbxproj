@@ -630,6 +630,8 @@
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
 		FA8535492D9BC91400E0379C /* NewShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8535482D9BC91400E0379C /* NewShimmerView.swift */; };
+		FA861C362E38ABA900859726 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
+		FA861C372E38ABA900859726 /* CertificateCv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA861C352E38ABA900859726 /* CertificateCv.xib */; };
 		FA99ED372DA6571800F6AF0E /* SeeMoreFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA99ED362DA6571800F6AF0E /* SeeMoreFooterView.xib */; };
 		FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */; };
 		FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */; };
@@ -1392,6 +1394,8 @@
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
 		FA8535482D9BC91400E0379C /* NewShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShimmerView.swift; sourceTree = "<group>"; };
+		FA861C342E38ABA900859726 /* CertificateCv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateCv.swift; sourceTree = "<group>"; };
+		FA861C352E38ABA900859726 /* CertificateCv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateCv.xib; sourceTree = "<group>"; };
 		FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FA99ED362DA6571800F6AF0E /* SeeMoreFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeMoreFooterView.xib; sourceTree = "<group>"; };
 		FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreFooterView.swift; sourceTree = "<group>"; };
@@ -1602,6 +1606,8 @@
 			children = (
 				187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */,
 				187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */,
+				FA861C342E38ABA900859726 /* CertificateCv.swift */,
+				FA861C352E38ABA900859726 /* CertificateCv.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -4064,6 +4070,7 @@
 				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
 				8451ECF92E25076300D6DBB4 /* ViewProgressVC.xib in Resources */,
+				FA861C372E38ABA900859726 /* CertificateCv.xib in Resources */,
 				84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */,
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
 				84EAE7832DB20B250083AD9E /* ReciverAttachmentrVC.xib in Resources */,
@@ -4357,6 +4364,7 @@
 				84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */,
 				18926C562D02DE81002BBB97 /* RestrictionRequest.swift in Sources */,
 				18926C572D02DE81002BBB97 /* RestrictionModal.swift in Sources */,
+				FA861C362E38ABA900859726 /* CertificateCv.swift in Sources */,
 				84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */,
 				8480477D2E02DF6E0042BC5D /* SubmitedStudentTVC.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,

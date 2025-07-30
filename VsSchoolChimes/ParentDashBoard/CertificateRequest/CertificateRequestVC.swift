@@ -33,6 +33,10 @@ class CertificateRequestVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var cv: UICollectionView!
+    @IBOutlet weak var HistoryBtn: UIButton!
+    @IBOutlet weak var CreateBtn: UIButton!
+    
     let dropdown = DropDown()
     var CertificatTypes : [String]?
     var certificates: [CertificateRequest]? = []
@@ -41,6 +45,13 @@ class CertificateRequestVC: UIViewController {
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
+//                    layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+//                    layout.minimumLineSpacing = 0
+//                    layout.minimumInteritemSpacing = 0
+//                }
+        
         certificateTypeApi()
         view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
                            startPoint: CGPoint(x: 1, y: 0.5),
@@ -55,7 +66,10 @@ class CertificateRequestVC: UIViewController {
         ReasonTextView.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
         configureUI()
+        addUnderline(to: CreateBtn, unselectedButton: HistoryBtn)
         setupGestureRecognizers()
+        
+        
         setupTableView()
         searchBar.delegate = self
     }
@@ -116,10 +130,38 @@ class CertificateRequestVC: UIViewController {
 
     private func setupTableView() {
         tv.isHidden = true
+        cv.isHidden = true
         certificatesView.isHidden = true
         tv.register(UINib(nibName: CellConfingName.CertificateTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.CertificateTableViewCell)
         tv.delegate = self
         tv.dataSource = self
+        
+        cv.register(UINib(nibName: "CertificateCv", bundle: nil), forCellWithReuseIdentifier: "CertificateCv")
+        cv.delegate = self
+        cv.dataSource = self
+    }
+    
+    func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
+        // Remove underline from both buttons
+        [selectedButton, unselectedButton].forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+
+        // Add underline to the selected button
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
+
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
     }
     
     func certificateListApi() {
@@ -132,13 +174,14 @@ class CertificateRequestVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self?.tv.isHidden = false
+                  //  self?.tv.isHidden = false
                     self?.certificates = response.data
                     self?.filteredCertificates = response.data
-                    self?.tv.reloadData()
-                    self?.noDataImg.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
-                    self?.noDataLbl.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
-                    self?.noDataLbl.text = response.message
+                  //  self?.tv.reloadData()
+                    self?.cv.reloadData()
+//                    self?.noDataImg.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
+//                    self?.noDataLbl.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
+//                    self?.noDataLbl.text = response.message
                 case .failure(let error):
                     print("API Error:", error)
                 }
@@ -195,7 +238,20 @@ class CertificateRequestVC: UIViewController {
         }
             
     }
-
+    
+    @IBAction func CreateAction(_ sender: Any) {
+        addUnderline(to: CreateBtn, unselectedButton: HistoryBtn)
+        cv.isHidden = true
+        RequestView.isHidden = false
+    }
+    
+    @IBAction func HistoryAction(_ sender: Any) {
+        addUnderline(to: HistoryBtn, unselectedButton: CreateBtn)
+        certificateListApi()
+        cv.isHidden = false
+        RequestView.isHidden = true
+    }
+    
     @IBAction func RequestCertificateAct(_ sender: Any) {
         if !ReasonTextView.text.isEmpty && ReasonTextView.text != "Enter Reason for Certificate" {
             SendeRequestApi(reason: ReasonTextView.text)
@@ -324,5 +380,151 @@ extension CertificateRequestVC: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+extension CertificateRequestVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filteredCertificates?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = cv.dequeueReusableCell(withReuseIdentifier: "CertificateCv", for: indexPath) as! CertificateCv
+        let data = filteredCertificates?[indexPath.item]
+        cell.CertificateName.text=data?.type
+        cell.reasonLbl.text = data?.reason
+        if data?.status == "Approved" {
+            
+            cell.CertificateView.layer.borderColor = UIColor.systemBlue.withAlphaComponent(0.8).cgColor
+        }else {
+            
+           // cell.CertificateView.backgroundColor = .systemGray6
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let spacing: CGFloat = 10
+        let inset: CGFloat = 10
+
+        // Adjust for spacing and insets
+        let availableWidth = collectionView.bounds.width - (inset * 2 + spacing)
+
+        // Get the text and font
+        let text = filteredCertificates?[indexPath.item].reason ?? ""
+        let font = UIFont.systemFont(ofSize: 12)
+
+        // Calculate text height using boundingRect
+        let labelMaxSize = CGSize(width: availableWidth, height: .greatestFiniteMagnitude)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        let boundingRect = NSString(string: text).boundingRect(
+            with: labelMaxSize,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: attributes,
+            context: nil
+        )
+
+        // Calculate total height with extra fixed UI elements (like padding, images, etc.)
+        let totalHeight = ceil(boundingRect.height) + 40 + 90
+
+        return CGSize(width: availableWidth, height: totalHeight)
+    }
+
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        let spacing: CGFloat = 10
+//        let inset: CGFloat = 10
+//
+//        let availableWidth = collectionView.bounds.width - (inset * 2 + spacing)
+//       // let width = floor(availableWidth)
+//        let width = collectionView.frame.width
+//        
+//        let label = UILabel()
+//        label.text = filteredCertificates?[indexPath.item].reason ?? ""
+//        label.font = UIFont.systemFont(ofSize: 12)
+//        
+//        let heigt = label.frame.height + 40 + 90
+//
+//        return CGSize(width: width, height: heigt)
+//    }
+//
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+
+    
+}
+
+
+import UIKit
+
+@IBDesignable
+class FolderView: UIView {
+
+    private let shapeLayer = CAShapeLayer()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    private func setup() {
+        backgroundColor = .clear
+        shapeLayer.fillColor = UIColor.orange.cgColor
+        layer.insertSublayer(shapeLayer, at: 0)
+
+        // Optional: Shadow
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 8
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        drawFolderShape()
+    }
+
+    private func drawFolderShape() {
+        let w = bounds.width
+        let h = bounds.height
+
+        guard w > 0, h > 0 else { return }
+
+        let r: CGFloat = 16
+        let tabWidth: CGFloat = 40
+        let tabHeight: CGFloat = 18
+
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: r, y: 0))
+        path.addLine(to: CGPoint(x: tabWidth, y: 0))
+        path.addLine(to: CGPoint(x: tabWidth + 10, y: tabHeight))
+        path.addLine(to: CGPoint(x: w - r, y: tabHeight))
+        path.addQuadCurve(to: CGPoint(x: w, y: tabHeight + r), controlPoint: CGPoint(x: w, y: tabHeight))
+        path.addLine(to: CGPoint(x: w, y: h - r))
+        path.addQuadCurve(to: CGPoint(x: w - r, y: h), controlPoint: CGPoint(x: w, y: h))
+        path.addLine(to: CGPoint(x: r, y: h))
+        path.addQuadCurve(to: CGPoint(x: 0, y: h - r), controlPoint: CGPoint(x: 0, y: h))
+        path.addLine(to: CGPoint(x: 0, y: r))
+        path.addQuadCurve(to: CGPoint(x: r, y: 0), controlPoint: CGPoint(x: 0, y: 0))
+
+        shapeLayer.path = path.cgPath
+        shapeLayer.frame = bounds
     }
 }

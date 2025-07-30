@@ -56,6 +56,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var DateBtn: UIButton!
     @IBOutlet weak var AttendTypeStackView: UIStackView!
+    @IBOutlet weak var MarkAttendanceBtn: UIButton!
+    @IBOutlet weak var ReportsBtn: UIButton!
     
     let formatter = DateFormatter()
     let customdate = DateFormatter()
@@ -92,6 +94,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         SessionStack.isHidden = true
         SearchBar.isHidden = true
         
+        addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
         
         let AcademicTap = UITapGestureRecognizer(target: self, action: #selector(Select_Academic_Year))
         AcademicYearView.addGestureRecognizer(AcademicTap)
@@ -220,6 +223,66 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             
         }
     }
+    
+    
+    @IBAction func MarkAttendanceAct(_ sender: Any) {
+        addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
+        TV.isHidden = true
+        SearchBar.isHidden = true
+        
+        MarkAbsentiesBtn.isHidden = false
+        markAllPresentBtn.isHidden = false
+        stackview.isHidden = false
+        AttendancetypeStack.isHidden = false
+        AttendTypeStackView.isHidden = false
+        if HalfdayImgview.image == UIImage(named:"RadioCheck"){
+            SessionStack.isHidden = false
+        }
+        
+    }
+    
+    @IBAction func ReportsAct(_ sender: Any) {
+        
+        addUnderline(to: ReportsBtn, unselectedButton: MarkAttendanceBtn)
+        student_attendance_report()
+
+        SearchBar.isHidden = false
+        TV.isHidden = false
+        TV.delegate = self
+        TV.dataSource = self
+        TV.reloadData()
+        
+        MarkAbsentiesBtn.isHidden = true
+        markAllPresentBtn.isHidden = true
+        stackview.isHidden = true
+        SessionStack.isHidden = true
+        AttendancetypeStack.isHidden = true
+        AttendTypeStackView.isHidden = true
+    }
+    
+    func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
+        // Remove underline from both buttons
+        [selectedButton, unselectedButton].forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+
+        // Add underline to the selected button
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
+
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
+    }
+    
     
     @objc func fulldayAction(){
         user_inputs.attendance_type = "F"

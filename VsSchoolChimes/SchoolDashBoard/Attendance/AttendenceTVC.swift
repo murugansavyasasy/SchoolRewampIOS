@@ -30,6 +30,7 @@ class AttendenceTVC: UITableViewCell, Attendence {
         rollNo.layer.backgroundColor = UIColor(red: 189/255, green: 230/255, blue: 254/255, alpha: 1).cgColor
         rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
+        admissionlbl.setFont(style: .body, size: FontSize.BodySize)
         rollNo.translatesAutoresizingMaskIntoConstraints = false
         rollNo.titleLabel?.adjustsFontSizeToFitWidth = true
         rollNo.titleLabel?.minimumScaleFactor = 0.5
