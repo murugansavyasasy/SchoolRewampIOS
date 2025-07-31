@@ -87,7 +87,7 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="200" id="D9o-cF-E8K"/>
                                             </constraints>
-                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="jTs-Ri-lMA">
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="3" id="jTs-Ri-lMA">
                                                 <size key="itemSize" width="128" height="128"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>

@@ -65,7 +65,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
         setupView()
-        Get_Notice()
     }
     @objc func catagoryTapped() {
         print("Category View Tapped")
@@ -76,6 +75,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             schoolName.text = item
             if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
                 UserDefaultFileManager.saveStaffDetails(data: selectedSchool)
+                Get_Notice()
             }
         }
     }

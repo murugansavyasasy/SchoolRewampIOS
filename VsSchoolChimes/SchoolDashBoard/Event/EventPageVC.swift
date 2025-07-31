@@ -137,7 +137,9 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
             print("Index out of bounds")
             return
         }
-        
+        if let vc = pages[1] as? NoticeBoardVc{
+            vc.Get_Notice()
+        }
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = selectedIndex > currentIndex ? .forward : .reverse
         
@@ -164,6 +166,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
               let currentIndex = pages.firstIndex(of: currentVC) else {
             return
         }
+       
         
         updateTabUI(for: currentIndex)
     }

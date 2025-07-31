@@ -817,7 +817,6 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         
         let colors: [UIColor] = [.systemRed, .systemGreen, .systemBlue, .systemPink, .systemOrange]
         var cells = [CAEmitterCell]()
-        
         for color in colors {
             let cell = CAEmitterCell()
             cell.birthRate = 6
