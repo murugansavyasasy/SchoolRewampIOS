@@ -269,7 +269,7 @@ extension UIButton {
             if secondLineRange.location != NSNotFound {
                 attributedTitle.addAttributes([
                     .font: UIFont(name: "Poppins-Bold", size: 11),
-                    .foregroundColor: colour.withAlphaComponent(0.6)
+                    .foregroundColor: colour.withAlphaComponent(0.8)
                 ], range: secondLineRange)
             }
             

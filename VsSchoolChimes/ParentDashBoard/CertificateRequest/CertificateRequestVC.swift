@@ -401,6 +401,14 @@ extension CertificateRequestVC: UICollectionViewDelegate,UICollectionViewDataSou
             
            // cell.CertificateView.backgroundColor = .systemGray6
         }
+        
+        if indexPath.item == 0 {
+            
+            cell.CertificateView.layer.borderColor = UIColor.systemBlue.withAlphaComponent(0.6).cgColor
+        }else {
+            
+            cell.CertificateView.layer.borderColor = UIColor.systemGray4.withAlphaComponent(0.6).cgColor
+        }
         return cell
     }
     

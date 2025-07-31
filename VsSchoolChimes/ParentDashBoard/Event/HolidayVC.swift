@@ -15,6 +15,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var selectedMonthLbl: UILabel!
     @IBOutlet weak var calendarContainerView: UIView!
     @IBOutlet weak var leaveListTable: UITableView!
+    @IBOutlet weak var BackBtn: UIButton!
     
     // MARK: - Properties
     var eventHolidayData: [EventHolidayData]?
@@ -259,7 +260,13 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
         updateCalendarView(with: .left)
     }
-
+    
+    
+    @IBAction func BackAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7 + daysInMonth.count
