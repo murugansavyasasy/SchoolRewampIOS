@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LeveHistoryVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="Backbtn" destination="InT-vl-Dv7" id="dMt-lW-5kU"/>
                 <outlet property="NodataImage" destination="VFI-pU-lGJ" id="mur-2l-VTa"/>
                 <outlet property="NodataLbl" destination="OGa-Nz-a55" id="TPE-zB-zVo"/>
                 <outlet property="TopInfoView" destination="qkB-YM-V0u" id="eas-mR-Wwr"/>
@@ -30,11 +31,27 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InT-vl-Dv7">
+                    <rect key="frame" x="10" y="64" width="373" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="zaS-lT-tYY"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="T39-I6-Wlu"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7K-uF-CDB">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="119" width="393" height="699"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VEu-bE-JfD">
-                            <rect key="frame" x="0.0" y="366" width="393" height="393"/>
+                            <rect key="frame" x="0.0" y="366" width="393" height="333"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="0ME-7H-RXP"/>
@@ -136,10 +153,13 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="r7K-uF-CDB" firstAttribute="top" secondItem="InT-vl-Dv7" secondAttribute="bottom" constant="20" id="29S-Hr-R12"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="InT-vl-Dv7" secondAttribute="trailing" constant="10" id="29c-ia-jcH"/>
                 <constraint firstItem="r7K-uF-CDB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ku6-UG-PRc"/>
+                <constraint firstItem="InT-vl-Dv7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ONY-hD-1L7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="r7K-uF-CDB" secondAttribute="trailing" id="WbD-B5-Gjl"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="r7K-uF-CDB" secondAttribute="bottom" id="c6j-wM-A6y"/>
-                <constraint firstItem="r7K-uF-CDB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="n0z-Fq-1Wk"/>
+                <constraint firstItem="InT-vl-Dv7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="uua-eT-Ub6"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
@@ -204,6 +224,7 @@
     </objects>
     <resources>
         <image name="NoMessage" width="650" height="512"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

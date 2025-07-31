@@ -13,8 +13,11 @@ class PreviewCell: UICollectionViewCell {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var webview: WKWebView!
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 }
+

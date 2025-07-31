@@ -4,6 +4,9 @@
 //
 //  Created by Lakshmanan on 27/03/25.
 //
+protocol Searchable: AnyObject {
+    func updateSearchResults(for query: String)
+}
 
 import UIKit
 
@@ -17,6 +20,7 @@ class ExamDetailsVC: UIViewController {
     @IBOutlet weak var TimeTableBtn: UIButton!
     @IBOutlet weak var MarksBtn: UISegmentedControl!
     @IBOutlet weak var ExamMarksBtn: UIButton!
+    @IBOutlet weak var Searchbar: UISearchBar!
     
     let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
     let secondChildVC = ExameMarVC()
@@ -25,6 +29,8 @@ class ExamDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Searchbar.isHidden = true
+        Searchbar.delegate = self
         //BackBtn.setTitle("Exam/Test", for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
@@ -69,6 +75,11 @@ class ExamDetailsVC: UIViewController {
         ])
     }
 
+    @IBAction func SearchIconAct(_ sender: Any) {
+        
+        Searchbar.isHidden.toggle()
+    }
+    
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -126,4 +137,11 @@ class ExamDetailsVC: UIViewController {
         transition(to: secondChildVC)
     }
     
+}
+
+extension ExamDetailsVC: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+    }
 }

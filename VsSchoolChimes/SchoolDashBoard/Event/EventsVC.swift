@@ -692,7 +692,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     
     // MARK: File Attachments Actions
     func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared
                 .presentPicker(
@@ -708,7 +708,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         
     }
     func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
@@ -718,7 +718,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
     }
     func selectPDF() {
-        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+//        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
             PhotoPickerManager.shared.limiSelection = 10 - attachments.count
