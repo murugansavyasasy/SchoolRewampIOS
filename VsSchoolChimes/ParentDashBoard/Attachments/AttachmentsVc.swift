@@ -7,30 +7,37 @@
 
 import UIKit
 
-extension AttachmentsVc: AttachmentHeaderViewDelegate {
-    func didTapSeeMore(in header: AttachmentHeaderCell) {
-        isHeaderExpanded.toggle()
-        cv.collectionViewLayout.invalidateLayout()
-        cv.reloadSections(IndexSet(integer: 0))
-    }
-}
+
 class AttachmentsVc: UIViewController {
-    @IBOutlet weak var cv: UICollectionView!
+    
+
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var tv: UITableView!
+   
     var attachmentHeaders: [AttachmentHeaderInfo] = []
-    var attachmentFiles: [[FilePath]] = []
+    var attachmentFiles: [[FilePath]]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    
     var attachmentData = [Attachment]()
     var filteredAttachments:[Attachment]?
     var SearchAttachments:[Attachment]?
-    var isHeaderExpanded: Bool = false
+//    var isHeaderExpanded: Bool = false
+    var isHeaderExpandedDict: [Int: Bool] = [:]
+    var search = true
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//
-        cv.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
+        searchBar.delegate = self
+        searchBar.layer.cornerRadius = 5
+        tv.register(
+                UINib(nibName: "AttachTvHeader", bundle: nil),
+                forHeaderFooterViewReuseIdentifier: "AttachTvHeader"
+            )
+        tv.register(UINib(nibName: "ContentCell", bundle: nil), forCellReuseIdentifier: "ContentCell")
         
-        cv.register(UINib(nibName: "AttachmentHeaderCell", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "AttachmentHeaderCell")
-        
+//        tableView.register(UINib(nibName: "CustomFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomFooterView")
+//        
         
         fetchAttachments()
     }
@@ -41,6 +48,12 @@ class AttachmentsVc: UIViewController {
         dismiss(animated: true)
     }
    
+    @IBAction func searchBtnCilck(_ sender: Any) {
+        
+        search.toggle()
+        searchBar.isHidden = search
+        
+    }
     
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
@@ -63,36 +76,65 @@ class AttachmentsVc: UIViewController {
                 switch result {
                 case .success(let response):
                     if response.status == true {
-//                        self.hideView(ishide: true)
+                        //                        self.hideView(ishide: true)
                         self.attachmentData = response.data ?? []
                         self.filteredAttachments = response.data
                         self.SearchAttachments = response.data
-
+                        
                         // Separate headers and file_paths
                         self.attachmentHeaders = []
                         self.attachmentFiles = []
-
+                        
                         for item in self.attachmentData {
                             let header = AttachmentHeaderInfo(
                                 title: item.title ?? "",
                                 description: item.description ?? "",
                                 date: item.date ?? "",
                                 time: item.time ?? "",
-                                sender_info: item.sender_info ?? ""
+                                sender_info: item.sender_info ?? "", is_unread: item.is_unread ?? false, id: item.id ?? ""
                             )
                             self.attachmentHeaders.append(header)
-                            self.attachmentFiles.append(item.file_path ?? [])
+                            self.attachmentFiles?.append(item.file_path ?? [])
                         }
-                        self.cv.delegate = self
-                        self.cv.dataSource = self
-                        self.cv.reloadData()
+                        self.tv.delegate = self
+                        self.tv.dataSource = self
+                        self.tv.reloadData()
                     } else {
-//                        self.hideView(ishide: false)
-//                        self.NodataLbl.text = response.message
+                        //                        self.hideView(ishide: false)
+                        //                        self.NodataLbl.text = response.message
                     }
-
+                    
                 case .failure(_):
                     ""
+                }
+            }
+        }
+    }
+    
+    
+    func ReadStatusUpdate(type: String,detail_id: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        attachmentHeaders = attachmentHeaders.map { attachment in
+                            var updated = attachment
+                            if attachment.id == detail_id {
+                                updated.is_unread = false
+                            }
+                            return updated
+                        }
+                      
+                    }
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -100,112 +142,118 @@ class AttachmentsVc: UIViewController {
 
 }
 
-extension AttachmentsVc : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("attachmentHeaders",attachmentHeaders.count)
-        return attachmentHeaders.count
-       }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attachmentFiles[section].count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let data  = attachmentFiles[indexPath.section][indexPath.item]
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "PreviewCell",
-            for: indexPath) as? PreviewCell
-        else{
-            return UICollectionViewCell()
+   func numberOfSections(in tableView: UITableView) -> Int {
+            return attachmentHeaders.count
         }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+
     
-        if data.type == "IMAGE"{
-            cell.imageView.isHidden = false
-            cell.webview.isHidden = true
-            cell.imageView
-                .sd_setImage(
-                    with: URL(string: data.url ?? ""),
-                    placeholderImage: UIImage(named: "placeholder")
-                )
-        }else  if data.type == "VIDEO" {
-            cell.imageView.image = UIImage(named: "video (1)")
-        }else{
-            let fileURL = URL(fileURLWithPath: data.url ?? "")
-            let iconName = getFileIconName(for: fileURL)
-            let iconImage = UIImage(named: iconName)
-            cell.imageView.image = iconImage
-//            cell.imageView.layer.borderColor = UIColor.black.cgColor
-//            cell.imageView.layer.borderWidth = 0.5
-            
+     func tableView(_ tableView: UITableView,
+                                viewForHeaderInSection section: Int) -> UIView? {
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttachTvHeader") as? AttachTvHeader else { return nil }
+            header.configure(with: attachmentHeaders[section])
+        
+         header.discretpionLbl
+             .setupExpandable(
+                text: attachmentHeaders[section].description ?? ""
+             )
+         
+        
+             header.roundView.isHidden = !attachmentHeaders[section].is_unread
+         
+         header.discretpionLbl.onExpandableTap = { [weak self] in
+                 header.discretpionLbl.isExpanded.toggle()
+             if self?.attachmentHeaders[section].is_unread == true{
+                 self?.ReadStatusUpdate(
+                           type: "ATTACHMENT",
+                           detail_id: self?.attachmentHeaders[section].id ?? ""
+                       )
+                   }
+                 tableView.beginUpdates()
+                 tableView.endUpdates()
+             }
+         
+            return header
         }
-        
-       
-        return cell
-    }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let size = (collectionView.frame.width-20)/3
-        return CGSize(width: size, height: size)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-                let header = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "AttachmentHeaderCell",
-                    for: indexPath) as! AttachmentHeaderCell
+      func tableView(_ tableView: UITableView,
+                                heightForHeaderInSection section: Int) -> CGFloat {
+            return UITableView.automaticDimension
+        }
 
-            let headerData = attachmentHeaders[indexPath.section]
-            header
-                .configure(
-                    title:headerData.title ?? "" ,
-                    description: headerData.description ?? "", isExpanded: isHeaderExpanded,
-                    date: headerData.date ?? ""
-                )
-
-            header.delegate = self
-            
-                return header
+         func tableView(_ tableView: UITableView,
+                                cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath) as? ContentCell else {
+                return UITableViewCell()
             }
-        
-        return UICollectionReusableView()
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let header = Bundle.main.loadNibNamed("AttachmentHeaderCell", owner: self, options: nil)?.first as? AttachmentHeaderCell else {
-            return CGSize(width: collectionView.frame.width, height: 100)
+             cell
+                 .configure(
+                    with: attachmentFiles?[indexPath.section],
+                    sendBy: ("Posted By : ") + (
+                        attachmentHeaders[indexPath.section].sender_info ?? ""
+                    )
+                 )
+            return cell
         }
-        let headerData = attachmentHeaders[section]
-    
-        header.frame = CGRect(x: 0, y: 0, width: collectionView.frame.width, height: 1000) // Arbitrary height for fitting
-        header
-            .configure(
-                title: headerData.title ?? "",
-                description: headerData.description ?? "",
-                isExpanded: isHeaderExpanded,
-                date: headerData.date ?? ""
-            )
 
-        header.layoutIfNeeded()
-        let targetSize = CGSize(width: collectionView.frame.width, height: UIView.layoutFittingCompressedSize.height)
-        let size = header.systemLayoutSizeFitting(targetSize,
-                                                  withHorizontalFittingPriority: .required,
-                                                  verticalFittingPriority: .fittingSizeLevel)
+      func tableView(_ tableView: UITableView,
+                                heightForRowAt indexPath: IndexPath) -> CGFloat {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell") as? ContentCell else {
+                return 100
+            }
+          cell
+              .configure(
+                with: attachmentFiles?[indexPath.section],
+                sendBy: ("Posted By : ") + (
+                    attachmentHeaders[indexPath.section].sender_info ?? ""
+                )
+              )
+          return cell.collectionContentHeight() + 60
+        }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            filterAttachments(with: searchText)
+        }
+    
+    private func filterAttachments(with searchText: String) {
+        if searchText.isEmpty {
+            self.filteredAttachments = self.attachmentData
+        } else {
+            self.filteredAttachments = self.attachmentData.filter { item in
+                let titleMatch = item.title?.lowercased().contains(searchText.lowercased()) ?? false
+                let descriptionMatch = item.description?.lowercased().contains(searchText.lowercased()) ?? false
+                return titleMatch || descriptionMatch
+            }
+        }
+
+        // Rebuild header & file list
+        self.attachmentHeaders = []
+        self.attachmentFiles = []
         
-        print("sizesizesize",size)
-        return size
+        if let attachments = self.filteredAttachments {
+            for item in attachments {
+                let header = AttachmentHeaderInfo(
+                    title: item.title ?? "",
+                    description: item.description ?? "",
+                    date: item.date ?? "",
+                    time: item.time ?? "",
+                    sender_info: item.sender_info ?? "",
+                    is_unread: item.is_unread ?? false,
+                    id: item.id ?? ""
+                )
+                self.attachmentHeaders.append(header)
+                self.attachmentFiles?.append(item.file_path ?? [])
+            }
+        }
+
+
+        self.tv.reloadData()
     }
 
-
-
-
-    
 }
 struct AttachmentHeaderInfo {
     let title: String?
@@ -213,4 +261,6 @@ struct AttachmentHeaderInfo {
     let date: String?
     let time: String?
     let sender_info: String?
+    var is_unread: Bool
+    let id: String?
 }

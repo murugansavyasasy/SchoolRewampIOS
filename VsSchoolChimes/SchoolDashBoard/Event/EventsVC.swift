@@ -498,6 +498,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             ]
             if sender.titleLabel?.text == "Update"{
 //                sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+                
             }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.event
@@ -650,7 +651,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     
     // MARK: File Attachments Actions
     func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared
                 .presentPicker(
@@ -666,7 +667,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         
     }
     func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
@@ -676,7 +677,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
     }
     func selectPDF() {
-        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+//        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
             PhotoPickerManager.shared.limiSelection = 10 - attachments.count

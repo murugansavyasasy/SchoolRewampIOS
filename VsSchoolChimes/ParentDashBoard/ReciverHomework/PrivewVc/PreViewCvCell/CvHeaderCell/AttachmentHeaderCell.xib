@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,32 +19,29 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oqs-kc-oFI">
                     <rect key="frame" x="10" y="10" width="180" height="81"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K33-BE-IHE">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="K33-BE-IHE">
                             <rect key="frame" x="10" y="10" width="160" height="61"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7jj-Sp-wH3">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="24"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="41"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBe-AT-15r">
-                                            <rect key="frame" x="0.0" y="0.0" width="85" height="24"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="85" id="gTw-hc-HIn"/>
-                                            </constraints>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="41"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Igw-on-3d4">
-                                            <rect key="frame" x="85" y="0.0" width="0.0" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="41"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="|" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDM-id-7fv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="24"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="41"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yIg-XU-xRD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="2" height="24"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="2" height="41"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="2" id="rqC-bv-6ch"/>
@@ -51,33 +49,41 @@
                                                 </view>
                                             </subviews>
                                         </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Kce-Qb-XyL">
-                                            <rect key="frame" x="85" y="0.0" width="75" height="24"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeu-er-huf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="24"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
+                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Kce-Qb-XyL">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="41"/>
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you confirm the XIB root is UICollectionReusableView and the class/identifier are set properly, the crash will be fixed." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnW-cs-gA6">
-                                    <rect key="frame" x="0.0" y="32" width="160" height="29"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeu-er-huf">
+                                    <rect key="frame" x="0.0" y="51" width="160" height="0.0"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="If you confirm the XIB root is UICollectionReusableView and the class/identifier are set properly, the crash will be fixed." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnW-cs-gA6">
+                                    <rect key="frame" x="0.0" y="61" width="160" height="0.0"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBn-Ov-aWI">
+                            <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
+                            <color key="backgroundColor" name="Red1"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="TUc-sD-6cB"/>
+                                <constraint firstAttribute="width" constant="10" id="Y7h-Gc-McC"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstItem="K33-BE-IHE" firstAttribute="top" secondItem="Oqs-kc-oFI" secondAttribute="top" constant="10" id="L35-tf-7eb"/>
                         <constraint firstItem="K33-BE-IHE" firstAttribute="leading" secondItem="Oqs-kc-oFI" secondAttribute="leading" constant="10" id="QIX-vv-PZz"/>
                         <constraint firstAttribute="bottom" secondItem="K33-BE-IHE" secondAttribute="bottom" constant="10" id="Tgs-mt-6gd"/>
                         <constraint firstAttribute="trailing" secondItem="K33-BE-IHE" secondAttribute="trailing" constant="10" id="Xjc-ZZ-oXg"/>
+                        <constraint firstItem="oBn-Ov-aWI" firstAttribute="leading" secondItem="Oqs-kc-oFI" secondAttribute="leading" id="g4l-5s-CEg"/>
+                        <constraint firstItem="oBn-Ov-aWI" firstAttribute="top" secondItem="Oqs-kc-oFI" secondAttribute="top" id="jFd-tu-S2E"/>
                     </constraints>
                 </view>
             </subviews>
@@ -93,12 +99,16 @@
             <connections>
                 <outlet property="dateLbl" destination="WBe-AT-15r" id="TsM-wA-Flg"/>
                 <outlet property="discreptionLbl" destination="DnW-cs-gA6" id="f7b-OF-7hk"/>
+                <outlet property="roundView" destination="oBn-Ov-aWI" id="VUT-Bc-LFM"/>
                 <outlet property="titleLbl" destination="jeu-er-huf" id="iOz-Iw-Iib"/>
             </connections>
-            <point key="canvasLocation" x="40" y="-220"/>
+            <point key="canvasLocation" x="39.694656488549619" y="-220.07042253521129"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="Red1">
+            <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
