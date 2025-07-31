@@ -36,7 +36,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 
                 if let toDate = labelFormatter.date(from: toText) {
                     if DayDate > toDate {
-                        // Auto-adjust To Date if From Date is later
                         NewToDateLbl.setFormattedDate(from: DayDate)
                     }
                 }
@@ -97,7 +96,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var selectedVideoURL: URL?
     var editId: String?
     let standardDateFormat = DateFormatString.StandardFormat
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
@@ -733,19 +731,14 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
     
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
         let size = textView.contentSize
-        
-        // Check if the content exceeds the initial height
         if size.height > initialHeight {
-            // Update the height constraint based on content size
-            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            let newHeight = min(size.height, maxHeight)
             textViewHeightConstraint.constant = newHeight
         }
-        
         // Animate the change for smoother UI
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        
         // Scroll to make the UITextView visible
         scrollToView(textView)
     }

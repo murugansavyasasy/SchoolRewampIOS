@@ -143,6 +143,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
+    
     func fetchData(eventList:EventList?){
         attachments.removeAll()
         if let eventList = eventList{

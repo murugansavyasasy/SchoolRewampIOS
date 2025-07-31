@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 protocol EditObjectDelegate{
     func editDta(edit:Any)
 }
@@ -28,6 +29,8 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     }
     
     
+    @IBOutlet weak var schoolName: UILabel!
+    @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -40,17 +43,42 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     var allNotices: [Notice] = []
     var delegate:EditObjectDelegate?
     let alert = CustomAlert()
+    let dropDown = DropDown()
+    var schoolList:[String]?
     private var isLoading = false
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-    
+    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        schoolDropDown.setShadow(cornerRadius: 4)
+        if school_details?.count ?? 0 > 1 {
+            schoolDropDown.isHidden = false
+            schoolName.text = school_details?.first?.school_name
+            schoolList = school_details?.compactMap { $0.school_name }
+            self.dropDown.dataSource = self.schoolList ?? []
+        }else{
+            schoolDropDown.isHidden = true
+        }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
+        schoolDropDown.isUserInteractionEnabled = true
+        schoolDropDown.addGestureRecognizer(tapGesture)
         setupView()
         Get_Notice()
     }
-    
+    @objc func catagoryTapped() {
+        print("Category View Tapped")
+        dropDown.anchorView = schoolDropDown
+        dropDown.show()
+        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+            schoolName.text = item
+            if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                UserDefaultFileManager.saveStaffDetails(data: selectedSchool)
+            }
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -61,7 +89,15 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         setupRefreshControl()
         setupLoader()
     }
-    
+    func searchHide(hide: Bool) {
+        searchBar?.isHidden = !hide
+        if hide {
+            searchBar?.becomeFirstResponder()
+        } else {
+            searchBar?.resignFirstResponder()
+        }
+    }
+
     private func customizeSearchBar() {
         searchBar.searchTextField.borderStyle = .none
         searchBar.backgroundImage = UIImage()
@@ -282,7 +318,7 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 30) / 2
+        let width = (collectionView.frame.width - 10) / 2
         
         return CGSize(width: width, height: 250)
     }

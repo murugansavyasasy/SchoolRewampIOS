@@ -18,6 +18,7 @@
                 <outlet property="presentView" destination="eAv-wd-i7x" id="R05-oM-wmF"/>
                 <outlet property="reportsBtn" destination="SKW-kd-ddF" id="GFH-iH-ucJ"/>
                 <outlet property="reportsLb" destination="kHf-tA-3bC" id="Odt-T2-iAU"/>
+                <outlet property="searcchBtn" destination="O8P-4k-LXO" id="qeD-J1-jiG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -117,16 +118,35 @@
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="ouY-aU-IMT"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8P-4k-LXO">
+                    <rect key="frame" x="380" y="61.666666666666657" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="BXL-Vk-PnO"/>
+                        <constraint firstAttribute="height" constant="40" id="sUh-m7-FeK"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="magnifyingglass" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="medium"/>
+                    </state>
+                    <connections>
+                        <action selector="search:" destination="-1" eventType="touchUpInside" id="5B1-dd-vwF"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="O8P-4k-LXO" secondAttribute="trailing" constant="10" id="1xT-zy-iqJ"/>
                 <constraint firstItem="ygH-X9-gex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="56p-G6-Zjd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xpr-Lv-zOq" secondAttribute="bottom" id="6up-77-vcY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xpr-Lv-zOq" secondAttribute="trailing" id="Fp4-p4-ZgJ"/>
                 <constraint firstItem="ygH-X9-gex" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="KSe-Sg-aMa"/>
                 <constraint firstItem="xpr-Lv-zOq" firstAttribute="top" secondItem="ygH-X9-gex" secondAttribute="bottom" constant="10" id="Prk-rU-PIs"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ygH-X9-gex" secondAttribute="trailing" constant="10" id="XaY-zb-FAl"/>
+                <constraint firstItem="O8P-4k-LXO" firstAttribute="centerY" secondItem="ygH-X9-gex" secondAttribute="centerY" id="YZG-l1-Cax"/>
                 <constraint firstItem="xpr-Lv-zOq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wmq-4W-gbK"/>
             </constraints>
             <point key="canvasLocation" x="-25" y="20"/>
@@ -134,6 +154,7 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="topBackgroundCLr">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
