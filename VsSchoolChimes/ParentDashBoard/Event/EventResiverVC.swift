@@ -36,7 +36,7 @@ class EventResiverVC: UIViewController {
     var button1 = "Event/Holidays".translated()
     var button2 = "Holiday".translated()
     var delegate: HistorySelectDelegate?
-
+    let transitionDelegate = TransitioningDelegate()
     var allEventSections: [EventDisplaySection] = []
     var filteredSections: [EventDisplaySection] = []
     var studentDetails = UserDefaultFileManager.get_child_Details()
@@ -249,7 +249,35 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         case .upcoming, .completed: return UITableView.automaticDimension
         }
     }
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sectionData = filteredSections[indexPath.section]
+        var selectedEvent: EventList?
+        
+        switch sectionData {
+        case .upcoming(let events), .completed(let events):
+            selectedEvent = events[indexPath.row]
+        default:
+            return // Don't handle tap for featured/categories
+        }
+        
+        guard let event = selectedEvent,
+              let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
+        
+        let detailVC = PrivewVc()
+        detailVC.attachmetList = event.file_path
+        detailVC.selectedDate = event.date
+        detailVC.titleString = event.title
+        detailVC.descriptionString = event.description
+        detailVC.postedBy = event.sent_by
+        
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
+    }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = .clear
@@ -357,3 +385,4 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
         return filtered
     }
 }
+

@@ -134,21 +134,13 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
             ActivityIndicator.stopAnimating()
             imgView.isHidden = false
             pdfView.isHidden = true
-            scrollView.isHidden = false
             
             if let image = img {
                 imgView.image = image
             } else if let url = selectedFileURL {
                 imgView.kf.setImage(with: url)
             }
-        } else if type?.uppercased() == AttachmentTypeString.VIDEO{
-            
-            if let url = selectedFileURL {
-                playLocalVideo(filePath: url.absoluteString, from: self)
-            }
-        }
-            else {
-            scrollView.isHidden = true
+        }else {
             pdfView.isHidden = false
                 
             if let url = selectedFileURL {
@@ -159,20 +151,6 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
             //            }
         }
     }
-    
-    
-    func playLocalVideo(filePath: String, from viewController: UIViewController) {
-        let fileURL = URL(fileURLWithPath: filePath)
-
-        let player = AVPlayer(url: fileURL)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-
-        viewController.present(playerViewController, animated: true) {
-            player.play()
-        }
-    }
-
     
     // Zoom delegate
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -194,16 +172,22 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
         }
         
         if url.isFileURL {
+            // Local PDF
             if FileManager.default.fileExists(atPath: url.path) {
                 pdfView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+                print("📄 Loaded local PDF: \(url.path)")
             } else {
-                print("❌ File not found.")
+                print("❌ Local file does not exist: \(url.path)")
             }
+            
         } else if url.scheme == "http" || url.scheme == "https" {
+            // Remote PDF
             let request = URLRequest(url: url)
             pdfView.load(request)
+            print("🌐 Loaded remote PDF: \(url)")
+            
         } else {
-            print("⚠️ Unsupported URL scheme.")
+            print("⚠️ Unsupported URL scheme: \(url.scheme ?? "nil")")
         }
     }
     

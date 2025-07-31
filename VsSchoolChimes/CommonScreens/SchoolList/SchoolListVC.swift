@@ -223,6 +223,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.senderHomeWorkNavigate(from: self)
             case Menu_id.studentReport:
                 MenuRedirect.senderStudentreportNavigate(from: self)
+            case Menu_id.noticeboardMenuId:
+                MenuRedirect.senderNoticeboardNavigate(from: self)
             case Menu_id.event:
                 MenuRedirect.senderEventNavigate(from: self)
             case Menu_id.attendance:

@@ -18,7 +18,6 @@ class PreviewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        contentView.backgroundColor = UIColor.white
     }
 }
 
