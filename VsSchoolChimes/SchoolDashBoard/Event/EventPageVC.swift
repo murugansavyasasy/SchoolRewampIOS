@@ -130,6 +130,9 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         if pages.indices.contains(1), let senderVC = pages[1] as? NoticeBoardVc {
             senderVC.searchHide(hide: sender.isSelected)
         }
+        if pages.indices.contains(1), let senderVC = pages[1] as? EventHistoryVC {
+            senderVC.searchHide(hide: sender.isSelected)
+        }
     }
     @IBAction func switchController(_ sender: UIButton) {
         let selectedIndex = sender.tag

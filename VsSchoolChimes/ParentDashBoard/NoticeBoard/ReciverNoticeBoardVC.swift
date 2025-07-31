@@ -78,57 +78,57 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         collectionView.backgroundColor = .clear
         collectionView.register(UINib(nibName: "NoticeCVC", bundle: nil), forCellWithReuseIdentifier: "NoticeCVC")
     }
-
+    
     private func setupRefreshControl() {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         collectionView.refreshControl = refreshControl
     }
-
+    
     private func showLoadingState() {
         activityIndicator.startAnimating()
         view.isUserInteractionEnabled = false
     }
-
+    
     private func hideLoadingState() {
         activityIndicator.stopAnimating()
         view.isUserInteractionEnabled = true
     }
-
+    
     private func updateCounts() {
         let today = getCurrentDateString()
         let todayNotices = searchData.filter { $0.created_on?.contains(today) == true }
         let withFiles = searchData.filter { !($0.file_path?.isEmpty ?? true) }
         let withoutFiles = searchData.filter { $0.file_path?.isEmpty ?? true }
-
+        
         totalCount.setAttributedTitle(formattedCountTitle(count: searchData.count, label: "Total", countColor: .black), for: .normal)
         todayCount.setAttributedTitle(formattedCountTitle(count: todayNotices.count, label: "Today", countColor: .blue), for: .normal)
         withFileCount.setAttributedTitle(formattedCountTitle(count: withFiles.count, label: "With File", countColor: .systemGreen), for: .normal)
         withoutFileCount.setAttributedTitle(formattedCountTitle(count: withoutFiles.count, label: "No File", countColor: .red), for: .normal)
     }
-
+    
     private func formattedCountTitle(count: Int, label: String, countColor: UIColor) -> NSAttributedString {
         let countString = "\(count)\n"
         let fullString = countString + label
         let title = NSMutableAttributedString(string: fullString)
-
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-
+        
         title.addAttributes([
             .font: UIFont.boldSystemFont(ofSize: 20),
             .foregroundColor: countColor,
             .paragraphStyle: paragraphStyle
         ], range: NSRange(location: 0, length: countString.count))
-
+        
         title.addAttributes([
             .font: UIFont.systemFont(ofSize: 12),
             .foregroundColor: UIColor.darkGray,
             .paragraphStyle: paragraphStyle
         ], range: NSRange(location: countString.count, length: label.count))
-
+        
         return title
     }
-
+    
     private func getCurrentDateString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -144,14 +144,14 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
-
+    
     @objc private func refreshData() {
         Get_Notice()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.refreshControl.endRefreshing()
         }
     }
-
+    
     func Get_Notice() {
         showLoadingState()
         APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
@@ -172,7 +172,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
             }
         }
     }
-
+    
     // MARK: - SearchBar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
@@ -186,7 +186,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         updateCounts()
         collectionView.reloadData()
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
@@ -194,27 +194,27 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         updateCounts()
         collectionView.reloadData()
     }
-
+    
     // MARK: - Count Buttons
     @IBAction func totalCountTapped(_ sender: UIButton) {
         searchData = allNotices
         updateCounts()
         collectionView.reloadData()
     }
-
+    
     @IBAction func todayCountTapped(_ sender: UIButton) {
         let today = getCurrentDateString()
         searchData = allNotices.filter { $0.created_on?.contains(today) == true }
         updateCounts()
         collectionView.reloadData()
     }
-
+    
     @IBAction func withFileCountTapped(_ sender: UIButton) {
         searchData = allNotices.filter { !($0.file_path?.isEmpty ?? true) }
         updateCounts()
         collectionView.reloadData()
     }
-
+    
     @IBAction func withoutFileCountTapped(_ sender: UIButton) {
         searchData = allNotices.filter { $0.file_path?.isEmpty ?? true }
         updateCounts()
@@ -228,12 +228,12 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchData.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoticeCVC", for: indexPath) as? NoticeCVC else {
             return UICollectionViewCell()
         }
-
+        
         let notice = searchData[indexPath.item]
         cell.configure(with: notice)
         cell.editBtn.isHidden = true
@@ -241,25 +241,26 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
         if let files = notice.file_path {
             loadFiles(into: cell, files: files)
         }
-
+        
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let notice = searchData[indexPath.item]
         guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
-                let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
+        let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
         let detailVC = PrivewVc()
         detailVC.attachmetList = notice.file_path
         detailVC.selectedDate  = notice.created_on
         detailVC.titleString  = notice.title
         detailVC.descriptionString  = notice.description
-//        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
-//        detailVC.postedBy  = notice.sent_by
-           detailVC.modalPresentationStyle = .custom
-           transitionDelegate.originFrame = cellFrameInSuperview
-           detailVC.transitioningDelegate = transitionDelegate
-           present(detailVC, animated: true)
+        //        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
+        detailVC.postedBy  = notice.sent_by
+        detailVC.subject_name = "Notice Board".translated()
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        present(detailVC, animated: true)
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -267,37 +268,39 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
         
         return CGSize(width: width, height: 250)
     }
-
+    
 }
 
 // MARK: - File Handling
 extension ReciverNoticeBoardVC {
     private func loadFiles(into cell: NoticeCVC, files: [FilePath]) {
         let imageViews = [cell.img1, cell.img2, cell.img3]
+        
+        // Reset all image views to hidden state
         imageViews.forEach { $0?.isHidden = true }
-
+        cell.imgCount.isHidden = true
+        
         for (index, file) in files.enumerated() {
             guard index < imageViews.count,
-                  let imageView = imageViews[safe: index],
+                  let imageView = imageViews[index],
                   let urlString = file.url,
                   let url = URL(string: urlString) else { continue }
-
-            imageView?.isHidden = false
-
-            if file.type?.lowercased() == "image" {
-                imageView?.kf.setImage(with: url)
+            
+            imageView.isHidden = false
+            if file.type?.lowercased() != "image" {
+                let iconName = getFileIconName(for: url)
+                imageView.image = UIImage(named: iconName)
             } else {
-                imageView?.image = UIImage(named: "file_icon") ?? UIImage(systemName: "doc")
+                imageView.kf.setImage(with: url)
             }
+            
         }
-
+        
+        // Handle extra files count
         if files.count > imageViews.count {
             let remaining = files.count - imageViews.count
             cell.imgCount.isHidden = false
             cell.imgCount.setTitle("+\(remaining)", for: .normal)
-        } else {
-            cell.imgCount.isHidden = true
         }
     }
-
 }

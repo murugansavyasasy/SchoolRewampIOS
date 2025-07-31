@@ -118,7 +118,7 @@
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="ouY-aU-IMT"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8P-4k-LXO">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8P-4k-LXO">
                     <rect key="frame" x="380" y="61.666666666666657" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="BXL-Vk-PnO"/>
