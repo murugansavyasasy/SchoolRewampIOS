@@ -393,8 +393,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             
             // Set collection view height dynamically
             let totalItems = attachments.count
-            collectionViewHeight.constant = totalItems <= 2 ? 120 : 220
-            
+            collectionViewHeight.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
         }
     }

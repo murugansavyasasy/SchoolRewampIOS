@@ -7,35 +7,34 @@
 
 import UIKit
 protocol AttachmentHeaderViewDelegate: AnyObject {
-    func didTapSeeMore(in header: AttachmentHeaderCell)
+    func didTapSeeMore(in header: AttachmentHeaderCell,section : Int)
 }
 
 class AttachmentHeaderCell: UICollectionReusableView {
         
+    @IBOutlet weak var roundView: UIView!
     @IBOutlet weak var discreptionLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     private var fullText: String = ""
      private var isExpanded = false
      weak var delegate: AttachmentHeaderViewDelegate?
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layoutIfNeeded()
-    }
+    var selectedSection : Int = 0
 
     
     override func awakeFromNib() {
             super.awakeFromNib()
             setupGesture()
-//            discreptionLbl.numberOfLines = 3
             discreptionLbl.isUserInteractionEnabled = true
+        roundView.isHidden = true
+        roundView.layer.cornerRadius = roundView.frame.width/2
         }
 
         func configure(title: String, description: String, isExpanded: Bool, date: String) {
-            titleLbl.text =  "  |  " + title
+            titleLbl.text =  title
             fullText = description
             self.isExpanded = isExpanded
-
+            
             let displayText = formattedDateStatus(from: date)
             dateLbl.text = "🗓️" + displayText
 
@@ -49,49 +48,9 @@ class AttachmentHeaderCell: UICollectionReusableView {
 
         @objc private func didTapDescription() {
             isExpanded.toggle()
-            delegate?.didTapSeeMore(in: self)
+            delegate?.didTapSeeMore(in: self, section: selectedSection)
         }
 
-//    func updateDescription() {
-//        
-//        let textToShow: String
-//        if isExpanded {
-//            textToShow = fullText + " See Less"
-//            discreptionLbl.numberOfLines = 0
-//        } else {
-//            textToShow = truncatedText(for: fullText) + "... See More"
-//            discreptionLbl.numberOfLines = 3
-//        }
-//        
-//        let attributedText = NSMutableAttributedString(string: textToShow)
-//        let actionText = isExpanded ? "See Less" : "See More"
-//        let range = (textToShow as NSString).range(of: actionText)
-//        
-//        attributedText.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: range)
-//        attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 14), range: range)
-//        discreptionLbl.attributedText = attributedText
-//    }
-    
-//    func updateDescription() {
-//        DispatchQueue.main.async {
-//            let textToShow: String
-//            if self.isExpanded {
-//                textToShow = self.fullText + " See Less"
-//                self.discreptionLbl.numberOfLines = 0
-//            } else {
-//                textToShow = self.truncatedText(for: self.fullText) + "... See More"
-//                self.discreptionLbl.numberOfLines = 3
-//            }
-//
-//            let attributedText = NSMutableAttributedString(string: textToShow)
-//            let actionText = self.isExpanded ? "See Less" : "See More"
-//            let range = (textToShow as NSString).range(of: actionText)
-//
-//            attributedText.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: range)
-//            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 14), range: range)
-//            self.discreptionLbl.attributedText = attributedText
-//        }
-//    }
 
     func updateDescription() {
            

@@ -11,9 +11,11 @@ import AWSS3
 import SDWebImage
 import SwiftUI
 import QuickLook
+import AVFoundation
+import AVKit
 
 @available(iOS 14.0, *)
-class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, VideoPickerManagerDelegate, UIPopoverPresentationControllerDelegate {
+class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate {
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
@@ -34,7 +36,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 
                 if let toDate = labelFormatter.date(from: toText) {
                     if DayDate > toDate {
-                        // Auto-adjust To Date if From Date is later
                         NewToDateLbl.setFormattedDate(from: DayDate)
                     }
                 }
@@ -93,8 +94,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var DocumentpreviewURL: URL?
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
+    var editId: String?
     let standardDateFormat = DateFormatString.StandardFormat
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
@@ -138,9 +139,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         textview.delegate = self
         TitleTextfield.delegate = self
-        
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
-        
         VideoView.isHidden = true
         
         
@@ -185,15 +183,16 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             } ?? []
             attachments.append(contentsOf: imageItems)
             Attachmentview.imageCollectionview.reloadData()
+            editId = notice.id
             NextBtn.setTitle("Update", for: .normal)
         }
     }
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
-            selectedVideoURL = nil
+            //            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             Attachmentview.imageCollectionview.reloadData()
@@ -206,10 +205,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
-            }
-            selectedVideoURL = nil
+            //            if imageItems.count != 0{
+            //                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            //            }
             Attachmentview.imageCollectionview.reloadData()
         }
         
@@ -217,44 +215,26 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            selectedVideoURL = nil
+            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            Attachmentview.imageCollectionview.reloadData()
+        }
+        PhotoPickerManager.shared.onVideoPicked = { [self] data in
+            // handle picked PDF
+            user_inputs.selectedFileType = CommonStringFile.VIDEO
+            attachments
+                .append(
+                    AttachmentItem(
+                        image:nil,
+                        imageURL: nil,
+                        fileType: CommonStringFile.VIDEO,
+                        VideoURl: data
+                    )
+                )
+            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             Attachmentview.imageCollectionview.reloadData()
         }
     }
     
-    func pickVideoFromGallery(){
-        //        if #available(iOS 15.0, *) {
-        //            showLottieProgressLoader(animationName: "loader (2)")
-        //        }
-        videoPicker?.pickVideo()
-    }
-    
-    
-    // MARK: - Delegate Methods
-    func videoPickerManager(didPickVideo url: URL) {
-        //        if #available(iOS 15.0, *) {
-        //            self.hideLottieProgressLoader()
-        //        }
-        videoPicker?.playVideo(from: url, in: VideoView)
-        attachments.removeAll()
-        Attachmentview.isHidden = true
-        collectionViewHeght.constant = 0
-        selectedVideoURL = url
-        VideoView.isHidden = false
-    }
-    
-    
-    func videoPickerManagerDidCloseVideo() {
-        if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
-        }
-        selectedVideoURL = nil
-        VideoView.isHidden = true
-        Attachmentview.isHidden = false
-        collectionViewHeght.constant = 120
-        Attachmentview.imageCollectionview.reloadData()
-    }
     
     //MARK: Setting Current Date as initial Date
     func setInitialDate() {
@@ -423,14 +403,16 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
         user_inputs.SelectedUrls = attachments
         user_inputs.VideoPath = selectedVideoURL
-        let params: [String: Any] = [
+        var params: [String: Any] = [
             SendAttachmentStringFile.title: textFieldText,
             SendAttachmentStringFile.description: textViewText,
             SendAttachmentStringFile.visible_from : user_inputs.FromDate,
             SendAttachmentStringFile.visible_to : user_inputs.ToDate
         ]
         if sender.titleLabel?.text == "Update"{
-            sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+            let com = commonApi_forSending()
+            params[SendAttachmentStringFile.id] = editId
+            sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_notice_board_update, Common_request_params: params)
         }else{
             let vc = SchoolListVC(nibName: nil, bundle: nil)
             vc.Common_request_params = params
@@ -440,12 +422,13 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     }
     
     private func sendAttachmentFlow(
-        via comm: commonApi_forSending = commonApi_forSending(),
+        via comm: commonApi_forSending,
         url baseURL: String,
         Common_request_params: [String: Any]
     ) {
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: 0,
+            edit: true,
             target_type:0,
             selectedId: [],
             baseURL: baseURL,
@@ -461,6 +444,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                     message: response.message,
                     on: self
                 ) { [self] in
+                    print("success")
                 }
             }
         }
@@ -469,32 +453,63 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     // MARK: File Attachments Actions
     func selectImages() {
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
+        if attachments.count != 10{
+            PhotoPickerManager.shared
+                .presentPicker(
+                    ofType: .gallery(selectionLimit: 10 - attachments.count),
+                    from: self
+                )
             
         }else{
+            let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
         }
+        
     }
-    
     func openCamera(){
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
+        if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
+            let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
         }
     }
-    
     func selectPDF() {
-        let pdf = attachments.filter { $0.fileType == CommonStringFile.pdf }
-        if pdf.count != 5{
+        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+        if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
+            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
         }else{
             
+            let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
+        
+    }
+    
+    func VideoPick() {
+        let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
+        
+        if  video.count != 2{
+            
+            if attachments.count <= 10{
+                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
+                PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
+                
+            }else{
+                let alert = CustomAlert()
+                alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+            
+        }else{
+            
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+        
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -515,47 +530,56 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 + attachments.count
+        
+        return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.item == 0{
-            
-            let cell = Attachmentview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
-            
+        // First cell is the "Add Attachment" button cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.AttachmentCVCell,
+                for: indexPath
+            ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
-        }else{
-            
-            let cell = Attachmentview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+        } else {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.ImageCvCell,
+                for: indexPath
+            ) as! ImageCvCell
             
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
-            
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
             
             if let image = item.image {
                 cell.imageViews.image = image
             } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                
                 if item.fileType.uppercased() != CommonStringFile.IMAGE {
                     let iconName = getFileIconName(for: url)
                     cell.imageViews.image = UIImage(named: iconName)
                 } else {
                     cell.imageViews.kf.setImage(with: url)
                 }
+            } else if let vido = item.VideoURl{
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
                 
-            } else {
+            }else{
+                
                 cell.imageViews.image = nil
             }
             
-            collectionViewHeght.constant = attachments.count <= 2 ? 120 : 220
-            
+            // Set collection view height dynamically
+            let totalItems = attachments.count
+            collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -564,54 +588,72 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
+        if indexPath.row == 0 {
+            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
             
-            let cameraAction = UIAlertAction(title:AlertstringFile.Camera, style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
-            let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
+            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
                 selectImages()
             }
             alertController.addAction(galleryAction)
             
-            let pdfAction = UIAlertAction(title: AlertstringFile.Document, style: .default) { [self] _ in
-                
+            let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
             alertController.addAction(pdfAction)
             
-            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
-                
-                pickVideoFromGallery()
+            let videoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                VideoPick()
             }
-            alertController.addAction(VideoAction)
+            alertController.addAction(videoAction)
             
-            let cancelAction = UIAlertAction(title:AlertstringFile.Cancel, style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             self.present(alertController, animated: true, completion: nil)
-        }else{
             
-            if  attachments[indexPath.item - 1].fileType != AttachmentTypeString.IMAGE {
-                
-                DocumentpreviewURL = URL(string: attachments[indexPath.item-1].imageURL ?? "")
-                let previewController = QLPreviewController()
-                previewController.dataSource = self
-                present(previewController, animated: true, completion: nil)
-            }else {
-                
+        } else {
+            let attachment = attachments[indexPath.item - 1]
+            
+            switch attachment.fileType {
+            case CommonStringFile.IMAGE:
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                if let img = attachments[indexPath.item - 1].image {
-                    vc.img = attachments[indexPath.item - 1].image
-                }else{
-                    vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
+                
+                if let img = attachment.image {
+                    vc.img = img
+                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
                 }
-                vc.type = user_inputs.selectedFileType
+                
+                vc.type = CommonStringFile.IMAGE
                 present(vc, animated: true)
+                
+            case CommonStringFile.pdf:
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
+                }
+                
+                vc.type = CommonStringFile.pdf
+                present(vc, animated: true)
+                
+            case CommonStringFile.VIDEO:
+                if let videoURL = attachment.VideoURl {
+                    let player = AVPlayer(url: videoURL)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    present(playerViewController, animated: true) {
+                        player.play()
+                    }
+                }
+            default:
+                break
             }
         }
     }
@@ -689,19 +731,14 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
     
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
         let size = textView.contentSize
-        
-        // Check if the content exceeds the initial height
         if size.height > initialHeight {
-            // Update the height constraint based on content size
-            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            let newHeight = min(size.height, maxHeight)
             textViewHeightConstraint.constant = newHeight
         }
-        
         // Animate the change for smoother UI
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        
         // Scroll to make the UITextView visible
         scrollToView(textView)
     }

@@ -62,6 +62,8 @@ struct ServiceUrl{
     static let api_notice_board_send_notice = "admin/api/notice-board/send-notice"
     static let api_notice_board_get_notice = "admin/api/notice-board/get-notice"
     static let admin_api_notice_board_report = "admin/api/notice-board/report"
+    static let admin_api_notice_board_update = "admin/api/notice-board/update"
+    static let admin_api_school_event_update = "admin/api/school-event/update"
     static let admin_api_notice_board_delete = "admin/api/notice-board/delete"
     static let admin_api_school_event_delete = "admin/api/school-event/delete"
     static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"

@@ -13,14 +13,14 @@ import DropDown
 @available(iOS 14.0, *)
 class SenderHomeWorkVC: UIViewController {
 
+    @IBOutlet weak var cvHeight: NSLayoutConstraint!
     // MARK: - Outlets
+    @IBOutlet weak var Cv: UICollectionView!
     @IBOutlet weak var noDataFound: UIImageView!
     @IBOutlet weak var nodataFoundLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     @IBOutlet weak var SectionLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var homeWorkTable: UITableView!
     @IBOutlet weak var sectionView: UIView!
     @IBOutlet weak var standerdView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
@@ -55,9 +55,9 @@ class SenderHomeWorkVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        HomeWorkCvCell
         setupViews()
-        registerTableCells()
+        registerCVCells()
         getAcademicYearList()
         searchBar.delegate = self
     }
@@ -94,9 +94,13 @@ class SenderHomeWorkVC: UIViewController {
         dateSelect(nil)
     }
 
-    private func registerTableCells() {
-        homeWorkTable.register(UINib(nibName: CellConfingName.HomeWorkTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
-        homeWorkTable.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
+    private func registerCVCells() {
+        
+        Cv.register(
+                UINib(nibName: "HomeWorkCvCell", bundle: nil),
+                forCellWithReuseIdentifier: "HomeWorkCvCell"
+            )
+//        homeWorkTable.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
 
     // MARK: - Dropdown Selections
@@ -130,8 +134,8 @@ class SenderHomeWorkVC: UIViewController {
             self.StandardLbl.text = item
             self.SectionLbl.text = selectedSections.first?.name ?? ""
             DispatchQueue.main.async {
-                self.homeWorkTable.layoutIfNeeded()
-                self.tableviewHeight.constant = 300
+                self.Cv.layoutIfNeeded()
+                self.cvHeight.constant = 300
             }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
@@ -151,8 +155,8 @@ class SenderHomeWorkVC: UIViewController {
             self.sectionId = self.sectionsDetails?[index].id
             self.SectionLbl.text = item
             DispatchQueue.main.async {
-                self.homeWorkTable.layoutIfNeeded()
-                self.tableviewHeight.constant = 300
+                self.Cv.layoutIfNeeded()
+                self.cvHeight.constant = 300
             }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
@@ -284,16 +288,16 @@ class SenderHomeWorkVC: UIViewController {
                     self.nodataFoundLbl.isHidden = response.status ?? false
                     self.noDataFound.isHidden = response.status ?? false
                     self.nodataFoundLbl.text = response.message
-                    self.homeWorkTable.reloadData()
+                    self.Cv.reloadData()
                     DispatchQueue.main.async {
-                        self.homeWorkTable.layoutIfNeeded()
-                        self.tableviewHeight.constant = self.homeWorkTable.contentSize.height
+                        self.Cv.layoutIfNeeded()
+                        self.cvHeight.constant = self.Cv.contentSize.height
                     }
 
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
                     self.noDataFound.isHidden = false
-                    self.tableviewHeight.constant = 0
+                    self.cvHeight.constant = 0
                 }
             }
         }
@@ -306,73 +310,55 @@ class SenderHomeWorkVC: UIViewController {
         nodataFoundLbl.text = message
         nodataFoundLbl.isHidden = false
         noDataFound.isHidden = false
-        tableviewHeight.constant = 0
+        cvHeight.constant = 0
     }
 }
 
 // MARK: - TableView
 @available(iOS 14.0, *)
-extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return FilterHomeWorkList?.count ?? 0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let data = FilterHomeWorkList?[indexPath.row] else {
-            return UITableViewCell()
-        }
-
-        if data.file_path?.first?.type?.uppercased() == "VIDEO" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-            cell.confic(data.file_path?.first?.url ?? "")
-            cell.descriptContent.setupExpandable(text: data.description ?? "")
-            cell.descriptContent.onExpandableTap = {
-                cell.descriptContent.isExpanded.toggle()
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            cell.newImg.isHidden = true
-            cell.datelbl.text = dateLbl.text?.convertToTargetDateFormat() ?? "-"
-            cell.titleLbl.text = data.title
-            cell.subjectName.text = data.subject_name
-            cell.forwardBtn.isHidden = false
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
-            cell.delegate = self
-            cell.subjectName.text = data.subject_name
-            cell.topics.text = data.title ?? ""
-            cell.dateLble.text = dateLbl.text ?? ""
-            cell.FilterHomeWorkList = data
-            cell.newView.isHidden = true
-            cell.descriptionLbl.setupExpandable(text: data.description ?? "")
-            cell.descriptionLbl.onExpandableTap = {
-                cell.descriptionLbl.isExpanded.toggle()
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-
-            if let filePaths = data.file_path, !filePaths.isEmpty {
-                cell.ImageCollectionView.isHidden = false
-                cell.CvHeight.constant = 100
-                cell.loadImage(urls: filePaths)
-            } else {
-                cell.ImageCollectionView.isHidden = true
-                cell.CvHeight.constant = 0
-            }
-            return cell
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (FilterHomeWorkList?.count ?? 0) - 1 == indexPath.row{
-            let contentHeight = self.homeWorkTable.contentSize.height
-            self.tableviewHeight.constant = contentHeight
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeWorkCvCell", for: indexPath) as? HomeWorkCvCell else {
+            return UICollectionViewCell()
         }
         
-        return UITableView.automaticDimension
+        
+        
+        
+       
+        cell.SubjectLbl.text = FilterHomeWorkList?[indexPath.row].subject_name
+        cell.stafNamLbl.text = FilterHomeWorkList?[indexPath.row].sent_by
+        
+        
+        
+        
+       
+            
+        cell.roundview.isHidden = true
+        cell.homeWorkCompletImg.isHidden = false
+        cell.homeWorkCompletImg.image = UIImage(named: "three-dot")
+            cell.pieChartWidth.constant = 0
+            cell.PieChartTrailling.constant = -10
+            cell.pieChart.isHidden = true
+        
+
+            return cell
+        }
     }
-}
+
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if (FilterHomeWorkList?.count ?? 0) - 1 == indexPath.row{
+//            let contentHeight = self.Cv.contentSize.height
+//            self.cvHeight.constant = contentHeight
+//        }
+//        
+//        return UITableView.automaticDimension
+//    }
+
 
 // MARK: - Delegates
 @available(iOS 14.0, *)
@@ -397,7 +383,7 @@ extension SenderHomeWorkVC: SelectNotice, Datepicker, UISearchBarDelegate {
                 $0.description?.lowercased().contains(lower) == true
             }
         }
-        homeWorkTable.reloadData()
+        Cv.reloadData()
     }
 }
 extension UIView{

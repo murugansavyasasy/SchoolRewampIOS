@@ -13,19 +13,19 @@ protocol HistorySelectDelegate {
 
 @available(iOS 14.0, *)
 class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate, EditObjectDelegate {
+    
     func editDta(edit: Any) {
         if pages.count > 0, let senderVC = pages[0] as? SenderNoticeBoardVC{
             senderVC.fetchData(notice: edit as? Notice)
         }
         if pages.count > 0, let senderVC = pages[0] as? EventsVC{
-            senderVC.fetchData(eventList: edit as? EventList) 
+            senderVC.fetchData(eventList: edit as? EventList)
         }
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 1
         let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .reverse : .forward
         updateTabUI(for: 0)
         pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
     }
-    
     
     // MARK: - IBOutlets
     @IBOutlet weak var BackBtn: UIButton!
@@ -34,7 +34,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     @IBOutlet weak var reportsLb: UILabel!
     @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var presentView: UIView!
-    
+    @IBOutlet weak var searcchBtn: UIButton!
     // MARK: - Variables
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
@@ -43,7 +43,6 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     var titleLbl = ""
     var button1 = "Create".translated()
     var button2 = "History".translated()
-    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,14 +123,23 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        if pages.indices.contains(1), let senderVC = pages[1] as? NoticeBoardVc {
+            senderVC.searchHide(hide: sender.isSelected)
+        }
+    }
     @IBAction func switchController(_ sender: UIButton) {
         let selectedIndex = sender.tag
         guard selectedIndex >= 0 && selectedIndex < pages.count else {
             print("Index out of bounds")
             return
         }
-        
+        if let vc = pages[1] as? NoticeBoardVc{
+            vc.Get_Notice()
+        }
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = selectedIndex > currentIndex ? .forward : .reverse
         
@@ -141,6 +149,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     }
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
+            self.searcchBtn.isHidden = index == 0
             self.createLbl.backgroundColor = index == 0 ? .blue : .white
             self.reportsLb.backgroundColor = index == 0 ? .white : .blue
             self.reportsBtn.tintColor = index == 0 ? .black : .blue
@@ -157,6 +166,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
               let currentIndex = pages.firstIndex(of: currentVC) else {
             return
         }
+       
         
         updateTabUI(for: currentIndex)
     }

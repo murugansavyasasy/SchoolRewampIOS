@@ -256,13 +256,13 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
+        
         bottomCv.delegate = self
         bottomCv.dataSource = self
         getacadmicYr{
             self.get_dashboard_details()
         }
-       
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -276,7 +276,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     
-
+    
     
     func getacadmicYr(onComplete: @escaping () -> Void){
         APIService.shared
@@ -287,7 +287,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
                 switch result {
                 case .success(let successMessage):
                     if successMessage.status == true{
-                            localData.accidamic_year_data = successMessage
+                        localData.accidamic_year_data = successMessage
                     }else{
                         localData.accidamic_year_data = successMessage
                     }
@@ -439,9 +439,9 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     cell.MenuImgView.image = img
                 }
                 cell.roundview.isHidden = true
-//                if data.unread_count ?? 0 > 0 {
-//                    cell.roundview.isHidden = false
-//                }
+                //                if data.unread_count ?? 0 > 0 {
+                //                    cell.roundview.isHidden = false
+                //                }
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
                 cell.GradientView.backgroundColor = .clr
@@ -814,10 +814,9 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         emitter.emitterPosition = CGPoint(x: view.center.x, y: -10)
         emitter.emitterShape = .line
         emitter.emitterSize = CGSize(width: view.bounds.size.width, height: 1)
-
+        
         let colors: [UIColor] = [.systemRed, .systemGreen, .systemBlue, .systemPink, .systemOrange]
         var cells = [CAEmitterCell]()
-
         for color in colors {
             let cell = CAEmitterCell()
             cell.birthRate = 6
@@ -831,15 +830,15 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             cell.contents = UIImage(systemName: "star.fill")?.withTintColor(color, renderingMode: .alwaysOriginal).cgImage
             cells.append(cell)
         }
-
+        
         emitter.emitterCells = cells
         view.layer.addSublayer(emitter)
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             emitter.birthRate = 0
             emitter.removeFromSuperlayer()
         }
     }
-
+    
 }
 

@@ -82,7 +82,7 @@ class LeveHistoryTV: UITableViewCell {
 }
 
 extension UIView {
-    func setShadow(cornerRadius: CGFloat = 15, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowOffset: CGSize = CGSize(width: 0, height: 2), shadowRadius: CGFloat = 4) {
+    func setShadow(cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOpacity: Float = 0.2, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowRadius: CGFloat = 4) {
         self.layer.cornerRadius = cornerRadius
         self.layer.shadowColor = shadowColor.cgColor
         self.layer.shadowOpacity = shadowOpacity

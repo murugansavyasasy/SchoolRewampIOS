@@ -141,9 +141,10 @@ class  commonApi_forSending {
 //    }
     
     
-    
+//onComplete: (Send_AttachmentResponse) -> Void
     func SendingAttachmentFlow(
         selectedAcadimicYearId: Int,
+        edit: Bool? = false,
         target_type: Int,
         selectedId: [String],
         baseURL: String,
@@ -166,79 +167,72 @@ class  commonApi_forSending {
 
                 let dispatchGroup = DispatchGroup()
 
-               
-                
-                
-
-                
-                // 🎥 Upload all videos to Vimeo
-                
+                // 🎥 Upload videos to Vimeo
                 let videoFiles = user_inputs.SelectedUrls.filter {
                     $0.fileType.uppercased() == AttachmentTypeString.VIDEO
                 }
-                
+
                 for item in videoFiles {
                     dispatchGroup.enter()
                     let videoTitle = Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
                     let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
 
-                    
                     if let videoURL = item.VideoURl {
                         startUpload(
                             from: viewController,
-                            videoURL:videoURL,
+                            videoURL: videoURL,
                             title: videoTitle,
                             description: videoDescription
-                        ) {
-                            [self] videoURLString,
-                            iframeHTML,
-                            fileSize,
-                            finalEmbedUrl in
-
+                        ) { [self] videoURLString, iframeHTML, fileSize, finalEmbedUrl in
                             if let finalEmbedUrl = finalEmbedUrl {
-                                uploadedFiles.append(["url": finalEmbedUrl, "type": AttachmentTypeString.VIDEO])
+                                uploadedFiles.append([
+                                    "url": finalEmbedUrl,
+                                    "type": AttachmentTypeString.VIDEO
+                                ])
                                 iframeValue = iframeHTML ?? ""
                                 fileSizeValue = convertSize(fileSize ?? 0)
                             } else {
-                                print("❌ Failed to upload video")
+                                print("❌ Failed to upload video.")
                             }
-
                             dispatchGroup.leave()
                         }
                     } else {
                         print("❌ Video URL is nil.")
-                    }
-                    
-                    
-                }
-                
-                
-
-                // 2. Upload images/documents
-                if let files = user_inputs.SelectedUrls as? [Any] {
-                    dispatchGroup.enter()
-                    uploadAWSMedia(file: files) {
-                        CircularProgressLoader.shared.hide()
-
-                        let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
-                            if let url = URL(string: urlString) {
-                                let type = url.pathExtension.lowercased()
-                                let resolvedType = (type == "jpg" || type == "png") ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                                return [CommonStringFile.url: urlString, CommonStringFile.type: resolvedType]
-                            }
-                            return nil
-                        }
-
-                        uploadedFiles.append(contentsOf: fileEntries)
                         dispatchGroup.leave()
                     }
                 }
 
-                // 3. Once all uploads complete, send
+                // 📷 Upload other files (images, PDFs, etc.)
+                dispatchGroup.enter()
+                uploadAWSMedia(file: user_inputs.SelectedUrls) {
+                    CircularProgressLoader.shared.hide()
+
+                    let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
+                        guard let url = URL(string: urlString) else { return nil }
+                        let ext = url.pathExtension.lowercased()
+                        let resolvedType = (ext == "jpg" || ext == "png") ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+                        return [
+                            CommonStringFile.url: urlString,
+                            CommonStringFile.type: resolvedType
+                        ]
+                    }
+
+                    uploadedFiles.append(contentsOf: fileEntries)
+                    dispatchGroup.leave()
+                }
+
+                // ✅ Once all uploads are complete, make the final API call
                 dispatchGroup.notify(queue: .main) {
                     if uploadedFiles.isEmpty {
                         print("❌ No files uploaded.")
                         return
+                    }
+
+                    if edit == true {
+                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL) {response in
+                            print("✅ All uploads complete.")
+                            onComplete(response)
+                        }
                     }
 
                     self.sendAttachment(
@@ -253,7 +247,7 @@ class  commonApi_forSending {
                         Common_request_params: Common_request_params,
                         subjectId: subjectId
                     ) { response in
-                        print("✅ All uploads complete")
+                        print("✅ All uploads complete.")
                         onComplete(response)
                     }
                 }
@@ -263,6 +257,7 @@ class  commonApi_forSending {
             }
         )
     }
+
 
     
     func sendAttachment(
@@ -307,7 +302,9 @@ class  commonApi_forSending {
             ) { [] (result: Result<Send_AttachmentResponse, Error>) in
                 switch result {
                 case .success(let successMessage):
-                    onComplete(successMessage)
+                    DispatchQueue.main.async {
+                        onComplete(successMessage)
+                    }
                     
                 case .failure(let error):
                     print("❌ API error: \(error.localizedDescription)")
@@ -318,12 +315,66 @@ class  commonApi_forSending {
                         preferredStyle: .alert
                     )
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    viewController.present(alert, animated: true)
+                    DispatchQueue.main.async {
+                        viewController.present(alert, animated: true)
+                    }
                 }
             }
             
         }
-    
+    func EditAttachment(
+        from viewController: UIViewController,
+        with uploadedFiles: [[String: String]],
+        iframe: String,
+        filesize: String,
+        baseURl: String,
+        Common_request_params: [String: Any]? = nil,
+        onComplete: @escaping(Send_AttachmentResponse) -> Void
+    ) {
+        var parameters: [String: Any] = [
+            SendAttachmentStringFile.file_path: uploadedFiles,
+            SendAttachmentStringFile.iframe: iframe,
+            SendAttachmentStringFile.file_size: filesize
+        ]
+        
+        var finalParams = parameters
+        if let common = Common_request_params {
+            finalParams.merge(common) { (_, new) in new }
+        }
+        
+        print("📤 Sending parameters Request : \(finalParams)")
+        
+        APIService.shared.makeApi(
+            url: baseURl,
+            parameters: finalParams,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
+            guard let viewController = viewController else { return }
+
+            switch result {
+            case .success(let successMessage):
+                DispatchQueue.main.async {
+                    onComplete(successMessage)
+                }
+
+            case .failure(let error):
+                print("❌ API error: \(error.localizedDescription)")
+
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: error.localizedDescription,
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+                DispatchQueue.main.async {
+                    viewController.present(alert, animated: true)
+                }
+            }
+        }
+    }
+
     
     
     //Function for video upload
@@ -518,7 +569,6 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-            
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
             

@@ -10,12 +10,13 @@ import AWSCore
 import AWSS3
 import AVFoundation
 import DropDown
+import AVKit
 
 protocol DeleteImge{
     func deleteImage(index:Int)
 }
 @available(iOS 14.0, *)
-class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker, UIImagePickerControllerDelegate & UINavigationControllerDelegate, VideoPickerManagerDelegate{
+class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
     func date(date: String) {
         
@@ -89,6 +90,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var images = [String]()
     var dropDownList = [String]()
     var eventListRespons : [EventCategory]?
+    var editId: String?
     let dropDown = DropDown()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,11 +117,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         eventTxt.addDoneButton()
         contentTxtView.addDoneButton()
         imageSelection()
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         catagoryDropDownView.isUserInteractionEnabled = true
         catagoryDropDownView.addGestureRecognizer(tapGesture)
-
+        
         VideoView.isHidden = true
         
         // Add observers for keyboard notifications
@@ -141,6 +143,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
+    
     func fetchData(eventList:EventList?){
         attachments.removeAll()
         if let eventList = eventList{
@@ -154,11 +157,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             }
             attachments.append(contentsOf: imageItems)
             costomView.imageCollectionview.reloadData()
-            
+            editId = eventList.id
             if let event = self.eventListRespons?.first(where: { $0.name == eventList.category }) {
                 self.selecctedCatagory.text = event.name
                 self.selectedCatagoryImg.kf.setImage(with: URL(string: event.url ?? ""))
+                
             }
+            
             nextBtn.setTitle("Update", for: .normal)
             updateTextViewHeight(contentTxtView)
         }
@@ -171,7 +176,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             self.view.layoutIfNeeded()
         }
     }
-
+    
     func get_CatagoryListApi() {
         APIService.shared.makeApi(url: ServiceUrl.admin_api_school_event_categories, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<EventCategoryResponse, Error>) in
             guard let self = self else { return }
@@ -209,15 +214,14 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
     }
     
-    
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            //            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-            selectedVideoURL = nil
             costomView.imageCollectionview.reloadData()
         }
         
@@ -228,10 +232,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            }
-            selectedVideoURL = nil
+            //            if imageItems.count != 0{
+            //                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            //            }
             costomView.imageCollectionview.reloadData()
         }
         
@@ -239,12 +242,26 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            selectedVideoURL = nil
+            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             costomView.imageCollectionview.reloadData()
         }
-        
+        PhotoPickerManager.shared.onVideoPicked = { [self] data in
+            // handle picked PDF
+            user_inputs.selectedFileType = CommonStringFile.VIDEO
+            attachments
+                .append(
+                    AttachmentItem(
+                        image:nil,
+                        imageURL: nil,
+                        fileType: CommonStringFile.VIDEO,
+                        VideoURl: data
+                    )
+                )
+            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            costomView.imageCollectionview.reloadData()
+        }
     }
+    
     @objc func catagoryTapped() {
         print("Category View Tapped")
         dropDown.anchorView = catagoryDropDownView
@@ -253,43 +270,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             selectedCatagoryImg.kf.setImage(with: URL(string: images[index]))
             selecctedCatagory.text = item
-           
+            
         }
     }
-
-    
-    func pickVideoFromGallery(){
-        //        if #available(iOS 15.0, *) {
-        //            showLottieProgressLoader(animationName: "loader (2)")
-        //        }
-        videoPicker?.pickVideo()
-    }
-    
-    // MARK: - Delegate Methods
-    func videoPickerManager(didPickVideo url: URL) {
-        //           if #available(iOS 15.0, *) {
-        //               self.hideLottieProgressLoader()
-        //           }
-        videoPicker?.playVideo(from: url, in: VideoView)
-        attachments.removeAll()
-        costomView.isHidden = true
-        collectionViewHeght.constant = 0
-        selectedVideoURL = url
-        VideoView.isHidden = false
-    }
     
     
-    func videoPickerManagerDidCloseVideo() {
-        if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
-        }
-        selectedVideoURL = nil
-        VideoView.isHidden = true
-        //          / chooseRecipientsBtn.isHidden = true
-        costomView.isHidden = false
-        collectionViewHeght.constant = 120
-        costomView.imageCollectionview.reloadData()
-    }
     
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
@@ -508,7 +493,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
             let date = convertDate(todate.titleLabel?.text ?? "")
-            let params: [String: Any] = [
+            var params: [String: Any] = [
                 assignmentResquestStringKey.title: eventTxt.text ?? "",
                 assignmentResquestStringKey.description: contentTxtView.text ?? "",
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
@@ -517,7 +502,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.category:selecctedCatagory.text ?? ""
             ]
             if sender.titleLabel?.text == "Update"{
-//                sendAttachmentFlow(url: ServiceUrl.admin_api_notice_board_report, Common_request_params: params)
+                let com = commonApi_forSending()
+                params[SendAttachmentStringFile.id] = editId
+                sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_school_event_update, Common_request_params: params)
             }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.event
@@ -532,6 +519,36 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
         
     }
+    
+    private func sendAttachmentFlow(
+        via comm: commonApi_forSending,
+        url baseURL: String,
+        Common_request_params: [String: Any]
+    ) {
+        comm.SendingAttachmentFlow(
+            selectedAcadimicYearId: 0,
+            edit: true,
+            target_type:0,
+            selectedId: [],
+            baseURL: baseURL,
+            subjectId: "",
+            message:"",
+            from: self,
+            Common_request_params: Common_request_params
+        ) { response in
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.hide()
+                CustomAlert.showAlertWithOkAction(
+                    title: AlertstringFile.Success,
+                    message: response.message,
+                    on: self
+                ) { [self] in
+                    print("success")
+                }
+            }
+        }
+    }
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -543,7 +560,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
@@ -579,89 +595,110 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 } else {
                     cell.imageViews.kf.setImage(with: url)
                 }
-            } else {
+            } else if let vido = item.VideoURl{
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }else{
                 cell.imageViews.image = nil
             }
             
             // Set collection view height dynamically
             let totalItems = attachments.count
-            collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
-            
+            collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
         }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let width = (costomView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
         
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0{
+        if indexPath.row == 0 {
             let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            //
-            // Camera option
+            
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-                //
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
-            // Gallery option
             let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
                 selectImages()
-                //
             }
             alertController.addAction(galleryAction)
             
-            //             PDF option
             let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
             alertController.addAction(pdfAction)
-            //            //             Video option
-            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
-                pickVideoFromGallery()
-            }
-            alertController.addAction(Video)
             
-            // Cancel action
+            let videoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                VideoPick()
+            }
+            alertController.addAction(videoAction)
+            
             let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             self.present(alertController, animated: true, completion: nil)
-        }else{
-            if attachments.count > indexPath.item - 1 {
-                if attachments[indexPath.item - 1].fileType != "video"{
-                    let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
-                        if let url = attachments[indexPath.item - 1].imageURL{
-                            vc.selectedFileURL = URL(string: url)
-                        }
-                    } else{
-                        if let img = attachments[indexPath.item - 1].image {
-                            vc.img = attachments[indexPath.item - 1].image
-                        }else{
-                            vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
-                        }
-                        
-                    }
-                    vc.type = attachments[indexPath.item - 1].fileType
-                    present(vc, animated: true)
-                }else{
-                    
+            
+        } else {
+            let attachment = attachments[indexPath.item - 1]
+            
+            switch attachment.fileType {
+            case CommonStringFile.IMAGE:
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                
+                if let img = attachment.image {
+                    vc.img = img
+                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
                 }
+                
+                vc.type = CommonStringFile.IMAGE
+                present(vc, animated: true)
+                
+            case CommonStringFile.pdf:
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                
+                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
+                }
+                
+                vc.type = CommonStringFile.pdf
+                present(vc, animated: true)
+                
+            case CommonStringFile.VIDEO:
+                if let videoURL = attachment.VideoURl {
+                    let player = AVPlayer(url: videoURL)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    present(playerViewController, animated: true) {
+                        player.play()
+                    }
+                }
+                
+            default:
+                break
             }
         }
     }
     
     // MARK: File Attachments Actions
     func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
+//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if attachments.count != 10{
+            PhotoPickerManager.shared
+                .presentPicker(
+                    ofType: .gallery(selectionLimit: 10 - attachments.count),
+                    from: self
+                )
             
         }else{
             let alert = CustomAlert()
@@ -671,8 +708,8 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         
     }
     func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
+//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -681,10 +718,32 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
     }
     func selectPDF() {
-        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
-        if pdf.count != 5{
+//        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+        if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
+            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
+        }else{
+            
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+        
+    }
+    
+    func VideoPick() {
+        let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
+        
+        if  video.count != 2{
+            
+            if attachments.count <= 10{
+                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
+                PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
+                
+            }else{
+                let alert = CustomAlert()
+                alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+            
         }else{
             
             let alert = CustomAlert()
@@ -752,29 +811,29 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-//        if updatedText.count <= 500 {
-//            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
-            return true // Allow the change
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            //            contentTxtView.isEditable = false // Optionally disable editing
-//            return false // Reject the change
-//        }
+        //        if updatedText.count <= 500 {
+        //            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
+        return true // Allow the change
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        //            //            contentTxtView.isEditable = false // Optionally disable editing
+        //            return false // Reject the change
+        //        }
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         
-//        if updatedText.count <= 50 {
-//            tittleCountLbl.text = "\(updatedText.count) / 50"
-//            return true
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
-//            return false
-//        }
+        //        if updatedText.count <= 50 {
+        //            tittleCountLbl.text = "\(updatedText.count) / 50"
+        //            return true
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
+        //            return false
+        //        }
         return true
     }
     
@@ -832,13 +891,9 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
 class HalfColorButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        // Create a layer for the 60% background color
         let coloredLayer = CALayer()
         coloredLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.4) // 60% height
-        coloredLayer.backgroundColor = UIColor.white.cgColor // Set the desired color
-        
-        // Remove old layers to avoid duplication
+        coloredLayer.backgroundColor = UIColor.white.cgColor
         self.layer.sublayers?.removeAll(where: { $0 is CALayer })
         // Add the 60% color layer
         self.layer.addSublayer(coloredLayer)

@@ -8,8 +8,15 @@
 import UIKit
 import Charts
 
-class HomeWorkCvCell: UICollectionViewCell {
 
+protocol EditAndDelete{
+    
+    func EditDeleteclcik()
+        
+        
+    
+}
+class HomeWorkCvCell: UICollectionViewCell {
     @IBOutlet weak var pieChartHeight: NSLayoutConstraint!
     @IBOutlet weak var homeWorkCompletImg: UIImageView!
     @IBOutlet weak var SubjectLbl: UILabel!

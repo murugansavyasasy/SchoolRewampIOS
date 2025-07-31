@@ -129,6 +129,7 @@ enum UploadEvent {
 class SendAttachmentStringFile {
     
     static let title = "title"
+    static let id = "id"
     static let file_type = "file_type"
     static let file_path = "file_path"
     static let target_type = "target_type"

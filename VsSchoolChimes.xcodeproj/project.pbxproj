@@ -129,6 +129,12 @@
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
+		840177DD2E3A2238006CB477 /* FooterCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840177DC2E3A2238006CB477 /* FooterCvCell.swift */; };
+		840177DF2E3A224F006CB477 /* FooterCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177DE2E3A224F006CB477 /* FooterCvCell.xib */; };
+		840177E22E3B2981006CB477 /* AttachTvHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840177E12E3B2981006CB477 /* AttachTvHeader.swift */; };
+		840177E42E3B2990006CB477 /* AttachTvHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177E32E3B2990006CB477 /* AttachTvHeader.xib */; };
+		840177E82E3B2CE0006CB477 /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177E72E3B2CE0006CB477 /* ContentCell.xib */; };
+		840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840177E62E3B2CE0006CB477 /* ContentCell.swift */; };
 		840639732DDF549300930943 /* GalleryPickerVcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840639712DDF549300930943 /* GalleryPickerVcViewController.swift */; };
 		840639742DDF549300930943 /* GalleryPickerVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840639722DDF549300930943 /* GalleryPickerVcViewController.xib */; };
 		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
@@ -893,6 +899,12 @@
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		840177DC2E3A2238006CB477 /* FooterCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCvCell.swift; sourceTree = "<group>"; };
+		840177DE2E3A224F006CB477 /* FooterCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterCvCell.xib; sourceTree = "<group>"; };
+		840177E12E3B2981006CB477 /* AttachTvHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachTvHeader.swift; sourceTree = "<group>"; };
+		840177E32E3B2990006CB477 /* AttachTvHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachTvHeader.xib; sourceTree = "<group>"; };
+		840177E62E3B2CE0006CB477 /* ContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
+		840177E72E3B2CE0006CB477 /* ContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCell.xib; sourceTree = "<group>"; };
 		840639712DDF549300930943 /* GalleryPickerVcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPickerVcViewController.swift; sourceTree = "<group>"; };
 		840639722DDF549300930943 /* GalleryPickerVcViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryPickerVcViewController.xib; sourceTree = "<group>"; };
 		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
@@ -2038,6 +2050,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		840177DB2E3A21F8006CB477 /* FooterView */ = {
+			isa = PBXGroup;
+			children = (
+				840177DC2E3A2238006CB477 /* FooterCvCell.swift */,
+				840177DE2E3A224F006CB477 /* FooterCvCell.xib */,
+			);
+			path = FooterView;
+			sourceTree = "<group>";
+		};
+		840177E02E3B28CC006CB477 /* TvHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				840177EA2E3B3B9F006CB477 /* TvFooterCell */,
+				840177E12E3B2981006CB477 /* AttachTvHeader.swift */,
+				840177E32E3B2990006CB477 /* AttachTvHeader.xib */,
+				840177E52E3B2CB1006CB477 /* Cell */,
+			);
+			path = TvHeaderCell;
+			sourceTree = "<group>";
+		};
+		840177E52E3B2CB1006CB477 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				840177E62E3B2CE0006CB477 /* ContentCell.swift */,
+				840177E72E3B2CE0006CB477 /* ContentCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		840177EA2E3B3B9F006CB477 /* TvFooterCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TvFooterCell;
+			sourceTree = "<group>";
+		};
 		8406396F2DDF541800930943 /* GalleryPickerPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -2137,6 +2185,7 @@
 		840F67722D94066000AC2F5A /* Attachments */ = {
 			isa = PBXGroup;
 			children = (
+				840177E02E3B28CC006CB477 /* TvHeaderCell */,
 				84EAE7812DB20B250083AD9E /* ReciverAttachmentrVC.swift */,
 				84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */,
 				846BDD732DB60387001DB91A /* TAttacmentTVC.swift */,
@@ -3293,6 +3342,7 @@
 		84E0A9FF2E389449002BF40A /* CvHeaderCell */ = {
 			isa = PBXGroup;
 			children = (
+				840177DB2E3A21F8006CB477 /* FooterView */,
 				84E0A9FD2E389432002BF40A /* AttachmentHeaderCell.xib */,
 				84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */,
 			);
@@ -3914,6 +3964,7 @@
 				FAFFBD082E336F8600F8B150 /* ExamListTV.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */,
+				840177E42E3B2990006CB477 /* AttachTvHeader.xib in Resources */,
 				8442A86F2CDB787A0006068E /* SchoolTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
 				8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */,
@@ -4146,6 +4197,7 @@
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				84E0A97B2E374B7C002BF40A /* AttachmentsVc.xib in Resources */,
 				8480A4172E320DD6009A7DED /* ReciverNoticeBoardVC.xib in Resources */,
+				840177E82E3B2CE0006CB477 /* ContentCell.xib in Resources */,
 				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
 				8451ECF92E25076300D6DBB4 /* ViewProgressVC.xib in Resources */,
@@ -4181,6 +4233,7 @@
 				84127AFA2E03C8F00092159D /* ClaimCouponVc.xib in Resources */,
 				84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */,
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
+				840177DF2E3A224F006CB477 /* FooterCvCell.xib in Resources */,
 				846CF73E2E2F5A98000361CE /* OngoingCVC.xib in Resources */,
 				8480A4132E31F4CB009A7DED /* NoticeCVC.xib in Resources */,
 				8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */,
@@ -4383,8 +4436,10 @@
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
 				FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */,
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
+				840177DD2E3A2238006CB477 /* FooterCvCell.swift in Sources */,
 				18926C522D02DE81002BBB97 /* SubmitLsrwRequest.swift in Sources */,
 				8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */,
+				840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */,
 				18926C532D02DE81002BBB97 /* LsrwListShowViewController.swift in Sources */,
 				18926C542D02DE81002BBB97 /* SubmitResponseForSkillModal.swift in Sources */,
 				FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */,
@@ -4466,6 +4521,7 @@
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
+				840177E22E3B2981006CB477 /* AttachTvHeader.swift in Sources */,
 				180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */,
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,

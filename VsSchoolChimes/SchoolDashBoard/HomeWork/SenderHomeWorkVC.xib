@@ -11,21 +11,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderHomeWorkVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="Cv" destination="tQS-DR-IHJ" id="FFJ-gh-IZg"/>
                 <outlet property="SectionLbl" destination="oqF-Uv-VMf" id="yBB-wF-gNY"/>
                 <outlet property="StandardLbl" destination="rW1-lu-5dU" id="Vy8-jn-kMs"/>
                 <outlet property="acodemicView" destination="Xlt-md-Fu0" id="VR8-5H-7Qt"/>
                 <outlet property="acodemicdropView" destination="yJO-tn-9h8" id="jaU-aY-h1G"/>
                 <outlet property="acodomicYearLbl" destination="Agk-gr-aOD" id="rGV-nw-KFu"/>
+                <outlet property="cvHeight" destination="z2O-gH-mpP" id="2FF-fs-meW"/>
                 <outlet property="dateLbl" destination="jwt-QO-JHP" id="SId-EI-VfC"/>
                 <outlet property="dateView" destination="jrt-ed-2r4" id="HAW-o9-ZGI"/>
                 <outlet property="dropDownStack" destination="JxM-Kh-jbu" id="lUi-XI-vek"/>
-                <outlet property="homeWorkTable" destination="ZFn-GK-QVq" id="cH6-R5-Gmo"/>
                 <outlet property="noDataFound" destination="msi-ow-kCq" id="maF-qs-nzy"/>
                 <outlet property="nodataFoundLbl" destination="PKx-fm-Yim" id="cqA-U5-v4K"/>
                 <outlet property="searchBar" destination="VID-OE-cAy" id="zQz-94-WzI"/>
                 <outlet property="sectionView" destination="dCT-6E-8Sm" id="sSa-Qq-Li6"/>
                 <outlet property="standerdView" destination="vAE-1z-vgv" id="O5W-qS-sG5"/>
-                <outlet property="tableviewHeight" destination="gBP-La-NQz" id="2DL-2m-wU3"/>
                 <outlet property="todayLbl" destination="37c-kQ-QOW" id="uDv-Qf-GFM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -243,7 +243,7 @@
                                         <action selector="selectSection:" destination="-1" eventType="touchUpInside" id="TYE-XQ-ve1"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9WN-9N-3Sa">
+                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9WN-9N-3Sa">
                                     <rect key="frame" x="10" y="186" width="420" height="20.333333333333343"/>
                                     <subviews>
                                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="msi-ow-kCq">
@@ -270,17 +270,19 @@
                                                 <outlet property="delegate" destination="-1" id="EuN-oh-FEA"/>
                                             </connections>
                                         </searchBar>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZFn-GK-QVq">
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="tQS-DR-IHJ">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="700"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="700" id="gBP-La-NQz"/>
+                                                <constraint firstAttribute="height" constant="700" id="z2O-gH-mpP"/>
                                             </constraints>
-                                            <connections>
-                                                <outlet property="dataSource" destination="-1" id="TLs-4o-5WM"/>
-                                                <outlet property="delegate" destination="-1" id="kna-5B-2wd"/>
-                                            </connections>
-                                        </tableView>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rU1-Hu-wcO">
+                                                <size key="itemSize" width="128" height="128"/>
+                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                            </collectionViewFlowLayout>
+                                        </collectionView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </stackView>
@@ -308,7 +310,6 @@
                                 <constraint firstItem="eEQ-7H-fwU" firstAttribute="leading" secondItem="vAE-1z-vgv" secondAttribute="leading" id="lIF-ti-zB5"/>
                                 <constraint firstItem="FOD-x4-1v7" firstAttribute="leading" secondItem="oAn-ev-L6a" secondAttribute="leading" constant="10" id="paZ-mi-byN"/>
                                 <constraint firstAttribute="trailing" secondItem="Xlt-md-Fu0" secondAttribute="trailing" constant="20" id="qO6-09-EBR"/>
-                                <constraint firstItem="9WN-9N-3Sa" firstAttribute="top" secondItem="ZFn-GK-QVq" secondAttribute="top" id="vBn-Th-TQh"/>
                                 <constraint firstItem="eEQ-7H-fwU" firstAttribute="bottom" secondItem="vAE-1z-vgv" secondAttribute="bottom" id="zZN-bE-Kt1"/>
                                 <constraint firstAttribute="trailing" secondItem="jrt-ed-2r4" secondAttribute="trailing" constant="16" id="zb4-8o-1fJ"/>
                             </constraints>
@@ -343,7 +344,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
