@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,13 +12,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderHomeWorkVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="Cv" destination="tQS-DR-IHJ" id="FFJ-gh-IZg"/>
+                <outlet property="Cv" destination="Dzc-jK-p8q" id="7sT-gx-dmK"/>
                 <outlet property="SectionLbl" destination="oqF-Uv-VMf" id="yBB-wF-gNY"/>
                 <outlet property="StandardLbl" destination="rW1-lu-5dU" id="Vy8-jn-kMs"/>
                 <outlet property="acodemicView" destination="Xlt-md-Fu0" id="VR8-5H-7Qt"/>
                 <outlet property="acodemicdropView" destination="yJO-tn-9h8" id="jaU-aY-h1G"/>
                 <outlet property="acodomicYearLbl" destination="Agk-gr-aOD" id="rGV-nw-KFu"/>
-                <outlet property="cvHeight" destination="z2O-gH-mpP" id="2FF-fs-meW"/>
+                <outlet property="cvHeight" destination="XIw-VE-tj3" id="B5n-9G-ux0"/>
                 <outlet property="dateLbl" destination="jwt-QO-JHP" id="SId-EI-VfC"/>
                 <outlet property="dateView" destination="jrt-ed-2r4" id="HAW-o9-ZGI"/>
                 <outlet property="dropDownStack" destination="JxM-Kh-jbu" id="lUi-XI-vek"/>
@@ -243,7 +244,7 @@
                                         <action selector="selectSection:" destination="-1" eventType="touchUpInside" id="TYE-XQ-ve1"/>
                                     </connections>
                                 </button>
-                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9WN-9N-3Sa">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9WN-9N-3Sa">
                                     <rect key="frame" x="10" y="186" width="420" height="20.333333333333343"/>
                                     <subviews>
                                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="msi-ow-kCq">
@@ -253,7 +254,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKx-fm-Yim">
-                                            <rect key="frame" x="0.0" y="0.0" width="420" height="20.333333333333332"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="420" height="20.333333333333314"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -270,13 +271,13 @@
                                                 <outlet property="delegate" destination="-1" id="EuN-oh-FEA"/>
                                             </connections>
                                         </searchBar>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="tQS-DR-IHJ">
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Dzc-jK-p8q">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="700"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="700" id="z2O-gH-mpP"/>
+                                                <constraint firstAttribute="height" constant="700" id="XIw-VE-tj3"/>
                                             </constraints>
-                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rU1-Hu-wcO">
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zGb-Vu-bK4">
                                                 <size key="itemSize" width="128" height="128"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -287,7 +288,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" systemColor="systemGray5Color"/>
                             <constraints>
                                 <constraint firstItem="su0-KY-rKo" firstAttribute="trailing" secondItem="dCT-6E-8Sm" secondAttribute="trailing" id="28U-Qc-cZf"/>
                                 <constraint firstItem="su0-KY-rKo" firstAttribute="bottom" secondItem="dCT-6E-8Sm" secondAttribute="bottom" id="2fG-ax-av1"/>
@@ -300,6 +301,7 @@
                                 <constraint firstItem="9WN-9N-3Sa" firstAttribute="leading" secondItem="FOD-x4-1v7" secondAttribute="leading" id="Ode-YC-xvG"/>
                                 <constraint firstItem="eEQ-7H-fwU" firstAttribute="top" secondItem="vAE-1z-vgv" secondAttribute="top" id="QTK-4c-v1f"/>
                                 <constraint firstItem="jrt-ed-2r4" firstAttribute="leading" secondItem="oAn-ev-L6a" secondAttribute="leading" constant="16" id="VTJ-UT-1ww"/>
+                                <constraint firstItem="9WN-9N-3Sa" firstAttribute="top" secondItem="FOD-x4-1v7" secondAttribute="top" id="WUi-yj-3UN"/>
                                 <constraint firstItem="Xlt-md-Fu0" firstAttribute="top" secondItem="oAn-ev-L6a" secondAttribute="top" constant="10" id="dd8-Ql-cwR"/>
                                 <constraint firstItem="eEQ-7H-fwU" firstAttribute="trailing" secondItem="vAE-1z-vgv" secondAttribute="trailing" id="gaM-ld-Bhc"/>
                                 <constraint firstItem="9WN-9N-3Sa" firstAttribute="trailing" secondItem="FOD-x4-1v7" secondAttribute="trailing" id="gsA-ed-PV0"/>
@@ -324,7 +326,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="HomeWorkClr"/>
             <constraints>
                 <constraint firstItem="xdl-3h-OZ8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="HcH-Ga-qne"/>
                 <constraint firstItem="oAn-ev-L6a" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MR0-b3-V0Y"/>
@@ -340,6 +342,9 @@
         <image name="NoMessage" width="650" height="512"/>
         <image name="calendarimage" width="24" height="24"/>
         <image name="down-arrow" width="512" height="512"/>
+        <namedColor name="HomeWorkClr">
+            <color red="0.3919999897480011" green="0.40400001406669617" blue="0.82400000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

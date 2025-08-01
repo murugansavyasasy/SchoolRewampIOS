@@ -23,20 +23,20 @@
                             <rect key="frame" x="0.0" y="0.0" width="373" height="91"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xu-4C-uH2">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="36.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="37.666666666666664"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rq9-u5-h0e">
-                                    <rect key="frame" x="0.0" y="41.666666666666664" width="373" height="23.999999999999993"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                    <rect key="frame" x="0.0" y="42.666666666666664" width="373" height="22.999999999999993"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqJ-bR-Br2">
                                     <rect key="frame" x="0.0" y="70.666666666666671" width="373" height="20.333333333333329"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>

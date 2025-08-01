@@ -90,6 +90,8 @@ struct ServiceUrl{
     static let comm_api_assignment_report = "comm/api/assignment/report"
     static let comm_api_assignment_submissions_list = "comm/api/assignment/submissions-list"
     static let   comm_api_assignment_list = "comm/api/assignment/list"
+    static let   comm_api_homework_update = "comm/api/homework/update"
+    static let   comm_api_homework_delete = "comm/api/homework/delete"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
     static let comm_api_assignment_submissions_list_archive = "comm/api/assignment/submissions-list-archive"

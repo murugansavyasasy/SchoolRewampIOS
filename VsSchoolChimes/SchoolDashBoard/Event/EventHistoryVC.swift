@@ -147,6 +147,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             return
         }
         
+        
+        
         alert.showAlertCancel(
             title: AlertstringFile.Confirm,
             message: AlertstringFile.deletemessage,

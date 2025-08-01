@@ -9,10 +9,12 @@ import UIKit
 import DropDown
 import Kingfisher
 import PDFKit
+import AVFoundation
+import AVKit
 
 @available(iOS 14.0, *)
 class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate, UITextFieldDelegate {
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+    func didTapButton(title: String, content: String, items: [FilePath],editId:String) {
         print("sdhbh")
     }
     func deleteImage(index: Int) {
@@ -51,6 +53,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var alert = CustomAlert()
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
+    var editId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         videoPicker = VideoPickerManager(presenter: self, delegate: self)
@@ -80,10 +83,17 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func setSelectedHomeWork(title:String,content:String,imageUrls:[FilePath]){
+    func setSelectedHomeWork(
+        title:String,
+        content:String,
+        imageUrls:[FilePath],
+        editId:String
+    ){
         DetailsTxtview.text = content
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
+            self.editId = editId
+        RecipientBtn.setTitle("UPDATE", for: .normal)
         let imageItems = imageUrls.map {
             AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
         }
@@ -219,15 +229,48 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            let params: [String: Any] = [
+            var params: [String: Any] = [
                 assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
                 assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
             ]
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.homeWorkMenuId
-            vc.Common_request_params = params
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            
+            if (sender as AnyObject).titleLabel.text == "UPDATE"{
+                
+                let com = commonApi_forSending()
+                params[SendAttachmentStringFile.id] = editId
+                com.SendingAttachmentFlow(
+                    selectedAcadimicYearId: 0,
+                    edit: true,
+                    target_type:0,
+                    selectedId: [],
+                    baseURL: ServiceUrl.comm_api_homework_update,
+                    subjectId: "",
+                    message:"",
+                    from: self,
+                    Common_request_params: params
+                ) { response in
+                    DispatchQueue.main.async {
+                        CircularProgressLoader.shared.hide()
+                        CustomAlert.showAlertWithOkAction(
+                            title: AlertstringFile.Success,
+                            message: response.message,
+                            on: self
+                        ) { [self] in
+                            print("success")
+                            dismiss(animated: true)
+                        }
+                    }
+                }
+                
+            }else{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = Menu_id.homeWorkMenuId
+                vc.Common_request_params = params
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+            
+           
         }else{
             alert
                 .showAlert(
@@ -317,7 +360,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     func VideoPick() {
         let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
         
-        if  video.count != 2{
+        if  video.count <= 2{
           
             if attachments.count <= 10{
                 PhotoPickerManager.shared.limiSelection = 10 - attachments.count
@@ -384,7 +427,11 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 } else {
                     cell.imageViews.kf.setImage(with: url)
                 }
-            } else {
+            } else if let vido = item.VideoURl{
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }else{
                 cell.imageViews.image = nil
             }
             
@@ -441,23 +488,44 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             
             self.present(alertController, animated: true, completion: nil)
         }else{
-            if attachments.count > indexPath.item - 1 {
+            let attachment = attachments[indexPath.item - 1]
+            
+            switch attachment.fileType {
+            case CommonStringFile.IMAGE:
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
-                    if let url = attachments[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-                } else{
-                    if let img = attachments[indexPath.item - 1].image {
-                        vc.img = attachments[indexPath.item - 1].image
-                    }else{
-                        vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
-                    }
-                    
+                
+                if let img = attachment.image {
+                    vc.img = img
+                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
                 }
-                vc.type = attachments[indexPath.item - 1].fileType
+                
+                vc.type = CommonStringFile.IMAGE
                 present(vc, animated: true)
+                
+            case CommonStringFile.pdf:
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+                    vc.selectedFileURL = url
+                }
+                vc.type = CommonStringFile.pdf
+                present(vc, animated: true)
+                
+            case CommonStringFile.VIDEO:
+                
+                if let videoURL = attachment.VideoURl {
+                    let player = AVPlayer(url: videoURL)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    present(playerViewController, animated: true) {
+                        player.play()
+                    }
+                }
+                
+            default:
+                break
             }
         }
         

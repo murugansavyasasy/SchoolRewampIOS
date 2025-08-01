@@ -248,11 +248,19 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId:String
+    ) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
     }
     
+    
+    
+ 
     func playVideo(for item: Notice) {
             
             let vc = VideoPreviewVc(nibName: nil, bundle: nil)

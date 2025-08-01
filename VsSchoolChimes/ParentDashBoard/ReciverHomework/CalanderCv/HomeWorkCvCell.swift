@@ -9,14 +9,10 @@ import UIKit
 import Charts
 
 
-protocol EditAndDelete{
-    
-    func EditDeleteclcik()
-        
-        
-    
-}
-class HomeWorkCvCell: UICollectionViewCell {
+class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationControllerDelegate {
+    func selectId(id: String?, edit: Bool?) {
+        delegate?.selectId(id:id, edit: edit)
+    }
     @IBOutlet weak var pieChartHeight: NSLayoutConstraint!
     @IBOutlet weak var homeWorkCompletImg: UIImageView!
     @IBOutlet weak var SubjectLbl: UILabel!
@@ -24,7 +20,12 @@ class HomeWorkCvCell: UICollectionViewCell {
     @IBOutlet weak var pieChartWidth: NSLayoutConstraint!
     @IBOutlet weak var PieChartTrailling: NSLayoutConstraint!
     @IBOutlet weak var roundview: UIView!
+    @IBOutlet weak var threeDotBtn: UIButton!
     @IBOutlet weak var pieChart: PieChartView!
+    var delegate:SelectedId?
+    var edit:Bool?
+    var delete:Bool?
+    var selectedId:String?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,7 +37,51 @@ class HomeWorkCvCell: UICollectionViewCell {
         
         
     }
-
+    
+    @IBAction func threeDotBtnAction(_ sender: UIButton) {
+        
+        let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
+        popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.delegate = self
+        popoverContentVC.edit = edit
+        popoverContentVC.delete = delete
+        popoverContentVC.selectedId = selectedId
+        
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 70)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .right
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
+        
+    }
+    
+    
+    func getCurrentViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController?
+            .topMostViewController()
+    }
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        homeWorkCompletImg.isHidden = !(edit || delete)
+    }
     
     private func setupPieChart() {
         pieChart.holeRadiusPercent = 0.9 // Adjust inner circle size
@@ -47,6 +92,10 @@ class HomeWorkCvCell: UICollectionViewCell {
         pieChart.holeColor = UIColor.white // Background of the hole
        }
     
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
+    }
     
     func setProgress(to percentage: Double) {
         let progressEntry = PieChartDataEntry(value: percentage, label: nil)

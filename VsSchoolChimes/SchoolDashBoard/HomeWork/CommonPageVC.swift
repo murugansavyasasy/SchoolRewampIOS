@@ -9,7 +9,10 @@ import UIKit
 
 class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, SelectNotice {
 
-    @IBOutlet weak var segmentController: UISegmentedControl!
+    @IBOutlet weak var createBtn: UIButton!
+    @IBOutlet weak var reportsBtn: UIButton!
+    @IBOutlet weak var reportsLb: UILabel!
+    @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var presentView: UIView!
 
@@ -90,18 +93,31 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         dismiss(animated: true)
     }
 
-    @IBAction func segment(_ sender: UISegmentedControl) {
-        let index = sender.selectedSegmentIndex
+//    @IBAction func switchController(_ sender: UIButton) {
+    @IBAction func segment(_ sender: UIButton) {
+        
+        let index = sender.tag
         guard index >= 0 && index < pages.count else {
             print("Index out of bounds")
             return
         }
+        updateTabUI(for: index)
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
 
         pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
     }
 
+    
+    func updateTabUI(for index: Int) {
+        UIView.animate(withDuration: 0.25) {
+//            self.searcchBtn.isHidden = index == 0
+            self.createLbl.backgroundColor = index == 0 ? .blue : .white
+            self.reportsLb.backgroundColor = index == 0 ? .white : .blue
+            self.reportsBtn.tintColor = index == 0 ? .black : .blue
+            self.createBtn.tintColor = index == 1 ? .black : .blue
+        }
+    }
     func loadPages(_ CV: [UIViewController]) {
         if #available(iOS 14.0, *) {
             if let page2 = CV[1] as? SenderHomeWorkVC {
@@ -154,11 +170,27 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         return currentIndex
  
     }
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId editID:String
+    ) {
         if #available(iOS 14.0, *) {
             if let page1 = pages.first as? SenderSideHomeWorkViewController{
-                segmentController.selectedSegmentIndex = 0
-                page1.setSelectedHomeWork(title: title, content: content, imageUrls: items)
+//                segmentController.selectedSegmentIndex = 0
+                
+                createBtn.setTitle("Update", for: .normal)
+                updateTabUI(for: 0)
+                
+               
+                page1
+                    .setSelectedHomeWork(
+                        title: title,
+                        content: content,
+                        imageUrls: items,
+                        editId: editID
+                    )
                 let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
                 let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
                 pageViewController.setViewControllers([page1], direction: direction, animated: true, completion: nil)

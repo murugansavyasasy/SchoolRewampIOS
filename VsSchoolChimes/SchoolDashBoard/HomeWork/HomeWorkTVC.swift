@@ -88,7 +88,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             .didTapButton(
                 title: FilterHomeWorkList?.title ?? "",
                 content: FilterHomeWorkList?.description ?? "",
-                items: homeworkDocs ?? [])
+                items: homeworkDocs ?? [], editId: "")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

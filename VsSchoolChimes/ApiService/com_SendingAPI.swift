@@ -227,28 +227,36 @@ class  commonApi_forSending {
                         print("❌ No files uploaded.")
                         return
                     }
-
+                    
                     if edit == true {
-                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL) {response in
+                        self.EditAttachment(
+                            from: viewController,
+                            with: uploadedFiles,
+                            iframe: iframeValue,
+                            filesize: fileSizeValue,
+                            baseURl: baseURL,
+                            Common_request_params: Common_request_params
+                        ) {response in
                             print("✅ All uploads complete.")
                             onComplete(response)
                         }
-                    }
-
-                    self.sendAttachment(
-                        from: viewController,
-                        with: uploadedFiles,
-                        iframe: iframeValue,
-                        filesize: fileSizeValue,
-                        baseURl: baseURL,
-                        array_selectedId: selectedId,
-                        target_type: target_type,
-                        selectedAcadimicYearId: selectedAcadimicYearId,
-                        Common_request_params: Common_request_params,
-                        subjectId: subjectId
-                    ) { response in
-                        print("✅ All uploads complete.")
-                        onComplete(response)
+                    }else{
+                        
+                        self.sendAttachment(
+                            from: viewController,
+                            with: uploadedFiles,
+                            iframe: iframeValue,
+                            filesize: fileSizeValue,
+                            baseURl: baseURL,
+                            array_selectedId: selectedId,
+                            target_type: target_type,
+                            selectedAcadimicYearId: selectedAcadimicYearId,
+                            Common_request_params: Common_request_params,
+                            subjectId: subjectId
+                        ) { response in
+                            print("✅ All uploads complete.")
+                            onComplete(response)
+                        }
                     }
                 }
             },
@@ -328,7 +336,7 @@ class  commonApi_forSending {
         iframe: String,
         filesize: String,
         baseURl: String,
-        Common_request_params: [String: Any]? = nil,
+        Common_request_params: [String: Any]?,
         onComplete: @escaping(Send_AttachmentResponse) -> Void
     ) {
         var parameters: [String: Any] = [
@@ -343,11 +351,12 @@ class  commonApi_forSending {
         }
         
         print("📤 Sending parameters Request : \(finalParams)")
+        print("📤 USER TOKEN \(UserDefaultFileManager.get_staff_Details()?.access_token ?? "")")
         
         APIService.shared.makeApi(
             url: baseURl,
             parameters: finalParams,
-            type: ApitTypeSringFile.POST,
+            type: ApitTypeSringFile.PUT,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
             guard let viewController = viewController else { return }

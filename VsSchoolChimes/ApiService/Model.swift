@@ -359,8 +359,14 @@ struct Homework: Codable {
     let id : String?
     let is_unread : Bool?
     let detail_id : String?
+    let can_edit : Bool?
+    let can_delete : Bool?
  
 }
+
+
+
+
 struct HomeworListkResponse: Codable {
     let status: Bool?
     let message: String?

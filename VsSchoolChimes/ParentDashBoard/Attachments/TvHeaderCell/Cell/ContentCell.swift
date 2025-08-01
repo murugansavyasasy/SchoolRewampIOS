@@ -66,8 +66,10 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             return UICollectionViewCell()
         }
       
-    
-        if data?.type == "IMAGE"{
+      
+
+        switch data?.type?.uppercased() {
+        case CommonStringFile.IMAGE:
             cell.imageView.isHidden = false
             cell.webview.isHidden = true
             cell.imageView
@@ -75,17 +77,23 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
                     with: URL(string: data?.url ?? ""),
                     placeholderImage: UIImage(named: "placeholder")
                 )
-        }else  if data?.type == "VIDEO" {
+            cell.outerView.clearShadow()
+            cell.imageView.layer.cornerRadius = 10
+            cell.outerView.backgroundColor = .white
+        case CommonStringFile.VIDEO:
             cell.imageView.image = UIImage(named: "video (1)")
-        }else{
-            let fileURL = URL(fileURLWithPath: data?.url ?? "")
-            let iconName = getFileIconName(for: fileURL)
-            let iconImage = UIImage(named: iconName)
-            cell.imageView.image = iconImage
-//            cell.imageView.layer.borderColor = UIColor.black.cgColor
-//            cell.imageView.layer.borderWidth = 0.5
-            
+            cell.outerView.setShadow()
+            cell.outerView.backgroundColor = .white
+        default:
+            let iconName = getFileIconName(
+                for: URL(fileURLWithPath: data?.url ?? "")
+            )
+            cell.imageView.image = UIImage(named: iconName)
+            cell.outerView.setShadow()
+            cell.outerView.backgroundColor = .white
         }
+
+        
         
        
         return cell
