@@ -144,6 +144,7 @@ class AlertstringFile{
     static let Enter_Otp = "Enter the otp".translated()
     static let OK = "Ok".translated()
     static let Yes_Send = "Yes,Send".translated()
+    static let Yes_Update = "Yes,Update".translated()
     static let delete = "Delete".translated()
     static let  enableRemindersAccess =  "Please enable reminders access in Settings.".translated()
     static let  PermissionDenied = "Permission Denied".translated()

@@ -324,7 +324,12 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
 extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
 
     func filterCatagories(name: String) {
-        self.filteredSections = filterEventListsByTitle(searchText: name)
+        if name != "All"{
+            self.filteredSections = filterEventListsByTitle(searchText: name)
+        }else{
+            filteredSections = allEventSections
+        }
+        
         self.tableview.reloadData()
     }
 
@@ -366,33 +371,33 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
             self.tableview.reloadData()
         }
     }
-
     func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
-        var filtered: [EventDisplaySection] = []
+        var filteredSections: [EventDisplaySection] = []
 
-        let upcoming = allEventSections.compactMap { section -> [EventList]? in
-            if case .upcoming(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        for section in allEventSections {
+            switch section {
+            case .featured(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.featured(filteredEvents))
+                }
+            case .categories(let categories):
+                filteredSections.append(.categories(categories))
+            case .upcoming(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.upcoming(filteredEvents))
+                }
+
+            case .completed(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.completed(filteredEvents))
+                }
             }
-            return nil
-        }.flatMap { $0 }
-
-        if !upcoming.isEmpty {
-            filtered.append(.upcoming(upcoming))
         }
 
-        let completed = allEventSections.compactMap { section -> [EventList]? in
-            if case .completed(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
-            }
-            return nil
-        }.flatMap { $0 }
-
-        if !completed.isEmpty {
-            filtered.append(.completed(completed))
-        }
-
-        return filtered
+        return filteredSections
     }
 }
 

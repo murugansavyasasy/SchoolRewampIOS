@@ -617,6 +617,10 @@
 		84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97CE2D3E13BD00EBF9F4 /* Successful.gif */; };
 		84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97D12D3E31FF00EBF9F4 /* CompletedTVcell.xib */; };
+		84FBAA832E3B7EC100A3FC31 /* CustomDasboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBAA812E3B7EC100A3FC31 /* CustomDasboard.swift */; };
+		84FBAA842E3B7EC100A3FC31 /* CustomDasboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FBAA822E3B7EC100A3FC31 /* CustomDasboard.xib */; };
+		84FBAA872E3BA05300A3FC31 /* CustomMenuCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBAA852E3BA05300A3FC31 /* CustomMenuCVC.swift */; };
+		84FBAA882E3BA05300A3FC31 /* CustomMenuCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FBAA862E3BA05300A3FC31 /* CustomMenuCVC.xib */; };
 		84FC4DCA2DBCAE6700BBEDD7 /* FiltersCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC4DC52DBCAE6700BBEDD7 /* FiltersCvCell.swift */; };
 		84FC4DCB2DBCAE6700BBEDD7 /* ParentCommunicationVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC4DC72DBCAE6700BBEDD7 /* ParentCommunicationVc.swift */; };
 		84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC82DBCAE6700BBEDD7 /* ParentCommunicationVc.xib */; };
@@ -1397,6 +1401,10 @@
 		84FB97CE2D3E13BD00EBF9F4 /* Successful.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Successful.gif; sourceTree = "<group>"; };
 		84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTVcell.swift; sourceTree = "<group>"; };
 		84FB97D12D3E31FF00EBF9F4 /* CompletedTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompletedTVcell.xib; sourceTree = "<group>"; };
+		84FBAA812E3B7EC100A3FC31 /* CustomDasboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDasboard.swift; sourceTree = "<group>"; };
+		84FBAA822E3B7EC100A3FC31 /* CustomDasboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomDasboard.xib; sourceTree = "<group>"; };
+		84FBAA852E3BA05300A3FC31 /* CustomMenuCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuCVC.swift; sourceTree = "<group>"; };
+		84FBAA862E3BA05300A3FC31 /* CustomMenuCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomMenuCVC.xib; sourceTree = "<group>"; };
 		84FC4DC52DBCAE6700BBEDD7 /* FiltersCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersCvCell.swift; sourceTree = "<group>"; };
 		84FC4DC62DBCAE6700BBEDD7 /* FiltersCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiltersCvCell.xib; sourceTree = "<group>"; };
 		84FC4DC72DBCAE6700BBEDD7 /* ParentCommunicationVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCommunicationVc.swift; sourceTree = "<group>"; };
@@ -3387,6 +3395,10 @@
 				84EFF9DB2CCC864800C11C26 /* BottomCVCell.xib */,
 				84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */,
 				84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */,
+				84FBAA812E3B7EC100A3FC31 /* CustomDasboard.swift */,
+				84FBAA822E3B7EC100A3FC31 /* CustomDasboard.xib */,
+				84FBAA852E3BA05300A3FC31 /* CustomMenuCVC.swift */,
+				84FBAA862E3BA05300A3FC31 /* CustomMenuCVC.xib */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -4111,6 +4123,7 @@
 				18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */,
 				18926D332D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib in Resources */,
 				849970CA2CF8752400800B07 /* HistoryTC.xib in Resources */,
+				84FBAA842E3B7EC100A3FC31 /* CustomDasboard.xib in Resources */,
 				FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */,
 				84079FF72D15A7B000D6DF04 /* NavigationVC.xib in Resources */,
 				8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */,
@@ -4134,6 +4147,7 @@
 				FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */,
 				FA4709542E39FF1000764E28 /* WeeklyReportTV.xib in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
+				84FBAA882E3BA05300A3FC31 /* CustomMenuCVC.xib in Resources */,
 				8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */,
 				848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */,
 				847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */,
@@ -4433,6 +4447,7 @@
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,
 				84A0D1162DC8E3F60037E1BF /* PinterestLayout.swift in Sources */,
 				FAFFBD072E336F8600F8B150 /* ExamListTV.swift in Sources */,
+				84FBAA872E3BA05300A3FC31 /* CustomMenuCVC.swift in Sources */,
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
 				FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */,
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
@@ -4620,6 +4635,7 @@
 				848E4F632DF6A874006F6658 /* AssignmentSummitionVC.swift in Sources */,
 				18D718B12D0D477900E9EDA3 /* fechLocationResp.swift in Sources */,
 				18D718B22D0D477900E9EDA3 /* StaffListReq.swift in Sources */,
+				84FBAA832E3B7EC100A3FC31 /* CustomDasboard.swift in Sources */,
 				18D718B32D0D477900E9EDA3 /* HistoryReq.swift in Sources */,
 				842031782D390FE9003C4076 /* TimetableTv.swift in Sources */,
 				848047752E02A8090042BC5D /* AssignmentPageVC.swift in Sources */,

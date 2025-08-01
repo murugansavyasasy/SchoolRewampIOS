@@ -504,7 +504,29 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             if sender.titleLabel?.text == "Update"{
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId
-                sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_school_event_update, Common_request_params: params)
+                com.SendingAttachmentFlow(
+                    selectedAcadimicYearId: 0,
+                    edit: true,
+                    target_type:0,
+                    selectedId: [],
+                    baseURL: ServiceUrl.admin_api_school_event_update,
+                    subjectId: "",
+                    message:"",
+                    from: self,
+                    Common_request_params: params
+                ) { response in
+                    DispatchQueue.main.async {
+                        CircularProgressLoader.shared.hide()
+                        CustomAlert.showAlertWithOkAction(
+                            title: AlertstringFile.Success,
+                            message: response.message,
+                            on: self
+                        ) { [self] in
+                            dismiss(animated: true)
+                        }
+                    }
+                }
+                
             }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.event
@@ -520,34 +542,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
     }
     
-    private func sendAttachmentFlow(
-        via comm: commonApi_forSending,
-        url baseURL: String,
-        Common_request_params: [String: Any]
-    ) {
-        comm.SendingAttachmentFlow(
-            selectedAcadimicYearId: 0,
-            edit: true,
-            target_type:0,
-            selectedId: [],
-            baseURL: baseURL,
-            subjectId: "",
-            message:"",
-            from: self,
-            Common_request_params: Common_request_params
-        ) { response in
-            DispatchQueue.main.async {
-                CircularProgressLoader.shared.hide()
-                CustomAlert.showAlertWithOkAction(
-                    title: AlertstringFile.Success,
-                    message: response.message,
-                    on: self
-                ) { [self] in
-                    print("success")
-                }
-            }
-        }
-    }
     
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)

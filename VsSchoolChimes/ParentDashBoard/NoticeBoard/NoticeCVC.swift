@@ -69,7 +69,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
         popoverContentVC.delete = delete
         popoverContentVC.selectedId = selectedId
         
-        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 70)
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 90)
         popoverContentVC.modalPresentationStyle = .popover
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
