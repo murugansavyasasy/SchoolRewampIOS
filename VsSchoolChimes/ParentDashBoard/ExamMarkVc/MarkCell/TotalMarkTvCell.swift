@@ -26,8 +26,8 @@ class TotalMarkTvCell: UITableViewCell {
         ExamTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         obtainedMarkLbl.setFont(style: .header, size: 40)
         totalMarkLbl.setFont(style: .body, size: FontSize.BodySize)
-        GradeLbl.setFont(style: .title, size: FontSize.TitleSize)
-        RemarksLbl.setFont(style: .body, size: FontSize.BodySize)
+//        GradeLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        RemarksLbl.setFont(style: .body, size: FontSize.BodySize)
         RemarksLbl.textColor = .dotColour
     }
 

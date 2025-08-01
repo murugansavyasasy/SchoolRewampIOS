@@ -205,7 +205,8 @@ class MenuRedirectHandler {
 //        viewController.present(vc, animated: true)
     }
     func senderAssignmentNavigate(from viewController: UIViewController) {
-        let vc = AssignmentPageVC(nibName: nil, bundle: nil)
+//        let vc = AssignmentPageVC(nibName: nil, bundle: nil)
+        let vc = CustomDasboard(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         

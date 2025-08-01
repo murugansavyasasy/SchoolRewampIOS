@@ -33,7 +33,7 @@ class LeveHistoryVC: UIViewController, editDelete {
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var TopInfoView: UIView!
-
+    @IBOutlet weak var Backbtn: UIButton!
     let alert = CustomAlert()
     var leaveHistoryData: [LeaveInfo] = []
     var filteredLeaveData: [LeaveInfo] = []
@@ -234,6 +234,12 @@ class LeveHistoryVC: UIViewController, editDelete {
         filteredLeaveData = leaveHistoryData
         historyTable.reloadData()
     }
+    
+    @IBAction func BackAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
 }
 
 // MARK: - TableView Delegate & DataSource

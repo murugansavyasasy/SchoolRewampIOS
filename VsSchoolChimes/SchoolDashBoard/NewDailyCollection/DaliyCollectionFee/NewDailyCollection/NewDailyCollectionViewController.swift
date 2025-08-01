@@ -240,4 +240,53 @@ extension UIButton {
         self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
+    
+   
+        func configureAsBackButton(firstLine: String, secondLine: String,colour: UIColor) {
+            let fullTitle = "\(firstLine)\n\(secondLine)"
+            
+            // Set the back arrow image
+            let image = UIImage(systemName: "chevron.left")
+            self.setImage(image, for: .normal)
+            
+            // Configure paragraph style
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .left
+            paragraphStyle.lineSpacing = 3
+            
+            // Create attributed title
+            let attributedTitle = NSMutableAttributedString(
+                string: fullTitle,
+                attributes: [
+                    .font: UIFont(name: "Poppins-Bold", size: 15),
+                    .foregroundColor: colour,
+                    .paragraphStyle: paragraphStyle
+                ]
+            )
+            
+            // Apply style to second line
+            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
+            if secondLineRange.location != NSNotFound {
+                attributedTitle.addAttributes([
+                    .font: UIFont(name: "Poppins-Bold", size: 11),
+                    .foregroundColor: colour.withAlphaComponent(0.8)
+                ], range: secondLineRange)
+            }
+            
+            // Configure title label
+            self.titleLabel?.numberOfLines = 3
+            self.titleLabel?.lineBreakMode = .byWordWrapping
+            self.titleLabel?.textAlignment = .left
+            
+            // Apply attributed title
+            self.setAttributedTitle(attributedTitle, for: .normal)
+            
+            // Adjust content and insets
+            self.contentHorizontalAlignment = .left
+            self.contentVerticalAlignment = .center
+            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+            self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+
 }

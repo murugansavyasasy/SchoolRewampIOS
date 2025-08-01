@@ -444,7 +444,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                     message: response.message,
                     on: self
                 ) { [self] in
-                    print("success")
+                    dismiss(animated: true)
                 }
             }
         }
@@ -692,15 +692,15 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
         // If the new text count is within the limit, update the character count label and allow the change
-        if updatedText.count <= 50 {
+//        if updatedText.count <= 50 {
             TextfieldCharCountLbl.text = "\(updatedText.count) / 50"
             return true
-        } else {
-            // If the limit is exceeded, show an alert and reject the change
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false
-        }
+//        } else {
+//            // If the limit is exceeded, show an alert and reject the change
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            return false
+//        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -718,15 +718,15 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
+//        if updatedText.count <= 500 {
             DescriptionLettersCount.text = "\(updatedText.count) / 500" // Update the character count label
             return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
+//            //            contentTxtView.isEditable = false // Optionally disable editing
+//            return false // Reject the change
+//        }
     }
     
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {

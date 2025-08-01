@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FSCalendar
 @available(iOS 14.0, *)
 class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     func date(date: String) {
@@ -40,6 +41,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
 
     }
     
+    @IBOutlet weak var OutlineView: UIView!
     @IBOutlet weak var ToDateLbl: UILabel!
     @IBOutlet weak var FromDateLbl: UILabel!
     @IBOutlet weak var TodateTop: UIView!
@@ -56,7 +58,13 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var SubmitBtn: UIButton!
+    @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var calendar: FSCalendar!
     
+    
+       var fromDate: Date?
+       var toDate: Date?
+       let today = Date()
    
     let dateFormatter = DateFormatter()
     var placeholderLabel: UILabel!
@@ -73,6 +81,19 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         super.viewDidLoad()
         
         uiConfic()
+        OutlineView.layer.cornerRadius = 12
+        OutlineView.layer.borderWidth = 1
+        OutlineView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        calendar.delegate = self
+        calendar.dataSource = self
+        
+        // Set both from and to date as today on load
+        fromDate = today
+        toDate = today
+        calendar.select(today)
+        calendar.setCurrentPage(today, animated: false)
+        
         setInitialDate()
         contentTxtView.delegate = self
         contentTxtView.addDoneButton()
@@ -82,7 +103,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         let DateGesture = UITapGestureRecognizer(target: self, action: #selector(datepicker))
         FromDateView.addGestureRecognizer(DateGesture)
         
-        let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDate))
+        let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDateAct))
         ToDateView.addGestureRecognizer(ToDateGesture)
        
         
@@ -306,7 +327,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
          self.present(vc, animated: false)
     }
     
-    @IBAction func toDate(_ sender: Any) {
+    @IBAction func toDateAct(_ sender: Any) {
         dateSelection = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
@@ -351,6 +372,26 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
             dayCount.text = "No of Days - " + " \(totalDays)"
         } else {
             dayCount.text = "Error calculating"
+        }
+    }
+    
+    @IBAction func BackAct(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+}
+
+@available(iOS 14.0, *)
+extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
+        if date < today {
+            fromDate = date
+            toDate = today
+        }else {
+            fromDate = today
+            toDate = date
         }
     }
 }

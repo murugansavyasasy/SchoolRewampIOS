@@ -80,7 +80,9 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             schoolName.text = item
             if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
                 UserDefaultFileManager.saveStaffDetails(data: selectedSchool)
-                Get_Notice()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.Get_Notice()
+                }
             }
         }
     }
@@ -102,7 +104,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             searchBar?.resignFirstResponder()
         }
     }
-
+    
     private func customizeSearchBar() {
         searchBar.searchTextField.borderStyle = .none
         searchBar.backgroundImage = UIImage()
@@ -315,6 +317,7 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
         detailVC.titleString  = notice.title
         detailVC.descriptionString  = notice.description
         //        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
+        detailVC.subject_name = "Notice Board".translated()
         detailVC.postedBy  = notice.sent_by
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
@@ -334,25 +337,33 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
 @available(iOS 14.0, *)
 extension NoticeBoardVc {
     private func loadFiles(into cell: NoticeCVC, files: [FilePath]) {
-        for (index, item) in files.enumerated() {
-            guard let urlString = item.url, let url = URL(string: urlString) else { continue }
-            let imageView: UIImageView? = [cell.img1, cell.img2, cell.img3][safe: index]
-            imageView?.isHidden = false
+        let imageViews = [cell.img1, cell.img2, cell.img3]
+        
+        // Reset all image views to hidden state
+        imageViews.forEach { $0?.isHidden = true }
+        cell.imgCount.isHidden = true
+        
+        for (index, file) in files.enumerated() {
+            guard index < imageViews.count,
+                  let imageView = imageViews[index],
+                  let urlString = file.url,
+                  let url = URL(string: urlString) else { continue }
             
-            if item.type?.lowercased() != "image" {
+            imageView.isHidden = false
+            if file.type?.lowercased() != "image" {
                 let iconName = getFileIconName(for: url)
-                imageView?.image = UIImage(named: iconName)
+                imageView.image = UIImage(named: iconName)
             } else {
-                imageView?.kf.setImage(with: url)
+                imageView.kf.setImage(with: url)
             }
+            
         }
         
-        if files.count > 3 {
-            let extraCount = files.count - 3
-            if let button = cell.imgCount as? UIButton {
-                button.setTitle("+\(extraCount)", for: .normal)
-            }
+        // Handle extra files count
+        if files.count > imageViews.count {
+            let remaining = files.count - imageViews.count
             cell.imgCount.isHidden = false
+            cell.imgCount.setTitle("+\(remaining)", for: .normal)
         }
     }
     

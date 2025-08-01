@@ -157,7 +157,7 @@ class  commonApi_forSending {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
             message: message,
-            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl1: AlertstringFile.Yes_Update,
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in
@@ -229,14 +229,7 @@ class  commonApi_forSending {
                     }
                     
                     if edit == true {
-                        self.EditAttachment(
-                            from: viewController,
-                            with: uploadedFiles,
-                            iframe: iframeValue,
-                            filesize: fileSizeValue,
-                            baseURl: baseURL,
-                            Common_request_params: Common_request_params
-                        ) {response in
+                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) {response in
                             print("✅ All uploads complete.")
                             onComplete(response)
                         }
@@ -258,6 +251,7 @@ class  commonApi_forSending {
                             onComplete(response)
                         }
                     }
+
                 }
             },
             onNo: {
@@ -315,15 +309,15 @@ class  commonApi_forSending {
                     }
                     
                 case .failure(let error):
-                    print("❌ API error: \(error.localizedDescription)")
-                    // Optional: Add alert for failure
-                    let alert = UIAlertController(
-                        title: "Error",
-                        message: error.localizedDescription,
-                        preferredStyle: .alert
-                    )
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
                     DispatchQueue.main.async {
+                        print("❌ API error: \(error.localizedDescription)")
+                        // Optional: Add alert for failure
+                        let alert = UIAlertController(
+                            title: "Error",
+                            message: error.localizedDescription,
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
                         viewController.present(alert, animated: true)
                     }
                 }
@@ -368,16 +362,16 @@ class  commonApi_forSending {
                 }
 
             case .failure(let error):
-                print("❌ API error: \(error.localizedDescription)")
-
-                let alert = UIAlertController(
-                    title: "Error",
-                    message: error.localizedDescription,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
                 DispatchQueue.main.async {
+                    print("❌ API error: \(error.localizedDescription)")
+
+                    let alert = UIAlertController(
+                        title: "Error",
+                        message: error.localizedDescription,
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+
                     viewController.present(alert, animated: true)
                 }
             }

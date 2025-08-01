@@ -15,17 +15,35 @@ protocol HistorySelectDelegate {
 class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate, EditObjectDelegate {
     
     func editDta(edit: Any) {
-        if pages.count > 0, let senderVC = pages[0] as? SenderNoticeBoardVC{
-            senderVC.fetchData(notice: edit as? Notice)
+        guard !pages.isEmpty else { return }
+
+        // Try to cast and update the correct VC
+        if let notice = edit as? Notice, let senderVC = pages[0] as? SenderNoticeBoardVC {
+            senderVC.fetchData(notice: notice)
+        } else if let event = edit as? EventList, let senderVC = pages[0] as? EventsVC {
+            senderVC.fetchData(eventList: event)
         }
-        if pages.count > 0, let senderVC = pages[0] as? EventsVC{
-            senderVC.fetchData(eventList: edit as? EventList)
+
+        // Update Create button
+        createBtn.setTitle("Edit", for: .normal)
+
+        // Update back button label
+        let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+        if titleLbl == CommonStringFile.CreateEvent {
+            BackBtn.configureAsBackButton(firstLine: "EditEvent", secondLine: schoolName)
+        } else {
+            BackBtn.configureAsBackButton(firstLine: "EditNoticeBoard", secondLine: schoolName)
         }
-        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 1
-        let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .reverse : .forward
+
+        // Animate page transition to the first page
+        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = currentIndex > 0 ? .reverse : .forward
+
         updateTabUI(for: 0)
         pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
     }
+
+
     
     // MARK: - IBOutlets
     @IBOutlet weak var BackBtn: UIButton!
@@ -128,6 +146,9 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
         if pages.indices.contains(1), let senderVC = pages[1] as? NoticeBoardVc {
+            senderVC.searchHide(hide: sender.isSelected)
+        }
+        if pages.indices.contains(1), let senderVC = pages[1] as? EventHistoryVC {
             senderVC.searchHide(hide: sender.isSelected)
         }
     }

@@ -8,7 +8,12 @@
 import UIKit
 import EventKit
 
-class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
+class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate,Searchable {
+    
+    func updateSearchResults(for query: String) {
+        
+    }
+    
 
     // MARK: - IBOutlets
     @IBOutlet weak var examCVC: UICollectionView!

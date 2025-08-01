@@ -57,7 +57,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             // Track selection and refresh visuals
             selectedIndex = indexPath.item
             collectionView.reloadData()
-//            delegate?.filterCatagories(name: category?[indexPath.item].name ?? "")
+            delegate?.filterCatagories(name: category?[indexPath.item].name ?? "")
         }
     }
 
