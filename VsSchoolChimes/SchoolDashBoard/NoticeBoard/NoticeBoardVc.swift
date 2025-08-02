@@ -55,7 +55,14 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
-            schoolName.text = school_details?.first?.school_name
+            if let staffToken = staffdetails?.access_token {
+                let matchedSchoolName = school_details?
+                    .first(where: { $0.access_token == staffToken })?
+                    .school_name
+
+                schoolName.text = matchedSchoolName ?? "School name not found"
+            }
+            
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
         }else{

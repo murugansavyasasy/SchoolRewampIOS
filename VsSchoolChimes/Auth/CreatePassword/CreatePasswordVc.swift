@@ -9,7 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class CreatePasswordVc: UIViewController,UITextFieldDelegate {
-
+    
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var WelcomeLbl: UILabel!
@@ -23,18 +23,18 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var confirmPassTextFld: UITextField!
     @IBOutlet weak var confirmPassBtnNam: UIButton!
     @IBOutlet weak var createPassTextFLd: UITextField!
-
+    
     let alertModal = CustomAlert()
-  
+    
     var createPassText : String?
     var confirmPassText : String?
     var createNewPassword : Bool?
     var mobile_number : String?
-  
+    
     override func viewDidLoad() {
         
-    super.viewDidLoad()
-       
+        super.viewDidLoad()
+        
         setUpUI()
         
         createPassDefaultLbl.text = ChangePasswordStringFile.create_newpassword
@@ -47,9 +47,9 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         confirmPassTextFld.addDoneButton()
         createPassTextFLd.addDoneButton()
         
-       createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
-       ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
-       confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
+        createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+        ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
+        confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
         
         createPassTextFLd.isSecureTextEntry = true
         confirmPassTextFld.isSecureTextEntry = true
@@ -61,21 +61,21 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         let NeweyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         NewPassEyeImage.addGestureRecognizer(NeweyeTap)
         NewPassEyeImage.isUserInteractionEnabled = true
-
-    if createNewPassword == false{
-    createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
-    ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
-        confirmPassBtnNam
-            .setTitle(ChangePasswordStringFile.change_password, for: .normal)
-        titleLbl.text = ChangePasswordStringFile.Reset_the_new_password
-    }
+        
+        if createNewPassword == false{
+            createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
+            ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
+            confirmPassBtnNam
+                .setTitle(ChangePasswordStringFile.change_password, for: .normal)
+            titleLbl.text = ChangePasswordStringFile.Reset_the_new_password
+        }
         
     }
-
+    
     
     func setUpUI(){
         
-       
+        
         
         
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -119,11 +119,11 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     @IBAction func backBtn(_ sender: Any) {
-
-           dismiss(animated: true)
-
+        
+        dismiss(animated: true)
+        
     }
-
+    
     @IBAction func confirmBtn(_ sender: Any) {
         
         if createPassTextFLd.text != "" {
@@ -165,7 +165,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         }
     }
     
-
+    
     @available(iOS 14.0, *)
     func CretaeNewPasswordAPIcall(){
         
@@ -204,25 +204,16 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                     if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true) &&  (
                                         UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true
                                     ){
-                                        let vc = PriorityVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
+                                        let vc = PriorityVC(nibName: nil,bundle: nil)
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                         
                                     }
                                     else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
                                         if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
-                                            if(
-                                                UserDefaultFileManager
-                                                    .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1
-                                            )
+                                            if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1)
                                             {
-                                                let vc = PriorityVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
+                                                let vc = PriorityVC(nibName: nil,bundle: nil)
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)
                                             }
@@ -230,9 +221,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                                 if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
                                                     UserDefaultFileManager.saveStaffDetails(data: data)}
                                                 
-                                                let vc = TapBarVC(
-                                                    nibName: nil,
-                                                    bundle: nil
+                                                let vc = TapBarVC(nibName: nil,bundle: nil
                                                 )
                                                 vc.login_astype = 1
                                                 vc.modalPresentationStyle = .fullScreen
@@ -271,7 +260,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                             if let data =                                             UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first{
                                                 UserDefaultFileManager.saveChildDetails(data: data)
                                             }
-                        
+                                            
                                             let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
@@ -308,8 +297,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
             }
         
     }
-        
-
+    
+    
     func ResetPasswordAPIcall(){
         
         APIService.shared
@@ -365,8 +354,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                                 )
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)
-                                            }
-                                            else{
+                                            }else{
                                                 if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
                                                     UserDefaultFileManager.saveStaffDetails(data: data)}
                                                 
@@ -379,18 +367,11 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                                 present(vc, animated: true)
                                             }
                                             
-                                        }
-                                        else{
-                                            
-                                            //
+                                        } else{
                                             if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
                                                 UserDefaultFileManager.saveStaffDetails(data: data)}
                                             
-                                            
-                                            let vc = TapBarVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
                                             vc.login_astype = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
@@ -403,54 +384,28 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                         if(
                                             UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
                                         ){
-                                            let vc = PriorityVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
+                                            let vc = PriorityVC(nibName: nil,bundle: nil)
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
-                                        }
-                                        else{
-                                            
+                                        }else{
                                             if let data =              UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first{
                                                 UserDefaultFileManager.saveChildDetails(data: data)
                                             }
                                             
-                                            let vc = TapBarVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
                                             vc.login_astype = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }
-                                        
-                                        
-                                        
                                     }
-                                    
                                 }
-                            
-                            
-                            
-                            
-                            
                         }
-                        
                     }else{
                         
                         DispatchQueue.main.async { [self] in
                             
-                            alertModal
-                                .showAlert(
-                                    title: "",
-                                    message:successMessage.message ?? "" ,
-                                    on: self
-                                )
-                            
+                            alertModal.showAlert(title:"",message:successMessage.message ?? "" ,on: self)
                         }
-                        
-                        
                     }
                     
                 case .failure(let error):
@@ -462,5 +417,5 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
         
     }
-       
-    }
+    
+}
