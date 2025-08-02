@@ -9,6 +9,7 @@ import UIKit
 
 class NewAttendanceReportVC: UIViewController {
 
+    @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
     
@@ -20,9 +21,11 @@ class NewAttendanceReportVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        TopView.layer.cornerRadius = 20
+        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .black)
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
         
         tv.register(UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil), forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
         Get_attendaceReport()

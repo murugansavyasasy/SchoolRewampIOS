@@ -646,6 +646,10 @@
 		FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */; };
 		FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */; };
 		FA6B90842DD483BA001D9EBD /* AttendanceReportVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */; };
+		FA6CD8A12E3DEEC500C146AB /* OutpassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6CD89F2E3DEEC500C146AB /* OutpassVC.swift */; };
+		FA6CD8A22E3DEEC500C146AB /* OutpassVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */; };
+		FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */; };
+		FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
 		FA8535492D9BC91400E0379C /* NewShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8535482D9BC91400E0379C /* NewShimmerView.swift */; };
@@ -1431,6 +1435,10 @@
 		FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTvCell.xib; sourceTree = "<group>"; };
 		FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceReportVc.swift; sourceTree = "<group>"; };
 		FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceReportVc.xib; sourceTree = "<group>"; };
+		FA6CD89F2E3DEEC500C146AB /* OutpassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutpassVC.swift; sourceTree = "<group>"; };
+		FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassVC.xib; sourceTree = "<group>"; };
+		FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveHistoryTV.swift; sourceTree = "<group>"; };
+		FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveHistoryTV.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
 		FA8535482D9BC91400E0379C /* NewShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShimmerView.swift; sourceTree = "<group>"; };
@@ -2132,6 +2140,10 @@
 				84079FEF2D15A7B000D6DF04 /* LeveHistoryVC.xib */,
 				84079FF02D15A7B000D6DF04 /* LeveHistoryTV.swift */,
 				84079FF12D15A7B000D6DF04 /* LeveHistoryTV.xib */,
+				FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */,
+				FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */,
+				FA6CD89F2E3DEEC500C146AB /* OutpassVC.swift */,
+				FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */,
 			);
 			path = LeaveRequest;
 			sourceTree = "<group>";
@@ -4139,6 +4151,7 @@
 				847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */,
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
 				84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */,
+				FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */,
 				FAFF9E0D2D6C806700498368 /* NewLSRWTVcell.xib in Resources */,
 				FAAF79902DFBE3C400227DCC /* Poppins-SemiBold.ttf in Resources */,
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
@@ -4217,6 +4230,7 @@
 				84127AEB2E03C8F00092159D /* Gilroy-Regular.ttf in Resources */,
 				84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */,
 				84127AED2E03C8F00092159D /* Gilroy-SemiBold.ttf in Resources */,
+				FA6CD8A22E3DEEC500C146AB /* OutpassVC.xib in Resources */,
 				84127AEE2E03C8F00092159D /* BottomView.xib in Resources */,
 				84127AEF2E03C8F00092159D /* CoupenCvCell.xib in Resources */,
 				84127AF02E03C8F00092159D /* ActivateCoupenTVC.xib in Resources */,
@@ -4482,6 +4496,7 @@
 				FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */,
 				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
 				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
+				FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */,
 				FAFF9DF02D6C7B7A00498368 /* cancelTableViewCell.swift in Sources */,
 				FAFF9DF12D6C7B7A00498368 /* verifyReq.swift in Sources */,
 				FAFF9DF22D6C7B7A00498368 /* StaffPtmTableViewCell.swift in Sources */,
@@ -4521,6 +4536,7 @@
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
+				FA6CD8A12E3DEEC500C146AB /* OutpassVC.swift in Sources */,
 				840177E22E3B2981006CB477 /* AttachTvHeader.swift in Sources */,
 				180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */,
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,

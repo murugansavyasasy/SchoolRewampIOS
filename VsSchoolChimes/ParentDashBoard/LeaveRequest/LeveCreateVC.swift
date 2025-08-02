@@ -7,6 +7,7 @@
 
 import UIKit
 import FSCalendar
+import DropDown
 @available(iOS 14.0, *)
 class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     func date(date: String) {
@@ -41,6 +42,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
 
     }
     
+    @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var OutlineView: UIView!
     @IBOutlet weak var ToDateLbl: UILabel!
     @IBOutlet weak var FromDateLbl: UILabel!
@@ -59,12 +61,77 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var SubmitBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var TypeImage: UIImageView!
+    @IBOutlet weak var CauseImage: UIImageView!
+    @IBOutlet weak var FromImage: UIImageView!
+    @IBOutlet weak var ToImage: UIImageView!
+    @IBOutlet weak var ApplyLeaveBtn: UIButton!
+    
+    
+    @IBOutlet weak var SessionDefLbl: UILabel!
+    @IBOutlet weak var FromDefLbl: UILabel!
+    @IBOutlet weak var CauseDefLbl: UILabel!
+    @IBOutlet weak var LeaveTypeLbl: UILabel!
+    @IBOutlet weak var TypeDefLbl: UILabel!
+    @IBOutlet weak var NewLeaveDefLbl: UILabel!
+    @IBOutlet weak var ToDefLbl: UILabel!
+    @IBOutlet weak var ToSessionDefLbl: UILabel!
+    @IBOutlet weak var FromDoneBtn: UIButton!
+    @IBOutlet weak var ToDoneBtn: UIButton!
+    
+    @IBOutlet weak var SelectFromDateDefLbl: UILabel!
+    @IBOutlet weak var SelectToDateDefLbl: UILabel!
+    
+    @IBOutlet weak var CauseTextView: UITextView!
     @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var NewFromDateLbl: UIButton!
+    @IBOutlet weak var NewToDateLbl: UIButton!
     
+    @IBOutlet weak var ToDatePickerView: UIView!
+    @IBOutlet weak var FromDatePickerView: UIView!
     
-       var fromDate: Date?
-       var toDate: Date?
-       let today = Date()
+    @IBOutlet weak var ToSessionBtn: UIButton!
+    @IBOutlet weak var FromSessionBtn: UIButton!
+    
+    @IBAction func ToDateDoneBtn(_ sender: Any) {
+        
+       // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
+        toDate = toDatePicker.date
+        NewToDateLbl.setTitle(dateFormatter.string(from: toDatePicker.date), for: .normal)
+        ToDatePickerView.isHidden = true
+        calculateDays()
+    }
+    
+    @IBAction func FromDateDoneBtn(_ sender: Any) {
+        
+        fromDate = FromDatePicker.date
+        NewFromDateLbl.titleLabel?.text = dateFormatter.string(from: FromDatePicker.date)
+        NewFromDateLbl.setTitle(dateFormatter.string(from: FromDatePicker.date), for: .normal)
+        FromDatePickerView.isHidden = true
+        calculateDays()
+    }
+    
+    @IBOutlet weak var toDatePicker: UIDatePicker!
+    @IBOutlet weak var FromDatePicker: UIDatePicker!
+    
+    @IBOutlet weak var errorLbl: UILabel!
+    
+   
+    
+    @IBAction func ShowFromDate() {
+        FromDatePickerView.isHidden = false
+        ToDatePickerView.isHidden = true
+    }
+    
+    @IBAction func ShowToDate() {
+        FromDatePickerView.isHidden = true
+        ToDatePickerView.isHidden = false
+    }
+    
+    var fromDate: Date?
+    var toDate: Date?
+    let today = Date()
+    var tapCount = 0
    
     let dateFormatter = DateFormatter()
     var placeholderLabel: UILabel!
@@ -77,22 +144,83 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     var childDetails = UserDefaultFileManager.get_child_Details()
     let alert = CustomAlert()
     var leave:editLeave?
+    
+    let dropDown = DropDown()
+    let options = ["First Half", "Second Half"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         uiConfic()
+        
+        TopView.layer.cornerRadius = 20
+        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        let name = childDetails?.name ?? ""
+        let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        
         OutlineView.layer.cornerRadius = 12
         OutlineView.layer.borderWidth = 1
         OutlineView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        NewLeaveDefLbl.setFont(style: .header, size: 20)
+        TypeDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        CauseDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        FromDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        SessionDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToSessionDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        errorLbl.setFont(style: .body, size: FontSize.BodySize)
+        ApplyLeaveBtn.setTitleFont(style: .secondary, size: FontSize.HeaderSize)
+        
+        LeaveTypeLbl.setFont(style: .body, size: 14)
+        
+        NewFromDateLbl.setTitleFont(style: .secondary, size: 14)
+        NewToDateLbl.setTitleFont(style: .secondary, size: 14)
+        FromSessionBtn.setTitleFont(style: .secondary, size: 12)
+        ToSessionBtn.setTitleFont(style: .secondary, size: 12)
+        
+        CauseTextView.font = UIFont(name: "Poppins-Medium", size: 14)
+        
+        TypeImage.layer.cornerRadius = 8
+        CauseImage.layer.cornerRadius = 8
+        FromImage.layer.cornerRadius = 8
+        ToImage.layer.cornerRadius = 8
+        
+        FromDoneBtn.layer.cornerRadius = 8
+        ToDoneBtn.layer.cornerRadius = 8
+        
+        ApplyLeaveBtn.layer.cornerRadius = 10
+        
+        ToDatePickerView.isHidden = true
+        
+        NewFromDateLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowFromDate)))
+        NewToDateLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowToDate)))
+        
+        NewToDateLbl.isUserInteractionEnabled = true
+        NewFromDateLbl.isUserInteractionEnabled = true
+        
+        dropDown.dataSource = options
+
+                // Common selection handler
+                dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+                    guard let anchorButton = self?.dropDown.anchorView as? UIButton else { return }
+                    anchorButton.setTitle(item, for: .normal)
+                    self?.calculateDays()
+                }
         
         calendar.delegate = self
         calendar.dataSource = self
         
         // Set both from and to date as today on load
-        fromDate = today
-        toDate = today
-        calendar.select(today)
+//        fromDate = today
+//        toDate = today
+       // calendar.select(today)
+        calendar.appearance.todayColor = .systemGray6 // ✅ This is fine
+        calendar.appearance.titleTodayColor = .black
         calendar.setCurrentPage(today, animated: false)
+        updateLabels()
         
         setInitialDate()
         contentTxtView.delegate = self
@@ -106,16 +234,16 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDateAct))
         ToDateView.addGestureRecognizer(ToDateGesture)
        
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(_:)),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(_:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+//        
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardWillShow(_:)),
+//                                               name: UIResponder.keyboardWillShowNotification,
+//                                               object: nil)
+//        
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardWillHide(_:)),
+//                                               name: UIResponder.keyboardWillHideNotification,
+//                                               object: nil)
         
         
         if let leave = leave{
@@ -379,79 +507,264 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         dismiss(animated: true)
     }
     
+    private func showDropdown(for button: UIButton) {
+        dropDown.anchorView = button
+        dropDown.bottomOffset = CGPoint(x: 0, y: button.bounds.height + 10) // Adjust '10' as needed
+        dropDown.show()
+    }
+    
+    @IBAction func FromSessionAct(_ sender: UIButton) {
+        showDropdown(for: sender)
+    }
+    @IBAction func ToSessionAct(_ sender: UIButton) {
+        showDropdown(for: sender)
+    }
+    
+     func calculateDays() {
+        
+         errorLbl.isHidden = true // Hide error by default
+
+         guard let fromDate = fromDate,
+               let toDate = toDate,
+               let fromSession = FromSessionBtn.title(for: .normal),
+               let toSession = ToSessionBtn.title(for: .normal) else {
+                 // Not all inputs selected yet — silently return
+                 return
+             }
+             
+             // ❌ Validation 1: from date > to date
+             if fromDate > toDate {
+                 showError("To date should be greater than from date")
+                 return
+             }
+
+             // ❌ Validation 2: same date but invalid session order
+             if Calendar.current.isDate(fromDate, inSameDayAs: toDate) {
+                 if isSecondHalf(session: fromSession) && isFirstHalf(session: toSession) {
+                     showError("From session cannot be after To session on the same day.")
+                     return
+                 }
+             }
+
+            let totalDays = calculateDays(from: fromDate, fromSession: fromSession, to: toDate, toSession: toSession)
+            
+         let formattedDays: String
+         if floor(totalDays) == totalDays {
+             formattedDays = String(Int(totalDays))  // e.g. "7"
+         } else {
+             formattedDays = String(totalDays)       // e.g. "7.5"
+         }
+
+         let daysText = "Apply for \(formattedDays) Days Leave"
+         ApplyLeaveBtn.setTitle(daysText, for: .normal)
+        
+        }
+    
+    func showError(_ message: String) {
+        let fullMessage = "* \(message)"
+        errorLbl.text = fullMessage
+        errorLbl.textColor = .systemRed
+        errorLbl.isHidden = false
+        ApplyLeaveBtn.setTitle("Apply Leave", for: .normal)
+    }
+
+
+
+        // MARK: - Core Logic
+        func calculateDays(from fromDate: Date, fromSession: String, to toDate: Date, toSession: String) -> Double {
+            let calendar = Calendar.current
+            let startOfFromDate = calendar.startOfDay(for: fromDate)
+            let startOfToDate = calendar.startOfDay(for: toDate)
+            
+            let daysBetween = calendar.dateComponents([.day], from: startOfFromDate, to: startOfToDate).day ?? 0
+            
+            let fromIsFirstHalf = isFirstHalf(session: fromSession)
+            let toIsSecondHalf = isSecondHalf(session: toSession)
+            
+            if daysBetween == 0 {
+                if fromIsFirstHalf && toIsSecondHalf {
+                    return 1.0
+                } else {
+                    return 0.5
+                }
+            }
+            
+            var totalDays = 0.0
+            totalDays += fromIsFirstHalf ? 1.0 : 0.5
+            totalDays += toIsSecondHalf ? 1.0 : 0.5
+            
+            if daysBetween > 1 {
+                totalDays += Double(daysBetween - 1)
+            }
+            
+            return totalDays
+        }
+
+        func isFirstHalf(session: String) -> Bool {
+            return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "first half"
+        }
+
+        func isSecondHalf(session: String) -> Bool {
+            return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "second half"
+        }
 }
 
 @available(iOS 14.0, *)
 extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     
+//    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+//            tapCount += 1
+//
+//            if tapCount == 1 {
+//                // Initial tap
+//                if let from = fromDate {
+//                    if date < from {
+//                        toDate = fromDate
+//                        fromDate = date
+//                    }else {
+//                        
+//                        fromDate = from
+//                        toDate = date
+//                    }
+//                }
+//            } else if tapCount == 2 {
+//                // Second tap → make a range
+//                
+//                fromDate = date
+//                toDate = date
+//                tapCount = 1
+//
+//                // Deselect all previously selected dates (optional visual)
+//                calendar.selectedDates.forEach { calendar.deselect($0) }
+//                calendar.select(date)
+//                
+//            } else {
+//                // Third tap or more → reset
+//                if let first = fromDate {
+//                    if date < first {
+//                        toDate = first
+//                        fromDate = date
+//                    } else {
+//                        fromDate = first
+//                        toDate = date
+//                    }
+//                }
+//            }
+//
+//            updateLabels()
+//            calendar.reloadData()
+//        }
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        
-        if date < today {
+        if fromDate == nil && toDate == nil {
+            // First tap: set both
             fromDate = date
-            toDate = today
-        }else {
-            fromDate = today
             toDate = date
+        } else if fromDate != nil && toDate != nil && fromDate == toDate {
+            // Second tap: form a range
+            if date < fromDate! {
+                fromDate = date
+            } else {
+                toDate = date
+            }
+        } else {
+            // Third or more: reset and start again
+            fromDate = date
+            toDate = date
+
+            // Clear previous selections visually
+            calendar.selectedDates.forEach { calendar.deselect($0) }
+            calendar.select(date)
         }
+
+        updateLabels()
+        calendar.reloadData()
     }
+
+
+        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+            guard let from = fromDate, let to = toDate else { return nil }
+
+            if date >= from && date <= to {
+                return .systemBlue
+            }
+            return nil
+        }
+    
+    func updateLabels() {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMM yyyy"
+
+            if let from = fromDate {
+                NewFromDateLbl.titleLabel?.text = "From: \(formatter.string(from: from))"
+            } else {
+                NewFromDateLbl.titleLabel?.text = "From: -"
+            }
+
+            if let to = toDate {
+                NewToDateLbl.titleLabel?.text = "To: \(formatter.string(from: to))"
+            } else {
+                NewToDateLbl.titleLabel?.text = "To: -"
+            }
+        }
 }
 
-@available(iOS 14.0, *)
-extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            isKeyboardVisible = true
-            UIView.animate(withDuration: 0.3) {
-                // Move outerView 20 points from the top
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
-        isKeyboardVisible = false
-        UIView.animate(withDuration: 0.3) {
-            self.outerView.transform = .identity // Reset position
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        adjustTextViewHeightWithConstraint(textView)
-    }
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Calculate the new length of the text
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
-            placeholderLabel.isHidden = updatedText.count == 0 ? false : true
-            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
-    }
-    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
-        // Calculate the size needed for the text
-        if textView.text.isEmpty {
-            // Set default height to 60
-            textViewHeightConstraint.constant = 100
-        } else {
-            // Calculate the size needed for the text
-            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            if sizeThatFits.height > 80{
-                textViewHeightConstraint.constant = sizeThatFits.height
-            }
-        }
-        textView.layoutIfNeeded() // Refresh the layout
-    }
-}
+//@available(iOS 14.0, *)
+//extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
+//    
+//    @objc func keyboardWillShow(_ notification: Notification) {
+//        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
+//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//            isKeyboardVisible = true
+//            UIView.animate(withDuration: 0.3) {
+//                // Move outerView 20 points from the top
+//                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
+//            }
+//        }
+//    }
+//    
+//    @objc func keyboardWillHide(_ notification: Notification) {
+//        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
+//        isKeyboardVisible = false
+//        UIView.animate(withDuration: 0.3) {
+//            self.outerView.transform = .identity // Reset position
+//        }
+//    }
+//    
+//    func textViewDidChange(_ textView: UITextView) {
+//        adjustTextViewHeightWithConstraint(textView)
+//    }
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        // Calculate the new length of the text
+//        let currentText = textView.text ?? ""
+//        guard let stringRange = Range(range, in: currentText) else { return false }
+//        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+//        if updatedText.count <= 500 {
+//            placeholderLabel.isHidden = updatedText.count == 0 ? false : true
+//            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
+//            return true // Allow the change
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            //            contentTxtView.isEditable = false // Optionally disable editing
+//            return false // Reject the change
+//        }
+//    }
+//    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
+//        // Calculate the size needed for the text
+//        if textView.text.isEmpty {
+//            // Set default height to 60
+//            textViewHeightConstraint.constant = 100
+//        } else {
+//            // Calculate the size needed for the text
+//            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+//            if sizeThatFits.height > 80{
+//                textViewHeightConstraint.constant = sizeThatFits.height
+//            }
+//        }
+//        textView.layoutIfNeeded() // Refresh the layout
+//    }
+//}
 
 extension UILabel {
     func setFormattedDate(from date: Date) {

@@ -10,6 +10,7 @@ import UIKit
 class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var calanderCollectionView: UICollectionView!
     @IBOutlet weak var noHolidayLbl: UILabel!
     @IBOutlet weak var selectedMonthLbl: UILabel!
@@ -29,6 +30,12 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        TopView.layer.cornerRadius = 20
+        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        let name = studentDetails?.name ?? ""
+        let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
         setupViews()
         addSwipeGestures()
     }
