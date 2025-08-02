@@ -157,7 +157,7 @@ class  commonApi_forSending {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
             message: message,
-            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl1: AlertstringFile.Yes_Update,
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in
@@ -229,27 +229,28 @@ class  commonApi_forSending {
                     }
 
                     if edit == true {
-                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL) {response in
+                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) {response in
+                            print("✅ All uploads complete.")
+                            onComplete(response)
+                        }
+                    }else{
+                        self.sendAttachment(
+                            from: viewController,
+                            with: uploadedFiles,
+                            iframe: iframeValue,
+                            filesize: fileSizeValue,
+                            baseURl: baseURL,
+                            array_selectedId: selectedId,
+                            target_type: target_type,
+                            selectedAcadimicYearId: selectedAcadimicYearId,
+                            Common_request_params: Common_request_params,
+                            subjectId: subjectId
+                        ) { response in
                             print("✅ All uploads complete.")
                             onComplete(response)
                         }
                     }
 
-                    self.sendAttachment(
-                        from: viewController,
-                        with: uploadedFiles,
-                        iframe: iframeValue,
-                        filesize: fileSizeValue,
-                        baseURl: baseURL,
-                        array_selectedId: selectedId,
-                        target_type: target_type,
-                        selectedAcadimicYearId: selectedAcadimicYearId,
-                        Common_request_params: Common_request_params,
-                        subjectId: subjectId
-                    ) { response in
-                        print("✅ All uploads complete.")
-                        onComplete(response)
-                    }
                 }
             },
             onNo: {
@@ -307,15 +308,15 @@ class  commonApi_forSending {
                     }
                     
                 case .failure(let error):
-                    print("❌ API error: \(error.localizedDescription)")
-                    // Optional: Add alert for failure
-                    let alert = UIAlertController(
-                        title: "Error",
-                        message: error.localizedDescription,
-                        preferredStyle: .alert
-                    )
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
                     DispatchQueue.main.async {
+                        print("❌ API error: \(error.localizedDescription)")
+                        // Optional: Add alert for failure
+                        let alert = UIAlertController(
+                            title: "Error",
+                            message: error.localizedDescription,
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
                         viewController.present(alert, animated: true)
                     }
                 }
@@ -328,7 +329,7 @@ class  commonApi_forSending {
         iframe: String,
         filesize: String,
         baseURl: String,
-        Common_request_params: [String: Any]? = nil,
+        Common_request_params: [String: Any]?,
         onComplete: @escaping(Send_AttachmentResponse) -> Void
     ) {
         var parameters: [String: Any] = [
@@ -347,7 +348,7 @@ class  commonApi_forSending {
         APIService.shared.makeApi(
             url: baseURl,
             parameters: finalParams,
-            type: ApitTypeSringFile.POST,
+            type: ApitTypeSringFile.PUT,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
             guard let viewController = viewController else { return }
@@ -359,16 +360,16 @@ class  commonApi_forSending {
                 }
 
             case .failure(let error):
-                print("❌ API error: \(error.localizedDescription)")
-
-                let alert = UIAlertController(
-                    title: "Error",
-                    message: error.localizedDescription,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-
                 DispatchQueue.main.async {
+                    print("❌ API error: \(error.localizedDescription)")
+
+                    let alert = UIAlertController(
+                        title: "Error",
+                        message: error.localizedDescription,
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+
                     viewController.present(alert, animated: true)
                 }
             }

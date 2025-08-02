@@ -158,26 +158,36 @@ class EventResiverVC: UIViewController {
     }
 
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
-
+        [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
+        cell.imgCount.isHidden = true
+        
         for (index, item) in files.enumerated() {
+            // Only process first 3 files for display
+            guard index < 3 else { break }
+            
             guard let urlString = item.url, let url = URL(string: urlString) else { continue }
-            let imageView: UIImageView? = [cell.img1, cell.img2, cell.img3][safe: index]
-            imageView?.isHidden = false
-
+            
+            // Safe array access
+            let imageViews = [cell.img1, cell.img2, cell.img3]
+            guard index < imageViews.count, let imageView = imageViews[index] else { continue }
+            
+            imageView.isHidden = false
+            
             if item.type?.lowercased() != "image" {
                 let iconName = getFileIconName(for: url)
-                imageView?.image = UIImage(named: iconName)
+                imageView.image = UIImage(named: iconName)
             } else {
-                imageView?.kf.setImage(with: url)
+                imageView.kf.setImage(with: url)
             }
         }
-
+        
+        // Handle extra files count display
         if files.count > 3 {
             let extraCount = files.count - 3
             if let button = cell.imgCount as? UIButton {
                 button.setTitle("+\(extraCount)", for: .normal)
+                cell.imgCount.isHidden = false
             }
-            cell.imgCount.isHidden = false
         }
     }
 }
@@ -271,7 +281,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.titleString = event.title
         detailVC.descriptionString = event.description
         detailVC.postedBy = event.sent_by
-        
+        detailVC.subject_name = "Event".translated()
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
         detailVC.transitioningDelegate = transitionDelegate
@@ -314,7 +324,12 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
 extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
 
     func filterCatagories(name: String) {
-        self.filteredSections = filterEventListsByTitle(searchText: name)
+        if name != "All"{
+            self.filteredSections = filterEventListsByTitle(searchText: name)
+        }else{
+            filteredSections = allEventSections
+        }
+        
         self.tableview.reloadData()
     }
 
@@ -356,33 +371,33 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
             self.tableview.reloadData()
         }
     }
-
     func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
-        var filtered: [EventDisplaySection] = []
+        var filteredSections: [EventDisplaySection] = []
 
-        let upcoming = allEventSections.compactMap { section -> [EventList]? in
-            if case .upcoming(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        for section in allEventSections {
+            switch section {
+            case .featured(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.featured(filteredEvents))
+                }
+            case .categories(let categories):
+                filteredSections.append(.categories(categories))
+            case .upcoming(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.upcoming(filteredEvents))
+                }
+
+            case .completed(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.completed(filteredEvents))
+                }
             }
-            return nil
-        }.flatMap { $0 }
-
-        if !upcoming.isEmpty {
-            filtered.append(.upcoming(upcoming))
         }
 
-        let completed = allEventSections.compactMap { section -> [EventList]? in
-            if case .completed(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
-            }
-            return nil
-        }.flatMap { $0 }
-
-        if !completed.isEmpty {
-            filtered.append(.completed(completed))
-        }
-
-        return filtered
+        return filteredSections
     }
 }
 

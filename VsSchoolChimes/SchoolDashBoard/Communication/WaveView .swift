@@ -327,3 +327,152 @@ class WaveView: UIView {
 //        canvasHeight = bounds.height
 //    }
 //}
+// MARK: - HeaderWaveView
+class HeaderWaveView: UIView {
+    
+    private var waveOffset: CGFloat = 0
+    private var displayLink: CADisplayLink?
+    private let waveSpeed: CGFloat = 0.2
+    private let waveHeight: CGFloat = 15
+    private let baseYOffset: CGFloat = 20
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = UIColor.clear
+        clipsToBounds = false
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setNeedsDisplay()
+    }
+    
+    deinit {
+        stopWaveAnimation()
+    }
+    
+    func startWaveAnimation() {
+        guard displayLink == nil else { return }
+        
+        displayLink = CADisplayLink(target: self, selector: #selector(updateWave))
+        displayLink?.preferredFramesPerSecond = 60
+        displayLink?.add(to: .current, forMode: .default)
+    }
+    
+    func stopWaveAnimation() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+    
+    @objc private func updateWave() {
+        waveOffset += waveSpeed
+        let cycleWidth = bounds.width * 2
+        if waveOffset > cycleWidth {
+            waveOffset = 0
+        }
+        setNeedsDisplay()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.clear(rect)
+        
+        drawGradientBackground(in: context, rect: rect)
+        drawAnimatedWaves(in: context, rect: rect)
+    }
+    
+    private func drawGradientBackground(in context: CGContext, rect: CGRect) {
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        // Updated colors to match the exact design
+        let topColor = UIColor(red: 0.31, green: 0.58, blue: 0.98, alpha: 1.0).cgColor // Brighter blue
+        let middleColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0).cgColor // Mid blue
+        let bottomColor = UIColor(red: 0.18, green: 0.42, blue: 0.85, alpha: 1.0).cgColor // Deeper blue
+        let colors = [topColor, middleColor, bottomColor] as CFArray
+        
+        guard let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: [0.0, 0.5, 1.0]) else { return }
+        
+        context.drawLinearGradient(gradient,
+                                   start: CGPoint(x: 0, y: 0),
+                                   end: CGPoint(x: 0, y: bounds.height),
+                                   options: [])
+    }
+    
+    private func drawAnimatedWaves(in context: CGContext, rect: CGRect) {
+        let width = bounds.width
+        let height = bounds.height
+        let baseY = height - waveHeight - baseYOffset
+        
+        // First wave (back layer) - more transparent
+        drawWave(in: context,
+                 width: width,
+                 height: height,
+                 baseY: baseY - 10,
+                 frequency: 1.8,
+                 amplitude: waveHeight * 0.6,
+                 phase: waveOffset * 0.018,
+                 color: UIColor.white.withAlphaComponent(0.4),
+                 stepSize: 2.0)
+        
+        // Second wave (middle layer)
+        drawWave(in: context,
+                 width: width,
+                 height: height,
+                 baseY: baseY - 10,
+                 frequency: 2.2,
+                 amplitude: waveHeight * 0.7,
+                 phase: waveOffset * 0.022,
+                 color: UIColor.white.withAlphaComponent(0.6),
+                 stepSize: 1.5)
+        
+        // Third wave (front layer) - most opaque
+        drawWave(in: context,
+                 width: width,
+                 height: height,
+                 baseY: baseY,
+                 frequency: 2.5,
+                 amplitude: waveHeight * 0.8,
+                 phase: waveOffset * 0.025,
+                 color: UIColor.white.withAlphaComponent(0.9),
+                 stepSize: 1.0)
+    }
+    
+    private func drawWave(in context: CGContext,
+                          width: CGFloat,
+                          height: CGFloat,
+                          baseY: CGFloat,
+                          frequency: CGFloat,
+                          amplitude: CGFloat,
+                          phase: CGFloat,
+                          color: UIColor,
+                          stepSize: CGFloat) {
+        
+        let wavePath = UIBezierPath()
+        
+        // Start from bottom left
+        wavePath.move(to: CGPoint(x: 0, y: height))
+        
+        // Draw to the start of the wave
+        wavePath.addLine(to: CGPoint(x: 0, y: baseY))
+        
+        // Create the wave
+        var x: CGFloat = 0
+        while x <= width {
+            let relativeX = x / width
+            let sine = sin((relativeX * frequency * 2 * .pi) + phase)
+            let y = baseY + sine * amplitude
+            wavePath.addLine(to: CGPoint(x: x, y: y))
+            x += stepSize
+        }
+        
+        // Complete the path
+        wavePath.addLine(to: CGPoint(x: width, y: height))
+        wavePath.close()
+        
+        context.saveGState()
+        color.setFill()
+        wavePath.fill()
+        context.restoreGState()
+    }
+}

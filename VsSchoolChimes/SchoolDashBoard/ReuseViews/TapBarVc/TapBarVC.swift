@@ -1,195 +1,450 @@
+////
+////  TapBarVC.swift
+////  VsSchoolChimes
+////
+////  Created by admin on 30/10/24.
+////
 //
-//  TapBarVC.swift
-//  VsSchoolChimes
+//import UIKit
+//protocol ProfileSwitchDelegate{
+//    func switchProfile()
+//}
+//@available(iOS 14.0, *)
+//class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome, ProfileSwitchDelegate {
+//    func switchProfile() {
+//        selectViewController(fourthVC)
+//        tabBar.selectedItem = tabBar.items?[3]
+//    }
+//    
+//    func backtohome() {
+//        setupTabBar()
+//        setupContainerView()
+//        if login_astype == 1{
+//            firstVC.getValue = login_astype
+//            selectViewController(firstVC)
+//        }else if login_astype == 2{
+//            Parent.getValue = login_astype
+//            selectViewController(Parent)
+//        }
+//    }
+//    
+//    private let tabBar = UITabBar()
+//    private var containerView = UIView()
+//    private lazy var firstVC = SchoolDashboardVc()
+//    private lazy var Parent = ParentDashboardVc()
+//    private lazy var secondVC = HelpVc()
+//    private lazy var thirdVC = SettingsViewController()
+//    private lazy var fourthVC = ProfileViewController()
+//    var languages : String!
+//    var login_astype : Int?
+//    var languageCode : String!
+//    var profile:Bool = false
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        firstVC.profileSwith = self
+//        Parent.profileSwith = self
+//        if !BiometricAuthentication.shared.isBiometricEnabledInApp() && !BiometricAuthentication.shared.isBiometricDeclineInApp() {
+//            BiometricAuthentication.shared.showEnableBiometricPopup(from: self, message: "Would you like to enable Face ID / Touch ID for this app?")
+//        }
+//        setupTabBar()
+//        setupContainerView()
+//    }
+//    
+//    private func setupTabBar() {
+//        
+//        // Configure the tab bar items
+//        let firstItem = UITabBarItem(title: StringsName.Home.translated(), image: UIImage(systemName: "house.fill"), tag: 0)
+//        let secondItem = UITabBarItem(title: StringsName.Help.translated(), image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
+//        let thirdItem = UITabBarItem(title : StringsName.Settings.translated(), image: UIImage(systemName: "gearshape.fill"), tag: 2)
+//        let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
+//        // Create the gradient color for tab bar
+//     
+//        tabBar.tintColor = .white
+//        tabBar.unselectedItemTintColor = .black.withAlphaComponent(0.55)
+//        tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
+//        tabBar.delegate = self
+//        tabBar.selectedItem = firstItem
+//        view.addSubview(tabBar)
+//        
+//        // Set text attributes for all states
+//        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
+//        UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
+//        UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .selected)
+//        // Layout the tab bar
+//        tabBar.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+//            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor
+//                                            )])
+//    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if login_astype == 2{
+//            Parent.getValue = login_astype
+//            
+//            selectViewController(Parent)
+//            
+//            applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue.blendedWithWhiteColour(factor: 0.3), Colornames.gradientgreen.blendedWithWhiteColour(factor: 0.3)])
+//            
+//        }else if login_astype == 1{
+//            
+//            firstVC.getValue = login_astype
+//            selectViewController(firstVC)
+//            
+//            applyGradientToTabBar(tabBar, colors: [Colornames.stafGradient, Colornames.stafGradient1])
+//            
+//            tabBar.tintColor = .white
+//        }
+//    }
+//    private func setupContainerView() {
+//        containerView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(containerView)
+//        
+//        NSLayoutConstraint.activate([
+//            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+//            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            containerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor) // Correct alignment
+//        ])
 //
-//  Created by admin on 30/10/24.
+//    }
+//    
+//    private func selectViewController(_ viewController: UIViewController) {
+//        // Remove all existing child view controllers
+//        children.forEach { child in
+//            child.willMove(toParent: nil)
+//            child.view.removeFromSuperview()
+//            child.removeFromParent()
+//        }
 //
-
+//        // Ensure `hidesBottomBarWhenPushed` is false
+//        viewController.hidesBottomBarWhenPushed = false
+//
+//        // Apply gradient if necessary
+//        if let settingsVC = viewController as? SettingsViewController, login_astype == 2 {
+//            settingsVC.delegate = self
+//            settingsVC.passVale = login_astype ?? 0
+//            
+//        } else if let profileVC = viewController as? ProfileViewController, login_astype == 2 {
+//            profileVC.passvalue = login_astype ?? 0
+//
+//        }else if let profileVC = viewController as? ParentDashboardVc, login_astype == 2 {
+//            profileVC.getValue = login_astype
+//            
+//        }else if let HelpVc = viewController as? HelpVc, login_astype == 2 {
+//            HelpVc.passVale = login_astype ?? 0
+//            
+//        }else if let Vc = viewController as? SchoolDashboardVc{
+//            Vc.profileSwith = self
+//        }
+//        
+//        // Add the new child view controller
+//        addChild(viewController)
+//        viewController.view.frame = containerView.bounds
+//        containerView.addSubview(viewController.view)
+//        viewController.didMove(toParent: self)
+//    }
+//    
+//    // Handle tab bar item selection with animation
+//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        
+//        switch item.tag {
+//        case 0:
+//            if login_astype == 1{
+//                selectViewController(firstVC)
+//                firstVC.bottomCv.reloadData()
+//                
+//            }else if login_astype == 2{
+//                
+//                selectViewController(Parent)
+//                Parent.bottomCv.reloadData()
+//            }
+//            
+//        case 1:
+//            selectViewController(secondVC)
+//        case 2:
+//            selectViewController(thirdVC)
+//            
+//        case 3:
+//            selectViewController(fourthVC)
+//        default:
+//            break
+//        }
+//    }
+//    
+//    func applyGradientToTabBar(_ tabBar: UITabBar, colors: [UIColor]) {
+//        let gradientLayer = CAGradientLayer()
+//        let width = UIScreen.main.bounds.width
+//        let height: CGFloat = 80 // Adjust based on tab bar height
+//
+//        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+//        gradientLayer.colors = colors.map { $0.cgColor }
+//        gradientLayer.startPoint = CGPoint(x: 1, y: 0.5) // Start from the right
+//        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)   // End at the left
+//
+//        // Remove any existing gradient layers to prevent overlapping
+//        tabBar.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+//
+//        // Insert the gradient at the bottom layer to ensure it's behind other content
+//        tabBar.layer.insertSublayer(gradientLayer, at: 0)
+//    }
+//}
+//extension UIColor {
+//    // Convert hex string to UIColor
+//    convenience init(hex: String) {
+//        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+//        if hexSanitized.hasPrefix("#") {
+//            hexSanitized.removeFirst()
+//        }
+//        
+//        var rgb: UInt64 = 0
+//        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+//        
+//        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+//        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+//        let blue = CGFloat(rgb & 0x0000FF) / 255.0
+//        
+//        self.init(red: red, green: green, blue: blue, alpha: 1.0)
+//    }
+//}
+//
 import UIKit
-protocol ProfileSwitchDelegate{
+
+protocol ProfileSwitchDelegate {
     func switchProfile()
 }
+
 @available(iOS 14.0, *)
-class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome, ProfileSwitchDelegate {
-    func switchProfile() {
-        selectViewController(fourthVC)
-        tabBar.selectedItem = tabBar.items?[3]
+class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDelegate, backNavigation {
+    
+    func back() {
+        // Check if we can pop from navigation stack
+        if let navController = self.navigationController,
+           navController.viewControllers.count > 1 {
+            navController.popViewController(animated: true)
+        } else {
+            if self.presentingViewController != nil {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
     }
     
+    func switchProfile() {
+        selectViewController(fourthVCNav)
+        tabBar.selectedItem = tabBar.items?[3]
+    }
+
     func backtohome() {
         setupTabBar()
         setupContainerView()
-        if login_astype == 1{
-            firstVC.getValue = login_astype
-            selectViewController(firstVC)
-        }else if login_astype == 2{
-            Parent.getValue = login_astype
-            selectViewController(Parent)
+        if login_astype == 1 {
+            selectViewController(firstVCNav)
+        } else if login_astype == 2 {
+            selectViewController(parentVCNav)
         }
     }
-    
+
     private let tabBar = UITabBar()
     private var containerView = UIView()
-    private lazy var firstVC = SchoolDashboardVc()
-    private lazy var Parent = ParentDashboardVc()
-    private lazy var secondVC = HelpVc()
-    private lazy var thirdVC = SettingsViewController()
-    private lazy var fourthVC = ProfileViewController()
-    var languages : String!
-    var login_astype : Int?
-    var languageCode : String!
-    var profile:Bool = false
+
+    // MARK: - Navigation Wrapped Controllers
+    private lazy var firstVCNav = UINavigationController(rootViewController: CustomDasboard())
+    private lazy var parentVCNav = UINavigationController(rootViewController: CustomParentDashboardVC())
+    private lazy var secondVCNav = UINavigationController(rootViewController: HelpVc())
+    private lazy var thirdVCNav = UINavigationController(rootViewController: SettingsViewController())
+    private lazy var fourthVCNav = UINavigationController(rootViewController: ProfileViewController())
+
+    var languages: String!
+    var login_astype: Int?
+    var languageCode: String!
+    var profile: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        firstVC.profileSwith = self
-        Parent.profileSwith = self
-        if !BiometricAuthentication.shared.isBiometricEnabledInApp() && !BiometricAuthentication.shared.isBiometricDeclineInApp() {
-            BiometricAuthentication.shared.showEnableBiometricPopup(from: self, message: "Would you like to enable Face ID / Touch ID for this app?")
-        }
+        
+        setupUI()
+        handleBiometricAuthentication()
+        setupInitialViewController()
+    }
+    
+    private func setupUI() {
         setupTabBar()
         setupContainerView()
     }
     
+    private func handleBiometricAuthentication() {
+        if !BiometricAuthentication.shared.isBiometricEnabledInApp() &&
+            !BiometricAuthentication.shared.isBiometricDeclineInApp() {
+            BiometricAuthentication.shared.showEnableBiometricPopup(
+                from: self,
+                message: "Would you like to enable Face ID / Touch ID for this app?"
+            )
+        }
+    }
+    
+    private func setupInitialViewController() {
+        if login_astype == 2 {
+            selectViewController(parentVCNav)
+            tabBar.selectedItem = tabBar.items?[0]
+        } else if login_astype == 1 {
+            selectViewController(firstVCNav)
+            tabBar.selectedItem = tabBar.items?[0]
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Add any view will appear logic here if needed
+    }
+
     private func setupTabBar() {
-        
-        // Configure the tab bar items
-        let firstItem = UITabBarItem(title: StringsName.Home.translated(), image: UIImage(systemName: "house.fill"), tag: 0)
-        let secondItem = UITabBarItem(title: StringsName.Help.translated(), image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
-        let thirdItem = UITabBarItem(title : StringsName.Settings.translated(), image: UIImage(systemName: "gearshape.fill"), tag: 2)
-        let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
-        // Create the gradient color for tab bar
-     
-        tabBar.tintColor = .white
-        tabBar.unselectedItemTintColor = .black.withAlphaComponent(0.55)
+        let firstItem = UITabBarItem(
+            title: StringsName.Home.translated(),
+            image: UIImage(systemName: "house.fill"),
+            tag: 0
+        )
+        let secondItem = UITabBarItem(
+            title: StringsName.Help.translated(),
+            image: UIImage(systemName: "questionmark.circle.fill"),
+            tag: 1
+        )
+        let thirdItem = UITabBarItem(
+            title: StringsName.Settings.translated(),
+            image: UIImage(systemName: "gearshape.fill"),
+            tag: 2
+        )
+        let fourthItem = UITabBarItem(
+            title: StringsName.Profile.translated(),
+            image: UIImage(systemName: "person.crop.circle"),
+            tag: 3
+        )
+
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem
         view.addSubview(tabBar)
+
+        // Configure tab bar appearance
+        configureTabBarAppearance()
         
-        // Set text attributes for all states
+        // Set up constraints
+        setupTabBarConstraints()
+    }
+    
+    private func configureTabBarAppearance() {
+        tabBar.tintColor = UIColor.white
+        tabBar.unselectedItemTintColor = UIColor.black
+
+        if #available(iOS 13.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
+            tabBar.standardAppearance = appearance
+            if #available(iOS 15.0, *) {
+                tabBar.scrollEdgeAppearance = appearance
+            }
+        } else {
+            tabBar.barTintColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
+        }
+
         let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
         UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .selected)
-        // Layout the tab bar
+    }
+    
+    private func setupTabBarConstraints() {
         tabBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tabBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor
-                                            )])
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if login_astype == 2{
-            Parent.getValue = login_astype
-            
-            selectViewController(Parent)
-            
-            applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue.blendedWithWhiteColour(factor: 0.3), Colornames.gradientgreen.blendedWithWhiteColour(factor: 0.3)])
-            
-        }else if login_astype == 1{
-            
-            firstVC.getValue = login_astype
-            selectViewController(firstVC)
-            
-            applyGradientToTabBar(tabBar, colors: [Colornames.stafGradient, Colornames.stafGradient1])
-            
-            tabBar.tintColor = .white
-        }
-    }
+
     private func setupContainerView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
-        
+
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.topAnchor),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor) // Correct alignment
+            containerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
         ])
+    }
 
+    private func selectViewController(_ navController: UINavigationController) {
+        // Remove all existing child view controllers
+        removeAllChildViewControllers()
+        
+        // Configure the top view controller before adding
+        configureTopViewController(navController)
+        
+        // Add the new child view controller
+        addChildViewController(navController)
     }
     
-    private func selectViewController(_ viewController: UIViewController) {
-        // Remove all existing child view controllers
+    private func removeAllChildViewControllers() {
         children.forEach { child in
             child.willMove(toParent: nil)
             child.view.removeFromSuperview()
             child.removeFromParent()
         }
-
-        // Ensure `hidesBottomBarWhenPushed` is false
-        viewController.hidesBottomBarWhenPushed = false
-
-        // Apply gradient if necessary
-        if let settingsVC = viewController as? SettingsViewController, login_astype == 2 {
-            settingsVC.delegate = self
-            settingsVC.passVale = login_astype ?? 0
-            
-        } else if let profileVC = viewController as? ProfileViewController, login_astype == 2 {
-            profileVC.passvalue = login_astype ?? 0
-
-        }else if let profileVC = viewController as? ParentDashboardVc, login_astype == 2 {
-            profileVC.getValue = login_astype
-            
-        }else if let HelpVc = viewController as? HelpVc, login_astype == 2 {
-            HelpVc.passVale = login_astype ?? 0
-            
-        }else if let Vc = viewController as? SchoolDashboardVc{
-            Vc.profileSwith = self
-        }
-        
-        // Add the new child view controller
-        addChild(viewController)
-        viewController.view.frame = containerView.bounds
-        containerView.addSubview(viewController.view)
-        viewController.didMove(toParent: self)
     }
     
-    // Handle tab bar item selection with animation
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    private func configureTopViewController(_ navController: UINavigationController) {
+        guard let topVC = navController.viewControllers.first else { return }
         
+        if let settingsVC = topVC as? SettingsViewController, login_astype == 2 {
+            settingsVC.delegate = self
+            settingsVC.passVale = login_astype ?? 0
+        } else if let profileVC = topVC as? CustomParentDashboardVC, login_astype == 2 {
+            profileVC.delegate = self
+        } else if let dashboardVC = topVC as? CustomDasboard {
+            dashboardVC.delegate = self
+        } else if let helpVC = topVC as? HelpVc {
+            helpVC.passVale = login_astype ?? 0
+        } else if let schoolVC = topVC as? SchoolDashboardVc {
+            schoolVC.profileSwith = self
+        }
+    }
+    
+    private func addChildViewController(_ navController: UINavigationController) {
+        addChild(navController)
+        navController.view.frame = containerView.bounds
+        navController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        containerView.addSubview(navController.view)
+        navController.didMove(toParent: self)
+    }
+
+    // MARK: - UITabBarDelegate
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 0:
-            if login_astype == 1{
-                selectViewController(firstVC)
-                firstVC.bottomCv.reloadData()
-                
-            }else if login_astype == 2{
-                
-                selectViewController(Parent)
-                Parent.bottomCv.reloadData()
-            }
-            
+            handleHomeTabSelection()
         case 1:
-            selectViewController(secondVC)
+            selectViewController(secondVCNav)
         case 2:
-            selectViewController(thirdVC)
-            
+            selectViewController(thirdVCNav)
         case 3:
-            selectViewController(fourthVC)
+            selectViewController(fourthVCNav)
         default:
             break
         }
     }
     
-    func applyGradientToTabBar(_ tabBar: UITabBar, colors: [UIColor]) {
-        let gradientLayer = CAGradientLayer()
-        let width = UIScreen.main.bounds.width
-        let height: CGFloat = 80 // Adjust based on tab bar height
-
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.startPoint = CGPoint(x: 1, y: 0.5) // Start from the right
-        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)   // End at the left
-
-        // Remove any existing gradient layers to prevent overlapping
-        tabBar.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-
-        // Insert the gradient at the bottom layer to ensure it's behind other content
-        tabBar.layer.insertSublayer(gradientLayer, at: 0)
+    private func handleHomeTabSelection() {
+        if login_astype == 1 {
+            selectViewController(firstVCNav)
+        } else if login_astype == 2 {
+            selectViewController(parentVCNav)
+        }
     }
 }
+
 extension UIColor {
     // Convert hex string to UIColor
     convenience init(hex: String) {
