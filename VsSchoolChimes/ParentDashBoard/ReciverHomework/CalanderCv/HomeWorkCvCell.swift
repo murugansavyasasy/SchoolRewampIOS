@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-
+ 
 class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationControllerDelegate {
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)

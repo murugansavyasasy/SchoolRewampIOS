@@ -51,7 +51,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Z9S-af-YPh" secondAttribute="bottom" id="4fH-ih-tr8"/>
                         <constraint firstAttribute="trailing" secondItem="Z9S-af-YPh" secondAttribute="trailing" id="IPw-F8-uX2"/>
@@ -74,6 +74,7 @@
             <connections>
                 <outlet property="dateLbl" destination="0xu-4C-uH2" id="Zzc-xo-tMn"/>
                 <outlet property="discretpionLbl" destination="uqJ-bR-Br2" id="x0v-RT-Ixd"/>
+                <outlet property="fullView" destination="zb7-IH-8WG" id="jLc-dS-gOu"/>
                 <outlet property="roundView" destination="msL-OM-Yq2" id="5wM-Nh-gTc"/>
                 <outlet property="titleLbl" destination="Rq9-u5-h0e" id="BDT-H7-MUl"/>
             </connections>

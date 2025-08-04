@@ -9,6 +9,7 @@ import UIKit
 
 class AttachTvHeader: UITableViewHeaderFooterView {
 
+    @IBOutlet weak var fullView: UIView!
     
     @IBOutlet weak var roundView: UIView!
     @IBOutlet weak var discretpionLbl: UILabel!
@@ -17,9 +18,11 @@ class AttachTvHeader: UITableViewHeaderFooterView {
     override func awakeFromNib() {
             super.awakeFromNib()
            
-//        roundView.isHidden = true
+        roundView.isHidden = true
         roundView.layer.cornerRadius = roundView.frame.width/2
         }
+    
+    
     
     func configure(with item: AttachmentHeaderInfo) {
         

@@ -177,7 +177,20 @@ class  commonApi_forSending {
                     let videoTitle = Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
                     let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
 
+                    
+                    if  let VimeoUrlForEdit = item.VimeoVideoURL {
+                        
+                        uploadedFiles.append([
+                            "url": VimeoUrlForEdit,
+                            "type": "VIDEO"
+                        ])
+                        
+                        dispatchGroup.leave()
+                    }
+                    
+                    
                     if let videoURL = item.VideoURl {
+                
                         startUpload(
                             from: viewController,
                             videoURL: videoURL,
@@ -196,14 +209,20 @@ class  commonApi_forSending {
                             }
                             dispatchGroup.leave()
                         }
-                    } else {
-                        print("❌ Video URL is nil.")
-                        dispatchGroup.leave()
                     }
+//
+//                    else {
+//                        print("❌ Video URL is nil.")
+//                        
+//                        dispatchGroup.leave()
+//                    }
                 }
 
                 // 📷 Upload other files (images, PDFs, etc.)
                 dispatchGroup.enter()
+               
+                    
+                
                 uploadAWSMedia(file: user_inputs.SelectedUrls) {
                     CircularProgressLoader.shared.hide()
 

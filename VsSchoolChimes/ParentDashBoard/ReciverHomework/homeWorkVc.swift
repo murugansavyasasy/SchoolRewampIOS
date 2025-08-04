@@ -7,7 +7,22 @@
 
 import UIKit
 
-class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout, readStatusUpdate {
+    func ReadCompleted(Id: String, IscompletedStatus: Bool) {
+        markHomeworkAsUnread(eventId: Id, isCompletedStatus: IscompletedStatus)
+    }
+    
+    
+    
+    func markHomeworkAsUnread(eventId: String,isCompletedStatus: Bool) {
+        if let index = FilterHomeWorkList.firstIndex(where: { $0.id == eventId }) {
+            var updatedHomework = FilterHomeWorkList[index]
+            updatedHomework.is_unread = false
+            updatedHomework.is_completed = isCompletedStatus
+            FilterHomeWorkList[index] = updatedHomework
+            bottomCV.reloadData()
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCV{
@@ -25,12 +40,17 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             
             let detailVC = PrivewVc()
             detailVC.attachmetList = FilterHomeWorkList[indexPath.row].file_path
+            detailVC.isCompleted = FilterHomeWorkList[indexPath.row].is_completed ?? false
             detailVC.selectedDate  = selectedDate
+            detailVC.is_unreadStatus = FilterHomeWorkList[indexPath.row].is_unread
             detailVC.titleString  = FilterHomeWorkList[indexPath.row].title
             detailVC.descriptionString  = FilterHomeWorkList[indexPath.row].description
+            detailVC.homeWorkdetail_id  = FilterHomeWorkList[indexPath.row].detail_id
             detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
             detailVC.postedBy  = FilterHomeWorkList[indexPath.row].sent_by
             detailVC.subject_name  = FilterHomeWorkList[indexPath.row].subject_name
+            detailVC.delegate = self
+            detailVC.modalPresentationStyle = .fullScreen
             detailVC.modalPresentationStyle = .custom
             transitionDelegate.originFrame = cellFrameInSuperview
             detailVC.transitioningDelegate = transitionDelegate
@@ -41,35 +61,28 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             
             scrollToCenter(of: indexPath, in: collectionView)
             
-            let item = calendarItems[indexPath.item]
-            let today = Date()
-            
-            // Disable future date selection
-            guard item.date <= today else { return }
-            
-            // Convert date to string format matching API
-            let selectedDate = convertDateToString(item.date)
-            self.selectedDate = selectedDate
+            if selectedIndexPath == indexPath {
+                return // do nothing if already selected
+            }
             selectedIndexPath = indexPath
-            
-            // Filter from cached API response
-            FilterHomeWorkList = filterHomeworkGroupByDate(from: allHomeworkData, date: selectedDate)
-            
-            let isEmpty = FilterHomeWorkList.isEmpty
-            //                    self.noDataLbl.text = response.message
-            //                    self.noDataLbl.isHidden = !isEmpty
-            noDataImage.isHidden = !isEmpty
-            NodataFoundLbl.isHidden = !isEmpty
-            homeWorkDefaultLbl.isHidden = isEmpty
-            bottomCV.isHidden  = isEmpty
-            
-            bottomCV.reloadData() // reload homework list
-            cv.reloadData() // optional: refresh selection UI
-               
+            let selectedDate = convertDateToString(calendarItems[indexPath.item].date)
+            updateHomeworkUI(for: selectedDate)
+            self.cv.reloadData()
+        }
+    }
+    
+    func updateHomeworkUI(for date: String) {
+        self.selectedDate = date
+        self.FilterHomeWorkList = self.filterHomeworkGroupByDate(from: self.allHomeworkData, date: date)
+        
+        let isEmpty = self.FilterHomeWorkList.isEmpty
+        self.NodataFoundLbl.isHidden = !isEmpty
+        self.noDataImage.isHidden = !isEmpty
+        self.homeWorkDefaultLbl.isHidden = isEmpty
+        
+        self.bottomCV.reloadData()
+    }
 
-            
-        }
-        }
     
     func convertDateToString(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -86,39 +99,27 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeWorkCvCell", for: indexPath) as? HomeWorkCvCell else {
                 return UICollectionViewCell()
             }
-            isReadStatus = item.is_unread
+            
             cell.SubjectLbl.text = item.subject_name
             cell.stafNamLbl.text = item.sent_by
             
-            if isReadStatus == true{
-                let percentage = Double(0)
-                cell.setProgress(to: percentage)
-                cell.roundview.isHidden = false
-            }else{
-                
+            if item.is_unread == false{
                 let percentage = Double(50)
                 cell.roundview.isHidden = true
                 cell.setProgress(to: percentage)
-                
+            }else{
+                let percentage = Double(0)
+                cell.setProgress(to: percentage)
+                cell.roundview.isHidden = false
             }
-            
-            
+        
             if item.is_completed == true{
-                //                    complete_homework
                 cell.homeWorkCompletImg.isHidden = false
                 cell.pieChartWidth.constant = 0
                 cell.PieChartTrailling.constant = -10
                 cell.pieChart.isHidden = true
             }
-            //                else{
-            //
-            //                    cell.homeWorkCompletImg.isHidden = true
-            //                    cell.pieChart.isHidden = false
-            //                    cell.pieChartWidth.constant = -30
-            //                    cell.PieChartTrailling.constant = 80
-            //
-            //
-            //                }
+            
             
             return cell
         }else{
@@ -133,8 +134,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             let isToday = Calendar.current.isDateInToday(item.date)
             let isFuture = item.date > today
             
-            //                print("itemitem",item.date)
-            // Configure UI
             cell.configure(
                 with: item,
                 isToday: isToday,
@@ -213,23 +212,24 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         topView.layer.masksToBounds = true
         
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
-                   layout.scrollDirection = .horizontal
-                   layout.minimumLineSpacing = 0
-               }
-    
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = 0
+        }
+        
         calendarItems = getAllDatesPast1MonthPlus1Month()
         cv.register(UINib(nibName: "CalanderCvCell", bundle: nil), forCellWithReuseIdentifier: "CalanderCvCell")
-        
         bottomCV.register(UINib(nibName: "HomeWorkCvCell", bundle: nil), forCellWithReuseIdentifier: "HomeWorkCvCell")
-        
         cv.delegate = self
         cv.dataSource = self
+        
         if let todayIndex = calendarItems.firstIndex(where: { Calendar.current.isDateInToday($0.date) }) {
             selectedIndexPath = IndexPath(item: todayIndex, section: 0)
         }
         cv.reloadData()
         
         scrollToToday(in: cv, with: calendarItems)
+        
+        GetHomeWorkReport()
         
     }
     
@@ -241,7 +241,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GetHomeWorkReport()
+      
     }
     
     
@@ -249,10 +249,8 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         var items: [CalendarItem] = []
         let calendar = Calendar.current
         let today = Date()
-        
         let pastStartDate = calendar.date(byAdding: .month, value: -1, to: today)!
         let futureEndDate = calendar.date(byAdding: .month, value: 1, to: today)!
-        
         var currentDate = pastStartDate
         while currentDate <= futureEndDate {
             items.append(CalendarItem(date: currentDate))
@@ -354,9 +352,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         if let matchedGroup = data.first(where: { $0.date == date }) {
             return matchedGroup.homework ?? []
         }
-        
-        
-        
         return []
     }
     

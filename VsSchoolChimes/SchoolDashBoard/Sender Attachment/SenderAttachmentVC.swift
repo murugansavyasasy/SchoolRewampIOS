@@ -12,7 +12,7 @@ import AVKit
 import QuickLook
 
 @available(iOS 14.0, *)
-class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge ,VideoPickerManagerDelegate {
+class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge{
     
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -67,7 +67,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         super.viewDidLoad()
         StyleAndTranslater()
         BackBtn.applyBackButton()
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+       
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -159,48 +159,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
 
     
-    func pickVideoFromGallery(){
-//        if #available(iOS 15.0, *) {
-//            showLottieProgressLoader(animationName: "loader (2)")
-//        } 
-        videoPicker?.pickVideo()
-    }
-
-    // MARK: - Delegate Methods
-       func videoPickerManager(didPickVideo url: URL) {
-//           if #available(iOS 15.0, *) {
-//               self.hideLottieProgressLoader()
-//           }
-           videoPicker?.playVideo(from: url, in: VideoView)
-           attachments.removeAll()
-           selectImgPdfview.isHidden = true
-           collectionViewHeght.constant = 0
-           selectedVideoURL = url
-           attachments
-               .append(
-                AttachmentItem(
-                    image: nil,
-                    imageURL: nil,
-                    fileType: CommonStringFile.VIDEO,
-                    VideoURl: selectedVideoURL
-                )
-               )
-           VideoView.isHidden = false
-           chooseRecipientsBtn.isHidden = false
-       }
-
-
-       func videoPickerManagerDidCloseVideo() {
-           if #available(iOS 15.0, *) {
-               self.hideLottieProgressLoader()
-           }
-           selectedVideoURL = nil
-           VideoView.isHidden = true
-           selectImgPdfview.isHidden = false
-           collectionViewHeght.constant = 120
-           selectImgPdfview.imageCollectionview.reloadData()
-       }
-    
+   
     
     
     
@@ -208,9 +167,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-//            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))         
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
@@ -222,19 +179,13 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-//            if imageItems.count != 0{
-//                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-//            }
-            
-            selectImgPdfview.imageCollectionview.reloadData()
+          selectImgPdfview.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            
             selectImgPdfview.imageCollectionview.reloadData()
         }
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
@@ -249,9 +200,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                         VideoURl: data
                     )
                 )
-//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            
-            selectImgPdfview.imageCollectionview.reloadData()
+               selectImgPdfview.imageCollectionview.reloadData()
         }
         
         
@@ -427,27 +376,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             }
         }
     }
-    
-    
-    //MARK: Video Picking Process Functions Starts
-    @IBAction func ChooseVideoBtnAct(_ sender: Any) {
-        if playerurl == nil{
-            pickVideoFromGallery()
-        }
-    }
-    
-    @IBAction func PlayBtnAct(_ sender: Any) {
-        pickVideoFromGallery()
-    }
-    
-    
-    func stopCurrentVideo() {
-        player?.pause()
-        player = nil
-        playerViewController?.view.removeFromSuperview()
-        playerViewController = nil
-    }
-    
     
 }
 

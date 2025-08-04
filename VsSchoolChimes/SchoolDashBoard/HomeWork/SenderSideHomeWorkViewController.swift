@@ -95,7 +95,18 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             self.editId = editId
         RecipientBtn.setTitle("UPDATE", for: .normal)
         let imageItems = imageUrls.map {
-            AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
+            
+            if $0.type == "VIDEO"{
+                AttachmentItem(
+                    image: nil,
+                    imageURL: nil,
+                    fileType:$0.type ?? "",
+                    VimeoVideoURL: $0.url
+                )
+            }else{
+                AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
+            }
+            
         }
         let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
@@ -336,7 +347,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     func openCamera(){
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if attachments.count != 10{
+        if attachments.count <= 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -346,7 +357,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     func selectPDF() {
         let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
-        if attachments.count != 10{
+        if attachments.count <= 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
             PhotoPickerManager.shared.limiSelection = 10 - attachments.count
         }else{
@@ -360,7 +371,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     func VideoPick() {
         let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
         
-        if  video.count <= 2{
+        
           
             if attachments.count <= 10{
                 PhotoPickerManager.shared.limiSelection = 10 - attachments.count
@@ -371,11 +382,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             }
             
-        }else{
-            
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-        }
+//        }else{
+//            
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//        }
         
     }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -431,7 +442,13 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
                 
-            }else{
+            }
+            else if let vido = URL(string: item.VimeoVideoURL ?? ""){
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }
+            else{
                 cell.imageViews.image = nil
             }
             
@@ -687,4 +704,5 @@ struct AttachmentItem {
     var imageURL: String?       // for remote
     var fileType: String
     var VideoURl : URL?// "image", "pdf", etc.
+    var VimeoVideoURL : String?
 }

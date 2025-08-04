@@ -199,8 +199,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         title: String,
         content: String,
         items: [FilePath],
-        editId:String
-    ) {
+        editId:String) {
+            
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
 }

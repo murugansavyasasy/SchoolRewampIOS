@@ -139,20 +139,26 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
-        switch type {
+        switch FileURL[indexPath.row].type {
             
-        case 0:
+        case "VIDEO":
             if let url = URL(string: FileURL[indexPath.row].url ?? "") {
                 let request = URLRequest(url: url)
                 cell.WebView.load(request)
             }
             cell.WebView.isHidden = false
-            
-        case 2:
+            cell.imageView.isHidden = true
+        case "IMAGE":
             cell.imageView.sd_setImage(with: URL(string: FileURL[indexPath.row].url ?? ""),placeholderImage: ImageName.placeholder)
             cell.WebView.isHidden = true
+            cell.imageView.isHidden = false
         default:
-            ""
+            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
+                let request = URLRequest(url: url)
+                cell.WebView.load(request)
+            }
+            cell.WebView.isHidden = false
+            cell.imageView.isHidden = true
         }
         
         return cell

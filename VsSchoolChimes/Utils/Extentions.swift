@@ -398,7 +398,7 @@ class CircularProgressLoader: UIView {
         }
     }
 }
-fileprivate class ExpandableLabelState {
+ class ExpandableLabelState {
     var fullText: String = ""
     var isExpanded: Bool = false
     var onTap: (() -> Void)?
@@ -566,7 +566,7 @@ func getFileIconName(for fileURL: URL) -> String {
     case "ppt", "pptx":
         return "ppt"                // 📽 PowerPoint icon
     default:
-        return "play-button"  // 🔄 Fallback icon
+        return "video (1)"  // 🔄 Fallback icon
     }
 }
 extension String {

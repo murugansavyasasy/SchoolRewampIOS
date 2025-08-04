@@ -355,9 +355,9 @@ struct Homework: Codable {
     let subject_name: String?
     let sent_by: String?
     let file_path: [FilePath]?
-    let is_completed : Bool?
+    var is_completed : Bool?
     let id : String?
-    let is_unread : Bool?
+    var is_unread : Bool?
     let detail_id : String?
     let can_edit : Bool?
     let can_delete : Bool?

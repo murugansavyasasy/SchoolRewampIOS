@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttachmentsVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="noDataLabel" destination="dUB-7c-vth" id="N9J-qu-XkH"/>
                 <outlet property="searchBar" destination="aPe-Xy-alW" id="TTY-ST-Y7h"/>
                 <outlet property="tv" destination="nsR-Jj-DY8" id="wuk-eX-Ey2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -72,7 +73,7 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal">
-                                <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="large"/>
+                                <imageReference key="image" image="magnifyingglass.circle.fill" catalog="system" symbolScale="large"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="medium"/>
                             </state>
                             <connections>
@@ -120,16 +121,26 @@
                         <constraint firstItem="NJF-kh-HGv" firstAttribute="top" secondItem="jSC-xj-WCb" secondAttribute="top" constant="20" id="jFH-Pz-sNl"/>
                     </constraints>
                 </view>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUB-7c-vth">
+                    <rect key="frame" x="10" y="416" width="373" height="20.333333333333314"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="HomeWorkClr"/>
             <constraints>
+                <constraint firstItem="dUB-7c-vth" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="2a7-cj-BH2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jSC-xj-WCb" secondAttribute="bottom" id="C1z-oC-gSw"/>
                 <constraint firstItem="JYj-H5-pYI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="J0V-6u-G3G"/>
                 <constraint firstItem="JYj-H5-pYI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SkY-L4-bej"/>
                 <constraint firstItem="jSC-xj-WCb" firstAttribute="top" secondItem="JYj-H5-pYI" secondAttribute="bottom" constant="10" id="Za9-Jt-EOB"/>
+                <constraint firstItem="dUB-7c-vth" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="apK-FM-7cp"/>
                 <constraint firstItem="jSC-xj-WCb" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="bqF-gg-7S6"/>
+                <constraint firstItem="dUB-7c-vth" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="d3x-mH-e95"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JYj-H5-pYI" secondAttribute="trailing" constant="10" id="jeg-rc-c30"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dUB-7c-vth" secondAttribute="trailing" constant="10" id="liT-EY-R4z"/>
                 <constraint firstItem="jSC-xj-WCb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mSP-gH-akq"/>
             </constraints>
             <point key="canvasLocation" x="124.42748091603053" y="50"/>
@@ -137,7 +148,7 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="magnifyingglass.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="HomeWorkClr">
             <color red="0.3919999897480011" green="0.40400001406669617" blue="0.82400000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

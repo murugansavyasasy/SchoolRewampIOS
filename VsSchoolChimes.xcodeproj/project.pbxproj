@@ -135,8 +135,6 @@
 		840177E42E3B2990006CB477 /* AttachTvHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177E32E3B2990006CB477 /* AttachTvHeader.xib */; };
 		840177E82E3B2CE0006CB477 /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177E72E3B2CE0006CB477 /* ContentCell.xib */; };
 		840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840177E62E3B2CE0006CB477 /* ContentCell.swift */; };
-		840179872E3C8208006CB477 /* SendHWCvCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840179862E3C8208006CB477 /* SendHWCvCellCollectionViewCell.xib */; };
-		840179882E3C8208006CB477 /* SendHWCvCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840179852E3C8208006CB477 /* SendHWCvCellCollectionViewCell.swift */; };
 		840639732DDF549300930943 /* GalleryPickerVcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840639712DDF549300930943 /* GalleryPickerVcViewController.swift */; };
 		840639742DDF549300930943 /* GalleryPickerVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840639722DDF549300930943 /* GalleryPickerVcViewController.xib */; };
 		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
@@ -911,8 +909,6 @@
 		840177E32E3B2990006CB477 /* AttachTvHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachTvHeader.xib; sourceTree = "<group>"; };
 		840177E62E3B2CE0006CB477 /* ContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
 		840177E72E3B2CE0006CB477 /* ContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCell.xib; sourceTree = "<group>"; };
-		840179852E3C8208006CB477 /* SendHWCvCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendHWCvCellCollectionViewCell.swift; sourceTree = "<group>"; };
-		840179862E3C8208006CB477 /* SendHWCvCellCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendHWCvCellCollectionViewCell.xib; sourceTree = "<group>"; };
 		840639712DDF549300930943 /* GalleryPickerVcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPickerVcViewController.swift; sourceTree = "<group>"; };
 		840639722DDF549300930943 /* GalleryPickerVcViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryPickerVcViewController.xib; sourceTree = "<group>"; };
 		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
@@ -2760,8 +2756,6 @@
 				84EA0E992DAF91E9001630FB /* HomeWorkTVC.xib */,
 				842214252DAFACAD00D38D16 /* CommonPageVC.swift */,
 				842214262DAFACAD00D38D16 /* CommonPageVC.xib */,
-				840179852E3C8208006CB477 /* SendHWCvCellCollectionViewCell.swift */,
-				840179862E3C8208006CB477 /* SendHWCvCellCollectionViewCell.xib */,
 			);
 			path = HomeWork;
 			sourceTree = "<group>";
@@ -4210,7 +4204,6 @@
 				18D718642D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib in Resources */,
 				18D718652D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib in Resources */,
 				18D718662D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib in Resources */,
-				840179872E3C8208006CB477 /* SendHWCvCellCollectionViewCell.xib in Resources */,
 				18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */,
 				18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */,
 				84B2C71A2E2247F200A69A1B /* MarkListVC.xib in Resources */,
@@ -4651,7 +4644,6 @@
 				840A7CED2D24FDAA0061EAEA /* MarkTvCell.swift in Sources */,
 				8451EC952E24E55B00D6DBB4 /* CalanderDateCVC.swift in Sources */,
 				8451EC962E24E55B00D6DBB4 /* HolidayTVC.swift in Sources */,
-				840179882E3C8208006CB477 /* SendHWCvCellCollectionViewCell.swift in Sources */,
 				8451EC972E24E55B00D6DBB4 /* HolidayVC.swift in Sources */,
 				840A7CEE2D24FDAA0061EAEA /* ExammarkFooterView.swift in Sources */,
 				840A7CF02D24FDAA0061EAEA /* ExamMarkCV.swift in Sources */,

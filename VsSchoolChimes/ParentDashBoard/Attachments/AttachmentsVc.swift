@@ -10,6 +10,7 @@ import UIKit
 
 class AttachmentsVc: UIViewController {
     
+    @IBOutlet weak var noDataLabel: UILabel!
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -25,9 +26,11 @@ class AttachmentsVc: UIViewController {
 //    var isHeaderExpanded: Bool = false
     var isHeaderExpandedDict: [Int: Bool] = [:]
     var search = true
+    var isExpanded: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
         searchBar.layer.cornerRadius = 5
         tv.register(
@@ -153,43 +156,53 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
 
     
      func tableView(_ tableView: UITableView,
-                                viewForHeaderInSection section: Int) -> UIView? {
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttachTvHeader") as? AttachTvHeader else { return nil }
-            header.configure(with: attachmentHeaders[section])
-        
+                    viewForHeaderInSection section: Int) -> UIView? {
+         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttachTvHeader") as? AttachTvHeader else { return nil }
+         header.configure(with: attachmentHeaders[section])
+         
          header.discretpionLbl
              .setupExpandable(
-                text: attachmentHeaders[section].description ?? ""
+                 text: attachmentHeaders[section].description ?? "",
+                 isExpanded: attachmentHeaders[section].isExpanded
              )
-         
-        
-             header.roundView.isHidden = !attachmentHeaders[section].is_unread
+
          
          header.discretpionLbl.onExpandableTap = { [weak self] in
-                 header.discretpionLbl.isExpanded.toggle()
-             if self?.attachmentHeaders[section].is_unread == true{
-                 self?.ReadStatusUpdate(
-                           type: "ATTACHMENT",
-                           detail_id: self?.attachmentHeaders[section].id ?? ""
-                       )
-                   }
-                 tableView.beginUpdates()
-                 tableView.endUpdates()
-             }
+             guard let self = self else { return }
+
+             let newValue = !header.discretpionLbl.isExpanded
+             header.discretpionLbl.isExpanded = newValue
+             self.attachmentHeaders[section].isExpanded = newValue
+
+//             if self.attachmentHeaders[section].is_unread == true {
+//                 self.ReadStatusUpdate(
+//                     type: "ATTACHMENT",
+//                     detail_id: self.attachmentHeaders[section].id ?? "")
+//             }
+
+             tableView.beginUpdates()
+             tableView.endUpdates()
+         }
+
+         header.layoutIfNeeded()
          
-            return header
-        }
+         return header
+     }
 
       func tableView(_ tableView: UITableView,
                                 heightForHeaderInSection section: Int) -> CGFloat {
-            return UITableView.automaticDimension
+              return UITableView.automaticDimension
         }
+    
+   
+    
 
          func tableView(_ tableView: UITableView,
                                 cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath) as? ContentCell else {
                 return UITableViewCell()
             }
+             
              cell
                  .configure(
                     with: attachmentFiles?[indexPath.section],
@@ -197,6 +210,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                         attachmentHeaders[indexPath.section].sender_info ?? ""
                     )
                  )
+             cell.layoutIfNeeded()
             return cell
         }
 
@@ -252,6 +266,17 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
 
 
         self.tv.reloadData()
+        
+    
+        if self.filteredAttachments?.isEmpty ?? true {
+            self.noDataLabel.isHidden = false
+            self.noDataLabel.text = "No Attachment Found"
+            
+            self.tv.isHidden = true
+        } else {
+            self.noDataLabel.isHidden = true
+            self.tv.isHidden = false
+        }
     }
 
 }
@@ -263,4 +288,5 @@ struct AttachmentHeaderInfo {
     let sender_info: String?
     var is_unread: Bool
     let id: String?
+    var isExpanded: Bool = false
 }
