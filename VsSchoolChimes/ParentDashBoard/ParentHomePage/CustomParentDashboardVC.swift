@@ -1,10 +1,16 @@
-// CustomDashboard.swift
-// School Chimes
+//
+//  CustomParentDashboardVC.swift
+//  School Chimes
+//
+//  Created by Chandhru on 01/08/25.
+//
 
 import UIKit
-
+protocol backNavigation{
+    func back()
+}
 @available(iOS 14.0, *)
-class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate {
+class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate {
     func meunu(viewController: UIViewController?) {
         hideSideMenu()
 
@@ -21,6 +27,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             delegate?.back()
         }
     }
+
     
     
     @IBOutlet weak var headerView: HeaderWaveView!
@@ -40,17 +47,15 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     ]
     
     var menu_details: [MenuDetail]?
-    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    var staffDetails = UserDefaultFileManager.get_staff_Details()
-    let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
-    let is_parent =  UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
-    let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
+    var childDetailscount = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
+    var childDetails = UserDefaultFileManager.get_child_Details()
     let MenuRedirect = MenuRedirectHandler.shared
     var sideMenu: SideMenuVC?
     var dimmedView: UIView?
     var delegate: backNavigation?
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
@@ -67,44 +72,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupProfileImage()
         get_dashboard_details()
     }
-    
-    func get_dashboard_details() {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
-
-        APIService.shared.makeApi(
-            url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "staff"],
-            type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
-        ) { [weak self] (result: Result<DashboardResponse, Error>) in
-            guard let self = self else { return }
-
-            DispatchQueue.main.async {
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
-
-                switch result {
-                case .success(let response):
-                    if response.status == true, let details = response.data?.first?.menu_details {
-                        self.menu_details = details
-                        self.MenuCollection.reloadData()
-                    } else {
-                        print("No data or status false")
-                        self.menu_details = []
-                        self.MenuCollection.reloadData()
-                    }
-
-                case .failure(let error):
-                    print("API Error:", error.localizedDescription)
-                    // Optionally show alert here
-                }
-            }
-        }
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -113,6 +80,40 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
+    func get_dashboard_details() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.get_dashboard_details,
+            parameters: ["member_type": "parent"],
+            type: ApitTypeSringFile.GET,
+            token: childDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<DashboardResponse, Error>) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    if response.status == true, let details = response.data?.first?.menu_details {
+                        self.menu_details = details
+                        self.MenuCollection.reloadData()
+                    } else {
+                        
+                    }
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error:", error.localizedDescription)
+                }
+            }
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -197,11 +198,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     private func setupLabels() {
-        welcomeLabel.text = staffDetails?.school_name
+        welcomeLabel.text = childDetails?.school_name
         welcomeLabel.textColor = UIColor.white.withAlphaComponent(0.9)
         welcomeLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         
-        nameLabel.text = staffDetails?.name
+        nameLabel.text = childDetails?.name
         nameLabel.textColor = UIColor.white
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     }
@@ -245,133 +246,62 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView != recentActiveMenuCollection {
+            
             let menuItem = menu_details?[indexPath.row].id
-            Menu_id.staffSelectedMenuId = menuItem ?? 0
             MenuStringFile.selectedMenuName = menu_details?[indexPath.row].name ?? ""
             switch menuItem {
-            case 1: //
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderAbsenteesReport(from: self)
-                }
             case 2:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderAssignmentNavigate(from: self)
-                }
-            case 3:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderMarkAttendence(from: self)
-                }
+                MenuRedirect.receiverAssignmentNavigate(from: self)
+            case 4:
+                MenuRedirect.receiverAttendancereport(from: self)
             case 5:
-                MenuRedirect.senderPtmNavigate(from: self)
+                MenuRedirect.receiverCertificateRequest(from: self)
+            case 6:
+                MenuRedirect.receiverclassTimeTable(from: self)
             case 7:
-                MenuRedirect.senderCommunicationNavigate(from: self)
-                
-            case 8:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderDailyCollectionNavigate(from: self)
-                }
+                MenuRedirect.receiverCommunicationNavigate(from: self)
             case 9:
-                MenuRedirect.senderEventNavigate(from: self)
-                
-            case 14:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderFeePendingNavigate(from: self)
-                }
+                MenuRedirect.receiverEvent(from: self)
+            case 10:
+                MenuRedirect.resiverExamMark(from: self)
+            case 12:
+                MenuRedirect.receiverFeeDetails(from: self)
+            case 13:
+                break    //fee payment
             case 15:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderHomeWorkNavigate(from: self)
-                }
-            case 17:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.Senderchat(from: self)
-                }
-            case 18:
-                MenuRedirect.senderLeaveRequestNavigate(from: self)
-            case 19:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderLessonplanNavigate(from: self)
-                }
-            case 21:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
-                }
-            case 22:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else {
-                    MenuRedirect.senderMgmt(from: self)
-                }
+                MenuRedirect.receiverHomework(from: self)
+            case 16:
+                MenuRedirect.receiverchat(from: self)
+            case 20:
+                MenuRedirect.receiverLsrwNavigate(from: self)
             case 23:
-                MenuRedirect.senderNoticeboardNavigate(from: self)
+                MenuRedirect.receiverNoticeBoardNavigate(from: self)
             case 24:
-                MenuRedirect.senderOnlineNavigate(from: self)
+                MenuRedirect.receiverOnlineNavigate(from: self)
+            case 25:
+                MenuRedirect.receiverFeeDetails(from: self)
             case 26:
-                MenuRedirect.senderPtmNavigate(from: self)
+                MenuRedirect.receiverPtmNavigate(from: self)
+            case 27:
+                MenuRedirect.QuizExam(from: self)
             case 28:
-                MenuRedirect.senderLeaveRequestNavigate(from: self)
-            case 29:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderEventNavigate(from: self)
-                }
-            case 30:
-                MenuRedirect.senderSchoolNeedsNavigate(from: self)
-            case 31:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderSchoolStrength(from: self)
-                }
-                
-            case 33:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.StaffWiseAttendance(from: self)
-                }
-            case 35:
-                if checkMutipleSchool(){
-                    MenuRedirect.SchoolListVc(from: self)
-                }else{
-                    MenuRedirect.senderStudentreportNavigate(from: self)
-                }
-            case 38:
-                MenuRedirect.SenderLSRWVCNavigate(from: self)
+                MenuRedirect.LeaveRquest(from: self)
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
-            case 39 :
-                MenuRedirect.senderAttachment(from: self)
-                
+            case 39:
+                MenuRedirect.receiverAttachment(from: self)
+            case 40:
+                MenuRedirect.receiverPauckt(from: self)
             default:
-                // Handle unknown menu items if needed
-                print("MenuId",menuItem)
                 break
             }
+
         }
         
     }
 }
 @available(iOS 14.0, *)
-extension CustomDasboard: UICollectionViewDelegateFlowLayout {
+extension CustomParentDashboardVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == recentActiveMenuCollection {
             return CGSize(width: 200, height: 90) // Horizontal scroll items
@@ -387,22 +317,4 @@ extension CustomDasboard: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
-    func checkMutipleSchool() -> Bool {
-        if staffDetailsCount?.count ?? 0 > 1 {
-            switch staff_roll {
-            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-                return true
-            default:
-                print("Unhandled staff role")
-                return false
-            }
-        }
-        return false
-    }
-}
-
-struct DashboardMenu {
-    let icon: String
-    let title: String
-    let subtitle: String
 }

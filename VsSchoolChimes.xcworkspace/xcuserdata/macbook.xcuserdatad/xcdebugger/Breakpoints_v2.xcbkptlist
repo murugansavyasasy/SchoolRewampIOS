@@ -20,7 +20,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - b2f83422a8d0fc91"
+                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - b2f83422a8d0fcdf"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,11 +30,11 @@
                   urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "889"
-                  endingLineNumber = "889">
+                  startingLineNumber = "891"
+                  endingLineNumber = "891">
                </Location>
                <Location
-                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - b2f83422a8d0fc91"
+                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - b2f83422a8d0fcdf"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -44,8 +44,8 @@
                   urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "889"
-                  endingLineNumber = "889">
+                  startingLineNumber = "891"
+                  endingLineNumber = "891">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -80,6 +80,36 @@
             endingLineNumber = "912"
             landmarkName = "SendingNoticeboardFlow()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "68C1FA4F-6A28-4F70-AABE-3BF228F260F4 - f7044a2db0a6a026"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "912"
+                  endingLineNumber = "912">
+               </Location>
+               <Location
+                  uuid = "68C1FA4F-6A28-4F70-AABE-3BF228F260F4 - 18cb2994276a1892"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "914"
+                  endingLineNumber = "914">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

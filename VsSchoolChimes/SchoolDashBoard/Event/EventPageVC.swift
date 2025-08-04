@@ -93,7 +93,8 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         if titleLbl == CommonStringFile.CreateEvent {
             BackBtn.configureAsBackButton(firstLine: titleLbl, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         } else {
-            BackBtn.setTitle(titleLbl, for: .normal)
+//            BackBtn.setTitle(titleLbl, for: .normal)
+            BackBtn.configureAsBackButton(firstLine: titleLbl, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
             BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         }
     }
@@ -158,6 +159,24 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
             print("Index out of bounds")
             return
         }
+        // Try to cast and update the correct VC
+        if let senderVC = pages[0] as? SenderNoticeBoardVC {
+            senderVC.fetchData(notice: nil)
+        } else if let senderVC = pages[0] as? EventsVC {
+            senderVC.fetchData(eventList: nil)
+        }
+
+        // Update Create button
+        createBtn.setTitle("Create", for: .normal)
+
+        // Update back button label
+        let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+        if titleLbl == CommonStringFile.CreateEvent {
+            BackBtn.configureAsBackButton(firstLine: titleLbl, secondLine: schoolName)
+        } else {
+            BackBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: schoolName)
+        }
+        
         if let vc = pages[1] as? NoticeBoardVc{
             vc.Get_Notice()
         }

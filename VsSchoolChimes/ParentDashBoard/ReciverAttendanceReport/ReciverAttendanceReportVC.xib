@@ -61,7 +61,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqM-ig-LyO">
-                            <rect key="frame" x="25" y="114" width="353" height="25.333333333333343"/>
+                            <rect key="frame" x="30" y="114" width="348" height="25.333333333333343"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -71,7 +71,7 @@
                     <constraints>
                         <constraint firstItem="lqM-ig-LyO" firstAttribute="top" secondItem="kqu-d0-EaJ" secondAttribute="bottom" constant="10" id="CdZ-q3-Dc5"/>
                         <constraint firstAttribute="trailing" secondItem="kqu-d0-EaJ" secondAttribute="trailing" constant="10" id="Ga7-aT-YHg"/>
-                        <constraint firstItem="lqM-ig-LyO" firstAttribute="leading" secondItem="lvu-Qf-qIH" secondAttribute="leading" constant="25" id="U7H-gI-gJA"/>
+                        <constraint firstItem="lqM-ig-LyO" firstAttribute="leading" secondItem="lvu-Qf-qIH" secondAttribute="leading" constant="30" id="U7H-gI-gJA"/>
                         <constraint firstItem="kqu-d0-EaJ" firstAttribute="leading" secondItem="lvu-Qf-qIH" secondAttribute="leading" constant="10" id="iUA-OC-lmR"/>
                         <constraint firstAttribute="height" constant="180" id="j8f-ef-hIg"/>
                         <constraint firstAttribute="trailing" secondItem="lqM-ig-LyO" secondAttribute="trailing" constant="15" id="qzu-Jb-Hbp"/>
@@ -313,7 +313,7 @@
                                                                         <constraint firstAttribute="width" constant="40" id="6uM-c9-hel"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bG9-eQ-WAu">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Requests" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bG9-eQ-WAu">
                                                                     <rect key="frame" x="10" y="70" width="84" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <nil key="textColor"/>

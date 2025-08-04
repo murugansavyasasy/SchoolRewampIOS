@@ -22,6 +22,8 @@ enum LeaveStatus: String {
 
 class LeveHistoryVC: UIViewController, editDelete {
 
+    @IBOutlet weak var LeaveRequestsLbl: UILabel!
+    @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var allBtn: UIButton!
     @IBOutlet weak var approveBtn: UIButton!
     @IBOutlet weak var rejectBtn: UIButton!
@@ -43,6 +45,16 @@ class LeveHistoryVC: UIViewController, editDelete {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        TopView.layer.cornerRadius = 20
+        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        let name = childDetails?.name ?? ""
+        let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+        Backbtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        
+        LeaveRequestsLbl.setFont(style: .header, size: 20)
+        
         addUnderline(to: allBtn, unSelectedBtn: [rejectBtn, approveBtn, waitingBtn])
         headerTitle.setFont(style: .body, size: FontSize.BodySize)
         NodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
@@ -53,6 +65,7 @@ class LeveHistoryVC: UIViewController, editDelete {
         NodataLbl.isHidden = true
 
         historyTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
+        historyTable.register(UINib(nibName: "LeaveHistoryTV", bundle: nil), forCellReuseIdentifier: "LeaveHistoryTV")
         historyTable.delegate = self
         historyTable.dataSource = self
 
@@ -252,53 +265,100 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as? LeveHistoryTV else {
-            return UITableViewCell()
+        
+        let cell = historyTable.dequeueReusableCell(withIdentifier: "LeaveHistoryTV", for: indexPath) as! LeaveHistoryTV
+        
+        let data = filteredLeaveData[indexPath.row]
+        
+        cell.DaysCountLbl.text = data.no_of_days + " Day Application"
+        cell.DateLbl.text = "\(data.leave_from.convertToTargetDateFormat() ?? "") - \(data.leave_to.convertToTargetDateFormat() ?? "")"
+        cell.TypeLbl.text = "Causual"
+        cell.ReasonLbl.text = data.reason
+        
+        switch LeaveStatus.from(data.status) {
+        
+        case.approved:
+            cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+            cell.StatusBtn.setTitleColor(.systemGreen, for: .normal)
+            cell.StatusBtn.setTitle(data.status, for: .normal)
+            cell.OptionsBtn.isHidden = true
+        case.rejected:
+            cell.StatusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+            cell.StatusBtn.setTitleColor(.red, for: .normal)
+            cell.StatusBtn.setTitle(data.status, for: .normal)
+            cell.OptionsBtn.isHidden = true
+        case.waiting:
+            cell.StatusBtn.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.3)
+            cell.StatusBtn.setTitleColor(.brown, for: .normal)
+            cell.StatusBtn.setTitle("Awaiting", for: .normal)
+            cell.OptionsBtn.isHidden = false
         }
-
-        let leave = filteredLeaveData[indexPath.row]
-        let name = leave.student_name
-        let fromDate = convertDate(leave.leave_from, toFormat: DateFormatString.StandardFormat) ?? "N/A"
-        let toDate = convertDate(leave.leave_to, toFormat: DateFormatString.StandardFormat) ?? "N/A"
-        cell.rejectBtn.isHidden = true
-        cell.nameLbl.text = name
-        cell.dateLbl.text = "\(fromDate) - \(toDate)"
-        cell.resonLbl.text = leave.reason
-        cell.durationLbl.text = daysBetweenLabel(start: leave.leave_from, end: leave.leave_to)
-        cell.aproveBtn.setTitle(leave.status, for: .normal)
-
-        cell.iconBtn.setTitle(name.first.map { String($0).uppercased() } ?? "", for: .normal)
-        cell.iconBtn.tag = indexPath.row
-        cell.editBtn.tag = indexPath.row
-        cell.deleteBtn.tag = indexPath.row
         cell.delegate = self
-        cell.aproveBtn.isUserInteractionEnabled = false
-        cell.rejectBtn.isUserInteractionEnabled = false
-        switch LeaveStatus.from(leave.status) {
-        case .approved:
-            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
-            cell.editClickBtn.isHidden = true
-        case .rejected:
-            cell.aproveBtn.backgroundColor = .red
-            cell.editClickBtn.isHidden = true
-        case .waiting:
-            cell.aproveBtn.backgroundColor = Colornames.pendingClr
-            cell.aproveBtn.setTitle("Waiting", for: .normal)
-            cell.editClickBtn.isHidden = false
-        }
-
         let isPopupOpen = openedPopupIndex == indexPath
-        cell.showPopup.isHidden = !isPopupOpen
-        cell.iconBtn.isSelected = isPopupOpen
-        cell.aproveBtn.isHidden = isPopupOpen
-
+        cell.popupView.isHidden = !isPopupOpen
+        cell.OptionsBtn.isSelected = isPopupOpen
+        
+        cell.GetOutpassBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(GetOutpass)))
+        
         return cell
     }
 
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as? LeveHistoryTV else {
+//            return UITableViewCell()
+//        }
+//
+//        let leave = filteredLeaveData[indexPath.row]
+//        let name = leave.student_name
+//        let fromDate = convertDate(leave.leave_from, toFormat: DateFormatString.StandardFormat) ?? "N/A"
+//        let toDate = convertDate(leave.leave_to, toFormat: DateFormatString.StandardFormat) ?? "N/A"
+//        cell.rejectBtn.isHidden = true
+//        cell.nameLbl.text = name
+//        cell.dateLbl.text = "\(fromDate) - \(toDate)"
+//        cell.resonLbl.text = leave.reason
+//        cell.durationLbl.text = daysBetweenLabel(start: leave.leave_from, end: leave.leave_to)
+//        cell.aproveBtn.setTitle(leave.status, for: .normal)
+//
+//        cell.iconBtn.setTitle(name.first.map { String($0).uppercased() } ?? "", for: .normal)
+//        cell.iconBtn.tag = indexPath.row
+//        cell.editBtn.tag = indexPath.row
+//        cell.deleteBtn.tag = indexPath.row
+//        cell.delegate = self
+//        cell.aproveBtn.isUserInteractionEnabled = false
+//        cell.rejectBtn.isUserInteractionEnabled = false
+//        switch LeaveStatus.from(leave.status) {
+//        case .approved:
+//            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
+//            cell.editClickBtn.isHidden = true
+//        case .rejected:
+//            cell.aproveBtn.backgroundColor = .red
+//            cell.editClickBtn.isHidden = true
+//        case .waiting:
+//            cell.aproveBtn.backgroundColor = Colornames.pendingClr
+//            cell.aproveBtn.setTitle("Waiting", for: .normal)
+//            cell.editClickBtn.isHidden = false
+//        }
+//
+//        let isPopupOpen = openedPopupIndex == indexPath
+//        cell.showPopup.isHidden = !isPopupOpen
+//        cell.iconBtn.isSelected = isPopupOpen
+//        cell.aproveBtn.isHidden = isPopupOpen
+//
+//        return cell
+//    }
+//
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismissPopup()
+    }
+    
+    @IBAction func GetOutpass(){
+        
+        let vc = OutpassVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        present(vc, animated: true)
     }
 
     func daysBetweenLabel(start: String?, end: String?) -> String {
