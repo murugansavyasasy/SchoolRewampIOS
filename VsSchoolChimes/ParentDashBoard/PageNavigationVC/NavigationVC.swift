@@ -73,7 +73,7 @@ class NavigationVC: UIViewController, EditObject {
         }
         if let edit = edit {
             if let vc = newVC as? LeveCreateVC{
-                vc.leave = edit
+                vc.editLeaveData = edit
             }
         }
 
@@ -100,4 +100,8 @@ struct editLeave{
     var fromDate:String
     var toDate:String
     var reson:String
+    var fromSession:String
+    var Tosession:String
+    var NoOfDays:String
+    var LeaveType:String
 }

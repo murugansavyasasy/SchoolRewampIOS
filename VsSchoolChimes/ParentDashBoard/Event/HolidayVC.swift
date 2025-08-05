@@ -316,7 +316,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         let dateStr = DateFormatter.yyyyMMdd.string(from: date)
         if let holiday = eventHolidayData?.first(where: { $0.date == dateStr }), isCurrentMonth {
-            cell.outerView.backgroundColor = colorForHoliday(named: holiday.name ?? "")
+            cell.outerView.backgroundColor = .themeColour//colorForHoliday(named: holiday.name ?? "")
             cell.dateLbl.textColor = .white
         } else {
             cell.outerView.backgroundColor = .white
@@ -348,21 +348,51 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HolidayTVC", for: indexPath) as! HolidayTVC
         let holiday = filteredHolidays[indexPath.row]
-        cell.nameLbl.text = "\(holiday.name ?? "") (\(holiday.date ?? ""))"
-//        convertToTargetDateFormat(inputFormat: "dd MMM yyyy")
-        cell.colorBtn.backgroundColor = colorForHoliday(named: holiday.name ?? "")
+        cell.nameLbl.text = holiday.name
+        cell.DateLbl.text = holiday.date?.convertToTargetDateFormat()
+        cell.colorBtn.backgroundColor = .themeColour//colorForHoliday(named: holiday.name ?? "")
         return cell
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard !filteredHolidays.isEmpty else { return nil }
-        formatter.dateFormat = "MMMM yyyy"
-//        return "Holidays"
-        return "Holidays for \(formatter.string(from: currentDate))"
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        guard !filteredHolidays.isEmpty else { return nil }
+//        formatter.dateFormat = "MMMM yyyy"
+////        return "Holidays"
+//        return "Holidays for \(formatter.string(from: currentDate))"
+//    }
+//    
+//     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        if let header = view as? UITableViewHeaderFooterView {
+//            // Customize font
+//            header.textLabel?.font = UIFont(name: "Poppins-Bold", size: 13)
+//            
+//            // Customize color
+//            header.textLabel?.textColor = .black.withAlphaComponent(0.8)
+//            
+//            // Optional: background color
+//            header.contentView.backgroundColor = .clear
+//        }
+//    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView()
+        headerView.backgroundColor = .clear  // Customize color
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setFont(style: .title, size: FontSize.TitleSize)
+        label.textColor = .darkGray
+        label.text = "Holidays for \(formatter.string(from: currentDate))"
+        headerView.addSubview(label)
+        
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 5)])
+
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return filteredHolidays.isEmpty ? 0 : 40
+        return filteredHolidays.isEmpty ? 0 : 30
     }
 }
 
