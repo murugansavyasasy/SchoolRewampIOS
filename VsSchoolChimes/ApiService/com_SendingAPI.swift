@@ -144,7 +144,7 @@ class  commonApi_forSending {
 //onComplete: (Send_AttachmentResponse) -> Void
     func SendingAttachmentFlow(
         selectedAcadimicYearId: Int,
-        edit: Bool? = false,
+        edit: Bool = false,
         target_type: Int,
         selectedId: [String],
         baseURL: String,
@@ -157,7 +157,7 @@ class  commonApi_forSending {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
             message: message,
-            actionLbl1: AlertstringFile.Yes_Update,
+            actionLbl1: edit ? AlertstringFile.Yes_Update :AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in

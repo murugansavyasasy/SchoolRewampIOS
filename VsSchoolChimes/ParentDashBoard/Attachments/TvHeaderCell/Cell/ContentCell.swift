@@ -114,7 +114,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             imageVC.pdfUrl = file.url
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
-            imageVC.type = isImage ? 2 : 0
+//            imageVC.type = isImage ? 2 : 0
             
             imageVC.modalPresentationStyle = .fullScreen
 //            imageVC.FileURL = attachmetList ?? []

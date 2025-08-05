@@ -134,27 +134,28 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
-        switch FileURL[indexPath.row].type {
-            
-        case "VIDEO":
-            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
-                let request = URLRequest(url: url)
-                cell.WebView.load(request)
-            }
-            cell.WebView.isHidden = false
-            cell.imageView.isHidden = true
-        case "IMAGE":
-            cell.imageView.sd_setImage(with: URL(string: FileURL[indexPath.row].url ?? ""),placeholderImage: ImageName.placeholder)
-            cell.WebView.isHidden = true
-            cell.imageView.isHidden = false
-        default:
-            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
-                let request = URLRequest(url: url)
-                cell.WebView.load(request)
-            }
-            cell.WebView.isHidden = false
-            cell.imageView.isHidden = true
-        }
+//        switch FileURL[indexPath.row].type {
+//            
+//        case "VIDEO":
+//            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
+//                let request = URLRequest(url: url)
+//                cell.WebView.load(request)
+//            }
+//            cell.WebView.isHidden = false
+//            cell.imageView.isHidden = true
+//        case "IMAGE":
+//            cell.imageView.sd_setImage(with: URL(string: FileURL[indexPath.row].url ?? ""),placeholderImage: ImageName.placeholder)
+//            cell.WebView.isHidden = true
+//            cell.imageView.isHidden = false
+//        default:
+//            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
+//                let request = URLRequest(url: url)
+//                cell.WebView.load(request)
+//            }
+//            cell.WebView.isHidden = false
+//            cell.imageView.isHidden = true
+//        }
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
