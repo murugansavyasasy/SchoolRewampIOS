@@ -110,12 +110,12 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             let homeworkDocs = attachmentFiles ?? []
-            imageVC.FileURL = homeworkDocs
+            imageVC.fileURL = homeworkDocs
             imageVC.subjectName = "Attachments"
             imageVC.pdfUrl = file.url
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
-            imageVC.type = isImage ? 2 : 0
+//            imageVC.type = isImage ? 2 : 0
             imageVC.modalPresentationStyle = .fullScreen
 //            imageVC.FileURL = attachmetList ?? []
             let currentController = getCurrentViewController()

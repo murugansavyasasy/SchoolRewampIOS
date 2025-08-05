@@ -12,12 +12,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="ActivityIndicator" destination="mlM-Cy-xFT" id="85w-UP-BAH"/>
-                <outlet property="PageController" destination="1Yi-ue-CFj" id="RM7-H5-hSp"/>
-                <outlet property="TitleLbl" destination="4LN-Xu-FRb" id="pDQ-Hv-bJP"/>
+                <outlet property="activityIndicator" destination="mlM-Cy-xFT" id="hlQ-cE-b6D"/>
                 <outlet property="cv" destination="2nI-Xu-ypg" id="bdC-fH-JvR"/>
+                <outlet property="pageController" destination="1Yi-ue-CFj" id="X0W-Gu-jcr"/>
                 <outlet property="pdfView" destination="Mij-9M-Z3u" id="wct-1Y-xlK"/>
                 <outlet property="textView" destination="kPN-2u-D3K" id="PPk-Cy-uf5"/>
+                <outlet property="titleLbl" destination="4LN-Xu-FRb" id="V4A-1z-oSr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

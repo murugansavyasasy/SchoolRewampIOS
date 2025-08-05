@@ -156,14 +156,14 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
 //        let filePath = homeworkDocs[indexPath.row]
 //        homeworkDocs.remove(at: indexPath.row)
 //        homeworkDocs.insert(filePath, at: 0)
-        imageVC.FileURL = homeworkDocs
+        imageVC.fileURL = homeworkDocs
         imageVC.subjectName = subjectName.text
         imageVC.pdfUrl = file.url
         imageVC.scrollIndex = indexPath
         imageVC.index = indexPath.row
-        imageVC.type = isImage ? 2 : 0
+//        imageVC.type = isImage ? 2 : 0
         imageVC.modalPresentationStyle = .fullScreen
-        imageVC.FileURL = file_path ?? []
+        imageVC.fileURL = file_path ?? []
         imageVC.subjectName = subjectName.text ?? ""
 
         getCurrentViewController()?.present(imageVC, animated: true)

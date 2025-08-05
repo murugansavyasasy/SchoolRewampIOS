@@ -270,10 +270,10 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             vcc.imageURL = FilesUrl?.filter({ img in
                 img.type?.uppercased() == CommonStringFile.IMAGE
             }) ?? []
-            vcc.FileURL =  FilesUrl ?? []
+            vcc.fileURL =  FilesUrl ?? []
             vcc.pdfUrl = FilesUrl?[indexPath.row].url
             vcc.scrollIndex = indexPath
-            vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+//            vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
             vcc.index = indexPath.row
             vcc.modalPresentationStyle = .fullScreen
             vc?.present(vcc, animated: true)

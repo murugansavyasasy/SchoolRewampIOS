@@ -166,6 +166,17 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             
             nextBtn.setTitle("Update", for: .normal)
             updateTextViewHeight(contentTxtView)
+        }else{
+            placeTxt.text = ""
+            eventTxt.text = ""
+            contentTxtView.text = ""
+            placeholderLabel.isHidden = !contentTxtView.text.isEmpty
+            attachments.removeAll()
+            costomView.imageCollectionview.reloadData()
+            editId = nil
+            
+            nextBtn.setTitle("Next", for: .normal)
+            updateTextViewHeight(contentTxtView)
         }
     }
     func updateTextViewHeight(_ textView: UITextView) {

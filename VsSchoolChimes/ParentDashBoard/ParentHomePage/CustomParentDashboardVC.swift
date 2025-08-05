@@ -306,7 +306,7 @@ extension CustomParentDashboardVC: UICollectionViewDelegateFlowLayout {
         if collectionView == recentActiveMenuCollection {
             return CGSize(width: 200, height: 90) // Horizontal scroll items
         } else {
-            return CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
+            return CGSize(width: (collectionView.frame.width - 25) / 2, height: 110)
         }
     }
     

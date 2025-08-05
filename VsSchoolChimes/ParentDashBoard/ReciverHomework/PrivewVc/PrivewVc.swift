@@ -497,12 +497,12 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         } else {
             let isImage = fileType == CommonStringFile.IMAGE
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-            imageVC.FileURL = attachmetList ?? []
+            imageVC.fileURL = attachmetList ?? []
             imageVC.subjectName = backBtn.title(for: .normal) ?? ""
             imageVC.pdfUrl = urlString
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
-            imageVC.type = isImage ? 2 : 0
+            imageVC.type = attachmetList?[indexPath.row].type
             imageVC.modalPresentationStyle = .fullScreen
             present(imageVC, animated: true)
         }

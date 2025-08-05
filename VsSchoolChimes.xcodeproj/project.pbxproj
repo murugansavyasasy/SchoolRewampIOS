@@ -296,6 +296,8 @@
 		8451ECFA2E25076300D6DBB4 /* ViewProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451ECF72E25076300D6DBB4 /* ViewProgressVC.swift */; };
 		845988412DD61382007CDB23 /* EventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845988402DD61382007CDB23 /* EventTVC.xib */; };
 		845988422DD61382007CDB23 /* EventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459883F2DD61382007CDB23 /* EventTVC.swift */; };
+		845D76472E40906D003261E2 /* AssignmentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845D76462E40906D003261E2 /* AssignmentTVC.xib */; };
+		845D76482E40906D003261E2 /* AssignmentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D76452E40906D003261E2 /* AssignmentTVC.swift */; };
 		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
 		845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845FED3E2D129A0D0090296B /* ExamCreatVC.xib */; };
 		8463D0EB2D6EF5CD00361F55 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463D0EA2D6EF5CD00361F55 /* Extentions.swift */; };
@@ -1083,6 +1085,8 @@
 		8451ECF82E25076300D6DBB4 /* ViewProgressVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewProgressVC.xib; sourceTree = "<group>"; };
 		8459883F2DD61382007CDB23 /* EventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTVC.swift; sourceTree = "<group>"; };
 		845988402DD61382007CDB23 /* EventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTVC.xib; sourceTree = "<group>"; };
+		845D76452E40906D003261E2 /* AssignmentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTVC.swift; sourceTree = "<group>"; };
+		845D76462E40906D003261E2 /* AssignmentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentTVC.xib; sourceTree = "<group>"; };
 		845FED3D2D129A0D0090296B /* ExamCreatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreatVC.swift; sourceTree = "<group>"; };
 		845FED3E2D129A0D0090296B /* ExamCreatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamCreatVC.xib; sourceTree = "<group>"; };
 		8463D0E72D6EE0FB00361F55 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
@@ -2853,6 +2857,8 @@
 				848047782E02DE920042BC5D /* SubmitedAssignmentVC.xib */,
 				8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */,
 				8480477C2E02DF6E0042BC5D /* SubmitedStudentTVC.xib */,
+				845D76452E40906D003261E2 /* AssignmentTVC.swift */,
+				845D76462E40906D003261E2 /* AssignmentTVC.xib */,
 			);
 			path = Assignment;
 			sourceTree = "<group>";
@@ -4167,6 +4173,7 @@
 				84E795E22D2FF684000B36BC /* InteractionVC.xib in Resources */,
 				84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
+				845D76472E40906D003261E2 /* AssignmentTVC.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84F986332D3A6169009FF065 /* QuizTVcell.xib in Resources */,
@@ -4501,6 +4508,7 @@
 				FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */,
 				FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
 				FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */,
+				845D76482E40906D003261E2 /* AssignmentTVC.swift in Sources */,
 				FAFF9DDE2D6C7B7A00498368 /* CheckAviableTvHeader.swift in Sources */,
 				FA31A7C12D7023890069C954 /* VideoPlayerVC.swift in Sources */,
 				FA31A7C22D7023890069C954 /* VideoTVCell.swift in Sources */,
