@@ -151,10 +151,10 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
 //        let filePath = homeworkDocs[indexPath.row]
 //        homeworkDocs.remove(at: indexPath.row)
 //        homeworkDocs.insert(filePath, at: 0)
-        vcc.FileURL = homeworkDocs
+        vcc.fileURL = homeworkDocs
         vcc.subjectName = subjectName.text
         vcc.index = indexPath.row
-        vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+//        vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
         //        } else {

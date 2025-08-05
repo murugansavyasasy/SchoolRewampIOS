@@ -181,7 +181,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     @IBAction func ViewAct(_ sender: Any){
         let vc = ImageShowVc(nibName: nil, bundle: nil)
 //        vc.FileURL = fileUrl
-        vc.type = 0
+//        vc.type = 0
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

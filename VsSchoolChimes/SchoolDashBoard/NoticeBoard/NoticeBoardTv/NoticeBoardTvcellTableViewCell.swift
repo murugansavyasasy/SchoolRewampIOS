@@ -160,13 +160,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
 //        let filePath = filurls[indexPath.row]
 //        filurls.remove(at: indexPath.row)
 //        filurls.insert(filePath, at: 0)
-        vcc.FileURL =  filurls
+//        vcc.FileURL =  filurls
         vcc.pdfUrl = homeworkDocs?[indexPath.row].url
         vcc.subjectName = TitleLbl.text ?? ""
         vcc.scrollIndex = indexPath
         vcc.index = indexPath.row
         
-        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+//        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
     }

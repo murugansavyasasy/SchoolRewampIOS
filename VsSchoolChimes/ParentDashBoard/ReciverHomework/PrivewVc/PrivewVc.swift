@@ -488,7 +488,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
        
            
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-            imageVC.FileURL = attachmetList ?? []
+            imageVC.fileURL = attachmetList ?? []
             imageVC.subjectName = backBtn.title(for: .normal) ?? ""
             imageVC.pdfUrl = urlString
             imageVC.scrollIndex = indexPath
