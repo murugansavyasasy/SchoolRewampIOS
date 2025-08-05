@@ -361,6 +361,7 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         cell.threeDotBtn.isHidden = false
             cell.pieChartWidth.constant = 0
             cell.PieChartTrailling.constant = -10
+        cell.pieChartHeight.constant = 5
             cell.pieChart.isHidden = true
         
 

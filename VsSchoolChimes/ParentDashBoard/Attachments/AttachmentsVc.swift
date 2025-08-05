@@ -11,19 +11,15 @@ import UIKit
 class AttachmentsVc: UIViewController {
     
     @IBOutlet weak var noDataLabel: UILabel!
-
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var tv: UITableView!
    
     var attachmentHeaders: [AttachmentHeaderInfo] = []
     var attachmentFiles: [[FilePath]]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    
     var attachmentData = [Attachment]()
     var filteredAttachments:[Attachment]?
     var SearchAttachments:[Attachment]?
-//    var isHeaderExpanded: Bool = false
     var isHeaderExpandedDict: [Int: Bool] = [:]
     var search = true
     var isExpanded: Bool = false
@@ -94,7 +90,8 @@ class AttachmentsVc: UIViewController {
                                 description: item.description ?? "",
                                 date: item.date ?? "",
                                 time: item.time ?? "",
-                                sender_info: item.sender_info ?? "", is_unread: item.is_unread ?? false, id: item.id ?? ""
+                                sender_info: item.sender_info ?? "", sent_by: "", is_unread: item.is_unread ?? false, id: item.id ?? "",can_edit: false,can_delete: false
+                                
                             )
                             self.attachmentHeaders.append(header)
                             self.attachmentFiles?.append(item.file_path ?? [])
@@ -255,9 +252,10 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                     description: item.description ?? "",
                     date: item.date ?? "",
                     time: item.time ?? "",
-                    sender_info: item.sender_info ?? "",
+                    sender_info: item.sender_info ?? "", sent_by: "",
                     is_unread: item.is_unread ?? false,
-                    id: item.id ?? ""
+                    id: item.id ?? "",
+                    can_edit: false,can_delete: false
                 )
                 self.attachmentHeaders.append(header)
                 self.attachmentFiles?.append(item.file_path ?? [])
@@ -286,7 +284,10 @@ struct AttachmentHeaderInfo {
     let date: String?
     let time: String?
     let sender_info: String?
+    let sent_by: String?
     var is_unread: Bool
     let id: String?
+    let can_edit: Bool
+    let can_delete: Bool
     var isExpanded: Bool = false
 }

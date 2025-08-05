@@ -204,6 +204,7 @@ class  commonApi_forSending {
                                 ])
                                 iframeValue = iframeHTML ?? ""
                                 fileSizeValue = convertSize(fileSize ?? 0)
+                              
                             } else {
                                 print("❌ Failed to upload video.")
                             }
@@ -366,17 +367,23 @@ class  commonApi_forSending {
         print("📤 Sending parameters Request : \(finalParams)")
         print("📤 USER TOKEN \(UserDefaultFileManager.get_staff_Details()?.access_token ?? "")")
         
+        let Updatetoken: String? = (localData.editToken == nil)
+            ? (UserDefaultFileManager.get_staff_Details()?.access_token ?? "")
+            : localData.editToken
+
+        
         APIService.shared.makeApi(
             url: baseURl,
             parameters: finalParams,
             type: ApitTypeSringFile.PUT,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: Updatetoken ?? ""
         ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
             guard let viewController = viewController else { return }
 
             switch result {
             case .success(let successMessage):
                 DispatchQueue.main.async {
+                    localData.editToken = nil
                     onComplete(successMessage)
                 }
 
@@ -402,17 +409,23 @@ class  commonApi_forSending {
     //Function for video upload
     func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
-        
-        CircularProgressLoader.shared.show()
-        
+        DispatchQueue.main.async {
+            CircularProgressLoader.shared.show()
+        }
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
 //        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
-            CircularProgressLoader.shared.updateProgress(to: progress)
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.updateProgress(to: progress * 100)
+            }
+//            CircularProgressLoader.shared.updateProgress(to: progress)
         }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
-            CircularProgressLoader.shared.hide()
+//            CircularProgressLoader.shared.hide()
             
+//            DispatchQueue.main.async {
+//                    CircularProgressLoader.shared.hide()
+//                }
             if let videoURL = videoURL {
                 print("✅ Video uploaded! Watch it at: \(videoURL)")
                 if let iframeHTML = iframeHTML {

@@ -47,7 +47,8 @@ struct ServiceUrl{
     static let comm_communication_read_status_update  = "comm/api/communication/read-status-update"
     static let  comm_communication_read_status_update_archive  = "comm/api/communication/read-status-update-archive"
     static let  comm_attachment_send_attachment  = "comm/api/attachment/send-attachment"
-    static let  comm_communication_attachment_list  = "comm/api/attachment/list"
+    static let  comm_communication_attachment_list  = "comm/api/attachment/list" 
+    static let  comm_api_attachment_report  = "comm/api/attachment/report"
     static let  comm_communication_attachment_list_archive  = "comm/api/attachment/list-archive"
     static let  staff_attd_geometric_entry_using_app  = "staff-attd/api/geometric/entry-using-app"
     static let  staff_attd_geometric_set_geometric_location  = "staff-attd/api/geometric/set-geometric-location"
@@ -91,7 +92,9 @@ struct ServiceUrl{
     static let comm_api_assignment_submissions_list = "comm/api/assignment/submissions-list"
     static let   comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_homework_update = "comm/api/homework/update"
+    static let   comm_api_attachment_update = "comm/api/attachment/update"
     static let   comm_api_homework_delete = "comm/api/homework/delete"
+    static let   comm_api_attachment_delete = "comm/api//attachment/delete"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
     static let comm_api_assignment_submissions_list_archive = "comm/api/assignment/submissions-list-archive"
@@ -139,6 +142,7 @@ struct localData{
     static var user_details : UserDetails? = nil
     static var user_data : UserData? = nil
     static var  accidamic_year_data : get_academic_yearSuc? = nil
+    static var  editToken : String?
 
 }
 struct screenType{
@@ -364,26 +368,76 @@ func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, sha
     view.backgroundColor = backgroundColor
 }
 
+//func formattedDateStatus(from selectedDateString: String) -> String {
+//    let inputFormatter = DateFormatter()
+//    inputFormatter.dateFormat = "dd-MM-yyyy"
+//    inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+//    
+//    guard let selectedDate = inputFormatter.date(from: selectedDateString) else {
+//        return selectedDateString // Fallback if parsing fails
+//    }
+//    
+//    let calendar = Calendar.current
+//    let today = Date()
+//    
+//    if calendar.isDate(selectedDate, inSameDayAs: today) {
+//        return "Today"
+//    } else if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+//              calendar.isDate(selectedDate, inSameDayAs: yesterday) {
+//        return "Yesterday"
+//    } else {
+//        let outputFormatter = DateFormatter()
+//        outputFormatter.dateFormat = "dd MMMM, yyyy" // e.g., 24 July, 2025
+//        return outputFormatter.string(from: selectedDate)
+//    }
+//}
+
+
 func formattedDateStatus(from selectedDateString: String) -> String {
+    let possibleFormats = [
+                "dd-MM-yyyy",
+                "yyyy-MM-dd",
+                "dd/MM/yyyy",
+                "MM/dd/yyyy",
+                "dd MMM yyyy",
+                "dd MMMM yyyy",
+                "yyyy/MM/dd",
+                "MMM dd, yyyy",
+                
+                // DateTime formats
+                "dd-MM-yyyy HH:mm",
+                "dd-MM-yyyy hh:mm a",
+                "yyyy-MM-dd HH:mm",
+                "yyyy-MM-dd HH:mm:ss",
+                "yyyy/MM/dd HH:mm:ss",
+                "MM/dd/yyyy HH:mm",
+                "dd MMM yyyy HH:mm",
+                "dd MMMM yyyy HH:mm",
+                "MMM dd, yyyy HH:mm"
+            ]
     let inputFormatter = DateFormatter()
-    inputFormatter.dateFormat = "dd-MM-yyyy"
     inputFormatter.locale = Locale(identifier: "en_US_POSIX")
     
-    guard let selectedDate = inputFormatter.date(from: selectedDateString) else {
-        return selectedDateString // Fallback if parsing fails
+    var selectedDate: Date?
+    for format in possibleFormats {
+        inputFormatter.dateFormat = format
+        if let date = inputFormatter.date(from: selectedDateString) {
+            selectedDate = date
+            break
+        }
     }
     
+    guard let date = selectedDate else { return selectedDateString }
     let calendar = Calendar.current
     let today = Date()
     
-    if calendar.isDate(selectedDate, inSameDayAs: today) {
+    if calendar.isDate(date, inSameDayAs: today) {
         return "Today"
-    } else if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
-              calendar.isDate(selectedDate, inSameDayAs: yesterday) {
+    } else if calendar.isDate(date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today)!) {
         return "Yesterday"
     } else {
         let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "dd MMMM, yyyy" // e.g., 24 July, 2025
-        return outputFormatter.string(from: selectedDate)
+        outputFormatter.dateFormat = "dd MMMM, yyyy"
+        return outputFormatter.string(from: date)
     }
 }

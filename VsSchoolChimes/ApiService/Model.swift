@@ -462,10 +462,13 @@ struct Attachment: Codable {
     let date: String?
     let time: String?
     let sender_info: String?
+    let sent_by: String?
     var is_unread: Bool?
     let is_archive: Bool?
     let file_path: [FilePath]?
     let iframe: String?
+    let can_edit: Bool?
+    let can_delete: Bool?
 }
 
 struct AttachmentFilePath: Codable {

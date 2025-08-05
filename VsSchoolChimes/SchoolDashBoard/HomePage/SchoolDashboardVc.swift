@@ -286,6 +286,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             ) in
                 switch result {
                 case .success(let successMessage):
+                    print("successMessagesuccessMessage",successMessage)
                     if successMessage.status == true{
                         localData.accidamic_year_data = successMessage
                     }else{
