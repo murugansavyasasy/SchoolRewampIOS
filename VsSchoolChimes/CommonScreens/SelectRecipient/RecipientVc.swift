@@ -219,7 +219,6 @@ class RecipientVc: UIViewController{
     @IBAction func send(_ sender: UIButton) {
         print("selectedId : \(array_selectedId)")
         let isEntireSchool = (cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School)
-        
         // Validate selection
         guard isEntireSchool || !array_selectedId.isEmpty else {
             alert.showAlert(

@@ -10,7 +10,7 @@ import SDWebImage
 
 protocol SelectNotice: AnyObject {
     
-    func didTapButton(title: String, content: String, items: [FilePath])
+    func didTapButton(title: String, content: String, items: [FilePath],editId:String)
 }
 
 @available(iOS 14.0, *)
@@ -88,7 +88,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     }
     
     @IBAction func Select(_ sender: UIButton) {
-                delegate?.didTapButton(title: TitleLbl.text!, content: dicriptContent.text!, items: homeworkDocs ?? [])
+        delegate?
+            .didTapButton(
+                title: TitleLbl.text!,
+                content: dicriptContent.text!,
+                items: homeworkDocs ?? [],
+                editId: ""
+            )
         
         
     }

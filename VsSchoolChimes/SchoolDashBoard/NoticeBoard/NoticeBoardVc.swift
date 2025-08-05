@@ -24,7 +24,12 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         }
     }
     
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId:String
+    ) {
         print("dsafersd")
     }
     
@@ -49,6 +54,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var token : String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +87,8 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
             if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-                UserDefaultFileManager.saveStaffDetails(data: selectedSchool)
+          
+                localData.editToken = selectedSchool.access_token
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     self.Get_Notice()
                 }

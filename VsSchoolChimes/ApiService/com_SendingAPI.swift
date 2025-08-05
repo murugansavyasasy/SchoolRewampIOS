@@ -144,7 +144,7 @@ class  commonApi_forSending {
 //onComplete: (Send_AttachmentResponse) -> Void
     func SendingAttachmentFlow(
         selectedAcadimicYearId: Int,
-        edit: Bool? = false,
+        edit: Bool = false,
         target_type: Int,
         selectedId: [String],
         baseURL: String,
@@ -157,27 +157,27 @@ class  commonApi_forSending {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
             message: message,
-            actionLbl1: AlertstringFile.Yes_Update,
+            actionLbl1: edit ? AlertstringFile.Yes_Update :AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in
                 var uploadedFiles: [[String: String]] = []
                 var iframeValue = ""
                 var fileSizeValue = ""
-
+                
                 let dispatchGroup = DispatchGroup()
-
+                
                 // 🎥 Upload videos to Vimeo
                 let videoFiles = user_inputs.SelectedUrls.filter {
                     $0.fileType.uppercased() == AttachmentTypeString.VIDEO
                 }
-
+                
                 for item in videoFiles {
                     dispatchGroup.enter()
                     let videoTitle = Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
                     let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
-
-                    if let videoURL = item.VideoURl {
+                    if let videoURL = item.VideoURl,
+                       !(videoURL.absoluteString.contains("vimeo.com")){
                         startUpload(
                             from: viewController,
                             videoURL: videoURL,
@@ -187,26 +187,31 @@ class  commonApi_forSending {
                             if let finalEmbedUrl = finalEmbedUrl {
                                 uploadedFiles.append([
                                     "url": finalEmbedUrl,
-                                    "type": AttachmentTypeString.VIDEO
-                                ])
+                                    "type": AttachmentTypeString.VIDEO])
                                 iframeValue = iframeHTML ?? ""
                                 fileSizeValue = convertSize(fileSize ?? 0)
+                                
                             } else {
                                 print("❌ Failed to upload video.")
                             }
                             dispatchGroup.leave()
                         }
-                    } else {
-                        print("❌ Video URL is nil.")
+                    }else{
+                        uploadedFiles.append([
+                            "url": item.VideoURl?.absoluteString ?? "",
+                            "type": "VIDEO"])
                         dispatchGroup.leave()
                     }
+                    
                 }
-
+                
                 // 📷 Upload other files (images, PDFs, etc.)
                 dispatchGroup.enter()
+                
+                
+                
                 uploadAWSMedia(file: user_inputs.SelectedUrls) {
-                    CircularProgressLoader.shared.hide()
-
+                    
                     let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
                         guard let url = URL(string: urlString) else { return nil }
                         let ext = url.pathExtension.lowercased()
@@ -216,24 +221,26 @@ class  commonApi_forSending {
                             CommonStringFile.type: resolvedType
                         ]
                     }
-
+                    
                     uploadedFiles.append(contentsOf: fileEntries)
                     dispatchGroup.leave()
                 }
-
+                
                 // ✅ Once all uploads are complete, make the final API call
                 dispatchGroup.notify(queue: .main) {
                     if uploadedFiles.isEmpty {
                         print("❌ No files uploaded.")
                         return
                     }
-
+                    
                     if edit == true {
                         self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) {response in
                             print("✅ All uploads complete.")
+                            CircularProgressLoader.shared.hide()
                             onComplete(response)
                         }
                     }else{
+                        
                         self.sendAttachment(
                             from: viewController,
                             with: uploadedFiles,
@@ -250,7 +257,7 @@ class  commonApi_forSending {
                             onComplete(response)
                         }
                     }
-
+                    
                 }
             },
             onNo: {
@@ -344,18 +351,25 @@ class  commonApi_forSending {
         }
         
         print("📤 Sending parameters Request : \(finalParams)")
+        print("📤 USER TOKEN \(UserDefaultFileManager.get_staff_Details()?.access_token ?? "")")
+        
+        let Updatetoken: String? = (localData.editToken == nil)
+            ? (UserDefaultFileManager.get_staff_Details()?.access_token ?? "")
+            : localData.editToken
+
         
         APIService.shared.makeApi(
             url: baseURl,
             parameters: finalParams,
             type: ApitTypeSringFile.PUT,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: Updatetoken ?? ""
         ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
             guard let viewController = viewController else { return }
 
             switch result {
             case .success(let successMessage):
                 DispatchQueue.main.async {
+                    localData.editToken = nil
                     onComplete(successMessage)
                 }
 
@@ -382,16 +396,23 @@ class  commonApi_forSending {
     func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
         
-        CircularProgressLoader.shared.show()
+          
         
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
 //        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
-            CircularProgressLoader.shared.updateProgress(to: progress)
+            DispatchQueue.main.async {
+                CircularProgressLoader.shared.show(style: .circle)
+                CircularProgressLoader.shared.updateProgress(to: progress * 100)
+            }
+//            CircularProgressLoader.shared.updateProgress(to: progress)
         }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
-            CircularProgressLoader.shared.hide()
             
+            
+//            DispatchQueue.main.async {
+//                    CircularProgressLoader.shared.hide()
+//                }
             if let videoURL = videoURL {
                 print("✅ Video uploaded! Watch it at: \(videoURL)")
                 if let iframeHTML = iframeHTML {

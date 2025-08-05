@@ -155,14 +155,25 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
 
     // MARK: - Video
     private func openVideoPicker(from viewController: UIViewController) {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.mediaTypes = ["public.movie"]
-        picker.sourceType = .photoLibrary
-        picker.allowsEditing = false
-        viewController.present(picker, animated: true)
+        if #available(iOS 14, *) {
+            var config = PHPickerConfiguration()
+            config.filter = .videos
+            config.selectionLimit = 1
+            let picker = PHPickerViewController(configuration: config)
+            picker.delegate = self
+            viewController.present(picker, animated: true)
+        } else {
+            // iOS 13 and below fallback
+            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.mediaTypes = ["public.movie"]
+            picker.sourceType = .photoLibrary
+            picker.allowsEditing = false
+            viewController.present(picker, animated: true)
+        }
     }
+
 
     // MARK: - File or PDF
     private func openDocumentPicker(from viewController: UIViewController, types: [UTType]) {
@@ -175,30 +186,50 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     // MARK: - PHPickerViewControllerDelegate
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-
-        var images: [UIImage] = []
-        let group = DispatchGroup()
-
-        for result in results {
-            group.enter()
-            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
-                defer { group.leave() }
-
-                if let image = object as? UIImage {
-                    let width = image.size.width
-                    let height = image.size.height
-                    print("Picked image - Width: \(width), Height: \(height)")
-                    print(image)
-                    images.append(image)
+        
+        guard !results.isEmpty else { return }
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if itemProvider?.hasItemConformingToTypeIdentifier(UTType.movie.identifier) == true {
+            // Handle video
+            itemProvider?.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { url, error in
+                if let url = url {
+                    let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+                    do {
+                        if FileManager.default.fileExists(atPath: tempURL.path) {
+                            try FileManager.default.removeItem(at: tempURL)
+                        }
+                        try FileManager.default.copyItem(at: url, to: tempURL)
+                        DispatchQueue.main.async {
+                            self.onVideoPicked?(tempURL)
+                        }
+                    } catch {
+                        print("❌ Failed to copy video: \(error)")
+                    }
                 }
             }
-        }
-
-        group.notify(queue: .main) {
-            self.onImagesPicked?(images)
-           
+        } else if itemProvider?.canLoadObject(ofClass: UIImage.self) == true {
+            // Handle image
+            var images: [UIImage] = []
+            let group = DispatchGroup()
+            
+            for result in results {
+                group.enter()
+                result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                    defer { group.leave() }
+                    if let image = object as? UIImage {
+                        images.append(image)
+                    }
+                }
+            }
+            
+            group.notify(queue: .main) {
+                self.onImagesPicked?(images)
+            }
         }
     }
+
 
 
     // MARK: - UIImagePickerControllerDelegate

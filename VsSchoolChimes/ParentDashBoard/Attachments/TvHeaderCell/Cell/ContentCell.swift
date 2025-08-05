@@ -23,17 +23,16 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
     }
     
     
+
     func configure(with files: [FilePath]?,sendBy:String) {
         sendByLbl.text = sendBy
            self.attachmentFiles = files
         cv.isScrollEnabled = false
            cv.reloadData()
-           layoutIfNeeded()
            updateCollectionViewHeight()
        }
 
        func updateCollectionViewHeight() {
-           cv.layoutIfNeeded()
            let height = cv.collectionViewLayout.collectionViewContentSize.height
            cvHeight.constant = height
        }
@@ -41,7 +40,6 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
    
 
        func collectionContentHeight() -> CGFloat {
-           cv.layoutIfNeeded()
            return cv.collectionViewLayout.collectionViewContentSize.height
        }
 
@@ -58,7 +56,6 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let data  = attachmentFiles?[indexPath.item]
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "PreviewCell",
             for: indexPath) as? PreviewCell
@@ -66,26 +63,28 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             return UICollectionViewCell()
         }
       
-    
-        if data?.type == "IMAGE"{
+      
+
+        guard let data = attachmentFiles?[indexPath.item] else { return cell }
+        
+        switch data.type?.uppercased() {
+        case CommonStringFile.IMAGE:
             cell.imageView.isHidden = false
             cell.webview.isHidden = true
-            cell.imageView
-                .sd_setImage(
-                    with: URL(string: data?.url ?? ""),
-                    placeholderImage: UIImage(named: "placeholder")
-                )
-        }else  if data?.type == "VIDEO" {
+            cell.imageView.sd_setImage(with: URL(string: data.url ?? ""), placeholderImage: UIImage(named: "placeholder"))
+            cell.outerView.clearShadow()
+            cell.outerView.backgroundColor = .white
+        case CommonStringFile.VIDEO:
             cell.imageView.image = UIImage(named: "video (1)")
-        }else{
-            let fileURL = URL(fileURLWithPath: data?.url ?? "")
-            let iconName = getFileIconName(for: fileURL)
-            let iconImage = UIImage(named: iconName)
-            cell.imageView.image = iconImage
-//            cell.imageView.layer.borderColor = UIColor.black.cgColor
-//            cell.imageView.layer.borderWidth = 0.5
-            
+            cell.outerView.setShadow()
+            cell.outerView.backgroundColor = .white
+        default:
+            let iconName = getFileIconName(for: URL(fileURLWithPath: data.url ?? ""))
+            cell.imageView.image = UIImage(named: iconName)
+            cell.outerView.setShadow()
+            cell.outerView.backgroundColor = .white
         }
+        
         
        
         return cell
@@ -99,15 +98,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
               let urlString = file.url,
              let url = URL(string: urlString) else { return }
         
-        let fileType = file.type?.uppercased()
-        
-        if fileType == CommonStringFile.VIDEO {
-            
-            playVideo(for: file.url ?? "")
-        }else{
-            
-            let isImage = fileType == CommonStringFile.IMAGE
-            
+
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             let homeworkDocs = attachmentFiles ?? []
             imageVC.fileURL = homeworkDocs
@@ -116,11 +107,13 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
 //            imageVC.type = isImage ? 2 : 0
+            
             imageVC.modalPresentationStyle = .fullScreen
 //            imageVC.FileURL = attachmetList ?? []
             let currentController = getCurrentViewController()
             currentController?.present(imageVC, animated: true)
-        }
+        
+        
     }
     
     func getCurrentViewController() -> UIViewController? {

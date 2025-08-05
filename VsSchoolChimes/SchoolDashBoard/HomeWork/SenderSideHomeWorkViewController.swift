@@ -9,10 +9,12 @@ import UIKit
 import DropDown
 import Kingfisher
 import PDFKit
+import AVFoundation
+import AVKit
 
 @available(iOS 14.0, *)
-class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate, UITextFieldDelegate {
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, UITextFieldDelegate {
+    func didTapButton(title: String, content: String, items: [FilePath],editId:String) {
         print("sdhbh")
     }
     func deleteImage(index: Int) {
@@ -51,9 +53,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var alert = CustomAlert()
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
+    var editId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+       
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
         wordsCountLbl.applyRightTxt()
@@ -80,13 +83,46 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func setSelectedHomeWork(title:String,content:String,imageUrls:[FilePath]){
+    func setSelectedHomeWork(
+        title:String,
+        content:String,
+        imageUrls:[FilePath],
+        editId:String
+    ){
         DetailsTxtview.text = content
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
-        let imageItems = imageUrls.map {
-            AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
-        }
+        self.editId = editId
+        RecipientBtn.setTitle("UPDATE", for: .normal)
+//        let imageItems = imageUrls.map {
+//            
+//            if $0.type == "VIDEO"{
+//                AttachmentItem(
+//                    image: nil,
+//                    imageURL: nil,
+//                    fileType:$0.type ?? "",
+//                    VimeoVideoURL: $0.url
+//                )
+//            }else{
+//                AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
+//            }
+//            
+//        }
+        
+        
+            let imageItems: [AttachmentItem] = imageUrls.map { file in
+                let type = file.type?.lowercased() ?? ""
+                return AttachmentItem(
+                    image: nil,
+                    imageURL: type != "video" ? file.url : nil,
+                    fileType: type,
+                    VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+                )
+            }
+            attachments = imageItems
+        
+        
+        
         let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
         TextViewheight.constant = newHeight
@@ -119,45 +155,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     
-    @IBAction func chooseVideoTapped(_ sender: UIButton) {
-        videoPicker?.pickVideo()
-    }
     
-    func pickVideoFromGallery(){
-//        if #available(iOS 15.0, *) {
-//            showLottieProgressLoader(animationName: "loader (2)")
-//        } 
-        videoPicker?.pickVideo()
-    }
-
-    
-    // MARK: - Delegate Methods
-    func videoPickerManager(didPickVideo url: URL) {
-//        if #available(iOS 15.0, *) {
-//            self.hideLottieProgressLoader()
-//        }
-        videoPicker?.playVideo(from: url, in: VideoView)
-        attachments.removeAll()
-        uploadAttachmentView.isHidden = true
-        collectionViewHeight.constant = 0
-        selectedVideoURL = url
-        VideoView.isHidden = false
-        RecipientBtn.isHidden = false
-    }
-    
-    func videoPickerManagerDidCloseVideo() {
-        if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
-        }
-        selectedVideoURL = nil
-        VideoView.isHidden = true
-        //          / chooseRecipientsBtn.isHidden = true
-        uploadAttachmentView.isHidden = false
-        collectionViewHeight.constant = 120
-        uploadAttachmentView.imageCollectionview.reloadData()
-        
-        
-    }
     
     
     func imageSelection(){
@@ -165,8 +163,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-//            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            
+
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
         }
@@ -178,10 +175,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-//            if imageItems.count != 0{
-//                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-//            }
-            
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -189,8 +182,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
@@ -205,8 +196,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                         VideoURl: data
                     )
                 )
-//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -219,15 +208,48 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            let params: [String: Any] = [
+            var params: [String: Any] = [
                 assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
                 assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
             ]
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.homeWorkMenuId
-            vc.Common_request_params = params
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            
+            if (sender as AnyObject).titleLabel.text == "UPDATE"{
+                
+                let com = commonApi_forSending()
+                params[SendAttachmentStringFile.id] = editId
+                com.SendingAttachmentFlow(
+                    selectedAcadimicYearId: 0,
+                    edit: true,
+                    target_type:0,
+                    selectedId: [],
+                    baseURL: ServiceUrl.comm_api_homework_update,
+                    subjectId: "",
+                    message:"",
+                    from: self,
+                    Common_request_params: params
+                ) { response in
+                    DispatchQueue.main.async {
+                        CircularProgressLoader.shared.hide()
+                        CustomAlert.showAlertWithOkAction(
+                            title: AlertstringFile.Success,
+                            message: response.message,
+                            on: self
+                        ) { [self] in
+                            print("success")
+                            dismiss(animated: true)
+                        }
+                    }
+                }
+                
+            }else{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = Menu_id.homeWorkMenuId
+                vc.Common_request_params = params
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+            
+           
         }else{
             alert
                 .showAlert(
@@ -276,65 +298,57 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     // MARK: File Attachments Actions
     func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if attachments.count != 10{
-            PhotoPickerManager.shared
-                .presentPicker(
-                    ofType: .gallery(selectionLimit: 10 - attachments.count),
-                    from: self
-                )
-            
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
+        let remaining = 10 - attachments.count
+        if remaining > 0 {
+            let limit = max(remaining , 0)
+            if limit > 0 {
+                PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: limit), from: self)
+            } else {
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+        } else {
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
-        
     }
-    func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if attachments.count != 10{
+
+    
+    func openCamera() {
+        if attachments.count < 10 {
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
+        } else {
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-    func selectPDF() {
-        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
-        if attachments.count != 10{
+
+    
+    func selectDocuments() {
+        let remaining = 10 - attachments.count
+        if remaining > 0 {
+            PhotoPickerManager.shared.limiSelection = remaining
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
-        }else{
-            
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        } else {
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
-        
     }
+
     
     func VideoPick() {
-        let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
-        
-        if  video.count != 2{
-          
-            if attachments.count <= 10{
-                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
-                PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
-               
-            }else{
-                let alert = CustomAlert()
-                alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            }
-            
-        }else{
-            
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        let totalRemaining = 10 - attachments.count
+        let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
+        let videoRemaining = 2 - videoCount
+
+        if totalRemaining <= 0 {
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        } else if videoRemaining <= 0 {
+            CustomAlert().showAlert(title: "", message: "You can only select up to 2 video files.", on: self)
+        } else {
+            // Ensure both limits respected
+            let pickLimit = min(totalRemaining, videoRemaining)
+            PhotoPickerManager.shared.limiSelection = pickLimit
+            PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
         }
-        
     }
+
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)
@@ -384,7 +398,17 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 } else {
                     cell.imageViews.kf.setImage(with: url)
                 }
-            } else {
+            } else if let vido = item.VideoURl{
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }
+            else if let vido = URL(string: item.VimeoVideoURL ?? ""){
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }
+            else{
                 cell.imageViews.image = nil
             }
             
@@ -407,63 +431,72 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            //
-            // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-                //
-                openCamera()
-            }
-            alertController.addAction(cameraAction)
+            let remaining = 10 - attachments.count
             
-            // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                selectImages()
-                //
-            }
-            alertController.addAction(galleryAction)
-            
-            //             PDF option
-            let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
-                selectPDF()
-            }
-            alertController.addAction(pdfAction)
-            
-            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+            if remaining > 0 {
                 
-                VideoPick()
-              
-            }
-            alertController.addAction(VideoAction)
-            // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-        }else{
-            if attachments.count > indexPath.item - 1 {
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
-                    if let url = attachments[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-                } else{
-                    if let img = attachments[indexPath.item - 1].image {
-                        vc.img = attachments[indexPath.item - 1].image
-                    }else{
-                        vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
-                    }
-                    
+                let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+                
+                // Camera option
+                let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                    //
+                    openCamera()
                 }
-                vc.type = attachments[indexPath.item - 1].fileType
-                present(vc, animated: true)
+                alertController.addAction(cameraAction)
+                
+                // Gallery option
+                let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                    selectImages()
+                    //
+                }
+                alertController.addAction(galleryAction)
+                
+                //             PDF option
+                let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
+                    selectDocuments()
+                }
+                alertController.addAction(pdfAction)
+                
+                //   VIDEO option
+                let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                    
+                    let totalRemaining = 10 - attachments.count
+                    let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
+                    let videoRemaining = 2 - videoCount
+                    
+                    if totalRemaining <= 0 {
+                        CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+                    } else if videoRemaining <= 0 {
+                        CustomAlert().showAlert(title: "", message: "You can only select up to 2 video files.", on: self)
+                    }else{
+                        
+                        VideoPick()
+                        
+                    }
+                }
+                alertController.addAction(VideoAction)
+                // Cancel action
+                let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+            }else{
+                
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             }
+            
+        }else{
+            
+            let attachment = attachments[indexPath.item - 1]
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.attachment = attachments
+            imageVC.subjectName = "HomeWork"
+            imageVC.scrollIndex = indexPath
+            imageVC.index = indexPath.row - 1
+            imageVC.type = attachment.fileType
+            imageVC.modalPresentationStyle = .fullScreen
+            present(imageVC, animated: true)
         }
-        
-        
-        
-        
     }
     
 }
@@ -619,4 +652,5 @@ struct AttachmentItem {
     var imageURL: String?       // for remote
     var fileType: String
     var VideoURl : URL?// "image", "pdf", etc.
+    var VimeoVideoURL : String?
 }

@@ -8,6 +8,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class ReciverHomeworkVC: UIViewController, SelectNotice {
+    
 
     // MARK: - Outlets
     @IBOutlet weak var searchHeight: NSLayoutConstraint!
@@ -194,7 +195,12 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         }
     }
 
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId:String) {
+            
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
 }
