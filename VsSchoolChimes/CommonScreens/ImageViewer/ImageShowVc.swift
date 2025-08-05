@@ -64,7 +64,7 @@ class ImageShowVc: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        uiUpdate(type: type ?? "")
+        //        uiUpdate(type: type ?? "")
         let count = attachment?.count ?? fileURL.count
         
         DispatchQueue.main.async {
@@ -102,26 +102,6 @@ class ImageShowVc: UIViewController {
         }
     }
     
-    func uiUpdate(type: String) {
-        guard let media = MediaType(rawValue: type.lowercased()) else { return }
-        
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            self.cv.isHidden = true
-            self.pdfView.isHidden = true
-            self.textView.isHidden = true
-            
-            switch media {
-            case .image, .video:
-                self.cv.isHidden = false
-            default:
-                guard let urlStr = self.downloadUrl, let url = URL(string: urlStr) else { return }
-                self.activityIndicator.startAnimating()
-                self.pdfView.load(URLRequest(url: url))
-                self.pdfView.isHidden = false
-            }
-        }
-    }
 }
 
 extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -132,30 +112,71 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
-        
-//        switch FileURL[indexPath.row].type {
-//            
-//        case "VIDEO":
-//            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
-//                let request = URLRequest(url: url)
-//                cell.WebView.load(request)
-//            }
-//            cell.WebView.isHidden = false
-//            cell.imageView.isHidden = true
-//        case "IMAGE":
-//            cell.imageView.sd_setImage(with: URL(string: FileURL[indexPath.row].url ?? ""),placeholderImage: ImageName.placeholder)
-//            cell.WebView.isHidden = true
-//            cell.imageView.isHidden = false
-//        default:
-//            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
-//                let request = URLRequest(url: url)
-//                cell.WebView.load(request)
-//            }
-//            cell.WebView.isHidden = false
-//            cell.imageView.isHidden = true
-//        }
-        return cell
+        if let attachments = attachment, !attachments.isEmpty {
+            let item = attachments[indexPath.item]
+            let fileType = item.fileType.lowercased()
+            let mediaType = MediaType(rawValue: fileType)
+            print(fileType)
+            switch mediaType {
+            case .image:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
+                if let urlStr = item.imageURL, let imageURL = URL(string: urlStr) {
+                    cell.imageView.sd_setImage(with: imageURL, placeholderImage: item.image)
+                } else {
+                    cell.imageView.image = item.image
+                }
+                cell.imageView.isHidden = false
+                cell.WebView.isHidden = true
+                return cell
+                
+            case .video:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.VideoPlayerCVC, for: indexPath) as! VideoPlayerCVC
+                if let videoURL = item.VideoURl {
+                    cell.configure(with: videoURL, parentVC: self)
+                }
+                return cell
+                
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
+                if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                    cell.WebView.load(URLRequest(url: url))
+                }
+                cell.imageView.isHidden = true
+                cell.WebView.isHidden = false
+                return cell
+            }
+        } else {
+            let item = fileURL[indexPath.item]
+            let fileType = item.type?.lowercased() ?? ""
+            let mediaType = MediaType(rawValue: fileType)
+            
+            switch mediaType {
+            case .image:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
+                if let urlStr = item.url, let url = URL(string: urlStr) {
+                    cell.imageView.sd_setImage(with: url, placeholderImage: ImageName.placeholder)
+                }
+                cell.imageView.isHidden = false
+                cell.WebView.isHidden = true
+                return cell
+                
+            case .video:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.VideoPlayerCVC, for: indexPath) as! VideoPlayerCVC
+                if let urlStr = item.url, let videoUrl = URL(string: urlStr) {
+                    cell.configure(with: videoUrl, parentVC: self)
+                }
+                return cell
+                
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
+                if let urlStr = item.url, let url = URL(string: urlStr) {
+                    cell.WebView.load(URLRequest(url: url))
+                }
+                cell.imageView.isHidden = true
+                cell.WebView.isHidden = false
+                return cell
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
