@@ -6,6 +6,14 @@
 import UIKit
 import DropDown
 
+enum LeaveFilterType: String {
+    case all = "All"
+    case approved = "Approved"
+    case rejected = "Rejected"
+    case waiting = "Waiting for approval"
+}
+
+
 enum LeaveStatus: String {
     case approved = "Approved"
     case rejected = "Rejected"
@@ -20,7 +28,7 @@ enum LeaveStatus: String {
     }
 }
 
-class LeveHistoryVC: UIViewController, editDelete {
+class LeveHistoryVC: UIViewController, EditDeleteDelegate {
 
     @IBOutlet weak var LeaveRequestsLbl: UILabel!
     @IBOutlet weak var TopView: UIView!
@@ -37,11 +45,12 @@ class LeveHistoryVC: UIViewController, editDelete {
     @IBOutlet weak var TopInfoView: UIView!
     @IBOutlet weak var Backbtn: UIButton!
     let alert = CustomAlert()
-    var leaveHistoryData: [LeaveInfo] = []
-    var filteredLeaveData: [LeaveInfo] = []
+    var leaveHistoryData: [LeaveMonth] = []
+    var filteredLeaveData: [LeaveMonth] = []
     var childDetails = UserDefaultFileManager.get_child_Details()
     var openedPopupIndex: IndexPath?
     var delegate: EditObject?
+    var selectedFilter: LeaveFilterType = .all
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,61 +83,73 @@ class LeveHistoryVC: UIViewController, editDelete {
         view.addGestureRecognizer(tapGesture)
 
         getLeaveRequestHistory()
+        applyFilter()
     }
 
     @objc func dismissPopup() {
         guard let index = openedPopupIndex,
-              let cell = historyTable.cellForRow(at: index) as? LeveHistoryTV else { return }
+              let cell = historyTable.cellForRow(at: index) as? LeaveHistoryTV else { return }
 
         cell.hidePopup()
         openedPopupIndex = nil
     }
-
-    func edit(edit: Int?, delete: Int?) {
-        if delete == -999, let row = edit {
-            let indexPath = IndexPath(row: row, section: 0)
-
-            if let previous = openedPopupIndex, previous != indexPath,
-               let prevCell = historyTable.cellForRow(at: previous) as? LeveHistoryTV {
+    
+    func edit(edit: IndexPath?, delete: IndexPath?) {
+        if let row = edit, delete?.row == -999 {
+            // Handle popup show/hide
+            if let previous = openedPopupIndex, previous != row,
+               let prevCell = historyTable.cellForRow(at: previous) as? LeaveHistoryTV {
                 prevCell.hidePopup()
             }
 
-            if openedPopupIndex == indexPath {
-                if let cell = historyTable.cellForRow(at: indexPath) as? LeveHistoryTV {
+            if openedPopupIndex == row {
+                if let cell = historyTable.cellForRow(at: row) as? LeaveHistoryTV {
                     cell.hidePopup()
                     openedPopupIndex = nil
                 }
             } else {
-                if let cell = historyTable.cellForRow(at: indexPath) as? LeveHistoryTV {
-                    cell.showPopup.isHidden = false
-                    cell.iconBtn.isSelected = true
-                    cell.aproveBtn.isHidden = true
-                    openedPopupIndex = indexPath
+                if let cell = historyTable.cellForRow(at: row) as? LeaveHistoryTV {
+                    cell.popupView.isHidden = false
+                    openedPopupIndex = row
                 }
             }
             return
         }
 
-        if let edit = edit {
-            let leave = filteredLeaveData[edit]
-            if let originalIndex = leaveHistoryData.firstIndex(where: { $0.id == leave.id }) {
-                let editLeaveObj = editLeave(
-                    id: leave.id,
-                    fromDate: leave.leave_from ?? "",
-                    toDate: leave.leave_to ?? "",
-                    reson: leave.reason ?? ""
-                )
-                delegate?.edit(edit: editLeaveObj)
+        // EDIT action
+        if let editIndexPath = edit {
+            let leave = filteredLeaveData[editIndexPath.section].details?[editIndexPath.row]
+                guard let leave = leave else { return }
+
+            if #available(iOS 14.0, *) {
+                let vc = LeveCreateVC(nibName: nil, bundle: nil)
+                
+                vc.editLeaveData = editLeave(
+                        id: leave.id,
+                        fromDate: leave.leave_from ?? "",
+                        toDate: leave.leave_to ?? "",
+                        reson: leave.reason ?? "",
+                        fromSession: leave.from_session ?? "",
+                        Tosession: leave.to_session ?? "",
+                        NoOfDays: leave.no_of_days ?? "",
+                        LeaveType: leave.leave_type ?? ""
+                    )
+                
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+            }
+
+        // DELETE action
+        if let deleteIndexPath = delete {
+            if let idToDelete = filteredLeaveData[deleteIndexPath.section].details?[deleteIndexPath.row].id {
+                deleteLeave(id: idToDelete, indexPath: deleteIndexPath)
             }
         }
-
-        if let delete = delete {
-            let idToDelete = leaveHistoryData[delete].id ?? ""
-            deleteLeave(id: idToDelete, index: delete)
-        }
     }
-
-    func deleteLeave(id: String, index: Int) {
+    
+    
+    func deleteLeave(id: String, indexPath: IndexPath) {
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.deletemessage,
                               actionLbl1: AlertstringFile.delete, actionLbl2: AlertstringFile.Cancel, on: self,
         onOk: {
@@ -145,11 +166,24 @@ class LeveHistoryVC: UIViewController, editDelete {
                         if success.status == true {
                             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success,
                                                               message: success.message ?? "", on: self) {
-                                if
-                                   let originalIndex = self.leaveHistoryData.firstIndex(where: { $0.id == self.filteredLeaveData[index].id }) {
-                                    self.leaveHistoryData.remove(at: originalIndex)
+
+                                // Remove from originalData
+                                if let originalSectionIndex = self.leaveHistoryData.firstIndex(where: { $0.month == self.filteredLeaveData[indexPath.section].month }),
+                                   let originalRowIndex = self.leaveHistoryData[originalSectionIndex].details?.firstIndex(where: { $0.id == id }) {
+                                    self.leaveHistoryData[originalSectionIndex].details?.remove(at: originalRowIndex)
+
+                                    // Remove entire section if empty
+                                    if self.leaveHistoryData[originalSectionIndex].details?.isEmpty ?? false {
+                                        self.leaveHistoryData.remove(at: originalSectionIndex)
+                                    }
                                 }
-                                self.filteredLeaveData.remove(at: index)
+
+                                // Remove from filteredData
+                                self.filteredLeaveData[indexPath.section].details?.remove(at: indexPath.row)
+                                if self.filteredLeaveData[indexPath.section].details?.isEmpty ?? false {
+                                    self.filteredLeaveData.remove(at: indexPath.section)
+                                }
+
                                 self.historyTable.reloadData()
                             }
                         } else {
@@ -223,29 +257,38 @@ class LeveHistoryVC: UIViewController, editDelete {
     // MARK: - Filter Actions
     @IBAction func approveAct(_ sender: UIButton) {
         addUnderline(to: approveBtn, unSelectedBtn: [rejectBtn, allBtn, waitingBtn])
-        filteredLeaveData = leaveHistoryData.filter { LeaveStatus.from($0.status) == .approved }
-        historyTable.reloadData()
+       // filteredLeaveData = leaveHistoryData.filter { LeaveStatus.from($0.status) == .approved }
+//        historyTable.reloadData()
+        selectedFilter = .approved
+        applyFilter()
     }
 
     @IBAction func rejectAct(_ sender: UIButton) {
         addUnderline(to: rejectBtn, unSelectedBtn: [approveBtn, allBtn, waitingBtn])
-        filteredLeaveData = leaveHistoryData.filter { LeaveStatus.from($0.status) == .rejected }
-        historyTable.reloadData()
+       // filteredLeaveData = leaveHistoryData.filter { LeaveStatus.from($0.status) == .rejected }
+       // historyTable.reloadData()
+        selectedFilter = .rejected
+            applyFilter()
     }
 
     @IBAction func waitingAct(_ sender: UIButton) {
         addUnderline(to: waitingBtn, unSelectedBtn: [rejectBtn, allBtn, approveBtn])
-        filteredLeaveData = leaveHistoryData.filter {
-            let status = LeaveStatus.from($0.status)
-            return status == .waiting
-        }
-        historyTable.reloadData()
+//        filteredLeaveData = leaveHistoryData.filter {
+//            let status = LeaveStatus.from($0.status)
+//            return status == .waiting
+//        }
+       // historyTable.reloadData()
+        selectedFilter = .waiting
+            applyFilter()
     }
+    
 
     @IBAction func AllAct(_ sender: UIButton) {
         addUnderline(to: allBtn, unSelectedBtn: [rejectBtn, approveBtn, waitingBtn])
-        filteredLeaveData = leaveHistoryData
-        historyTable.reloadData()
+//        filteredLeaveData = leaveHistoryData
+//        historyTable.reloadData()
+        selectedFilter = .all
+            applyFilter()
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -258,8 +301,29 @@ class LeveHistoryVC: UIViewController, editDelete {
 // MARK: - TableView Delegate & DataSource
 extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        filteredLeaveData.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView()
+        headerView.backgroundColor = .clear  // Customize color
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setFont(style: .title, size: FontSize.TitleSize)
+        label.textColor = .darkGray
+        label.text = filteredLeaveData[section].month
+        headerView.addSubview(label)
+        
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])
+
+        return headerView
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredLeaveData.count
+        return filteredLeaveData[section].details?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -270,96 +334,86 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
         
         let cell = historyTable.dequeueReusableCell(withIdentifier: "LeaveHistoryTV", for: indexPath) as! LeaveHistoryTV
         
-        let data = filteredLeaveData[indexPath.row]
+        let data = filteredLeaveData[indexPath.section].details?[indexPath.row]//filteredLeaveData[indexPath.row]
         
-        cell.DaysCountLbl.text = data.no_of_days + " Day Application"
-        cell.DateLbl.text = "\(data.leave_from.convertToTargetDateFormat() ?? "") - \(data.leave_to.convertToTargetDateFormat() ?? "")"
-        cell.TypeLbl.text = "Causual"
-        cell.ReasonLbl.text = data.reason
+        cell.DaysCountLbl.text = (data?.no_of_days ?? "") + " Day Application"
+        cell.DateLbl.text = "\(data?.leave_from?.convertToTargetDateFormat() ?? "") - \(data?.leave_to?.convertToTargetDateFormat() ?? "")"
+        cell.TypeLbl.text = data?.leave_type
+        cell.ReasonLbl.text = data?.reason
         
-        switch LeaveStatus.from(data.status) {
+        switch LeaveStatus.from(data?.status ?? "") {
         
         case.approved:
             cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
             cell.StatusBtn.setTitleColor(.systemGreen, for: .normal)
-            cell.StatusBtn.setTitle(data.status, for: .normal)
+            cell.StatusBtn.setTitle(data?.status, for: .normal)
             cell.OptionsBtn.isHidden = true
+            cell.GetOutpassBtn.isHidden = false
         case.rejected:
             cell.StatusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
             cell.StatusBtn.setTitleColor(.red, for: .normal)
-            cell.StatusBtn.setTitle(data.status, for: .normal)
+            cell.StatusBtn.setTitle(data?.status, for: .normal)
             cell.OptionsBtn.isHidden = true
+            cell.GetOutpassBtn.isHidden = true
         case.waiting:
             cell.StatusBtn.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.3)
             cell.StatusBtn.setTitleColor(.brown, for: .normal)
             cell.StatusBtn.setTitle("Awaiting", for: .normal)
             cell.OptionsBtn.isHidden = false
+            cell.GetOutpassBtn.isHidden = true
         }
-        cell.delegate = self
         let isPopupOpen = openedPopupIndex == indexPath
         cell.popupView.isHidden = !isPopupOpen
         cell.OptionsBtn.isSelected = isPopupOpen
+        cell.indexPath = indexPath
+        cell.delegate = self
         
-        cell.GetOutpassBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(GetOutpass)))
-        
+        cell.outpassAction = { [weak self] indexPath in
+            self?.presentOutpassVC(for: indexPath)
+        }
         return cell
     }
 
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as? LeveHistoryTV else {
-//            return UITableViewCell()
-//        }
-//
-//        let leave = filteredLeaveData[indexPath.row]
-//        let name = leave.student_name
-//        let fromDate = convertDate(leave.leave_from, toFormat: DateFormatString.StandardFormat) ?? "N/A"
-//        let toDate = convertDate(leave.leave_to, toFormat: DateFormatString.StandardFormat) ?? "N/A"
-//        cell.rejectBtn.isHidden = true
-//        cell.nameLbl.text = name
-//        cell.dateLbl.text = "\(fromDate) - \(toDate)"
-//        cell.resonLbl.text = leave.reason
-//        cell.durationLbl.text = daysBetweenLabel(start: leave.leave_from, end: leave.leave_to)
-//        cell.aproveBtn.setTitle(leave.status, for: .normal)
-//
-//        cell.iconBtn.setTitle(name.first.map { String($0).uppercased() } ?? "", for: .normal)
-//        cell.iconBtn.tag = indexPath.row
-//        cell.editBtn.tag = indexPath.row
-//        cell.deleteBtn.tag = indexPath.row
-//        cell.delegate = self
-//        cell.aproveBtn.isUserInteractionEnabled = false
-//        cell.rejectBtn.isUserInteractionEnabled = false
-//        switch LeaveStatus.from(leave.status) {
-//        case .approved:
-//            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
-//            cell.editClickBtn.isHidden = true
-//        case .rejected:
-//            cell.aproveBtn.backgroundColor = .red
-//            cell.editClickBtn.isHidden = true
-//        case .waiting:
-//            cell.aproveBtn.backgroundColor = Colornames.pendingClr
-//            cell.aproveBtn.setTitle("Waiting", for: .normal)
-//            cell.editClickBtn.isHidden = false
-//        }
-//
-//        let isPopupOpen = openedPopupIndex == indexPath
-//        cell.showPopup.isHidden = !isPopupOpen
-//        cell.iconBtn.isSelected = isPopupOpen
-//        cell.aproveBtn.isHidden = isPopupOpen
-//
-//        return cell
-//    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+
 //
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismissPopup()
     }
     
-    @IBAction func GetOutpass(){
+    func applyFilter() {
+        guard selectedFilter != .all else {
+            filteredLeaveData = leaveHistoryData
+            historyTable.reloadData()
+            return
+        }
+
+        filteredLeaveData = leaveHistoryData.compactMap { month in
+            let filteredDetails = month.details?.filter {
+                $0.status == selectedFilter.rawValue
+            }
+            if let details = filteredDetails, !details.isEmpty {
+                return LeaveMonth(month: month.month, details: details)
+            }
+            return nil
+        }
         
+        historyTable.reloadData()
+    }
+
+    
+    func presentOutpassVC(for indexPath: IndexPath) {
+        guard let leave = filteredLeaveData[indexPath.section].details?[indexPath.row] else { return }
+
         let vc = OutpassVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.leaveInfo = leave
+        vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         present(vc, animated: true)
     }
+
 
     func daysBetweenLabel(start: String?, end: String?) -> String {
         let formatter = DateFormatter()

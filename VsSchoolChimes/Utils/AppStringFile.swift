@@ -274,7 +274,7 @@ class CommonStringFile{
     static let TextMessage = "Text Message".translated()
     static let ScheduleCall = "Schedule Call".translated()
     static let EnterTextHere = "Enter Text Here".translated()
-    static let Reason = "Reason".translated()
+    static let EnterReason = "Enter Reason".translated()
     static let BacktoTextMessage = "Back to compose".translated()
     static let BackToVoiceMessage = "Back to compose".translated()
     static let Venue = "Venue".translated()
@@ -483,4 +483,5 @@ class DateFormatString {
     static var Day_and_date = "EEE dd"
     static var Date_Day_month_year = "d EEE, MMM yyyy" 
     static var StandardFormat = "dd MMM yyyy"
+    static var DayStandardFormat = "EEE, dd MMM yyyy"
 }

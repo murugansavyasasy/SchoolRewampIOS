@@ -19,11 +19,15 @@ class MobileNumberVc: UIViewController {
     @IBOutlet weak var MobilenumLabel: UILabel!
     @IBOutlet weak var MobilTextFld:
     UITextField!
+    @IBOutlet weak var ContentView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     var AlertModal = CustomAlert()
     var country_data : CountryData?
     var mobile_number_length : Int?
     var mobile_no_hint : String?
     var activeTextField: UITextField?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,28 +36,61 @@ class MobileNumberVc: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.3) { // Smooth animation
-                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // Assuming your textField is named `myTextField`
+        let textFieldBottom = MobilTextFld.convert(MobilTextFld.bounds, to: self.view).maxY
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+
+        // Only move up if the textField is hidden by the keyboard
+        if textFieldBottom > keyboardTop {
+            let overlap = textFieldBottom - keyboardTop + 80 // Add a bit of padding
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
             }
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
         }
     }
+
+    
+//    
+//    @objc func keyboardWillShow(_ notification: Notification) {
+//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardHeight = keyboardFrame.cgRectValue.height
+//            view.contentInset.bottom = keyboardHeight + 40
+//            view.verticalScrollIndicatorInsets.bottom = keyboardHeight
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(_ notification: Notification) {
+//        view.contentInset.bottom = 0
+//        view.verticalScrollIndicatorInsets.bottom = 0
+//    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     func setupUI() {
         
+        ContentView.layer.cornerRadius = 40
+        ContentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        scrollView.layer.cornerRadius = 40
+        scrollView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         country_data =   UserDefaultFileManager.getCountryDetails()
         MobilTextFld.addDoneButton()
-        MobilTextFld.layer.cornerRadius = 10
+        MobilTextFld.layer.cornerRadius = 20
+        MobilTextFld.backgroundColor = .systemGray5.withAlphaComponent(0.7)
         BottomView.layer.cornerRadius = 30
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
@@ -72,10 +109,10 @@ class MobileNumberVc: UIViewController {
         MobilTextFld.textContentType = .telephoneNumber
         MobilTextFld.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 
-        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        WelcomeLbl.setFont(style: .title, size: 16)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-        LoginTitleLbl.setFont(style: .header, size: 25)
-        MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
+        LoginTitleLbl.setFont(style: .header, size: 16)
+        MobilenumLabel.setFont(style: .body, size: FontSize.TitleSize)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         addPadding(to: MobilTextFld, amount: 10)
         

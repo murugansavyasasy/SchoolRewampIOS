@@ -788,24 +788,53 @@ struct AbsentisReportStudent: Codable {
 
 //MARK: Leave Request History
 
+//struct LeaveInfoResponse: Codable {
+//    let status: Bool
+//    let message: String
+//    let data: [LeaveInfo]
+//}
+
+//struct LeaveInfo: Codable {
+//    let id: String
+//    let applied_on: String
+//    let student_name: String
+//    let class_name: String
+//    let section_name: String
+//    let leave_from: String
+//    let leave_to: String
+//    let no_of_days: String
+//    let reason: String
+//    var status: String
+//    var updated_on: String
+//}
+
 struct LeaveInfoResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [LeaveInfo]
+    var status: Bool?
+    var message: String?
+    var data: [LeaveMonth]?
+}
+
+struct LeaveMonth: Codable {
+    var month: String?
+    var details: [LeaveInfo]?
 }
 
 struct LeaveInfo: Codable {
-    let id: String
-    let applied_on: String
-    let student_name: String
-    let class_name: String
-    let section_name: String
-    let leave_from: String
-    let leave_to: String
-    let no_of_days: String
-    let reason: String
-    var status: String
-    var updated_on: String
+    var id: String?
+    var applied_on: String?
+    var student_name: String?
+    var class_name: String?
+    var section_name: String?
+    var leave_from: String?
+    var leave_to: String?
+    var no_of_days: String?
+    var reason: String?
+    var status: String?
+    var updated_on: String?
+    var from_session: String?
+    var to_session: String?
+    var approved_by: String?
+    var leave_type: String?
 }
 
 //MARK: ASSIGINMENT LIST

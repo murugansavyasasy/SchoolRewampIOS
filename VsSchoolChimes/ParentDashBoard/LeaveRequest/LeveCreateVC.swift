@@ -9,114 +9,39 @@ import UIKit
 import FSCalendar
 import DropDown
 @available(iOS 14.0, *)
-class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
-    func date(date: String) {
-        
-        dateFormatter.dateFormat = dateFormat1
-        if let selectedDate = dateFormatter.date(from: date) {
-            if dateSelection {
-                FromDateLbl.setFormattedDate(from: selectedDate)
-
-                // Check if To Date is set and valid
-                if let toText = ToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
-                    let labelFormatter = DateFormatter()
-                    labelFormatter.dateFormat = DateFormatString.Date_Day_month_year
-
-                    if let toDate = labelFormatter.date(from: toText) {
-                        if selectedDate > toDate {
-                            // Auto-adjust To Date if From Date is later
-                            ToDateLbl.setFormattedDate(from: selectedDate)
-                        }
-                    }
-                }
-
-            } else {
-                // Set To Date
-                ToDateLbl.setFormattedDate(from: selectedDate)
-            }
-            
-            updateDayCountLabel(startDateStr: FromDateLbl.text ?? "", endDateStr: ToDateLbl.text ?? "", dayCount: dayCount)
-        } else {
-            print("Error: Invalid date format or nil value")
-        }
-
-    }
+class LeveCreateVC: UIViewController,UITextViewDelegate{
     
     @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var OutlineView: UIView!
-    @IBOutlet weak var ToDateLbl: UILabel!
-    @IBOutlet weak var FromDateLbl: UILabel!
-    @IBOutlet weak var TodateTop: UIView!
-    @IBOutlet weak var FromDateTop: UIView!
-    @IBOutlet weak var ToDateView: UIView!
-    @IBOutlet weak var FromDateView: UIView!
-    @IBOutlet weak var dayCount: UILabel!
-    @IBOutlet weak var ReasonLbl: UILabel!
-    @IBOutlet weak var headerTitle: UILabel!
-    @IBOutlet weak var ToLbl: UILabel!
-    @IBOutlet weak var fromLbl: UILabel!
-    @IBOutlet weak var contentCount: UILabel!
-    @IBOutlet weak var contentTxtView: UITextView!
-    @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var SubmitBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TypeImage: UIImageView!
     @IBOutlet weak var CauseImage: UIImageView!
     @IBOutlet weak var FromImage: UIImageView!
     @IBOutlet weak var ToImage: UIImageView!
     @IBOutlet weak var ApplyLeaveBtn: UIButton!
-    
-    
+    @IBOutlet weak var CauseTextviewHeight: NSLayoutConstraint!
     @IBOutlet weak var SessionDefLbl: UILabel!
     @IBOutlet weak var FromDefLbl: UILabel!
     @IBOutlet weak var CauseDefLbl: UILabel!
-    @IBOutlet weak var LeaveTypeLbl: UILabel!
+    @IBOutlet weak var LeaveTypeBtn: UIButton!
     @IBOutlet weak var TypeDefLbl: UILabel!
     @IBOutlet weak var NewLeaveDefLbl: UILabel!
     @IBOutlet weak var ToDefLbl: UILabel!
     @IBOutlet weak var ToSessionDefLbl: UILabel!
     @IBOutlet weak var FromDoneBtn: UIButton!
     @IBOutlet weak var ToDoneBtn: UIButton!
-    
     @IBOutlet weak var SelectFromDateDefLbl: UILabel!
     @IBOutlet weak var SelectToDateDefLbl: UILabel!
-    
     @IBOutlet weak var CauseTextView: UITextView!
-    @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var NewFromDateLbl: UIButton!
     @IBOutlet weak var NewToDateLbl: UIButton!
-    
     @IBOutlet weak var ToDatePickerView: UIView!
     @IBOutlet weak var FromDatePickerView: UIView!
-    
     @IBOutlet weak var ToSessionBtn: UIButton!
     @IBOutlet weak var FromSessionBtn: UIButton!
-    
-    @IBAction func ToDateDoneBtn(_ sender: Any) {
-        
-       // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
-        toDate = toDatePicker.date
-        NewToDateLbl.setTitle(dateFormatter.string(from: toDatePicker.date), for: .normal)
-        ToDatePickerView.isHidden = true
-        calculateDays()
-    }
-    
-    @IBAction func FromDateDoneBtn(_ sender: Any) {
-        
-        fromDate = FromDatePicker.date
-        NewFromDateLbl.titleLabel?.text = dateFormatter.string(from: FromDatePicker.date)
-        NewFromDateLbl.setTitle(dateFormatter.string(from: FromDatePicker.date), for: .normal)
-        FromDatePickerView.isHidden = true
-        calculateDays()
-    }
-    
     @IBOutlet weak var toDatePicker: UIDatePicker!
     @IBOutlet weak var FromDatePicker: UIDatePicker!
-    
     @IBOutlet weak var errorLbl: UILabel!
-    
-   
     
     @IBAction func ShowFromDate() {
         FromDatePickerView.isHidden = false
@@ -132,26 +57,28 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     var toDate: Date?
     let today = Date()
     var tapCount = 0
-   
     let dateFormatter = DateFormatter()
     var placeholderLabel: UILabel!
     var dateSelection = false
     let photoPickManager = PhotoPickerManager.shared
     var selectedImages: [UIImage] = []
     var url : URL?
-    var dateFormat1 = DateFormatString.StandardFormat
+    var dateFormat1 = DateFormatString.DayStandardFormat
     var isKeyboardVisible = false
     var childDetails = UserDefaultFileManager.get_child_Details()
     let alert = CustomAlert()
-    var leave:editLeave?
-    
+    var editLeaveData:editLeave?
     let dropDown = DropDown()
+    let dropDown2 = DropDown()
     let options = ["First Half", "Second Half"]
+    var leaveTypes : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         uiConfic()
+        
+        Get_Leave_Categories()
         
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -174,12 +101,15 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         errorLbl.setFont(style: .body, size: FontSize.BodySize)
         ApplyLeaveBtn.setTitleFont(style: .secondary, size: FontSize.HeaderSize)
         
-        LeaveTypeLbl.setFont(style: .body, size: 14)
+        LeaveTypeBtn.setTitleFont(style: .body, size: 14)
         
         NewFromDateLbl.setTitleFont(style: .secondary, size: 14)
         NewToDateLbl.setTitleFont(style: .secondary, size: 14)
         FromSessionBtn.setTitleFont(style: .secondary, size: 12)
         ToSessionBtn.setTitleFont(style: .secondary, size: 12)
+        
+        NewFromDateLbl.titleLabel?.numberOfLines = 0
+        NewToDateLbl.titleLabel?.numberOfLines = 0
         
         CauseTextView.font = UIFont(name: "Poppins-Medium", size: 14)
         
@@ -198,8 +128,13 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         NewFromDateLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowFromDate)))
         NewToDateLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowToDate)))
         
+        LeaveTypeBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowTypeDropdown)))
+        
         NewToDateLbl.isUserInteractionEnabled = true
         NewFromDateLbl.isUserInteractionEnabled = true
+        LeaveTypeBtn.isUserInteractionEnabled = true
+        
+        setupDropDowns()
         
         dropDown.dataSource = options
 
@@ -210,51 +145,28 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
                     self?.calculateDays()
                 }
         
-        calendar.delegate = self
-        calendar.dataSource = self
-        
-        // Set both from and to date as today on load
-//        fromDate = today
-//        toDate = today
-       // calendar.select(today)
-        calendar.appearance.todayColor = .systemGray6 // ✅ This is fine
-        calendar.appearance.titleTodayColor = .black
-        calendar.setCurrentPage(today, animated: false)
-        updateLabels()
-        
         setInitialDate()
-        contentTxtView.delegate = self
-        contentTxtView.addDoneButton()
+        CauseTextView.delegate = self
        
         setupPlaceholder()
         
-        let DateGesture = UITapGestureRecognizer(target: self, action: #selector(datepicker))
-        FromDateView.addGestureRecognizer(DateGesture)
-        
-        let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDateAct))
-        ToDateView.addGestureRecognizer(ToDateGesture)
-       
-//        
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(keyboardWillShow(_:)),
-//                                               name: UIResponder.keyboardWillShowNotification,
-//                                               object: nil)
-//        
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(keyboardWillHide(_:)),
-//                                               name: UIResponder.keyboardWillHideNotification,
-//                                               object: nil)
-        
-        
-        if let leave = leave{
-            ToDateLbl.setFormattedDate(from: leave.toDate)
-                FromDateLbl.setFormattedDate(from: leave.fromDate)
-            contentTxtView.text = leave.reson
-            updateDayCountLabel(startDateStr: FromDateLbl.text ?? "", endDateStr: ToDateLbl.text ?? "", dayCount: dayCount)
-            placeholderLabel.isHidden = !leave.reson.isEmpty
-            contentCount.text = "\(leave.reson.count) / 500"
-        }
+        if let leave = editLeaveData{
            
+            placeholderLabel.isHidden = !leave.reson.isEmpty
+            LeaveTypeBtn.setTitle(leave.LeaveType, for: .normal)
+            NewFromDateLbl.setTitle(leave.fromDate, for: .normal)
+            NewToDateLbl.setTitle(leave.toDate, for: .normal)
+            CauseTextView.text = leave.reson
+            let size = CGSize(width: CauseTextView.frame.width, height: .infinity)
+            let estimatedSize = CauseTextView.sizeThatFits(size)
+            CauseTextviewHeight.constant = estimatedSize.height
+            FromDatePickerView.isHidden = true
+            FromSessionBtn.setTitle(leave.fromSession, for: .normal)
+            ToSessionBtn.setTitle(leave.Tosession, for: .normal)
+            NewLeaveDefLbl.text = "Edit Leave Request"
+            let daysText = "Update for \(leave.NoOfDays) Days Leave"
+            ApplyLeaveBtn.setTitle(daysText, for: .normal)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -262,75 +174,121 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     }
     
     func uiConfic(){
+    }
+    
+    func setupDropDowns() {
+        // DropDown for Label One
+        dropDown2.anchorView = LeaveTypeBtn
+        dropDown2.bottomOffset = CGPoint(x: -20, y: LeaveTypeBtn.bounds.height - 10)
+        dropDown2.width = LeaveTypeBtn.bounds.width
+        dropDown2.selectionAction = { [weak self] index, item in
+            self?.LeaveTypeBtn.setTitleColor(.black, for: .normal)
+            self?.LeaveTypeBtn.setTitle(item, for: .normal)
+        }
+    }
+    
+    
+    @IBAction func ToDateDoneBtn(_ sender: Any) {
         
-        FromDateView.layer.cornerRadius = 8
-        ToDateView.layer.cornerRadius = 8
-        FromDateTop.layer.cornerRadius = 8
-        TodateTop.layer.cornerRadius = 8
-        FromDateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
-        TodateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+       // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
+        toDate = toDatePicker.date
+        NewToDateLbl.setTitle(dateFormatter.string(from: toDatePicker.date), for: .normal)
+        ToDatePickerView.isHidden = true
+        calculateDays()
+    }
+    
+    @IBAction func FromDateDoneBtn(_ sender: Any) {
         
-        FromDateView.layer.cornerRadius = 10
-        FromDateView.layer.shadowColor = UIColor.black.cgColor
-        FromDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        FromDateView.layer.shadowRadius = 5
-        FromDateView.layer.shadowOpacity = 0.3
+        fromDate = FromDatePicker.date
+        NewFromDateLbl.titleLabel?.text = dateFormatter.string(from: FromDatePicker.date)
+        NewFromDateLbl.setTitle(dateFormatter.string(from: FromDatePicker.date), for: .normal)
+        FromDatePickerView.isHidden = true
+        calculateDays()
+    }
+    
+    @IBAction func ShowTypeDropdown(){
         
-        ToDateView.layer.cornerRadius = 10
-        ToDateView.layer.shadowColor = UIColor.black.cgColor
-        ToDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        ToDateView.layer.shadowRadius = 5
-        ToDateView.layer.shadowOpacity = 0.3
-        
-        contentTxtView.layer.cornerRadius = 10
-        contentTxtView.layer.borderWidth = 0.5
-        contentTxtView.layer.borderColor = UIColor.black.cgColor
-        contentTxtView.font = UIFont(name: "Poppins-Medium", size: 13)
-        
-        outerView.layer.cornerRadius = 10
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        outerView.layer.shadowRadius = 5
-        outerView.layer.shadowOpacity = 0.3
-        
-        SubmitBtn.layer.cornerRadius = 10
-        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
-        ToLbl.setFont(style:.title, size: FontSize.TitleSize)
-        headerTitle.setFont(style:.title, size: FontSize.TitleSize)
-        fromLbl.setFont(style:.title, size: FontSize.TitleSize)
-        dayCount.setFont(style:.header, size: FontSize.BodySize)
-        contentCount.setFont(style: .body, size: FontSize.BodySize)
-        
-        fromLbl.text = CommonStringFile.From.translated()
-        headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
-        ReasonLbl.setRequiredText(CommonStringFile.Reason)
+        dropDown2.show()
     }
 
     @IBAction func SubmitAct(_ sender: Any) {
        
-        if contentTxtView.text != ""{
-            if let leave = leave{
+        guard let fromDate = NewFromDateLbl.title(for: .normal), !fromDate.isEmpty, fromDate != "Select From Date",
+              let toDate = NewToDateLbl.title(for: .normal), !toDate.isEmpty, toDate != "Select To Date" else {
+            alert.showAlert(title: "Missing Information", message: "Please select both From and To dates.", on: self)
+            return
+        }
+        
+        if LeaveTypeBtn.title(for: .normal) == "Select Leave Type" {
+            alert.showAlert(title: "Missing Information", message: "Please select Leave Type.", on: self)
+            return
+        }
+
+        if !CauseTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if let leave = editLeaveData {
                 updateLeave()
-            }else{
+            } else {
                 ApplyLeave()
             }
-        }else{
-            alert.showAlert(title: "", message: AlertstringFile.Enter_reason, on: self)
+        } else {
+            alert.showAlert(title: "Missing Information", message: AlertstringFile.Enter_reason, on: self)
         }
+
     }
     
     
     //MARK: Leave Request API call
     
+    
+    func Get_Leave_Categories(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_leave_categories, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                guard let self = self else {return}
+                
+                switch result {
+                    
+                case .success(let success):
+                    
+                    self.leaveTypes = success.data ?? []
+                    dropDown2.dataSource = leaveTypes
+                    
+                case .failure(let error):
+                    print("Error: ",error.localizedDescription)
+                }
+                
+            }
+        }
+    }
+    
     func ApplyLeave(){
         
-        let LeaveFrom = ConvertDateStringSmart(FromDateLbl.text)
-        let LeaveTo = ConvertDateStringSmart(ToDateLbl.text)
-        
+        let LeaveFrom = ConvertDateStringSmart(NewFromDateLbl.titleLabel?.text)
+        let LeaveTo = ConvertDateStringSmart(NewToDateLbl.titleLabel?.text)
+        var fromSessionCode = ""
+        var toSessionCode = ""
+
+        if let fromTitle = FromSessionBtn.title(for: .normal) {
+            if fromTitle.contains("First") {
+                fromSessionCode = "FH"
+            } else if fromTitle.contains("Second") {
+                fromSessionCode = "SH"
+            }
+        }
+
+        if let toTitle = ToSessionBtn.title(for: .normal) {
+            if toTitle.contains("First") {
+                toSessionCode = "FH"
+            } else if toTitle.contains("Second") {
+                toSessionCode = "SH"
+            }
+        }
+
         print("LeaveFrom",LeaveFrom)
         print("LeaveTo",LeaveTo)
-        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
+        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session:toSessionCode, LeaveRequestStringFile.leave_type:LeaveTypeBtn.title(for: .normal) ?? ""]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
                               
@@ -372,15 +330,34 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
     
     func updateLeave(){
         
-        let LeaveFrom = ConvertDateStringSmart(FromDateLbl.text)
-        let LeaveTo = ConvertDateStringSmart(ToDateLbl.text)
-        let param: [String:Any] = [LeaveRequestStringFile.leave_from:leave?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
+        let LeaveFrom = ConvertDateStringSmart(NewFromDateLbl.titleLabel?.text)
+        let LeaveTo = ConvertDateStringSmart(NewToDateLbl.titleLabel?.text)
+        var fromSessionCode = ""
+        var toSessionCode = ""
+
+        if let fromTitle = FromSessionBtn.title(for: .normal) {
+            if fromTitle.contains("First") {
+                fromSessionCode = "FH"
+            } else if fromTitle.contains("Second") {
+                fromSessionCode = "SH"
+            }
+        }
+
+        if let toTitle = ToSessionBtn.title(for: .normal) {
+            if toTitle.contains("First") {
+                toSessionCode = "FH"
+            } else if toTitle.contains("Second") {
+                toSessionCode = "SH"
+            }
+        }
+        
+        let param: [String:Any] = [LeaveRequestStringFile.id:editLeaveData?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session: toSessionCode]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
                               
             onOk: {
                   
-            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_update, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_update, parameters: param, type: ApitTypeSringFile.PUT, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
                 
                 DispatchQueue.main.async { [weak self] in
                     
@@ -424,63 +401,29 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
         dateFormatter.dateFormat = dateFormat1
         let date = dateFormatter.string(from: currentDate)
         
-        FromDateLbl.setFormattedDate(from: currentDate)
-        ToDateLbl.setFormattedDate(from: currentDate)
-        
     }
    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.Reason.translated()
-        contentTxtView.applyRightTxt()
-        contentCount.applyRightTxt()
-
-        // Placeholder styling
-        placeholderLabel.font = contentTxtView.font
+        placeholderLabel.text = CommonStringFile.EnterReason.translated()
+        placeholderLabel.font = CauseTextView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
-        contentTxtView.applyRightTxt(with: placeholderLabel)
-
-        contentTxtView.addSubview(placeholderLabel)
+        CauseTextView.addSubview(placeholderLabel)
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = CauseTextView.sizeThatFits(size)
+        CauseTextviewHeight.constant = estimatedSize.height
+        placeholderLabel.isHidden = CauseTextView.text.count == 0 ? false : true
+        CauseTextView.isScrollEnabled = false
+        
     }
 
     
-    @IBAction func datepicker(_ sender: Any) {
-         dateSelection = true
-         let vc = DatePickerVC(nibName: nil, bundle: nil)
-         vc.dateSelection = 2
-         vc.delegate = self
-         vc.modalPresentationStyle = .overCurrentContext
-         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-         self.present(vc, animated: false)
-    }
     
-    @IBAction func toDateAct(_ sender: Any) {
-        dateSelection = false
-        let vc = DatePickerVC(nibName: nil, bundle: nil)
-        vc.dateSelection = 2
-        vc.delegate = self
 
-        // Extract and parse from FromDateLbl
-        if let fromDateString = FromDateLbl.text {
-            let components = fromDateString.components(separatedBy: "\n")
-            if components.count == 2,
-               let day = components.first,
-               let rest = components.last {
-                let fullDateString = "\(day) \(rest)" // e.g., "18 Wed, Jun 2025"
-
-                let formatter = DateFormatter()
-                formatter.dateFormat = DateFormatString.Date_Day_month_year
-                if let fromDate = formatter.date(from: fullDateString) {
-                    vc.minimumDate = fromDate
-                }
-            }
-        }
-
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
-    }
 
     func updateDayCountLabel(startDateStr: String, endDateStr: String, dayCount: UILabel) {
         let dateFormatter = DateFormatter()
@@ -555,9 +498,13 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, Datepicker{
              formattedDays = String(totalDays)       // e.g. "7.5"
          }
 
-         let daysText = "Apply for \(formattedDays) Days Leave"
-         ApplyLeaveBtn.setTitle(daysText, for: .normal)
-        
+         if let leave = editLeaveData{
+             let daysText = "Update for \(formattedDays) Days Leave"
+             ApplyLeaveBtn.setTitle(daysText, for: .normal)
+         }else{
+             let daysText = "Apply for \(formattedDays) Days Leave"
+             ApplyLeaveBtn.setTitle(daysText, for: .normal)
+         }
         }
     
     func showError(_ message: String) {

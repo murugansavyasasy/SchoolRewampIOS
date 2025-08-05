@@ -583,7 +583,8 @@ extension String {
             "dd MMM yyyy",
             "yyyy-MM-dd HH:mm:ss",
             "MMM d, yyyy",
-            "EEE, d MMM yyyy"
+            "EEE, d MMM yyyy",
+            "dd-MM-yyyy hh:mm a"
         ]
         
         if let inputFormat = inputFormat {
