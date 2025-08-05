@@ -64,7 +64,7 @@ class ImageShowVc: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        uiUpdate(type: type ?? "")
+        //        uiUpdate(type: type ?? "")
         let count = attachment?.count ?? fileURL.count
         
         DispatchQueue.main.async {
@@ -102,26 +102,6 @@ class ImageShowVc: UIViewController {
         }
     }
     
-    func uiUpdate(type: String) {
-        guard let media = MediaType(rawValue: type.lowercased()) else { return }
-        
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            self.cv.isHidden = true
-            self.pdfView.isHidden = true
-            self.textView.isHidden = true
-            
-            switch media {
-            case .image, .video:
-                self.cv.isHidden = false
-            default:
-                guard let urlStr = self.downloadUrl, let url = URL(string: urlStr) else { return }
-                self.activityIndicator.startAnimating()
-                self.pdfView.load(URLRequest(url: url))
-                self.pdfView.isHidden = false
-            }
-        }
-    }
 }
 
 extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -151,11 +131,8 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 
             case .video:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.VideoPlayerCVC, for: indexPath) as! VideoPlayerCVC
-                print(item)
-                print(item.imageURL)
-                print(item.VideoURl)
                 if let videoURL = item.VideoURl {
-                    cell.configure(with: videoURL)
+                    cell.configure(with: videoURL, parentVC: self)
                 }
                 return cell
                 
@@ -186,7 +163,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             case .video:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.VideoPlayerCVC, for: indexPath) as! VideoPlayerCVC
                 if let urlStr = item.url, let videoUrl = URL(string: urlStr) {
-                    cell.configure(with: videoUrl)
+                    cell.configure(with: videoUrl, parentVC: self)
                 }
                 return cell
                 

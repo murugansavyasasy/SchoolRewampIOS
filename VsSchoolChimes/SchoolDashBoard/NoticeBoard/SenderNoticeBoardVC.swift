@@ -32,8 +32,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             // Check if To Date is set and valid
             if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                 let labelFormatter = DateFormatter()
-                labelFormatter.dateFormat = DateFormatString.Date_Day_month_year // Matches formatted label
-                
+                labelFormatter.dateFormat = DateFormatString.Date_Day_month_year
                 if let toDate = labelFormatter.date(from: toText) {
                     if DayDate > toDate {
                         NewToDateLbl.setFormattedDate(from: DayDate)
@@ -178,10 +177,22 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             TitleTextfield.text = notice.title
             textview.text = notice.description
             placeholderLabel.isHidden = !textview.text.isEmpty
-            let imageItems = notice.file_path?.map{
-                AttachmentItem(image:nil, imageURL: $0.url, fileType: $0.type ?? "")
-            } ?? []
-            attachments.append(contentsOf: imageItems)
+            if let files = notice.file_path {
+                let imageItems: [AttachmentItem] = files.map { file in
+                    let type = file.type?.lowercased() ?? ""
+                    return AttachmentItem(
+                        image: nil,
+                        imageURL: type != "video" ? file.url : nil,
+                        fileType: type,
+                        VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+                    )
+                }
+
+                attachments = imageItems
+            } else {
+                attachments = []
+            }
+
             Attachmentview.imageCollectionview.reloadData()
             editId = notice.id
             NextBtn.setTitle("Update", for: .normal)

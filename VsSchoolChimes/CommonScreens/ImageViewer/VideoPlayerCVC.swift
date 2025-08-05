@@ -1,32 +1,43 @@
 import UIKit
 import WebKit
 import AVFoundation
+import AVKit
 
 class VideoPlayerCVC: UICollectionViewCell {
 
     @IBOutlet weak var videoPlayer: UIView!
+
     private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
+    private var playerViewController: AVPlayerViewController?
     private var webView: WKWebView?
+    private var activityIndicator: UIActivityIndicatorView?
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        player?.pause()
-        playerLayer?.removeFromSuperlayer()
-        player = nil
-        playerLayer = nil
         
+        player?.pause()
+        player = nil
+        
+        playerViewController?.view.removeFromSuperview()
+        playerViewController = nil
+        
+        webView?.navigationDelegate = nil
         webView?.removeFromSuperview()
         webView = nil
+        
+        activityIndicator?.removeFromSuperview()
+        activityIndicator = nil
     }
 
-    func configure(with url: URL) {
+    func configure(with url: URL, parentVC: UIViewController) {
+        showActivityIndicator()
+        
         let urlString = url.absoluteString.lowercased()
         
-        if urlString.contains("vimeo.com") || urlString.contains("youtube.com") {
-            // Load in WKWebView
+        if urlString.contains("youtube.com") || urlString.contains("vimeo.com") {
             let config = WKWebViewConfiguration()
             let webView = WKWebView(frame: videoPlayer.bounds, configuration: config)
+            webView.navigationDelegate = self
             webView.translatesAutoresizingMaskIntoConstraints = false
             self.videoPlayer.addSubview(webView)
             NSLayoutConstraint.activate([
@@ -38,21 +49,74 @@ class VideoPlayerCVC: UICollectionViewCell {
             webView.load(URLRequest(url: url))
             self.webView = webView
         } else {
-            // Load using AVPlayer
-            player = AVPlayer(url: url)
-            playerLayer = AVPlayerLayer(player: player)
-            playerLayer?.frame = videoPlayer.bounds
-            playerLayer?.videoGravity = .resizeAspect
-            if let layer = playerLayer {
-                videoPlayer.layer.addSublayer(layer)
+            let asset = AVURLAsset(url: url)
+            asset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.hideActivityIndicator()
+                    let playerItem = AVPlayerItem(asset: asset)
+                    self.player = AVPlayer(playerItem: playerItem)
+                    let playerVC = AVPlayerViewController()
+                    playerVC.player = self.player
+                    playerVC.showsPlaybackControls = true
+
+                    playerVC.view.frame = self.videoPlayer.bounds
+                    playerVC.view.translatesAutoresizingMaskIntoConstraints = false
+                    self.videoPlayer.addSubview(playerVC.view)
+                    NSLayoutConstraint.activate([
+                        playerVC.view.topAnchor.constraint(equalTo: self.videoPlayer.topAnchor),
+                        playerVC.view.bottomAnchor.constraint(equalTo: self.videoPlayer.bottomAnchor),
+                        playerVC.view.leadingAnchor.constraint(equalTo: self.videoPlayer.leadingAnchor),
+                        playerVC.view.trailingAnchor.constraint(equalTo: self.videoPlayer.trailingAnchor)
+                    ])
+
+                    parentVC.addChild(playerVC)
+                    playerVC.didMove(toParent: parentVC)
+
+                    self.playerViewController = playerVC
+                    self.player?.play()
+                }
             }
-            player?.play()
         }
+    }
+
+    private func showActivityIndicator() {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.center = videoPlayer.center
+        indicator.hidesWhenStopped = true
+        indicator.startAnimating()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        videoPlayer.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: videoPlayer.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: videoPlayer.centerYAnchor)
+        ])
+        activityIndicator = indicator
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator?.stopAnimating()
+        activityIndicator?.removeFromSuperview()
+        activityIndicator = nil
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        playerLayer?.frame = videoPlayer.bounds
+        playerViewController?.view.frame = videoPlayer.bounds
         webView?.frame = videoPlayer.bounds
+    }
+}
+
+extension VideoPlayerCVC: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        hideActivityIndicator()
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideActivityIndicator()
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideActivityIndicator()
     }
 }
