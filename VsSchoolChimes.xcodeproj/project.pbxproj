@@ -135,6 +135,10 @@
 		840177E42E3B2990006CB477 /* AttachTvHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177E32E3B2990006CB477 /* AttachTvHeader.xib */; };
 		840177E82E3B2CE0006CB477 /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840177E72E3B2CE0006CB477 /* ContentCell.xib */; };
 		840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840177E62E3B2CE0006CB477 /* ContentCell.swift */; };
+		84017BFD2E4079BB006CB477 /* AttachHistroyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84017BFC2E4079BB006CB477 /* AttachHistroyVC.xib */; };
+		84017BFE2E4079BB006CB477 /* AttachHistroyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84017BFB2E4079BB006CB477 /* AttachHistroyVC.swift */; };
+		84017C012E4082D8006CB477 /* AttachCommonPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84017C002E4082D8006CB477 /* AttachCommonPage.xib */; };
+		84017C022E4082D8006CB477 /* AttachCommonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84017BFF2E4082D8006CB477 /* AttachCommonPage.swift */; };
 		840639732DDF549300930943 /* GalleryPickerVcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840639712DDF549300930943 /* GalleryPickerVcViewController.swift */; };
 		840639742DDF549300930943 /* GalleryPickerVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840639722DDF549300930943 /* GalleryPickerVcViewController.xib */; };
 		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
@@ -917,6 +921,10 @@
 		840177E32E3B2990006CB477 /* AttachTvHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachTvHeader.xib; sourceTree = "<group>"; };
 		840177E62E3B2CE0006CB477 /* ContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
 		840177E72E3B2CE0006CB477 /* ContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCell.xib; sourceTree = "<group>"; };
+		84017BFB2E4079BB006CB477 /* AttachHistroyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachHistroyVC.swift; sourceTree = "<group>"; };
+		84017BFC2E4079BB006CB477 /* AttachHistroyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachHistroyVC.xib; sourceTree = "<group>"; };
+		84017BFF2E4082D8006CB477 /* AttachCommonPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachCommonPage.swift; sourceTree = "<group>"; };
+		84017C002E4082D8006CB477 /* AttachCommonPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachCommonPage.xib; sourceTree = "<group>"; };
 		840639712DDF549300930943 /* GalleryPickerVcViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPickerVcViewController.swift; sourceTree = "<group>"; };
 		840639722DDF549300930943 /* GalleryPickerVcViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryPickerVcViewController.xib; sourceTree = "<group>"; };
 		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
@@ -3582,6 +3590,10 @@
 			children = (
 				FA2A3FB82DB0CABB0000AF55 /* SenderAttachmentVC.swift */,
 				FA2A3FB92DB0CABB0000AF55 /* SenderAttachmentVC.xib */,
+				84017BFB2E4079BB006CB477 /* AttachHistroyVC.swift */,
+				84017BFC2E4079BB006CB477 /* AttachHistroyVC.xib */,
+				84017BFF2E4082D8006CB477 /* AttachCommonPage.swift */,
+				84017C002E4082D8006CB477 /* AttachCommonPage.xib */,
 			);
 			path = "Sender Attachment";
 			sourceTree = "<group>";
@@ -4073,6 +4085,7 @@
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8466E83E2D6ED0CB004F4EFC /* PopupVC.xib in Resources */,
 				843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */,
+				84017C012E4082D8006CB477 /* AttachCommonPage.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
 				849507312DAE3EDD004343C4 /* loader (2).json in Resources */,
 				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
@@ -4081,6 +4094,7 @@
 				84E0A9FE2E389432002BF40A /* AttachmentHeaderCell.xib in Resources */,
 				84EFF9D32CCC7CD000C11C26 /* SchoolDashboardVc.xib in Resources */,
 				84B2C5502E2224C900A69A1B /* ExamCatogoryCVC.xib in Resources */,
+				84017BFD2E4079BB006CB477 /* AttachHistroyVC.xib in Resources */,
 				84BB5EAB2D11334400AD0C87 /* ScheduleExamsList.xib in Resources */,
 				84B57EC82D14A0A300E0EA29 /* ParentNoticeBoardVc.xib in Resources */,
 				84EFF9CE2CCC7A6000C11C26 /* PasswordVc.xib in Resources */,
@@ -4477,6 +4491,7 @@
 				FAFFBD072E336F8600F8B150 /* ExamListTV.swift in Sources */,
 				84FBAA872E3BA05300A3FC31 /* CustomMenuCVC.swift in Sources */,
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
+				84017C022E4082D8006CB477 /* AttachCommonPage.swift in Sources */,
 				FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */,
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
 				840177DD2E3A2238006CB477 /* FooterCvCell.swift in Sources */,
@@ -4526,6 +4541,7 @@
 				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
 				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
 				FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */,
+				84017BFE2E4079BB006CB477 /* AttachHistroyVC.swift in Sources */,
 				FAFF9DF02D6C7B7A00498368 /* cancelTableViewCell.swift in Sources */,
 				FAFF9DF12D6C7B7A00498368 /* verifyReq.swift in Sources */,
 				FAFF9DF22D6C7B7A00498368 /* StaffPtmTableViewCell.swift in Sources */,

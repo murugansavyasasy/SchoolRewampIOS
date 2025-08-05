@@ -335,25 +335,37 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     }
     
     private func configureTabBarAppearance() {
-        tabBar.tintColor = UIColor.white
-        tabBar.unselectedItemTintColor = UIColor.black
+        tabBar.tintColor = UIColor.white // Selected item color
 
         if #available(iOS 13.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
+
+            // Set unselected and selected item appearance
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor.black
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.black]
+
+            appearance.stackedLayoutAppearance.selected.iconColor = UIColor.white
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+
             tabBar.standardAppearance = appearance
+
             if #available(iOS 15.0, *) {
                 tabBar.scrollEdgeAppearance = appearance
             }
         } else {
+            // iOS 12 and below
             tabBar.barTintColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
+            tabBar.unselectedItemTintColor = UIColor.black
         }
 
-        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
-        UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .selected)
+        // Font (applies to both selected and unselected)
+        let font = UIFont.systemFont(ofSize: 14)
+        UITabBarItem.appearance().setTitleTextAttributes([.font: font], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([.font: font], for: .selected)
     }
+
     
     private func setupTabBarConstraints() {
         tabBar.translatesAutoresizingMaskIntoConstraints = false

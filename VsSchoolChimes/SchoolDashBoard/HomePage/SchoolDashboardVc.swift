@@ -123,7 +123,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         schoolLogoImg.layer.borderColor = UIColor.black.cgColor
         StyleAndTranslater()
         setupVideoBackground()
-        DeviceTokenAPIcall()
+//        DeviceTokenAPIcall()
         //startAutoScroll()
         cellRegistration()
         Searchbar.addDoneButton()
@@ -286,6 +286,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             ) in
                 switch result {
                 case .success(let successMessage):
+                    print("successMessagesuccessMessage",successMessage)
                     if successMessage.status == true{
                         localData.accidamic_year_data = successMessage
                     }else{
@@ -682,72 +683,72 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         }
     }
     
-    func DeviceTokenAPIcall(){
-        let secureID = SecureIDManager.getSecureID()
-        
-        var deviceToken: String? // Use var instead of let
-        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            deviceToken = appDelegate.DeviceToken
-        }
-        
-        APIService.shared
-            .makeApi(
-                url: ServiceUrl.auth_device_token,
-                parameters:[
-                    
-                    COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
-                    DeviceTokenStringFile.device_token : deviceToken ?? "",
-                    COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
-                    DeviceTokenStringFile.secure_id : secureID,
-                    DeviceTokenStringFile.device_info : [
-                        
-                        DeviceTokenStringFile.manufacturer : "iphone" ,
-                        DeviceTokenStringFile.model : "iphone12",
-                        DeviceTokenStringFile.device : "iphone",
-                        DeviceTokenStringFile.brand : "iphone",
-                        DeviceTokenStringFile.hardware : "",
-                        DeviceTokenStringFile.product : "",
-                        DeviceTokenStringFile.os_version : 8.1,
-                        DeviceTokenStringFile.sdk_int : 33,
-                        DeviceTokenStringFile.app_version : 1
-                    ]
-                    
-                    
-                ] ,
-                type: ApitTypeSringFile.POST,
-                token: ServiceUrl.token
-            ){ [self] (
-                result : Result<DeviceTokenResponseSuc,
-                Error>
-            ) in
-                
-                switch result {
-                    
-                case.success(let succesmessage) :
-                    
-                    if succesmessage.status == true {
-                        
-                        DispatchQueue.main.async { [self] in
-                            
-                            print("Status true5656565656565656")
-                        }
-                    }else {
-                        
-                        DispatchQueue.main.async {
-                            print(" status false")
-                        }
-                    }
-                    
-                case.failure(let error) :
-                    
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
-                }
-                
-            }
-    }
+//    func DeviceTokenAPIcall(){
+//        let secureID = SecureIDManager.getSecureID()
+//        
+//        var deviceToken: String? // Use var instead of let
+//        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+//            deviceToken = appDelegate.DeviceToken
+//        }
+//        
+//        APIService.shared
+//            .makeApi(
+//                url: ServiceUrl.auth_device_token,
+//                parameters:[
+//                    
+//                    COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
+//                    DeviceTokenStringFile.device_token : deviceToken ?? "",
+//                    COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+//                    DeviceTokenStringFile.secure_id : secureID,
+//                    DeviceTokenStringFile.device_info : [
+//                        
+//                        DeviceTokenStringFile.manufacturer : "iphone" ,
+//                        DeviceTokenStringFile.model : "iphone12",
+//                        DeviceTokenStringFile.device : "iphone",
+//                        DeviceTokenStringFile.brand : "iphone",
+//                        DeviceTokenStringFile.hardware : "",
+//                        DeviceTokenStringFile.product : "",
+//                        DeviceTokenStringFile.os_version : 8.1,
+//                        DeviceTokenStringFile.sdk_int : 33,
+//                        DeviceTokenStringFile.app_version : 1
+//                    ]
+//                    
+//                    
+//                ] ,
+//                type: ApitTypeSringFile.POST,
+//                token: ServiceUrl.token
+//            ){ [self] (
+//                result : Result<DeviceTokenResponseSuc,
+//                Error>
+//            ) in
+//                
+//                switch result {
+//                    
+//                case.success(let succesmessage) :
+//                    
+//                    if succesmessage.status == true {
+//                        
+//                        DispatchQueue.main.async { [self] in
+//                            
+//                            print("Status true5656565656565656")
+//                        }
+//                    }else {
+//                        
+//                        DispatchQueue.main.async {
+//                            print(" status false")
+//                        }
+//                    }
+//                    
+//                case.failure(let error) :
+//                    
+//                    DispatchQueue.main.async {
+//                        print(error.localizedDescription)
+//                    }
+//                }
+//                
+//            }
+//    }
     func get_dashboard_details() {
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,

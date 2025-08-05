@@ -1,14 +1,14 @@
 //
-//  CommonPageVC.swift
-//  VsSchoolChimes
+//  AttachCommonPage.swift
+//  School Chimes
 //
-//  Created by Chandhru on 16/04/25.
+//  Created by SARANRAJ SHANMUGAM on 04/08/25.
 //
 
 import UIKit
 
-class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, SelectNotice {
-
+class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageViewControllerDataSource, SelectNotice {
+    
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
     @IBOutlet weak var reportsLb: UILabel!
@@ -120,10 +120,10 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     }
     func loadPages(_ CV: [UIViewController]) {
         if #available(iOS 14.0, *) {
-            if let page2 = CV[1] as? SenderHomeWorkVC {
+            if let page2 = CV[1] as? AttachHistroyVC {
                 page2.selectNotice = self
             }
-        } 
+        }
             pages = CV
     }
 
@@ -177,7 +177,7 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         editId editID:String
     ) {
         if #available(iOS 14.0, *) {
-            if let page1 = pages.first as? SenderSideHomeWorkViewController{
+            if let page1 = pages.first as? SenderAttachmentVC{
 //                segmentController.selectedSegmentIndex = 0
                 
                 createBtn.setTitle("Update", for: .normal)

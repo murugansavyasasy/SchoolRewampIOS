@@ -151,11 +151,18 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             eventTxt.text = eventList.title
             contentTxtView.text = eventList.description
             placeholderLabel.isHidden = !contentTxtView.text.isEmpty
-            
-            let imageItems = eventList.file_path.map {
-                AttachmentItem(image:nil, imageURL: $0.url, fileType: $0.type ?? "")
-            }
-            attachments.append(contentsOf: imageItems)
+                let imageItems: [AttachmentItem] = eventList.file_path.map { file in
+                    let type = file.type?.lowercased() ?? ""
+                    return AttachmentItem(
+                        image: nil,
+                        imageURL: type != "video" ? file.url : nil,
+                        fileType: type,
+                        VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+                    )
+                }
+
+                attachments = imageItems
+        
             costomView.imageCollectionview.reloadData()
             editId = eventList.id
             if let event = self.eventListRespons?.first(where: { $0.name == eventList.category }) {
@@ -165,6 +172,17 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             }
             
             nextBtn.setTitle("Update", for: .normal)
+            updateTextViewHeight(contentTxtView)
+        }else{
+            placeTxt.text = ""
+            eventTxt.text = ""
+            contentTxtView.text = ""
+            placeholderLabel.isHidden = !contentTxtView.text.isEmpty
+            attachments.removeAll()
+            costomView.imageCollectionview.reloadData()
+            editId = nil
+            
+            nextBtn.setTitle("Next", for: .normal)
             updateTextViewHeight(contentTxtView)
         }
     }
@@ -613,74 +631,111 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+            let remaining = 10 - attachments.count
             
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-                openCamera()
+            if remaining > 0 {
+                
+                let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+                
+                // Camera option
+                let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                    //
+                    openCamera()
+                }
+                alertController.addAction(cameraAction)
+                
+                // Gallery option
+                let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                    selectImages()
+                    //
+                }
+                alertController.addAction(galleryAction)
+                
+                //             PDF option
+                let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
+                    selectPDF()
+                }
+                alertController.addAction(pdfAction)
+                
+                //   VIDEO option
+                let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                    
+                    let totalRemaining = 10 - attachments.count
+                    let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
+                    let videoRemaining = 2 - videoCount
+                    
+                    if totalRemaining <= 0 {
+                        CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+                    } else if videoRemaining <= 0 {
+                        CustomAlert().showAlert(title: "", message: "You can only select up to 2 video files.", on: self)
+                    }else{
+                        
+                        VideoPick()
+                        
+                    }
+                }
+                alertController.addAction(VideoAction)
+                // Cancel action
+                let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+            }else{
+                
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             }
-            alertController.addAction(cameraAction)
-            
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                selectImages()
-            }
-            alertController.addAction(galleryAction)
-            
-            let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
-                selectPDF()
-            }
-            alertController.addAction(pdfAction)
-            
-            let videoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
-                VideoPick()
-            }
-            alertController.addAction(videoAction)
-            
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
             
         } else {
             let attachment = attachments[indexPath.item - 1]
-            
-            switch attachment.fileType {
-            case CommonStringFile.IMAGE:
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                
-                if let img = attachment.image {
-                    vc.img = img
-                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
-                    vc.selectedFileURL = url
-                }
-                
-                vc.type = CommonStringFile.IMAGE
-                present(vc, animated: true)
-                
-            case CommonStringFile.pdf:
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                
-                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
-                    vc.selectedFileURL = url
-                }
-                
-                vc.type = CommonStringFile.pdf
-                present(vc, animated: true)
-                
-            case CommonStringFile.VIDEO:
-                if let videoURL = attachment.VideoURl {
-                    let player = AVPlayer(url: videoURL)
-                    let playerViewController = AVPlayerViewController()
-                    playerViewController.player = player
-                    present(playerViewController, animated: true) {
-                        player.play()
-                    }
-                }
-                
-            default:
-                break
-            }
+//            attachment
+//            let isImage = fileType == CommonStringFile.IMAGE
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.attachment = attachments
+            imageVC.subjectName = "Event"
+            imageVC.scrollIndex = indexPath
+            imageVC.index = indexPath.row - 1
+            imageVC.type = attachment.fileType
+            imageVC.modalPresentationStyle = .fullScreen
+            present(imageVC, animated: true)
+//
+//            switch attachment.fileType {
+//            case CommonStringFile.IMAGE:
+//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                
+//                if let img = attachment.image {
+//                    vc.img = img
+//                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+//                    vc.selectedFileURL = url
+//                }
+//                
+//                vc.type = CommonStringFile.IMAGE
+//                present(vc, animated: true)
+//                
+//            case CommonStringFile.pdf:
+//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                
+//                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
+//                    vc.selectedFileURL = url
+//                }
+//                
+//                vc.type = CommonStringFile.pdf
+//                present(vc, animated: true)
+//                
+//            case CommonStringFile.VIDEO:
+//                if let videoURL = attachment.VideoURl {
+//                    let player = AVPlayer(url: videoURL)
+//                    let playerViewController = AVPlayerViewController()
+//                    playerViewController.player = player
+//                    present(playerViewController, animated: true) {
+//                        player.play()
+//                    }
+//                }
+//                
+//            default:
+//                break
+//            }
         }
     }
     

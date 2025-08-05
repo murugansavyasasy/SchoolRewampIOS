@@ -355,12 +355,18 @@ struct Homework: Codable {
     let subject_name: String?
     let sent_by: String?
     let file_path: [FilePath]?
-    let is_completed : Bool?
+    var is_completed : Bool?
     let id : String?
-    let is_unread : Bool?
+    var is_unread : Bool?
     let detail_id : String?
+    let can_edit : Bool?
+    let can_delete : Bool?
  
 }
+
+
+
+
 struct HomeworListkResponse: Codable {
     let status: Bool?
     let message: String?
@@ -456,10 +462,13 @@ struct Attachment: Codable {
     let date: String?
     let time: String?
     let sender_info: String?
+    let sent_by: String?
     var is_unread: Bool?
     let is_archive: Bool?
     let file_path: [FilePath]?
     let iframe: String?
+    let can_edit: Bool?
+    let can_delete: Bool?
 }
 
 struct AttachmentFilePath: Codable {

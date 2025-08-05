@@ -11,7 +11,28 @@ import UIKit
 import DropDown
 
 @available(iOS 14.0, *)
-class SenderHomeWorkVC: UIViewController {
+class SenderHomeWorkVC: UIViewController, SelectedId {
+    func selectId(id: String?, edit: Bool?) {
+        
+        if edit ?? false{
+            if let selectedEvent = HomeWork(withId: id ?? "") {
+                selectNotice?
+                    .didTapButton(
+                        title: selectedEvent.title ?? "",
+                        content: selectedEvent.description ?? "",
+                        items: selectedEvent.file_path ?? [], editId: id ?? ""
+                    )
+                
+                
+            }
+
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.homeWorkDelete(id:id ?? "")
+            }
+        }
+    }
+
 
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
     // MARK: - Outlets
@@ -51,7 +72,8 @@ class SenderHomeWorkVC: UIViewController {
     var selectNotice: SelectNotice?
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
-
+    let transitionDelegate = TransitioningDelegate()
+    let alert = CustomAlert()
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,10 +155,10 @@ class SenderHomeWorkVC: UIViewController {
             self.sectionId = selectedSections.first?.id
             self.StandardLbl.text = item
             self.SectionLbl.text = selectedSections.first?.name ?? ""
-            DispatchQueue.main.async {
-                self.Cv.layoutIfNeeded()
-                self.cvHeight.constant = 300
-            }
+//            DispatchQueue.main.async {
+//                self.Cv.layoutIfNeeded()
+//                self.cvHeight.constant = 300
+//            }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }
@@ -154,10 +176,10 @@ class SenderHomeWorkVC: UIViewController {
 
             self.sectionId = self.sectionsDetails?[index].id
             self.SectionLbl.text = item
-            DispatchQueue.main.async {
-                self.Cv.layoutIfNeeded()
-                self.cvHeight.constant = 300
-            }
+//            DispatchQueue.main.async {
+//                self.Cv.layoutIfNeeded()
+//                self.cvHeight.constant = 300
+//            }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }
@@ -287,12 +309,15 @@ class SenderHomeWorkVC: UIViewController {
                     self.homeWorkList = response.data
                     self.nodataFoundLbl.isHidden = response.status ?? false
                     self.noDataFound.isHidden = response.status ?? false
+//                    self.Cv.isHidden = !(response.status ?? false)
                     self.nodataFoundLbl.text = response.message
+                    self.Cv.delegate = self
+                    self.Cv.dataSource = self
                     self.Cv.reloadData()
-                    DispatchQueue.main.async {
-                        self.Cv.layoutIfNeeded()
-                        self.cvHeight.constant = self.Cv.contentSize.height
-                    }
+//                    DispatchQueue.main.async {
+//                        self.Cv.layoutIfNeeded()
+//                        self.cvHeight.constant = self.Cv.contentSize.height
+//                    }
 
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
@@ -310,7 +335,7 @@ class SenderHomeWorkVC: UIViewController {
         nodataFoundLbl.text = message
         nodataFoundLbl.isHidden = false
         noDataFound.isHidden = false
-        cvHeight.constant = 0
+//        cvHeight.constant = 0
     }
 }
 
@@ -325,52 +350,161 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeWorkCvCell", for: indexPath) as? HomeWorkCvCell else {
             return UICollectionViewCell()
         }
-        
-        
-        
-        
        
         cell.SubjectLbl.text = FilterHomeWorkList?[indexPath.row].subject_name
         cell.stafNamLbl.text = FilterHomeWorkList?[indexPath.row].sent_by
-        
-        
-        
-        
-       
-            
+        cell.edit(edit: FilterHomeWorkList?[indexPath.row].can_edit ?? false, delete:  FilterHomeWorkList?[indexPath.row].can_delete ?? false, selectedId: FilterHomeWorkList?[indexPath.row].id ?? "")
+
+        cell.delegate = self
         cell.roundview.isHidden = true
-        cell.homeWorkCompletImg.isHidden = false
-        cell.homeWorkCompletImg.image = UIImage(named: "three-dot")
+        cell.homeWorkCompletImg.isHidden = true
+        cell.threeDotBtn.isHidden = false
             cell.pieChartWidth.constant = 0
             cell.PieChartTrailling.constant = -10
+        cell.pieChartHeight.constant = 5
             cell.pieChart.isHidden = true
         
 
             return cell
         }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+      
+            return CGSize(width: 170, height: 230)
+       
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+        let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
+        
+        let detailVC = PrivewVc()
+        detailVC.attachmetList = FilterHomeWorkList?[indexPath.row].file_path
+        detailVC.selectedDate  = dateLbl.text
+        detailVC.titleString  = FilterHomeWorkList?[indexPath.row].title
+        detailVC.descriptionString  = FilterHomeWorkList?[indexPath.row].description
+//        detailVC.homeWorkid  = FilterHomeWorkList?[indexPath.row].id
+        detailVC.postedBy  = FilterHomeWorkList?[indexPath.row].sent_by
+        detailVC.subject_name  = FilterHomeWorkList?[indexPath.row].subject_name
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
+        
+    }
     }
 
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if (FilterHomeWorkList?.count ?? 0) - 1 == indexPath.row{
-//            let contentHeight = self.Cv.contentSize.height
-//            self.cvHeight.constant = contentHeight
-//        }
-//        
-//        return UITableView.automaticDimension
-//    }
 
 
 // MARK: - Delegates
 @available(iOS 14.0, *)
 extension SenderHomeWorkVC: SelectNotice, Datepicker, UISearchBarDelegate {
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId: String
+    ) {
+        selectNotice?
+                    .didTapButton(
+                        title: title,
+                        content: content,
+                        items: items,
+                        editId: editId
+                    )
+    }
+
     func date(date: String) {
         dateSelect(date)
         GetHomeWorkReport(sectionId, date)
     }
-
-    func didTapButton(title: String, content: String, items: [FilePath]) {
-        selectNotice?.didTapButton(title: title, content: content, items: items)
+    
+    func HomeWork(withId eventId: String) -> Homework? {
+        return homeWorkList?.first(where: { $0.id == eventId })
     }
+
+
+    func homeWorkDelete(id: String?) {
+        guard let noticeId = id, !noticeId.isEmpty else {
+            print("Invalid notice ID")
+            return
+        }
+        
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm,
+            message: AlertstringFile.deletemessage,
+            actionLbl1: AlertstringFile.delete,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                APIService.shared.makeApi(
+                    url: ServiceUrl.comm_api_homework_delete,
+                    parameters: ["id": noticeId],
+                    type: ApitTypeSringFile.PUT,
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        
+                        switch result {
+                        case .success(let successResponse):
+                            if successResponse.status == true {
+                                CustomAlert.showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                ) {
+                                    self.removeEvent(withId: noticeId)
+                                }
+                            } else {
+                                self.alert.showAlert(
+                                    title: AlertstringFile.Failed,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                )
+                            }
+                            
+                        case .failure(let error):
+                            print("Error deleting notice: \(error.localizedDescription)")
+                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
+                        }
+                    }
+                }
+            },
+            onNo: {
+                print("User canceled deletion")
+            }
+        )
+    }
+    
+    
+    
+    func removeEvent(withId eventId: String) {
+        // Remove from filtered list
+        FilterHomeWorkList = FilterHomeWorkList?.filter { $0.id != eventId }
+
+        // Remove from original list
+        homeWorkList = homeWorkList?.filter { $0.id != eventId }
+        // Reload the UI
+        Cv.reloadData()
+    }
+
+    
+//    func didTapButton(title: String, content: String, items: [FilePath],) {
+//        selectNotice?
+//            .didTapButton(
+//                title: title,
+//                content: content,
+//                items: items,
+//                editId: <#String#>
+//            )
+//    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {

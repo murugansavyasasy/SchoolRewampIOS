@@ -255,6 +255,10 @@
 
 import UIKit
 
+protocol readStatusUpdate{
+    
+    func ReadCompleted(Id:String,IscompletedStatus:Bool)
+}
 class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var doneHomeWorkBtnName: UIButton!
@@ -273,10 +277,14 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var descriptionString: String?
     var postedBy: String?
     var homeWorkid: String?
+    var homeWorkdetail_id: String?
     var selectedDate: String?
     var isThumbedUp = false
     var isCompleted = false
     var subject_name: String?
+    var delegate : readStatusUpdate?
+    var is_unreadStatus : Bool?
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -308,10 +316,20 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         discreption.text = descriptionString
         postedByLbl.text = "Posted By : " + (postedBy ?? "")
         
-        if let homeWorkid = homeWorkid, !homeWorkid.isEmpty {
-            doneHomeWorkBtnName.isHidden = isCompleted
+        
+        if is_unreadStatus ?? false{
+            ReadStatusUpdateArchive(
+                type: "HOMEWORK",
+                detail_id: homeWorkdetail_id ?? ""
+            )
         }
         
+        
+        
+        if let homeWorkid = homeWorkdetail_id, !homeWorkid.isEmpty {
+            doneHomeWorkBtnName.isHidden = isCompleted
+        }
+     
         backBtn.setTitle(subject_name ?? "", for: .normal)
         backBtn.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         backBtn.tintColor = .white
@@ -350,56 +368,10 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
-    func formattedDateStatus(from selectedDateString: String) -> String {
-        let possibleFormats = [
-                    "dd-MM-yyyy",
-                    "yyyy-MM-dd",
-                    "dd/MM/yyyy",
-                    "MM/dd/yyyy",
-                    "dd MMM yyyy",
-                    "dd MMMM yyyy",
-                    "yyyy/MM/dd",
-                    "MMM dd, yyyy",
-                    
-                    // DateTime formats
-                    "dd-MM-yyyy HH:mm",
-                    "dd-MM-yyyy hh:mm a",
-                    "yyyy-MM-dd HH:mm",
-                    "yyyy-MM-dd HH:mm:ss",
-                    "yyyy/MM/dd HH:mm:ss",
-                    "MM/dd/yyyy HH:mm",
-                    "dd MMM yyyy HH:mm",
-                    "dd MMMM yyyy HH:mm",
-                    "MMM dd, yyyy HH:mm"
-                ]
-        let inputFormatter = DateFormatter()
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        var selectedDate: Date?
-        for format in possibleFormats {
-            inputFormatter.dateFormat = format
-            if let date = inputFormatter.date(from: selectedDateString) {
-                selectedDate = date
-                break
-            }
-        }
-        
-        guard let date = selectedDate else { return selectedDateString }
-        let calendar = Calendar.current
-        let today = Date()
-        
-        if calendar.isDate(date, inSameDayAs: today) {
-            return "Today"
-        } else if calendar.isDate(date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today)!) {
-            return "Yesterday"
-        } else {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "dd MMMM, yyyy"
-            return outputFormatter.string(from: date)
-        }
-    }
+    
     
     @IBAction func backBtn(_ sender: Any) {
+        delegate?.ReadCompleted(Id: homeWorkid ?? "", IscompletedStatus: isCompleted)
         dismiss(animated: false)
     }
     
@@ -431,14 +403,35 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                         on: self,
                         okAction: {
                             self.doneHomeWorkBtnName.isHidden = true
-                            self.dismiss(animated: true)
+//                            self.dismiss(animated: true)
                         })
+                    
+                    self.isCompleted = true
+                    self.doneHomeWorkBtnName.isHidden = true
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
         }
     }
+    
+    
+    func ReadStatusUpdateArchive(type: String,detail_id: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+            case .success(let SuccessMessage):
+                ""
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     
     func reloadCollectionAndUpdateHeight() {
         cv.reloadData()
@@ -490,31 +483,29 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let file = attachmetList?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
-        let fileType = file.type?.uppercased()
+       
         
-        if fileType == CommonStringFile.VIDEO {
-            playVideo(for: urlString)
-        } else {
-            let isImage = fileType == CommonStringFile.IMAGE
+       
+           
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-            imageVC.FileURL = attachmetList ?? []
+            imageVC.fileURL = attachmetList ?? []
             imageVC.subjectName = backBtn.title(for: .normal) ?? ""
             imageVC.pdfUrl = urlString
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
-            imageVC.type = isImage ? 2 : 0
+//            imageVC.type = isImage ? 2 : 0
             imageVC.modalPresentationStyle = .fullScreen
             present(imageVC, animated: true)
         }
-    }
     
-    func playVideo(for item: String) {
-        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-        vc.url = item
-        vc.titles = backBtn.titleLabel?.text ?? ""
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
+    
+//    func playVideo(for item: String) {
+//        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
+//        vc.url = item
+//        vc.titles = backBtn.titleLabel?.text ?? ""
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+//    }
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

@@ -377,8 +377,14 @@ class CircularProgressLoader: UIView {
             self.percentageLabel.text = String(format: "%.0f%%", clamped)
 
             if self.currentStyle == .circle {
+                // Animate stroke for circle
+                CATransaction.begin()
+                CATransaction.setDisableActions(false)
+                CATransaction.setAnimationDuration(0.2)
                 self.progressLayer.strokeEnd = CGFloat(stroke)
+                CATransaction.commit()
             } else {
+                // Update bar path manually for rectangle style
                 let width = 80 * CGFloat(stroke)
                 let path = UIBezierPath(roundedRect: CGRect(x: 10, y: 45, width: width, height: 10), cornerRadius: 5)
                 self.progressLayer.path = path.cgPath
@@ -392,13 +398,14 @@ class CircularProgressLoader: UIView {
         }
     }
 
+
     func hide() {
         DispatchQueue.main.async {
             self.removeFromSuperview()
         }
     }
 }
-fileprivate class ExpandableLabelState {
+ class ExpandableLabelState {
     var fullText: String = ""
     var isExpanded: Bool = false
     var onTap: (() -> Void)?
@@ -566,7 +573,7 @@ func getFileIconName(for fileURL: URL) -> String {
     case "ppt", "pptx":
         return "ppt"                // 📽 PowerPoint icon
     default:
-        return "play-button"  // 🔄 Fallback icon
+        return "video (1)"  // 🔄 Fallback icon
     }
 }
 extension String {

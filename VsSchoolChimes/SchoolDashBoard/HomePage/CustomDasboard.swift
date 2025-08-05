@@ -61,11 +61,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         recentActiveMenuCollection.dataSource = self
         MenuCollection.delegate = self
         MenuCollection.dataSource = self
-        
+        DeviceTokenAPIcall()
         setupHeaderView()
         setupLabels()
         setupProfileImage()
-        get_dashboard_details()
+        getacadmicYr{
+            self.get_dashboard_details()
+        }
     }
     
     func get_dashboard_details() {
@@ -163,7 +165,92 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             menuVC.view.frame.origin.x = 0
         }
     }
-    
+    func getacadmicYr(onComplete: @escaping () -> Void){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        localData.accidamic_year_data = successMessage
+                    }else{
+                        localData.accidamic_year_data = successMessage
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        
+        onComplete()
+    }
+    func DeviceTokenAPIcall(){
+        let secureID = SecureIDManager.getSecureID()
+        
+        var deviceToken: String? // Use var instead of let
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            deviceToken = appDelegate.DeviceToken
+        }
+        
+        APIService.shared
+            .makeApi(
+                url: ServiceUrl.auth_device_token,
+                parameters:[
+                    
+                    COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
+                    DeviceTokenStringFile.device_token : deviceToken ?? "",
+                    COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.secure_id : secureID,
+                    DeviceTokenStringFile.device_info : [
+                        
+                        DeviceTokenStringFile.manufacturer : "iphone" ,
+                        DeviceTokenStringFile.model : "iphone12",
+                        DeviceTokenStringFile.device : "iphone",
+                        DeviceTokenStringFile.brand : "iphone",
+                        DeviceTokenStringFile.hardware : "",
+                        DeviceTokenStringFile.product : "",
+                        DeviceTokenStringFile.os_version : 8.1,
+                        DeviceTokenStringFile.sdk_int : 33,
+                        DeviceTokenStringFile.app_version : 1
+                    ]
+                    
+                    
+                ] ,
+                type: ApitTypeSringFile.POST,
+                token: ServiceUrl.token
+            ){ [self] (
+                result : Result<DeviceTokenResponseSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            print("Status true5656565656565656")
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            print(" status false")
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+    }
     func applyGradientBackground(to view: UIView) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -376,7 +463,7 @@ extension CustomDasboard: UICollectionViewDelegateFlowLayout {
         if collectionView == recentActiveMenuCollection {
             return CGSize(width: 200, height: 90) // Horizontal scroll items
         } else {
-            return CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
+            return CGSize(width: (collectionView.frame.width - 25) / 2, height: 110)
         }
     }
     

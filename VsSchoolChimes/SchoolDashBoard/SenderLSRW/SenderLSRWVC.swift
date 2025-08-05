@@ -13,7 +13,12 @@ import UniformTypeIdentifiers
 class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate, UITextFieldDelegate, UIDocumentPickerDelegate{
     
     // MARK: - Protocol Methods
-    func didTapButton(title: String, content: String, items: [FilePath]) {
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId:String
+    ) {
         print("Button tapped with title: \(title)")
     }
     
