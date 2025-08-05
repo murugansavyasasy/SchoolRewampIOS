@@ -98,15 +98,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
               let urlString = file.url,
              let url = URL(string: urlString) else { return }
         
-        let fileType = file.type?.uppercased()
-        
-        if fileType == CommonStringFile.VIDEO {
-            
-            playVideo(for: file.url ?? "")
-        }else{
-            
-            let isImage = fileType == CommonStringFile.IMAGE
-            
+
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             let homeworkDocs = attachmentFiles ?? []
             imageVC.fileURL = homeworkDocs
@@ -120,7 +112,8 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
 //            imageVC.FileURL = attachmetList ?? []
             let currentController = getCurrentViewController()
             currentController?.present(imageVC, animated: true)
-        }
+        
+        
     }
     
     func getCurrentViewController() -> UIViewController? {

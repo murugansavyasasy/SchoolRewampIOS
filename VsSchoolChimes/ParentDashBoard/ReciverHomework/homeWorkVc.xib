@@ -11,7 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="homeWorkVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="VPs-XE-Roc" id="K4r-d8-JDX"/>
                 <outlet property="NodataFoundLbl" destination="AzT-dZ-GF7" id="Mzm-Oo-wjm"/>
+                <outlet property="StandardLbl" destination="Krb-hJ-8mB" id="p33-KI-91f"/>
+                <outlet property="backBtnName" destination="7QP-gl-Lli" id="nPS-vr-3CT"/>
                 <outlet property="bottomCV" destination="MhQ-8b-fNe" id="t8C-N2-wZO"/>
                 <outlet property="cv" destination="XAf-VB-6gG" id="veI-MX-jZg"/>
                 <outlet property="homeWorkDefaultLbl" destination="kUu-fd-anw" id="M8V-B1-xah"/>
@@ -42,7 +45,7 @@
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="chevron.left" catalog="system"/>
                                             <connections>
-                                                <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="8NC-ja-dBT"/>
+                                                <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="Wq3-OE-rWM"/>
                                             </connections>
                                         </button>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="D0D-sZ-0k5">
@@ -74,7 +77,7 @@
                                     </connections>
                                 </button>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="XAf-VB-6gG">
-                                    <rect key="frame" x="0.0" y="80.666666666666657" width="393" height="109.33333333333334"/>
+                                    <rect key="frame" x="10" y="60.666666666666657" width="373" height="129.33333333333334"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="k5O-j7-uyI">
                                         <size key="itemSize" width="128" height="128"/>
@@ -87,14 +90,14 @@
                             <color key="backgroundColor" red="0.39215686274509803" green="0.40392156862745099" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="3Xa-We-KYA"/>
-                                <constraint firstAttribute="trailing" secondItem="XAf-VB-6gG" secondAttribute="trailing" id="5hW-66-E3G"/>
+                                <constraint firstAttribute="trailing" secondItem="XAf-VB-6gG" secondAttribute="trailing" constant="10" id="5hW-66-E3G"/>
                                 <constraint firstItem="VOs-8A-j0e" firstAttribute="top" secondItem="C21-YM-E4i" secondAttribute="top" id="AaI-wp-bXk"/>
-                                <constraint firstItem="XAf-VB-6gG" firstAttribute="leading" secondItem="C21-YM-E4i" secondAttribute="leading" id="AlI-Q4-sLY"/>
+                                <constraint firstItem="XAf-VB-6gG" firstAttribute="leading" secondItem="C21-YM-E4i" secondAttribute="leading" constant="10" id="AlI-Q4-sLY"/>
                                 <constraint firstAttribute="trailing" secondItem="sjs-HF-nx5" secondAttribute="trailing" constant="10" id="D1e-B6-zMC"/>
                                 <constraint firstAttribute="bottom" secondItem="XAf-VB-6gG" secondAttribute="bottom" constant="10" id="GGw-Lq-UB8"/>
                                 <constraint firstItem="VOs-8A-j0e" firstAttribute="leading" secondItem="C21-YM-E4i" secondAttribute="leading" constant="10" id="W63-Z2-YxP"/>
                                 <constraint firstItem="sjs-HF-nx5" firstAttribute="top" secondItem="C21-YM-E4i" secondAttribute="top" id="W8K-4W-4mS"/>
-                                <constraint firstItem="XAf-VB-6gG" firstAttribute="top" secondItem="VOs-8A-j0e" secondAttribute="bottom" constant="30" id="gva-jV-EKl"/>
+                                <constraint firstItem="XAf-VB-6gG" firstAttribute="top" secondItem="VOs-8A-j0e" secondAttribute="bottom" constant="10" id="gva-jV-EKl"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyP-fz-QT9">
@@ -117,7 +120,7 @@
                                                 <constraint firstAttribute="height" constant="300" id="Onk-zS-oU3"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzT-dZ-GF7">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Home Work Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzT-dZ-GF7">
                                             <rect key="frame" x="0.0" y="316" width="373" height="20.333333333333314"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -182,7 +185,7 @@
         <image name="customer-support" width="360" height="360"/>
         <image name="magnifyingglass.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

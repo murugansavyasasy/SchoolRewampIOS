@@ -10,14 +10,15 @@ import UIKit
 @available(iOS 14.0, *)
 class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     
+    @IBOutlet weak var confirmEyeBtnName: UIButton!
+    @IBOutlet weak var newEyeBtnName: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var WelcomeLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var CreatePassTitleLbl: UILabel!
     @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var NewPassEyeImage: UIImageView!
-    @IBOutlet weak var ConfirmPassEyeImage: UIImageView!
+   
     @IBOutlet weak var createPassDefaultLbl: UILabel!
     @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
@@ -54,13 +55,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         createPassTextFLd.isSecureTextEntry = true
         confirmPassTextFld.isSecureTextEntry = true
         
-        let eyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
-        ConfirmPassEyeImage.addGestureRecognizer(eyeTap)
-        ConfirmPassEyeImage.isUserInteractionEnabled = true
-        
-        let NeweyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
-        NewPassEyeImage.addGestureRecognizer(NeweyeTap)
-        NewPassEyeImage.isUserInteractionEnabled = true
+       
         
         if createNewPassword == false{
             createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
@@ -152,17 +147,22 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
+    @IBAction func eyeBtnAct(_ sender: Any) {
+        createPassTextFLd.isSecureTextEntry.toggle()
+        
+        
+    }
     @IBAction func showPassword(_ sender: UITapGestureRecognizer) {
         
-        if sender.view == NewPassEyeImage{
-            createPassTextFLd.isSecureTextEntry.toggle()
-            let imageName = createPassTextFLd.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
-            NewPassEyeImage.image = imageName
-        }else if sender.view == ConfirmPassEyeImage{
-            confirmPassTextFld.isSecureTextEntry.toggle()
-            let imageName = confirmPassTextFld.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
-            ConfirmPassEyeImage.image = imageName
-        }
+//        if sender.view == NewPassEyeImage{
+//            createPassTextFLd.isSecureTextEntry.toggle()
+//            let imageName = createPassTextFLd.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
+//            NewPassEyeImage.image = imageName
+//        }else if sender.view == ConfirmPassEyeImage{
+//            confirmPassTextFld.isSecureTextEntry.toggle()
+//            let imageName = confirmPassTextFld.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
+//            ConfirmPassEyeImage.image = imageName
+//        }
     }
     
     

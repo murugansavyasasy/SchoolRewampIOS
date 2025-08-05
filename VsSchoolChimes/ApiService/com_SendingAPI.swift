@@ -164,33 +164,20 @@ class  commonApi_forSending {
                 var uploadedFiles: [[String: String]] = []
                 var iframeValue = ""
                 var fileSizeValue = ""
-
+                
                 let dispatchGroup = DispatchGroup()
-
+                
                 // 🎥 Upload videos to Vimeo
                 let videoFiles = user_inputs.SelectedUrls.filter {
                     $0.fileType.uppercased() == AttachmentTypeString.VIDEO
                 }
-
+                
                 for item in videoFiles {
                     dispatchGroup.enter()
                     let videoTitle = Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
                     let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
-
-                    
-                    if  let VimeoUrlForEdit = item.VimeoVideoURL {
-                        
-                        uploadedFiles.append([
-                            "url": VimeoUrlForEdit,
-                            "type": "VIDEO"
-                        ])
-                        
-                        dispatchGroup.leave()
-                    }
-                    
-                    
-                    if let videoURL = item.VideoURl {
-                
+                    if let videoURL = item.VideoURl,
+                       !(videoURL.absoluteString.contains("vimeo.com")){
                         startUpload(
                             from: viewController,
                             videoURL: videoURL,
@@ -200,33 +187,31 @@ class  commonApi_forSending {
                             if let finalEmbedUrl = finalEmbedUrl {
                                 uploadedFiles.append([
                                     "url": finalEmbedUrl,
-                                    "type": AttachmentTypeString.VIDEO
-                                ])
+                                    "type": AttachmentTypeString.VIDEO])
                                 iframeValue = iframeHTML ?? ""
                                 fileSizeValue = convertSize(fileSize ?? 0)
-                              
+                                
                             } else {
                                 print("❌ Failed to upload video.")
                             }
                             dispatchGroup.leave()
                         }
+                    }else{
+                        uploadedFiles.append([
+                            "url": item.VideoURl?.absoluteString ?? "",
+                            "type": "VIDEO"])
+                        dispatchGroup.leave()
                     }
-//
-//                    else {
-//                        print("❌ Video URL is nil.")
-//                        
-//                        dispatchGroup.leave()
-//                    }
+                    
                 }
-
+                
                 // 📷 Upload other files (images, PDFs, etc.)
                 dispatchGroup.enter()
-               
-                    
+                
+                
                 
                 uploadAWSMedia(file: user_inputs.SelectedUrls) {
-                    CircularProgressLoader.shared.hide()
-
+                    
                     let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
                         guard let url = URL(string: urlString) else { return nil }
                         let ext = url.pathExtension.lowercased()
@@ -236,11 +221,11 @@ class  commonApi_forSending {
                             CommonStringFile.type: resolvedType
                         ]
                     }
-
+                    
                     uploadedFiles.append(contentsOf: fileEntries)
                     dispatchGroup.leave()
                 }
-
+                
                 // ✅ Once all uploads are complete, make the final API call
                 dispatchGroup.notify(queue: .main) {
                     if uploadedFiles.isEmpty {
@@ -251,6 +236,7 @@ class  commonApi_forSending {
                     if edit == true {
                         self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) {response in
                             print("✅ All uploads complete.")
+                            CircularProgressLoader.shared.hide()
                             onComplete(response)
                         }
                     }else{
@@ -271,7 +257,7 @@ class  commonApi_forSending {
                             onComplete(response)
                         }
                     }
-
+                    
                 }
             },
             onNo: {
@@ -409,19 +395,20 @@ class  commonApi_forSending {
     //Function for video upload
     func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
-        DispatchQueue.main.async {
-            CircularProgressLoader.shared.show()
-        }
+        
+          
+        
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
 //        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
             DispatchQueue.main.async {
+                CircularProgressLoader.shared.show(style: .circle)
                 CircularProgressLoader.shared.updateProgress(to: progress * 100)
             }
 //            CircularProgressLoader.shared.updateProgress(to: progress)
         }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
-//            CircularProgressLoader.shared.hide()
+            
             
 //            DispatchQueue.main.async {
 //                    CircularProgressLoader.shared.hide()

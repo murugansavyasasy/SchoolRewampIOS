@@ -115,20 +115,18 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         assignTitleTxtFld.text = title
             self.editId = editId
         chooseRecipientsBtn.setTitle("UPDATE", for: .normal)
-        let imageItems = imageUrls.map {
-            
-            if $0.type == "VIDEO"{
-                AttachmentItem(
-                    image: nil,
-                    imageURL: nil,
-                    fileType:$0.type ?? "",
-                    VimeoVideoURL: $0.url
-                )
-            }else{
-                AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
-            }
-            
+        
+        let imageItems: [AttachmentItem] = imageUrls.map { file in
+            let type = file.type?.lowercased() ?? ""
+            return AttachmentItem(
+                image: nil,
+                imageURL: type != "video" ? file.url : nil,
+                fileType: type,
+                VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+            )
         }
+        attachments = imageItems
+    
         let size = contentTextView.sizeThatFits(CGSize(width: contentTextView.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
         TextviewHeight.constant = newHeight
@@ -352,7 +350,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                             on: self
                         ) { [self] in
                             print("success")
-                            dismiss(animated: true)
                         }
                     }
                 }
@@ -585,34 +582,16 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             
             
         }else{
-            if attachments.count > indexPath.item - 1 {
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType == CommonStringFile.IMAGE{
-                    //                    if let videoURL = attachments[indexPath.item - 1].VideoURl{
-                    //                        vc.selectedFileURL = URL(string: url)
-                    //                    }
-                    
-                    if let img = attachments[indexPath.item - 1].image {
-                        vc.img = attachments[indexPath.item - 1].image
-                    }else{
-                        vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
-                    }
-                } else if attachments[indexPath.item - 1].fileType == CommonStringFile.pdf{
-                    if let url = attachments[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-                    
-                    
-                }else if attachments[indexPath.item - 1].fileType == CommonStringFile.VIDEO{
-                    
-                    if let VideoURl = attachments[indexPath.item - 1].VideoURl{
-                        vc.selectedFileURL = VideoURl
-                    }
-                }
-                vc.type = attachments[indexPath.item - 1].fileType
-                present(vc, animated: true)
-            }
+            
+            let attachment = attachments[indexPath.item - 1]
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.attachment = attachments
+            imageVC.subjectName = "Attachment"
+            imageVC.scrollIndex = indexPath
+            imageVC.index = indexPath.row - 1
+            imageVC.type = attachment.fileType
+            imageVC.modalPresentationStyle = .fullScreen
+            present(imageVC, animated: true)
         }
         
     }

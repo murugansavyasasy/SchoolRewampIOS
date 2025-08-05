@@ -178,14 +178,13 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }
     }
     
+    @IBOutlet weak var backBtnName: UIButton!
     @IBOutlet weak var NodataFoundLbl: UILabel!
     @IBOutlet weak var homeWorkDefaultLbl: UILabel!
     @IBOutlet weak var searchBtnName: UIButton!
-    
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var cv: UICollectionView!
-    
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var bottomCV: UICollectionView!
     var calendarItems: [CalendarItem] = []
@@ -198,12 +197,18 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     let today = Date()
     var selectedDate  : String?
     var allHomeworkData: [HomeworkList] = []
+    @IBOutlet weak var StandardLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
     var isReadStatus : Bool?
     var toggle = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         searchbar.isHidden = true
         searchbar.delegate = self
         searchbar.searchTextField.addDoneButton()
@@ -216,7 +221,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             layout.minimumLineSpacing = 0
         }
         
-        calendarItems = getAllDatesPast1MonthPlus1Month()
+        calendarItems = getAllPastDatesIncludingTodayForLastMonth()
         cv.register(UINib(nibName: "CalanderCvCell", bundle: nil), forCellWithReuseIdentifier: "CalanderCvCell")
         bottomCV.register(UINib(nibName: "HomeWorkCvCell", bundle: nil), forCellWithReuseIdentifier: "HomeWorkCvCell")
         cv.delegate = self
@@ -245,21 +250,30 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     
-    func getAllDatesPast1MonthPlus1Month() -> [CalendarItem] {
+    func getAllPastDatesIncludingTodayForLastMonth() -> [CalendarItem] {
         var items: [CalendarItem] = []
         let calendar = Calendar.current
         let today = Date()
-        let pastStartDate = calendar.date(byAdding: .month, value: -1, to: today)!
-        let futureEndDate = calendar.date(byAdding: .month, value: 1, to: today)!
+        
+        // Start from 1 month ago
+        guard let pastStartDate = calendar.date(byAdding: .month, value: -1, to: today) else {
+            return items
+        }
+        
         var currentDate = pastStartDate
-        while currentDate <= futureEndDate {
+        
+        // Loop until currentDate is equal to or before today
+        while currentDate <= today {
             items.append(CalendarItem(date: currentDate))
-            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
+                break
+            }
+            currentDate = nextDate
         }
         
         return items
     }
-    
+
     
     
     func GetHomeWorkReport() {
@@ -294,7 +308,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     self.bottomCV.reloadData()
                     
                     let isEmpty = filteredHomework.isEmpty
-                    self.NodataFoundLbl.text = response.message
+                  
                     self.NodataFoundLbl.isHidden = !isEmpty
                     
                     self.noDataImage.isHidden = !isEmpty
