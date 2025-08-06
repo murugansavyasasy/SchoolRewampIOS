@@ -16,8 +16,17 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var validateBtnName: UIButton!
     @IBOutlet weak var eyeImage: UIImageView!
     @IBOutlet weak var forgetLbl: UILabel!
+    @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var passwordDefLbl: UILabel!
+    @IBOutlet weak var backbtn: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var PasswordBaseview: UIView!
+    
     var AlertModal = CustomAlert()
     var mobile_number:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,16 +48,26 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.3) { // Smooth animation
-                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // Assuming your textField is named `myTextField`
+        let textFieldBottom = passwordTxtFld.convert(passwordTxtFld.bounds, to: self.view).maxY
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+
+        // Only move up if the textField is hidden by the keyboard
+        if textFieldBottom > keyboardTop {
+            let overlap = textFieldBottom - keyboardTop + 80 // Add a bit of padding
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
             }
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
         }
     }
     
@@ -57,19 +76,26 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     func SetpUI(){
+        
+        PasswordBaseview.layer.borderWidth = 2
+        PasswordBaseview.layer.borderColor = UIColor.cyan.cgColor
+        PasswordBaseview.layer.cornerRadius = 20
         passwordTxtFld.addDoneButton()
-        BottomView.layer.cornerRadius = 30
-        BottomView.backgroundColor = Colornames.auth_screen_color
-        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        scrollView.layer.cornerRadius = 40
+        scrollView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        
+        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        passwordDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        forgetLbl.setFont(style: .body, size: FontSize.TitleSize)
+        validateBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         
         validateBtnName.layer.cornerRadius = 15
         validateBtnName.layer.masksToBounds = false
-        validateBtnName.backgroundColor = Colornames.auth_screen_color
-        // Adding shadow for a popped-up effect
         validateBtnName.layer.shadowColor = UIColor.black.cgColor
-        validateBtnName.layer.shadowOffset = CGSize(width: 0, height: 5)
-        validateBtnName.layer.shadowOpacity = 0.3
-        validateBtnName.layer.shadowRadius = 6
+        validateBtnName.layer.shadowOffset = CGSize(width: 0, height: 2)
+        validateBtnName.layer.shadowOpacity = 0.2
+        validateBtnName.layer.shadowRadius = 2
     }
     @IBAction func forgetClick() {
         if mobile_number != ""  {
@@ -92,6 +118,10 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
+    @IBAction func BackAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
     func setupUI() {
         validateBtnName.backgroundColor = Colornames.ButtonColor
         validateBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)

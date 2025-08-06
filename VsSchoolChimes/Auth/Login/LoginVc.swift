@@ -24,6 +24,9 @@ class LoginVc: UIViewController {
     @IBOutlet weak var BannerImgview: UIImageView!
     @IBOutlet weak var WelcomeLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var PasswordBaseview: UIView!
+    
     
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
@@ -59,33 +62,41 @@ class LoginVc: UIViewController {
     
     func setupUI() {
         
+        MobilTextFld.layer.cornerRadius = 20
+        MobilTextFld.layer.borderWidth = 0.5
+        MobilTextFld.layer.borderColor = UIColor.blue.cgColor
         MobilTextFld.placeholder = country_data?.mobile_no_hint
-        
-        BottomView.layer.cornerRadius = 30
-        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        BottomView.backgroundColor =  Colornames.auth_screen_color
-        loginBtnNm.layer.cornerRadius = 15
-        loginBtnNm.layer.masksToBounds = false
-        loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
-                // Adding shadow for a popped-up effect
-        loginBtnNm.layer.shadowColor = UIColor.black.cgColor
-        loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)
-        loginBtnNm.layer.shadowOpacity = 0.3
-        loginBtnNm.layer.shadowRadius = 6
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .phonePad
         MobilTextFld.textContentType = .telephoneNumber
         MobilTextFld.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20)) // Adjust width for padding
+        MobilTextFld.leftView = paddingView
+        MobilTextFld.leftViewMode = .always
+        
+        PasswordBaseview.layer.cornerRadius = 20
+        PasswordBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.8)
+        
+        scrollView.layer.cornerRadius = 40
+        scrollView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        loginBtnNm.layer.cornerRadius = 15
+        loginBtnNm.layer.masksToBounds = false
+        loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        loginBtnNm.layer.shadowColor = UIColor.black.cgColor
+        loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 2)
+        loginBtnNm.layer.shadowOpacity = 0.2
+        loginBtnNm.layer.shadowRadius = 2
+       
         passTextFld.delegate = self
         passTextFld.keyboardType = .default
         passTextFld.isSecureTextEntry = true
         
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         loginBtnNm.setTitleFont(style: .primary, size: FontSize.TitleSize)
-        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        WelcomeLbl.setFont(style: .title, size: FontSize.HeaderSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-        MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
-        PasswordLabel.setFont(style: .title, size: FontSize.TitleSize)
+        MobilenumLabel.setFont(style: .body, size: FontSize.BodySize)
+        PasswordLabel.setFont(style: .body, size: FontSize.BodySize)
         forgetLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     
@@ -441,16 +452,26 @@ extension LoginVc: UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.3) { // Smooth animation
-                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // Assuming your textField is named `myTextField`
+        let textFieldBottom = passTextFld.convert(passTextFld.bounds, to: self.view).maxY
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+
+        // Only move up if the textField is hidden by the keyboard
+        if textFieldBottom > keyboardTop {
+            let overlap = textFieldBottom - keyboardTop + 150 // Add a bit of padding
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
             }
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
         }
     }
     

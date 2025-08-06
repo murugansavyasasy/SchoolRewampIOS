@@ -60,21 +60,6 @@ class MobileNumberVc: UIViewController {
             self.view.frame.origin.y = 0
         }
     }
-
-    
-//    
-//    @objc func keyboardWillShow(_ notification: Notification) {
-//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//            let keyboardHeight = keyboardFrame.cgRectValue.height
-//            view.contentInset.bottom = keyboardHeight + 40
-//            view.verticalScrollIndicatorInsets.bottom = keyboardHeight
-//        }
-//    }
-//
-//    @objc func keyboardWillHide(_ notification: Notification) {
-//        view.contentInset.bottom = 0
-//        view.verticalScrollIndicatorInsets.bottom = 0
-//    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)

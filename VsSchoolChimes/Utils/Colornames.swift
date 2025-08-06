@@ -52,6 +52,7 @@ class Colornames {
 //    static  var stafGradient1 =  UIColor(hex: "#3B82F6")
     //static var Timetable = UIColor(hex: "#ED6E68")
     static var Timetable = UIColor(hex: "#ff6861")
+    static var primeryColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
    
 }
 class ImageName{

@@ -48,7 +48,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="online-work-meetings" translatesAutoresizingMaskIntoConstraints="NO" id="IHZ-uP-8kp">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MobileScreen" translatesAutoresizingMaskIntoConstraints="NO" id="IHZ-uP-8kp">
                                     <rect key="frame" x="30" y="144.66666666666669" width="333" height="150"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="150" id="A3R-UF-hKH"/>
@@ -242,9 +242,9 @@
         </viewController>
     </objects>
     <resources>
+        <image name="MobileScreen" width="4239.6689453125" height="2817.0869140625"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="eye.fill" catalog="system" width="128" height="80"/>
-        <image name="online-work-meetings" width="7000" height="5000"/>
         <namedColor name="auth_screenClr">
             <color red="0.11800000071525574" green="0.74099999666213989" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
