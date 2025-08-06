@@ -1168,11 +1168,13 @@ struct Report: Codable {
     let subject: String?
     let created_date: String?
     let created_time: String?
+    let progress: Float?
     let submitted_count: Int?
     let total_count: Int?
     let end_date: String?
     let file_path: [FilePath]?
 }
+
 // MARK: - Student Submission Report
 
 struct StudentSubmissionResponse: Codable {
