@@ -297,6 +297,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.reminderBtn.isHidden = false
             cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
             loadFiles(into: cell, files: event.file_path)
+            cell.attacmentView.isHidden = event.file_path.count ==  0
             return cell
         case .completed(let events):
             let event = events[indexPath.row]
@@ -312,6 +313,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.reminderBtn.isHidden = true
             cell.outerView.backgroundColor = .black
             loadFiles(into: cell, files: event.file_path)
+            cell.attacmentView.isHidden = event.file_path.count ==  0
             return cell
         }
     }

@@ -18,6 +18,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
     var category: [EventCategory]?
     var delegate:FilterCatagories?
     var selectedIndex : Int?
+    let transitionDelegate = TransitioningDelegate()
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -58,6 +59,22 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             selectedIndex = indexPath.item
             collectionView.reloadData()
             delegate?.filterCatagories(name: category?[indexPath.item].name ?? "")
+        }else{
+            guard let notice = onGoing?[indexPath.item],
+                             let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+
+                       let cellFrameInSuperview = collectionView.convert(attributes.frame, to: self.window)
+                       let detailVC = PrivewVc()
+                       detailVC.attachmetList = notice.file_path
+                       detailVC.selectedDate = notice.date
+                       detailVC.titleString = notice.title
+                       detailVC.descriptionString = notice.description
+                       detailVC.subject_name = "Notice Board".translated()
+                       detailVC.postedBy = notice.sent_by
+                       detailVC.modalPresentationStyle = .custom
+                       transitionDelegate.originFrame = cellFrameInSuperview
+                       detailVC.transitioningDelegate = transitionDelegate
+                       getCurrentViewController()?.present(detailVC, animated: true)
         }
     }
 
@@ -92,11 +109,52 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             cell.placeLbl.text = event.venue
             cell.titleLbl.text = event.title
             cell.descriptionLbl.text = event.description
-            cell.imageLoad(loadimg: event.file_path)
+            loadFiles(into: cell, files: event.file_path)
+            cell.attacmentView.isHidden = event.file_path.count ==  0
             return cell
         }
     }
-
+    private func getCurrentViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController?
+            .topMostViewController()
+    }
+    func loadFiles(into cell: OngoingCVC, files: [FilePath]) {
+        [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
+        cell.imgCount.isHidden = true
+        
+        for (index, item) in files.enumerated() {
+            // Only process first 3 files for display
+            guard index < 3 else { break }
+            
+            guard let urlString = item.url, let url = URL(string: urlString) else { continue }
+            
+            // Safe array access
+            let imageViews = [cell.img1, cell.img2, cell.img3]
+            guard index < imageViews.count, let imageView = imageViews[index] else { continue }
+            
+            imageView.isHidden = false
+            
+            if item.type?.lowercased() != "image" {
+                let iconName = getFileIconName(for: url)
+                imageView.image = UIImage(named: iconName)
+            } else {
+                imageView.kf.setImage(with: url)
+            }
+        }
+        
+        // Handle extra files count display
+        if files.count > 3 {
+            let extraCount = files.count - 3
+            if let button = cell.imgCount as? UIButton {
+                button.setTitle("+\(extraCount)", for: .normal)
+                cell.imgCount.isHidden = false
+            }
+        }
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !type {
             let pageWidth = scrollView.frame.size.width

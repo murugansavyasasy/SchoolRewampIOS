@@ -26,7 +26,7 @@ class AssignmentTVC: UITableViewCell {
     
     // MARK: - IBOutlets
     @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var createdDateLbl: UILabel!
+//    @IBOutlet weak var createdDateLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var assignmentProgressLbl: UILabel!
     @IBOutlet weak var outerView: UIView!
@@ -52,6 +52,13 @@ class AssignmentTVC: UITableViewCell {
     
     // MARK: - UI Setup
     func setupUI() {
+        [img1, img2, img3, imgCount].forEach { $0?.isHidden = true }
+        [img1, img2, img3, imgCount].forEach {
+            if let view = $0 {
+                setBorderAndCornerRadius(for: view, cornerRadius: view.frame.width / 2)
+            }
+        }
+        imgCount.layer.cornerRadius = imgCount.frame.width / 2
         completedBtn.layer.cornerRadius = 6
         submitBtn.layer.cornerRadius = 10
         mysubmitBtn.layer.cornerRadius = 10
@@ -65,12 +72,17 @@ class AssignmentTVC: UITableViewCell {
         titleLbl.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLbl.textColor = .label
         
-        createdDateLbl.font = .systemFont(ofSize: 12, weight: .regular)
-        createdDateLbl.textColor = .secondaryLabel
+//        createdDateLbl.font = .systemFont(ofSize: 12, weight: .medium) // Slightly bolder
+//        createdDateLbl.textColor = .secondaryLabel
+//        createdDateLbl.backgroundColor = .systemBackground
+//        createdDateLbl.layer.cornerRadius = 15
+//        createdDateLbl.layer.borderWidth = 1
+//        createdDateLbl.layer.borderColor = UIColor.separator.cgColor // Subtle border
+//        createdDateLbl.textAlignment = .center
+//        createdDateLbl.layer.masksToBounds = true
         
         descriptionLbl.font = .systemFont(ofSize: 14, weight: .regular)
         descriptionLbl.textColor = .secondaryLabel
-        descriptionLbl.numberOfLines = 2
         
         assignmentProgressLbl.font = .systemFont(ofSize: 12, weight: .medium)
         assignmentProgressLbl.textColor = .label
@@ -82,7 +94,7 @@ class AssignmentTVC: UITableViewCell {
         
         titleLbl.text = assignment.title
         descriptionLbl.text = assignment.description
-        createdDateLbl.text = "Assigned : \(formatDate(assignment.created_date ?? ""))"
+//        createdDateLbl.text = "Assigned : \(formatDate(assignment.created_date ?? ""))"
         
         // Clear old stack items
         subCatogoriesStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -94,15 +106,35 @@ class AssignmentTVC: UITableViewCell {
             let generatedStack = createSubCategoriesStack(with: categories)
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
-        
-        configureProgress(Double(assignment.progress ?? 0.0))
-        configureStudentImages()
+        let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
+        configureProgress(progress)
     }
     
     // MARK: - Create Categories Array
     func createCategoriesArray(from assignment: Report) -> [SubCategories] {
         var cats: [SubCategories] = []
-        
+        if let subject = assignment.created_date {
+            cats.append(SubCategories(
+                name: "Assigned : \(formatDate(assignment.created_date ?? ""))",
+                icon: "calendar",
+                backgroundColor: .systemBlue.withAlphaComponent(0.15),
+                textColor: .systemBlue
+            ))
+        }
+        if let category = assignment.category {
+            cats.append(SubCategories(
+                name: category,
+                icon: "square.grid.2x2"
+            ))
+        }
+        if let subject = assignment.subject {
+            cats.append(SubCategories(
+                name: subject,
+                icon: "book.closed",
+                backgroundColor: .systemBlue.withAlphaComponent(0.15),
+                textColor: .systemBlue
+            ))
+        }
         if let endDate = assignment.end_date {
             cats.append(SubCategories(
                 name: "Deadline \(formatDate(endDate))",
@@ -112,50 +144,40 @@ class AssignmentTVC: UITableViewCell {
             ))
         }
         
-        if let subject = assignment.subject {
-            cats.append(SubCategories(
-                name: subject,
-                icon: "book.closed",
-                backgroundColor: .systemBlue.withAlphaComponent(0.15),
-                textColor: .systemBlue
-            ))
-        }
-        
-        if let category = assignment.category {
-            cats.append(SubCategories(
-                name: category,
-                icon: "square.grid.2x2"
-            ))
-        }
         
         return cats
     }
-    
+    func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
+        view.layer.cornerRadius = cornerRadius
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = borderColor.cgColor
+        view.clipsToBounds = true
+    }
     // MARK: - Configure Progress
-    func configureProgress(_ value: Double) {
-        progressView.progress = Float(value / 100.0)
+    func configureProgress(_ value: Float) {
+        progressView.progress = value
         progressView.trackTintColor = .systemGray5
         progressView.progressTintColor = .systemGreen
         progressView.layer.cornerRadius = 4
         progressView.clipsToBounds = true
         assignmentProgressLbl.text = "Assignment Progress"
-    }
-    
-    // MARK: - Configure Student Images
-    func configureStudentImages() {
-        [img1, img2, img3].forEach { imageView in
-            imageView?.layer.cornerRadius = 12
-            imageView?.clipsToBounds = true
-            imageView?.backgroundColor = .systemGray4
-            imageView?.contentMode = .scaleAspectFill
+        switch value {
+        case 0.0..<0.3:
+            progressView.progressTintColor = UIColor.systemRed
+        case 0.3..<0.7:
+            progressView.progressTintColor = UIColor.systemOrange
+        default:
+            progressView.progressTintColor = UIColor.systemGreen
         }
         
-        imgCount.backgroundColor = .systemGray5
-        imgCount.layer.cornerRadius = 12
-        imgCount.setTitleColor(.label, for: .normal)
-        imgCount.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-        imgCount.setTitle("+34 Students", for: .normal)
     }
+    func calculateProgressPercentage(submitted: Int?, total: Int?) -> Float {
+        guard let submitted = submitted, let total = total, total > 0 else {
+            return 0.0
+        }
+        return Float(submitted) / Float(total)
+    }
+
     
     // MARK: - Create Subcategory Stack with Wrapping
     func createSubCategoriesStack(with tags: [SubCategories]) -> UIStackView {

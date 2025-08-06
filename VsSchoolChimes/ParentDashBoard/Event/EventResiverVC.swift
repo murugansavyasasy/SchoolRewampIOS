@@ -221,6 +221,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
             cell.config(category: categories, onGoing: nil, type: true)
             cell.delegate = self
+            
             return cell
 
         case .upcoming(let events):
@@ -235,6 +236,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             cell.reminderBtn.isHidden = false
             cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
             loadFiles(into: cell, files: event.file_path)
+            cell.attacmentView.isHidden = event.file_path.count ==  0
             return cell
         case .completed(let events):
             let event = events[indexPath.row]
@@ -248,6 +250,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             cell.reminderBtn.isHidden = true
             cell.outerView.backgroundColor = .black
             loadFiles(into: cell, files: event.file_path)
+            cell.attacmentView.isHidden = event.file_path.count ==  0
             return cell
         }
     }
