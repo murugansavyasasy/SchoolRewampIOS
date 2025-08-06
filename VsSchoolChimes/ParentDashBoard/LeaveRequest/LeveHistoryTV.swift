@@ -7,76 +7,60 @@
 
 import UIKit
 
-protocol editDelete: AnyObject {
-    func edit(edit: Int?, delete: Int?)
+protocol EditDeleteDelegate: AnyObject {
+    func edit(edit: IndexPath?, delete: IndexPath?)
 }
 
 class LeveHistoryTV: UITableViewCell {
 
-    @IBOutlet weak var showPopup: UIView!
-    @IBOutlet weak var deleteBtn: UIButton!
-    @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var rejectBtn: UIButton!
     @IBOutlet weak var aproveBtn: UIButton!
-    @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var resonLbl: UILabel!
     @IBOutlet weak var durationLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var editClickBtn: UIButton!
+    @IBOutlet weak var LeaveTypeLbl: UILabel!
     
-    weak var delegate: editDelete?
+    
+    var indexPath: IndexPath?
+    weak var delegate: EditDeleteDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         outerView.layer.cornerRadius = 10
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        outerView.layer.shadowRadius = 5
-        outerView.layer.shadowOpacity = 0.3
+        outerView.layer.borderWidth = 1
+        outerView.layer.borderColor = UIColor.systemGray4.cgColor
 
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        dateLbl.setFont(style: .body, size: FontSize.BodySize)
+        dateLbl.setFont(style: .title, size: FontSize.TitleSize)
         durationLbl.setFont(style: .body, size: FontSize.BodySize)
         resonLbl.setFont(style: .body, size: FontSize.BodySize)
+        LeaveTypeLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        editClickBtn.layer.cornerRadius = 5
+        editClickBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        aproveBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        rejectBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         aproveBtn.setShadow()
         rejectBtn.setShadow()
-        showPopup.setShadow()
-        iconBtn.setShadow(cornerRadius: iconBtn.frame.width / 2)
-        showPopup.isHidden = true
-    }
-
-    func hidePopup() {
-        showPopup.isHidden = true
-        iconBtn.isSelected = false
-        aproveBtn.isHidden = false
+        
     }
 
     @IBAction func iconBtnTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        if sender.isSelected{
-            delegate?.edit(edit: sender.tag, delete: -999)
-        }else{
-            hidePopup()
-        }
     }
 
-    @IBAction func editAct(_ sender: UIButton) {
-            delegate?.edit(edit: sender.tag, delete: nil)
-        
-    }
-
-    @IBAction func deleteAct(_ sender: UIButton) {
-            delegate?.edit(edit: nil, delete: sender.tag)
-        
-    }
     @IBAction func aprove(_ sender: UIButton) {
-        delegate?.edit(edit: sender.tag, delete:0)
+        if let indexPath = indexPath {
+                delegate?.edit(edit: indexPath, delete: IndexPath(row: 0, section: indexPath.section)) // use as needed
+            }
     }
     @IBAction func rejectAct(_ sender: UIButton) {
-        delegate?.edit(edit: sender.tag, delete: 1)
+        if let indexPath = indexPath {
+                delegate?.edit(edit: indexPath, delete: IndexPath(row: 1, section: indexPath.section)) // use as needed
+            }
     }
     
 }

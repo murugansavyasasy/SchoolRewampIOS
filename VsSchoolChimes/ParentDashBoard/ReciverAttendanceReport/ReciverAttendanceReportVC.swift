@@ -105,18 +105,14 @@ class ReciverAttendanceReportVC: UIViewController {
         MenusView.layer.shadowRadius = 4
         MenusView.layer.masksToBounds = false
         
-        DateLbl.setFont(style: .header, size: 28)
+        DateLbl.setFont(style: .header, size: 40)
         WeekStatusDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        WeekStatusDefLbl.textColor = .black.withAlphaComponent(0.7)
         
         let today = Date()
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd"
-        let date = dateFormatter.string(from: today)
-        
-        DateLbl.text = date
+        DateLbl.attributedText = getDayWithSuffix(from: today)
 
-        
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "EEEE" // Full day name, e.g. "Wednesday"
         let dayName = dayFormatter.string(from: today)
@@ -159,6 +155,40 @@ class ReciverAttendanceReportVC: UIViewController {
         HolidaysView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HolidaysAct)))
     }
     
+    func getDayWithSuffix(from date: Date) -> NSAttributedString {
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: date)
+        
+        let suffix: String
+        switch day {
+        case 11, 12, 13:
+            suffix = "th"
+        default:
+            switch day % 10 {
+            case 1: suffix = "st"
+            case 2: suffix = "nd"
+            case 3: suffix = "rd"
+            default: suffix = "th"
+            }
+        }
+
+        let dayString = "\(day)"
+        let fullString = "\(day)\(suffix)"
+        let attributed = NSMutableAttributedString(string: fullString)
+
+        // Load Poppins-Medium
+        let suffixFont = UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)
+
+        // Apply style to suffix only
+        attributed.setAttributes([
+            .font: suffixFont,
+            .baselineOffset: 20
+        ], range: NSRange(location: dayString.count, length: suffix.count))
+
+        return attributed
+    }
+
+    
     func setupDayButtons() {
         
         Stackview.arrangedSubviews.forEach { view in
@@ -180,6 +210,7 @@ class ReciverAttendanceReportVC: UIViewController {
             label.text = initial
             label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 13)
+            label.textColor = .black.withAlphaComponent(0.8)
 
             // Create the image view
             let imageView = UIImageView()

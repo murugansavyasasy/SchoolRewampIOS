@@ -10,52 +10,54 @@ protocol ConfirmDelegate{
     func confirm(index:Int,status:Bool)
 }
 @available(iOS 14.0, *)
-class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
-    func edit(edit: Int?, delete: Int?) {
-        guard let studentId = SearchLeavetData?[edit ?? 0].id else { return }
-        if delete == 0{
-            
-            let message = "Are you sure you want to approve this leave request?"
-            
-            alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-                self.Leave_Update_status(id: studentId, status:true, index:edit ?? 0)
-                
-            }, onNo: {
-                
+class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
+   
+    
+    func edit(edit: IndexPath?, delete: IndexPath?) {
+        guard let indexPath = edit,
+              let studentId = SearchLeavetData?[indexPath.section].details?[indexPath.row].id else { return }
+
+        if let delete = delete {
+            switch delete.row {
+            case 0: // Approve
+                let message = "Are you sure you want to approve this leave request?"
+                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                                      actionLbl1: AlertstringFile.OK,
+                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    self.Leave_Update_status(id: studentId, status: true, indexPath: indexPath)
+                }, onNo: {})
+
+            case 1: // Reject
+                let message = "Are you sure you want to reject this leave request?"
+                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                                      actionLbl1: AlertstringFile.OK,
+                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    self.Leave_Update_status(id: studentId, status: false, indexPath: indexPath)
+                }, onNo: {})
+
+            default:
+                break
             }
-            )
-            
-        }else{
-            let message = "Are you sure you want to reject this leave request?"
-            
-            alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-                
-                self.Leave_Update_status(id: studentId, status:true, index:edit ?? 0)
-                
-            }, onNo: {
-                
-            }
-            )
-            
         }
     }
+
     
     
     
     func confirm(index: Int, status: Bool) {
         
-        let message = status==true ? "Are you sure you want to approve this leave request?" : "Are you sure you want to reject this leave request?"
-        
-        let Leaveid = SearchLeavetData?[index].id ?? ""
-        
-        alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-            
-            self.Leave_Update_status(id: Leaveid, status: status, index: index)
-            
-        }, onNo: {
-            
-        }
-        )
+//        let message = status==true ? "Are you sure you want to approve this leave request?" : "Are you sure you want to reject this leave request?"
+//        
+//        let Leaveid = SearchLeavetData?[index].id ?? ""
+//
+//        alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+//            
+//            self.Leave_Update_status(id: Leaveid, status: status, index: index)
+//            
+//        }, onNo: {
+//            
+//        }
+//        )
     }
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -65,8 +67,8 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodateLbl: UILabel!
     
-    var LeaveRequestData: [LeaveInfo]?
-    var SearchLeavetData: [LeaveInfo]?
+    var LeaveRequestData: [LeaveMonth]?
+    var SearchLeavetData: [LeaveMonth]?
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     let alert = CustomAlert()
     
@@ -141,8 +143,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
         }
     }
     
-    func Leave_Update_status(id: String, status: Bool, index: Int) {
-        
+    func Leave_Update_status(id: String, status: Bool, indexPath: IndexPath) {
         let param: [String: Any] = [
             LeaveRequestStringFile.id: id,
             LeaveRequestStringFile.is_approve: status
@@ -153,48 +154,56 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
             parameters: param,
             type: ApitTypeSringFile.PUT,
             token: StaffDetails?.access_token ?? ""
-        ) { [self] (result: Result<CommonApiSuc, Error>) in
+        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             
-            switch result {
-            case .success(let success):
-                DispatchQueue.main.async {
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
                     if success.status == true {
                         let title = AlertstringFile.Success
                         let message = success.message ?? ""
                         let newStatus = status ? "Approved" : "Rejected"
-                        
-                        // Get formatted date
+
+                        // Format current date for updated_on
                         let formatter = DateFormatter()
                         formatter.dateFormat = "dd MMM yyyy hh:mm a"
                         let formattedDate = formatter.string(from: Date())
-                        
-                       self.SearchLeavetData?[index].status = newStatus
-                        self.SearchLeavetData?[index].updated_on = formattedDate
-                        if let idToUpdate = self.SearchLeavetData?[index].id,
-                           let originalIndex = self.LeaveRequestData?.firstIndex(where: { $0.id == idToUpdate }) {
-                            self.LeaveRequestData?[originalIndex].status = newStatus
-                            self.LeaveRequestData?[originalIndex].updated_on = formattedDate
+
+                        // ✅ Update SearchLeavetData
+                        self.SearchLeavetData?[indexPath.section].details?[indexPath.row].status = newStatus
+                        self.SearchLeavetData?[indexPath.section].details?[indexPath.row].updated_on = formattedDate
+
+                        // ✅ Update LeaveRequestData (original)
+                        if let idToUpdate = self.SearchLeavetData?[indexPath.section].details?[indexPath.row].id,
+                           let sectionIndex = self.LeaveRequestData?.firstIndex(where: {
+                               $0.details?.contains(where: { $0.id == idToUpdate }) == true
+                           }),
+                           let rowIndex = self.LeaveRequestData?[sectionIndex].details?.firstIndex(where: {
+                               $0.id == idToUpdate
+                           }) {
+                            
+                            self.LeaveRequestData?[sectionIndex].details?[rowIndex].status = newStatus
+                            self.LeaveRequestData?[sectionIndex].details?[rowIndex].updated_on = formattedDate
                         }
-                        
-                        // ✅ Reload updated row
-                        self.leaveRequestTable.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-                        
-                        // ✅ Show success
+
+                        // ✅ Reload updated row in table
+                        self.leaveRequestTable.reloadRows(at: [indexPath], with: .automatic)
+
+                        // ✅ Show confirmation
                         CustomAlert.showAlertWithOkAction(title: title, message: message, on: self) {}
                     } else {
-                        let title = AlertstringFile.Failed
-                        self.alert.showAlert(title: title, message: success.message ?? "", on: self)
+                        self.alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                     }
-                }
-                
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    print("Error:", error.localizedDescription)
+
+                case .failure(let error):
                     self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
             }
         }
     }
+
     
     
     
@@ -207,52 +216,83 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, editDelete {
 @available(iOS 14.0, *)
 extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        SearchLeavetData?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView()
+        headerView.backgroundColor = .clear  // Customize color
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setFont(style: .title, size: FontSize.TitleSize)
+        label.textColor = .darkGray
+        label.text = SearchLeavetData?[section].month
+        headerView.addSubview(label)
+        
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])
+
+        return headerView
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchLeavetData?.count ?? 0
+        return SearchLeavetData?[section].details?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as! LeveHistoryTV
         
-        let LeaveRequest = SearchLeavetData?[indexPath.row]
-        guard let leaveData = SearchLeavetData?[indexPath.row] else { return cell }
+        guard let leaveData = SearchLeavetData?[indexPath.section].details?[indexPath.row] else { return cell }
         
         cell.nameLbl.text = leaveData.student_name
-        cell.dateLbl.text = "\(convertDate(leaveData.leave_from, toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to, toFormat: DateFormatString.StandardFormat) ?? "")"
+        cell.dateLbl.text = "\(convertDate(leaveData.leave_from ?? "", toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to ?? "", toFormat: DateFormatString.StandardFormat) ?? "")"
         cell.resonLbl.text = leaveData.reason
         cell.aproveBtn.setTitle(leaveData.status, for: .normal)
-        let firstLetter = leaveData.student_name.first.map { String($0) } ?? ""
-        cell.iconBtn.setTitle(firstLetter.uppercased(), for: .normal)
-        cell.delegate = self
+        let firstLetter = leaveData.student_name?.first.map { String($0) } ?? ""
+       
+       // cell.delegate = self
         cell.aproveBtn.isUserInteractionEnabled = true
         cell.rejectBtn.isUserInteractionEnabled = true
         cell.aproveBtn.tag = indexPath.row
         cell.rejectBtn.tag = indexPath.row
-        cell.durationLbl.text = daysBetweenLabel(start: leaveData.leave_from, end: leaveData.leave_to)
+        cell.durationLbl.text = (leaveData.no_of_days ?? "") + " Days Application"
         if leaveData.status == "Approved" {
-            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
-            cell.aproveBtn.isHidden = false
+            cell.editClickBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+            cell.editClickBtn.setTitleColor(.systemGreen, for: .normal)
+            cell.editClickBtn.setTitle("Approved", for: .normal)
+            cell.aproveBtn.isHidden = true
             cell.rejectBtn.isHidden = true
         } else if leaveData.status == "Rejected" {
-            cell.aproveBtn.backgroundColor = .red
             cell.aproveBtn.isHidden = true
-            cell.rejectBtn.isHidden = false
+            cell.rejectBtn.isHidden = true
+            cell.editClickBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+            cell.editClickBtn.setTitleColor(.red, for: .normal)
+            cell.editClickBtn.setTitle("Rejected", for: .normal)
+            cell.editClickBtn.isHidden = false
         } else {
             cell.aproveBtn.backgroundColor = Colornames.AprovedClr
             cell.aproveBtn.setTitle("Approve", for: .normal)
             cell.rejectBtn.setTitle("Reject", for: .normal)
             cell.aproveBtn.isHidden = false
             cell.rejectBtn.isHidden = false
+            cell.editClickBtn.isHidden = true
         }
         
-        cell.showPopup.isHidden = true
-        cell.editClickBtn.isHidden = true
+        cell.indexPath = indexPath
+        cell.delegate = self
         
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
     func daysBetweenLabel(start: String, end: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
@@ -272,30 +312,38 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
 }
 
 @available(iOS 14.0, *)
-extension SenderLeaveRqstVC: UISearchBarDelegate{
+extension SenderLeaveRqstVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            
             SearchLeavetData = LeaveRequestData
-            
         } else {
-            
-            SearchLeavetData = LeaveRequestData?.filter{ Leave in
+            SearchLeavetData = LeaveRequestData?.compactMap { month in
+                let filteredDetails = month.details?.filter { leave in
+                    leave.applied_on?.lowercased().contains(searchText.lowercased()) == true ||
+                    leave.student_name?.lowercased().contains(searchText.lowercased()) == true ||
+                    leave.class_name?.lowercased().contains(searchText.lowercased()) == true ||
+                    leave.section_name?.lowercased().contains(searchText.lowercased()) == true ||
+                    leave.reason?.lowercased().contains(searchText.lowercased()) == true ||
+                    leave.status?.lowercased().contains(searchText.lowercased()) == true
+                }
                 
-                Leave.applied_on.lowercased().contains(searchText.lowercased()) ||
-                Leave.student_name.lowercased().contains(searchText.lowercased()) ||
-                Leave.class_name.lowercased().contains(searchText.lowercased()) ||
-                Leave.section_name.lowercased().contains(searchText.lowercased()) ||
-                Leave.reason.lowercased().contains(searchText.lowercased()) ||
-                Leave.status.lowercased().contains(searchText.lowercased())
+                if let filteredDetails, !filteredDetails.isEmpty {
+                    return LeaveMonth(month: month.month, details: filteredDetails)
+                } else {
+                    return nil
+                }
             }
         }
         
+        // Show or hide empty state
+        let isEmpty = SearchLeavetData?.allSatisfy { $0.details?.isEmpty ?? true } ?? true
         NodateLbl.text = "No data found!"
-        NodataImage.isHidden = !(SearchLeavetData?.isEmpty ?? false)
-        NodateLbl.isHidden = !(SearchLeavetData?.isEmpty ?? false)
-        EmptyView.isHidden = !(SearchLeavetData?.isEmpty ?? false)
+        NodataImage.isHidden = !isEmpty
+        NodateLbl.isHidden = !isEmpty
+        EmptyView.isHidden = !isEmpty
+        
         leaveRequestTable.reloadData()
     }
 }
+
