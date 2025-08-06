@@ -22,6 +22,7 @@ class OTPVc: UIViewController {
     @IBOutlet weak var ResendLbl: UILabel!
     @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
     
+    @IBOutlet weak var StackView: UIStackView!
     
     @IBOutlet weak var callUsLbl: UILabel!
     
@@ -37,14 +38,13 @@ class OTPVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BottomView.layer.cornerRadius = 30
-        BottomView.backgroundColor = Colornames.auth_screen_color
-        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        StackView.layer.cornerRadius = 40
+        StackView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         
         
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        OtpContentLbl.setFont(style: .title, size: FontSize.TitleSize)
+        OtpContentLbl.setFont(style: .body, size: FontSize.BodySize)
         ResendLbl.setFont(style: .body, size: FontSize.BodySize)
         DidnotReciveOtpLbl.setFont(style: .body, size: FontSize.BodySize)
         
@@ -57,7 +57,7 @@ class OTPVc: UIViewController {
             OtpContentLbl.text =  otpContent
             
         }else{
-            OtpContentLbl.text = "  " + (validateMobileData.first?.more_info ?? "") + (
+            OtpContentLbl.text = (validateMobileData.first?.more_info ?? "") + (
                 mobile_number ?? "") + "  "
         }
         
@@ -175,9 +175,9 @@ class OTPVc: UIViewController {
     
     
     func setupLabel() {
-        ResendLbl.frame = CGRect(x: 30, y: 100, width: view.frame.width - 60, height: 40)
-        ResendLbl.textAlignment = .center
-        ResendLbl.font = UIFont.systemFont(ofSize: 16)
+        ResendLbl.frame = CGRect(x: 18, y: 100, width: view.frame.width - 60, height: 40)
+        ResendLbl.textAlignment = .left
+        ResendLbl.setFont(style: .body, size: FontSize.BodySize)
         ResendLbl.isUserInteractionEnabled = true
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
@@ -526,7 +526,7 @@ extension OTPVc : UITextFieldDelegate{
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height-91
+                self.view.frame.origin.y -= keyboardSize.height
                 print("keyboardSize.height",keyboardSize.height)
             }
         }

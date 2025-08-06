@@ -140,7 +140,12 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         case 0:
             let cell = NewTv.dequeueReusableCell(withIdentifier: "TotalMarkTvCell", for: indexPath) as! TotalMarkTvCell
             
+            let mark = assessments?.first
             cell.ExamTitleLbl.text = ExamTitle
+            cell.obtainedMarkLbl.text = mark?.total_obtained
+            cell.totalMarkLbl.text = "out of \(mark?.total_mark ?? "")"
+            cell.GradeLbl.text = "Overall Grade: \(mark?.grade ?? "")"
+            cell.RemarksLbl.text = mark?.message
             return cell
             
         case 1:

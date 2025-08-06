@@ -664,6 +664,8 @@
 		FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
+		FA82918B2E4379960051844E /* CountryTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8291892E4379960051844E /* CountryTvcell.swift */; };
+		FA82918C2E4379960051844E /* CountryTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA82918A2E4379960051844E /* CountryTvcell.xib */; };
 		FA8535492D9BC91400E0379C /* NewShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8535482D9BC91400E0379C /* NewShimmerView.swift */; };
 		FA861C362E38ABA900859726 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		FA861C372E38ABA900859726 /* CertificateCv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA861C352E38ABA900859726 /* CertificateCv.xib */; };
@@ -1465,6 +1467,8 @@
 		FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveHistoryTV.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
+		FA8291892E4379960051844E /* CountryTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTvcell.swift; sourceTree = "<group>"; };
+		FA82918A2E4379960051844E /* CountryTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTvcell.xib; sourceTree = "<group>"; };
 		FA8535482D9BC91400E0379C /* NewShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShimmerView.swift; sourceTree = "<group>"; };
 		FA861C342E38ABA900859726 /* CertificateCv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateCv.swift; sourceTree = "<group>"; };
 		FA861C352E38ABA900859726 /* CertificateCv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateCv.xib; sourceTree = "<group>"; };
@@ -3080,6 +3084,8 @@
 				848126D72D91820500BE6979 /* CountryListVC.xib */,
 				848126DA2D9182E100BE6979 /* CountryListCVC.swift */,
 				848126DB2D9182E100BE6979 /* CountryListCVC.xib */,
+				FA8291892E4379960051844E /* CountryTvcell.swift */,
+				FA82918A2E4379960051844E /* CountryTvcell.xib */,
 			);
 			path = CountryList;
 			sourceTree = "<group>";
@@ -4020,6 +4026,7 @@
 				8451EC942E24E55B00D6DBB4 /* HolidayVC.xib in Resources */,
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
 				849757122D2BA575006A27FD /* Std_Grp_header.xib in Resources */,
+				FA82918C2E4379960051844E /* CountryTvcell.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
 				846CF73A2E2F5654000361CE /* ReciverEventTVC.xib in Resources */,
 				848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */,
@@ -4799,6 +4806,7 @@
 				84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */,
 				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
+				FA82918B2E4379960051844E /* CountryTvcell.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
 				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				842214282DAFACAD00D38D16 /* CommonPageVC.swift in Sources */,

@@ -405,6 +405,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 checkBiometricStatus()
             } else {
                 let vc = CountryVc(nibName: nil, bundle: nil)
+                //let vc = CountryListVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
                 validate_user()

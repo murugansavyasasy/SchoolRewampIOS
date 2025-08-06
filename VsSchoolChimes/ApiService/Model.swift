@@ -1424,6 +1424,10 @@ struct Assessment: Codable {
     var TotalWorkingDays: String?
     var Remarks: String?
     var Percentage: String?
+    var total_mark: String?
+    var total_obtained: String?
+    var grade: String?
+    var message: String?
 }
 
 struct Groups: Codable {
