@@ -437,6 +437,8 @@
 		849AD03F2D1A845E002DEC07 /* AttendenceReportTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849AD0382D1A845E002DEC07 /* AttendenceReportTVCell.xib */; };
 		849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849AD0412D1A858D002DEC07 /* SenderAssignmentTextViewController.xib */; };
+		849B9A9D2E43605600F43C4D /* AssignmentDateCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B9A9C2E43605600F43C4D /* AssignmentDateCVC.xib */; };
+		849B9A9E2E43605600F43C4D /* AssignmentDateCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B9A9B2E43605600F43C4D /* AssignmentDateCVC.swift */; };
 		849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722E2D14270D0060E222 /* SubscriptionView.swift */; };
 		849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */; };
 		849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722F2D14270D0060E222 /* SubscriptionView.xib */; };
@@ -1231,6 +1233,8 @@
 		849AD03A2D1A845E002DEC07 /* MarkAttendenceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkAttendenceVC.xib; sourceTree = "<group>"; };
 		849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderAssignmentTextViewController.swift; sourceTree = "<group>"; };
 		849AD0412D1A858D002DEC07 /* SenderAssignmentTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAssignmentTextViewController.xib; sourceTree = "<group>"; };
+		849B9A9B2E43605600F43C4D /* AssignmentDateCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentDateCVC.swift; sourceTree = "<group>"; };
+		849B9A9C2E43605600F43C4D /* AssignmentDateCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentDateCVC.xib; sourceTree = "<group>"; };
 		849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTVCell.swift; sourceTree = "<group>"; };
 		849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionTVCell.xib; sourceTree = "<group>"; };
 		849D722E2D14270D0060E222 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -2771,6 +2775,8 @@
 				849AD0052D1A837A002DEC07 /* ReciverHomeworkVC.xib */,
 				843BCD332E2E65ED00D4364A /* homeWorkVc.swift */,
 				843BCD342E2E65ED00D4364A /* homeWorkVc.xib */,
+				849B9A9B2E43605600F43C4D /* AssignmentDateCVC.swift */,
+				849B9A9C2E43605600F43C4D /* AssignmentDateCVC.xib */,
 			);
 			path = ReciverHomework;
 			sourceTree = "<group>";
@@ -4083,6 +4089,7 @@
 				FACD4D782E30F8B40084B125 /* TimetableTvCell.xib in Resources */,
 				849AD0002D1A8369002DEC07 /* ReciverAttendanceReportVC.xib in Resources */,
 				FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */,
+				849B9A9D2E43605600F43C4D /* AssignmentDateCVC.xib in Resources */,
 				849AD0012D1A8369002DEC07 /* ReciverAttendReportTV.xib in Resources */,
 				FA3B30032E2F8BD6003B6E6D /* TotalMarkTvCell.xib in Resources */,
 				849F4C7C2D24012E00C9F4BF /* Mathematics.mp4 in Resources */,
@@ -4710,6 +4717,7 @@
 				84CE676B2E4232610019128B /* AssignmentTVC.swift in Sources */,
 				84B2C54F2E2224C900A69A1B /* ExamCatogoryCVC.swift in Sources */,
 				84D785952DFD4F9400A7B9E9 /* PaymentHeaderView.swift in Sources */,
+				849B9A9E2E43605600F43C4D /* AssignmentDateCVC.swift in Sources */,
 				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */,

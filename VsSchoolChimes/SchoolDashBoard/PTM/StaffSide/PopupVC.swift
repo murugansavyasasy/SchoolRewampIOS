@@ -33,8 +33,17 @@ class PopupVC: UIViewController {
             editStack.isHidden = !edit
         }
         
-        
     }
+    init(edit: Bool = false, delete: Bool = false, selectedId: String?) {
+        self.edit = edit
+        self.delete = delete
+        self.selectedId = selectedId
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     @IBAction func cancelBtn(_ sender: UIButton) {
         print("cancelBtn")
         dismiss(animated: true)

@@ -11,10 +11,10 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
        
     }
     
+    @IBOutlet weak var calanderCollectionView: UICollectionView!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordImg: UIImageView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var listTable: UITableView!
@@ -23,8 +23,11 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     var didSelectDelegate : DidSelectDelegate?
     var data : [Assignment]?
     var filteredData :[Assignment]?
+    var calendarItems: [AssignmentCalendar] = []
     var shouldShowFooter = true
     var tapGesture: UITapGestureRecognizer?
+    var selectedIndexPath: IndexPath?
+    let today = Date()
     var studentDetails = UserDefaultFileManager.get_child_Details()
     
     override func viewDidLoad() {
@@ -33,12 +36,18 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         nodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         searchview.placeholder = CommonStringFile.Search.translated()
         searchview.delegate = self
+        calendarItems = getAllPastDatesIncludingTodayForLastMonth()
+        if let todayIndex = calendarItems.firstIndex(where: { Calendar.current.isDateInToday($0.date) }) {
+            selectedIndexPath = IndexPath(item: todayIndex, section: 0)
+        }
+        calanderCollectionView.delegate = self
+        calanderCollectionView.dataSource = self
+        calanderCollectionView.register(UINib(nibName: "AssignmentDateCVC", bundle: nil), forCellWithReuseIdentifier: "AssignmentDateCVC")
         searchview.searchTextField.addDoneButton()
         nodataLbl.isHidden = true
         noRecordImg.isHidden = true
@@ -129,7 +138,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         }
     }
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+//        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -243,6 +252,32 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 60
     }
+    func getAllPastDatesIncludingTodayForLastMonth() -> [AssignmentCalendar] {
+          var items: [AssignmentCalendar] = []
+          let calendar = Calendar.current
+          let today = Date()
+          
+          guard let pastStartDate = calendar.date(byAdding: .month, value: -1, to: today) else {
+              return items
+          }
+
+          var currentDate = pastStartDate
+          while currentDate <= today {
+              // Example logic: red dot on Wednesdays, green on Saturdays
+              let weekday = calendar.component(.weekday, from: currentDate)
+              var status: DotStatus? = nil
+              if weekday == 4 { status = .red }      // Wednesday
+              if weekday == 7 { status = .green }    // Saturday
+
+              items.append(AssignmentCalendar(date: currentDate, status: status))
+              guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
+                  break
+              }
+              currentDate = nextDate
+          }
+
+          return items
+      }
 }
 
 extension AssignmentListVC: UISearchBarDelegate {
@@ -286,4 +321,41 @@ extension AssignmentListVC: UISearchBarDelegate {
         searchBar.endEditing(true)
         searchBar.resignFirstResponder()
     }
+}
+import UIKit
+
+extension AssignmentListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return calendarItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let item = calendarItems[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssignmentDateCVC", for: indexPath) as? AssignmentDateCVC else {
+            return UICollectionViewCell()
+        }
+        
+        let isSelected = indexPath == selectedIndexPath
+        cell.configure(with: item.date, isSelected: isSelected, status: item.status)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        collectionView.reloadData()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 50, height: 90)
+    }
+}
+struct AssignmentCalendar {
+    var date: Date
+    var status: DotStatus?
+}
+
+enum DotStatus {
+    case red
+    case green
 }

@@ -86,6 +86,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var maxHeight : CGFloat = 300
     var attachments: [AttachmentItem] = []
     var videoPicker: VideoPickerManager?
+    var delegate:EditObjectDelegate?
     var selectedVideoURL: URL?
     var images = [String]()
     var dropDownList = [String]()
@@ -540,7 +541,17 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                             message: response.message,
                             on: self
                         ) { [self] in
-                            dismiss(animated: true)
+                            placeTxt.text = ""
+                            eventTxt.text = ""
+                            contentTxtView.text = ""
+                            placeholderLabel.isHidden = !contentTxtView.text.isEmpty
+                            attachments.removeAll()
+                            costomView.imageCollectionview.reloadData()
+                            editId = nil
+                            
+                            nextBtn.setTitle("Next", for: .normal)
+                            updateTextViewHeight(contentTxtView)
+                            delegate?.editDta(edit: nil)
                         }
                     }
                 }
