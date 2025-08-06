@@ -11,9 +11,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     func ReadCompleted(Id: String, IscompletedStatus: Bool) {
         markHomeworkAsUnread(eventId: Id, isCompletedStatus: IscompletedStatus)
     }
-    
-    
-    
+  
     func markHomeworkAsUnread(eventId: String,isCompletedStatus: Bool) {
         if let index = FilterHomeWorkList.firstIndex(where: { $0.id == eventId }) {
             var updatedHomework = FilterHomeWorkList[index]
@@ -86,7 +84,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func convertDateToString(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy" // Match API format!
+        formatter.dateFormat = DateInputs.dd_MM_yyyy// Match API format!
         formatter.timeZone = TimeZone(identifier: "Asia/Kolkata")
         return formatter.string(from: date)
     }
@@ -96,7 +94,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         
         if collectionView == bottomCV{
             let item = FilterHomeWorkList[indexPath.item]
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeWorkCvCell", for: indexPath) as? HomeWorkCvCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomeWorkCvCell, for: indexPath) as? HomeWorkCvCell else {
                 return UICollectionViewCell()
             }
             
@@ -112,7 +110,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 cell.setProgress(to: percentage)
                 cell.roundview.isHidden = false
             }
-        
+            
             if item.is_completed == true{
                 cell.homeWorkCompletImg.isHidden = false
                 cell.pieChartWidth.constant = 0
@@ -125,11 +123,9 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }else{
             let item = calendarItems[indexPath.item]
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalanderCvCell", for: indexPath) as? CalanderCvCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CalanderCvCell, for: indexPath) as? CalanderCvCell else {
                 return UICollectionViewCell()
             }
-            
-            
             
             let isToday = Calendar.current.isDateInToday(item.date)
             let isFuture = item.date > today
@@ -142,12 +138,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 isFuture: item.date > today
             )
             
-            
-            // Grey out future dates
-            //                cell.isUserInteractionEnabled = !isFuture
-            //                cell.alpha = isFuture ? 0.4 : 1.0
-            //
-            // Selected highlight (today selected by default)
             if indexPath == selectedIndexPath {
                 cell.contentView.backgroundColor = .white
                 cell.contentView.layer.cornerRadius = 10
@@ -204,17 +194,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        searchbar.isHidden = true
-        searchbar.delegate = self
-        searchbar.searchTextField.addDoneButton()
-        topView.layer.cornerRadius = 30
-        topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        topView.layer.masksToBounds = true
+        UiUpdate()
         
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
@@ -222,8 +202,12 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }
         
         calendarItems = getAllPastDatesIncludingTodayForLastMonth()
-        cv.register(UINib(nibName: "CalanderCvCell", bundle: nil), forCellWithReuseIdentifier: "CalanderCvCell")
-        bottomCV.register(UINib(nibName: "HomeWorkCvCell", bundle: nil), forCellWithReuseIdentifier: "HomeWorkCvCell")
+        cv
+            .register(
+                UINib(nibName: CellConfingName.CalanderCvCell, bundle: nil),
+                forCellWithReuseIdentifier: CellConfingName.CalanderCvCell
+            )
+        bottomCV.register(UINib(nibName: CellConfingName.HomeWorkCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomeWorkCvCell)
         cv.delegate = self
         cv.dataSource = self
         
@@ -238,6 +222,21 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         
     }
     
+    func UiUpdate(){
+        
+        // Do any additional setup after loading the view.
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        searchbar.isHidden = true
+        searchbar.delegate = self
+        searchbar.searchTextField.addDoneButton()
+        topView.layer.cornerRadius = 30
+        topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        topView.layer.masksToBounds = true
+        
+    }
     
     @IBAction func searchBtn(_ sender: UIButton) {
         toggle.toggle()
@@ -358,7 +357,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func getCurrentDateString() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.dateFormat = DateInputs.dd_MM_yyyy
         return formatter.string(from: Date())
     }
     
@@ -369,20 +368,10 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         return []
     }
     
-    
-    
-    
-    
-    
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
     }
-    
-    
-    
-    
-    
 }
 
 extension homeWorkVc: UISearchBarDelegate{
@@ -420,10 +409,7 @@ extension homeWorkVc: UISearchBarDelegate{
         self.homeWorkDefaultLbl.isHidden = self.FilterHomeWorkList.isEmpty
         self.bottomCV.reloadData()
     }
-    
-    
-    
-    
+
 }
 
 
