@@ -10,12 +10,16 @@ import Foundation
 class CellConfingName {
     
     static let HomePageBottomCell = "BottomCVCell"
+    static let ContentCell = "ContentCell"
+    static let HomeWorkCvCell = "HomeWorkCvCell"
+    static let CalanderCvCell = "CalanderCvCell"
     static let HomePageTopCell = "TopCVCell"
     static let ContactUsTVCell = "ContactUsTVCell"
     static let SettingsTableViewCell = "SettingsTableViewCell"
     static let SettingHeaderView = "SettingHeaderView"
     static let NotificationTableViewCell = "NotificationTableViewCell"
     static let ImageCvCell = "ImageCvCell"
+    static let AttachTvHeader = "AttachTvHeader"
     static let FAQTableViewCell = "FAQTableViewCell"
     static let LangTvCellTableViewCell = "LangTvCellTableViewCell"
     static let HistoryTC = "HistoryTC"

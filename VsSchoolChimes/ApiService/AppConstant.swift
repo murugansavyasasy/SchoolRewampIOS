@@ -208,6 +208,17 @@ struct recipeint_tabBarName{
     static let Entier_School = "Entire School"
 }
 
+struct Filecount{
+    static let SelectImageAndDocumetCount = 10
+    static let SelectVideoCount = 2
+
+}
+
+struct DateInputs{
+    
+    static let dd_MM_yyyy =  "dd-MM-yyyy"
+}
+
 struct user_inputs {
     static var voice_link = ""
     static var duration: Int = 0

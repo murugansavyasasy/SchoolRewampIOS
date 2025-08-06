@@ -184,7 +184,7 @@ class LoginVc: UIViewController {
                                 .saveUserDetails(
                                     data: (data))
                             
-                           
+                            
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
@@ -227,7 +227,7 @@ class LoginVc: UIViewController {
                                                     nibName: nil,
                                                     bundle: nil
                                                 )
-                                               
+                                                
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)
                                             }
@@ -272,7 +272,7 @@ class LoginVc: UIViewController {
                                         }
                                         
                                     }
-                                   
+                                    
                                     
                                 }
                                 

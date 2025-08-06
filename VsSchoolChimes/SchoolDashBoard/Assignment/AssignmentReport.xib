@@ -11,14 +11,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssignmentReport" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="acodemicView" destination="TzU-y7-8Ud" id="Fq5-qB-Cra"/>
-                <outlet property="acodemicdropView" destination="oEt-Sq-NA6" id="2tI-aE-LYg"/>
-                <outlet property="acodomicYearLbl" destination="0QT-lu-F1w" id="fvH-of-qLR"/>
+                <outlet property="academicDropView" destination="oEt-Sq-NA6" id="cgL-As-p5u"/>
+                <outlet property="academicView" destination="TzU-y7-8Ud" id="dii-co-CO5"/>
+                <outlet property="academicYearLabel" destination="0QT-lu-F1w" id="1gA-Vo-I14"/>
+                <outlet property="noDataLabel" destination="sr6-DJ-h4t" id="MX0-0B-NEH"/>
                 <outlet property="noDataStack" destination="96r-yu-K0I" id="r3m-Kw-AwW"/>
-                <outlet property="noRecordImg" destination="WLG-oh-3qg" id="BOv-7m-Cze"/>
-                <outlet property="nodataLbl" destination="sr6-DJ-h4t" id="fGQ-Q4-JxE"/>
+                <outlet property="noRecordImage" destination="WLG-oh-3qg" id="w4f-jN-rkW"/>
                 <outlet property="reportTable" destination="PBw-1A-YXp" id="dY7-Dg-CPi"/>
-                <outlet property="searchview" destination="1sY-wH-WZ2" id="IlE-sW-qZb"/>
+                <outlet property="searchBar" destination="1sY-wH-WZ2" id="TZe-8J-Sla"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,16 +31,16 @@
                     <rect key="frame" x="0.0" y="59" width="430" height="873"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="96r-yu-K0I">
-                            <rect key="frame" x="10" y="129.99999999999997" width="410" height="320.33333333333326"/>
+                            <rect key="frame" x="10" y="130" width="410" height="0.0"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="WLG-oh-3qg">
-                                    <rect key="frame" x="0.0" y="0.0" width="410" height="300"/>
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="WLG-oh-3qg">
+                                    <rect key="frame" x="0.0" y="0.0" width="650" height="300"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="300" id="S9m-PB-QEf"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sr6-DJ-h4t">
-                                    <rect key="frame" x="0.0" y="300" width="410" height="20.333333333333314"/>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sr6-DJ-h4t">
+                                    <rect key="frame" x="0.0" y="0.0" width="650" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -116,11 +116,8 @@
                                 <constraint firstAttribute="height" constant="60" id="SkG-re-SfP"/>
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="Llo-Pz-UTW"/>
-                            </connections>
                         </searchBar>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PBw-1A-YXp">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PBw-1A-YXp">
                             <rect key="frame" x="0.0" y="130" width="430" height="743"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>

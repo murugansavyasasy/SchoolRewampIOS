@@ -30,14 +30,10 @@ class AttachmentsVc: UIViewController {
         searchBar.delegate = self
         searchBar.layer.cornerRadius = 5
         tv.register(
-                UINib(nibName: "AttachTvHeader", bundle: nil),
-                forHeaderFooterViewReuseIdentifier: "AttachTvHeader"
+            UINib(nibName: CellConfingName.AttachTvHeader, bundle: nil),
+                forHeaderFooterViewReuseIdentifier: CellConfingName.AttachTvHeader
             )
-        tv.register(UINib(nibName: "ContentCell", bundle: nil), forCellReuseIdentifier: "ContentCell")
-        
-//        tableView.register(UINib(nibName: "CustomFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomFooterView")
-//        
-        
+        tv.register(UINib(nibName: CellConfingName.ContentCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ContentCell)
         fetchAttachments()
     }
 
@@ -48,10 +44,8 @@ class AttachmentsVc: UIViewController {
     }
    
     @IBAction func searchBtnCilck(_ sender: Any) {
-        
         search.toggle()
         searchBar.isHidden = search
-        
     }
     
     private func fetchAttachments() {
@@ -154,7 +148,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
     
      func tableView(_ tableView: UITableView,
                     viewForHeaderInSection section: Int) -> UIView? {
-         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttachTvHeader") as? AttachTvHeader else { return nil }
+         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
          header.configure(with: attachmentHeaders[section])
          
          header.discretpionLbl
@@ -186,49 +180,44 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
          return header
      }
 
-      func tableView(_ tableView: UITableView,
-                                heightForHeaderInSection section: Int) -> CGFloat {
-              return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView,
+                   heightForHeaderInSection section: Int) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContentCell, for: indexPath) as? ContentCell else {
+            return UITableViewCell()
         }
-    
-   
-    
-
-         func tableView(_ tableView: UITableView,
-                                cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath) as? ContentCell else {
-                return UITableViewCell()
-            }
-             
-             cell
-                 .configure(
-                    with: attachmentFiles?[indexPath.section],
-                    sendBy: ("Posted By : ") + (
-                        attachmentHeaders[indexPath.section].sender_info ?? ""
-                    )
-                 )
-             cell.layoutIfNeeded()
-            return cell
-        }
-
-      func tableView(_ tableView: UITableView,
-                                heightForRowAt indexPath: IndexPath) -> CGFloat {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell") as? ContentCell else {
-                return 100
-            }
-          cell
-              .configure(
+        cell
+            .configure(
                 with: attachmentFiles?[indexPath.section],
                 sendBy: ("Posted By : ") + (
                     attachmentHeaders[indexPath.section].sender_info ?? ""
                 )
-              )
-          return cell.collectionContentHeight() + 60
+            )
+        cell.layoutIfNeeded()
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContentCell) as? ContentCell else {
+            return 100
         }
+        cell
+            .configure(
+                with: attachmentFiles?[indexPath.section],
+                sendBy: ("Posted By : ") + (
+                    attachmentHeaders[indexPath.section].sender_info ?? ""
+                )
+            )
+        return cell.collectionContentHeight() + 60
+    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            filterAttachments(with: searchText)
-        }
+        filterAttachments(with: searchText)
+    }
     
     private func filterAttachments(with searchText: String) {
         if searchText.isEmpty {
@@ -261,15 +250,12 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 self.attachmentFiles?.append(item.file_path ?? [])
             }
         }
-
-
+    
         self.tv.reloadData()
         
-    
         if self.filteredAttachments?.isEmpty ?? true {
             self.noDataLabel.isHidden = false
             self.noDataLabel.text = "No Attachment Found"
-            
             self.tv.isHidden = true
         } else {
             self.noDataLabel.isHidden = true
