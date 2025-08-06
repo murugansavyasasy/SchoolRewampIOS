@@ -212,6 +212,11 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     }
 
     @IBAction func SubmitAct(_ sender: Any) {
+        
+        if errorLbl.isHidden == false {
+            alert.showAlert(title: "In correct", message: errorLbl.text ?? "", on: self)
+            return
+        }
        
         guard let fromDate = NewFromDateLbl.title(for: .normal), !fromDate.isEmpty, fromDate != "Select From Date",
               let toDate = NewToDateLbl.title(for: .normal), !toDate.isEmpty, toDate != "Select To Date" else {
@@ -223,7 +228,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             alert.showAlert(title: "Missing Information", message: "Please select Leave Type.", on: self)
             return
         }
-
+        
         if !CauseTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             if let leave = editLeaveData {
                 updateLeave()
@@ -408,9 +413,18 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         placeholderLabel.text = CommonStringFile.EnterReason.translated()
         placeholderLabel.font = CauseTextView.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         CauseTextView.addSubview(placeholderLabel)
+
+        // Use constraints to align the placeholder with the text view's text
+        NSLayoutConstraint.activate([
+            placeholderLabel.topAnchor.constraint(equalTo: CauseTextView.topAnchor, constant: CauseTextView.textContainerInset.top),
+            placeholderLabel.leadingAnchor.constraint(equalTo: CauseTextView.leadingAnchor, constant: CauseTextView.textContainer.lineFragmentPadding),
+            placeholderLabel.trailingAnchor.constraint(equalTo: CauseTextView.trailingAnchor, constant: -CauseTextView.textContainer.lineFragmentPadding)
+        ])
     }
+
     
     func textViewDidChange(_ textView: UITextView) {
         let size = CGSize(width: textView.frame.width, height: .infinity)

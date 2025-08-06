@@ -9,10 +9,13 @@ import UIKit
 import DropDown
 import Kingfisher
 
-class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITableViewDelegate,UITableViewDataSource {
 
     
-
+    @IBOutlet weak var newBottomview: UIView!
+    @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var newNextBtn: UIButton!
+    
     @IBOutlet weak var viewTermsAndCondition: UILabel!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var dropDownBtn: UIButton!
@@ -33,6 +36,7 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         get_CountryListApi()
+        confingNew()
         BottomView.layer.cornerRadius = 30
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
@@ -62,6 +66,19 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         let attributedString = NSAttributedString(string: "View Terms and Conditions", attributes: attributes)
         viewTermsAndCondition.attributedText = attributedString
     }
+    
+    func confingNew(){
+        newBottomview.layer.cornerRadius = 40
+        newBottomview.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        
+        newNextBtn.layer.cornerRadius = 10
+        newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        
+        tv.register(UINib(nibName: "CountryTvcell", bundle: nil), forCellReuseIdentifier: "CountryTvcell")
+        tv.delegate = self
+        tv.dataSource = self
+    }
+    
     func startAutoScroll() {
             timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
         }
@@ -197,6 +214,7 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
                             }
                         CountryList.isUserInteractionEnabled = true
                         countryCV.reloadData()
+                        tv.reloadData()
                     }
                 }
             case .failure(let error):
@@ -208,4 +226,30 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return CountryListRespons?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tv.dequeueReusableCell(withIdentifier: "CountryTvcell", for: indexPath) as! CountryTvcell
+        let country = CountryListRespons?[indexPath.row]
+        cell.nameLbl.text = country?.name
+        if let urlstr = country?.flag_url, let url = URL(string: urlstr) {
+            cell.FlagImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
 }
+
+//@available(iOS 14.0, *)
+//extension CountryVc: UITableViewDelegate, UITableViewDataSource {
+//
+//    
+//    
+//}

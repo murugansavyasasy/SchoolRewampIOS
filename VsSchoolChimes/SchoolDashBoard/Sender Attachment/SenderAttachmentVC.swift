@@ -525,44 +525,49 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            
-            let remaining = 10 - attachments.count
+            let remaining = Filecount.SelectImageAndDocumetCount - attachments.count
             
             if remaining > 0 {
                 
                 let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
                 
                 // Camera option
-                let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
                     //
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
                 
                 // Gallery option
-                let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
                     selectImages()
                     //
                 }
                 alertController.addAction(galleryAction)
                 
                 //             PDF option
-                let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
                 
                 //   VIDEO option
-                let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                let VideoAction = UIAlertAction(title:
+                                                CommonStringFile.Video, style: .default) { [self] _ in
                     
-                    let totalRemaining = 10 - attachments.count
+                    let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
-                    let videoRemaining = 2 - videoCount
+                    let videoRemaining = Filecount.SelectVideoCount - videoCount
                     
                     if totalRemaining <= 0 {
                         CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
                     } else if videoRemaining <= 0 {
-                        CustomAlert().showAlert(title: "", message: "You can only select up to 2 video files.", on: self)
+                        CustomAlert()
+                            .showAlert(
+                                title: "",
+                                message: CommonStringFile.You_can_only_select_up_to2_video_files,
+                                on: self
+                            )
                     }else{
                         
                         VideoPick()
@@ -571,7 +576,11 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                 }
                 alertController.addAction(VideoAction)
                 // Cancel action
-                let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+                let cancelAction = UIAlertAction(
+                    title: CommonStringFile.Cancel,
+                    style: .cancel,
+                    handler: nil
+                )
                 alertController.addAction(cancelAction)
                 
                 self.present(alertController, animated: true, completion: nil)
@@ -579,7 +588,6 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                 
                 CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             }
-            
             
         }else{
             
