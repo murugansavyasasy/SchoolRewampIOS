@@ -14,15 +14,17 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     @IBOutlet weak var calanderCollectionView: UICollectionView!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordImg: UIImageView!
+    @IBOutlet weak var monthBtn: UIButton!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     
     var didSelectDelegate : DidSelectDelegate?
-    var data : [Assignment]?
-    var filteredData :[Assignment]?
+    var data : [Report]?
+    var filteredData :[Report]?
     var calendarItems: [AssignmentCalendar] = []
     var shouldShowFooter = true
     var tapGesture: UITapGestureRecognizer?
@@ -34,8 +36,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        monthBtn.setShadow()
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         nodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
@@ -44,7 +45,14 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         calendarItems = getAllPastDatesIncludingTodayForLastMonth()
         if let todayIndex = calendarItems.firstIndex(where: { Calendar.current.isDateInToday($0.date) }) {
             selectedIndexPath = IndexPath(item: todayIndex, section: 0)
+            let selectedDate = calendarItems[todayIndex].date
+            monthBtn.setTitle(selectedDate.getMonthName(), for: .normal)
+            // Scroll to today's date
+            DispatchQueue.main.async { [weak self] in
+                self?.calanderCollectionView.scrollToItem(at: IndexPath(item: todayIndex, section: 0), at: .centeredHorizontally, animated: true)
+            }
         }
+    
         calanderCollectionView.delegate = self
         calanderCollectionView.dataSource = self
         calanderCollectionView.register(UINib(nibName: "AssignmentDateCVC", bundle: nil), forCellWithReuseIdentifier: "AssignmentDateCVC")
@@ -52,7 +60,6 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         nodataLbl.isHidden = true
         noRecordImg.isHidden = true
         searchview.isHidden = true
-        setupTableFooter()
         register()
         getAssigment()
     }
@@ -68,7 +75,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<AssignmentResponse, Error>) in
+        ) { [weak self] (result: Result<AssignmentReportResponse, Error>) in
             
             DispatchQueue.main.async {
                 
@@ -85,7 +92,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                             self?.nodataLbl.isHidden = !isEmpty
                             self?.nodataLbl.text = isEmpty ? response.message : CommonStringFile.No_data_found
                             self?.noRecordImg.isHidden = !isEmpty
-                    self?.searchview.isHidden = self?.data?.count ?? 0 <= 2
+                    self?.searchview.isHidden = self?.data?.count ?? 0 <= 2 && !((self?.searchBtn.isSelected) == nil)
                             
                             self?.listTable.reloadData()
                         
@@ -98,53 +105,20 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
             }
         }
     }
-    func getArchiveAssigment() {
-        
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
-        
-        APIService.shared.makeApi(
-            url: ServiceUrl.comm_api_assignment_list_archive,
-            parameters: [:],
-            type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<AssignmentResponse, Error>) in
-            
-            DispatchQueue.main.async {
-                
-                if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
-                }
-                
-                switch result {
-                    
-                case .success(let response):
-                    
-                    self?.data?.append(contentsOf: response.data ?? [])
-                    self?.filteredData = self?.data
-                    let isEmpty = self?.data?.isEmpty ?? true
-                    self?.nodataLbl.isHidden = !isEmpty
-                    self?.nodataLbl.text = isEmpty ? response.message : CommonStringFile.No_data_found
-                    self?.noRecordImg.isHidden = !isEmpty
-                    self?.searchview.isHidden = self?.data?.count ?? 0 <= 2
-                    self?.listTable.reloadData()
-                    
-                case .failure(let error):
-                    
-                    print("API Error: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    override func viewDidLayoutSubviews() {
-//        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
+
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
+    @IBAction func search(_ sender: UIButton) {
+        searchview.becomeFirstResponder()
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        searchview.isHidden = !sender.isSelected
+    }
     func register(){
         listTable.register(UINib(nibName: CellConfingName.AssignmentListCTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AssignmentListCTVC)
+        listTable.register(UINib(nibName: "AssignmentTVC", bundle: nil), forCellReuseIdentifier: "AssignmentTVC")
     }
     
 }
@@ -157,29 +131,13 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.AssignmentListCTVC, for: indexPath) as! AssignmentListCTVC
-        cell.tittleLbl.text = filteredData?[indexPath.row].title
-        cell.DescriptionLbl.setupExpandable(text: filteredData?[indexPath.row].description ?? "")
-        cell.DescriptionLbl.onExpandableTap = {
-            
-            cell.DescriptionLbl.isExpanded.toggle()
-            tableView.beginUpdates()
-            tableView.endUpdates()
+        let cell = listTable.dequeueReusableCell(withIdentifier: "AssignmentTVC", for: indexPath) as! AssignmentTVC
+        if let report = filteredData?[indexPath.row]{
+            cell.configure(with: report)
+            cell.loadFiles(into: cell, files: report.file_path ?? [])
         }
-        cell.categoryLbl.text = filteredData?[indexPath.row].category
-        if !isDueDatePassed(dueDate: filteredData?[indexPath.row].end_date ?? "") {
-            cell.dueDateLbl.textColor = .black
-        } else {
-            cell.dueDateLbl.textColor = .red
-        }
-        cell.id = filteredData?[indexPath.row].header_id
-        cell.assignmentId = filteredData?[indexPath.row].id
-        cell.FilesUrl = filteredData?[indexPath.row].file_path
-        cell.iframe = filteredData?[indexPath.row].iframe
-        cell.dueDateLbl.text = filteredData?[indexPath.row].end_date?.convertToTargetDateFormat()
-        cell.CreaterdDate.text = filteredData?[indexPath.row].date
-        cell.sendByLbl.text = filteredData?[indexPath.row].sent_by
-        cell.Delegate = self
+       
+        cell.layoutIfNeeded()
         return cell
     }
     
@@ -199,65 +157,13 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         didSelectDelegate?.select(index: index, value: value,Img:Img,Pdf:Pdf,text:text,type:type)
     }
     
-    // Method to load the footer from nib and set it as tableFooterView
-    func setupTableFooter() {
-        if shouldShowFooter {
-            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                // Adjust the frame based on your needs.
-                footer.frame = CGRect(x: 0, y: 0, width: listTable.frame.width, height: 200)
-               
-                let buttonTitle = "See More"
-                let attributedString = NSMutableAttributedString(string: buttonTitle)
-
-                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
-                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
-                
-                // Apply underline style
-                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
-
-                // Set attributed title to UIButton
-                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
-
-                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-                footer.SeeMoreBtn.isUserInteractionEnabled = true
-                
-                // Set the footer view.
-                listTable.tableFooterView = footer
-            }
-        } else {
-            listTable.tableFooterView = nil
-        }
-    }
-    
-    @objc func seeMoreAction() {
-        print("Footer button tapped. Hiding the footer.")
-        
-        if let footer = listTable.tableFooterView {
-            UIView.animate(withDuration: 0.3, animations: {
-                footer.alpha = 0
-            }, completion: {[self] _ in
-                
-                getArchiveAssigment()
-                
-                listTable.tableFooterView = nil
-                shouldShowFooter = false
-            })
-        } else {
-            
-            shouldShowFooter = false
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 60
-    }
+  
     func getAllPastDatesIncludingTodayForLastMonth() -> [AssignmentCalendar] {
           var items: [AssignmentCalendar] = []
           let calendar = Calendar.current
           let today = Date()
           
-          guard let pastStartDate = calendar.date(byAdding: .month, value: -1, to: today) else {
+          guard let pastStartDate = calendar.date(byAdding: .month, value: -6, to: today) else {
               return items
           }
 
@@ -343,11 +249,41 @@ extension AssignmentListVC: UICollectionViewDelegate, UICollectionViewDataSource
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
+        let selectedDate = calendarItems[indexPath.item].date
+        monthBtn.setTitle(selectedDate.getMonthName(), for: .normal)
+
         collectionView.reloadData()
+           DispatchQueue.main.async {
+               self.scrollToCenter(of: indexPath, in: collectionView)
+           }
+    }
+    func scrollToCenter(of indexPath: IndexPath, in collectionView: UICollectionView) {
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+        guard let attributes = layout.layoutAttributesForItem(at: indexPath) else {
+            collectionView.layoutIfNeeded()
+            if let newAttributes = layout.layoutAttributesForItem(at: indexPath) {
+                centerScrollLogic(attributes: newAttributes, collectionView: collectionView)
+            }
+            return
+        }
+
+        centerScrollLogic(attributes: attributes, collectionView: collectionView)
+    }
+
+    private func centerScrollLogic(attributes: UICollectionViewLayoutAttributes, collectionView: UICollectionView) {
+        let cellFrame = attributes.frame
+        let collectionViewWidth = collectionView.bounds.size.width
+        let targetX = cellFrame.midX - collectionViewWidth / 2
+        let maxOffsetX = collectionView.contentSize.width - collectionViewWidth
+        let finalOffsetX = max(0, min(targetX, maxOffsetX))
+
+        let targetOffset = CGPoint(x: finalOffsetX, y: 0)
+        collectionView.setContentOffset(targetOffset, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 90)
+        return CGSize(width: 50, height: 110)
     }
 }
 struct AssignmentCalendar {
@@ -358,4 +294,11 @@ struct AssignmentCalendar {
 enum DotStatus {
     case red
     case green
+}
+extension Date {
+    func getMonthName() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM yyyy"
+        return formatter.string(from: self)
+    }
 }

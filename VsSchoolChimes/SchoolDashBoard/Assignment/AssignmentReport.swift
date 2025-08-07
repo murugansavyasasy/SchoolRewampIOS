@@ -30,7 +30,7 @@ class AssignmentReport: UIViewController {
     var academicYearDataList: [AcadimicYearData] = []
     var academicYears: [String] = []
     var shouldShowFooter = true
-
+    let transitionDelegate = TransitioningDelegate()
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,32 +126,7 @@ class AssignmentReport: UIViewController {
         )
     }
     // MARK: - File Handling
-    func loadFiles(into cell: AssignmentTVC, files: [FilePath]) {
-        [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
-        cell.imgCount.isHidden = true
-
-        for (index, file) in files.enumerated() where index < 3 {
-            guard let urlString = file.url, let url = URL(string: urlString) else { continue }
-
-            let imageViews = [cell.img1, cell.img2, cell.img3]
-            guard index < imageViews.count, let imageView = imageViews[index] else { continue }
-
-            imageView.isHidden = false
-
-            if file.type?.lowercased() != "image" {
-                let iconName = getFileIconName(for: url) // Ensure this function exists
-                imageView.image = UIImage(named: iconName) ?? UIImage(systemName: "doc.fill")
-            } else {
-                imageView.kf.setImage(with: url)
-            }
-        }
-
-        if files.count > 3 {
-            let extraCount = files.count - 3
-            cell.imgCount.setTitle("+\(extraCount)", for: .normal)
-            cell.imgCount.isHidden = false
-        }
-    }
+    
 
     // MARK: - Actions
     @IBAction func selectAcademicYear(_ sender: UIButton) {
@@ -185,9 +160,33 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
 
         let report = filteredData[indexPath.row]
         cell.configure(with: report)
-        loadFiles(into: cell, files: report.file_path ?? [])
+        cell.loadFiles(into: cell, files: report.file_path ?? [])
         cell.layoutIfNeeded()
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath),
+              indexPath.row < filteredData.count else { return }
+        
+        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
+        
+        let detailVC = PrivewVc()
+        let selectedItem = filteredData[indexPath.row]
+        
+        detailVC.attachmetList = selectedItem.file_path
+        detailVC.selectedDate = selectedItem.created_date
+        detailVC.is_unreadStatus = selectedItem.is_unread
+        detailVC.titleString = selectedItem.title
+        detailVC.descriptionString = selectedItem.description
+        detailVC.homeWorkid = selectedItem.id
+        detailVC.postedBy = selectedItem.sent_by
+        detailVC.subject_name = selectedItem.subject
+        detailVC.buttonTitle = "View Submissions"
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

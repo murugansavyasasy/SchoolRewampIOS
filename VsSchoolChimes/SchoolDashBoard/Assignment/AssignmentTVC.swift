@@ -94,8 +94,6 @@ class AssignmentTVC: UITableViewCell {
         
         titleLbl.text = assignment.title
         descriptionLbl.text = assignment.description
-//        createdDateLbl.text = "Assigned : \(formatDate(assignment.created_date ?? ""))"
-        
         // Clear old stack items
         subCatogoriesStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
@@ -109,7 +107,32 @@ class AssignmentTVC: UITableViewCell {
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)
     }
-    
+    func loadFiles(into cell: AssignmentTVC, files: [FilePath]) {
+        [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
+        cell.imgCount.isHidden = true
+
+        for (index, file) in files.enumerated() where index < 3 {
+            guard let urlString = file.url, let url = URL(string: urlString) else { continue }
+
+            let imageViews = [cell.img1, cell.img2, cell.img3]
+            guard index < imageViews.count, let imageView = imageViews[index] else { continue }
+
+            imageView.isHidden = false
+
+            if file.type?.lowercased() != "image" {
+                let iconName = getFileIconName(for: url) // Ensure this function exists
+                imageView.image = UIImage(named: iconName) ?? UIImage(systemName: "doc.fill")
+            } else {
+                imageView.kf.setImage(with: url)
+            }
+        }
+
+        if files.count > 3 {
+            let extraCount = files.count - 3
+            cell.imgCount.setTitle("+\(extraCount)", for: .normal)
+            cell.imgCount.isHidden = false
+        }
+    }
     // MARK: - Create Categories Array
     func createCategoriesArray(from assignment: Report) -> [SubCategories] {
         var cats: [SubCategories] = []
