@@ -468,7 +468,7 @@ class MenuRedirectHandler {
     }
     func receiverCertificateRequest(from viewController: UIViewController){
         //let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
-        let vc = CertificateRequestVC(nibName: nil, bundle: nil)
+        let vc = certificateReqVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

@@ -169,13 +169,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         //selectImgPdfview.isHidden = true
 
         VideoView.layer.cornerRadius = 10
-        AssignmentTypeview.layer.cornerRadius = 10
+        
         selectImgPdfview.layer.cornerRadius = 10
         contentTextView.layer.cornerRadius = 10
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.gray.cgColor
         chooseRecipientsBtn.backgroundColor = .button
         chooseRecipientsBtn.layer.cornerRadius = 10
+        AssignmentTypeview.layer.cornerRadius = 10
         AssignmentTypeview.layer.borderWidth = 1
         AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
         AssignmentTypeview.backgroundColor = .white
