@@ -94,22 +94,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         TitleTxtfield.text = title
         self.editId = editId
         RecipientBtn.setTitle("UPDATE", for: .normal)
-//        let imageItems = imageUrls.map {
-//            
-//            if $0.type == "VIDEO"{
-//                AttachmentItem(
-//                    image: nil,
-//                    imageURL: nil,
-//                    fileType:$0.type ?? "",
-//                    VimeoVideoURL: $0.url
-//                )
-//            }else{
-//                AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
-//            }
-//            
-//        }
-        
-        
             let imageItems: [AttachmentItem] = imageUrls.map { file in
                 let type = file.type?.lowercased() ?? ""
                 return AttachmentItem(
@@ -407,10 +391,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             else{
                 cell.imageViews.image = nil
             }
-            
-            // Assuming you have an array of UIImage from selected files
-            
-            
+    
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeight.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
@@ -455,7 +436,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video, style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count

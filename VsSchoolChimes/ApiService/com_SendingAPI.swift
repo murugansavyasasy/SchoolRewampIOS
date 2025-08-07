@@ -157,27 +157,48 @@ class  commonApi_forSending {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
             message: message,
-            actionLbl1: edit ? AlertstringFile.Yes_Update :AlertstringFile.Yes_Send,
+            actionLbl1: edit ? AlertstringFile.Yes_Update : AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in
+                let totalUploads = user_inputs.SelectedUrls.count + 1 // 1 for AWS/media upload
+                
+                var completedUploads = 0
+
+                            func updateProgress() {
+                                let progress = Double(completedUploads) / Double(totalUploads)
+                                CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                            }
+
+                            CircularProgressLoader.shared.show(style: .circle)
                 var uploadedFiles: [[String: String]] = []
                 var iframeValue = ""
                 var fileSizeValue = ""
                 
                 let dispatchGroup = DispatchGroup()
-                
-                // 🎥 Upload videos to Vimeo
                 let videoFiles = user_inputs.SelectedUrls.filter {
                     $0.fileType.uppercased() == AttachmentTypeString.VIDEO
                 }
                 
-                for item in videoFiles {
-                    dispatchGroup.enter()
+                print("VIDEO COUNT : ", videoFiles.count)
+                dispatchGroup.enter()
+                
+                // 🚀 Serial video upload using inline recursive loop
+                var currentVideoIndex = 0
+            
+                func uploadNextVideo() {
+                    guard currentVideoIndex < videoFiles.count else {
+                        dispatchGroup.leave()
+                        return
+                    }
+                    
+                    let item = videoFiles[currentVideoIndex]
                     let videoTitle = Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
                     let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
+                    
                     if let videoURL = item.VideoURl,
-                       !(videoURL.absoluteString.contains("vimeo.com")){
+                       !(videoURL.absoluteString.contains("vimeo.com")) {
+                        
                         startUpload(
                             from: viewController,
                             videoURL: videoURL,
@@ -187,31 +208,33 @@ class  commonApi_forSending {
                             if let finalEmbedUrl = finalEmbedUrl {
                                 uploadedFiles.append([
                                     "url": finalEmbedUrl,
-                                    "type": AttachmentTypeString.VIDEO])
+                                    "type": AttachmentTypeString.VIDEO
+                                ])
                                 iframeValue = iframeHTML ?? ""
                                 fileSizeValue = convertSize(fileSize ?? 0)
-                                
                             } else {
-                                print("❌ Failed to upload video.")
+                                print("❌ Failed to upload video at index \(currentVideoIndex)")
                             }
-                            dispatchGroup.leave()
+                            currentVideoIndex += 1
+                            updateProgress()
+                            uploadNextVideo()
                         }
-                    }else{
+                    } else {
                         uploadedFiles.append([
                             "url": item.VideoURl?.absoluteString ?? "",
-                            "type": "VIDEO"])
-                        dispatchGroup.leave()
+                            "type": AttachmentTypeString.VIDEO
+                        ])
+                        currentVideoIndex += 1
+                        updateProgress()
+                        uploadNextVideo()
                     }
-                    
                 }
+                
+                uploadNextVideo()
                 
                 // 📷 Upload other files (images, PDFs, etc.)
                 dispatchGroup.enter()
-                
-                
-                
                 uploadAWSMedia(file: user_inputs.SelectedUrls) {
-                    
                     let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
                         guard let url = URL(string: urlString) else { return nil }
                         let ext = url.pathExtension.lowercased()
@@ -221,8 +244,9 @@ class  commonApi_forSending {
                             CommonStringFile.type: resolvedType
                         ]
                     }
-                    
                     uploadedFiles.append(contentsOf: fileEntries)
+                    completedUploads += 1
+                    updateProgress()
                     dispatchGroup.leave()
                 }
                 
@@ -234,13 +258,11 @@ class  commonApi_forSending {
                     }
                     
                     if edit == true {
-                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) {response in
+                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) { response in
                             print("✅ All uploads complete.")
-                            CircularProgressLoader.shared.hide()
                             onComplete(response)
                         }
-                    }else{
-                        
+                    } else {
                         self.sendAttachment(
                             from: viewController,
                             with: uploadedFiles,
@@ -254,10 +276,10 @@ class  commonApi_forSending {
                             subjectId: subjectId
                         ) { response in
                             print("✅ All uploads complete.")
+                            CircularProgressLoader.shared.hide()
                             onComplete(response)
                         }
                     }
-                    
                 }
             },
             onNo: {
@@ -265,6 +287,8 @@ class  commonApi_forSending {
             }
         )
     }
+
+
 
 
     
@@ -311,11 +335,13 @@ class  commonApi_forSending {
                 switch result {
                 case .success(let successMessage):
                     DispatchQueue.main.async {
+                        CircularProgressLoader.shared.hide()
                         onComplete(successMessage)
                     }
                     
                 case .failure(let error):
                     DispatchQueue.main.async {
+                        CircularProgressLoader.shared.hide()
                         print("❌ API error: \(error.localizedDescription)")
                         // Optional: Add alert for failure
                         let alert = UIAlertController(
@@ -370,13 +396,14 @@ class  commonApi_forSending {
             case .success(let successMessage):
                 DispatchQueue.main.async {
                     localData.editToken = nil
+                    CircularProgressLoader.shared.hide()
                     onComplete(successMessage)
                 }
 
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("❌ API error: \(error.localizedDescription)")
-
+                    CircularProgressLoader.shared.hide()
                     let alert = UIAlertController(
                         title: "Error",
                         message: error.localizedDescription,
@@ -399,20 +426,11 @@ class  commonApi_forSending {
           
         
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
-//        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
-            DispatchQueue.main.async {
-                CircularProgressLoader.shared.show(style: .circle)
-                CircularProgressLoader.shared.updateProgress(to: progress * 100)
-            }
-//            CircularProgressLoader.shared.updateProgress(to: progress)
         }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
             
-            
-//            DispatchQueue.main.async {
-//                    CircularProgressLoader.shared.hide()
-//                }
+
             if let videoURL = videoURL {
                 print("✅ Video uploaded! Watch it at: \(videoURL)")
                 if let iframeHTML = iframeHTML {
@@ -459,9 +477,9 @@ class  commonApi_forSending {
         var completed = 0
         func updateAndCheckCompletion(total: Int) {
             let progress = (Double(completed) / Double(total)) * 100
-            CircularProgressLoader.shared.updateProgress(to: progress)
+//            CircularProgressLoader.shared.updateProgress(to: progress)
             if completed == total {
-                CircularProgressLoader.shared.hide()
+//                CircularProgressLoader.shared.hide()
                 completion()
             }
         }
@@ -483,7 +501,7 @@ class  commonApi_forSending {
                 ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
-                    CircularProgressLoader.shared.updateProgress(to: progress)
+//                    CircularProgressLoader.shared.updateProgress(to: progress)
                 },
                 completion: { url in
                     if let uploadedURL = url {
@@ -495,10 +513,10 @@ class  commonApi_forSending {
                     
                     completed += 1
                     let progress = (Double(completed) / Double(total)) * 100
-                    CircularProgressLoader.shared.updateProgress(to: progress)
+//                    CircularProgressLoader.shared.updateProgress(to: progress)
                     
                     if completed == total {
-                        CircularProgressLoader.shared.hide()
+//                        CircularProgressLoader.shared.hide()
                         completion()
                     }
                 }
@@ -511,9 +529,9 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            
+//            CircularProgressLoader.shared.show(style: .circle)
+//            CircularProgressLoader.shared.updateProgress(to: 0)
+//            
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
@@ -532,9 +550,9 @@ class  commonApi_forSending {
                         
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
-                        CircularProgressLoader.shared.updateProgress(to: progress)
+//                        CircularProgressLoader.shared.updateProgress(to: progress)
                         if completed == total {
-                            CircularProgressLoader.shared.hide()
+//                            CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
                             completion()
                         }
@@ -549,9 +567,9 @@ class  commonApi_forSending {
                 return
             }
             
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            
+//            CircularProgressLoader.shared.show(style: .circle)
+//            CircularProgressLoader.shared.updateProgress(to: 0)
+//            
             for (index, url) in files.enumerated() {
                 guard let PdfURL = URL(string: url) else {
                     print("❌ Invalid audio URL.")
@@ -574,10 +592,10 @@ class  commonApi_forSending {
                         
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
-                        CircularProgressLoader.shared.updateProgress(to: progress)
+//                        CircularProgressLoader.shared.updateProgress(to: progress)
                         
                         if completed == total {
-                            CircularProgressLoader.shared.hide()
+//                            CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
                             completion()
                         }
@@ -591,9 +609,9 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            
+//            CircularProgressLoader.shared.show(style: .circle)
+//            CircularProgressLoader.shared.updateProgress(to: 0)
+//            
             for item in uploadableItems {
                 if let image = item.image {
                     // 🖼️ Upload local image

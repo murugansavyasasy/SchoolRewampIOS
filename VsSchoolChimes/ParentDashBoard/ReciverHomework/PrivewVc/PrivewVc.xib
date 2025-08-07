@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,9 +18,7 @@
                 <outlet property="dateLbl" destination="rqb-ID-Dku" id="7y4-rr-org"/>
                 <outlet property="discreption" destination="CZ4-jC-XWP" id="Spu-12-jGH"/>
                 <outlet property="doneHomeWorkBtnName" destination="kD4-W4-AwV" id="8u8-9H-JrH"/>
-                <outlet property="mySubmission" destination="CKC-P9-ofZ" id="Ne9-xG-AzS"/>
                 <outlet property="postedByLbl" destination="J8y-jM-dKY" id="gFu-rI-b4M"/>
-                <outlet property="submitBtn" destination="8Sd-M8-0yR" id="GFv-Fr-C7c"/>
                 <outlet property="titleLbl" destination="Rar-rg-85k" id="79M-VQ-mAH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -31,10 +29,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kdq-su-jJh">
-                    <rect key="frame" x="0.0" y="117" width="393" height="701"/>
+                    <rect key="frame" x="0.0" y="176" width="393" height="608"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGk-in-s5r">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="952.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="833"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vY5-2a-zDi">
                                     <rect key="frame" x="20" y="10" width="353" height="546"/>
@@ -75,16 +73,16 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="QQk-Mr-lQ2">
-                                    <rect key="frame" x="10" y="571" width="373" height="371.33333333333326"/>
+                                    <rect key="frame" x="10" y="571" width="373" height="252"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attachments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIs-ey-OGP">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="40.666666666666664"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Attachments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIs-ey-OGP">
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="26.333333333333332"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="1lX-Ol-1WE">
-                                            <rect key="frame" x="0.0" y="45.666666666666629" width="373" height="200"/>
+                                            <rect key="frame" x="0.0" y="31.333333333333371" width="373" height="200"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="200" id="D9o-cF-E8K"/>
@@ -97,51 +95,11 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
                                             </collectionViewFlowLayout>
                                         </collectionView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attachments" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8y-jM-dKY">
-                                            <rect key="frame" x="0.0" y="250.6666666666666" width="373" height="15.666666666666657"/>
+                                            <rect key="frame" x="0.0" y="236.33333333333337" width="373" height="15.666666666666657"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" systemColor="systemGray2Color"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mme-fB-sh2">
-                                            <rect key="frame" x="0.0" y="271.33333333333337" width="373" height="100"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wb4-Ef-Xff">
-                                                    <rect key="frame" x="20" y="40" width="333" height="40"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sd-M8-0yR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="161.66666666666666" height="40"/>
-                                                            <color key="backgroundColor" red="0.059000000357627869" green="0.53520187339582648" blue="0.059000000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="Submit"/>
-                                                            <connections>
-                                                                <action selector="submit:" destination="-1" eventType="touchUpInside" id="5gR-Ry-Wa1"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKC-P9-ofZ">
-                                                            <rect key="frame" x="171.66666666666663" y="0.0" width="161.33333333333337" height="40"/>
-                                                            <color key="backgroundColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" title="My Submissions"/>
-                                                            <connections>
-                                                                <action selector="mySubmission:" destination="-1" eventType="touchUpInside" id="fNM-bY-hzs"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="A1P-fg-GTp"/>
-                                                    </constraints>
-                                                </stackView>
-                                            </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Wb4-Ef-Xff" secondAttribute="bottom" constant="20" id="0Np-2D-V4A"/>
-                                                <constraint firstItem="Wb4-Ef-Xff" firstAttribute="top" secondItem="mme-fB-sh2" secondAttribute="top" constant="40" id="ZqU-HE-T2X"/>
-                                                <constraint firstItem="Wb4-Ef-Xff" firstAttribute="leading" secondItem="mme-fB-sh2" secondAttribute="leading" constant="20" id="dgY-lz-UeI"/>
-                                                <constraint firstAttribute="trailing" secondItem="Wb4-Ef-Xff" secondAttribute="trailing" constant="20" id="r7W-tU-L1k"/>
-                                            </constraints>
-                                        </view>
                                     </subviews>
                                 </stackView>
                             </subviews>
@@ -166,7 +124,7 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
                     </constraints>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5a-ry-l4W">
-                    <rect key="frame" x="0.0" y="59" width="393" height="50"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="50"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0Xi-Vx-ZM8">
                             <rect key="frame" x="335" y="0.0" width="53" height="45"/>
@@ -245,14 +203,11 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

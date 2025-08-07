@@ -12,6 +12,7 @@ import Kingfisher
 class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITableViewDelegate,UITableViewDataSource {
 
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var newBottomview: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var newNextBtn: UIButton!
@@ -32,7 +33,9 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
     var CountryListRespons : [CountryData]?
     var country_data : CountryData?
     var timer: Timer?
-        var currentIndex = 0
+    var currentIndex = 0
+    var selectedIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         get_CountryListApi()
@@ -71,6 +74,26 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         newBottomview.layer.cornerRadius = 40
         newBottomview.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         
+        tv.layer.cornerRadius = 40
+        tv.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        
+        searchBar.placeholder = "Find your country"
+        searchBar.searchBarStyle = .minimal
+        searchBar.barTintColor = .white
+        searchBar.backgroundColor = .white
+        searchBar.layer.cornerRadius = 10
+        searchBar.clipsToBounds = true
+
+//        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
+//                textField.backgroundColor = .white
+//                textField.layer.cornerRadius = 10
+//                textField.clipsToBounds = true
+//            }
+//            
+//            // Remove default background
+//            searchBar.backgroundImage = UIImage()
+//            searchBar.barTintColor = .white
+//            searchBar.backgroundColor = .white
         newNextBtn.layer.cornerRadius = 10
         newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
         
@@ -238,7 +261,24 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         if let urlstr = country?.flag_url, let url = URL(string: urlstr) {
             cell.FlagImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
         }
+        
+        if indexPath.row == selectedIndex {
+            cell.checkImage.isHidden = false
+            cell.cellView.backgroundColor = .white
+            cell.cellView.layer.borderColor = UIColor.systemBlue.cgColor
+        }else {
+            cell.checkImage.isHidden = true
+            cell.cellView.backgroundColor = .systemGray5
+            cell.cellView.layer.borderColor = UIColor.clear.cgColor
+        }
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedIndex = indexPath.row
+        tv.reloadData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
