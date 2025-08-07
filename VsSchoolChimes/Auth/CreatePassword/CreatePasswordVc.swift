@@ -14,19 +14,17 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var ConfirmPassEyeImage: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
-   
     @IBOutlet weak var DescriptionLbl: UILabel!
-    @IBOutlet weak var CreatePassTitleLbl: UILabel!
     @IBOutlet weak var BottomView: UIView!
-   
     @IBOutlet weak var createPassDefaultLbl: UILabel!
     @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
     @IBOutlet weak var confirmPassBtnNam: UIButton!
     @IBOutlet weak var createPassTextFLd: UITextField!
+    @IBOutlet weak var createPasswordBaseview: UIView!
+    @IBOutlet weak var confirmPasswordBaseview: UIView!
     
     let alertModal = CustomAlert()
-    
     var createPassText : String?
     var confirmPassText : String?
     var createNewPassword : Bool?
@@ -38,10 +36,16 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
         setUpUI()
         
-        createPassDefaultLbl.text = ChangePasswordStringFile.create_newpassword
-        ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
-        
-        titleLbl.text = ChangePasswordStringFile.create_newpassword
+        if createNewPassword == true{
+            createPassDefaultLbl.text = ChangePasswordStringFile.Enter_the_old_password
+            ConfirmPassLabel.text = ChangePasswordStringFile.Enter_the_new_password
+            titleLbl.text = ChangePasswordStringFile.change_password
+        }else {
+            createPassDefaultLbl.text = ChangePasswordStringFile.Enter_the_new_password
+            ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
+            titleLbl.text = ChangePasswordStringFile.Reset_password
+            confirmPassBtnNam.setTitle(ChangePasswordStringFile.change_password, for: .normal)
+        }
         
         createPassTextFLd.delegate = self
         confirmPassTextFld.delegate = self
@@ -62,40 +66,16 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         let NeweyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         NewPassEyeImage.addGestureRecognizer(NeweyeTap)
         NewPassEyeImage.isUserInteractionEnabled = true
-        
-        if createNewPassword == false{
-            createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
-            ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
-            confirmPassBtnNam
-                .setTitle(ChangePasswordStringFile.change_password, for: .normal)
-            titleLbl.text = ChangePasswordStringFile.Reset_the_new_password
-        }
-        
-        
-        
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        let topBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 5))
-        topBar.backgroundColor = .newClr
-        view.addSubview(topBar)
-    }
-
-    
-   
-    
     
     func setUpUI(){
      
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 //        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-        CreatePassTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        titleLbl.setFont(style: .header, size: FontSize.TitleSize)
         
-        BottomView.layer.cornerRadius = 30
-        BottomView.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        BottomView.layer.cornerRadius = 40
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         confirmPassBtnNam.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
         confirmPassBtnNam.layer.cornerRadius = 15
@@ -103,9 +83,21 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
         // Adding shadow for a popped-up effect
         confirmPassBtnNam.layer.shadowColor = UIColor.black.cgColor
-        confirmPassBtnNam.layer.shadowOffset = CGSize(width: 0, height: 5)
-        confirmPassBtnNam.layer.shadowOpacity = 0.3
-        confirmPassBtnNam.layer.shadowRadius = 6
+        confirmPassBtnNam.layer.shadowOffset = CGSize(width: 0, height: 2)
+        confirmPassBtnNam.layer.shadowOpacity = 0.2
+        confirmPassBtnNam.layer.shadowRadius = 2
+        
+       
+        createPasswordBaseview.layer.cornerRadius = 20
+        confirmPasswordBaseview.layer.cornerRadius = 20
+        createPassTextFLd.layer.cornerRadius = 20
+        confirmPassTextFld.layer.cornerRadius = 20
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        createPassTextFLd.leftView = paddingView
+        createPassTextFLd.leftViewMode = .always
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        confirmPassTextFld.leftView = paddingView2
+        confirmPassTextFld.leftViewMode = .always
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
@@ -114,21 +106,30 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.3) { // Smooth animation
-                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+            // Only move if view is at original position
+            if self.view.frame.origin.y == 0 {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y = -keyboardFrame.height / 2 // Or full height if needed
+                }
             }
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
+        // Reset to original position
+        if self.view.frame.origin.y != 0 {
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = 0
+            }
         }
     }
+
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
@@ -429,4 +430,25 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
+}
+
+
+@available(iOS 14.0, *)
+extension CreatePasswordVc: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Active/focused text field
+        textField.backgroundColor = .white
+        textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 20
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Inactive/unfocused text field
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.borderWidth = 0
+        textField.backgroundColor = .clear
+    }
+
 }

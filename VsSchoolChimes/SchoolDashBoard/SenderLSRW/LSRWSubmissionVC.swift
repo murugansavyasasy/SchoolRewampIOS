@@ -135,14 +135,14 @@ class LSRWSubmissionVC: UIViewController, UITableViewDataSource, UITableViewDele
         let student = filterAssignment[indexPath.row]
         cell.studentNameLbl.text = student.student_name
         cell.standerdScection?.text = "\(student.standard ?? "") - \(student.section ?? "")"
-        cell.subject.text = subject ?? ""
-        cell.titleLbl.text = titleString ?? ""
-        
-        let emoji = (student.submit_status == "NOTSUBMITTED") ? "❌" : "✅"
-        cell.submitedCount.textColor = (student.submit_status == "NOTSUBMITTED") ? UIColor.red : UIColor.aproved
-        cell.indicationBtn.isHidden = (student.submit_status == "NOTSUBMITTED")
-        let count = student.submissions_details?.count ?? 0
-        cell.submitedCount.text = (student.submit_status == "NOTSUBMITTED") ? "\(emoji) \(student.submit_status ?? "")" : "\(emoji) \(student.submit_status ?? ""): \(count)"
+//        cell.subject.text = subject ?? ""
+//        cell.titleLbl.text = titleString ?? ""
+//        
+//        let emoji = (student.submit_status == "NOTSUBMITTED") ? "❌" : "✅"
+//        cell.submitedCount.textColor = (student.submit_status == "NOTSUBMITTED") ? UIColor.red : UIColor.aproved
+//        cell.indicationBtn.isHidden = (student.submit_status == "NOTSUBMITTED")
+//        let count = student.submissions_details?.count ?? 0
+//        cell.submitedCount.text = (student.submit_status == "NOTSUBMITTED") ? "\(emoji) \(student.submit_status ?? "")" : "\(emoji) \(student.submit_status ?? ""): \(count)"
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

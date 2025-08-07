@@ -18,9 +18,8 @@ class CountryTvcell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        cellView.layer.cornerRadius = 20
+        cellView.layer.cornerRadius = 25
         cellView.layer.borderWidth = 1
-        cellView.layer.borderColor = UIColor.clear.cgColor
         
         FlagImage.layer.cornerRadius = FlagImage.frame.width / 2
         

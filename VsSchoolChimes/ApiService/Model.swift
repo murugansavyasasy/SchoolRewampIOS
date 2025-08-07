@@ -591,12 +591,35 @@ struct AttendanceReportResponse: Codable {
 }
 
 struct AttenenceReportData: Codable{
-    
     let student_name: String?
     let admission_no: String?
     let att_status: String?
     let absent_on: String?
 }
+
+struct StudentStatisticsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentStatistics]?
+}
+
+struct StudentStatistics: Codable {
+    let total_working_days: Int?
+    let present_days: Int?
+    let absent_days: Int?
+    let completed_working_days: Int?
+    let upcoming_working_days: Int?
+    let attendance_percentage: String?
+    let weekly_status: WeeklyStatus?
+}
+
+struct WeeklyStatus: Codable {
+    let start : String?
+    let end : String?
+    let student_name : String?
+    let att_list : [String]?
+}
+
 
 struct EventResponse: Codable {
     let status: Bool?
@@ -846,32 +869,32 @@ struct LeaveInfo: Codable {
     var leave_type: String?
 }
 
-//MARK: ASSIGINMENT LIST
-struct AssignmentResponse: Codable {
-    var status: Bool?
-    var message: String?
-    var data: [Assignment]?
-}
+////MARK: ASSIGINMENT LIST
+//struct AssignmentResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: [Assignment]?
+//}
 
-struct Assignment: Codable {
-    var id: String?
-    var header_id: String?
-    var title: String?
-    var description: String?
-    var category: String?
-    var subject: String?
-    var date: String?
-    var time: String?
-    var submitted_count: Int?
-    var end_date: String?
-    var is_unread: Bool?
-    var sent_by: String?
-    var sort_order: String?
-    var is_archive: Bool?
-    var iframe: String?
-    var file_size: String?
-    var file_path: [FilePath]?
-}
+//struct Assignment: Codable {
+//    var id: String?
+//    var header_id: String?
+//    var title: String?
+//    var description: String?
+//    var category: String?
+//    var subject: String?
+//    var date: String?
+//    var time: String?
+//    var submitted_count: Int?
+//    var end_date: String?
+//    var is_unread: Bool?
+//    var sent_by: String?
+//    var sort_order: String?
+//    var is_archive: Bool?
+//    var iframe: String?
+//    var file_size: String?
+//    var file_path: [FilePath]?
+//}
 //MARK: ASSIGNMENT MY SUBMISION
 struct SubmissionResponse: Codable {
     let status: Bool
@@ -1162,16 +1185,28 @@ struct AssignmentReportResponse: Codable {
 
 struct Report: Codable {
     let id: String?
+    let header_id: String?
     let title: String?
     let description: String?
     let category: String?
     let subject: String?
+    let date: String?
+    let time: String?
     let created_date: String?
     let created_time: String?
     let progress: Float?
     let submitted_count: Int?
     let total_count: Int?
     let end_date: String?
+    let is_unread: Bool?
+    let sent_by: String?
+    let can_edit: Bool?
+    let can_delete: Bool?
+    let sort_order: String?
+    let is_archive: Bool?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
     let file_path: [FilePath]?
 }
 
