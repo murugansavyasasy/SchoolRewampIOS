@@ -39,12 +39,22 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var AttendanceReportView: UIView!
     @IBOutlet weak var HolidaysView: UIView!
     
+    @IBOutlet weak var AttendanceDefLbl: UILabel!
+    @IBOutlet weak var LeaveTakenDefLbl: UILabel!
+    @IBOutlet weak var OngoingdaysDefLbl: UILabel!
+    @IBOutlet weak var askLeavesDefLbl: UILabel!
+    @IBOutlet weak var requestHistoryDefLbl: UILabel!
+    @IBOutlet weak var attendanceReportDefLbl: UILabel!
+    @IBOutlet weak var holidaysDefLbl: UILabel!
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
     let dateFormatter = DateFormatter()
+    var studentStats: [StudentStatistics]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        get_student_stats()
         BackBtn.applyBackButton()
         
         searchBar.applyRightTxt()
@@ -86,6 +96,14 @@ class ReciverAttendanceReportVC: UIViewController {
         percentagesBaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
         percentagesBaseView.layer.shadowRadius = 4
         percentagesBaseView.layer.masksToBounds = false
+        
+        AttendanceDefLbl.setFont(style: .body, size: 10)
+        LeaveTakenDefLbl.setFont(style: .body, size: 10)
+        OngoingdaysDefLbl.setFont(style: .body, size: 10)
+        askLeavesDefLbl.setFont(style: .body, size: 10)
+        requestHistoryDefLbl.setFont(style: .body, size: 10)
+        attendanceReportDefLbl.setFont(style: .body, size: 10)
+        holidaysDefLbl.setFont(style: .body, size: 10)
 
 //        MenusStack.layer.cornerRadius = 10
 //        MenusStack.layer.borderWidth = 0.2
@@ -112,6 +130,7 @@ class ReciverAttendanceReportVC: UIViewController {
         let today = Date()
 
         DateLbl.attributedText = getDayWithSuffix(from: today)
+       
 
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "EEEE" // Full day name, e.g. "Wednesday"
@@ -137,22 +156,47 @@ class ReciverAttendanceReportVC: UIViewController {
         DayAndMonthLbl.numberOfLines = 0 // Allow line break
         DayAndMonthLbl.attributedText = attributedString
         
-        setupDayButtons()
         
         setupPieChart(AttendencePercentage)
-        setProgress(on: AttendencePercentage, to: 75)
+        //setProgress(on: AttendencePercentage, to: 75)
         
         setupPieChart(LeaveTakenview)
-        setProgress(on: LeaveTakenview, to: 50)
+        //setProgress(on: LeaveTakenview, to: 50)
         
         setupPieChart(OngoingDaysView)
-        setProgress(on: OngoingDaysView, to: 90)
+        //setProgress(on: OngoingDaysView, to: 90)
         
         
         AskLeaveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(AskLeaveAct)))
         LeaveHistoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LeaveHistoryAct)))
         AttendanceReportView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(AttendanceReportAct)))
         HolidaysView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HolidaysAct)))
+    }
+    
+    //MARK: Api call
+    func get_student_stats() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_stats, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<StudentStatisticsResponse,Error>) in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                guard let self = self else {return}
+                
+                switch result{
+                    
+                case .success(let success):
+                    
+                    self.studentStats = success.data
+                    setupDayButtons()
+                    Set_Piechart_data()
+                case .failure(let error):
+                    
+                    CustomAlert.showAlertWithOkAction(title: "Error", message: error.localizedDescription, on: self, okAction: {
+                        self.dismiss(animated: true)
+                    })
+                }
+            }
+        }
     }
     
     func getDayWithSuffix(from date: Date) -> NSAttributedString {
@@ -185,6 +229,14 @@ class ReciverAttendanceReportVC: UIViewController {
             .baselineOffset: 20
         ], range: NSRange(location: dayString.count, length: suffix.count))
 
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = 30 // Try increasing this value if clipping persists
+
+        attributed.addAttributes([
+            .paragraphStyle: paragraphStyle
+        ], range: NSRange(location: 0, length: fullString.count))
+
+        
         return attributed
     }
 
@@ -196,9 +248,10 @@ class ReciverAttendanceReportVC: UIViewController {
             view.removeFromSuperview()
         }
         
-        let dayInitials = ["M", "T", "W", "T", "F", "S"] // Add "S" for Sunday if needed
+        let dayInitials = ["M", "T", "W", "T", "F", "S", "S"] // Add "S" for Sunday if needed
+        let attList = studentStats?.first?.weekly_status?.att_list ?? []
         
-        for initial in dayInitials {
+        for (index,initial) in dayInitials.enumerated() {
             // Create a vertical stack: [Label, ImageView]
             let verticalStack = UIStackView()
             verticalStack.axis = .vertical
@@ -214,9 +267,29 @@ class ReciverAttendanceReportVC: UIViewController {
 
             // Create the image view
             let imageView = UIImageView()
-            imageView.image = UIImage(systemName: "checkmark.circle.fill")
+            let status = attList.indices.contains(index) ? attList[index] : nil
+            switch status{
+            case "-":
+                imageView.image = UIImage(systemName: "circle")
+                imageView.tintColor = .systemPink
+                
+            case "P":
+                imageView.image = UIImage(systemName: "checkmark.circle.fill")
+                imageView.tintColor = .systemIndigo
+            
+            case "A":
+                imageView.image = UIImage(systemName: "a.circle.fill")
+                imageView.tintColor = .systemRed
+                
+            case "S":
+                imageView.image = UIImage(systemName: "h.circle.fill")
+                imageView.tintColor = .systemPink
+                
+            default:
+                break
+            }
+            
             imageView.contentMode = .scaleAspectFit
-            imageView.tintColor = .systemIndigo
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 imageView.widthAnchor.constraint(equalToConstant: 20),
@@ -232,6 +305,42 @@ class ReciverAttendanceReportVC: UIViewController {
         }
     }
     
+    func Set_Piechart_data(){
+        guard let stats = studentStats?.first else { return }
+        
+        let attendancePercent = Double(stats.attendance_percentage?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
+        let absentDays = Double(stats.absent_days ?? 0)
+        let completedDays = Double(stats.completed_working_days ?? 0)
+        let totalDays = Double(stats.total_working_days ?? 1) // avoid divide by zero
+        
+        setProgress(
+            on: AttendencePercentage,
+            value: attendancePercent,
+            total: 100,
+            unit: "%",
+            fillColor: .themeColour,
+            labelColor: .themeColour
+        )
+        
+        setProgress(
+            on: LeaveTakenview,
+            value: absentDays,
+            total: 30,
+            unit: "",
+            fillColor: .themeColour,
+            labelColor: .themeColour
+        )
+        
+        setProgress(
+            on: OngoingDaysView,
+            value: completedDays,
+            total: totalDays,
+            unit: "",
+            fillColor: .themeColour,
+            labelColor: .themeColour
+        )
+    }
+    
     private func setupPieChart(_ pieChart: PieChartView) {
         pieChart.holeRadiusPercent = 0.8
         pieChart.transparentCircleRadiusPercent = 0.2
@@ -241,31 +350,53 @@ class ReciverAttendanceReportVC: UIViewController {
         pieChart.holeColor = .white
     }
 
-    func setProgress(on pieChart: PieChartView, to percentage: Double) {
-        let progressEntry = PieChartDataEntry(value: percentage)
-        let emptyEntry = PieChartDataEntry(value: 100 - percentage)
+    func setProgress(
+        on pieChart: PieChartView,
+        value: Double,
+        total: Double,
+        unit: String,
+        fillColor: UIColor,
+        labelColor: UIColor
+    ) {
+        let filledEntry = PieChartDataEntry(value: value)
+        let emptyEntry = PieChartDataEntry(value: max(0, total - value))
 
-        let progressColor = colorForPercentage(percentage)
+        let dataSet = PieChartDataSet(entries: [filledEntry, emptyEntry], label: "")
+        dataSet.colors = [fillColor, .systemGray6]
+        dataSet.drawValuesEnabled = false
 
-        let progressDataSet = PieChartDataSet(entries: [progressEntry, emptyEntry], label: "")
-        progressDataSet.colors = [progressColor, .lightGray]
-        progressDataSet.drawValuesEnabled = false
-
-        let pieData = PieChartData(dataSet: progressDataSet)
+        let pieData = PieChartData(dataSet: dataSet)
         pieChart.data = pieData
 
-        // Center label
-        let percentageText = "\(Int(percentage))%"
-        let attributedString = NSAttributedString(
-            string: percentageText,
-            attributes: [
-                .font: UIFont(name: "Poppins-Bold", size: 11)!,
-                .foregroundColor: UIColor.homeWorkClr
-            ]
-        )
-        pieChart.centerAttributedText = attributedString
-        pieChart.centerTextRadiusPercent = 0.9
+        // ✅ Animate the chart
+        pieChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
+
+        // ✅ Center label with smaller unit
+           let valueText = "\(Int(value))"
+           let unitText = unit // like "%"
+
+           let fullText = valueText + unitText
+           let attributedText = NSMutableAttributedString(string: fullText)
+
+           attributedText.addAttributes([
+            .font: UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 17),
+               .foregroundColor: labelColor
+           ], range: NSRange(location: 0, length: valueText.count))
+
+           attributedText.addAttributes([
+               .font: UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12),
+               .foregroundColor: labelColor
+           ], range: NSRange(location: valueText.count, length: unitText.count))
+
+           let paragraphStyle = NSMutableParagraphStyle()
+           paragraphStyle.alignment = .center
+           attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: fullText.count))
+
+           pieChart.centerAttributedText = attributedText
+           pieChart.centerTextRadiusPercent = 0.9
     }
+
+
 
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {

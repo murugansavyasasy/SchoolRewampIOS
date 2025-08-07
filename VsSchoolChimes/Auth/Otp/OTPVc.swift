@@ -269,10 +269,7 @@ class OTPVc: UIViewController {
                         if successMessage.status == true {
                             if(pageType == screenType.isForgotPassword){
                                 
-                                let vc = CreatePasswordVc(
-                                    nibName: nil,
-                                    bundle: nil
-                                )
+                                let vc = CreatePasswordVc(nibName: nil, bundle: nil)
                                 vc.modalPresentationStyle = .fullScreen
                                 vc.createNewPassword = false
                                 vc.mobile_number = mobileNumber
