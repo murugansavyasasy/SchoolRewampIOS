@@ -92,6 +92,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var alert = CustomAlert()
     var DocumentpreviewURL: URL?
     var videoPicker: VideoPickerManager?
+    var delegate:EditObjectDelegate?
     var selectedVideoURL: URL?
     var editId: String?
     let standardDateFormat = DateFormatString.StandardFormat
@@ -463,7 +464,14 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                     message: response.message,
                     on: self
                 ) { [self] in
-                    dismiss(animated: true)
+                    TitleTextfield.text = ""
+                    textview.text = ""
+                    placeholderLabel.isHidden = !textview.text.isEmpty
+                    attachments.removeAll()
+                    Attachmentview.imageCollectionview.reloadData()
+                    editId = nil
+                    NextBtn.setTitle("Next", for: .normal)
+                    delegate?.editDta(edit: nil)
                 }
             }
         }

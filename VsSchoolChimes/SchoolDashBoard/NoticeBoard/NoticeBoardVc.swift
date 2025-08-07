@@ -8,7 +8,7 @@
 import UIKit
 import DropDown
 protocol EditObjectDelegate{
-    func editDta(edit:Any)
+    func editDta(edit:Any?)
 }
 @available(iOS 14.0, *)
 class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, SelectedId {

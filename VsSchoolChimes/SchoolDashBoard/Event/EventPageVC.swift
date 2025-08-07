@@ -14,18 +14,31 @@ protocol HistorySelectDelegate {
 @available(iOS 14.0, *)
 class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate, EditObjectDelegate {
     
-    func editDta(edit: Any) {
+    func editDta(edit: Any?) {
         guard !pages.isEmpty else { return }
 
-        // Try to cast and update the correct VC
+        var title = "Edit"
+        var pageToShowIndex = 0
+
         if let notice = edit as? Notice, let senderVC = pages[0] as? SenderNoticeBoardVC {
             senderVC.fetchData(notice: notice)
+
         } else if let event = edit as? EventList, let senderVC = pages[0] as? EventsVC {
             senderVC.fetchData(eventList: event)
+
+        } else if edit == nil {
+            title = "Create"
+            pageToShowIndex = 1 // Navigate to pages[1]
+
+            if let senderVC = pages[1] as? EventHistoryVC {
+                // senderVC.prepareForCreate()
+            } else if let senderVC = pages[1] as? NoticeBoardVc {
+                senderVC.Get_Notice()
+            }
         }
 
         // Update Create button
-        createBtn.setTitle("Edit", for: .normal)
+        createBtn.setTitle(title, for: .normal)
 
         // Update back button label
         let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
@@ -35,12 +48,12 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
             BackBtn.configureAsBackButton(firstLine: "EditNoticeBoard", secondLine: schoolName)
         }
 
-        // Animate page transition to the first page
+        // Animate page transition
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-        let direction: UIPageViewController.NavigationDirection = currentIndex > 0 ? .reverse : .forward
+        let direction: UIPageViewController.NavigationDirection = (currentIndex > pageToShowIndex) ? .reverse : .forward
 
-        updateTabUI(for: 0)
-        pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
+        updateTabUI(for: pageToShowIndex)
+        pageViewController.setViewControllers([pages[pageToShowIndex]], direction: direction, animated: true, completion: nil)
     }
 
 
@@ -160,14 +173,14 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
             return
         }
         // Try to cast and update the correct VC
-        if let senderVC = pages[0] as? SenderNoticeBoardVC {
-            senderVC.fetchData(notice: nil)
-        } else if let senderVC = pages[0] as? EventsVC {
-            senderVC.fetchData(eventList: nil)
-        }
+//        if let senderVC = pages[0] as? SenderNoticeBoardVC {
+//            senderVC.fetchData(notice: nil)
+//        } else if let senderVC = pages[0] as? EventsVC {
+//            senderVC.fetchData(eventList: nil)
+//        }
 
         // Update Create button
-        createBtn.setTitle("Create", for: .normal)
+//        createBtn.setTitle("Create", for: .normal)
 
         // Update back button label
         let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""

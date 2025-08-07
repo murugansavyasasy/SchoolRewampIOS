@@ -62,14 +62,10 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
     }
     @IBAction func edit(_ sender: UIButton) {
         
-        let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
-        popoverContentVC.view.backgroundColor = .white
+        let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
         popoverContentVC.delegate = self
-        popoverContentVC.edit = edit
-        popoverContentVC.delete = delete
-        popoverContentVC.selectedId = selectedId
-        
-        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 90)
+//        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 90)
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: edit ?? false ? 90:50)
         popoverContentVC.modalPresentationStyle = .popover
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
@@ -230,7 +226,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
 
     // MARK: - Configure Cell
     func configure(with notice: Notice) {
-        titleLbl.text = notice.title
+        titleLbl.text = notice.title ?? ""
         descriptionLbl.text = notice.description
         dateLbl.text = formattedDate(from: notice.created_on)
         timeBtn.text = formattedTime(from: notice.created_on)

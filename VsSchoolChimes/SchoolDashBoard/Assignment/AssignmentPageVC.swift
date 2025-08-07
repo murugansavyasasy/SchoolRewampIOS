@@ -10,9 +10,13 @@ import UIKit
 @available(iOS 14.0, *)
 class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource{
     
-    @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var createBtn: UIButton!
+    @IBOutlet weak var reportsBtn: UIButton!
+    @IBOutlet weak var reportsLb: UILabel!
+    @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var presentView: UIView!
+    @IBOutlet weak var searcchBtn: UIButton!
 
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
@@ -52,6 +56,15 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
 //        BackBtn.setTitle(titleLbl, for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
     }
+    func updateTabUI(for index: Int) {
+        UIView.animate(withDuration: 0.25) {
+            self.searcchBtn.isHidden = index == 0
+            self.createLbl.backgroundColor = index == 0 ? .blue : .white
+            self.reportsLb.backgroundColor = index == 0 ? .white : .blue
+            self.reportsBtn.tintColor = index == 0 ? .black : .blue
+            self.createBtn.tintColor = index == 1 ? .black : .blue
+        }
+    }
 
     private func setupPageViewController() {
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -89,7 +102,31 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+//        if pages.indices.contains(1), let senderVC = pages[1] as? NoticeBoardVc {
+//            senderVC.searchHide(hide: sender.isSelected)
+//        }
+//        if pages.indices.contains(1), let senderVC = pages[1] as? EventHistoryVC {
+//            senderVC.searchHide(hide: sender.isSelected)
+//        }
+    }
+    @IBAction func switchController(_ sender: UIButton) {
+        let selectedIndex = sender.tag
+        guard selectedIndex >= 0 && selectedIndex < pages.count else {
+            print("Index out of bounds")
+            return
+        }
 
+        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = selectedIndex > currentIndex ? .forward : .reverse
+        
+        updateTabUI(for: selectedIndex)
+        
+        pageViewController.setViewControllers([pages[selectedIndex]], direction: direction, animated: true, completion: nil)
+    }
     @IBAction func segment(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
         guard index >= 0 && index < pages.count else {

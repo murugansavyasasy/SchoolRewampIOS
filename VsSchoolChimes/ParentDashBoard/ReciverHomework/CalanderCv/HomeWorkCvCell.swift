@@ -40,13 +40,9 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
     
     @IBAction func threeDotBtnAction(_ sender: UIButton) {
         
-        let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
+        let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
         popoverContentVC.view.backgroundColor = .white
         popoverContentVC.delegate = self
-        popoverContentVC.edit = edit
-        popoverContentVC.delete = delete
-        popoverContentVC.selectedId = selectedId
-        
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: 70)
         popoverContentVC.modalPresentationStyle = .popover
         if let popoverController = popoverContentVC.popoverPresentationController {
