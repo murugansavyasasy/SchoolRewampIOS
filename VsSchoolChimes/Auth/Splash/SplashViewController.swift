@@ -342,12 +342,12 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
-                            AlertModal
-                                .showAlert(
-                                    title: "",
-                                    message: response.message ?? "",
-                                    on: self
-                                )
+                            CustomAlert.showAlertWithOkAction(title: "Alert", message: response.message ?? "", on: self, okAction: {
+                                
+                                let vc = LoginVc(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            })
                         }
                     }
                 case .failure(let error):

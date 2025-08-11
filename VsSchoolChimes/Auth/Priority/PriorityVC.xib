@@ -19,6 +19,7 @@
                 <outlet property="ProceedInstructionLbl" destination="86y-aT-C5X" id="iIX-mp-gSf"/>
                 <outlet property="TeacherParentlbl" destination="u3w-cO-gNT" id="oCl-y5-xdX"/>
                 <outlet property="containerViewHeightConstraint" destination="2Lz-Lm-oKl" id="Ro5-wn-qyc"/>
+                <outlet property="logoutBtn" destination="aFQ-J7-xat" id="zoC-Ny-yC7"/>
                 <outlet property="priorityview" destination="3Fd-Jo-Dka" id="NEs-CM-TpV"/>
                 <outlet property="tableview" destination="vDi-Yd-4hE" id="JDw-rA-SCz"/>
                 <outlet property="teacherButton" destination="IT3-Y1-4ZX" id="VUZ-cu-Cvh"/>
@@ -34,23 +35,46 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8F-aZ-FCz">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="822.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="838.33333333333337"/>
                             <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFQ-J7-xat">
+                                    <rect key="frame" x="343" y="10" width="40" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="kcg-LB-35m"/>
+                                        <constraint firstAttribute="width" constant="40" id="sTA-O5-0B4"/>
+                                    </constraints>
+                                    <color key="tintColor" name="Red"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal">
+                                        <imageReference key="image" image="power.circle" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <buttonConfiguration key="configuration" style="plain" image="iphone.and.arrow.forward" catalog="system"/>
+                                    <connections>
+                                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="PbO-DM-jvP"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXr-w5-LBu">
+                                    <rect key="frame" x="338" y="50" width="45" height="15.666666666666671"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                    <color key="textColor" name="Red"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="female-teacher-teaching-boy-in-school" translatesAutoresizingMaskIntoConstraints="NO" id="484-M4-0Y6">
-                                    <rect key="frame" x="8" y="50" width="377" height="170"/>
+                                    <rect key="frame" x="8" y="65.666666666666686" width="377" height="170"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="170" id="OYL-u7-TfD"/>
                                         <constraint firstAttribute="width" constant="377" id="kW3-a8-20S"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your role" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJI-52-t63">
-                                    <rect key="frame" x="20" y="228" width="353" height="20"/>
+                                    <rect key="frame" x="20" y="243.66666666666669" width="353" height="20"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Fd-Jo-Dka">
-                                    <rect key="frame" x="42" y="307.33333333333331" width="308" height="40"/>
+                                    <rect key="frame" x="42" y="323" width="308" height="40"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="JJN-tz-BHC">
                                             <rect key="frame" x="0.0" y="0.0" width="308" height="40"/>
@@ -91,47 +115,24 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as a teacher or parent" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3w-cO-gNT">
-                                    <rect key="frame" x="20" y="256" width="353" height="20.333333333333314"/>
+                                    <rect key="frame" x="20" y="271.66666666666669" width="353" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click proceed to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86y-aT-C5X">
+                                    <rect key="frame" x="30" y="373" width="333" height="20.333333333333314"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vDi-Yd-4hE">
-                                    <rect key="frame" x="10" y="382.66666666666674" width="373" height="400"/>
+                                    <rect key="frame" x="10" y="398.33333333333326" width="373" height="400"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="400" id="2Lz-Lm-oKl"/>
                                     </constraints>
                                 </tableView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click proceed to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86y-aT-C5X">
-                                    <rect key="frame" x="30" y="357.33333333333331" width="333" height="20.333333333333314"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFQ-J7-xat">
-                                    <rect key="frame" x="343" y="10" width="40" height="40"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="kcg-LB-35m"/>
-                                        <constraint firstAttribute="width" constant="40" id="sTA-O5-0B4"/>
-                                    </constraints>
-                                    <color key="tintColor" name="Red"/>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal">
-                                        <imageReference key="image" image="power.circle" catalog="system" symbolScale="large"/>
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                                    </state>
-                                    <buttonConfiguration key="configuration" style="plain" image="iphone.and.arrow.forward.inward" catalog="system"/>
-                                    <connections>
-                                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="PbO-DM-jvP"/>
-                                    </connections>
-                                </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXr-w5-LBu">
-                                    <rect key="frame" x="338" y="50" width="45" height="15.666666666666671"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                    <color key="textColor" name="Red"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -148,11 +149,11 @@
                                 <constraint firstAttribute="trailing" secondItem="86y-aT-C5X" secondAttribute="trailing" constant="30" id="N0a-AG-trc"/>
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="20" id="Ovc-xG-VMz"/>
                                 <constraint firstItem="bJI-52-t63" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="20" id="QfP-KZ-MpR"/>
-                                <constraint firstItem="484-M4-0Y6" firstAttribute="top" secondItem="aFQ-J7-xat" secondAttribute="bottom" id="WmT-2m-asK"/>
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="YrB-eY-j1g"/>
                                 <constraint firstItem="3Fd-Jo-Dka" firstAttribute="top" secondItem="u3w-cO-gNT" secondAttribute="bottom" constant="31" id="ZRK-dz-ggl"/>
                                 <constraint firstAttribute="trailing" secondItem="3Fd-Jo-Dka" secondAttribute="trailing" constant="43" id="cNw-Mn-41D"/>
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="top" secondItem="bJI-52-t63" secondAttribute="bottom" constant="8" id="gEL-3N-HZp"/>
+                                <constraint firstItem="484-M4-0Y6" firstAttribute="top" secondItem="zXr-w5-LBu" secondAttribute="bottom" id="gMR-tn-vzY"/>
                                 <constraint firstItem="484-M4-0Y6" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="8" id="hVR-jq-qA7"/>
                                 <constraint firstItem="zXr-w5-LBu" firstAttribute="top" secondItem="aFQ-J7-xat" secondAttribute="bottom" id="jhF-yl-O85"/>
                                 <constraint firstAttribute="trailing" secondItem="zXr-w5-LBu" secondAttribute="trailing" constant="10" id="p1P-og-AeH"/>
@@ -163,7 +164,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
-                            <rect key="frame" x="96.666666666666686" y="777" width="200" height="35"/>
+                            <rect key="frame" x="96.666666666666686" y="708" width="200" height="35"/>
                             <color key="backgroundColor" systemColor="systemBlueColor"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="tL0-H6-lBn"/>
@@ -201,7 +202,7 @@
     </objects>
     <resources>
         <image name="female-teacher-teaching-boy-in-school" width="1400" height="1400"/>
-        <image name="iphone.and.arrow.forward.inward" catalog="system" width="112" height="128"/>
+        <image name="iphone.and.arrow.forward" catalog="system" width="112" height="128"/>
         <image name="power.circle" catalog="system" width="128" height="123"/>
         <namedColor name="Red">
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -210,7 +211,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -70,6 +70,9 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var tv: UITableView!
     
     @IBOutlet weak var TodaysBookedSlotsLbl: UILabel!
+    
+    @IBOutlet weak var upcomingView: customView!
+    
     var instituteId  = Int()
     var sectionId = Int()
     var staffId  = Int()
@@ -107,11 +110,21 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let create  = UITapGestureRecognizer(target: self , action:#selector(cretaeVC) )
         createView.addGestureRecognizer(create)
         
+        upcomingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNewPtmVC)))
+        
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
         setInitialButtonTitles()
     }
+    
+    @objc func gotoNewPtmVC(){
+        
+        let vc = NewPtmVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
         let dateFormatter = DateFormatter()

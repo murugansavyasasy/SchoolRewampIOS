@@ -105,25 +105,31 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            // Only move if view is at original position
-            if self.view.frame.origin.y == 0 {
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        if let activeField = view.firstResponder as? UIView {
+            // Convert active field's frame to the main view's coordinate space
+            let activeFieldFrame = activeField.convert(activeField.bounds, to: self.view)
+            
+            // Keyboard top Y position
+            let keyboardTop = self.view.frame.height - keyboardFrame.height
+            
+            // How far the active field is below the keyboard top
+            let overlap = activeFieldFrame.maxY - keyboardTop + 10 // +10 for padding
+            
+            if overlap > 0 {
                 UIView.animate(withDuration: 0.3) {
-                    self.view.frame.origin.y = -keyboardFrame.height / 2 // Or full height if needed
+                    self.view.frame.origin.y = -overlap
                 }
             }
         }
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        // Reset to original position
-        if self.view.frame.origin.y != 0 {
-            UIView.animate(withDuration: 0.3) {
-                self.view.frame.origin.y = 0
-            }
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
         }
     }
-
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -132,8 +138,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     
     @IBAction func backBtn(_ sender: Any) {
         
-        dismiss(animated: true)
-        
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     @IBAction func confirmBtn(_ sender: Any) {
@@ -451,4 +456,20 @@ extension CreatePasswordVc: UITextFieldDelegate {
         textField.backgroundColor = .clear
     }
 
+}
+
+
+// Helper to find first responder
+extension UIView {
+    var firstResponder: UIResponder? {
+        if self.isFirstResponder {
+            return self
+        }
+        for subview in self.subviews {
+            if let responder = subview.firstResponder {
+                return responder
+            }
+        }
+        return nil
+    }
 }

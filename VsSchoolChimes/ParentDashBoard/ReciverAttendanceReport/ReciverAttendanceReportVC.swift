@@ -14,7 +14,6 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var noResordStack: UIStackView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TV: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var Topview: UIView!
     
     
@@ -24,7 +23,7 @@ class ReciverAttendanceReportVC: UIViewController {
     
     @IBOutlet weak var DateLbl: UILabel!
     @IBOutlet weak var DayAndMonthLbl: UILabel!
-    @IBOutlet weak var WeekStatusDefLbl: UILabel!
+    @IBOutlet weak var WeekStatusDefBtn: UIButton!
     @IBOutlet weak var AttendencePercentage: PieChartView!
     @IBOutlet weak var OngoingDaysView: PieChartView!
     @IBOutlet weak var LeaveTakenview: PieChartView!
@@ -51,17 +50,18 @@ class ReciverAttendanceReportVC: UIViewController {
     var attendanceReportData : [StudentAttendance]?
     let dateFormatter = DateFormatter()
     var studentStats: [StudentStatistics]?
+    var popover: PopoverView?
+    var popoverBackgroundView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         get_student_stats()
         BackBtn.applyBackButton()
         
-        searchBar.applyRightTxt()
+        
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         BackBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
-        searchBar.placeholder = CommonStringFile.Search.translated()
         Topview.layer.cornerRadius = 25
         Topview.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         StyleAndTranslate()
@@ -124,9 +124,13 @@ class ReciverAttendanceReportVC: UIViewController {
         MenusView.layer.masksToBounds = false
         
         DateLbl.setFont(style: .header, size: 40)
-        WeekStatusDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        WeekStatusDefLbl.textColor = .black.withAlphaComponent(0.7)
-        
+        WeekStatusDefBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        WeekStatusDefBtn.setTitleColor(.black.withAlphaComponent(0.7), for: .normal)
+        WeekStatusDefBtn.semanticContentAttribute = .forceRightToLeft
+        let spacing: CGFloat = 2
+        WeekStatusDefBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: -spacing)
+        WeekStatusDefBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
+
         let today = Date()
 
         DateLbl.attributedText = getDayWithSuffix(from: today)
@@ -273,9 +277,9 @@ class ReciverAttendanceReportVC: UIViewController {
                 imageView.image = UIImage(systemName: "circle")
                 imageView.tintColor = .systemPink
                 
-            case "P":
+            case "x":
                 imageView.image = UIImage(systemName: "checkmark.circle.fill")
-                imageView.tintColor = .systemIndigo
+                imageView.tintColor = .backGroundClr
             
             case "A":
                 imageView.image = UIImage(systemName: "a.circle.fill")
@@ -285,8 +289,17 @@ class ReciverAttendanceReportVC: UIViewController {
                 imageView.image = UIImage(systemName: "h.circle.fill")
                 imageView.tintColor = .systemPink
                 
+            case "/" :
+                imageView.image = UIImage(systemName: "circle.lefthalf.filled")
+                imageView.tintColor = .backGroundClr
+            
+            case "SH" :
+                imageView.image = UIImage(systemName: "circle.righthalf.filled")
+                imageView.tintColor = .backGroundClr
+                
             default:
-                break
+                imageView.image = UIImage(systemName: "circle")
+                imageView.tintColor = .systemPink
             }
             
             imageView.contentMode = .scaleAspectFit
@@ -318,8 +331,8 @@ class ReciverAttendanceReportVC: UIViewController {
             value: attendancePercent,
             total: 100,
             unit: "%",
-            fillColor: .themeColour,
-            labelColor: .themeColour
+            fillColor: .backGroundClr,
+            labelColor: .backGroundClr
         )
         
         setProgress(
@@ -327,8 +340,8 @@ class ReciverAttendanceReportVC: UIViewController {
             value: absentDays,
             total: 30,
             unit: "",
-            fillColor: .themeColour,
-            labelColor: .themeColour
+            fillColor: .backGroundClr,
+            labelColor: .backGroundClr
         )
         
         setProgress(
@@ -336,8 +349,8 @@ class ReciverAttendanceReportVC: UIViewController {
             value: completedDays,
             total: totalDays,
             unit: "",
-            fillColor: .themeColour,
-            labelColor: .themeColour
+            fillColor: .backGroundClr,
+            labelColor: .backGroundClr
         )
     }
     
@@ -416,6 +429,46 @@ class ReciverAttendanceReportVC: UIViewController {
             return UIColor.lightGray // Default color (0% or invalid input)
         }
     }
+    
+    @IBAction func InfoBtnAct() {
+        // If already shown → remove popover and background
+        if let existing = popover {
+            existing.removeFromSuperview()
+            popover = nil
+
+            popoverBackgroundView?.removeFromSuperview()
+            popoverBackgroundView = nil
+            return
+        }
+
+        // Create full-screen transparent view to detect taps outside
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.backgroundColor = UIColor.clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopover))
+        backgroundView.addGestureRecognizer(tapGesture)
+        view.addSubview(backgroundView)
+        popoverBackgroundView = backgroundView
+
+        // Create the popover
+        let popup = PopoverView()
+        popup.arrowDirection = .left
+        popup.arrowPosition = 50
+        popup.frame = CGRect(x: WeekStatusDefBtn.frame.maxX - 120,
+                             y: WeekStatusDefBtn.frame.maxY + 100,
+                             width: 180,
+                             height: 180)
+        backgroundView.addSubview(popup) // Add to backgroundView, not view
+        popover = popup
+    }
+
+    @objc func dismissPopover() {
+        popover?.removeFromSuperview()
+        popover = nil
+
+        popoverBackgroundView?.removeFromSuperview()
+        popoverBackgroundView = nil
+    }
+
     
     //MARK: Cell Registeration
     func CellRigister(){
@@ -599,5 +652,138 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
                 print("Error: \(error.localizedDescription)")
             }
         }
+    }
+}
+
+
+
+
+import UIKit
+
+class PopoverView: UIView {
+    
+    enum ArrowDirection {
+        case top
+        case left
+        // You can add more: right, bottom if needed
+    }
+
+    // MARK: - Configurable Properties
+    var arrowSize: CGSize = CGSize(width: 10, height: 20)
+    var cornerRadius: CGFloat = 12
+    var arrowDirection: ArrowDirection = .top
+    var arrowPosition: CGFloat? // If nil: centered
+
+    private let stackView = UIStackView()
+
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+
+    // MARK: - Setup
+    private func commonInit() {
+        backgroundColor = .systemGray5
+
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: arrowDirection == .left ? arrowSize.width + 15 : 15),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+        ])
+
+        let buttonData: [(symbol: String, title: String, color: UIColor)] = [
+            ("circle", "Not Taken", .red),
+            ("checkmark.circle.fill", "Present", .backGroundClr),
+            ("circle.lefthalf.filled", "First Half", .backGroundClr),
+            ("circle.righthalf.filled", "Second Half", .backGroundClr),
+            ("a.circle.fill", "Absent", .systemRed),
+            ("h.circle.fill", "Holiday", .systemPink)
+        ]
+
+        for (symbol, title, color) in buttonData {
+            let button = UIButton(type: .system)
+            button.setTitle(" \(title)", for: .normal)
+            button.setImage(UIImage(systemName: symbol), for: .normal)
+            button.tintColor = color
+            button.setTitleColor(.black, for: .normal)
+            button.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 14)
+            button.contentHorizontalAlignment = .left
+            button.isUserInteractionEnabled = false
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+            stackView.addArrangedSubview(button)
+        }
+    }
+
+    // MARK: - Drawing
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        applyShape()
+    }
+
+    private func applyShape() {
+        let path = UIBezierPath()
+        let width = bounds.width
+        let height = bounds.height
+
+        let arrowW = arrowSize.width
+        let arrowH = arrowSize.height
+
+        switch arrowDirection {
+        case .top:
+            let arrowMidX = arrowPosition ?? width / 2
+
+            path.move(to: CGPoint(x: cornerRadius, y: arrowH))
+            path.addLine(to: CGPoint(x: arrowMidX - arrowW / 2, y: arrowH))
+            path.addLine(to: CGPoint(x: arrowMidX, y: 0))
+            path.addLine(to: CGPoint(x: arrowMidX + arrowW / 2, y: arrowH))
+            path.addLine(to: CGPoint(x: width - cornerRadius, y: arrowH))
+            path.addQuadCurve(to: CGPoint(x: width, y: arrowH + cornerRadius), controlPoint: CGPoint(x: width, y: arrowH))
+            path.addLine(to: CGPoint(x: width, y: height - cornerRadius))
+            path.addQuadCurve(to: CGPoint(x: width - cornerRadius, y: height), controlPoint: CGPoint(x: width, y: height))
+            path.addLine(to: CGPoint(x: cornerRadius, y: height))
+            path.addQuadCurve(to: CGPoint(x: 0, y: height - cornerRadius), controlPoint: CGPoint(x: 0, y: height))
+            path.addLine(to: CGPoint(x: 0, y: arrowH + cornerRadius))
+            path.addQuadCurve(to: CGPoint(x: cornerRadius, y: arrowH), controlPoint: CGPoint(x: 0, y: arrowH))
+
+        case .left:
+            let arrowMidY = arrowPosition ?? height / 2
+
+            path.move(to: CGPoint(x: arrowW, y: cornerRadius))
+            path.addLine(to: CGPoint(x: arrowW, y: arrowMidY - arrowH / 2))
+            path.addLine(to: CGPoint(x: 0, y: arrowMidY))
+            path.addLine(to: CGPoint(x: arrowW, y: arrowMidY + arrowH / 2))
+            path.addLine(to: CGPoint(x: arrowW, y: height - cornerRadius))
+            path.addQuadCurve(to: CGPoint(x: arrowW + cornerRadius, y: height), controlPoint: CGPoint(x: arrowW, y: height))
+            path.addLine(to: CGPoint(x: width - cornerRadius, y: height))
+            path.addQuadCurve(to: CGPoint(x: width, y: height - cornerRadius), controlPoint: CGPoint(x: width, y: height))
+            path.addLine(to: CGPoint(x: width, y: cornerRadius))
+            path.addQuadCurve(to: CGPoint(x: width - cornerRadius, y: 0), controlPoint: CGPoint(x: width, y: 0))
+            path.addLine(to: CGPoint(x: arrowW + cornerRadius, y: 0))
+            path.addQuadCurve(to: CGPoint(x: arrowW, y: cornerRadius), controlPoint: CGPoint(x: arrowW, y: 0))
+        }
+
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        layer.mask = shapeLayer
+
+        layer.shadowPath = path.cgPath
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.shadowRadius = 6
     }
 }

@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StaffPtmViewController" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StaffPtmViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="AllslotsLbl" destination="RgC-j3-CtV" id="Cr1-mb-iZQ"/>
                 <outlet property="Backbtn" destination="pfN-2J-vhI" id="G5Q-Za-lpY"/>
@@ -23,6 +23,7 @@
                 <outlet property="toDateLbl" destination="spP-uK-7zc" id="zaC-Ky-yUt"/>
                 <outlet property="todaSlotView" destination="TTT-RC-Wkc" id="jdE-vH-4Fi"/>
                 <outlet property="tv" destination="dik-C6-9po" id="6DX-tO-TdC"/>
+                <outlet property="upcomingView" destination="xXp-YW-Kln" id="A0R-XD-uSU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -137,13 +138,13 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="JKx-du-C5C">
                                     <rect key="frame" x="0.0" y="0.0" width="335" height="70"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kl5-l9-QxH" customClass="customView" customModule="VsSchoolChimes" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kl5-l9-QxH" customClass="customView" customModule="School_Chimes" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="70"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IVN-8B-Awv">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="70"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdM-do-ohm" customClass="HalfColorButton" customModule="VsSchoolChimes" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdM-do-ohm" customClass="HalfColorButton" customModule="School_Chimes" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="80" height="70"/>
                                                             <color key="backgroundColor" name="AttendenceColor"/>
                                                             <inset key="imageEdgeInsets" minX="8" minY="3" maxX="8" maxY="0.0"/>
@@ -173,7 +174,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="IVN-8B-Awv" secondAttribute="trailing" id="lA7-g6-Pqc"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXp-YW-Kln" customClass="customView" customModule="VsSchoolChimes" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXp-YW-Kln" customClass="customView" customModule="School_Chimes" customModuleProvider="target">
                                             <rect key="frame" x="85" y="0.0" width="80" height="70"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcomming" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EO1-xR-bLc">
@@ -203,7 +204,7 @@
                                                 <constraint firstItem="XJL-nz-jzB" firstAttribute="leading" secondItem="EO1-xR-bLc" secondAttribute="leading" id="zxU-E6-JTA"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5b-8U-wv8" customClass="customView" customModule="VsSchoolChimes" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5b-8U-wv8" customClass="customView" customModule="School_Chimes" customModuleProvider="target">
                                             <rect key="frame" x="170" y="0.0" width="80" height="70"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEb-th-wDp">
@@ -233,7 +234,7 @@
                                                 <constraint firstItem="yEb-th-wDp" firstAttribute="leading" secondItem="U5b-8U-wv8" secondAttribute="leading" constant="5" id="tIL-fT-BhA"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZKn-Aa-rJh" customClass="customView" customModule="VsSchoolChimes" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZKn-Aa-rJh" customClass="customView" customModule="School_Chimes" customModuleProvider="target">
                                             <rect key="frame" x="255" y="0.0" width="80" height="70"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canceled" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPA-ZU-Ah8">
@@ -380,7 +381,7 @@
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

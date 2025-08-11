@@ -638,6 +638,8 @@
 		84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC82DBCAE6700BBEDD7 /* ParentCommunicationVc.xib */; };
 		84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC62DBCAE6700BBEDD7 /* FiltersCvCell.xib */; };
 		FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */; };
+		FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0EDF122E4A1752008EC30D /* NewPtmVC.xib */; };
+		FA0EDF142E4A1752008EC30D /* NewPtmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0EDF112E4A1752008EC30D /* NewPtmVC.swift */; };
 		FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA28FC452E01349700647A76 /* LessonViewTvCell.xib */; };
 		FA28FC472E01349700647A76 /* LessonViewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28FC442E01349700647A76 /* LessonViewTvCell.swift */; };
 		FA2A3FBA2DB0CABB0000AF55 /* SenderAttachmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A3FB82DB0CABB0000AF55 /* SenderAttachmentVC.swift */; };
@@ -1445,6 +1447,8 @@
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
 		FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
+		FA0EDF112E4A1752008EC30D /* NewPtmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPtmVC.swift; sourceTree = "<group>"; };
+		FA0EDF122E4A1752008EC30D /* NewPtmVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewPtmVC.xib; sourceTree = "<group>"; };
 		FA28FC442E01349700647A76 /* LessonViewTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewTvCell.swift; sourceTree = "<group>"; };
 		FA28FC452E01349700647A76 /* LessonViewTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonViewTvCell.xib; sourceTree = "<group>"; };
 		FA2A3FB82DB0CABB0000AF55 /* SenderAttachmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderAttachmentVC.swift; sourceTree = "<group>"; };
@@ -3603,6 +3607,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FA0EDF102E4A1700008EC30D /* NewPTM */ = {
+			isa = PBXGroup;
+			children = (
+				FA0EDF112E4A1752008EC30D /* NewPtmVC.swift */,
+				FA0EDF122E4A1752008EC30D /* NewPtmVC.xib */,
+			);
+			path = NewPTM;
+			sourceTree = "<group>";
+		};
 		FA2A3FB72DB0CA6C0000AF55 /* Sender Attachment */ = {
 			isa = PBXGroup;
 			children = (
@@ -3784,6 +3797,7 @@
 		FAFF9DD12D6C7B7A00498368 /* PTM */ = {
 			isa = PBXGroup;
 			children = (
+				FA0EDF102E4A1700008EC30D /* NewPTM */,
 				FAFF9D9C2D6C7B7A00498368 /* StaffSide */,
 				FAFF9DA02D6C7B7A00498368 /* BothStaffParentTv */,
 				FAFF9DD02D6C7B7A00498368 /* ParentSide */,
@@ -4165,6 +4179,7 @@
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				84235A122E1E2819002F2E1D /* AddAttachmentTVC.xib in Resources */,
 				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
+				FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */,
 				846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */,
 				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
 				843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */,
@@ -4765,6 +4780,7 @@
 				84079FF52D15A7B000D6DF04 /* LeveHistoryTV.swift in Sources */,
 				840639732DDF549300930943 /* GalleryPickerVcViewController.swift in Sources */,
 				84079FF62D15A7B000D6DF04 /* NavigationVC.swift in Sources */,
+				FA0EDF142E4A1752008EC30D /* NewPtmVC.swift in Sources */,
 				845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */,
 				18926D302D04140B002BBB97 /* PendingFeeReportTableViewCell.swift in Sources */,
 				849970B92CF8750B00800B07 /* PageVC.swift in Sources */,
