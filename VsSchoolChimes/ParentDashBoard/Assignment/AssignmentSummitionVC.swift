@@ -20,6 +20,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     var subject:String?
     var id:String?
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    let transitionDelegate = TransitioningDelegate()
     var submissions_details: [SubmissionDetail]?
     var submitedList = false
     override func viewDidLoad() {
@@ -93,12 +94,12 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                 cell.FilesUrl = data.file_path
                 cell.timeLeft.text = "Submited: \(timeAgo)"
                 cell.descriptionLbl.text = data.description
-                cell.descriptionLbl.setupExpandable(text: data.description ?? "")
-                cell.descriptionLbl.onExpandableTap = {
-                    cell.descriptionLbl.isExpanded.toggle()
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
+//                cell.descriptionLbl.setupExpandable(text: data.description ?? "")
+//                cell.descriptionLbl.onExpandableTap = {
+//                    cell.descriptionLbl.isExpanded.toggle()
+//                    tableView.beginUpdates()
+//                    tableView.endUpdates()
+//                }
             }
             return cell
         }else{
@@ -110,18 +111,47 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                 cell.FilesUrl = data.file_path
                 cell.timeLeft.text = "Submited: \(timeAgo)"
                 cell.descriptionLbl.text = data.description
-                cell.descriptionLbl.setupExpandable(text: data.description)
-                cell.descriptionLbl.onExpandableTap = {
-                    cell.descriptionLbl.isExpanded.toggle()
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
+//                cell.descriptionLbl.setupExpandable(text: data.description)
+//                cell.descriptionLbl.onExpandableTap = {
+//                    cell.descriptionLbl.isExpanded.toggle()
+//                    tableView.beginUpdates()
+//                    tableView.endUpdates()
+//                }
             }
             
             return cell
         }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row >= 0 else { return }
+        
+        let cellFrameInSuperview = tableView.rectForRow(at: indexPath)
+        let convertedFrame = tableView.convert(cellFrameInSuperview, to: view)
+        
+        let detailVC = PrivewVc()
+        
+        if submitedList {
+            guard let submission = submissions_details?[indexPath.row] else { return }
+            detailVC.attachmetList = submission.file_path
+            detailVC.selectedDate = submission.submitted_on
+            detailVC.descriptionString = submission.description
+        } else {
+            guard let assignment = assignments?[indexPath.row] else { return }
+            detailVC.attachmetList = assignment.file_path
+            detailVC.selectedDate = assignment.submitted_on
+            detailVC.descriptionString = assignment.description
+        }
+        
+        detailVC.titleString = titleName
+        detailVC.subject_name = "Assignment".translated()
+        detailVC.modalPresentationStyle = .custom
+        
+        transitionDelegate.originFrame = convertedFrame
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
+    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

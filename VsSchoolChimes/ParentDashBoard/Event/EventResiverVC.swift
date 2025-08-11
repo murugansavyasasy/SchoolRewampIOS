@@ -40,7 +40,6 @@ class EventResiverVC: UIViewController {
     var allEventSections: [EventDisplaySection] = []
     var filteredSections: [EventDisplaySection] = []
     var studentDetails = UserDefaultFileManager.get_child_Details()
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -161,6 +161,8 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
         let report = filteredData[indexPath.row]
         cell.configure(with: report)
         cell.loadFiles(into: cell, files: report.file_path ?? [])
+        cell.submittedProgressStack.isHidden = false
+        cell.submitBtnStack.isHidden = true
         cell.layoutIfNeeded()
         return cell
     }
@@ -170,18 +172,11 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
         
         let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
         
-        let detailVC = PrivewVc()
+        let detailVC = AssignmentPriview()
         let selectedItem = filteredData[indexPath.row]
-        
-        detailVC.attachmetList = selectedItem.file_path
-        detailVC.selectedDate = selectedItem.created_date
-        detailVC.is_unreadStatus = selectedItem.is_unread
-        detailVC.titleString = selectedItem.title
-        detailVC.descriptionString = selectedItem.description
-        detailVC.homeWorkid = selectedItem.id
-        detailVC.postedBy = selectedItem.sent_by
-        detailVC.subject_name = selectedItem.subject
-        detailVC.buttonTitle = "View Submissions"
+        detailVC.data = selectedItem
+        detailVC.userNameValue = UserDefaultFileManager.get_staff_Details()?.name
+        detailVC.sectionValue = UserDefaultFileManager.get_staff_Details()?.school_name
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
         detailVC.transitioningDelegate = transitionDelegate

@@ -409,19 +409,31 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
         cell.standerdScection?.text = "\(student.standard ?? "") - \(student.section ?? "")"
         
         let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
-        let emoji = isNotSubmitted ? "❌" : "✅"
-        let statusColor = isNotSubmitted ? UIColor.red : UIColor.systemGreen
-        cell.statusView.setShadow()
-        let statusColor1 = isNotSubmitted ? UIColor.orange : UIColor.systemGreen
-        cell.statusView.backgroundColor = statusColor1.withAlphaComponent(0.5)
-        cell.submitedStatus.textColor = statusColor
-        
-        if isNotSubmitted {
-            cell.submitedStatus.text = "\(emoji) Pending"
-        } else {
-            let count = student.submissions_details?.count ?? 0
-            cell.submitedStatus.text = "\(emoji) SUBMITTED: \(count)"
-        }
+        let dueDateString = "Due: Mon, 11" // format from your date
+        let statusText = isNotSubmitted ? "Pending" : "Submitted"
+        let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
+
+        let fullText = NSMutableAttributedString(
+            string: statusText,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+                .foregroundColor: statusColor
+            ]
+        )
+
+        fullText.append(NSAttributedString(
+            string: "  \(dueDateString)",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 14, weight: .regular),
+                .foregroundColor: UIColor.darkGray
+            ]
+        ))
+
+        cell.statusView.setAttributedTitle(fullText, for: .normal)
+        cell.statusView.setImage(
+            UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill"),
+            for: .normal
+        )
         
         return cell
     }

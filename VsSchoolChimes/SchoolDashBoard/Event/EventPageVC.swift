@@ -139,6 +139,12 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         if let historyVC = pages[1] as? EventHistoryVC {
             historyVC.delegate = self
         }
+        if let historyVC = pages[0] as? SenderNoticeBoardVC {
+            historyVC.delegate = self
+        }
+        if let historyVC = pages[0] as? EventsVC {
+            historyVC.delegate = self
+        }
     }
     
     //    func disableSwipeGesture() {

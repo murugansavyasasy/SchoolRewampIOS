@@ -34,11 +34,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var MenuCollection: UICollectionView!
     
     // MARK: - Sample Data
-    var recentMenuItems: [DashboardMenu] = [
-        DashboardMenu(icon:"ic_homework", title: "Daily Homework", subtitle: ""),
-        DashboardMenu(icon:"ic_fee", title: "Fee Payment", subtitle: "")
-    ]
-    
+    var recentMenuItems: [MenuDetail]?
     var menu_details: [MenuDetail]?
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -55,7 +51,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-        pagecontroller.numberOfPages = recentMenuItems.count
+        pagecontroller.numberOfPages = recentMenuItems?.count ?? 0
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
         recentActiveMenuCollection.dataSource = self
@@ -77,10 +73,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "staff"],
+            parameters: ["member_type": "staff","mobile_number":staffDetails?.mobile_no ?? ""],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
-        ) { [weak self] (result: Result<DashboardResponse, Error>) in
+        ) { [weak self] (result: Result<MenuResponse, Error>) in
             guard let self = self else { return }
 
             DispatchQueue.main.async {
@@ -90,9 +86,12 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 
                 switch result {
                 case .success(let response):
-                    if response.status == true, let details = response.data?.first?.menu_details {
-                        self.menu_details = details
+                    if response.status == true, let details = response.data?.first {
+                        self.menu_details = details.menus
+                        self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
+                        self.recentActiveMenuCollection.isHidden = details.frequently_used?.count == 0
+                        self.pagecontroller.isHidden = details.frequently_used?.count == 0
                     } else {
                         print("No data or status false")
                         self.menu_details = []
@@ -303,7 +302,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: - CollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == recentActiveMenuCollection {
-            return recentMenuItems.count
+            return recentMenuItems?.count ?? 0
         } else {
             return menu_details?.count ?? 0
         }
@@ -312,8 +311,9 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == recentActiveMenuCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCVCell", for: indexPath) as! TopCVCell
-            let item = recentMenuItems[indexPath.item]
-            cell.configure(with: item)
+            if let item = recentMenuItems?[indexPath.item]{
+                cell.configure(with: item)
+            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMenuCVC", for: indexPath) as! CustomMenuCVC
@@ -324,7 +324,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                     let img = UIImage(named: filteredItems.first?.name ?? "")
                     cell.iconBtn.setImage(img, for: .normal)
                     cell.imenuName.text = item?.name
-                    cell.menuCondent.text = "Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet."
+                    cell.menuCondent.text = item?.description
                 }
             }
             return cell
@@ -463,7 +463,7 @@ extension CustomDasboard: UICollectionViewDelegateFlowLayout {
         if collectionView == recentActiveMenuCollection {
             return CGSize(width: 200, height: 90) // Horizontal scroll items
         } else {
-            return CGSize(width: (collectionView.frame.width - 25) / 2, height: 110)
+            return CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
         }
     }
     

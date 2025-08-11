@@ -33,7 +33,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="C"/>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oEh-Wv-Obg">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="oEh-Wv-Obg">
                                 <rect key="frame" x="60" y="10" width="266" height="136"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Chandhru V" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7v-C6-w08">
@@ -42,45 +42,33 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;I - B&quot;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQH-pO-jqm">
-                                        <rect key="frame" x="0.0" y="52" width="266" height="15.666666666666671"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fnK-wD-V3f">
-                                        <rect key="frame" x="0.0" y="102.33333333333333" width="266" height="33.666666666666671"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="ede-KI-xVg">
+                                        <rect key="frame" x="0.0" y="54.333333333333329" width="266" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8m-iW-bk0">
-                                                <rect key="frame" x="0.0" y="0.0" width="77" height="33.666666666666664"/>
-                                                <string key="text">Submitted:
-Mon, 11</string>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;I - B&quot;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQH-pO-jqm">
+                                                <rect key="frame" x="0.0" y="7.3333333333333419" width="37.666666666666664" height="15.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vo1-mL-sLl">
-                                                <rect key="frame" x="146" y="2" width="120" height="30"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submited" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vw0-yE-Mlr">
-                                                        <rect key="frame" x="10" y="10.000000000000014" width="100" height="10"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gKl-4K-HX1">
+                                                <rect key="frame" x="166" y="0.0" width="100" height="30"/>
                                                 <constraints>
-                                                    <constraint firstItem="Vw0-yE-Mlr" firstAttribute="top" secondItem="vo1-mL-sLl" secondAttribute="top" constant="10" id="ANA-ZI-NdO"/>
-                                                    <constraint firstItem="Vw0-yE-Mlr" firstAttribute="leading" secondItem="vo1-mL-sLl" secondAttribute="leading" constant="10" id="Ife-ax-cVh"/>
-                                                    <constraint firstAttribute="width" constant="120" id="SmN-Af-JPj"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Vw0-yE-Mlr" secondAttribute="bottom" constant="10" id="fzs-o8-1q2"/>
-                                                    <constraint firstAttribute="height" constant="30" id="rpl-DB-3hk"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Vw0-yE-Mlr" secondAttribute="trailing" constant="10" id="s32-Xy-iUv"/>
+                                                    <constraint firstAttribute="height" constant="30" id="KBY-xa-1Ur"/>
+                                                    <constraint firstAttribute="width" constant="100" id="VlK-8Z-EvT"/>
                                                 </constraints>
-                                            </view>
+                                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="2"/>
+                                                <state key="normal" title="Pending" image="checkmark.circle.fill" catalog="system"/>
+                                            </button>
                                         </subviews>
                                     </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Submitted: Mon, 11" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8m-iW-bk0">
+                                        <rect key="frame" x="0.0" y="121.66666666666664" width="266" height="14.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -109,15 +97,15 @@ Mon, 11</string>
                 <outlet property="initialBtn" destination="2Re-fu-CbC" id="Son-Gr-A6e"/>
                 <outlet property="outerView" destination="jKD-yh-rP9" id="ucz-Fy-Tia"/>
                 <outlet property="standerdScection" destination="tQH-pO-jqm" id="vvf-I2-GHC"/>
-                <outlet property="statusView" destination="vo1-mL-sLl" id="vRG-Wv-9uH"/>
+                <outlet property="statusView" destination="gKl-4K-HX1" id="lXi-EB-7yv"/>
                 <outlet property="studentNameLbl" destination="f7v-C6-w08" id="CGq-kz-Ue4"/>
                 <outlet property="submitDate" destination="K8m-iW-bk0" id="RIL-bA-t4d"/>
-                <outlet property="submitedStatus" destination="Vw0-yE-Mlr" id="zo1-lq-F1G"/>
             </connections>
             <point key="canvasLocation" x="-134.35114503816794" y="67.605633802816911"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

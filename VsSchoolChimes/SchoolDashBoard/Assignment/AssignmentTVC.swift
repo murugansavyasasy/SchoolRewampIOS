@@ -25,6 +25,7 @@ struct SubCategories {
 class AssignmentTVC: UITableViewCell {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
 //    @IBOutlet weak var createdDateLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
@@ -33,6 +34,7 @@ class AssignmentTVC: UITableViewCell {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var submittedProgressStack: UIStackView!
     @IBOutlet weak var subCatogoriesStack: UIStackView!
+    @IBOutlet weak var submitBtnStack: UIStackView!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var mysubmitBtn: UIButton!
     @IBOutlet weak var completedBtn: UIButton!
@@ -44,12 +46,53 @@ class AssignmentTVC: UITableViewCell {
     // MARK: - Variables
     var categories: [SubCategories]?
     var assignment: Report?
-    
+    var id :String?
+    var subject :String?
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
     
+    @IBAction func submitBtn(_ sender: UIButton) {
+        if let currentVC = getCurrentViewController() {
+            if #available(iOS 14.0, *) {
+                let vcc = SubmitVC(nibName: nil, bundle: nil)
+                vcc.titleName = titleLbl.text
+                vcc.id = id
+                vcc.modalPresentationStyle = .fullScreen
+                currentVC.present(vcc, animated: true, completion: nil)
+            }
+        }
+    }
+    @IBAction func mySubmission(_ sender: UIButton) {
+        if #available(iOS 14.0, *) {
+            if let currentVC = getCurrentViewController() {
+                let vcc = AssignmentSummitionVC(nibName: nil, bundle: nil)
+                vcc.titleName = titleLbl.text
+                vcc.subject = subject
+                vcc.id = id
+                vcc.modalPresentationStyle = .fullScreen
+                currentVC.present(vcc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @IBAction func viewAttachment(_ sender: UIButton) {
+        if let topVC = getCurrentViewController() {
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.fileURL = assignment?.file_path ?? []
+            imageVC.subjectName = assignment?.subject
+            imageVC.index = 0
+            imageVC.modalPresentationStyle = .fullScreen
+            topVC.present(imageVC, animated: true)
+        }
+    }
+    func getCurrentViewController() -> UIViewController? {
+        return UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
+            .first?.rootViewController?.topMostViewController()
+    }
     // MARK: - UI Setup
     func setupUI() {
         [img1, img2, img3, imgCount].forEach { $0?.isHidden = true }
@@ -60,10 +103,10 @@ class AssignmentTVC: UITableViewCell {
         }
         imgCount.layer.cornerRadius = imgCount.frame.width / 2
         completedBtn.layer.cornerRadius = 6
-        submitBtn.layer.cornerRadius = 10
-        mysubmitBtn.layer.cornerRadius = 10
-        mysubmitBtn.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.5)
-        submitBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.5)
+        submitBtn.layer.cornerRadius = 6
+        mysubmitBtn.layer.cornerRadius = 6
+//        mysubmitBtn.backgroundColor = UIColor.systemOrange
+//        submitBtn.backgroundColor = UIColor.systemGreen
         mysubmitBtn.layer.cornerRadius = 10
         outerView.setShadow()
         outerView.backgroundColor = .systemBackground
