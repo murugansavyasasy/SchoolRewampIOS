@@ -16,7 +16,7 @@ class AssignmentDateCVC: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         outerView.layer.cornerRadius = 25
-        outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+//        outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         outerView.layer.masksToBounds = true
         statusView.layer.cornerRadius = statusView.frame.height / 2
     }

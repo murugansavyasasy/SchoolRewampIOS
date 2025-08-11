@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="177" height="186"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UpE-gU-CQn">
-                                <rect key="frame" x="10" y="0.0" width="157" height="186"/>
+                                <rect key="frame" x="10" y="10" width="157" height="176"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -30,7 +30,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="UpE-gU-CQn" firstAttribute="top" secondItem="cRa-13-K7N" secondAttribute="top" id="JcN-X0-DH8"/>
+                            <constraint firstItem="UpE-gU-CQn" firstAttribute="top" secondItem="cRa-13-K7N" secondAttribute="top" constant="10" id="JcN-X0-DH8"/>
                             <constraint firstAttribute="trailing" secondItem="UpE-gU-CQn" secondAttribute="trailing" constant="10" id="hqS-6f-6WR"/>
                             <constraint firstItem="UpE-gU-CQn" firstAttribute="leading" secondItem="cRa-13-K7N" secondAttribute="leading" constant="10" id="qkV-2P-ACa"/>
                             <constraint firstAttribute="bottom" secondItem="UpE-gU-CQn" secondAttribute="bottom" id="qoQ-HS-Q6h"/>

@@ -17,8 +17,8 @@ class TopCVCell: UICollectionViewCell {
         outerView.setShadow(cornerRadius: 4)
         readVieaw.layer.cornerRadius = readVieaw.frame.width/2
     }
-    func configure(with item: DashboardMenu) {
+    func configure(with item: MenuDetail) {
         iconBtn.setImage(UIImage(named: "Homework"), for: .normal)
-        nameLbl.text = item.title
+        nameLbl.text = item.name
     }
 }

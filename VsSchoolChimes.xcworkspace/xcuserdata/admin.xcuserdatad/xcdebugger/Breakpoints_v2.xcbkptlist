@@ -153,144 +153,192 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F9F41A6D-AD6A-4B7D-839A-51FBD0F9FAA8"
+            uuid = "A170C166-8473-4B87-9CCD-8F1EE2F453F4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/AttachmentVCViewController.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/Video/VideoTVCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "play(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "75E8EB50-5293-4EA4-B882-BD559A336F5D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Pauckt/HomePageVc/HomePaucktVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "Get_campians(parameter:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "02DFD115-5879-4DED-8B6B-90BE93D60E8F"
+            uuid = "F2FBE705-972D-4032-8D2B-07F373AD6487"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/ReciverHomework/ReciverHomeworkVC.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/Assignment/AssignmentListVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "GetHomeWorkArchive()"
+            startingLineNumber = "6"
+            endingLineNumber = "6"
+            landmarkName = "sumition(index:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8EB9AF8B-FCA0-4C48-B26C-F831BEBA7975"
+            uuid = "78586EF7-5CBD-4F35-BDAC-6CF6C0FDA38E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/PreviewImageVC.swift"
+            filePath = "VsSchoolChimes/CommonScreens/VideoPickAndPlay/videoPickAndPlay.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "webView(_:didStartProvisionalNavigation:)"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "imagePickerControllerDidCancel(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6F6BA14D-32D4-498B-BFF5-36DB66AEA997"
+            uuid = "0EE6C129-F4E3-47CB-8820-7DC86A591A1D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/PreviewImageVC.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "webView(_:didStartProvisionalNavigation:)"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8C6F1912-F82A-400A-A4F0-C34845D593BD"
+            uuid = "67AF44C8-ECC1-4D3C-A3A9-8E917F71D35F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/PreviewImageVC.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/ClassTimeTable/ClassTimeTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "webView(_:didFinish:)"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ED7B4A6B-6E36-4878-AF23-35488560D75D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/ClassTimeTable/ClassTimeTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "37B57DF5-F11C-4E43-B5FF-00E3A990D3A6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/ClassTimeTable/ClassTimeTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7786BE9B-EFB2-456F-947A-A197BE61F509"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/ClassTimeTable/ClassTimeTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8658689-5F33-42DF-9FD2-C9C6D1651FC5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/AttendanceReportVc.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "10F9CF89-88FE-4C50-8505-D19BFEEE206B"
+            uuid = "8FD6AA0E-0205-4C5A-AF6F-56E98860B835"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/PreviewImageVC.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/AttendanceReportVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "webView(_:didFailProvisionalNavigation:withError:)"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "student_attendance_report()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BBE05866-2565-462C-8111-B038717767AC"
+            uuid = "E8D84498-033E-4481-9B24-EFF3735CC97A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/PreviewImageVC.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/AttendanceReportVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "loadPDF(from:)"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "student_attendance_report()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B688413A-7CD1-44FA-A37C-D8193E395F2D"
+            uuid = "4A1F2A9B-FD5B-4EA1-A6A0-D51D7B647F3E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/HomePage/SchoolDashboardVc.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/AttendanceReportVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "student_attendance_report()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -304,8 +352,8 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "imageSelection()"
             landmarkType = "7">
          </BreakpointContent>
@@ -320,87 +368,9 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "imageSelection()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0A7D4771-10A8-4241-BD3F-789E8887F1A9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/CommonScreens/ImageViewer/ImageShowVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "86D0205B-3F22-4AAA-9745-AA461D777451"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/EventPageVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "editDta(edit:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "86D0205B-3F22-4AAA-9745-AA461D777451 - 5beb2edcb503980b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "School_Chimes.EventPageVC.editDta(edit: Swift.Optional&lt;Any&gt;) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Event/EventPageVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35">
-               </Location>
-               <Location
-                  uuid = "86D0205B-3F22-4AAA-9745-AA461D777451 - 5beb2edcb503980b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "School_Chimes.EventPageVC.editDta(edit: Swift.Optional&lt;Any&gt;) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Event/EventPageVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "68EDC5CF-9464-4D2C-B918-163D6B9CE2D7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/EventPageVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "editDta(edit:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

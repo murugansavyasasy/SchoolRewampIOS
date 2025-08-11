@@ -300,9 +300,20 @@ struct GetStaffDetails:Codable{
         let id: Int?
         let name: String?
         let unread_count: Int?
+        let description: String?
     }
 
+struct MenuResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MenuData]?
+}
 
+struct MenuData: Codable {
+    let contact_details: ContactDetails?
+    let frequently_used: [MenuDetail]?
+    let menus: [MenuDetail]?
+}
 
 //MARK: All SENDINg API COMMON MODEL :
 
@@ -869,32 +880,32 @@ struct LeaveInfo: Codable {
     var leave_type: String?
 }
 
-//MARK: ASSIGINMENT LIST
-struct AssignmentResponse: Codable {
-    var status: Bool?
-    var message: String?
-    var data: [Assignment]?
-}
+////MARK: ASSIGINMENT LIST
+//struct AssignmentResponse: Codable {
+//    var status: Bool?
+//    var message: String?
+//    var data: [Assignment]?
+//}
 
-struct Assignment: Codable {
-    var id: String?
-    var header_id: String?
-    var title: String?
-    var description: String?
-    var category: String?
-    var subject: String?
-    var date: String?
-    var time: String?
-    var submitted_count: Int?
-    var end_date: String?
-    var is_unread: Bool?
-    var sent_by: String?
-    var sort_order: String?
-    var is_archive: Bool?
-    var iframe: String?
-    var file_size: String?
-    var file_path: [FilePath]?
-}
+//struct Assignment: Codable {
+//    var id: String?
+//    var header_id: String?
+//    var title: String?
+//    var description: String?
+//    var category: String?
+//    var subject: String?
+//    var date: String?
+//    var time: String?
+//    var submitted_count: Int?
+//    var end_date: String?
+//    var is_unread: Bool?
+//    var sent_by: String?
+//    var sort_order: String?
+//    var is_archive: Bool?
+//    var iframe: String?
+//    var file_size: String?
+//    var file_path: [FilePath]?
+//}
 //MARK: ASSIGNMENT MY SUBMISION
 struct SubmissionResponse: Codable {
     let status: Bool
@@ -1185,16 +1196,28 @@ struct AssignmentReportResponse: Codable {
 
 struct Report: Codable {
     let id: String?
+    let header_id: String?
     let title: String?
     let description: String?
     let category: String?
     let subject: String?
+    let date: String?
+    let time: String?
     let created_date: String?
     let created_time: String?
     let progress: Float?
     let submitted_count: Int?
     let total_count: Int?
     let end_date: String?
+    let is_unread: Bool?
+    let sent_by: String?
+    let can_edit: Bool?
+    let can_delete: Bool?
+    let sort_order: String?
+    let is_archive: Bool?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
     let file_path: [FilePath]?
 }
 

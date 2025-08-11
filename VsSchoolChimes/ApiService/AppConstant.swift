@@ -26,7 +26,8 @@ struct ServiceUrl{
     static let  cred_create_new_password = "app/api/cred/create-new-password"
     static let global_global_variables   = "app/global/global-variables"
     static let  auth_device_token        = "app/api/auth/device-token"
-    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
+//    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
+    static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
     static let recipient_get_group_list  = "comm/api/recipient/get-group-list"
     static let recipient_get_standards   = "comm/api/recipient/get-standards"
     static let recipient_get_student_list  = "comm/api/recipient/get-student-list"
@@ -409,26 +410,36 @@ func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, sha
 
 func formattedDateStatus(from selectedDateString: String) -> String {
     let possibleFormats = [
-                "dd-MM-yyyy",
-                "yyyy-MM-dd",
-                "dd/MM/yyyy",
-                "MM/dd/yyyy",
-                "dd MMM yyyy",
-                "dd MMMM yyyy",
-                "yyyy/MM/dd",
-                "MMM dd, yyyy",
-                
-                // DateTime formats
-                "dd-MM-yyyy HH:mm",
-                "dd-MM-yyyy hh:mm a",
-                "yyyy-MM-dd HH:mm",
-                "yyyy-MM-dd HH:mm:ss",
-                "yyyy/MM/dd HH:mm:ss",
-                "MM/dd/yyyy HH:mm",
-                "dd MMM yyyy HH:mm",
-                "dd MMMM yyyy HH:mm",
-                "MMM dd, yyyy HH:mm"
-            ]
+        // Date only
+        "dd-MM-yyyy",
+        "yyyy-MM-dd",
+        "dd/MM/yyyy",
+        "MM/dd/yyyy",
+        "dd MMM yyyy",
+        "dd MMMM yyyy",
+        "yyyy/MM/dd",
+        "MMM dd, yyyy",
+        
+        // Date + Time (various formats)
+        "dd-MM-yyyy HH:mm",
+        "dd-MM-yyyy HH:mm:ss",
+        "dd-MM-yyyy hh:mm a",
+        "dd-MM-yyyy hh:mm:ss a",
+        "yyyy-MM-dd HH:mm",
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd hh:mm a",
+        "yyyy-MM-dd hh:mm:ss a",
+        "yyyy/MM/dd HH:mm:ss",
+        "MM/dd/yyyy HH:mm",
+        "MM/dd/yyyy hh:mm a",
+        "dd MMM yyyy HH:mm",
+        "dd MMM yyyy hh:mm a",
+        "dd MMMM yyyy HH:mm",
+        "dd MMMM yyyy hh:mm a",
+        "MMM dd, yyyy HH:mm",
+        "MMM dd, yyyy hh:mm a"
+    ]
+    
     let inputFormatter = DateFormatter()
     inputFormatter.locale = Locale(identifier: "en_US_POSIX")
     
