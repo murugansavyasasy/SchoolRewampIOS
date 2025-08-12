@@ -9,7 +9,7 @@ import UIKit
 
 class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return certificate?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -20,6 +20,10 @@ class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollect
         ) as? certificateHstryCvCell else{
             return UICollectionViewCell()
         }
+        cell.reasonLbl.text = ("Reason :") + (certificate?[indexPath.item].reason ?? "")
+        let reqDate = formattedDateStatus(from:certificate?[indexPath.item].requested_on ?? "")
+        cell.dateLbl.text = reqDate
+        cell.typeLbl.text = certificate?[indexPath.item].type
         return cell
     }
     
@@ -27,13 +31,13 @@ class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollect
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        
         let vc  = CertificatePreviewVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
+        if let  certi = certificate?[indexPath.item]{
+            vc.certificate = certi
+        }
         let currentController = getCurrentViewController()
         currentController?.present(vc, animated: true)
-        
-        
     }
     func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes
@@ -52,20 +56,20 @@ class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollect
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
     @IBOutlet weak var cv: UICollectionView!
     let transitionDelegate = TransitioningDelegate()
+    var certificate: [CertificateRequest]? = []
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        cv
-            .register(
-                UINib(nibName: "certificateHstryCvCell", bundle: nil),
-                forCellWithReuseIdentifier: "certificateHstryCvCell"
-            )
+        cv.register(UINib(nibName: "certificateHstryCvCell", bundle: nil),
+                forCellWithReuseIdentifier: "certificateHstryCvCell")
+        
         cv.delegate = self
         cv.dataSource = self
     }
 
     
-    func configure() {
+    func configure(with files: [CertificateRequest]?) {
+        certificate = files
         cv.isScrollEnabled = false
            cv.reloadData()
            updateCollectionViewHeight()

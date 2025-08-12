@@ -10,6 +10,9 @@ import UIKit
 class certificateHstryCvCell: UICollectionViewCell {
 
     
+    @IBOutlet weak var reasonLbl: UILabel!
+    @IBOutlet weak var typeLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -164,9 +164,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             print("Invalid notice ID")
             return
         }
-        
-        
-        
+    
         alert.showAlertCancel(
             title: AlertstringFile.Confirm,
             message: AlertstringFile.deletemessage,

@@ -98,6 +98,11 @@
                 <constraint firstAttribute="bottom" secondItem="Mie-PW-6Nz" secondAttribute="bottom" constant="10" id="ydl-6a-v5S"/>
             </constraints>
             <size key="customSize" width="221" height="140"/>
+            <connections>
+                <outlet property="dateLbl" destination="XdM-qq-Aen" id="iaa-tx-DSd"/>
+                <outlet property="reasonLbl" destination="mLf-aM-nlJ" id="qes-Wn-DYv"/>
+                <outlet property="typeLbl" destination="Yvj-xy-t6o" id="Xfc-jc-tb6"/>
+            </connections>
             <point key="canvasLocation" x="266.41221374045801" y="16.901408450704228"/>
         </collectionViewCell>
     </objects>

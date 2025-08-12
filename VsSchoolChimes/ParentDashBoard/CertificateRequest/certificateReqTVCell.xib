@@ -165,6 +165,9 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Request Certificate"/>
+                                <connections>
+                                    <action selector="requestCertificateBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FEF-hv-PQL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -209,6 +212,14 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" systemColor="systemGray5Color"/>
             <connections>
+                <outlet property="DropdownLbl" destination="sT3-5H-kmy" id="hjN-W7-cDf"/>
+                <outlet property="NotUrgentView" destination="XOv-vZ-eKF" id="9MS-z5-4Ac"/>
+                <outlet property="NoturgentCheckImg" destination="Vli-hu-1UA" id="psk-0q-FyS"/>
+                <outlet property="ResondefaultLbl" destination="OMa-46-nLO" id="f3Z-xt-rjT"/>
+                <outlet property="ResontextView" destination="51g-GT-yFT" id="X30-zL-VE2"/>
+                <outlet property="UrgentCheckImg" destination="frF-yL-7up" id="tCN-5J-Ova"/>
+                <outlet property="UrgentView" destination="Yiq-Ys-eEg" id="fol-Ya-6vh"/>
+                <outlet property="certificsteTypeView" destination="u92-qE-Hkc" id="DAi-cp-b6Z"/>
                 <outlet property="fullview" destination="elP-OB-NVS" id="dOL-Y5-CJn"/>
                 <outlet property="requestBtn" destination="5c7-Hd-0T2" id="NQh-fw-869"/>
                 <outlet property="textView" destination="51g-GT-yFT" id="kD4-ee-T3I"/>
