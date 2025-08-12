@@ -300,9 +300,20 @@ struct GetStaffDetails:Codable{
         let id: Int?
         let name: String?
         let unread_count: Int?
+        let description: String?
     }
 
+struct MenuResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MenuData]?
+}
 
+struct MenuData: Codable {
+    let contact_details: ContactDetails?
+    let frequently_used: [MenuDetail]?
+    let menus: [MenuDetail]?
+}
 
 //MARK: All SENDINg API COMMON MODEL :
 

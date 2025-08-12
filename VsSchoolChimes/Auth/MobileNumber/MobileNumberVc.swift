@@ -8,17 +8,15 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class MobileNumberVc: UIViewController {
+class MobileNumberVc: UIViewController,UITextFieldDelegate {
  
     @IBOutlet weak var LoginTitleLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var WelcomeLbl: UILabel!
     @IBOutlet weak var BannerImageview: UIImageView!
-    @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var continueBtnName: UIButton!
     @IBOutlet weak var MobilenumLabel: UILabel!
-    @IBOutlet weak var MobilTextFld:
-    UITextField!
+    @IBOutlet weak var MobilTextFld:UITextField!
     @IBOutlet weak var ContentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -76,9 +74,6 @@ class MobileNumberVc: UIViewController {
         MobilTextFld.addDoneButton()
         MobilTextFld.layer.cornerRadius = 20
         MobilTextFld.backgroundColor = .systemGray5.withAlphaComponent(0.7)
-        BottomView.layer.cornerRadius = 30
-        BottomView.backgroundColor = Colornames.auth_screen_color
-        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
 
         continueBtnName.layer.cornerRadius = 15
         continueBtnName.layer.masksToBounds = false
@@ -107,6 +102,21 @@ class MobileNumberVc: UIViewController {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Active/focused text field
+        textField.backgroundColor = .white
+        textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 20
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Inactive/unfocused text field
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.borderWidth = 0
+        textField.backgroundColor = .systemGray5
     }
     
     @IBAction func continueBtn(_ sender: Any) {

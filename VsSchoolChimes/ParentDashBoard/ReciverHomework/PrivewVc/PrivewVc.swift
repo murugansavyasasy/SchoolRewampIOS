@@ -22,8 +22,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
-    @IBOutlet weak var mySubmission: UIButton!
-    @IBOutlet weak var submitBtn: UIButton!
     
     var attachmetList: [FilePath]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
@@ -42,12 +40,8 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Reload collection view once the view has appeared and frame is set
-        submitBtn.setShadow()
-        mySubmission.setShadow()
         cv.reloadData()
         reloadCollectionAndUpdateHeight()
-        submitBtn.isHidden = buttonTitle == "View Submissions"
-        mySubmission.setTitle(buttonTitle ?? "", for: .normal)
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,29 +118,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             self.reloadCollectionAndUpdateHeight()
         }
     }
-    
-    @IBAction func mySubmission(_ sender: UIButton) {
-        if buttonTitle == "View Submissions"{
-            let vc = SubmitedAssignmentVC()
-            vc.id = self.homeWorkid
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }else{
-            let vc = AssignmentSummitionVC()
-            vc.id = self.homeWorkid
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
-    }
-    @IBAction func submit(_ sender: UIButton) {
-        if #available(iOS 14.0, *) {
-            let vc = SubmitVC()
-            
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
-    }
-    
     @IBAction func backBtn(_ sender: Any) {
         delegate?.ReadCompleted(Id: homeWorkid ?? "", IscompletedStatus: isCompleted)
         dismiss(animated: false)

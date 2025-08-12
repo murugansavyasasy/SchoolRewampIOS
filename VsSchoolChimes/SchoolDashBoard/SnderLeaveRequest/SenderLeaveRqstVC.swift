@@ -10,12 +10,12 @@ protocol ConfirmDelegate{
     func confirm(index:Int,status:Bool)
 }
 @available(iOS 14.0, *)
-class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
+class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
    
     
     func edit(edit: IndexPath?, delete: IndexPath?) {
         guard let indexPath = edit,
-              let studentId = SearchLeavetData?[indexPath.section].details?[indexPath.row].id else { return }
+              let studentId = filteredLeaveRecords?[indexPath.section].details?[indexPath.row].id else { return }
 
         if let delete = delete {
             switch delete.row {
@@ -40,53 +40,43 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
             }
         }
     }
-
     
-    
-    
-    func confirm(index: Int, status: Bool) {
-        
-//        let message = status==true ? "Are you sure you want to approve this leave request?" : "Are you sure you want to reject this leave request?"
-//        
-//        let Leaveid = SearchLeavetData?[index].id ?? ""
-//
-//        alert.showAlertCancel(title: AlertstringFile.Confirm, message: message, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-//            
-//            self.Leave_Update_status(id: Leaveid, status: status, index: index)
-//            
-//        }, onNo: {
-//            
-//        }
-//        )
-    }
-    
+    @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var leaveRequestTable: UITableView!
-    @IBOutlet weak var EmptyView: UIView!
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodateLbl: UILabel!
+    @IBOutlet weak var filterBtnStack: UIStackView!
+    @IBOutlet weak var approvedBtn: UIButton!
+    @IBOutlet weak var allBtn: UIButton!
+    @IBOutlet weak var rejectedBtn: UIButton!
+    @IBOutlet weak var waitingBtn: UIButton!
     
-    var LeaveRequestData: [LeaveMonth]?
-    var SearchLeavetData: [LeaveMonth]?
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
+    var allLeaveRecords: [LeaveMonth]?
+    var filteredLeaveRecords: [LeaveMonth]?
+    var selectedStatus: String? = nil
+    var searchQuery: String = ""
     let alert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        BackBtn.applyBackButton()
         
-        // BackBtn.setTitle(MenuStringFile.LeaveRequest.translated(), for: .normal)
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
-        // BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        TopView.layer.cornerRadius = 20
+        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "",colour: .white)
+        
+        addUnderline(to: allBtn, unSelectedBtn: [approvedBtn,rejectedBtn,waitingBtn])
+        
+        searchBar.isHidden = true
         searchBar.placeholder = CommonStringFile.Search.translated()
-        searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
         
         NodateLbl.isHidden = true
         NodataImage.isHidden = true
-        EmptyView.isHidden = true
         
         leaveRequestTable.showsVerticalScrollIndicator = false
         leaveRequestTable.showsHorizontalScrollIndicator = false
@@ -100,16 +90,27 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
         
     }
     
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+    func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
+        ([selectedButton] + unSelectedBtn).forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
+
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
     }
     
     //MARK: Get Leave Requests API call
-    
     func GetLeaveRequestAPI() {
         
         APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_list, parameters: [LeaveRequestStringFile.member_type: "STAFF"], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[self] (result: Result<LeaveInfoResponse,Error>) in
@@ -120,13 +121,11 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
                 
                 DispatchQueue.main.async {[self] in
                     
-                    LeaveRequestData = Success.data
-                    SearchLeavetData = LeaveRequestData
+                    allLeaveRecords = Success.data
+                    filteredLeaveRecords = allLeaveRecords
                     NodateLbl.text = Success.message
-                    NodataImage.isHidden = !(LeaveRequestData?.isEmpty ?? false)
-                    NodateLbl.isHidden = !(LeaveRequestData?.isEmpty ?? false)
-                    EmptyView.isHidden = !(LeaveRequestData?.isEmpty ?? false)
-                    searchBar.isHidden = (LeaveRequestData?.isEmpty ?? false)
+                    NodataImage.isHidden = !(allLeaveRecords?.isEmpty ?? false)
+                    NodateLbl.isHidden = !(allLeaveRecords?.isEmpty ?? false)
                     leaveRequestTable.reloadData()
                 }
                 
@@ -136,13 +135,13 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
                     NodateLbl.text = error.localizedDescription
                     NodataImage.isHidden = false
                     NodateLbl.isHidden = false
-                    EmptyView.isHidden = false
                     print("Error: ",error.localizedDescription)
                 }
             }
         }
     }
     
+    //MARK: update staus Api call
     func Leave_Update_status(id: String, status: Bool, indexPath: IndexPath) {
         let param: [String: Any] = [
             LeaveRequestStringFile.id: id,
@@ -172,20 +171,20 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
                         let formattedDate = formatter.string(from: Date())
 
                         // ✅ Update SearchLeavetData
-                        self.SearchLeavetData?[indexPath.section].details?[indexPath.row].status = newStatus
-                        self.SearchLeavetData?[indexPath.section].details?[indexPath.row].updated_on = formattedDate
+                        self.filteredLeaveRecords?[indexPath.section].details?[indexPath.row].status = newStatus
+                        self.filteredLeaveRecords?[indexPath.section].details?[indexPath.row].updated_on = formattedDate
 
                         // ✅ Update LeaveRequestData (original)
-                        if let idToUpdate = self.SearchLeavetData?[indexPath.section].details?[indexPath.row].id,
-                           let sectionIndex = self.LeaveRequestData?.firstIndex(where: {
+                        if let idToUpdate = self.filteredLeaveRecords?[indexPath.section].details?[indexPath.row].id,
+                           let sectionIndex = self.allLeaveRecords?.firstIndex(where: {
                                $0.details?.contains(where: { $0.id == idToUpdate }) == true
                            }),
-                           let rowIndex = self.LeaveRequestData?[sectionIndex].details?.firstIndex(where: {
+                           let rowIndex = self.allLeaveRecords?[sectionIndex].details?.firstIndex(where: {
                                $0.id == idToUpdate
                            }) {
                             
-                            self.LeaveRequestData?[sectionIndex].details?[rowIndex].status = newStatus
-                            self.LeaveRequestData?[sectionIndex].details?[rowIndex].updated_on = formattedDate
+                            self.allLeaveRecords?[sectionIndex].details?[rowIndex].status = newStatus
+                            self.allLeaveRecords?[sectionIndex].details?[rowIndex].updated_on = formattedDate
                         }
 
                         // ✅ Reload updated row in table
@@ -204,20 +203,45 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate, EditDeleteDelegate {
         }
     }
 
-    
-    
-    
+    //MARK: Button actions
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
+    @IBAction func searchBtnAct(_ sender: Any) {
+        searchBar.isHidden.toggle()
+    }
+    
+    @IBAction func allBtnAct(_ sender: Any) {
+        addUnderline(to: allBtn, unSelectedBtn: [approvedBtn,rejectedBtn,waitingBtn])
+        selectedStatus = nil
+        applyFilters()
+    }
+    
+    @IBAction func approvedBtnAct(_ sender: Any) {
+        addUnderline(to: approvedBtn, unSelectedBtn: [allBtn,rejectedBtn,waitingBtn])
+        selectedStatus = "Approved"
+        applyFilters()
+    }
+    
+    @IBAction func rejectedBtnAct(_ sender: Any) {
+        addUnderline(to: rejectedBtn, unSelectedBtn: [allBtn,approvedBtn,waitingBtn])
+        selectedStatus = "Rejected"
+        applyFilters()
+    }
+    @IBAction func waitingBtnAct(_ sender: Any) {
+        addUnderline(to: waitingBtn, unSelectedBtn: [allBtn,rejectedBtn,approvedBtn])
+        selectedStatus = "Waiting for approval"
+        applyFilters()
+    }
 }
 
+//MARK: Tableview Delegate Functions
 @available(iOS 14.0, *)
 extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        SearchLeavetData?.count ?? 0
+        filteredLeaveRecords?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -229,28 +253,27 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setFont(style: .title, size: FontSize.TitleSize)
         label.textColor = .darkGray
-        label.text = SearchLeavetData?[section].month
+        label.text = filteredLeaveRecords?[section].month
         headerView.addSubview(label)
         
-        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0)])
 
         return headerView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchLeavetData?[section].details?.count ?? 0
+        return filteredLeaveRecords?[section].details?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as! LeveHistoryTV
         
-        guard let leaveData = SearchLeavetData?[indexPath.section].details?[indexPath.row] else { return cell }
+        guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
         
         cell.nameLbl.text = leaveData.student_name
         cell.dateLbl.text = "\(convertDate(leaveData.leave_from ?? "", toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to ?? "", toFormat: DateFormatString.StandardFormat) ?? "")"
         cell.resonLbl.text = leaveData.reason
         cell.aproveBtn.setTitle(leaveData.status, for: .normal)
-        let firstLetter = leaveData.student_name?.first.map { String($0) } ?? ""
        
        // cell.delegate = self
         cell.aproveBtn.isUserInteractionEnabled = true
@@ -272,7 +295,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             cell.editClickBtn.setTitle("Rejected", for: .normal)
             cell.editClickBtn.isHidden = false
         } else {
-            cell.aproveBtn.backgroundColor = Colornames.AprovedClr
+            cell.aproveBtn.backgroundColor = .systemGreen
             cell.aproveBtn.setTitle("Approve", for: .normal)
             cell.rejectBtn.setTitle("Reject", for: .normal)
             cell.aproveBtn.isHidden = false
@@ -293,6 +316,15 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         return 40
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView() // empty view
+    }
+
+    
     func daysBetweenLabel(start: String, end: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
@@ -311,39 +343,45 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     }
 }
 
+//MARK: Searchbar Delegate Functions
 @available(iOS 14.0, *)
 extension SenderLeaveRqstVC: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            SearchLeavetData = LeaveRequestData
-        } else {
-            SearchLeavetData = LeaveRequestData?.compactMap { month in
-                let filteredDetails = month.details?.filter { leave in
-                    leave.applied_on?.lowercased().contains(searchText.lowercased()) == true ||
-                    leave.student_name?.lowercased().contains(searchText.lowercased()) == true ||
-                    leave.class_name?.lowercased().contains(searchText.lowercased()) == true ||
-                    leave.section_name?.lowercased().contains(searchText.lowercased()) == true ||
-                    leave.reason?.lowercased().contains(searchText.lowercased()) == true ||
-                    leave.status?.lowercased().contains(searchText.lowercased()) == true
-                }
+    func applyFilters() {
+        filteredLeaveRecords = allLeaveRecords?.compactMap { month in
+            let filteredDetails = month.details?.filter { leave in
+                // Status filter
+                let statusMatches = selectedStatus == nil || leave.status == selectedStatus
                 
-                if let filteredDetails, !filteredDetails.isEmpty {
-                    return LeaveMonth(month: month.month, details: filteredDetails)
-                } else {
-                    return nil
-                }
+                // Search filter
+                let searchMatches = searchQuery.isEmpty ||
+                    leave.applied_on?.lowercased().contains(searchQuery) == true ||
+                    leave.student_name?.lowercased().contains(searchQuery) == true ||
+                    leave.class_name?.lowercased().contains(searchQuery) == true ||
+                    leave.section_name?.lowercased().contains(searchQuery) == true ||
+                    leave.reason?.lowercased().contains(searchQuery) == true ||
+                    leave.status?.lowercased().contains(searchQuery) == true
+                
+                return statusMatches && searchMatches
             }
+            
+            if let filteredDetails, !filteredDetails.isEmpty {
+                return LeaveMonth(month: month.month, details: filteredDetails)
+            }
+            return nil
         }
         
-        // Show or hide empty state
-        let isEmpty = SearchLeavetData?.allSatisfy { $0.details?.isEmpty ?? true } ?? true
-        NodateLbl.text = "No data found!"
+        // Show/hide "No data" message
+        let isEmpty = filteredLeaveRecords?.allSatisfy { $0.details?.isEmpty ?? true } ?? false
         NodataImage.isHidden = !isEmpty
         NodateLbl.isHidden = !isEmpty
-        EmptyView.isHidden = !isEmpty
-        
+        NodateLbl.text = isEmpty ? "No data found!" : ""
         leaveRequestTable.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchQuery = searchText.lowercased()
+        applyFilters()
     }
 }
 

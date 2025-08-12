@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="350" id="KGk-i7-Jjw" customClass="AssignmentTVC" customModule="School_Chimes" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="350" id="KGk-i7-Jjw" customClass="AssignmentTVC" customModule="School_Chimes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="616" height="383"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -117,6 +117,9 @@
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" title="+3"/>
+                                                        <connections>
+                                                            <action selector="viewAttachment:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6Xq-bb-MNr"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <viewLayoutGuide key="safeArea" id="7o0-ht-zgT"/>
@@ -145,21 +148,41 @@
                                             <constraint firstAttribute="height" constant="30" id="cqh-gb-X2s"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="a3J-j3-ilb">
+                                    <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="a3J-j3-ilb">
                                         <rect key="frame" x="0.0" y="134" width="576" height="34.333333333333343"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Etf-oa-dvt">
-                                                <rect key="frame" x="293" y="0.0" width="283" height="34.333333333333336"/>
+                                                <rect key="frame" x="476" y="0.0" width="100" height="34.333333333333336"/>
+                                                <color key="backgroundColor" red="0.059000000359999999" green="0.53520187340000003" blue="0.059000000359999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="qFK-fm-2eb"/>
                                                     <constraint firstAttribute="height" constant="34.333333333333336" id="zlI-n3-ydB"/>
                                                 </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Submit"/>
+                                                <connections>
+                                                    <action selector="submitBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eJQ-f3-fSV"/>
+                                                </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guU-hp-sz4">
+                                                <rect key="frame" x="160" y="0.0" width="306" height="34.333333333333336"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vkq-n5-VDR">
-                                                <rect key="frame" x="0.0" y="0.0" width="283" height="34.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="34.333333333333336"/>
+                                                <color key="backgroundColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.61623195829999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="6Lu-QL-l6X"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="MySubmision"/>
+                                                <connections>
+                                                    <action selector="mySubmission:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="04T-X7-WhG"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -177,13 +200,24 @@
                             <constraint firstAttribute="bottom" secondItem="KeI-92-A7b" secondAttribute="bottom" constant="10" id="qz1-ZS-mjC"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSN-aY-lhg">
+                        <rect key="frame" x="20" y="281.66666666666669" width="90" height="47"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <connections>
+                            <action selector="viewAttachment:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ach-hK-5Qm"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="uSN-aY-lhg" firstAttribute="top" secondItem="0Bi-nA-yqF" secondAttribute="top" id="3vV-5H-zlY"/>
+                    <constraint firstItem="uSN-aY-lhg" firstAttribute="trailing" secondItem="0Bi-nA-yqF" secondAttribute="trailing" id="4Pn-JQ-r7H"/>
                     <constraint firstAttribute="bottom" secondItem="XL1-CB-cJ1" secondAttribute="bottom" constant="13.666666666666742" id="HcD-g8-y0G"/>
                     <constraint firstItem="XL1-CB-cJ1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="JyU-KB-6AQ"/>
+                    <constraint firstItem="uSN-aY-lhg" firstAttribute="bottom" secondItem="0Bi-nA-yqF" secondAttribute="bottom" id="P5e-8P-uRz"/>
                     <constraint firstItem="XL1-CB-cJ1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="QU5-3w-jY4"/>
                     <constraint firstAttribute="trailing" secondItem="XL1-CB-cJ1" secondAttribute="trailing" constant="10" id="f83-ci-HuE"/>
+                    <constraint firstItem="uSN-aY-lhg" firstAttribute="leading" secondItem="0Bi-nA-yqF" secondAttribute="leading" id="zUj-ZC-wVG"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -192,6 +226,7 @@
                 <outlet property="assignmentProgressLbl" destination="bmI-dO-xB4" id="eOB-JB-4fz"/>
                 <outlet property="completedBtn" destination="Uwl-Tf-n0w" id="lhV-da-Cv4"/>
                 <outlet property="descriptionLbl" destination="eP9-eE-snK" id="BG1-jK-8Ub"/>
+                <outlet property="editBtn" destination="ybj-BQ-fXO" id="aRf-4k-N9P"/>
                 <outlet property="img1" destination="G4y-Wv-kie" id="CHb-mf-bDP"/>
                 <outlet property="img2" destination="CaN-e2-iN5" id="tis-6O-U0b"/>
                 <outlet property="img3" destination="fAv-wS-UDe" id="Ygh-tw-5Ce"/>
@@ -201,10 +236,11 @@
                 <outlet property="progressView" destination="I3C-tA-Xbh" id="OJz-aO-ZCK"/>
                 <outlet property="subCatogoriesStack" destination="Ji1-p1-OuP" id="lSH-2P-7px"/>
                 <outlet property="submitBtn" destination="Etf-oa-dvt" id="7sF-e9-8Qg"/>
+                <outlet property="submitBtnStack" destination="a3J-j3-ilb" id="DrT-x3-em3"/>
                 <outlet property="submittedProgressStack" destination="37L-3H-eAT" id="etu-yt-dcR"/>
                 <outlet property="titleLbl" destination="NFI-Fh-EvJ" id="6ap-5C-qQI"/>
             </connections>
-            <point key="canvasLocation" x="253.43511450381678" y="127.11267605633803"/>
+            <point key="canvasLocation" x="318" y="127"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -44,8 +44,8 @@ class LeveHistoryTV: UITableViewCell {
         aproveBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         rejectBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        aproveBtn.setShadow()
-        rejectBtn.setShadow()
+        aproveBtn.layer.cornerRadius = 5
+        rejectBtn.layer.cornerRadius = 5
         
     }
 

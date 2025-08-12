@@ -30,6 +30,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     var tapGesture: UITapGestureRecognizer?
     var selectedIndexPath: IndexPath?
     let today = Date()
+    let transitionDelegate = TransitioningDelegate()
     var studentDetails = UserDefaultFileManager.get_child_Details()
     
     override func viewDidLoad() {
@@ -134,23 +135,38 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         let cell = listTable.dequeueReusableCell(withIdentifier: "AssignmentTVC", for: indexPath) as! AssignmentTVC
         if let report = filteredData?[indexPath.row]{
             cell.configure(with: report)
+            cell.id = report.header_id
+            cell.subject = report.subject
             cell.loadFiles(into: cell, files: report.file_path ?? [])
+            cell.mysubmitBtn.isHidden = report.submitted_count == 0
         }
-       
+        cell.submittedProgressStack.isHidden = true
+        cell.editBtn.isHidden = true
+        
+        cell.submitBtnStack.isHidden = false
         cell.layoutIfNeeded()
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath),
+              indexPath.row < filteredData?.count ?? 0 else { return }
+        
+        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
+        
+        let detailVC = AssignmentPriview()
+        let selectedItem = filteredData?[indexPath.row]
+        detailVC.data = selectedItem
+        detailVC.userNameValue = UserDefaultFileManager.get_child_Details()?.name
+        detailVC.sectionValue = UserDefaultFileManager.get_child_Details()?.school_name
+        detailVC.reciver = true
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-    }
-    
-    @IBAction func ViewAct(_ sender: Any){
-        let vc = ImageShowVc(nibName: nil, bundle: nil)
-//        vc.FileURL = fileUrl
-//        vc.type = 0
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     
     func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String) {

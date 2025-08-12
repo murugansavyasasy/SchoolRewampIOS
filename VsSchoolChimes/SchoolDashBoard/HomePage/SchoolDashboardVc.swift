@@ -347,7 +347,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             if let menuDetails = menu_details {
                 filteredMenu_details = Array(menuDetails.prefix(9))
                 if filteredMenu_details?.count ?? 0 > 5 {
-                    filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                    filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0, description: ""), at: 6)
                 }
             }
         } else {
@@ -774,7 +774,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                         
                         // Insert "Add" item if count > 5
                         if self.filteredMenu_details?.count ?? 0 > 5 {
-                            self.filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                            self.filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0, description: ""), at: 6)
                         }
                         
                         self.filteredItems = details

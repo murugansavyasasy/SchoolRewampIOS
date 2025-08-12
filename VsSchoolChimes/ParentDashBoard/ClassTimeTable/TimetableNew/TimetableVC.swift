@@ -110,8 +110,6 @@ class TimetableVC: UIViewController {
         nav.isModalInPresentation = true
         present(nav, animated: true)
     }
-    
-   //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6Ijk2NzQ2ODYiLCJzY2hvb2xfaWQiOiI3MDQzIiwiY2xhc3NfaWQiOjMyNTgyLCJzZWN0aW9uX2lkIjo5MDgxMywiaWF0IjoxNzUzMzM5ODIxfQ.BTdYpDv8tZG7B0L5myEMVbpDi7nerChzozTgOgJKhc8"
    
     func daily_collectionApi(type: Int) {
         APIService.shared.makeApi(
