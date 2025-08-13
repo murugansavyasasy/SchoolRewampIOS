@@ -1541,3 +1541,53 @@ struct TestQuestion: Codable {
     var question: String
     var options: [String]
 }
+
+
+//MARK: PTM Model class
+
+struct PTMSlotResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [SlotDateData]?
+}
+
+struct SlotDateData: Codable {
+    let date: String?
+    let details: [SlotEventDetail]?
+}
+
+struct SlotEventDetail: Codable {
+    let event_name: String?
+    let event_mode: String?
+    let meeting_duration: Int?
+    let break_duration: Int?
+    let slots: [SlotItem]?
+    let std_sec_details: [ClassSectionDetail]?
+}
+
+struct SlotItem: Codable {
+    let slot_id: String?
+    let from_time: String?
+    let to_time: String?
+    let is_cancelled: Int?
+    let is_booked: Int?
+    let booked_by: String?
+    let my_class: String?
+    let my_section: String?
+    let profile_url: String?
+    let status: String?
+    let event_name: String?
+    let event_mode: String?
+    let meeting_duration: Int?
+    let break_duration: Int?
+    let is_cancelled_by_staff: Int?
+    let date: String?
+}
+
+struct ClassSectionDetail: Codable {
+    let class_id: String?
+    let section_id: String?
+    let class_name: String?
+    let section_name: String?
+}
+

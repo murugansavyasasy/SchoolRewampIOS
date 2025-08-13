@@ -54,7 +54,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManag
     @IBOutlet weak var recordingTimeLbl: UILabel!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
-    @IBOutlet weak var VideoView: UIView!
     
     @IBOutlet weak var recordingStack: UIStackView!
     
@@ -104,7 +103,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManag
         setupAudioUI()
         styleAndTranslate()
         imageSelection()
-        VideoView.isHidden = true
         // Apply selected style
         skillButtons.first?.layer.borderWidth = 2
         skillButtons.first?.layer.cornerRadius = 10
@@ -235,6 +233,36 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManag
         isRecording ? stopRecording() : startRecording()
     }
     
+    @IBAction func selectRecipient(_ sender: UIButton) {
+//        guard let title = assignTitleTxtFld.text , !title.isEmpty, let contents = contentTextView.text , !contents.isEmpty
+//        else {
+//            CustomAlert
+//                .showAlertWithOkAction(
+//                    title: AlertstringFile.Alert_title,
+//                    message: AlertstringFile.Fill_All_Required_Fields,
+//                    on: self
+//                )
+//            return
+//        }
+//        
+//        let date = ConvertDateStringSmart(DateBtn.titleLabel?.text)
+//        
+//        // Step 1: Prepare all user_inputs data into one dictionary
+//        let params: [String: Any] = [
+//            assignmentResquestStringKey.title: title,
+//            assignmentResquestStringKey.description: contents,
+//            assignmentResquestStringKey.category: categoryDropDownLbl.text ?? "",
+//            assignmentResquestStringKey.submission_date: date,
+//        ]
+//        
+//        user_inputs.VideoPath = selectedVideoURL
+//        user_inputs.SelectedUrls = attachments
+//        
+//        let vc = RecipientVc(nibName: nil, bundle: nil)
+//        vc.Common_request_params = params
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+    }
     @IBAction func deleteVideo() {
         videoPickerManagerDidCloseVideo()
     }
@@ -511,18 +539,15 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManag
 @available(iOS 15.0, *)
 extension SenderLSRWVC {
     func videoPickerManager(didPickVideo url: URL) {
-        videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         uploadAttachmentView.isHidden = true
         collectionViewHeight.constant = 0
         selectedVideoURL = url
-        VideoView.isHidden = false
         RecipientBtn.isHidden = false
     }
     
     func videoPickerManagerDidCloseVideo() {
         selectedVideoURL = nil
-        VideoView.isHidden = true
         uploadAttachmentView.isHidden = false
         collectionViewHeight.constant = 120
         uploadAttachmentView.imageCollectionview.reloadData()

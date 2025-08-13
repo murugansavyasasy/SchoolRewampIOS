@@ -19,7 +19,6 @@
                 <outlet property="TextViewheight" destination="Evc-a0-qpq" id="JGP-hA-biF"/>
                 <outlet property="TitleTxtfield" destination="5Tq-fx-tKi" id="UNr-QN-yg1"/>
                 <outlet property="ToStdOrSecBtnBottom" destination="fMp-z2-ggI" id="UPb-Mk-mJ8"/>
-                <outlet property="VideoView" destination="Wfs-U8-dxp" id="lh8-M5-kj8"/>
                 <outlet property="audioFile" destination="swF-vH-WBt" id="i2s-7R-Aey"/>
                 <outlet property="collectionViewHeight" destination="QoB-F1-DOQ" id="zhE-oc-yre"/>
                 <outlet property="deleteBtn" destination="bbX-s8-wvu" id="scH-tW-NME"/>
@@ -58,7 +57,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNZ-WV-gqI">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="962.33333333333337"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="708.33333333333337"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pmk-98-l1u">
                                             <rect key="frame" x="10" y="10" width="373" height="40"/>
@@ -101,7 +100,7 @@
                                             </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="04u-yp-Nru">
-                                            <rect key="frame" x="16" y="60" width="361" height="892.33333333333337"/>
+                                            <rect key="frame" x="16" y="60" width="361" height="638.33333333333337"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ppg-eY-ail">
                                                     <rect key="frame" x="0.0" y="0.0" width="361" height="202.33333333333334"/>
@@ -200,7 +199,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="eXK-KP-m87">
-                                                    <rect key="frame" x="0.0" y="232.33333333333326" width="361" height="590"/>
+                                                    <rect key="frame" x="0.0" y="232.33333333333331" width="361" height="335.99999999999994"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uo4-gE-edG">
                                                             <rect key="frame" x="0.0" y="0.0" width="361" height="20"/>
@@ -224,22 +223,15 @@
                                                                 <constraint firstAttribute="height" constant="20" id="xHh-gZ-NdY"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wfs-U8-dxp">
-                                                            <rect key="frame" x="0.0" y="44" width="361" height="230"/>
-                                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="230" id="Qwm-vz-yhZ"/>
-                                                            </constraints>
-                                                        </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nkv-yR-VcH" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="298.00000000000006" width="361" height="120"/>
+                                                            <rect key="frame" x="0.0" y="44" width="361" height="120"/>
                                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="120" id="QoB-F1-DOQ"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swF-vH-WBt">
-                                                            <rect key="frame" x="0.0" y="442" width="361" height="148"/>
+                                                            <rect key="frame" x="0.0" y="188.00000000000006" width="361" height="148"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="MEa-YX-WI6">
                                                                     <rect key="frame" x="10" y="10" width="341" height="128"/>
@@ -365,7 +357,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNx-mk-nhd">
-                                                    <rect key="frame" x="0.0" y="852.33333333333337" width="361" height="40"/>
+                                                    <rect key="frame" x="0.0" y="598.33333333333337" width="361" height="40"/>
                                                     <color key="backgroundColor" name="ButtonColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="hJu-oQ-5n7"/>
@@ -374,6 +366,9 @@
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="TO STANDARD OR SECTIONS"/>
+                                                    <connections>
+                                                        <action selector="selectRecipient:" destination="-1" eventType="touchUpInside" id="QCd-CC-wXb"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>

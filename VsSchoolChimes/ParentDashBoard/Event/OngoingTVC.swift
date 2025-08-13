@@ -69,7 +69,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                        detailVC.selectedDate = notice.date
                        detailVC.titleString = notice.title
                        detailVC.descriptionString = notice.description
-                       detailVC.subject_name = "Notice Board".translated()
+                       detailVC.subject_name = "Event".translated()
                        detailVC.postedBy = notice.sent_by
                        detailVC.modalPresentationStyle = .custom
                        transitionDelegate.originFrame = cellFrameInSuperview
@@ -105,7 +105,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                   let event = onGoing?[indexPath.item] else {
                 return UICollectionViewCell()
             }
-            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date)"
+            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
             cell.placeLbl.text = event.venue
             cell.titleLbl.text = event.title
             cell.descriptionLbl.text = event.description

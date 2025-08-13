@@ -22,7 +22,11 @@ struct SubCategories {
     }
 }
 
-class AssignmentTVC: UITableViewCell {
+class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
+    func selectId(id: String?, edit: Bool?) {
+        delegate?.selectId(id:id, edit: edit)
+    }
+    
     
     // MARK: - IBOutlets
     @IBOutlet weak var editBtn: UIButton!
@@ -48,6 +52,10 @@ class AssignmentTVC: UITableViewCell {
     var assignment: Report?
     var id :String?
     var subject :String?
+    var edit:Bool?
+    var delete:Bool?
+    var delegate:SelectedId?
+    var selectedId:String?
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -130,7 +138,12 @@ class AssignmentTVC: UITableViewCell {
         assignmentProgressLbl.font = .systemFont(ofSize: 12, weight: .medium)
         assignmentProgressLbl.textColor = .label
     }
-    
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        editBtn.isHidden = !(edit || delete)
+    }
     // MARK: - Cell Configuration
     func configure(with assignment: Report) {
         self.assignment = assignment
@@ -212,6 +225,27 @@ class AssignmentTVC: UITableViewCell {
         
         
         return cats
+    }
+    @IBAction func edit(_ sender: UIButton) {
+        let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
+        popoverContentVC.delegate = self
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: edit ?? false ? 90:50)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .right
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
     }
     func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
         view.layer.cornerRadius = cornerRadius
@@ -363,5 +397,9 @@ class AssignmentTVC: UITableViewCell {
     func formatDate(_ dateString: String) -> String {
         // TODO: Replace with actual date formatting
         return dateString
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
     }
 }
