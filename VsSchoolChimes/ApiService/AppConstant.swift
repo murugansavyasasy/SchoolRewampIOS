@@ -132,6 +132,7 @@ struct ServiceUrl{
     static let comm_api_leave_req_update = "comm/api/leave-req/update"
     static let lms_api_lsrw_skill_list = "lms/api/lsrw/skill-list"
     static let lms_api_lsrw_submit_skill = "lms/api/lsrw/submit-skill"
+    static let lms_api_lsrw_create_skill = "lms/api/lsrw/create-skill"
     static let comm_api_leave_req_leave_categories = "comm/api/leave-req/leave-categories"
     static let stud_attd_api_attendance_student_stats = "stud-attd/api/attendance/student-stats"
     static let ptm_api_ptm_schedule_slot_details_for_staff = "ptm/api/ptm-schedule/slot-details-for-staff"

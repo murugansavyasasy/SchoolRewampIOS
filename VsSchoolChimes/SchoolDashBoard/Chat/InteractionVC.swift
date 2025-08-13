@@ -8,24 +8,27 @@
 import UIKit
 
 class InteractionVC: UIViewController {
-    @IBOutlet weak var NameStandardStackView: UIStackView!
-    
+   
+    @IBOutlet weak var FullView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var HeaderLbl: UILabel!
    
     var passvalue = 0
     var staffMembersData: [StaffMember]?
-    var childDetails = UserDefaultFileManager.get_child_Details()
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         backBtn.applyBackButton()
+        FullView.layer.cornerRadius = 30
+        FullView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        FullView.layer.masksToBounds = true
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        HeaderLbl.setFont(style: .header, size: 17)
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        let name = studentDetails?.name ?? ""
+        let standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
@@ -36,23 +39,13 @@ class InteractionVC: UIViewController {
         
     }
     
-    override func viewDidLayoutSubviews() {
-        if passvalue == 1{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            backBtn.setTitle("Interact With Staff", for: .normal)
-            NameStandardStackView.isHidden = false
-        }
-        else if passvalue == 2{
-            backBtn.setTitle("Interact With Student", for: .normal)
-            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            NameStandardStackView.isHidden = true
-        }
-    }
     
-    @IBAction func BackAct(_ sender: Any) {
+    
+    @IBAction func backBtnAct(_ sender: Any) {
+        
         dismiss(animated: true)
     }
-    
+ 
 }
 
 extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
@@ -97,7 +90,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
 
     func getStaff(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? ""){ [self] (
                 result:Result <StaffListResponse,
                 Error>
             ) in

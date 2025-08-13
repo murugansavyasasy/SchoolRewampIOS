@@ -14,6 +14,15 @@ class IntractwithStudentVc: UIViewController {
     var getStandardDetails:[StaffMember]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let name = StaffDetails?.name ?? ""
+//        let standard = (StaffDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+//        backBtn.configureAsBackButton(
+//                firstLine: "",
+//                secondLine: StaffDetails?.school_name,
+//                colour: .white
+//            )
+//        
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
@@ -21,8 +30,6 @@ class IntractwithStudentVc: UIViewController {
         getStaff()
     }
 
-
-   
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true)
     }

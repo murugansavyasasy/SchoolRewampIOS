@@ -44,6 +44,9 @@
                                                 <color key="tintColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.4818106761" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
                                                 <state key="normal" image="three-dot"/>
+                                                <connections>
+                                                    <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hxY-sN-cG5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>

@@ -116,7 +116,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     }
 
     @IBAction func backBtn(_ sender: UIButton) {
-        dismiss(animated: true)
+        dismiss(animated: false)
     }
     
     func getAssignment() {

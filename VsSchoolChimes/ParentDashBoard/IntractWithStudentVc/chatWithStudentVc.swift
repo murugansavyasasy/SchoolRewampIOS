@@ -142,9 +142,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTVCell", for: indexPath) as! ChatTVCell
      let message = chatDataDetails?[indexPath.row]
-     
-     
-     
+ 
      if message?.ans_file_path?.count == 0 {
          if message?.answer != "Not answered yet"{
              
@@ -162,8 +160,6 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
          cell.timeStampLbl.isHidden = true
          cell.imageStack.isHidden = false
          cell.imageConficure(with:message?.ans_file_path?.first?.url )
-         
-        
 
      }
      
