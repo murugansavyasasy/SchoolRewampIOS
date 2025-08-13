@@ -283,3 +283,9 @@ class PaucketHeader{
     static let source_link = "source_link"
     static let mobile_no = "mobile_no"
 }
+
+
+class PTMRequestStringFile{
+    
+    static let event_date = "event_date"
+}

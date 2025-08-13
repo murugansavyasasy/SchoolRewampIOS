@@ -91,6 +91,28 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         OutlineView.layer.borderWidth = 1
         OutlineView.layer.borderColor = UIColor.systemGray4.cgColor
         
+        NewLeaveDefLbl.text = AttendanceString.newLeave
+        TypeDefLbl.text = AttendanceString.type
+        LeaveTypeBtn.setTitle(AttendanceString.selectLeaveType, for: .normal)
+        CauseDefLbl.text = AttendanceString.cause
+        FromDefLbl.text = CommonStringFile.From
+        ToDefLbl.text = CommonStringFile.To
+        SessionDefLbl.text = AttendanceString.session
+        ToSessionDefLbl.text = AttendanceString.session
+        
+        NewFromDateLbl.setTitle(AttendanceString.selectFromDate, for: .normal)
+        NewToDateLbl.setTitle(AttendanceString.selectToDate, for: .normal)
+        FromSessionBtn.setTitle(AttendanceString.firstHalf, for: .normal)
+        ToSessionBtn.setTitle(AttendanceString.secondHalf, for: .normal)
+        
+        SelectFromDateDefLbl.text = AttendanceString.selectFromDate
+        SelectToDateDefLbl.text = AttendanceString.selectToDate
+        
+        ApplyLeaveBtn.setTitle(AttendanceString.applyLeave, for: .normal)
+        
+        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        
         NewLeaveDefLbl.setFont(style: .header, size: 20)
         TypeDefLbl.setFont(style: .body, size: FontSize.BodySize)
         CauseDefLbl.setFont(style: .body, size: FontSize.BodySize)

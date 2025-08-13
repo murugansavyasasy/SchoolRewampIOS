@@ -12,6 +12,7 @@ class NewAttendanceReportVC: UIViewController {
     @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var TitleLbl: UILabel!
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
@@ -26,6 +27,9 @@ class NewAttendanceReportVC: UIViewController {
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
+        
+        TitleLbl.text = AttendanceString.attendanceReport
+        TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
         tv.register(UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil), forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
         Get_attendaceReport()

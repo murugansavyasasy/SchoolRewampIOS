@@ -255,3 +255,50 @@
 "Days" = "दिन";
 "CreateLeaveRequest" = "छुट्टी का अनुरोध बनाएं";
 "LeaveRequestInfo" = "छुट्टी अनुरोध जानकारी";
+
+//MARK: Lesson plan
+"All Classes" = "सभी कक्षाएँ";
+"My Classes" = "मेरी कक्षाएँ";
+"Edit Lesson Plan" = "पाठ योजना संपादित करें";
+"items completed" = "आइटम पूरे हुए";
+"All" = "सभी";
+"Yet to Start" = "अभी शुरू नहीं हुआ";
+"In Progress" = "प्रगति पर है";
+"Completed" = "पूर्ण";
+"Edit" = "संपादित करें";
+
+"View Marks" = "अंक देखें";
+"View Progress" = "प्रगति देखें";
+"Overall Grade" = "कुल ग्रेड";
+"Subject & Marks" = "विषय और अंक";
+"Other Activities" = "अन्य गतिविधियाँ";
+"Exam Timetable" = "परीक्षा समय सारिणी";
+"Exam Marks" = "परीक्षा अंक";
+
+"Attendance" = "उपस्थिति";
+"This week status" = "इस सप्ताह की स्थिति";
+"Leave Taken" = "अवकाश लिया गया";
+"Ongoing Days" = "चालू दिन";
+"Ask Leave" = "अवकाश मांगें";
+"Leave Requests" = "अवकाश अनुरोध";
+"Attendance Report" = "उपस्थिति रिपोर्ट";
+"Holidays" = "छुट्टियाँ";
+"New Leave" = "नया अवकाश";
+"Type" = "प्रकार";
+"Cause" = "कारण";
+"Session" = "सत्र";
+"Select From Date" = "तारीख से चुनें";
+"Select To Date" = "तारीख तक चुनें";
+"First Half" = "पहला आधा";
+"Second Half" = "दूसरा आधा";
+"Select Leave Type" = "अवकाश प्रकार चुनें";
+"Enter Reason" = "कारण दर्ज करें";
+"Apply Leave" = "अवकाश के लिए आवेदन करें";
+"Approved" = "स्वीकृत";
+"Rejected" = "अस्वीकृत";
+"Waiting" = "प्रतीक्षा में";
+"Awaiting" = "लंबित";
+"Generate Outpass" = "आउटपास जनरेट करें";
+"Absent" = "अनुपस्थित";
+"No Holidays for" = "कोई छुट्टी नहीं";
+"Holidays for" = "छुट्टियाँ हैं";

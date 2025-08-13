@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExameMarVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="SearchBar" destination="OXc-83-TMa" id="auM-Uj-fsd"/>
                 <outlet property="cv" destination="mH4-ng-0SF" id="1sI-ki-OG8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,15 +23,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBN-7F-8Ax">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="OXc-83-TMa">
-                            <rect key="frame" x="8" y="5" width="377" height="56"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="56" id="uCi-gt-4Jk"/>
-                            </constraints>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="mH4-ng-0SF">
-                            <rect key="frame" x="15" y="71" width="363" height="669"/>
+                            <rect key="frame" x="15" y="15" width="363" height="725"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iE3-pr-PlB">
                                 <size key="itemSize" width="128" height="128"/>
@@ -45,12 +37,9 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="mH4-ng-0SF" firstAttribute="leading" secondItem="VBN-7F-8Ax" secondAttribute="leading" constant="15" id="Atj-pS-Wnv"/>
-                        <constraint firstItem="OXc-83-TMa" firstAttribute="top" secondItem="VBN-7F-8Ax" secondAttribute="top" constant="5" id="B3G-fj-s5T"/>
-                        <constraint firstItem="OXc-83-TMa" firstAttribute="leading" secondItem="VBN-7F-8Ax" secondAttribute="leading" constant="8" id="LAs-zJ-c1L"/>
+                        <constraint firstItem="mH4-ng-0SF" firstAttribute="top" secondItem="VBN-7F-8Ax" secondAttribute="top" constant="15" id="FI5-r1-Ssm"/>
                         <constraint firstAttribute="bottom" secondItem="mH4-ng-0SF" secondAttribute="bottom" constant="19" id="hne-OP-q4D"/>
                         <constraint firstAttribute="trailing" secondItem="mH4-ng-0SF" secondAttribute="trailing" constant="15" id="jLV-s1-mNz"/>
-                        <constraint firstItem="mH4-ng-0SF" firstAttribute="top" secondItem="OXc-83-TMa" secondAttribute="bottom" constant="10" id="rlO-Tp-oPB"/>
-                        <constraint firstAttribute="trailing" secondItem="OXc-83-TMa" secondAttribute="trailing" constant="8" id="vV3-YB-K4u"/>
                     </constraints>
                 </view>
             </subviews>

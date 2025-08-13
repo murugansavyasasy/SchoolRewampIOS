@@ -30,10 +30,14 @@ class ExamDetailsVC: UIViewController {
         super.viewDidLoad()
         
         Searchbar.isHidden = true
+        Searchbar.placeholder = CommonStringFile.Search
         Searchbar.delegate = self
         //BackBtn.setTitle("Exam/Test", for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        
+        TimeTableBtn.setTitle(ExamStringFile.examTimetable, for: .normal)
+        ExamMarksBtn.setTitle(ExamStringFile.examMarks, for: .normal)
         TimeTableBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
         ExamMarksBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         

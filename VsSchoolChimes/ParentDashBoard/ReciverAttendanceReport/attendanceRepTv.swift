@@ -20,6 +20,8 @@ class attendanceRepTv: UITableViewCell {
         // Initialization code
         datefullView.layer.cornerRadius = 32.5
         absntBtn.layer.cornerRadius = 15
+        absntBtn.setTitle(AttendanceString.absent, for: .normal)
+        absntBtn.setTitleFont(style: .secondary, size: FontSize.TitleSize)
         applyShadowAndCornerRadius(to:cellFullview)
     }
 
