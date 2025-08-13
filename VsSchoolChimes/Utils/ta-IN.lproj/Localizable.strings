@@ -268,3 +268,51 @@
 "Days" = "நாட்கள்";
 "CreateLeaveRequest" = "சல்லற் கோரிக்கையை உருவாக்கவும்";
 "LeaveRequestInfo" = "செல்லற் கோரிக்கை விவரம்";
+
+
+//MARK: Lessonplan
+"All Classes" = "அனைத்து வகுப்புகள்";
+"My Classes" = "என் வகுப்புகள்";
+"Edit Lesson Plan" = "பாடத்திட்டத்தை திருத்து";
+"items completed" = "பொருட்கள் முடிக்கப்பட்டது";
+"All" = "அனைத்து";
+"Yet to Start" = "இன்னும் தொடங்கவில்லை";
+"In Progress" = "நடைபெற்று வருகிறது";
+"Completed" = "முடிந்தது";
+"Edit" = "திருத்து";
+
+"View Marks" = "மதிப்பெண்களை காண்க";
+"View Progress" = "முன்னேற்றத்தை காண்க";
+"Overall Grade" = "மொத்த தரம்";
+"Subject & Marks" = "பாடம் & மதிப்பெண்கள்";
+"Other Activities" = "பிற செயல்பாடுகள்";
+"Exam Timetable" = "தேர்வு அட்டவணை";
+"Exam Marks" = "தேர்வு மதிப்பெண்கள்";
+
+"Attendance" = "வருகை";
+"This week status" = "இந்த வார நிலை";
+"Leave Taken" = "விடுப்பு எடுத்தது";
+"Ongoing Days" = "நடந்து வரும் நாட்கள்";
+"Ask Leave" = "விடுப்பு கேட்க";
+"Leave Requests" = "விடுப்பு கோரிக்கைகள்";
+"Attendance Report" = "வருகை அறிக்கை";
+"Holidays" = "விடுமுறைகள்";
+"New Leave" = "புதிய விடுப்பு";
+"Type" = "வகை";
+"Cause" = "காரணம்";
+"Session" = "அமர்வு";
+"Select From Date" = "தேதி முதல் தேர்வு செய்க";
+"Select To Date" = "தேதி வரை தேர்வு செய்க";
+"First Half" = "முதல் பாதி";
+"Second Half" = "இரண்டாம் பாதி";
+"Select Leave Type" = "விடுப்பு வகையைத் தேர்ந்தெடுக்கவும்";
+"Enter Reason" = "காரணத்தை உள்ளிடவும்";
+"Apply Leave" = "விடுப்பு விண்ணப்பிக்கவும்";
+"Approved" = "அனுமதிக்கப்பட்டது";
+"Rejected" = "நிராகரிக்கப்பட்டது";
+"Waiting" = "காத்திருக்கிறது";
+"Awaiting" = "நிலுவையில் உள்ளது";
+"Generate Outpass" = "வெளியேறும் பாஸ் உருவாக்கு";
+"Absent" = "வரவில்லை";
+"No Holidays for" = "விடுமுறை இல்லை";
+"Holidays for" = "விடுமுறை உள்ளது";

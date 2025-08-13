@@ -256,3 +256,51 @@
 "Days" = "วัน";
 "CreateLeaveRequest" = "สร้างคำขอลา";
 "LeaveRequestInfo" = "ข้อมูลคำขอลา";
+
+
+//MARK: Lesson plan
+"All Classes" = "ทุกชั้นเรียน";
+"My Classes" = "ชั้นเรียนของฉัน";
+"Edit Lesson Plan" = "แก้ไขแผนการสอน";
+"items completed" = "รายการเสร็จสิ้น";
+"All" = "ทั้งหมด";
+"Yet to Start" = "ยังไม่เริ่ม";
+"In Progress" = "กำลังดำเนินการ";
+"Completed" = "เสร็จสิ้น";
+"Edit" = "แก้ไข";
+
+"View Marks" = "ดูคะแนน";
+"View Progress" = "ดูความก้าวหน้า";
+"Overall Grade" = "เกรดรวม";
+"Subject & Marks" = "วิชาและคะแนน";
+"Other Activities" = "กิจกรรมอื่นๆ";
+"Exam Timetable" = "ตารางสอบ";
+"Exam Marks" = "คะแนนสอบ";
+
+"Attendance" = "การเข้าเรียน";
+"This week status" = "สถานะสัปดาห์นี้";
+"Leave Taken" = "การลาหยุด";
+"Ongoing Days" = "วันที่ดำเนินอยู่";
+"Ask Leave" = "ขอลาหยุด";
+"Leave Requests" = "คำขอลาหยุด";
+"Attendance Report" = "รายงานการเข้าเรียน";
+"Holidays" = "วันหยุด";
+"New Leave" = "ลาหยุดใหม่";
+"Type" = "ประเภท";
+"Cause" = "สาเหตุ";
+"Session" = "ช่วงเวลา";
+"Select From Date" = "เลือกจากวันที่";
+"Select To Date" = "เลือกถึงวันที่";
+"First Half" = "ครึ่งแรก";
+"Second Half" = "ครึ่งหลัง";
+"Select Leave Type" = "เลือกประเภทการลา";
+"Enter Reason" = "กรอกเหตุผล";
+"Apply Leave" = "ยื่นขอลาหยุด";
+"Approved" = "อนุมัติแล้ว";
+"Rejected" = "ปฏิเสธ";
+"Waiting" = "รอ";
+"Awaiting" = "กำลังรอ";
+"Generate Outpass" = "สร้างบัตรผ่าน";
+"Absent" = "ขาดเรียน";
+"No Holidays for" = "ไม่มีวันหยุดสำหรับ";
+"Holidays for" = "วันหยุดสำหรับ";

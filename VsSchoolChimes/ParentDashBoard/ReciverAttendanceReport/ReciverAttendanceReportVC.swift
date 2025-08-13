@@ -15,12 +15,8 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var Topview: UIView!
-    
-    
     @IBOutlet weak var WeeklyView: UIView!
-    
     @IBOutlet weak var percentagesBaseView: UIView!
-    
     @IBOutlet weak var DateLbl: UILabel!
     @IBOutlet weak var DayAndMonthLbl: UILabel!
     @IBOutlet weak var WeekStatusDefBtn: UIButton!
@@ -45,6 +41,7 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var requestHistoryDefLbl: UILabel!
     @IBOutlet weak var attendanceReportDefLbl: UILabel!
     @IBOutlet weak var holidaysDefLbl: UILabel!
+    @IBOutlet weak var MenuTitleLbl: UILabel!
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
@@ -62,6 +59,8 @@ class ReciverAttendanceReportVC: UIViewController {
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         BackBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
+        MenuTitleLbl.text = AttendanceString.attendance
+        MenuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         Topview.layer.cornerRadius = 25
         Topview.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         StyleAndTranslate()
@@ -96,6 +95,16 @@ class ReciverAttendanceReportVC: UIViewController {
         percentagesBaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
         percentagesBaseView.layer.shadowRadius = 4
         percentagesBaseView.layer.masksToBounds = false
+        
+        WeekStatusDefBtn.setTitle(AttendanceString.thisWeekStatus, for: .normal)
+        
+        AttendanceDefLbl.text = AttendanceString.attendance
+        LeaveTakenDefLbl.text = AttendanceString.leaveTaken
+        OngoingdaysDefLbl.text = AttendanceString.ongoingDays
+        askLeavesDefLbl.text = AttendanceString.askLeave
+        requestHistoryDefLbl.text = AttendanceString.leaveRequests
+        attendanceReportDefLbl.text = AttendanceString.attendanceReport
+        holidaysDefLbl.text = AttendanceString.holidays
         
         AttendanceDefLbl.setFont(style: .body, size: 10)
         LeaveTakenDefLbl.setFont(style: .body, size: 10)

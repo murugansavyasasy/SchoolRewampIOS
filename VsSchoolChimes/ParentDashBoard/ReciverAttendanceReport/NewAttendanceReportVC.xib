@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewAttendanceReportVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="TitleLbl" destination="ud9-Wx-jlO" id="CVe-S8-Nvs"/>
                 <outlet property="TopView" destination="2fy-0D-nOV" id="rwM-dj-sAM"/>
                 <outlet property="backBtn" destination="T2V-oH-1rT" id="qIK-Mp-JEn"/>
                 <outlet property="tv" destination="YY8-wu-xnp" id="i3e-km-JFQ"/>
@@ -40,7 +41,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" name="themeColour"/>
+                    <color key="backgroundColor" name="BackGroundClr"/>
                     <constraints>
                         <constraint firstItem="T2V-oH-1rT" firstAttribute="leading" secondItem="2fy-0D-nOV" secondAttribute="leading" constant="10" id="Ejc-IG-Wn9"/>
                         <constraint firstAttribute="trailing" secondItem="T2V-oH-1rT" secondAttribute="trailing" constant="10" id="oM4-K1-8la"/>
@@ -83,8 +84,8 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="themeColour">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

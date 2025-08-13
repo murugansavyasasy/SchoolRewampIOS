@@ -247,9 +247,52 @@
 "Leave Request Info" = "Leave Request Info";
 
 
+//MARK: Lessonplan
+"All Classes" = "All Classes";
+"My Classes" = "My Classes";
+"Edit Lesson Plan" = "Edit Lesson Plan";
+"items completed" = "items completed";
+"All" = "All";
+"Yet to Start" = "Yet to Start";
+"In Progress" = "In Progress";
+"Completed" = "Completed";
+"Edit" = "Edit";
 
+"View Marks" = "View Marks";
+"View Progress" = "View Progress";
+"Overall Grade" = "Overall Grade";
+"Subject & Marks" = "Subject & Marks";
+"Other Activities" = "Other Activities";
+"Exam Timetable" = "Exam Timetable";
+"Exam Marks" = "Exam Marks";
 
-
+"Attendance" = "Attendance";
+"This week status" = "This week status";
+"Leave Taken" = "Leave Taken";
+"Ongoing Days" = "Ongoing Days";
+"Ask Leave" = "Ask Leave";
+"Leave Requests" = "Leave Requests";
+"Attendance Report" = "Attendance Report";
+"Holidays" = "Holidays";
+"New Leave" = "New Leave";
+"Type" = "Type";
+"Cause" = "Cause";
+"Session" = "Session";
+"Select From Date" = "Select From Date";
+"Select To Date" = "Select To Date";
+"First Half" = "First Half";
+"Second Half" = "Second Half";
+"Select Leave Type" = "Select Leave Type";
+"Enter Reason" = "Enter Reason";
+"Apply Leave" = "Apply Leave";
+"Approved" = "Approved";
+"Rejected" = "Rejected";
+"Waiting" = "Waiting";
+"Awaiting" = "Awaiting";
+"Generate Outpass" = "Generate Outpass";
+"Absent" = "Absent";
+"No Holidays for" = "No Holidays for";
+"Holidays for" = "Holidays for";
 
 
 

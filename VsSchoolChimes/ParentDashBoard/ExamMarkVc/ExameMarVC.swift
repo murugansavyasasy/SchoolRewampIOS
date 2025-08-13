@@ -9,16 +9,13 @@ import UIKit
 
 class ExameMarVC: UIViewController {
 
-    @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var cv: UICollectionView!
     var exameList: [ExamItem]?
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        StyleAndTranslate()
-        SearchBar.addDoneButton()
+        
         CellRegister()
-        SearchBar.applyRightTxt()
+        
 
         cv.dataSource = self
         cv.delegate = self
@@ -57,10 +54,6 @@ class ExameMarVC: UIViewController {
         }
     }
 
-  
-    func StyleAndTranslate() {
-        SearchBar.placeholder = CommonStringFile.Search.translated()
-    }
 
     func CellRegister() {
         cv.register(UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
@@ -123,9 +116,3 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
 }
 
-// MARK: - SearchBar
-extension ExameMarVC: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        SearchBar.resignFirstResponder()
-    }
-}

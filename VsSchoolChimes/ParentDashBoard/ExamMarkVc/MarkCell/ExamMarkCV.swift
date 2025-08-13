@@ -27,6 +27,9 @@ class ExamMarkCV: UICollectionViewCell {
         ViewMarkBtnview.layer.cornerRadius = 10
         ViewProgress.layer.cornerRadius = 10
         
+        viewMarksLbl.text = ExamStringFile.viewMarks
+        viewprogessLbl.text = ExamStringFile.viewProgress
+        
         ExamLbl.setFont(style: .title, size: FontSize.TitleSize)
         viewMarksLbl.setFont(style: .title, size: FontSize.TitleSize)
         viewprogessLbl.setFont(style: .title, size: FontSize.TitleSize)
