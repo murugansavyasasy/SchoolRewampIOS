@@ -11,7 +11,15 @@ import Kingfisher
 
 class AssignmentReport: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
-
+        if edit ?? false{
+            if let selectedNotice = self.filteredData.first(where: { $0.id == id }) {
+                delegate?.editDta(edit: selectedNotice)
+            }
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.deleteEvent(id: id)
+            }
+        }
     }
     
 
@@ -30,6 +38,7 @@ class AssignmentReport: UIViewController, SelectedId {
     var filteredData: [Report] = []
     let academicDropDown = DropDown()
     let alert = CustomAlert()
+    var delegate:EditObjectDelegate?
     var academicId: Int?
     var academicYearDataList: [AcadimicYearData] = []
     var academicYears: [String] = []
@@ -49,7 +58,7 @@ class AssignmentReport: UIViewController, SelectedId {
         getAssigment()
     }
     func deleteEvent(id: String?) {
-        guard let noticeId = id, !noticeId.isEmpty else {
+        guard let targetID = id, !targetID.isEmpty else {
             print("Invalid notice ID")
             return
         }
@@ -61,8 +70,8 @@ class AssignmentReport: UIViewController, SelectedId {
             on: self,
             onOk: {
                 APIService.shared.makeApi(
-                    url: ServiceUrl.admin_api_school_event_delete,
-                    parameters: ["id": noticeId],
+                    url: ServiceUrl.comm_api_assignment_delete,
+                    parameters: ["id": targetID],
                     type: ApitTypeSringFile.PUT,
                     token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
@@ -77,7 +86,9 @@ class AssignmentReport: UIViewController, SelectedId {
                                     message: successResponse.message ?? "",
                                     on: self
                                 ) {
-                                   
+                                    self.filteredData.removeAll { $0.id == targetID }
+                                    self.data.removeAll { $0.id == targetID }
+                                    self.reportTable.reloadData()
                                 }
                             } else {
                                 self.alert.showAlert(
@@ -142,7 +153,14 @@ class AssignmentReport: UIViewController, SelectedId {
         academicView.layer.borderColor = UIColor.lightGray.cgColor
         academicView.layer.borderWidth = 0.5
     }
-
+    func searchHide(hide: Bool) {
+        searchBar?.isHidden = !hide
+        if hide {
+            searchBar?.becomeFirstResponder()
+        } else {
+            searchBar?.resignFirstResponder()
+        }
+    }
     @objc func deletedTapped(_ sender: UIButton) {
         let index = sender.tag
 
@@ -193,7 +211,7 @@ class AssignmentReport: UIViewController, SelectedId {
 
         academicDropDown.selectionAction = { [weak self] index, item in
             self?.academicYearLabel.text = item
-            self?.academicId = index
+            self?.academicId = self?.academicYearDataList[index].id
             self?.getAssigment()
         }
     }
