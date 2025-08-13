@@ -51,14 +51,14 @@
                                             <action selector="reminder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qXr-X1-e8F"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
+                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
                                         <rect key="frame" x="33" y="-7" width="40" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="OZV-vV-YCz"/>
                                             <constraint firstAttribute="width" constant="40" id="kel-Vv-QbZ"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
+                                        <inset key="imageEdgeInsets" minX="16" minY="3" maxX="0.0" maxY="5"/>
                                         <state key="normal" image="three-dot"/>
                                         <connections>
                                             <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zoA-my-26G"/>
@@ -247,7 +247,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -9,7 +9,11 @@ import UIKit
 import DropDown
 import Kingfisher
 
-class AssignmentReport: UIViewController {
+class AssignmentReport: UIViewController, SelectedId {
+    func selectId(id: String?, edit: Bool?) {
+
+    }
+    
 
     // MARK: - IBOutlets
     @IBOutlet weak var noDataStack: UIStackView!
@@ -44,6 +48,58 @@ class AssignmentReport: UIViewController {
         academicId = localData.accidamic_year_data?.data?.last?.id ?? 0
         getAssigment()
     }
+    func deleteEvent(id: String?) {
+        guard let noticeId = id, !noticeId.isEmpty else {
+            print("Invalid notice ID")
+            return
+        }
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm,
+            message: AlertstringFile.deletemessage,
+            actionLbl1: AlertstringFile.delete,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                APIService.shared.makeApi(
+                    url: ServiceUrl.admin_api_school_event_delete,
+                    parameters: ["id": noticeId],
+                    type: ApitTypeSringFile.PUT,
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        
+                        switch result {
+                        case .success(let successResponse):
+                            if successResponse.status == true {
+                                CustomAlert.showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                ) {
+                                   
+                                }
+                            } else {
+                                self.alert.showAlert(
+                                    title: AlertstringFile.Failed,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                )
+                            }
+                            
+                        case .failure(let error):
+                            print("Error deleting notice: \(error.localizedDescription)")
+                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
+                        }
+                    }
+                }
+            },
+            onNo: {
+                print("User canceled deletion")
+            }
+        )
+    }
+    
     func getAssigment() {
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_assignment_report,
@@ -161,6 +217,8 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
         let report = filteredData[indexPath.row]
         cell.configure(with: report)
         cell.loadFiles(into: cell, files: report.file_path ?? [])
+        cell.edit(edit: report.can_edit ?? false, delete:  report.can_delete ?? false, selectedId: report.id ?? "")
+        cell.delegate = self
         cell.submittedProgressStack.isHidden = false
         cell.submitBtnStack.isHidden = true
         cell.layoutIfNeeded()
