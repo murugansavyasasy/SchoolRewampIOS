@@ -36,6 +36,8 @@ class LessonViewTvCell: UITableViewCell {
         ProgressView2.layer.borderColor = UIColor.systemOrange.withAlphaComponent(0.8).cgColor
         ProgressView2.backgroundColor = .systemOrange.withAlphaComponent(0.1)
         
+        DeleteBtn.setTitle(AlertstringFile.delete, for: .normal)
+        EditBtn.setTitle(CommonStringFile.edit, for: .normal)
         DeleteBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         

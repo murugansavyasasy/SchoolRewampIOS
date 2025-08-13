@@ -58,7 +58,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBOutlet weak var ToDateView: UIView!
     @IBOutlet weak var FromDateView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var TittleDefLbl: UILabel!
@@ -79,9 +78,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBOutlet weak var TextfieldCharCountLbl: UILabel!
     @IBOutlet weak var NextBtn: UIButton!
     @IBOutlet weak var PopupView: UIView!
-    @IBOutlet weak var VideoView: UIView!
-    //    @IBOutlet weak var VideoThumbnailImg: UIImageView!
-    
     let photoPickManager = PhotoPickerManager.shared
     var dateSelection = false
     var placeholderLabel: UILabel!
@@ -136,11 +132,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         imageSelection()
         Attachmentview.imageCollectionview.delegate = self
         Attachmentview.imageCollectionview.dataSource = self
-        
+        Attachmentview.imageCollectionview.backgroundColor = .clear
         textview.delegate = self
         TitleTextfield.delegate = self
-        VideoView.isHidden = true
-        
         
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         Attachmentview.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
@@ -164,14 +158,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
     func fetchData(notice:Notice?){
         attachments.removeAll()
         if let notice = notice{
@@ -188,12 +174,12 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                         VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
                     )
                 }
-
+                
                 attachments = imageItems
             } else {
                 attachments = []
             }
-
+            
             Attachmentview.imageCollectionview.reloadData()
             editId = notice.id
             NextBtn.setTitle("Update", for: .normal)
@@ -294,12 +280,12 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     func StyleAndTranslater(){
         
-        //MARK: UI Changes
-        PopupView.layer.cornerRadius = 10
-        PopupView.layer.shadowColor = UIColor.black.cgColor
-        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        PopupView.layer.shadowRadius = 5
-        PopupView.layer.shadowOpacity = 0.3
+        //        //MARK: UI Changes
+        //        PopupView.layer.cornerRadius = 10
+        //        PopupView.layer.shadowColor = UIColor.black.cgColor
+        //        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        //        PopupView.layer.shadowRadius = 5
+        //        PopupView.layer.shadowOpacity = 0.3
         
         calanderBtn.layer.borderWidth = 1 // Border width
         calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
@@ -644,7 +630,7 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
                 
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video, style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
@@ -690,7 +676,7 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             imageVC.type = attachment.fileType
             imageVC.modalPresentationStyle = .fullScreen
             present(imageVC, animated: true)
-
+            
         }
     }
     
@@ -728,15 +714,15 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
         // If the new text count is within the limit, update the character count label and allow the change
-//        if updatedText.count <= 50 {
-            TextfieldCharCountLbl.text = "\(updatedText.count) / 50"
-            return true
-//        } else {
-//            // If the limit is exceeded, show an alert and reject the change
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            return false
-//        }
+        //        if updatedText.count <= 50 {
+        TextfieldCharCountLbl.text = "\(updatedText.count) / 50"
+        return true
+        //        } else {
+        //            // If the limit is exceeded, show an alert and reject the change
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        //            return false
+        //        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -754,15 +740,15 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-//        if updatedText.count <= 500 {
-            DescriptionLettersCount.text = "\(updatedText.count) / 500" // Update the character count label
-            return true // Allow the change
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
-//            //            contentTxtView.isEditable = false // Optionally disable editing
-//            return false // Reject the change
-//        }
+        //        if updatedText.count <= 500 {
+        DescriptionLettersCount.text = "\(updatedText.count) / 500" // Update the character count label
+        return true // Allow the change
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
+        //            //            contentTxtView.isEditable = false // Optionally disable editing
+        //            return false // Reject the change
+        //        }
     }
     
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {

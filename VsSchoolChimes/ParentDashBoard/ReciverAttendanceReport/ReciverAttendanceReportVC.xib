@@ -24,6 +24,7 @@
                 <outlet property="LeaveHistoryView" destination="5lS-bE-6N9" id="pq6-O6-Rl5"/>
                 <outlet property="LeaveTakenDefLbl" destination="czQ-HV-Fb4" id="gLc-fI-zCS"/>
                 <outlet property="LeaveTakenview" destination="dHN-4e-O6W" id="0SB-Tw-cd2"/>
+                <outlet property="MenuTitleLbl" destination="lqM-ig-LyO" id="P7f-8G-vHb"/>
                 <outlet property="MenusStack" destination="Kdp-5L-24i" id="p9C-7j-js4"/>
                 <outlet property="MenusView" destination="oj1-fw-LY0" id="hTO-Zm-vBd"/>
                 <outlet property="OngoingDaysView" destination="qA8-Ap-mtB" id="iMT-9r-thP"/>
@@ -35,7 +36,7 @@
                 <outlet property="WeeklyView" destination="tP1-Fq-Xno" id="9jG-6b-TR8"/>
                 <outlet property="askLeavesDefLbl" destination="wtO-gP-Eug" id="5IH-R6-eil"/>
                 <outlet property="attendanceReportDefLbl" destination="8PN-Y6-mo7" id="cON-su-xrg"/>
-                <outlet property="holidaysDefLbl" destination="0r5-JP-vnm" id="pwl-Fj-1hY"/>
+                <outlet property="holidaysDefLbl" destination="0r5-JP-vnm" id="sdi-ee-e9H"/>
                 <outlet property="noRecordLbl" destination="HZT-0w-U1a" id="vtl-bH-XdZ"/>
                 <outlet property="noResordStack" destination="n7d-EO-BNb" id="K3q-5t-W1U"/>
                 <outlet property="percentagesBaseView" destination="voa-cS-Hrw" id="JJm-cZ-PHH"/>
@@ -537,7 +538,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

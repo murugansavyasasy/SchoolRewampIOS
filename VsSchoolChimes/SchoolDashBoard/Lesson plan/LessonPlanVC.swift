@@ -37,8 +37,11 @@ class LessonPlanVC: UIViewController {
         BackBtn.applyBackButton()
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+        searchBar.placeholder = CommonStringFile.Search.translated()
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
         searchBar.isHidden = true
+        MyClassBtn.setTitle(LessonplanStringFile.myClasses, for: .normal)
+        MyClassBtn.setTitle(LessonplanStringFile.allClasses, for: .normal)
         MyClassBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         AllClassBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         
@@ -127,7 +130,7 @@ class LessonPlanVC: UIViewController {
                     self.NodataLbl.isHidden = false
                     self.NodataLbl.text = error.localizedDescription
                         
-                        print("Error: ",error.localizedDescription)
+                    print("Error: ",error.localizedDescription)
                 }
             }
         }
@@ -217,7 +220,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         cell.SubjectLbl.text = Lesson?.subject_name
         cell.StandardLbl.text = (Lesson?.class_name ?? "") + " - " + (Lesson?.section_name ?? "")
         cell.StaffNameLbl.text = Lesson?.staff_name
-        cell.CompletedItemsLbl.text = "Items completed : \(Lesson?.items_completed ?? "")"
+        cell.CompletedItemsLbl.text = "\(LessonplanStringFile.itemsCompleted) : \(Lesson?.items_completed ?? "")"
         cell.ArrowImage.isHidden = Lesson?.total_items == "0"
         let percentage = Double(Lesson?.percentage_value ?? 0)
         cell.setProgress(to: percentage)

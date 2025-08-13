@@ -23,7 +23,7 @@ class ViewLessonVC: UIViewController {
     var ViewLessonData: [LessonPlanDetail]?
     var FilteredData: [LessonPlanDetail]?
     var Reqest_Type: String?
-    var Filters = ["All","Yet to Start","In Progress","Completed"]
+    var Filters = [CommonStringFile.all,LessonplanStringFile.yetToStart,LessonplanStringFile.inProgress,CommonStringFile.completed]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var LessonPlanStatus = 0
     var IsDeleteHiden = false
@@ -33,7 +33,7 @@ class ViewLessonVC: UIViewController {
         
         BAckBtn
             .configureAsBackButton(
-                firstLine: MenuStringFile.selectedMenuName,
+                firstLine: MenuStringFile.LessonPlan,
                 secondLine: staffDetails?.school_name ?? ""
             )
         
@@ -181,17 +181,17 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
             
         case 1:
             colour = .systemOrange
-            cell.StatusLbl.text = "Yet to Start"
+            cell.StatusLbl.text = LessonplanStringFile.yetToStart
             cell.ProgressImage.image = UIImage.pending
             
         case 2:
             colour = .systemBlue
-            cell.StatusLbl.text = "In Progress"
+            cell.StatusLbl.text = LessonplanStringFile.inProgress
             cell.ProgressImage.image = UIImage(systemName: "arrow.2.circlepath.circle.fill")
             
         case 3:
             colour = .systemGreen
-            cell.StatusLbl.text = "Completed"
+            cell.StatusLbl.text = CommonStringFile.completed
             cell.ProgressImage.image = UIImage.completed1
         default:
             colour = .systemOrange

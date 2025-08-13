@@ -51,8 +51,8 @@ class MenuStringFile{
     static let AttendanceMarking = "Attendance marking"
     static let MessagesFromManagement = "Messages from management"
     static let InteractionWithStudent = "Interaction with student"
-    static let LessonPlan = "Lesson Plan"
-    static let PTM = "PTM"
+    static let LessonPlan = "Lesson Plan".translated()
+    static let PTM = "PTM".translated()
     static let TextToParentsStaff = "Text to Parents/Staff"
     static let SchoolClassEvents = "Events"
     static let EventsHolidays = "Events"
@@ -357,8 +357,11 @@ class CommonStringFile{
         Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
         """
     
-    static let No_data_found = "No Data Found!"
+    static let No_data_found = "No Data Found!".translated()
     static let Notice_Display_Date_Range = "Notice Display Date Range"
+    static let all = "All".translated()
+    static let edit = "Edit".translated()
+
 }
 
 
@@ -492,4 +495,57 @@ class DateFormatString {
     static var Date_Day_month_year = "d EEE, MMM yyyy" 
     static var StandardFormat = "dd MMM yyyy"
     static var DayStandardFormat = "EEE, dd MMM yyyy"
+}
+
+
+class LessonplanStringFile {
+    static let allClasses = "All Classes".translated()
+    static let myClasses = "My Classes".translated()
+    static let editLessonPlan = "Edit Lesson Plan".translated()
+    static let itemsCompleted = "items completed".translated()
+    static let yetToStart = "Yet to Start".translated()
+    static let inProgress = "In Progress".translated()
+}
+
+class ExamStringFile{
+    
+    static let viewMarks = "View Marks".translated()
+    static let viewProgress = "View Progress".translated()
+    static let overallGrade = "Overall Grade".translated()
+    static let subjectAndMarks = "Subject & Marks".translated()
+    static let otherActivities = "Other Activities".translated()
+    static let examTimetable = "Exam Timetable".translated()
+    static let examMarks = "Exam Marks".translated()
+}
+
+class AttendanceString{
+    
+    static let attendance = "Attendance".translated()
+    static let thisWeekStatus = "This week status".translated()
+    static let leaveTaken = "Leave Taken".translated()
+    static let ongoingDays = "Ongoing Days".translated()
+    static let askLeave = "Ask Leave".translated()
+    static let leaveRequests = "Leave Requests".translated()
+    static let attendanceReport = "Attendance Report".translated()
+    static let holidays = "Holidays".translated()
+    static let newLeave = "New Leave".translated()
+    static let type = "Type".translated()
+    static let cause = "Cause".translated()
+    static let session = "Session".translated()
+    static let selectFromDate = "Select From Date".translated()
+    static let selectToDate = "Select To Date".translated()
+    static let firstHalf = "First Half".translated()
+    static let secondHalf = "Second Half".translated()
+    static let selectLeaveType = "Select Leave Type".translated()
+    static let enterReason = "Enter Reason".translated()
+    static let applyLeave = "Apply Leave".translated()
+    static let approved = "Approved".translated()
+    static let rejected = "Rejected".translated()
+    static let waiting = "Waiting".translated()
+    static let awaiting = "Awaiting".translated()
+    static let generateOutpass = "Generate Outpass".translated()
+    static let absent = "Absent".translated()
+    static let noHolidaysFor = "No Holidays for".translated()
+    static let holidaysFor = "Holidays for".translated()
+
 }

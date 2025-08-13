@@ -93,14 +93,14 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        view.applyGradient(
+//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+//    }
     
     func uiConficration() {
         if titleLbl == CommonStringFile.CreateEvent {
@@ -209,8 +209,8 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
             self.searcchBtn.isHidden = index == 0
-            self.createLbl.backgroundColor = index == 0 ? .blue : .white
-            self.reportsLb.backgroundColor = index == 0 ? .white : .blue
+            self.createLbl.backgroundColor = index == 0 ? .blue : .clear
+            self.reportsLb.backgroundColor = index == 0 ? .clear : .blue
             self.reportsBtn.tintColor = index == 0 ? .black : .blue
             self.createBtn.tintColor = index == 1 ? .black : .blue
         }

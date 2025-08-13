@@ -17,6 +17,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var calendarContainerView: UIView!
     @IBOutlet weak var leaveListTable: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var titleLbl: UILabel!
     
     // MARK: - Properties
     var eventHolidayData: [EventHolidayData]?
@@ -36,6 +37,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let name = studentDetails?.name ?? ""
         let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        titleLbl.text = AttendanceString.holidays
         setupViews()
         addSwipeGestures()
     }
@@ -181,7 +183,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             return holidayDate >= startOfMonth && holidayDate < endOfMonth
         }.sorted { ($0.date ?? "") < ($1.date ?? "") }
         formatter.dateFormat = "MMMM yyyy"
-        noHolidayLbl.text = "No Holidays for \(formatter.string(from: currentDate))"
+        noHolidayLbl.text = "\(AttendanceString.noHolidaysFor) \(formatter.string(from: currentDate))"
         noHolidayLbl.isHidden = !filteredHolidays.isEmpty
         leaveListTable.reloadData()
     }
@@ -316,7 +318,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         let dateStr = DateFormatter.yyyyMMdd.string(from: date)
         if let holiday = eventHolidayData?.first(where: { $0.date == dateStr }), isCurrentMonth {
-            cell.outerView.backgroundColor = .themeColour//colorForHoliday(named: holiday.name ?? "")
+            cell.outerView.backgroundColor = .backGroundClr//colorForHoliday(named: holiday.name ?? "")
             cell.dateLbl.textColor = .white
         } else {
             cell.outerView.backgroundColor = .white
@@ -350,7 +352,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let holiday = filteredHolidays[indexPath.row]
         cell.nameLbl.text = holiday.name
         cell.DateLbl.text = holiday.date?.convertToTargetDateFormat()
-        cell.colorBtn.backgroundColor = .themeColour//colorForHoliday(named: holiday.name ?? "")
+        cell.colorBtn.backgroundColor = .backGroundClr//colorForHoliday(named: holiday.name ?? "")
         return cell
     }
 
@@ -383,7 +385,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setFont(style: .title, size: FontSize.TitleSize)
         label.textColor = .darkGray
-        label.text = "Holidays for \(formatter.string(from: currentDate))"
+        label.text = "\(AttendanceString.holidaysFor) \(formatter.string(from: currentDate))"
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 5)])
