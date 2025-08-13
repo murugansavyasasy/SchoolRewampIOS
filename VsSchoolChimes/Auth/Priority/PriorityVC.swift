@@ -20,6 +20,7 @@ class PriorityVC: UIViewController {
     @IBOutlet weak var teacherButton: UIButton!
     @IBOutlet weak var ParentButton: UIButton!
     
+    @IBOutlet weak var logoutBtn: UIButton!
     var selectedIndexPath : IndexPath!
     
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]

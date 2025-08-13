@@ -1391,13 +1391,13 @@ struct CertificateResponse: Codable {
 }
 
 struct CertificateRequest: Codable {
-    let url: String?
-    let type: String?
-    let reason: String?
-    let urgency_level: String?
-    let requested_on: String?
-    let status: String?
-    let issued_on: String?
+    var url: String?
+    var type: String?
+    var reason: String?
+    var urgency_level: String?
+    var requested_on: String?
+    var status: String?
+    var issued_on: String?
 }
 //MARK: DetailedExamList
 struct DetailedExamListResponse: Codable {

@@ -58,7 +58,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
 
         // Only move up if the textField is hidden by the keyboard
         if textFieldBottom > keyboardTop {
-            let overlap = textFieldBottom - keyboardTop + 80 // Add a bit of padding
+            let overlap = textFieldBottom - keyboardTop + 120 // Add a bit of padding
             UIView.animate(withDuration: 0.3) {
                 self.view.frame.origin.y = -overlap
             }
@@ -75,14 +75,31 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Active/focused text field
+        PasswordBaseview.backgroundColor = .white
+        PasswordBaseview.layer.borderColor = UIColor.systemBlue.cgColor
+        PasswordBaseview.layer.borderWidth = 1
+        PasswordBaseview.layer.cornerRadius = 20
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Inactive/unfocused text field
+        PasswordBaseview.layer.borderColor = UIColor.clear.cgColor
+        PasswordBaseview.layer.borderWidth = 0
+        PasswordBaseview.backgroundColor = .systemGray5
+    }
+    
     func SetpUI(){
         
-        PasswordBaseview.layer.borderWidth = 2
-        PasswordBaseview.layer.borderColor = UIColor.cyan.cgColor
+        PasswordBaseview.layer.borderWidth = 1
+        PasswordBaseview.layer.borderColor = UIColor.clear.cgColor
         PasswordBaseview.layer.cornerRadius = 20
         passwordTxtFld.addDoneButton()
+        passwordTxtFld.delegate = self
         scrollView.layer.cornerRadius = 40
         scrollView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+       
         
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -338,6 +355,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                             vc.mobile_number = mobile_number
                             vc.otpContent = successmessage.data?.first?.more_info ?? ""
                             vc.pageType = screenType.isForgotPassword
+                            vc.forgotpasswordData = successmessage.data ?? []
                             present(vc, animated: true)
                             
                         }

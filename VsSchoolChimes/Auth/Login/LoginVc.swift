@@ -31,6 +31,8 @@ class LoginVc: UIViewController {
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
     var country_data : CountryData?
+    private var originalContentInset: UIEdgeInsets = .zero
+    private var originalScrollIndicatorInsets: UIEdgeInsets = .zero
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +66,8 @@ class LoginVc: UIViewController {
         
         MobilTextFld.layer.cornerRadius = 20
         MobilTextFld.layer.borderWidth = 0.5
-        MobilTextFld.layer.borderColor = UIColor.blue.cgColor
+        MobilTextFld.backgroundColor = .systemGray5.withAlphaComponent(0.8)
+        MobilTextFld.layer.borderColor = UIColor.clear.cgColor
         MobilTextFld.placeholder = country_data?.mobile_no_hint
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .phonePad
@@ -76,9 +79,14 @@ class LoginVc: UIViewController {
         
         PasswordBaseview.layer.cornerRadius = 20
         PasswordBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.8)
+        PasswordBaseview.layer.borderWidth = 1
+        PasswordBaseview.layer.borderColor = UIColor.clear.cgColor
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20)) // Adjust width for padding
+        passTextFld.leftView = paddingView2
+        passTextFld.leftViewMode = .always
         
-        scrollView.layer.cornerRadius = 40
-        scrollView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        BottomView.layer.cornerRadius = 40
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
         loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
@@ -341,6 +349,7 @@ class LoginVc: UIViewController {
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = MobilTextFld.text
                             vc.pageType = screenType.isForgotPassword
+                            vc.forgotpasswordData = successmessage.data ?? []
                             vc.otpContent = successmessage.data?.first?.more_info ?? ""
                             present(vc, animated: true)
                             
@@ -384,10 +393,25 @@ extension LoginVc: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField // ✅ Now dynamically tracks the active field
+        
+        if textField == MobilTextFld {
+            MobilTextFld.layer.borderColor = UIColor.systemBlue.cgColor
+            MobilTextFld.backgroundColor = .white
+        }else {
+            PasswordBaseview.layer.borderColor = UIColor.systemBlue.cgColor
+            PasswordBaseview.backgroundColor = .white
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeTextField = nil
+        if textField == MobilTextFld {
+            MobilTextFld.layer.borderColor = UIColor.clear.cgColor
+            MobilTextFld.backgroundColor = .systemGray5.withAlphaComponent(0.8)
+        }else {
+            PasswordBaseview.layer.borderColor = UIColor.clear.cgColor
+            PasswordBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.8)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -451,30 +475,41 @@ extension LoginVc: UITextFieldDelegate {
         return trimmedPhone
     }
     
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+//
+//        let bottomInset = keyboardFrame.height + 20 // padding
+//        scrollView.contentInset.bottom = bottomInset
+//        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+//    }
+//
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        scrollView.contentInset.bottom = 0
+//        scrollView.verticalScrollIndicatorInsets.bottom = 0
+//    }
+
+   
+
     @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+
+        // Store the current insets only the first time
+        if originalContentInset == .zero {
+            originalContentInset = scrollView.contentInset
+            originalScrollIndicatorInsets = scrollView.verticalScrollIndicatorInsets
         }
 
-        // Assuming your textField is named `myTextField`
-        let textFieldBottom = passTextFld.convert(passTextFld.bounds, to: self.view).maxY
-        let keyboardTop = self.view.frame.height - keyboardFrame.height
-
-        // Only move up if the textField is hidden by the keyboard
-        if textFieldBottom > keyboardTop {
-            let overlap = textFieldBottom - keyboardTop + 150 // Add a bit of padding
-            UIView.animate(withDuration: 0.3) {
-                self.view.frame.origin.y = -overlap
-            }
-        }
+        let bottomInset = keyboardFrame.height + 20 // padding
+        scrollView.contentInset.bottom = bottomInset
+        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y = 0
-        }
+        // Restore original insets
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
     }
-    
+
 }
 
 

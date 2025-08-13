@@ -21,9 +21,7 @@ class OTPVc: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var ResendLbl: UILabel!
     @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
-    
     @IBOutlet weak var StackView: UIStackView!
-    
     @IBOutlet weak var callUsLbl: UILabel!
     
     var countdownTimer: Timer?
@@ -32,14 +30,15 @@ class OTPVc: UIViewController {
     var otpFields: [UITextField] = []
     var mobile_number:String?
     var validateMobileData : [UserData] = []
+    var forgotpasswordData : [ForgotPasswordData] = []
     var AlertModal = CustomAlert()
     var pageType : Int?
     var otpContent:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        StackView.layer.cornerRadius = 40
-        StackView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        BottomView.layer.cornerRadius = 40
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         
         
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -51,6 +50,10 @@ class OTPVc: UIViewController {
         ResendLbl.isUserInteractionEnabled = true
         setupLabel()
         startTimer()
+        
+        if pageType == screenType.isSplash {
+            BackBtn.isHidden = true
+        }
         
         if  pageType == screenType.isForgotPassword{
             
@@ -95,12 +98,15 @@ class OTPVc: UIViewController {
         dismiss(animated: true)
     }
     
-    
-    
      @objc func showDialOptions() {
         doneButtonAction()
         
-        let dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
+         var dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
+         
+         if pageType == screenType.isForgotPassword {
+          dialNumbersString = forgotpasswordData.first?.dial_numbers ?? ""
+         }
+         
         let dialNumbers = dialNumbersString.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
 
         guard !dialNumbers.isEmpty else {
@@ -163,6 +169,9 @@ class OTPVc: UIViewController {
             textField.keyboardType = .numberPad
             textField.font = UIFont.systemFont(ofSize: 24)
             textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            textField.layer.borderColor = UIColor.systemGray4.cgColor
+            textField.layer.borderWidth = 1
+            textField.layer.cornerRadius = 5
         }
         otpTextField1.becomeFirstResponder()
     }
@@ -262,11 +271,17 @@ class OTPVc: UIViewController {
             ) in
                 switch result {
                 case .success(let successMessage):
-                    DispatchQueue.main.async { [self] in
+                    DispatchQueue.main.async { [weak self] in
+                        
+                        guard let self = self else {return}
                         if #available(iOS 15.0, *) {
                             hideLottieProgressLoader()
                         }
                         if successMessage.status == true {
+                            
+                            self.remainingTime = 0
+                            self.startTimer()
+                            
                             if(pageType == screenType.isForgotPassword){
                                 
                                 let vc = CreatePasswordVc(nibName: nil, bundle: nil)
@@ -518,22 +533,34 @@ extension OTPVc : UITextFieldDelegate{
         return textField.text?.count == 0
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
-        
-        
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
-                print("keyboardSize.height",keyboardSize.height)
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // Find the lowest point among your text field, labels, and button
+        let elements: [UIView] = [otpTextField1, ResendLbl, DidnotReciveOtpLbl, callUsLbl] // Add all relevant elements
+        let bottomMost = elements.map {
+            $0.convert($0.bounds, to: self.view).maxY
+        }.max() ?? 0
+
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+
+        // Only move up if the bottom-most element is hidden by the keyboard
+        if bottomMost > keyboardTop {
+            let overlap = bottomMost - keyboardTop + 20 // padding
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
             }
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
+        UIView.animate(withDuration: 0.3) {
             self.view.frame.origin.y = 0
         }
     }
+
     
     @objc func doneButtonAction() {
         view.endEditing(true)

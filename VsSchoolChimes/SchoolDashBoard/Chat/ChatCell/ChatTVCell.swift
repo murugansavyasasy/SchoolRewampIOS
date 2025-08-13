@@ -63,20 +63,21 @@ class ChatTVCell: UITableViewCell {
         }
 
         if isSender {
-            bubbleView.backgroundColor = .gradient1
+//            cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+            bubbleView.backgroundColor = .parentClr.withAlphaComponent(0.2)
             bubbleTrailingConstraint.constant = trailingConstant
             bubbleLeadingConstraint.constant = leadingConstant
         } else {
-            bubbleView.backgroundColor = .topBackgroundCLr
+            bubbleView.backgroundColor = .systemGray4.withAlphaComponent(0.2)
             bubbleTrailingConstraint.constant = leadingConstant
             bubbleLeadingConstraint.constant = trailingConstant
         }
 
         // Common shadow styling
-        bubbleView.layer.shadowOpacity = 2
-        bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
-        bubbleView.layer.shadowRadius = 1
-        bubbleView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+//        bubbleView.layer.shadowOpacity = 2
+//        bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
+//        bubbleView.layer.shadowRadius = 1
+//        bubbleView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
 
         // Only receiver (e.g. staff) allows swipe gesture
         panGestureRecognizer.isEnabled = !isSender
