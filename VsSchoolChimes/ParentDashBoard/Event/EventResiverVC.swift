@@ -48,8 +48,22 @@ class EventResiverVC: UIViewController {
         setupUI()
         registerTableView()
         GetEvent()
+        
+        scrollCellToCenter(indexPath: IndexPath(row: 9, section: 0), animated: true)
+
     }
 
+    func scrollCellToCenter(indexPath: IndexPath, animated: Bool) {
+        if let cellRect = tableview.rectForRow(at: indexPath) as CGRect? {
+            let tableViewHeight = tableview.bounds.height
+            let contentOffsetY = cellRect.midY - tableViewHeight / 2
+            let maxOffsetY = tableview.contentSize.height - tableViewHeight
+            let minOffsetY: CGFloat = 0
+            
+            let finalOffsetY = max(minOffsetY, min(contentOffsetY, maxOffsetY))
+            tableview.setContentOffset(CGPoint(x: 0, y: finalOffsetY), animated: animated)
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         filteredSections = allEventSections

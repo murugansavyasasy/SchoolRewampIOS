@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NotiTvheader" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="46"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozs-rG-WTR">
+                    <rect key="frame" x="10" y="0.0" width="373" height="46"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Homework" translatesAutoresizingMaskIntoConstraints="NO" id="uRF-qf-ewG">
+                            <rect key="frame" x="0.0" y="6" width="38" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38" id="JJx-dn-m9q"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HomeWork" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzD-5V-eG3">
+                            <rect key="frame" x="43" y="0.0" width="310" height="46"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="wzD-5V-eG3" secondAttribute="bottom" id="2qR-Ag-jka"/>
+                        <constraint firstItem="wzD-5V-eG3" firstAttribute="leading" secondItem="uRF-qf-ewG" secondAttribute="trailing" constant="5" id="5DZ-Ef-Hj7"/>
+                        <constraint firstItem="uRF-qf-ewG" firstAttribute="leading" secondItem="ozs-rG-WTR" secondAttribute="leading" id="Olg-KI-L8P"/>
+                        <constraint firstItem="wzD-5V-eG3" firstAttribute="top" secondItem="ozs-rG-WTR" secondAttribute="top" id="Yqk-Xa-jny"/>
+                        <constraint firstAttribute="trailing" secondItem="wzD-5V-eG3" secondAttribute="trailing" constant="20" id="jo5-gZ-sJE"/>
+                        <constraint firstItem="uRF-qf-ewG" firstAttribute="centerY" secondItem="ozs-rG-WTR" secondAttribute="centerY" id="qQs-PD-NoM"/>
+                        <constraint firstItem="uRF-qf-ewG" firstAttribute="top" secondItem="ozs-rG-WTR" secondAttribute="top" constant="6" id="yDl-xQ-Zbf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemGray6Color"/>
+            <constraints>
+                <constraint firstItem="ozs-rG-WTR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="1RZ-Rv-vlB"/>
+                <constraint firstItem="ozs-rG-WTR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ATa-fg-6Lf"/>
+                <constraint firstAttribute="bottom" secondItem="ozs-rG-WTR" secondAttribute="bottom" id="MQX-nt-P9Q"/>
+                <constraint firstAttribute="trailing" secondItem="ozs-rG-WTR" secondAttribute="trailing" constant="10" id="dhg-GI-5Pa"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="136.64122137404578" y="-264.78873239436621"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Homework" width="64" height="64"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
