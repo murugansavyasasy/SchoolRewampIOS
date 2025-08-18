@@ -674,10 +674,14 @@
 		FA3230972D95292B0070BA51 /* ExamDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3230952D95292B0070BA51 /* ExamDetailsVC.xib */; };
 		FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3230BC2D9556160070BA51 /* ExameMarVC.swift */; };
 		FA3230BF2D9556160070BA51 /* ExameMarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3230BD2D9556160070BA51 /* ExameMarVC.xib */; };
+		FA38D8F12E530EBE00EC6ED7 /* SlotCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA38D8F02E530EBE00EC6ED7 /* SlotCV.xib */; };
+		FA38D8F22E530EBE00EC6ED7 /* SlotCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38D8EF2E530EBE00EC6ED7 /* SlotCV.swift */; };
 		FA3B2FFE2E2F714D003B6E6D /* ExamMarkTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3B2FFC2E2F714D003B6E6D /* ExamMarkTvCell.swift */; };
 		FA3B2FFF2E2F714D003B6E6D /* ExamMarkTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3B2FFD2E2F714D003B6E6D /* ExamMarkTvCell.xib */; };
 		FA3B30022E2F8BD6003B6E6D /* TotalMarkTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3B30002E2F8BD6003B6E6D /* TotalMarkTvCell.swift */; };
 		FA3B30032E2F8BD6003B6E6D /* TotalMarkTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3B30012E2F8BD6003B6E6D /* TotalMarkTvCell.xib */; };
+		FA3E28D22E4DDE48008885A3 /* CreateMeetingVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */; };
+		FA3E28D32E4DDE48008885A3 /* CreateMeetingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */; };
 		FA4709532E39FF1000764E28 /* WeeklyReportTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */; };
 		FA4709542E39FF1000764E28 /* WeeklyReportTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */; };
 		FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */; };
@@ -1511,10 +1515,14 @@
 		FA3230952D95292B0070BA51 /* ExamDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamDetailsVC.xib; sourceTree = "<group>"; };
 		FA3230BC2D9556160070BA51 /* ExameMarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameMarVC.swift; sourceTree = "<group>"; };
 		FA3230BD2D9556160070BA51 /* ExameMarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameMarVC.xib; sourceTree = "<group>"; };
+		FA38D8EF2E530EBE00EC6ED7 /* SlotCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotCV.swift; sourceTree = "<group>"; };
+		FA38D8F02E530EBE00EC6ED7 /* SlotCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotCV.xib; sourceTree = "<group>"; };
 		FA3B2FFC2E2F714D003B6E6D /* ExamMarkTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamMarkTvCell.swift; sourceTree = "<group>"; };
 		FA3B2FFD2E2F714D003B6E6D /* ExamMarkTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamMarkTvCell.xib; sourceTree = "<group>"; };
 		FA3B30002E2F8BD6003B6E6D /* TotalMarkTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalMarkTvCell.swift; sourceTree = "<group>"; };
 		FA3B30012E2F8BD6003B6E6D /* TotalMarkTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TotalMarkTvCell.xib; sourceTree = "<group>"; };
+		FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMeetingVc.swift; sourceTree = "<group>"; };
+		FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateMeetingVc.xib; sourceTree = "<group>"; };
 		FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportTV.swift; sourceTree = "<group>"; };
 		FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyReportTV.xib; sourceTree = "<group>"; };
 		FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTvCell.swift; sourceTree = "<group>"; };
@@ -3696,6 +3704,10 @@
 				FAED58572E4B61B000497026 /* SlotListTV.xib */,
 				FAED585A2E4B682200497026 /* MeetingDetailTV.swift */,
 				FAED585B2E4B682200497026 /* MeetingDetailTV.xib */,
+				FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */,
+				FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */,
+				FA38D8EF2E530EBE00EC6ED7 /* SlotCV.swift */,
+				FA38D8F02E530EBE00EC6ED7 /* SlotCV.xib */,
 			);
 			path = NewPTM;
 			sourceTree = "<group>";
@@ -4173,6 +4185,7 @@
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84D7858E2DFD3A3900A7B9E9 /* PaymentTypeTVC.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
+				FA3E28D32E4DDE48008885A3 /* CreateMeetingVc.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
 				18926C5D2D02DE81002BBB97 /* FileAttachmentTableViewCell.xib in Resources */,
 				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
@@ -4306,6 +4319,7 @@
 				84D785942DFD4F9400A7B9E9 /* PaymentHeaderView.xib in Resources */,
 				84E795E22D2FF684000B36BC /* InteractionVC.xib in Resources */,
 				84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */,
+				FA38D8F12E530EBE00EC6ED7 /* SlotCV.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
@@ -4607,6 +4621,7 @@
 				18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */,
 				18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */,
 				18D7185A2D0D471A00E9EDA3 /* DailycollResp.swift in Sources */,
+				FA3E28D22E4DDE48008885A3 /* CreateMeetingVc.swift in Sources */,
 				18D7185B2D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift in Sources */,
 				8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */,
 				18D7185C2D0D471A00E9EDA3 /* StanderReq.swift in Sources */,
@@ -4866,6 +4881,7 @@
 				842FBABF2D0BEDBF007C0B51 /* ReportStudentListVC.swift in Sources */,
 				842FBAC02D0BEDBF007C0B51 /* StudentReportVC.swift in Sources */,
 				84EFFAE12CCF9EEA00C11C26 /* NotificationTableViewCell.swift in Sources */,
+				FA38D8F22E530EBE00EC6ED7 /* SlotCV.swift in Sources */,
 				843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */,
 				84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */,
 				848126DD2D9182E100BE6979 /* CountryListCVC.swift in Sources */,

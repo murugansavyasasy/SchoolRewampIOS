@@ -7,17 +7,18 @@
 
 import UIKit
 
-class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    
+class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
+    
+    var slotData: SlotDateData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tv.register(UINib(nibName: "MeetingDetailTV", bundle: nil), forCellReuseIdentifier: "MeetingDetailTV")
+        tv.register(UINib(nibName: "SlotListTV", bundle: nil), forCellReuseIdentifier: "SlotListTV")
         tv.delegate = self
         tv.dataSource = self
     }
@@ -26,14 +27,59 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         dismiss(animated: true)
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return section == 0 ? 1 : slotData?.details?.first?.slots?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
         
-        return cell
+        if indexPath.section == 0{
+            let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
+            
+            return cell
+        }else {
+                let cell = tv.dequeueReusableCell(withIdentifier: "SlotListTV", for: indexPath) as! SlotListTV
+            
+            let slot = slotData?.details?.first?.slots?[indexPath.row]
+            
+            
+            if slot?.is_booked == 1 {
+                cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
+                cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+                cell.StatusBtn.setTitleColor(.aproved, for: .normal)
+                cell.StatusBtn.tintColor = .aproved
+                cell.BookedStatusView.isHidden = false
+                cell.WaitingLbl.isHidden = true
+                cell.BookingBaseview.backgroundColor = .systemGreen.withAlphaComponent(0.05)
+            }else {
+                cell.StatusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.075)
+                cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Available", for: .normal)
+                cell.StatusBtn.setTitleColor(.black, for: .normal)
+                cell.StatusBtn.tintColor = .systemBlue
+                cell.BookedStatusView.isHidden = true
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .systemBlue
+                cell.BookingBaseview.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+            }
+            
+            if slot?.is_cancelled == 1 {
+                cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
+                cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Cancelled", for: .normal)
+                cell.StatusBtn.setTitleColor(.red, for: .normal)
+                cell.StatusBtn.tintColor = .red
+                cell.BookedStatusView.isHidden = false
+                cell.WaitingLbl.isHidden = true
+                cell.BookingBaseview.backgroundColor = .systemGray6.withAlphaComponent(0.8)
+            }
+                return cell
+        }
     }
+    
     
 }

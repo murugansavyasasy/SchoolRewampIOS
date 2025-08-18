@@ -89,6 +89,11 @@ class NewPtmVC: UIViewController {
         }
     }
     
+    @IBAction func createAct(_ sender: Any) {
+        let vc = CreateMeetingVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     @IBAction func backAct(_ sender: Any) {
         
         dismiss(animated: true)
@@ -145,6 +150,7 @@ extension NewPtmVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         cell.modeLbl.text = "Mode - " + (meeting.details?.first?.event_mode ?? "")
         cell.standardLbl.text = (meeting.details?.first?.std_sec_details?.first?.class_name ?? "") + " - " + (meeting.details?.first?.std_sec_details?.first?.section_name ?? "")
         cell.cellview.backgroundColor = colours[indexPath.item % colours.count].withAlphaComponent(0.1)
+        cell.timeLbl.text = (meeting.date ?? "") + ", " + "4:30 PM"
         return cell
     }
     
@@ -154,14 +160,14 @@ extension NewPtmVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let totalSpacing = layout.minimumInteritemSpacing + layout.sectionInset.left + layout.sectionInset.right
         
         let width = (collectionView.bounds.width - totalSpacing) / 2
-        return CGSize(width: width, height: 200)
+        return CGSize(width: width, height: 160)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let vc = SlotListVC(nibName: nil, bundle: nil)
+        vc.slotData = Meeting_data[indexPath.row]
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
 }
