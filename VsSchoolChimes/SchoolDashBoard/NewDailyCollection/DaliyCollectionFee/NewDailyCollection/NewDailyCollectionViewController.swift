@@ -211,7 +211,6 @@ extension UIButton {
             string: fullTitle,
             attributes: [
                 .font: UIFont(name: "Poppins-Bold", size: 15),
-                .foregroundColor: UIColor.label,
                 .paragraphStyle: paragraphStyle
             ]
         )
@@ -220,8 +219,7 @@ extension UIButton {
         let secondLineRange = (fullTitle as NSString).range(of: secondLine)
         if secondLineRange.location != NSNotFound {
             attributedTitle.addAttributes([
-                .font: UIFont(name: "Poppins-Bold", size: 11),
-                .foregroundColor: UIColor.black.withAlphaComponent(0.6)
+                .font: UIFont(name: "Poppins-Bold", size: 11)
             ], range: secondLineRange)
         }
         

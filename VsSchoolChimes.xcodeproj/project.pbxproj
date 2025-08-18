@@ -582,6 +582,8 @@
 		84E0AA012E3894CB002BF40A /* AttachmentHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */; };
 		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
 		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
+		84E5A25F2E53255100A71420 /* AudioCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E5A25E2E53255100A71420 /* AudioCVC.xib */; };
+		84E5A2602E53255100A71420 /* AudioCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5A25D2E53255100A71420 /* AudioCVC.swift */; };
 		84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */; };
 		84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E70DD02D49F61900E916D1 /* DatePickerVC.xib */; };
 		84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E795DB2D2FF3DF000B36BC /* ChatCvcell.swift */; };
@@ -1412,6 +1414,8 @@
 		84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentHeaderCell.swift; sourceTree = "<group>"; };
 		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
 		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
+		84E5A25D2E53255100A71420 /* AudioCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCVC.swift; sourceTree = "<group>"; };
+		84E5A25E2E53255100A71420 /* AudioCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCVC.xib; sourceTree = "<group>"; };
 		84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
 		84E70DD02D49F61900E916D1 /* DatePickerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerVC.xib; sourceTree = "<group>"; };
 		84E795DB2D2FF3DF000B36BC /* ChatCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCvcell.swift; sourceTree = "<group>"; };
@@ -1843,6 +1847,8 @@
 				84235A192E1E3C9C002F2E1D /* LSWViewAttachmentTVC.xib */,
 				846E7FAA2E2785CC00BC954B /* AudioPlayerTVC.swift */,
 				846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */,
+				84E5A25D2E53255100A71420 /* AudioCVC.swift */,
+				84E5A25E2E53255100A71420 /* AudioCVC.xib */,
 			);
 			path = Tv;
 			sourceTree = "<group>";
@@ -4319,6 +4325,7 @@
 				FAAF79902DFBE3C400227DCC /* Poppins-SemiBold.ttf in Resources */,
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
 				84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */,
+				84E5A25F2E53255100A71420 /* AudioCVC.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				849AD03E2D1A845E002DEC07 /* MarkAttendenceVC.xib in Resources */,
 				84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */,
@@ -4665,6 +4672,7 @@
 				FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
 				FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */,
 				FA3230962D95292B0070BA51 /* ExamDetailsVC.swift in Sources */,
+				84E5A2602E53255100A71420 /* AudioCVC.swift in Sources */,
 				843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */,
 				FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */,
 				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,

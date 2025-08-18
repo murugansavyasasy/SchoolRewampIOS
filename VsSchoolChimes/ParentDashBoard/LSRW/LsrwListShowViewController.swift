@@ -18,8 +18,8 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var tv: UITableView!
     
     var rowIdentifier = "NewLSRWTVcell"
-    var tasks: [SkillData]?
-    var filteredTasks: [SkillData] = []
+    var tasks: [LSRWTask]?
+    var filteredTasks: [LSRWTask] = []
     var instituteId = Int()
     var studentId = String()
     
@@ -57,7 +57,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<SkillListResponse, Error>) in
+        ) { [weak self] (result: Result<LSRWResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     self?.hideLottieProgressLoader()
@@ -103,22 +103,20 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         cell.DescriptionLbl.text = item.description
         cell.Subject.setTitle(item.subject, for: .normal)
         cell.StaffName.setTitle(item.sent_by, for: .normal)
-        cell.SkillType.setTitle(item.activity_type, for: .normal)
+        cell.SkillType.setTitle(item.activity_type.displayName, for: .normal)
         cell.Date.setTitle(item.date, for: .normal)
 
-        let skillType = item.activity_type?.lowercased() ?? ""
+        // Use LSRWType enum for icons
         let iconName: String
-        switch skillType {
-        case "read":
+        switch item.activity_type {
+        case .reading:
             iconName = "book.pages.fill"
-        case "listen":
+        case .listening:
             iconName = "headphones"
-        case "write":
+        case .writing:
             iconName = "pencil.and.list.clipboard"
-        case "speak":
+        case .speaking:
             iconName = "mic.fill"
-        default:
-            iconName = "questionmark.circle"
         }
         cell.SkillType.setImage(UIImage(systemName: iconName), for: .normal)
 
@@ -161,7 +159,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
                 ($0.title ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.description ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.subject ?? "").lowercased().contains(searchText.lowercased()) ||
-                ($0.activity_type ?? "").lowercased().contains(searchText.lowercased())
+                $0.activity_type.displayName.lowercased().contains(searchText.lowercased())
             }
         }
         tv.reloadData()
@@ -200,4 +198,3 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
 class LsrwListShowGesture : UITapGestureRecognizer {
     var getSkillId : String!
 }
-
