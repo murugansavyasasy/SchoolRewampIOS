@@ -83,9 +83,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "parent","mobile_number":childDetails?.whatsapp_number ?? ""],
+            parameters: ["member_type": "parent","mobile_number":mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
             token: childDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuResponse, Error>) in
@@ -103,6 +104,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.count == 0
                         self.pagecontroller.isHidden = details.frequently_used?.count == 0
+                        self.recentActiveMenuCollection.reloadData()
                     } else {
                         self.MenuCollection.reloadData()
                     }

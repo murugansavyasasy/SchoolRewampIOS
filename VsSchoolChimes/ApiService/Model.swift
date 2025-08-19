@@ -1591,7 +1591,85 @@ struct ClassSectionDetail: Codable {
     let class_name: String?
     let section_name: String?
 }
+struct LSRWResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [LSRWTask]?
+}
+//struct LSRWTask: Codable {
+//    let id: String?
+//    let title: String
+//    let description: String
+//    let sent_to: String?
+//    let activity_type: LSRWType
+//    let created_on: String?
+//    let iframe: String?
+//    let file_size: String?
+//    let thumbnail: String?
+//    let file_path: [FilePath]
+//    let submittedCount: Int?
+//    let totalCount: Int?
+//    
+//    var progressPercentage: Float {
+//        guard let submittedCount = submittedCount,
+//              let totalCount = totalCount,
+//              totalCount > 0 else { return 0 }
+//        return Float(submittedCount) / Float(totalCount)
+//    }
+//}
+//
+//enum LSRWType: String, Codable {
+//    case listening = "Listening"
+//    case speaking = "Speaking"
+//    case reading = "Reading"
+//    case writing = "Writing"
+//    
+//    var icon: String {
+//        switch self {
+//        case .listening: return "🎧"
+//        case .speaking:  return "🎤"
+//        case .reading:   return "📖"
+//        case .writing:   return "✏️"
+//        }
+//    }
+//    
+//    var displayName: String {
+//        return rawValue
+//    }
+//}
+struct LSRWTask: Codable {
+    let id: String?
+    let detail_id: String?
+    let title: String?
+    let description: String?
+    let sent_to: String?
+    let activity_type: LSRWType
+    let subject: String?
+    let date: String?
+    let time: String?
+    let submitted_date: String?
+    let is_submitted: Bool?
+    let is_unread: Bool?
+    let sent_by: String?
+    let created_on: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let file_path: [FilePath]?
+    var test:[TestQuestion]?
+    let submittedCount: Int?
+    let totalCount: Int?
+    
+    var progressPercentage: Float {
+        guard let submittedCount = submittedCount,
+              let totalCount = totalCount,
+              totalCount > 0 else { return 0 }
+        return Float(submittedCount) / Float(totalCount)
+    }
 
+}
+
+<<<<<<< HEAD
 
 struct notificationSuc : Codable{
     
@@ -1671,4 +1749,50 @@ struct QuizQuestionDataDetails : Codable{
     let mark : Int?
     let correctOptionIndex : Int?
     let options : [String]?
+=======
+enum LSRWType: String, Codable {
+    case listening = "Listening"
+    case speaking = "Speaking"
+    case reading = "Reading"
+    case writing = "Writing"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        
+        // Normalize variations like "Take Reading Skill"
+        if rawValue.lowercased().contains("listen") {
+            self = .listening
+        } else if rawValue.lowercased().contains("speak") {
+            self = .speaking
+        } else if rawValue.lowercased().contains("read") {
+            self = .reading
+        } else if rawValue.lowercased().contains("write") {
+            self = .writing
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Invalid LSRW type: \(rawValue)"
+            )
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .listening: return "🎧"
+        case .speaking:  return "🎤"
+        case .reading:   return "📖"
+        case .writing:   return "✏️"
+        }
+    }
+    
+    var displayName: String {
+        switch self {
+        case .listening: return "Listening"
+        case .speaking:  return "Speaking"
+        case .reading:   return "Reading"
+        case .writing:   return "Writing"
+        }
+    }
+>>>>>>> development
 }

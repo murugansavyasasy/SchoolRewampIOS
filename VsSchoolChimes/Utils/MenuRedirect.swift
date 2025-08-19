@@ -312,7 +312,8 @@ class MenuRedirectHandler {
 //        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
 //        vc.Header = "School Needs"
         if #available(iOS 15.0, *) {
-            let vc = LSRWPagenationVC(nibName: nil, bundle: nil)
+//            let vc = LSRWPagenationVC(nibName: nil, bundle: nil)
+            let vc = LSRWVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             viewController.present(vc, animated: true)
         }

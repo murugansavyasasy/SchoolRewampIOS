@@ -70,10 +70,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
-
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "staff","mobile_number":staffDetails?.mobile_no ?? ""],
+            parameters: ["member_type": "staff","mobile_number":mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuResponse, Error>) in
@@ -92,6 +92,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.count == 0
                         self.pagecontroller.isHidden = details.frequently_used?.count == 0
+                        self.recentActiveMenuCollection.reloadData()
                     } else {
                         print("No data or status false")
                         self.menu_details = []

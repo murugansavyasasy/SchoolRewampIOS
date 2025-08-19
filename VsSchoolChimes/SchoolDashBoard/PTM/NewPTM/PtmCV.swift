@@ -20,6 +20,7 @@ class PtmCV: UICollectionViewCell {
     @IBOutlet weak var imgCountBtn: UIButton!
     @IBOutlet weak var timeLbl: UILabel!
     
+    @IBOutlet weak var iconImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,6 +38,7 @@ class PtmCV: UICollectionViewCell {
         img2.layer.cornerRadius = 15
         img3.layer.cornerRadius = 15
         imgCountBtn.layer.cornerRadius = 15
+        iconImage.layer.cornerRadius = iconImage.frame.width / 2
     }
 
 }
