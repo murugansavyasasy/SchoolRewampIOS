@@ -59,6 +59,7 @@ class RecipientVc: UIViewController{
     let alert = CustomAlert()
     var circular_types : String?
     var subjectId : String?
+    var classID : String?
     var accadimYr :[String] = []
     let acidamicdrops = DropDown()
     var  selectedAcadimicYearId: Int?
@@ -184,6 +185,7 @@ class RecipientVc: UIViewController{
         nodataFound.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
             let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId || Menu_id.staffSelectedMenuId == Menu_id.lsrw
+            let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz
             
             if isAssignmentOrHomework {
                 segmentName.isHidden = true
@@ -255,6 +257,18 @@ class RecipientVc: UIViewController{
                 subjectId: subjectId
             )
             
+        case Menu_id.quiz:
+            guard let subjectId = subjectId, !subjectId.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_section,
+                    on: self
+                )
+                return
+            }
+            
+            CreateQuiz()
+            
         case Menu_id.AttachmentMenuId:
             sendAttachmentFlow(
                 via: comm,
@@ -285,6 +299,71 @@ class RecipientVc: UIViewController{
         default:
             print("⚠️ Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
+    }
+    
+    
+    func CreateQuiz(){
+        
+        let params: [String: Any] = [
+            "target_type": target_type ?? 0,
+            "target_code": array_selectedId,
+            "subject_id": subjectId ?? "",
+            "class_id": classID ?? ""
+        ]
+        
+        
+        
+        var finalParams = params
+            finalParams.merge(Common_request_params ?? [:]) { (_, new) in new }
+
+       
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.quiz_create_quiz, parameters: finalParams
+                
+               , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.gotoDashboard()
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            self.alert
+                                .showAlert(
+                                    title: AlertstringFile.Alert_title,
+                                    message: succesmessage.message ?? "" ,
+                                    on: self)
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+        
     }
     
     
@@ -322,6 +401,9 @@ class RecipientVc: UIViewController{
         }
     }
     
+    
+    
+    
     func acidmicYearOrNotAlertMessage() -> String{
         var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
         
@@ -344,6 +426,7 @@ class RecipientVc: UIViewController{
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId {
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.quiz == Menu_id.staffSelectedMenuId {
             if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                 getSubjectListAPI(finalSectionIds)
             }
@@ -472,7 +555,7 @@ class RecipientVc: UIViewController{
             circular_types =  circular_type.section
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             speficBtnName.isEnabled = !(
-                Menu_id.staffSelectedMenuId == Menu_id.isAssaignment ||  Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId
+                Menu_id.staffSelectedMenuId == Menu_id.isAssaignment ||  Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz
             )
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
@@ -513,6 +596,7 @@ class RecipientVc: UIViewController{
             if let label = self.selectStandardDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
             }
+            classID = self.standardDetails?[index].id
             speficBtnName.isHidden = true
             self.tv.isHidden = false
             self.tv.reloadData()
@@ -720,6 +804,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
                 if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId {
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.quiz == Menu_id.quiz {
                     getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
                         selectSubject.isHidden =  !getSubject.isHidden
@@ -808,6 +893,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             sectionIds = array_selectedId.joined(separator: ",")
             
             if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId{
+            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
                 sectionIds = ""
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
@@ -899,6 +985,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         
                         getSubject.isHidden = true
                         drpodonLbl.text = standardDetails?.first?.name
+                        drpodonLbl.text = standardDetails?.first?.name
+                        classID = standardDetails?.first?.id ?? ""
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
                         tv.reloadData()
                         DispatchQueue.main.async {
@@ -930,6 +1018,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         noRecordLbl.isHidden = ishide
         noRecordLbl.text = message
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId {
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
             getSubject.isHidden = !ishide
         }
         

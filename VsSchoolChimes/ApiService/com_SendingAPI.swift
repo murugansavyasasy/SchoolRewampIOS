@@ -254,7 +254,7 @@ class  commonApi_forSending {
                 dispatchGroup.notify(queue: .main) {
                     if uploadedFiles.isEmpty {
                         print("❌ No files uploaded.")
-                        return
+//                        return
                     }
                     
                     if edit == true {

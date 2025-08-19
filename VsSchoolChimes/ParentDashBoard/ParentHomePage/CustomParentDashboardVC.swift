@@ -34,7 +34,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var menuButton: UIButton!
+   
     
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var recentActiveMenuCollection: UICollectionView!
@@ -132,6 +132,14 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
     @IBAction func SideMenu(_ sender: UIButton) {
         showSideMenu()
+    }
+    
+    
+    @IBAction func notificationBtn(_ sender: UIButton) {
+        
+        let vc = NotificationViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func showSideMenu() {

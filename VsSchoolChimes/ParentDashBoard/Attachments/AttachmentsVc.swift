@@ -23,7 +23,7 @@ class AttachmentsVc: UIViewController {
     var isHeaderExpandedDict: [Int: Bool] = [:]
     var search = true
     var isExpanded: Bool = false
-
+    var clickedMessageId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.searchTextField.addDoneButton()
@@ -34,9 +34,14 @@ class AttachmentsVc: UIViewController {
                 forHeaderFooterViewReuseIdentifier: CellConfingName.AttachTvHeader
             )
         tv.register(UINib(nibName: CellConfingName.ContentCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ContentCell)
+        
         fetchAttachments()
+        
+        
+       
     }
 
+    
 
     @IBAction func back(_ sender: Any) {
         
@@ -84,7 +89,7 @@ class AttachmentsVc: UIViewController {
                                 description: item.description ?? "",
                                 date: item.date ?? "",
                                 time: item.time ?? "",
-                                sender_info: item.sender_info ?? "", sent_by: "", is_unread: item.is_unread ?? false, id: item.id ?? "",can_edit: false,can_delete: false
+                                sender_info: item.sender_info ?? "", sent_by: "", is_unread: item.is_unread ?? false, id: item.id ?? "", headerID: item.header_id ,can_edit: false,can_delete: false
                                 
                             )
                             self.attachmentHeaders.append(header)
@@ -92,6 +97,9 @@ class AttachmentsVc: UIViewController {
                         }
                         self.tv.delegate = self
                         self.tv.dataSource = self
+                        if self.clickedMessageId != ""{
+                            self.loadDataAndScrollIfNeeded()
+                        }
                         self.tv.reloadData()
                     } else {
                         //                        self.hideView(ishide: false)
@@ -145,7 +153,38 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         return 1
     }
 
-    
+    func scrollToHeaderMessageId(_ messageId: String) {
+        // 1. Find section index where header.id == messageId
+        
+        
+        if let targetSection = attachmentHeaders.firstIndex(
+            where: { "\($0.headerID ?? "")" == messageId
+            }) {
+            
+            // 2. Scroll after layout is ready
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.tv.scrollToRow(
+                    at: IndexPath(row: 0, section: targetSection),
+                    at: .middle,
+                    animated: true
+                )
+            }
+        } else {
+            print("⚠️ Message ID \(messageId) not found in attachmentHeaders")
+        }
+    }
+
+    func loadDataAndScrollIfNeeded() {
+        // API Call → update attachmentHeaders → reloadData
+        tv.reloadData()
+        
+        if let messageId = clickedMessageId,
+           !messageId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            scrollToHeaderMessageId(messageId)
+            clickedMessageId = nil
+        }
+    }
+
      func tableView(_ tableView: UITableView,
                     viewForHeaderInSection section: Int) -> UIView? {
          guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
@@ -153,28 +192,28 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
          
          header.discretpionLbl
              .setupExpandable(
-                 text: attachmentHeaders[section].description ?? "",
-                 isExpanded: attachmentHeaders[section].isExpanded
+                text: attachmentHeaders[section].description ?? "",
+                isExpanded: attachmentHeaders[section].isExpanded
              )
-
+         
          
          header.discretpionLbl.onExpandableTap = { [weak self] in
              guard let self = self else { return }
-
+             
              let newValue = !header.discretpionLbl.isExpanded
              header.discretpionLbl.isExpanded = newValue
              self.attachmentHeaders[section].isExpanded = newValue
-
-//             if self.attachmentHeaders[section].is_unread == true {
-//                 self.ReadStatusUpdate(
-//                     type: "ATTACHMENT",
-//                     detail_id: self.attachmentHeaders[section].id ?? "")
-//             }
-
+             
+             //             if self.attachmentHeaders[section].is_unread == true {
+             //                 self.ReadStatusUpdate(
+             //                     type: "ATTACHMENT",
+             //                     detail_id: self.attachmentHeaders[section].id ?? "")
+             //             }
+             
              tableView.beginUpdates()
              tableView.endUpdates()
          }
-
+         
          header.layoutIfNeeded()
          
          return header
@@ -215,6 +254,9 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         return cell.collectionContentHeight() + 60
     }
     
+   
+
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterAttachments(with: searchText)
     }
@@ -243,7 +285,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                     time: item.time ?? "",
                     sender_info: item.sender_info ?? "", sent_by: "",
                     is_unread: item.is_unread ?? false,
-                    id: item.id ?? "",
+                    id: item.id ?? "", headerID: item.header_id,
                     can_edit: false,can_delete: false
                 )
                 self.attachmentHeaders.append(header)
@@ -273,6 +315,7 @@ struct AttachmentHeaderInfo {
     let sent_by: String?
     var is_unread: Bool
     let id: String?
+    let headerID: String?
     let can_edit: Bool
     let can_delete: Bool
     var isExpanded: Bool = false

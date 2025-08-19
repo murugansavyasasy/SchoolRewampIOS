@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol goToReportPage{
+    
+    func goToReportPage(index:Int)
+}
 class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, SelectNotice {
 
     @IBOutlet weak var createBtn: UIButton!
@@ -21,10 +25,21 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     var page1 = UIViewController()
     var page2 = UIViewController()
     var titleLbl = ""
-
+    var deleate : goToReportPage?
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        let index = 1
+//        guard index >= 0 && index < pages.count else {
+//            print("Index out of bounds")
+//            return
+//        }
+//        updateTabUI(for: index)
+//        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+//        let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
+//
+//        pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
+        
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
@@ -177,24 +192,25 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         editId editID:String
     ) {
         if #available(iOS 14.0, *) {
-            if let page1 = pages.first as? SenderSideHomeWorkViewController{
-//                segmentController.selectedSegmentIndex = 0
-                
-                createBtn.setTitle("Update", for: .normal)
-                updateTabUI(for: 0)
-                
-               
-                page1
-                    .setSelectedHomeWork(
-                        title: title,
-                        content: content,
-                        imageUrls: items,
-                        editId: editID
-                    )
-                let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-                let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
-                pageViewController.setViewControllers([page1], direction: direction, animated: true, completion: nil)
-            }
+            
+          
+                if let page1 = pages.first as? SenderSideHomeWorkViewController{
+                    //                segmentController.selectedSegmentIndex = 0
+                    
+                    createBtn.setTitle("Update", for: .normal)
+                    updateTabUI(for: 0)
+                    page1
+                        .setSelectedHomeWork(
+                            title: title,
+                            content: content,
+                            imageUrls: items,
+                            editId: editID
+                        )
+                    let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+                    let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
+                    pageViewController.setViewControllers([page1], direction: direction, animated: true, completion: nil)
+                }
+            
         }
     }
     
