@@ -248,7 +248,31 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManag
     }
     
     @IBAction func selectRecipient(_ sender: UIButton) {
-        // Commented out code remains as is
+        guard let title = TitleTxtfield.text, !title.isEmpty,
+              let description = DetailsTxtview.text, !description.isEmpty,
+              description != CommonStringFile.Description else {
+            alert.showAlert(
+                title: "",
+                message: AlertstringFile.enter_title_description,
+                on: self
+            )
+            return
+        }
+        
+        user_inputs.SelectedUrls = attachments
+        user_inputs.VideoPath = selectedVideoURL
+        
+        let params: [String: Any] = [
+            assignmentResquestStringKey.title: title,
+            assignmentResquestStringKey.description: description,
+            assignmentResquestStringKey.activity_type: taskTypes[selectedTaskIndex].0,
+        ]
+      
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        vc.ScreenType = Menu_id.homeWorkMenuId
+        vc.Common_request_params = params
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @IBAction func deleteVideo() {
@@ -283,33 +307,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, VideoPickerManag
             waveView.reset()
             audioURL = nil
         }
-    }
-    
-    @IBAction func recipientBtnAction(_ sender: Any) {
-        guard let title = TitleTxtfield.text, !title.isEmpty,
-              let description = DetailsTxtview.text, !description.isEmpty,
-              description != CommonStringFile.Description else {
-            alert.showAlert(
-                title: "",
-                message: AlertstringFile.enter_title_description,
-                on: self
-            )
-            return
-        }
-        
-        user_inputs.SelectedUrls = attachments
-        user_inputs.VideoPath = selectedVideoURL
-        
-        let params: [String: Any] = [
-            assignmentResquestStringKey.title: title,
-            assignmentResquestStringKey.description: description,
-        ]
-        
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        vc.ScreenType = Menu_id.homeWorkMenuId
-        vc.Common_request_params = params
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     
     // MARK: - Audio Methods

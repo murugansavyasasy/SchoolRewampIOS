@@ -57,7 +57,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-        pagecontroller.numberOfPages = recentMenuItems?.count ?? 0
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
         recentActiveMenuCollection.dataSource = self
@@ -104,6 +103,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.count == 0
                         self.pagecontroller.isHidden = details.frequently_used?.count == 0
+                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                     } else {
                         self.MenuCollection.reloadData()
@@ -119,12 +119,12 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        headerView.startWaveAnimation()
+//        headerView.startWaveAnimation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        headerView.stopWaveAnimation()
+//        headerView.stopWaveAnimation()
     }
     
     private func setupHeaderView() {
@@ -228,8 +228,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == recentActiveMenuCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCVCell", for: indexPath) as! TopCVCell
-            let item = recentMenuItems?[indexPath.item]
-//            cell.configure(with: item)
+            if let item = recentMenuItems?[indexPath.item]{
+                cell.configure(with: item)
+            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMenuCVC", for: indexPath) as! CustomMenuCVC
@@ -247,60 +248,71 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView != recentActiveMenuCollection {
-            
-            let menuItem = menu_details?[indexPath.row].id
-            MenuStringFile.selectedMenuName = menu_details?[indexPath.row].name ?? ""
-            switch menuItem {
-            case 2:
-                MenuRedirect.receiverAssignmentNavigate(from: self)
-            case 4:
-                MenuRedirect.receiverAttendancereport(from: self)
-            case 5:
-                MenuRedirect.receiverCertificateRequest(from: self)
-            case 6:
-                MenuRedirect.receiverclassTimeTable(from: self)
-            case 7:
-                MenuRedirect.receiverCommunicationNavigate(from: self)
-            case 9:
-                MenuRedirect.receiverEvent(from: self)
-            case 10:
-                MenuRedirect.resiverExamMark(from: self)
-            case 12:
-                MenuRedirect.receiverFeeDetails(from: self)
-            case 13:
-                break    //fee payment
-            case 15:
-                MenuRedirect.receiverHomework(from: self)
-            case 16:
-                MenuRedirect.receiverchat(from: self)
-            case 20:
-                MenuRedirect.receiverLsrwNavigate(from: self)
-            case 23:
-                MenuRedirect.receiverNoticeBoardNavigate(from: self)
-            case 24:
-                MenuRedirect.receiverOnlineNavigate(from: self)
-            case 25:
-                MenuRedirect.receiverFeeDetails(from: self)
-            case 26:
-                MenuRedirect.receiverPtmNavigate(from: self)
-            case 27:
-                MenuRedirect.QuizExam(from: self)
-            case 28:
-                MenuRedirect.LeaveRquest(from: self)
-            case 36:
-                MenuRedirect.senderImportantInfoNavigate(from: self)
-            case 39:
-                MenuRedirect.receiverAttachment(from: self)
-            case 40:
-                MenuRedirect.receiverPauckt(from: self)
-            default:
-                break
-            }
+        var menuItem: Int?
+        var menuName: String = ""
 
+        if collectionView != recentActiveMenuCollection {
+            menuItem = menu_details?[indexPath.row].id
+            menuName = menu_details?[indexPath.row].name ?? ""
+        } else {
+            menuItem = recentMenuItems?[indexPath.row].id
+            menuName = recentMenuItems?[indexPath.row].name ?? ""
         }
-        
+
+        // Save selected menu name
+        MenuStringFile.selectedMenuName = menuName
+
+        // Ensure menuItem is not nil before switching
+        guard let menuId = menuItem else { return }
+
+        switch menuId {
+        case 2:
+            MenuRedirect.receiverAssignmentNavigate(from: self)
+        case 4:
+            MenuRedirect.receiverAttendancereport(from: self)
+        case 5:
+            MenuRedirect.receiverCertificateRequest(from: self)
+        case 6:
+            MenuRedirect.receiverclassTimeTable(from: self)
+        case 7:
+            MenuRedirect.receiverCommunicationNavigate(from: self)
+        case 9:
+            MenuRedirect.receiverEvent(from: self)
+        case 10:
+            MenuRedirect.resiverExamMark(from: self)
+        case 12:
+            MenuRedirect.receiverFeeDetails(from: self)
+        case 13:
+            break    // Fee payment
+        case 15:
+            MenuRedirect.receiverHomework(from: self)
+        case 16:
+            MenuRedirect.receiverchat(from: self)
+        case 20:
+            MenuRedirect.receiverLsrwNavigate(from: self)
+        case 23:
+            MenuRedirect.receiverNoticeBoardNavigate(from: self)
+        case 24:
+            MenuRedirect.receiverOnlineNavigate(from: self)
+        case 25:
+            MenuRedirect.receiverFeeDetails(from: self)
+        case 26:
+            MenuRedirect.receiverPtmNavigate(from: self)
+        case 27:
+            MenuRedirect.QuizExam(from: self)
+        case 28:
+            MenuRedirect.LeaveRquest(from: self)
+        case 36:
+            MenuRedirect.senderImportantInfoNavigate(from: self)
+        case 39:
+            MenuRedirect.receiverAttachment(from: self)
+        case 40:
+            MenuRedirect.receiverPauckt(from: self)
+        default:
+            break
+        }
     }
+
 }
 @available(iOS 14.0, *)
 extension CustomParentDashboardVC: UICollectionViewDelegateFlowLayout {

@@ -44,7 +44,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     func getSubmission() {
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_assignment_submissions_list,
-            parameters: ["id":"180648", "type": "TOTAL"],
+            parameters: ["id":"180652", "type": "TOTAL"],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<StudentSubmissionResponse, Error>) in

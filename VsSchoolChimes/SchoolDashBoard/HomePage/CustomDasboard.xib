@@ -29,10 +29,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-GC-JgT" customClass="HeaderWaveView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="179.33333333333334"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="199.33333333333334"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfh-Ne-KxY">
-                            <rect key="frame" x="10" y="67.333333333333329" width="30" height="30"/>
+                            <rect key="frame" x="10" y="70.333333333333329" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="aWU-TS-xrH"/>
                                 <constraint firstAttribute="height" constant="30" id="eKk-uf-H44"/>
@@ -47,13 +47,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-xi-caa">
-                            <rect key="frame" x="60" y="99.333333333333329" width="203" height="0.0"/>
+                            <rect key="frame" x="60" y="105.33333333333333" width="203" height="14"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xm8-ou-byW">
-                            <rect key="frame" x="60" y="75" width="203" height="14.333333333333329"/>
+                            <rect key="frame" x="60" y="75" width="203" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -95,16 +95,16 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Bj-00-zHJ">
-                    <rect key="frame" x="0.0" y="169.33333333333331" width="393" height="648.66666666666674"/>
+                    <rect key="frame" x="0.0" y="189.33333333333331" width="393" height="628.66666666666674"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pCW-mj-7SX">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="648.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="628.66666666666663"/>
                             <subviews>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-r1-Ddw">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-r1-Ddw">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="120" id="WJO-xo-AjA"/>
+                                        <constraint firstAttribute="height" constant="100" id="WJO-xo-AjA"/>
                                     </constraints>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Nbr-9Q-a5x">
                                         <size key="itemSize" width="128" height="128"/>
@@ -114,7 +114,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="A6G-fe-j6j">
-                                    <rect key="frame" x="0.0" y="119.99999999999997" width="393" height="30"/>
+                                    <rect key="frame" x="0.0" y="99.999999999999972" width="393" height="30"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="DvL-ns-eO2"/>
@@ -122,8 +122,8 @@
                                     <color key="pageIndicatorTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="currentPageIndicatorTintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </pageControl>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8j8-rO-HUO">
-                                    <rect key="frame" x="0.0" y="149.99999999999997" width="393" height="498.66666666666663"/>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8j8-rO-HUO">
+                                    <rect key="frame" x="0.0" y="129.99999999999997" width="393" height="498.66666666666663"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZST-5D-OKJ">
                                         <size key="itemSize" width="128" height="128"/>
