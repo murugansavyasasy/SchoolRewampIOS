@@ -407,7 +407,7 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39:
-                MenuRedirect.receiverAttachment(from: self)
+                MenuRedirect.receiverAttachment(from: self, notificationId: "")
             case 40:
                 MenuRedirect.receiverPauckt(from: self)
             default:

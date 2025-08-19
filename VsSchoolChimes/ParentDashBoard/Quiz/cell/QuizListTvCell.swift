@@ -9,34 +9,43 @@ import UIKit
 
 class QuizListTvCell: UITableViewCell {
     
-    @IBOutlet weak var LevelView: UIView!
+    @IBOutlet weak var postedByLbl: UILabel!
+    @IBOutlet weak var subjectLbl: UILabel!
+    @IBOutlet weak var discretiponsLbl: UILabel!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var EndTimeLbl: UILabel!
+    @IBOutlet weak var strtTimeLbl: UILabel!
+    @IBOutlet weak var exameDateLbl: UILabel!
+    @IBOutlet weak var DeafultimageView: UIImageView!
+    //    @IBOutlet weak var LevelView: UIView!
     @IBOutlet weak var CellView: UIView!
-    @IBOutlet weak var TitleLbl: UILabel!
-    @IBOutlet weak var SubjectLbl: UILabel!
-    @IBOutlet weak var DescriptionLbl: UILabel!
+//    @IBOutlet weak var TitleLbl: UILabel!
+//    @IBOutlet weak var SubjectLbl: UILabel!
+//    @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var PlayBtn: UIButton!
-    @IBOutlet weak var LevelLbl: UILabel!
-    
+//    @IBOutlet weak var LevelLbl: UILabel!
+//    
     override func awakeFromNib() {
         super.awakeFromNib()
         CellView.layer.cornerRadius = 10
-        CellView.layer.shadowColor = UIColor.black.cgColor
-        CellView.layer.shadowOpacity = 0.5
-        CellView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        CellView.layer.shadowRadius = 3
-        CellView.layer.masksToBounds = false
-        CellView.layer.borderWidth = 1
-        CellView.layer.borderColor = UIColor.gray.cgColor
-        
-        LevelView.layer.cornerRadius = 10
-        LevelView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
-       
-        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-        SubjectLbl.setFont(style: .body, size: FontSize.BodySize)
-        LevelLbl.setFont(style: .title, size: FontSize.TitleSize)
-        PlayBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
-        PlayBtn.applyRightButton()
+        DeafultimageView.layer.cornerRadius = 10
+//        CellView.layer.shadowColor = UIColor.black.cgColor
+//        CellView.layer.shadowOpacity = 0.5
+//        CellView.layer.shadowOffset = CGSize(width: 4, height: 4)
+//        CellView.layer.shadowRadius = 3
+//        CellView.layer.masksToBounds = false
+//        CellView.layer.borderWidth = 1
+//        CellView.layer.borderColor = UIColor.gray.cgColor
+//        
+//        LevelView.layer.cornerRadius = 10
+//        LevelView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
+//       
+//        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+//        SubjectLbl.setFont(style: .body, size: FontSize.BodySize)
+//        LevelLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        PlayBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+//        PlayBtn.applyRightButton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

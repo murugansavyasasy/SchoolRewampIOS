@@ -153,7 +153,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
                                 date: item.date ?? "",
                                 time: item.time ?? "",
                                 
-                                sender_info: item.sender_info ?? "", sent_by: item.sent_by, is_unread: item.is_unread ?? false, id: item.id ?? "", can_edit: item.can_edit ?? false,
+                                sender_info: item.sender_info ?? "", sent_by: item.sent_by, is_unread: item.is_unread ?? false, id: item.id ?? "", headerID: item.header_id, can_edit: item.can_edit ?? false,
                                 can_delete: item.can_delete ?? false
                             )
                             self.attachmentHeaders.append(header)
@@ -367,7 +367,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                     time: item.time ?? "",
                     sender_info:  "", sent_by: item.sent_by,
                     is_unread: item.is_unread ?? false,
-                    id: item.id ?? "",
+                    id: item.id ?? "", headerID: item.header_id,
                     can_edit: item.can_edit ?? false,
                     can_delete: item.can_delete ?? false
                     

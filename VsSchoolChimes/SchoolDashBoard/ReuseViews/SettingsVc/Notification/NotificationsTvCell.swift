@@ -9,6 +9,9 @@ import UIKit
 
 class NotificationsTvCell: UITableViewCell {
 
+    @IBOutlet weak var sentbyLbl: UILabel!
+    @IBOutlet weak var messageLbl: UILabel!
+    @IBOutlet weak var typeLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

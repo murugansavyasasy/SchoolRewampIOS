@@ -9,6 +9,7 @@ import UIKit
 
 class PlayQuizVc: UIViewController {
     
+    @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var PreviousBtn: UIButton!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
@@ -25,7 +26,6 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var Button3: UIButton!
     @IBOutlet weak var Button4: UIButton!
     @IBOutlet weak var NextBtn: UIButton!
-    @IBOutlet weak var PreviousImgView: UIImageView!
     @IBOutlet weak var CompletedView: UIView!
     @IBOutlet weak var ContinueBtn: UIButton!
     @IBOutlet weak var CompletedImg: UIImageView!
@@ -38,19 +38,19 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
     @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
     @IBOutlet weak var CompTotalmarkLbl: UILabel!
-    
-    var questions: [Question] = [
-        Question(text: "What is the capital of Germany?", options: ["Berlin", "Munich", "Frankfurt", "Hamburg"], correctOptionIndex: 0),
-        Question(text: "What is the square root of 64?", options: ["6", "7", "8", "9"], correctOptionIndex: 2),
-        Question(text: "Which planet is the largest in the Solar System?", options: ["Earth", "Mars", "Jupiter", "Saturn"], correctOptionIndex: 2),
-        Question(text: "Who wrote 'Romeo and Juliet'?", options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "Jane Austen"], correctOptionIndex: 2),
-        Question(text: "Which is the smallest prime number?", options: ["0", "1", "2", "3"], correctOptionIndex: 2),
-        Question(text: "What is the chemical symbol for water?", options: ["H2O", "CO2", "NaCl", "O2"], correctOptionIndex: 0),
-        Question(text: "Which country is known as the Land of the Rising Sun?", options: ["India", "China", "Japan", "Thailand"], correctOptionIndex: 2),
-        Question(text: "What is the fastest land animal?", options: ["Cheetah", "Lion", "Horse", "Leopard"], correctOptionIndex: 0),
-        Question(text: "Which ocean is the largest by area?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correctOptionIndex: 3),
-        Question(text: "Who discovered penicillin?", options: ["Marie Curie", "Alexander Fleming", "Isaac Newton", "Louis Pasteur"], correctOptionIndex: 1)
-    ]
+//    
+//    var questions: [Question] = [
+//        Question(text: "What is the capital of Germany?", options: ["Berlin", "Munich", "Frankfurt", "Hamburg"], correctOptionIndex: 0),
+//        Question(text: "What is the square root of 64?", options: ["6", "7", "8", "9"], correctOptionIndex: 2),
+//        Question(text: "Which planet is the largest in the Solar System?", options: ["Earth", "Mars", "Jupiter", "Saturn"], correctOptionIndex: 2),
+//        Question(text: "Who wrote 'Romeo and Juliet'?", options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "Jane Austen"], correctOptionIndex: 2),
+//        Question(text: "Which is the smallest prime number?", options: ["0", "1", "2", "3"], correctOptionIndex: 2),
+//        Question(text: "What is the chemical symbol for water?", options: ["H2O", "CO2", "NaCl", "O2"], correctOptionIndex: 0),
+//        Question(text: "Which country is known as the Land of the Rising Sun?", options: ["India", "China", "Japan", "Thailand"], correctOptionIndex: 2),
+//        Question(text: "What is the fastest land animal?", options: ["Cheetah", "Lion", "Horse", "Leopard"], correctOptionIndex: 0),
+//        Question(text: "Which ocean is the largest by area?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correctOptionIndex: 3),
+//        Question(text: "Who discovered penicillin?", options: ["Marie Curie", "Alexander Fleming", "Isaac Newton", "Louis Pasteur"], correctOptionIndex: 1)
+//    ]
     
     var currentQuestionIndex = 0
     var buttons: [UIButton] = []
@@ -59,20 +59,25 @@ class PlayQuizVc: UIViewController {
     let gifImages = UIImage.gifImageWithName("Successful")
     var correctOption: [Int] = []
     var correctAnswers = ""
+    var getQuestiondataDetails : [QuizQuestionDataDetails] = []
+    var getQuestiondata : [QuizQuestionData] = []
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    var selectedQuizId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Get_QuizQuestion()
         CompletedView.isHidden = true
-        
+        fullView.layer.cornerRadius = 10
         buttons = [Button1,Button2,Button3,Button4]
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(previousQuesAct))
-        PreviousImgView.addGestureRecognizer(tap)
-        PreviousImgView.isUserInteractionEnabled = true
+      
         
         applyCustomFontToButtons()
-        selectedOptions = Array(repeating: nil, count: questions.count)
-        loadQuestion()
+        selectedOptions = Array(repeating: nil, count: getQuestiondataDetails.count)
+        if getQuestiondataDetails.count != 0 {
+            loadQuestion()
+        }
+        
         StyleAndTranslate()
     }
     override func viewDidLayoutSubviews() {
@@ -100,6 +105,32 @@ class PlayQuizVc: UIViewController {
                     ),
                     for: state
                 )
+            }
+        }
+    }
+    
+    
+    func Get_QuizQuestion() {
+       
+        APIService.shared
+            .makeApi(url: ServiceUrl.quiz_get_questions, parameters: ["id" : selectedQuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+                result: Result<QuizQuestionSuc,
+                Error>
+            ) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let successResponse):
+                   
+                    self.getQuestiondata = successResponse.data ?? []
+                    
+                    self.getQuestiondataDetails = successResponse.data?.first?.question_details ?? []
+                    
+                    
+                case .failure(let error):
+                    print("Error fetching notices: \(error.localizedDescription)")
+                }
             }
         }
     }
@@ -142,11 +173,11 @@ class PlayQuizVc: UIViewController {
     }
     
     func loadQuestion() {
-        let currentQuestion = questions[currentQuestionIndex]
-        QuestionLbl.text = currentQuestion.text
+        let currentQuestion = getQuestiondataDetails[currentQuestionIndex]
+        QuestionLbl.text = currentQuestion.question
         
         for (index, button) in buttons.enumerated() {
-            button.setTitle(currentQuestion.options[index], for: .normal)
+            button.setTitle(currentQuestion.options?[index], for: .normal)
             button.tag = index // Set button tag to match option index
             resetButtonStyle(button)
             
@@ -162,35 +193,35 @@ class PlayQuizVc: UIViewController {
         applyCustomFontToButtons()
         
         // Update progress bar and question count
-        progressBar.progress = Float(currentQuestionIndex + 1) / Float(questions.count)
-        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(questions.count)"
+        progressBar.progress = Float(currentQuestionIndex + 1) / Float(getQuestiondataDetails.count)
+        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(getQuestiondata.first?.total_questions)"
     }
     
     @IBAction func NextAct(_ sender: Any) {
         
-        if currentQuestionIndex < questions.count - 1 {
+        if currentQuestionIndex < getQuestiondataDetails.count - 1 {
             currentQuestionIndex += 1
             loadQuestion()
             PreviousBtn.backgroundColor = .systemIndigo
-            if currentQuestionIndex == questions.count - 1 {
+            if currentQuestionIndex == getQuestiondataDetails.count - 1 {
                 NextBtn.backgroundColor = .systemGreen
                 NextBtn.setTitle("Submit", for: .normal)
             }
             
-        } else if currentQuestionIndex == questions.count - 1 {
+        } else if currentQuestionIndex == getQuestiondataDetails.count - 1 {
             
             // Calculate the score and show the result after the last question
             var score = 0
             
-            for (index, question) in questions.enumerated() {
+            for (index, question) in getQuestiondataDetails.enumerated() {
                 if selectedOptions[index] == question.correctOptionIndex {
                     score += 1 // Increment score for correct answers
                 }
             }
             
             CompCorrectAnsCountLbl.text = String (score)
-            CompInccorectCountLbl.text = String (questions.count - score)
-            CompTotalmarkLbl.text = " \(score) out of \(questions.count)"
+            CompInccorectCountLbl.text = String (getQuestiondataDetails.count - score)
+            CompTotalmarkLbl.text = " \(score) out of \(getQuestiondataDetails.count)"
             CompletedView.isHidden = false
             correctAnswers = String (score)
         }
@@ -247,20 +278,20 @@ class PlayQuizVc: UIViewController {
     
     @IBAction func ContinueAct(_ sender: Any) {
         var correctOption: [Int] = []
-        for question in questions {
-            correctOption.append(question.correctOptionIndex)
+        for question in getQuestiondataDetails {
+            correctOption.append(question.correctOptionIndex ?? 0)
         }
         
-        let vc = QuizVC(nibName: nil, bundle: nil)
-        vc.correctoption = correctOption
-        vc.questions = questions
-        for i in selectedOptions {
-            vc.selectedOption.append(i ?? 0)
-        }
-        vc.correctAnswers = correctAnswers
-        //vc.selectedOption = selectedOptions
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+//        let vc = QuizVC(nibName: nil, bundle: nil)
+//        vc.correctoption = correctOption
+//        vc.questions = getQuestiondataDetails
+//        for i in selectedOptions {
+//            vc.selectedOption.append(i ?? 0)
+//        }
+//        vc.correctAnswers = correctAnswers
+//        //vc.selectedOption = selectedOptions
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     
     //    var questions: [Question] = [

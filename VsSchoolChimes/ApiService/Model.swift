@@ -474,6 +474,7 @@ struct Attachment: Codable {
     let time: String?
     let sender_info: String?
     let sent_by: String?
+    let header_id: String?
     var is_unread: Bool?
     let is_archive: Bool?
     let file_path: [FilePath]?
@@ -1591,3 +1592,83 @@ struct ClassSectionDetail: Codable {
     let section_name: String?
 }
 
+
+struct notificationSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [notificationData]?
+}
+
+struct notificationData : Codable{
+    let menu_id : Int?
+    let menu_name : String?
+    let details : [notificationDetails]?
+    
+}
+
+struct notificationDetails : Codable{
+    let id : String?
+    let name : String?
+    let member_id : String?
+    let type : String?
+    let menu_id : Int?
+    let message : String?
+    let sent_on : String?
+    let header_id : String?
+    let device : String?
+}
+
+struct QuizListSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [QuizListData]?
+    
+}
+
+
+
+
+struct QuizListData : Codable{
+    let id : String?
+    let quiz_id : String?
+    let title : String?
+    let description : String?
+    let max_mark : Int?
+    let subject_id : String?
+    let subject : String?
+    let level : Int?
+    let submitted_on : String?
+    let created_on : String?
+    let is_submitted : Bool?
+    let is_unread : Bool?
+    let SentBy : String?
+    let no_of_questions : Int?
+    let right_answer : Int?
+    let wrong_answer : Int?
+    let total_mark : Int?
+    let no_of_levels : String?
+}
+
+struct QuizQuestionSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [QuizQuestionData]?
+}
+struct QuizQuestionData : Codable{
+    
+    let level : Int?
+    let total_questions : Int?
+    let question_details : [QuizQuestionDataDetails]?
+    
+}
+
+struct QuizQuestionDataDetails : Codable{
+    let id : String?
+    let question : String?
+    let mark : Int?
+    let correctOptionIndex : Int?
+    let options : [String]?
+}

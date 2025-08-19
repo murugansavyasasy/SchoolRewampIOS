@@ -20,8 +20,7 @@ class COMMON_PARAMETER{
 }
 
 class mobileNumber{
-    
-   
+
     static var mobile_number = "mobile_number"
     static var password = "password"
     static var device_type = "device_type"

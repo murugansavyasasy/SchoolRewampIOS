@@ -23,6 +23,9 @@ class NotificationViewController: UIViewController {
     var content = ["Come to school","complete the Asssignment","Draw the Image","Follow the Noticeboard","Complete the Homework","You are absent Today","Chemistry Exam"]
     let MenuRedirect = MenuRedirectHandler.shared
     var passValue = 1
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    var tvheadernotidata : [notificationData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,20 +51,16 @@ class NotificationViewController: UIViewController {
                 forHeaderFooterViewReuseIdentifier: "NotiTvheader"
             )
         
-        tableview.dataSource = self
-        tableview.delegate = self
+       
     }
     
-//    override func viewDidLayoutSubviews() {
-//        if passValue == 1{
-//            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//        }else{
-//            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//        }
-//    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        getNotification()
+    }
+
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -74,43 +73,47 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-             return name.count
+             return tvheadernotidata.count-1
          }
     
      
-      func tableView(_ tableView: UITableView,
-                     viewForHeaderInSection section: Int) -> UIView? {
-          guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "NotiTvheader") as? NotiTvheader else { return nil }
-         
-          
-          return header
-      }
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "NotiTvheader") as? NotiTvheader else { return nil }
+        
+        if let name = tvheadernotidata[section].menu_id {
+            if #available(iOS 14.0, *) {
+                let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
+                header.MenuImage.image = UIImage(named: filteredItems.first?.name ?? "")
+                header.menuNameLbl.text = tvheadernotidata[section].menu_name
+                
+            }
+        }
+        
+        return header
+    }
 
      func tableView(_ tableView: UITableView,
                     heightForHeaderInSection section: Int) -> CGFloat {
          return 60
      }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return name.count
+        return tvheadernotidata[section].details?.count ?? 0
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationsTvCell", for: indexPath) as! NotificationsTvCell
-      
-//        cell.NameLabel.text = name[indexPath.row]
-//        cell.messageTypeLabel.text = type[indexPath.row % type.count]
-//        cell.imgview.image = icon[indexPath.row % icon.count]
-//        cell.contentLabel.text = content[indexPath.row % content.count]
-//        let firstletter = name[indexPath.row].first ?? "A"
-//        
-//        if let letterColor = ColorManager.shared.letterColors[firstletter] {
-//            cell.ProfileLbl.backgroundColor = letterColor
-//        }
-//
-//        cell.ProfileLbl.text = String(firstletter)
-//        
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationsTvCell", for: indexPath) as? NotificationsTvCell else {
+            return UITableViewCell()
+        }
+        
+        
+        cell.sentbyLbl.text = tvheadernotidata[indexPath.section].details?[indexPath.row].name ?? ""
+        cell.messageLbl.text = tvheadernotidata[indexPath.section].details?[indexPath.row].message ?? ""
+        cell.typeLbl.text = tvheadernotidata[indexPath.section].details?[indexPath.row].type ?? ""
+    
         return cell
     }
     
@@ -119,7 +122,71 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         didSelectRowAt indexPath: IndexPath
     ) {
         
-        MenuRedirect.receiverEvent(from: self)
+        
+        let menuItem = tvheadernotidata[indexPath.section].details?[indexPath.row].menu_id
+        if let menuName = tvheadernotidata.first(where: { $0.menu_id == menuItem })?.menu_name {
+            print("Menu Name: \(menuName)")
+            MenuStringFile.selectedMenuName = menuName
+        }
+        
+        switch menuItem {
+        case 2:
+            MenuRedirect.receiverAssignmentNavigate(from: self)
+        case 4:
+            MenuRedirect.receiverAttendancereport(from: self)
+        case 5:
+            MenuRedirect.receiverCertificateRequest(from: self)
+        case 6:
+            MenuRedirect.receiverclassTimeTable(from: self)
+        case 7:
+            MenuRedirect.receiverCommunicationNavigate(from: self)
+        case 9:
+            MenuRedirect.receiverEvent(from: self)
+        case 10:
+            MenuRedirect.resiverExamMark(from: self)
+        case 12:
+            MenuRedirect.receiverFeeDetails(from: self)
+        case 13:
+            break    //fee payment
+        case 15:
+            MenuRedirect.receiverHomework(from: self)
+        case 16:
+            MenuRedirect.receiverchat(from: self)
+        case 20:
+            MenuRedirect.receiverLsrwNavigate(from: self)
+        case 23:
+            MenuRedirect.receiverNoticeBoardNavigate(from: self)
+        case 24:
+            MenuRedirect.receiverOnlineNavigate(from: self)
+        case 25:
+            MenuRedirect.receiverFeeDetails(from: self)
+        case 26:
+            MenuRedirect.receiverPtmNavigate(from: self)
+        case 27:
+            MenuRedirect.QuizExam(from: self)
+        case 28:
+            MenuRedirect.LeaveRquest(from: self)
+        case 36:
+            MenuRedirect.senderImportantInfoNavigate(from: self)
+        case 39:
+            
+            //            clearNotification(
+            //                id:append(tvheadernotidata[indexPath.section].details?[indexPath.row].id)){ finished in
+            //
+            MenuRedirect
+                .receiverAttachment(
+                    from: self,
+                    notificationId: tvheadernotidata[indexPath.section].details?[indexPath.row].header_id ?? ""
+                )
+            //                }
+            
+        case 40:
+            MenuRedirect.receiverPauckt(from: self)
+        default:
+            break
+        }
+        
+        
     }
     
     
@@ -127,6 +194,84 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         return UITableView.automaticDimension
     }
     
+    
+    
+    func getNotification() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_notifications,
+            parameters: ["device_type" : "Iphone"],
+            type: ApitTypeSringFile.GET,
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<notificationSuc, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self?.hideLottieProgressLoader()
+                }
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    if response.status == true {
+                        self.tvheadernotidata = response.data ?? []
+                        self.tableview.dataSource = self
+                        self.tableview.delegate = self
+                        self.tableview.reloadData()
+                    }else{
+                        
+                    }
+                    
+                    
+                case .failure(let error):
+                   ""
+                }
+            }
+        }
+    }
+    
+    
+    func clearNotification(id:[String],onComplete:@escaping (Bool)->(Void)) {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_delete_notification,
+            parameters: ["id" : id],
+            type: ApitTypeSringFile.PUT,
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<notificationSuc, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self?.hideLottieProgressLoader()
+                }
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    
+                    if response.status == true {
+                        self.tvheadernotidata = response.data ?? []
+                        self.tableview.dataSource = self
+                        self.tableview.delegate = self
+                        self.tableview.reloadData()
+                    }else{
+                        
+                    }
+                    
+                    
+                case .failure(let error):
+                   ""
+                }
+                
+                onComplete(true)
+            }
+        }
+        
+    }
 }
 
 @available(iOS 14.0, *)

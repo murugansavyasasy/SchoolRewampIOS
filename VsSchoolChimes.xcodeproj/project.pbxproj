@@ -580,6 +580,8 @@
 		84D85FF12DE5815200633784 /* SectionStregnthCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85FEE2DE5815200633784 /* SectionStregnthCVC.swift */; };
 		84D85FF42DE5967A00633784 /* SectionStregnthTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */; };
 		84D85FF52DE5967A00633784 /* SectionStregnthTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */; };
+		84DE949C2E53252E008E1BF4 /* SenderQuizVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84DE949B2E53252E008E1BF4 /* SenderQuizVc.xib */; };
+		84DE949D2E53252E008E1BF4 /* SenderQuizVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE949A2E53252E008E1BF4 /* SenderQuizVc.swift */; };
 		84E0A97A2E374B7C002BF40A /* AttachmentsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */; };
 		84E0A97B2E374B7C002BF40A /* AttachmentsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */; };
 		84E0A9FE2E389432002BF40A /* AttachmentHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E0A9FD2E389432002BF40A /* AttachmentHeaderCell.xib */; };
@@ -1414,6 +1416,8 @@
 		84D85FEF2DE5815200633784 /* SectionStregnthCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionStregnthCVC.xib; sourceTree = "<group>"; };
 		84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionStregnthTVC.swift; sourceTree = "<group>"; };
 		84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionStregnthTVC.xib; sourceTree = "<group>"; };
+		84DE949A2E53252E008E1BF4 /* SenderQuizVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderQuizVc.swift; sourceTree = "<group>"; };
+		84DE949B2E53252E008E1BF4 /* SenderQuizVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderQuizVc.xib; sourceTree = "<group>"; };
 		84E0A9782E374B7C002BF40A /* AttachmentsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsVc.swift; sourceTree = "<group>"; };
 		84E0A9792E374B7C002BF40A /* AttachmentsVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentsVc.xib; sourceTree = "<group>"; };
 		84E0A9FD2E389432002BF40A /* AttachmentHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentHeaderCell.xib; sourceTree = "<group>"; };
@@ -3228,6 +3232,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84DE94992E5324F7008E1BF4 /* Quiz */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				FA2A3FB72DB0CA6C0000AF55 /* Sender Attachment */,
 				849AD04F2D1A858D002DEC07 /* Assignment */,
@@ -3475,6 +3480,15 @@
 				FA8535482D9BC91400E0379C /* NewShimmerView.swift */,
 			);
 			path = CommonScreens;
+			sourceTree = "<group>";
+		};
+		84DE94992E5324F7008E1BF4 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				84DE949A2E53252E008E1BF4 /* SenderQuizVc.swift */,
+				84DE949B2E53252E008E1BF4 /* SenderQuizVc.xib */,
+			);
+			path = Quiz;
 			sourceTree = "<group>";
 		};
 		84E0A9FF2E389449002BF40A /* CvHeaderCell */ = {
@@ -4439,6 +4453,7 @@
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
+				84DE949C2E53252E008E1BF4 /* SenderQuizVc.xib in Resources */,
 				843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */,
@@ -4638,6 +4653,7 @@
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
 				840177DD2E3A2238006CB477 /* FooterCvCell.swift in Sources */,
 				18926C522D02DE81002BBB97 /* SubmitLsrwRequest.swift in Sources */,
+				84DE949D2E53252E008E1BF4 /* SenderQuizVc.swift in Sources */,
 				84017F762E446DB4006CB477 /* certificateReqVc.swift in Sources */,
 				8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */,
 				840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */,

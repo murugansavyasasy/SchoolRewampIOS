@@ -19,13 +19,13 @@
                     <rect key="frame" x="10" y="0.0" width="373" height="46"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Homework" translatesAutoresizingMaskIntoConstraints="NO" id="uRF-qf-ewG">
-                            <rect key="frame" x="0.0" y="6" width="38" height="34"/>
+                            <rect key="frame" x="10" y="10" width="31" height="26"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="38" id="JJx-dn-m9q"/>
+                                <constraint firstAttribute="width" constant="31" id="29U-u4-2qF"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HomeWork" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzD-5V-eG3">
-                            <rect key="frame" x="43" y="0.0" width="310" height="46"/>
+                            <rect key="frame" x="46" y="0.0" width="322" height="46"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                             <nil key="textColor"/>
@@ -34,13 +34,14 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="wzD-5V-eG3" secondAttribute="bottom" id="2qR-Ag-jka"/>
-                        <constraint firstItem="wzD-5V-eG3" firstAttribute="leading" secondItem="uRF-qf-ewG" secondAttribute="trailing" constant="5" id="5DZ-Ef-Hj7"/>
-                        <constraint firstItem="uRF-qf-ewG" firstAttribute="leading" secondItem="ozs-rG-WTR" secondAttribute="leading" id="Olg-KI-L8P"/>
-                        <constraint firstItem="wzD-5V-eG3" firstAttribute="top" secondItem="ozs-rG-WTR" secondAttribute="top" id="Yqk-Xa-jny"/>
-                        <constraint firstAttribute="trailing" secondItem="wzD-5V-eG3" secondAttribute="trailing" constant="20" id="jo5-gZ-sJE"/>
-                        <constraint firstItem="uRF-qf-ewG" firstAttribute="centerY" secondItem="ozs-rG-WTR" secondAttribute="centerY" id="qQs-PD-NoM"/>
-                        <constraint firstItem="uRF-qf-ewG" firstAttribute="top" secondItem="ozs-rG-WTR" secondAttribute="top" constant="6" id="yDl-xQ-Zbf"/>
+                        <constraint firstAttribute="bottom" secondItem="wzD-5V-eG3" secondAttribute="bottom" id="Bcm-W8-3Fn"/>
+                        <constraint firstItem="uRF-qf-ewG" firstAttribute="centerY" secondItem="ozs-rG-WTR" secondAttribute="centerY" id="X3I-dR-UBD"/>
+                        <constraint firstItem="wzD-5V-eG3" firstAttribute="top" secondItem="ozs-rG-WTR" secondAttribute="top" id="fUy-Om-20l"/>
+                        <constraint firstAttribute="trailing" secondItem="wzD-5V-eG3" secondAttribute="trailing" constant="5" id="iKu-gN-ab8"/>
+                        <constraint firstItem="uRF-qf-ewG" firstAttribute="top" secondItem="ozs-rG-WTR" secondAttribute="top" constant="10" id="nzG-Pl-h2L"/>
+                        <constraint firstAttribute="bottom" secondItem="uRF-qf-ewG" secondAttribute="bottom" constant="10" id="prE-XY-ICr"/>
+                        <constraint firstItem="wzD-5V-eG3" firstAttribute="leading" secondItem="uRF-qf-ewG" secondAttribute="trailing" constant="5" id="uJ7-46-Zd1"/>
+                        <constraint firstItem="uRF-qf-ewG" firstAttribute="leading" secondItem="ozs-rG-WTR" secondAttribute="leading" constant="10" id="xgx-kr-C12"/>
                     </constraints>
                 </view>
             </subviews>
@@ -53,6 +54,10 @@
                 <constraint firstAttribute="trailing" secondItem="ozs-rG-WTR" secondAttribute="trailing" constant="10" id="dhg-GI-5Pa"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="MenuImage" destination="uRF-qf-ewG" id="tVL-Q4-f5y"/>
+                <outlet property="menuNameLbl" destination="wzD-5V-eG3" id="wTe-Ha-YLe"/>
+            </connections>
             <point key="canvasLocation" x="136.64122137404578" y="-264.78873239436621"/>
         </view>
     </objects>

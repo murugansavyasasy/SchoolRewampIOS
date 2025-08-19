@@ -11,9 +11,7 @@ class QuizVC: UIViewController {
 
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var ButtonStackview: UIStackView!
-    @IBOutlet weak var UpcomingBtn: UIButton!
-    @IBOutlet weak var CompletedBtn: UIButton!
+   
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
@@ -26,8 +24,11 @@ class QuizVC: UIViewController {
     var correctoption : [Int] = []
     var selectedOption : [Int] = []
     var questions : [Question] = []
+    var get_QuizDetails : [QuizListData] = []
     var correctAnswers = ""
     var incorrectAnswers = ""
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    let images = ["Quiz1", "Quiz2", "Quiz3"]
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -45,25 +46,45 @@ class QuizVC: UIViewController {
         
         tv.delegate = self
         tv.dataSource = self
-        tv.reloadData()
+//        tv.reloadData()
+        Get_Quiz()
 
+    }
+    
+    
+    func Get_Quiz() {
+       
+        APIService.shared
+            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: ["type" : "2","status_type" : "1"], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+                result: Result<QuizListSuc,
+                Error>
+            ) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let successResponse):
+                   
+                    self.get_QuizDetails = successResponse.data ?? []
+                    
+                    self.tv.reloadData()
+                    
+                case .failure(let error):
+                    print("Error fetching notices: \(error.localizedDescription)")
+                }
+            }
+        }
     }
     
     func StyleAndTranslate(){
         
         //MARK: UI Changes
-        ButtonStackview.layer.cornerRadius = 20
-        UpcomingBtn.layer.cornerRadius = 20
-        CompletedBtn.layer.cornerRadius = 20
-        CompletedBtn.tintColor = .lightGray
-        
-        configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
+       
         
         //MARK: Font Style
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        UpcomingBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        CompletedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+      
         BackBtn.setTitleFont(style: .body, size: 20)
         IncorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
         CorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -84,10 +105,10 @@ class QuizVC: UIViewController {
         tv.register(nib3, forCellReuseIdentifier: CellConfingName.QuizListTvCell)
     }
     
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
-    
+//    override func viewDidLayoutSubviews() {
+//        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+//    }
+//    
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
@@ -119,12 +140,7 @@ class QuizVC: UIViewController {
     }
     
     @IBAction func UpcomingAct(_ sender: Any) {
-        configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
-        UpcomingBtn.tintColor = .black
-        CompletedBtn.tintColor = .lightGray
-        
-        gradientcolours(button: CompletedBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        
+       
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
         id = 0
@@ -136,11 +152,7 @@ class QuizVC: UIViewController {
     @IBAction func CompletedAct(_ sender: Any) {
         
         //gradientcolours(button: CompletedBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
-        configureButton(CompletedBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
-        UpcomingBtn.tintColor = .lightGray
-        CompletedBtn.tintColor = .black
-        
-        gradientcolours(button: UpcomingBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+       
         
         IncorrectAnswerLbl.isHidden = false
         CorrectAnswerLbl.isHidden = false
@@ -163,7 +175,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         if id == 1 {
             return questions.count
         }else{
-            return 4
+            return get_QuizDetails.count
         }
     }
     
@@ -200,25 +212,42 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
             return cell
 
         }else{
-            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as! QuizListTvCell
-            let colour = colours[indexPath.row % colours.count]
-            let colour2 = UIColor(named:colour)?.adjustedColor(brightnessFactor: 1.7, saturationFactor: 0.4)
-            cell.CellView.backgroundColor = colour2
-            let tap = UITapGestureRecognizer(target: self, action: #selector(StartQuiz))
-            //cell.StartBtn.addGestureRecognizer(tap)
-            cell.PlayBtn.addGestureRecognizer(tap)
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? QuizListTvCell else {
+                return UITableViewCell()
+            }
+            let quiz = get_QuizDetails[indexPath.row]
+               let imageName = images[indexPath.row % images.count]
+            cell.DeafultimageView.image = UIImage(named: imageName)
+            
+            cell.titleLbl.text = get_QuizDetails[indexPath.row].title
+            cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description
+            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
+            cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
+            cell.postedByLbl.text = ("Posted By:") + (
+                get_QuizDetails[indexPath.row].SentBy ?? ""
+            )
             return cell
         }
     }
+    
+    
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        
+        if id != 1{
+            
+            let vc = PlayQuizVc(nibName: nil, bundle: nil)
+            vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+        
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-    }
-    
-    @IBAction func StartQuiz(){
-        
-        let vc = PlayQuizVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     
 }

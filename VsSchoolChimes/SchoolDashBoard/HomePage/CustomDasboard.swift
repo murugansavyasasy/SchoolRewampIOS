@@ -412,6 +412,12 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 MenuRedirect.senderOnlineNavigate(from: self)
             case 26:
                 MenuRedirect.senderPtmNavigate(from: self)
+            case 27:
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else {
+                    MenuRedirect.senderQuiz(from: self)
+                }
             case 28:
                 MenuRedirect.senderLeaveRequestNavigate(from: self)
             case 29:

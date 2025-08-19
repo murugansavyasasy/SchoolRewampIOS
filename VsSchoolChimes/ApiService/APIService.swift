@@ -34,6 +34,7 @@ class APIService: NSObject, URLSessionDelegate {
         
         print("✅ Request URL: \(fullURL)")
         print("📦 Parameters: \(parameters ?? [:])")
+        print("TOKEN : \(token)")
         
         
         var request = URLRequest(url: fullURL)
