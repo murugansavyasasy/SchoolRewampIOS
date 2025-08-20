@@ -288,6 +288,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
+    func senderQuiz(from viewController: UIViewController) {
+        let vc = SenderQuizVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+        
+    }
     
     
     
@@ -306,7 +312,8 @@ class MenuRedirectHandler {
 //        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
 //        vc.Header = "School Needs"
         if #available(iOS 15.0, *) {
-            let vc = LSRWPagenationVC(nibName: nil, bundle: nil)
+//            let vc = LSRWPagenationVC(nibName: nil, bundle: nil)
+            let vc = LSRWVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             viewController.present(vc, animated: true)
         }
@@ -429,10 +436,11 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
-    func receiverAttachment(from viewController: UIViewController){
+    func receiverAttachment(from viewController: UIViewController,notificationId:String){
         
 //        let vc = ReciverAttachmentrVC(nibName: nil, bundle: nil)
         let vc = AttachmentsVc(nibName: nil, bundle: nil)
+        vc.clickedMessageId = notificationId
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

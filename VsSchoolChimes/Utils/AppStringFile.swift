@@ -323,6 +323,7 @@ class CommonStringFile{
     static let Proceed = "Proceed".translated()
     static let CreateEvent = "Create Event".translated()
     static let Title = "Title".translated()
+    static let selectedDate = "Selected Date".translated()
     static let SelectCatagorie = "Select Catagorie".translated()
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
     static let Add_attachment_optional = "Add attachment (Optional?)".translated()

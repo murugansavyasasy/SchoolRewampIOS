@@ -412,12 +412,12 @@ extension SenderHomeWorkVC: SelectNotice, Datepicker, UISearchBarDelegate {
         editId: String
     ) {
         selectNotice?
-                    .didTapButton(
-                        title: title,
-                        content: content,
-                        items: items,
-                        editId: editId
-                    )
+            .didTapButton(
+                title: title,
+                content: content,
+                items: items,
+                editId: editId
+            )
     }
 
     func date(date: String) {

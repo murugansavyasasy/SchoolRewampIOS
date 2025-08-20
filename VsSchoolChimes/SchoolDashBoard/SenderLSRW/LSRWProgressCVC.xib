@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,27 +18,27 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Rg-4O-HI3">
-                        <rect key="frame" x="0.0" y="0.0" width="280" height="177"/>
+                        <rect key="frame" x="5" y="5" width="270" height="167"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="e54-RJ-qv0">
-                                <rect key="frame" x="10" y="65" width="260" height="102"/>
+                                <rect key="frame" x="10" y="65" width="250" height="92"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzt-4o-TbH">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Qv-SA-iPL">
-                                        <rect key="frame" x="0.0" y="86.333333333333343" width="260" height="15.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="76.333333333333343" width="250" height="15.666666666666671"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="68" translatesAutoresizingMaskIntoConstraints="NO" id="4ib-FS-OP4">
-                                <rect key="frame" x="10" y="10" width="260" height="35"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ib-FS-OP4">
+                                <rect key="frame" x="10" y="10" width="250" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAM-dA-OYr">
                                         <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
@@ -50,18 +49,17 @@
                                         </constraints>
                                         <color key="tintColor" red="0.059000000359999999" green="0.46893476649999999" blue="0.059000000359999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="person.2.badge.plus" catalog="system"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="87%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-NF-mc7">
-                                        <rect key="frame" x="103" y="0.0" width="157" height="35"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <rect key="frame" x="35" y="0.0" width="215" height="35"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="e54-RJ-qv0" secondAttribute="trailing" constant="10" id="1Ax-OF-H98"/>
                             <constraint firstItem="e54-RJ-qv0" firstAttribute="top" secondItem="4ib-FS-OP4" secondAttribute="bottom" constant="20" id="2Fv-tb-EnR"/>
@@ -75,20 +73,22 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="1Rg-4O-HI3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Fbp-RK-Ozm"/>
-                <constraint firstAttribute="bottom" secondItem="1Rg-4O-HI3" secondAttribute="bottom" id="L68-hX-k0W"/>
-                <constraint firstAttribute="trailing" secondItem="1Rg-4O-HI3" secondAttribute="trailing" id="a52-eD-I1j"/>
-                <constraint firstItem="1Rg-4O-HI3" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="fVg-N4-Lbx"/>
+                <constraint firstItem="1Rg-4O-HI3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Fbp-RK-Ozm"/>
+                <constraint firstAttribute="bottom" secondItem="1Rg-4O-HI3" secondAttribute="bottom" constant="5" id="L68-hX-k0W"/>
+                <constraint firstAttribute="trailing" secondItem="1Rg-4O-HI3" secondAttribute="trailing" constant="5" id="a52-eD-I1j"/>
+                <constraint firstItem="1Rg-4O-HI3" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="fVg-N4-Lbx"/>
             </constraints>
             <size key="customSize" width="280" height="177"/>
+            <connections>
+                <outlet property="IconBtn" destination="MAM-dA-OYr" id="2G7-i6-7SC"/>
+                <outlet property="descriptionLbl" destination="9Qv-SA-iPL" id="HsH-21-DgD"/>
+                <outlet property="outerView" destination="1Rg-4O-HI3" id="4SG-3l-fwv"/>
+                <outlet property="titleLbl" destination="fzt-4o-TbH" id="qbg-UM-C5e"/>
+                <outlet property="valueLbl" destination="DmN-NF-mc7" id="KRk-Ze-PHP"/>
+            </connections>
             <point key="canvasLocation" x="314.50381679389312" y="64.436619718309856"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="person.2.badge.plus" catalog="system" width="128" height="90"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

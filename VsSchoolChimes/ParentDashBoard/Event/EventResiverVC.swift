@@ -40,6 +40,7 @@ class EventResiverVC: UIViewController {
     var allEventSections: [EventDisplaySection] = []
     var filteredSections: [EventDisplaySection] = []
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    var clickedMessageId : String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,8 +49,24 @@ class EventResiverVC: UIViewController {
         setupUI()
         registerTableView()
         GetEvent()
+        if clickedMessageId != nil{
+            loadDataAndScrollIfNeeded()
+        }
+        scrollCellToCenter(indexPath: IndexPath(row: 9, section: 0), animated: true)
+
     }
 
+    func scrollCellToCenter(indexPath: IndexPath, animated: Bool) {
+        if let cellRect = tableview.rectForRow(at: indexPath) as CGRect? {
+            let tableViewHeight = tableview.bounds.height
+            let contentOffsetY = cellRect.midY - tableViewHeight / 2
+            let maxOffsetY = tableview.contentSize.height - tableViewHeight
+            let minOffsetY: CGFloat = 0
+            
+            let finalOffsetY = max(minOffsetY, min(contentOffsetY, maxOffsetY))
+            tableview.setContentOffset(CGPoint(x: 0, y: finalOffsetY), animated: animated)
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         filteredSections = allEventSections
@@ -195,6 +212,41 @@ class EventResiverVC: UIViewController {
 @available(iOS 14.0, *)
 extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
 
+    func loadDataAndScrollIfNeeded() {
+        // API Call → update attachmentHeaders → reloadData
+        tableview.reloadData()
+        
+        if let messageId = clickedMessageId,
+           !messageId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            scrollToHeaderMessageId(messageId)
+            clickedMessageId = nil
+        }
+    }
+    
+    func scrollToHeaderMessageId(_ messageId: String) {
+        if let targetSection = filteredSections.firstIndex(where: { section in
+            switch section {
+            case .upcoming(let events), .completed(let events):
+                return events.contains { "\($0.id)" == messageId }
+            default:
+                return false
+            }
+        }) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                let headerRect = self.tableview.rectForHeader(
+                    inSection: targetSection
+                )
+                self.tableview.scrollRectToVisible(headerRect, animated: true)
+            }
+        } else {
+            print("⚠️ Message ID \(messageId) not found in filteredSections")
+        }
+    }
+
+    
+    
+
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return filteredSections.count
     }

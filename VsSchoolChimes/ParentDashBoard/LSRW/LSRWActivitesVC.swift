@@ -9,17 +9,26 @@ import UIKit
 import AVFoundation
 
 @available(iOS 15.0, *)
-class LSRWActivitesVC: UIViewController, BaktoHome {
+class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate {
+    func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
+        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+        imageVC.fileURL = allAttachments
+        imageVC.subjectName = "Event"
+        imageVC.scrollIndex = IndexPath(index:index)
+        imageVC.index = index
+        imageVC.modalPresentationStyle = .fullScreen
+        present(imageVC, animated: true)
+    }
+    
     func backtohome() {
         testTable.reloadData()
     }
-    
     
     // MARK: - IBOutlets
     @IBOutlet weak var testTable: UITableView!
     
     // MARK: - Properties
-    var lsrw: SkillData?
+    var lsrw: LSRWTask?
     private var captions: [CaptionType] = []
     
     override func viewDidLoad() {
@@ -32,29 +41,35 @@ class LSRWActivitesVC: UIViewController, BaktoHome {
     private func setupCaptions() {
         guard let lsrw = lsrw else { return }
         
-        // Add initial attachment type if available
-        if let firstAttachmentType = lsrw.file_path?.first?.type {
-            captions.append(firstAttachmentType == "audio" ? .audio : .attachments)
+//        // Add initial attachment type if available
+//        if let firstAttachmentType = lsrw.file_path?.first?.type?.lowercased() {
+//            captions.append(firstAttachmentType == "audio" ? .audio : .attachments)
+//        }
+        self.lsrw?.test = [
+            TestQuestion(question: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"]),
+            TestQuestion(question: "Which is the largest planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"]),
+            TestQuestion(question: "Who wrote the national anthem of India?", options: ["Tagore", "Gandhi", "Nehru", "Vivekananda"]),
+            TestQuestion(question: "Which is the fastest land animal?", options: ["Tiger", "Cheetah", "Lion", "Horse"])
+        ]
+
+        // Configure captions based on LSRW type
+        switch lsrw.activity_type {
+        case .reading, .listening:
+            captions += Array(repeating: .test, count: self.lsrw?.test?.count ?? 0)
+        case .writing:
+            captions.append(.addAttachment)
+        case .speaking:
+            captions += [.record, .addAttachment]
         }
         
-        // Configure captions based on LSRW type
-        switch lsrw.activity_type?.lowercased() {
-        case "read", "listen":
-            captions += Array(repeating: .test, count: lsrw.test?.count ?? 0)
-        case "write":
-            captions.append(.addAttachment)
-        case "speak":
-            captions += [.record, .addAttachment]
-        default:
-            break
-        }
+        // Always insert task first
         captions.insert(.task, at: 0)
     }
     
     private func setupTableView() {
         let nibs = [
             "TestTVC", "RecorderTVC", "AddAttachmentTVC",
-            "LSWTaskTVC", "LSWViewAttachmentTVC", "AudioPlayerTVC"
+            "LSWTaskTVC", "AudioPlayerTVC"
         ]
         nibs.forEach { testTable.register(UINib(nibName: $0, bundle: nil), forCellReuseIdentifier: $0) }
         
@@ -62,6 +77,10 @@ class LSRWActivitesVC: UIViewController, BaktoHome {
         testTable.dataSource = self
         testTable.rowHeight = UITableView.automaticDimension
         testTable.estimatedRowHeight = 100.0
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.testTable.reloadData()
+        }
     }
     
     // MARK: - Actions
@@ -91,14 +110,12 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
             cell.titleLbl.text = lsrw?.title ?? "No Title"
             cell.descriptionLbl.text = lsrw?.description ?? "No Description"
-            return cell
-            
-        case .attachments:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSWViewAttachmentTVC", for: indexPath) as! LSWViewAttachmentTVC
-            let type = lsrw?.file_path?.first?.type ?? ""
-            cell.videoView.isHidden = (type != "video")
-            cell.imagesView.isHidden = (type != "image")
-            cell.loadFilePath(lsrw?.file_path ?? [])
+            if let task = lsrw {
+                cell.configureCell(with: task, attachments:task.file_path ?? [])
+            }
+            cell.reminderBtn.isHidden = true
+            cell.exportRecordBtn.isHidden = true
+            cell.delegate = self
             return cell
             
         case .audio:
@@ -110,15 +127,18 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             
         case .test:
             let index = captions[..<indexPath.row].filter { $0 == .test }.count
-            guard let test = lsrw?.test?[safe: index] else {
+            let safeTest = lsrw?.test
+            if let test = safeTest?[safe: index] {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
+                cell.test = test
+                print(test)
+                cell.questionLbl.text = test.question
+                return cell
+            } else {
                 let cell = UITableViewCell()
                 cell.textLabel?.text = "No Test Available"
                 return cell
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
-            cell.test = test
-            cell.questionLbl.text = test.question
-            return cell
             
         case .addAttachment:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddAttachmentTVC", for: indexPath) as! AddAttachmentTVC
@@ -127,8 +147,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             
         case .record:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecorderTVC", for: indexPath) as! RecorderTVC
-//            cell.audioURLString = lsrw?.filePath.first?.url
-            cell.recoderTime.text = lsrw?.test?.first?.question ?? "00:00"
+            cell.recoderTime.text = "00:00"
             return cell
         }
     }
@@ -138,23 +157,15 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
 enum CaptionType: String {
     case task
     case audio
-    case attachments
     case test
     case addAttachment
     case record
 }
 
-// MARK: - Collection Extension for Safe Indexing
+// MARK: - Safe Subscript
 extension Collection {
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
-    }
-}
-
-// MARK: - Array Extension for Safe Access
-extension Array {
-    subscript(safe index: Int) -> Element? {
-        return index >= 0 && index < count ? self[index] : nil
     }
 }
 

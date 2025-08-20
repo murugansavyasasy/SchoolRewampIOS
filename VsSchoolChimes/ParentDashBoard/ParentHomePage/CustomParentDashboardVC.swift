@@ -34,7 +34,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var menuButton: UIButton!
+   
     
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var recentActiveMenuCollection: UICollectionView!
@@ -83,9 +83,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "parent","mobile_number":childDetails?.whatsapp_number ?? ""],
+            parameters: ["member_type": "parent","mobile_number":mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
             token: childDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuResponse, Error>) in
@@ -103,6 +104,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.count == 0
                         self.pagecontroller.isHidden = details.frequently_used?.count == 0
+                        self.recentActiveMenuCollection.reloadData()
                     } else {
                         self.MenuCollection.reloadData()
                     }
@@ -130,6 +132,14 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
     @IBAction func SideMenu(_ sender: UIButton) {
         showSideMenu()
+    }
+    
+    
+    @IBAction func notificationBtn(_ sender: UIButton) {
+        
+        let vc = NotificationViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func showSideMenu() {
@@ -289,7 +299,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39:
-                MenuRedirect.receiverAttachment(from: self)
+                MenuRedirect.receiverAttachment(from: self,notificationId: "")
             case 40:
                 MenuRedirect.receiverPauckt(from: self)
             default:

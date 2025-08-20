@@ -23,7 +23,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
     }
     
     
-
+    
     func configure(with files: [FilePath]?,sendBy:String) {
         sendByLbl.text = sendBy
            self.attachmentFiles = files

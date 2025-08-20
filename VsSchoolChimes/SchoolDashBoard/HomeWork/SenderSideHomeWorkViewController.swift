@@ -51,9 +51,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var alert = CustomAlert()
-    var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     var editId : String?
+    var selectNotice: SelectNotice?
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -220,7 +220,20 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                             on: self
                         ) { [self] in
                             print("success")
-                            dismiss(animated: true)
+                            editId = nil
+                            RecipientBtn.setTitle("Next", for: .normal)
+//                            selectNotice?
+//                                .didTapButton(
+//                                    title: <#T##String#>,
+//                                    content: <#T##String#>,
+//                                    items: <#T##[FilePath]#>,
+//                                    editId: <#T##String#>
+//                                )
+                            
+                            
+                          
+//                            updateTextViewHeight(contentTxtView)
+//                            delegate = self
                         }
                     }
                 }
