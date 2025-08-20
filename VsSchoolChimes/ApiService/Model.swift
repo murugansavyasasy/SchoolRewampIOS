@@ -1591,3 +1591,41 @@ struct ClassSectionDetail: Codable {
     let section_name: String?
 }
 
+struct SlotValidationResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [ValidatedSlotData]?
+}
+
+struct ValidatedSlotData: Codable {
+    var institute_id: String?
+    var staff_id: String?
+    var break_time: Int?
+    var date: String?
+    var duration: Int?
+    var event_name: String?
+    var meeting_mode: String?
+    var from_time: String?
+    var to_time: String?
+    var slots: [Slot]?
+    var std_sec_details: [StdSecDetail]?
+}
+
+struct ValidatedSlot: Codable {
+    var slot_from: String?
+    var slot_to: String?
+    var type: Int?
+    var slot_availablity: String?
+}
+
+struct StdSecDetail: Codable {
+    var class_id: String?
+    var section_id: String?
+}
+
+struct ClassDisplayItem {
+    let displayName: String
+    let standardId: String
+    let sectionId: String
+}
+

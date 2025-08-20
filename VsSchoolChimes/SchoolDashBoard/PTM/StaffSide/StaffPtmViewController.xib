@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="AllslotsLbl" destination="RgC-j3-CtV" id="Cr1-mb-iZQ"/>
                 <outlet property="Backbtn" destination="pfN-2J-vhI" id="G5Q-Za-lpY"/>
+                <outlet property="CompletedView" destination="U5b-8U-wv8" id="AIn-75-HJB"/>
                 <outlet property="TodaysBookedSlotsLbl" destination="TJd-rX-v2P" id="mQK-Qp-8WR"/>
                 <outlet property="calanderBtn" destination="EdM-do-ohm" id="YgE-U4-di1"/>
                 <outlet property="createView" destination="LYD-AR-pxS" id="mwZ-91-bAg"/>
@@ -390,10 +391,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

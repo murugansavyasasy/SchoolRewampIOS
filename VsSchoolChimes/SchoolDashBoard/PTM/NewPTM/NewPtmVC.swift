@@ -21,13 +21,18 @@ class NewPtmVC: UIViewController {
     @IBOutlet weak var sheduledBtn: UIButton!
     @IBOutlet weak var AttendedBtn: UIButton!
     @IBOutlet weak var plusBtn: UIButton!
+    @IBOutlet weak var tv: UITableView!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var Meeting_data: [SlotDateData] = []
-    let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen]
+    var tvHidden:Bool?
+    //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
+    let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tv.isHidden = tvHidden ?? false
 
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -55,6 +60,11 @@ class NewPtmVC: UIViewController {
         cv.delegate = self
         cv.dataSource = self
         
+        tv.register(UINib(nibName: "MeetingDetailTV", bundle: nil), forCellReuseIdentifier: "MeetingDetailTV")
+        tv.register(UINib(nibName: "SlotListTV", bundle: nil), forCellReuseIdentifier: "SlotListTV")
+        tv.delegate = self
+        tv.dataSource = self
+        
 //        if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
 //                    layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 //                    layout.minimumInteritemSpacing = 8
@@ -63,6 +73,7 @@ class NewPtmVC: UIViewController {
 //                }
         
         Get_Meetings_Api()
+        
     }
 
     func Get_Meetings_Api() {
@@ -81,6 +92,7 @@ class NewPtmVC: UIViewController {
                         self.Meeting_data = success.data ?? []
                     }
                     cv.reloadData()
+                    tv.reloadData()
                     
                 case .failure(let error):
                     print("Error: ",error.localizedDescription)
@@ -89,6 +101,7 @@ class NewPtmVC: UIViewController {
         }
     }
     
+    @available(iOS 14.0, *)
     @IBAction func createAct(_ sender: Any) {
         let vc = CreateMeetingVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -149,7 +162,7 @@ extension NewPtmVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         cell.MeetingNameLbl.text = meeting.details?.first?.event_name
         cell.modeLbl.text = "Mode - " + (meeting.details?.first?.event_mode ?? "")
         cell.standardLbl.text = (meeting.details?.first?.std_sec_details?.first?.class_name ?? "") + " - " + (meeting.details?.first?.std_sec_details?.first?.section_name ?? "")
-        cell.cellview.backgroundColor = colours[indexPath.item % colours.count].withAlphaComponent(0.1)
+        cell.cellview.backgroundColor = colours[indexPath.item % colours.count]
         cell.timeLbl.text = (meeting.date ?? "") + ", " + "4:30 PM"
         return cell
     }
@@ -165,6 +178,26 @@ extension NewPtmVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let vc = SlotListVC(nibName: nil, bundle: nil)
+        vc.slotData = Meeting_data[indexPath.row]
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+}
+
+
+extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Meeting_data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
+        cell.cellView.backgroundColor = colours[indexPath.row % colours.count]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = SlotListVC(nibName: nil, bundle: nil)
         vc.slotData = Meeting_data[indexPath.row]
         vc.modalPresentationStyle = .fullScreen

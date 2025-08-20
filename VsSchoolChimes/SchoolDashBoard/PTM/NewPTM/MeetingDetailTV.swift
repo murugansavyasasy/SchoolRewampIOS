@@ -30,8 +30,8 @@ class MeetingDetailTV: UITableViewCell {
         optionsBtn.layer.cornerRadius = optionsBtn.frame.width / 2
         
         optionsBtn.backgroundColor = .white
-        dateBtn.backgroundColor = .white.withAlphaComponent(0.2)
-        timeBtn.backgroundColor = .white.withAlphaComponent(0.2)
+        dateBtn.backgroundColor = .white.withAlphaComponent(1)
+        timeBtn.backgroundColor = .white.withAlphaComponent(1)
         
         dateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         timeBtn.setTitleFont(style: .body, size: FontSize.BodySize)

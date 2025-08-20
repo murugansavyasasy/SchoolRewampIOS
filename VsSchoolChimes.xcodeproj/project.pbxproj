@@ -692,6 +692,8 @@
 		FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
+		FA7C7BAF2E55B55B009BD4CF /* CreateSlotsBottomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */; };
+		FA7C7BB02E55B55B009BD4CF /* CreateSlotsBottomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7C7BAE2E55B55B009BD4CF /* CreateSlotsBottomVC.xib */; };
 		FA82918B2E4379960051844E /* CountryTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8291892E4379960051844E /* CountryTvcell.swift */; };
 		FA82918C2E4379960051844E /* CountryTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA82918A2E4379960051844E /* CountryTvcell.xib */; };
 		FA8535492D9BC91400E0379C /* NewShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8535482D9BC91400E0379C /* NewShimmerView.swift */; };
@@ -726,6 +728,8 @@
 		FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		FAF43B672E02A12A00F28A16 /* LessonEditTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF43B662E02A12A00F28A16 /* LessonEditTV.xib */; };
 		FAF43B682E02A12A00F28A16 /* LessonEditTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B652E02A12A00F28A16 /* LessonEditTV.swift */; };
+		FAF4C7AD2E54614E0092B938 /* MeetingDataTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF4C7AB2E54614E0092B938 /* MeetingDataTV.swift */; };
+		FAF4C7AE2E54614E0092B938 /* MeetingDataTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF4C7AC2E54614E0092B938 /* MeetingDataTV.xib */; };
 		FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */; };
 		FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */; };
 		FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */; };
@@ -1531,6 +1535,8 @@
 		FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveHistoryTV.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
+		FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotsBottomVC.swift; sourceTree = "<group>"; };
+		FA7C7BAE2E55B55B009BD4CF /* CreateSlotsBottomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateSlotsBottomVC.xib; sourceTree = "<group>"; };
 		FA8291892E4379960051844E /* CountryTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTvcell.swift; sourceTree = "<group>"; };
 		FA82918A2E4379960051844E /* CountryTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTvcell.xib; sourceTree = "<group>"; };
 		FA8535482D9BC91400E0379C /* NewShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShimmerView.swift; sourceTree = "<group>"; };
@@ -1565,6 +1571,8 @@
 		FAF43B622E02A09200F28A16 /* EditLessonVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditLessonVC.xib; sourceTree = "<group>"; };
 		FAF43B652E02A12A00F28A16 /* LessonEditTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEditTV.swift; sourceTree = "<group>"; };
 		FAF43B662E02A12A00F28A16 /* LessonEditTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonEditTV.xib; sourceTree = "<group>"; };
+		FAF4C7AB2E54614E0092B938 /* MeetingDataTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDataTV.swift; sourceTree = "<group>"; };
+		FAF4C7AC2E54614E0092B938 /* MeetingDataTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingDataTV.xib; sourceTree = "<group>"; };
 		FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportVC.swift; sourceTree = "<group>"; };
 		FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationReportVC.xib; sourceTree = "<group>"; };
 		FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTv.swift; sourceTree = "<group>"; };
@@ -3702,6 +3710,10 @@
 				FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */,
 				FA38D8EF2E530EBE00EC6ED7 /* SlotCV.swift */,
 				FA38D8F02E530EBE00EC6ED7 /* SlotCV.xib */,
+				FAF4C7AB2E54614E0092B938 /* MeetingDataTV.swift */,
+				FAF4C7AC2E54614E0092B938 /* MeetingDataTV.xib */,
+				FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */,
+				FA7C7BAE2E55B55B009BD4CF /* CreateSlotsBottomVC.xib */,
 			);
 			path = NewPTM;
 			sourceTree = "<group>";
@@ -4149,6 +4161,7 @@
 				846CF73A2E2F5654000361CE /* ReciverEventTVC.xib in Resources */,
 				848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */,
 				84235A1A2E1E3C9C002F2E1D /* LSWViewAttachmentTVC.xib in Resources */,
+				FAF4C7AE2E54614E0092B938 /* MeetingDataTV.xib in Resources */,
 				848126D82D91820500BE6979 /* CountryListVC.xib in Resources */,
 				849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */,
 				84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */,
@@ -4267,6 +4280,7 @@
 				84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */,
 				84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */,
 				FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */,
+				FA7C7BB02E55B55B009BD4CF /* CreateSlotsBottomVC.xib in Resources */,
 				FAFF9DFF2D6C7B7A00498368 /* SlotsCollectionViewCell.xib in Resources */,
 				FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */,
 				8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */,
@@ -4847,6 +4861,7 @@
 				840A7CF02D24FDAA0061EAEA /* ExamMarkCV.swift in Sources */,
 				84A5BE8E2C197C3000E32496 /* Toast.swift in Sources */,
 				8442A8682CDB787A0006068E /* SchoolTVCell.swift in Sources */,
+				FAF4C7AD2E54614E0092B938 /* MeetingDataTV.swift in Sources */,
 				8442A8692CDB787A0006068E /* PriorityVC.swift in Sources */,
 				848047792E02DE920042BC5D /* SubmitedAssignmentVC.swift in Sources */,
 				187CF5DD2D142D06001422CE /* CertificateRequestViewController.swift in Sources */,
@@ -4948,6 +4963,7 @@
 				84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */,
 				84E0AA012E3894CB002BF40A /* AttachmentHeaderCell.swift in Sources */,
 				FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */,
+				FA7C7BAF2E55B55B009BD4CF /* CreateSlotsBottomVC.swift in Sources */,
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */,
 				FACD4D772E30F8B40084B125 /* TimetableTvCell.swift in Sources */,

@@ -288,4 +288,16 @@ class PaucketHeader{
 class PTMRequestStringFile{
     
     static let event_date = "event_date"
+    static let event_name = "event_name"
+    static let date = "date"
+    static let from_time = "from_time"
+    static let to_time = "to_time"
+    static let duration = "duration"
+    static let event_link = "event_link"
+    static let break_time = "break_time"
+    static let meeting_mode = "meeting_mode"
+    static let std_sec_details = "std_sec_details"
+    static let section_id = "section_id"
+    static let class_id = "class_id"
+    static let slots = "slots"
 }
