@@ -1791,43 +1791,6 @@ struct QuizQuestionDataDetails : Codable{
     let correctOptionIndex : Int?
     let options : [String]?
 }
-enum LSRWType: String, Codable {
-    case listening = "Listening"
-    case speaking = "Speaking"
-    case reading = "Reading"
-    case writing = "Writing"
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        
-        // Normalize variations like "Take Reading Skill"
-        if rawValue.lowercased().contains("listen") {
-            self = .listening
-        } else if rawValue.lowercased().contains("speak") {
-            self = .speaking
-        } else if rawValue.lowercased().contains("read") {
-            self = .reading
-        } else if rawValue.lowercased().contains("write") {
-            self = .writing
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Invalid LSRW type: \(rawValue)"
-            )
-        }
-    }
-    
-    var icon: String {
-        switch self {
-        case .listening: return "🎧"
-        case .speaking:  return "🎤"
-        case .reading:   return "📖"
-        case .writing:   return "✏️"
-        }
-    }
-    
-}
 
 struct SubmittedActivitiesResponse: Codable {
     let status: Bool?

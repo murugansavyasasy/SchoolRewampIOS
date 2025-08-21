@@ -14,95 +14,61 @@ protocol AudioManagerDelegate: AnyObject {
 class RecorderTVC: UITableViewCell {
     // MARK: - IBOutlets
     @IBOutlet weak var vicecImg: UIImageView!
-    @IBOutlet weak var waveView: AudioMessageView!
-    @IBOutlet weak var playerView: UIView!
-    @IBOutlet weak var outerplayerView: UIView!
     @IBOutlet weak var recoderTime: UILabel!
-    @IBOutlet weak var playBtn: UIButton!
-    @IBOutlet weak var deleteBtn: UIButton!
-    
+    @IBOutlet weak var recordButton: UIButton! // connect this if you have the button in nib
+
     // MARK: - Properties
     private var recordingTimer: Timer?
     private var recordingStartTime: Date?
-    private var isRecording = false
+    private(set) var isRecording = false
     private let audioManager = AudioManager()
     private var audioURL: URL? // Can be local or remote
     private var isRemoteAudio = false
-    
+
+   var delegate: EditObjectDelegate?
+
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        setupAudio()
-        playerView.setShadow(cornerRadius: 10)
+        audioManager.delegate = self
+
+        // Stop recording if the app goes to background
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appDidEnterBackground),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        stopAllAudioActions()
+        stopRecordingIfNeeded()
         resetUI()
     }
-    
+
     deinit {
-        recordingTimer?.invalidate()
-        recordingTimer = nil
+        NotificationCenter.default.removeObserver(self)
+        invalidateTimer()
     }
-    
+
     // MARK: - Setup Methods
     private func setupUI() {
-        deleteBtn.isHidden = true
-        outerplayerView.isHidden = true
+        recoderTime.text = "00:00"
         vicecImg.image = UIImage(systemName: "microphone.circle.fill")
+        recordButton?.setTitle(nil, for: .normal) // optional, if you only show icon
     }
-    
-    private func setupAudio() {
-        audioManager.delegate = self
-        
-        if let audioURL = audioURL {
-            setupPlayerWithURL(audioURL)
-        }
-    }
-    
-    // MARK: - Audio Setup Helper
-    private func setupPlayerWithURL(_ url: URL) {
-        do {
-            try audioManager.setupPlayer(with: url)
-            outerplayerView.isHidden = false
-            deleteBtn.isHidden = !url.isFileURL
-            let duration = audioManager.duration
-            waveView.audioURL = url
-            
-        } catch {
-            print("Failed to setup player: \(error.localizedDescription)")
-            showErrorAlert(message: "Failed to load audio file")
-        }
-    }
-    
-    private func stopAllAudioActions() {
-        audioManager.stop()
-        audioManager.stopRecording { _, _ in }
-        audioManager.cleanup()
-        recordingTimer?.invalidate()
-        recordingTimer = nil
-        UIApplication.shared.isIdleTimerDisabled = false
-        waveView.reset()
-        isRecording = false
-    }
-    
+
     private func resetUI() {
-        playBtn.setImage(UIImage(named: "play-button"), for: .normal)
         vicecImg.image = UIImage(systemName: "microphone.circle.fill")
-        deleteBtn.isHidden = true
-        outerplayerView.isHidden = true
-        waveView.reset()
+        recoderTime.text = "00:00"
         isRemoteAudio = false
     }
-    
+
     // MARK: - Actions
     @IBAction private func recorderTapped(_ sender: UIButton) {
         isRecording ? stopRecording() : startRecording()
     }
-    
+
     private func startRecording() {
         audioManager.checkRecordPermission { [weak self] granted in
             guard let self = self else { return }
@@ -111,106 +77,104 @@ class RecorderTVC: UITableViewCell {
             }
         }
     }
-    
+
     private func beginRecording() {
+        // UI setup
+        isRecording = true
         recordingStartTime = Date()
-        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, weakTarget: self) { [weak self] _ in
+        recoderTime.text = "00:00"
+
+        // Start a 1s tick timer (no retain cycle)
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.updateRecordingTime()
         }
-        
+
+        // Start recording
         audioManager.startRecording()
-        isRecording = true
-        outerplayerView.isHidden = true
-        playBtn.setImage(UIImage(named: "play-button"), for: .normal)
-        deleteBtn.isHidden = true
-        vicecImg.image = UIImage.gifImageWithName("Mic")
+
+        // Optional animated indicator (if you have this helper; otherwise keep the SF Symbol)
+        if let gif = UIImage.gifImageWithName("Mic") {
+            vicecImg.image = gif
+        } else {
+            vicecImg.image = UIImage(systemName: "mic.circle.fill")
+        }
+
         UIApplication.shared.isIdleTimerDisabled = true
     }
-    
+
     private func stopRecording() {
-        recordingTimer?.invalidate()
-        recordingTimer = nil
-        
+        invalidateTimer()
+
         audioManager.stopRecording { [weak self] url, duration in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.isRecording = false
-                self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
                 self.vicecImg.image = UIImage(systemName: "microphone.circle.fill")
-                self.deleteBtn.isHidden = false
-                
+                self.recoderTime.text = self.formatTime(duration ?? 0)
+
                 if let url = url {
                     self.audioURL = url
                     self.isRemoteAudio = false
-                    self.setupPlayerWithURL(url)
+                    self.delegate?.editDta(edit: AttachmentItem(image: nil, imageURL: url.absoluteString, fileType: "audio", VideoURl: nil, VimeoVideoURL: nil))
                 }
+
                 UIApplication.shared.isIdleTimerDisabled = false
             }
         }
     }
-    
+
+    private func stopRecordingIfNeeded() {
+        guard isRecording else { return }
+        stopRecording()
+    }
+
+    private func invalidateTimer() {
+        recordingTimer?.invalidate()
+        recordingTimer = nil
+        recordingStartTime = nil
+    }
+
+    @objc private func appDidEnterBackground() {
+        if isRecording {
+            stopRecording()
+        }
+    }
+
     @objc private func updateRecordingTime() {
         guard let startTime = recordingStartTime, isRecording else { return }
         let elapsed = Date().timeIntervalSince(startTime)
+        recoderTime.text = formatTime(elapsed)
     }
-    
-    @IBAction private func deleteAudio(_ sender: UIButton) {
-        // Only allow deletion of local recordings
-        if !isRemoteAudio {
-            audioManager.deleteRecording()
-            outerplayerView.isHidden = true
-            deleteBtn.isHidden = true
-            waveView.reset()
-            audioURL = nil
-        }
-    }
-    
-    @IBAction private func playVoice(_ sender: UIButton) {
-        do {
-            let isPlaying = try audioManager.togglePlayback()
-            playBtn.setImage(UIImage(named: isPlaying ? "pause-button" : "play-button"), for: .normal)
-            
-            if isPlaying {
-                waveView.startPlaybackAnimation()
-            } else {
-                waveView.stopPlaybackAnimation()
-            }
-            
-        } catch {
-            print("Playback error: \(error.localizedDescription)")
-            showErrorAlert(message: error.localizedDescription)
-        }
-    }
-    
+
     private func formatTime(_ seconds: Double) -> String {
         let mins = Int(seconds) / 60
         let secs = Int(seconds) % 60
         return String(format: "%02d:%02d", mins, secs)
     }
-    
+
     private func showMicPermissionAlert() {
         let alert = UIAlertController(
             title: "Microphone Access Required",
-            message: "Please allow microphone access in Settings to record audio",
+            message: "Please allow microphone access in Settings to record audio.",
             preferredStyle: .alert
         )
-        
+
         alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
             if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(settingsURL)
             }
         })
-        
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         getCurrentViewController()?.present(alert, animated: true)
     }
-    
+
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         getCurrentViewController()?.present(alert, animated: true)
     }
-    
+
     private func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
@@ -219,62 +183,45 @@ class RecorderTVC: UITableViewCell {
             .rootViewController?
             .topMostViewController()
     }
-    
-    // MARK: - Public Methods
-    func setRemoteAudioURL(_ url: URL) {
-        audioURL = url
-        isRemoteAudio = true
-        setupPlayerWithURL(url)
-    }
-    
+
+    // Public setter if you want to prefill with local audio (not recording)
     func setLocalAudioURL(_ url: URL) {
         audioURL = url
         isRemoteAudio = false
-        setupPlayerWithURL(url)
     }
 }
 
 // MARK: - AudioManagerDelegate
 @available(iOS 15.0, *)
 extension RecorderTVC: AudioManagerDelegate {
-    func audioManagerDidStartBuffering() {
-        DispatchQueue.main.async {
-            self.playBtn.isEnabled = false
-        }
-    }
-    
-    func audioManagerDidFinishBuffering() {
-        DispatchQueue.main.async {
-            self.playBtn.isEnabled = true
-            // Update duration if it's now available
-            let duration = self.audioManager.duration
-        }
-    }
-    
-    func audioManagerDidFinishPlaying() {
-        DispatchQueue.main.async {
-            self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
-            self.waveView.stopPlaybackAnimation()
-            self.waveView.reset()
-        }
-    }
-    
     func audioManagerDidUpdateTime(currentTime: Double, duration: Double) {
-        DispatchQueue.main.async {
-            guard duration.isFinite && duration > 0 else { return }
-            let progress = currentTime / duration
+        // If you also use AudioManager progress while recording, you can reflect it here
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, self.isRecording else { return }
+            self.recoderTime.text = self.formatTime(currentTime)
         }
     }
-    
+
+    func audioManagerDidFinishPlaying() {
+        // Not used for recording, but keep for completeness
+    }
+
     func audioManagerDidFailWithError(_ error: Error) {
-        DispatchQueue.main.async {
-            print("Audio Error: \(error.localizedDescription)")
-            self.showErrorAlert(message: error.localizedDescription)
-            self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
-            self.playBtn.isEnabled = true
+        DispatchQueue.main.async { [weak self] in
+            self?.showErrorAlert(message: error.localizedDescription)
         }
+    }
+
+    func audioManagerDidStartBuffering() {
+        // Likely N/A during recording
+    }
+
+    func audioManagerDidFinishBuffering() {
+        // Likely N/A during recording
     }
 }
+
+
 
 // MARK: - Enhanced AudioManager Class
 class AudioManager: NSObject {
