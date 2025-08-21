@@ -137,15 +137,12 @@ struct ServiceUrl{
     static let comm_api_leave_req_leave_categories = "comm/api/leave-req/leave-categories"
     static let stud_attd_api_attendance_student_stats = "stud-attd/api/attendance/student-stats"
     static let ptm_api_ptm_schedule_slot_details_for_staff = "ptm/api/ptm-schedule/slot-details-for-staff"
-<<<<<<< HEAD
     static let dashboard_notifications = "dashboard/api/dashboard/notifications"
     static let dashboard_delete_notification = "dashboard/api/dashboard/delete-notification"
     static let quiz_exam_list = "lms/api/quiz/quiz-exam-list"
     static let quiz_get_questions = "lms/api/quiz/get-questions"
     static let quiz_create_quiz = "lms/api/quiz/create-quiz"
-=======
     static let lms_api_lsrw_skills_report = "lms/api/lsrw/skills-report"
->>>>>>> development
     
 }
 

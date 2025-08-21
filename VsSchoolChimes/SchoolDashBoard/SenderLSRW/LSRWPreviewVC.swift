@@ -29,7 +29,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         backBtn.configureAsBackButton(firstLine: "LSRW",secondLine:"Listening, Speaking, Reading,Writing")
         if #available(iOS 15.0, *) {
             priviewTable.sectionHeaderTopPadding = 0
-            }
+        }
         priviewTable.register(UINib(nibName: "LSWTaskTVC", bundle: nil), forCellReuseIdentifier: "LSWTaskTVC")
         priviewTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
         priviewTable.dataSource = self
@@ -55,7 +55,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                         self?.submittedAssignment = response.data ?? []
                         self?.filterAssignment = response.data ?? []
                         self?.priviewTable.reloadData()
-//                        self?.updateCountLabels()
+                        //                        self?.updateCountLabels()
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -65,7 +65,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
-//                    self?.showAlert(message: "Network error occurred. Please try again.")
+                    //                    self?.showAlert(message: "Network error occurred. Please try again.")
                     self?.priviewTable.reloadData()
                 }
             }
@@ -80,17 +80,25 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Submitted Student
-        if indexPath.section == 0{
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as? LSWTaskTVC else {
-                return UITableViewCell()
+        if indexPath.section == 0 {
+            if #available(iOS 15.0, *) {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as? LSWTaskTVC else {
+                    return UITableViewCell()
+                }
+                
+                if let data = report {
+                    cell.configureCell(with: data, attachments: data.file_path ?? [])
+                }
+                cell.delegate = self
+                return cell
+            } else {
+                // Fallback for iOS < 15
+                let cell = UITableViewCell(style: .default, reuseIdentifier: "defaultCell")
+                cell.textLabel?.text = "Not supported on < iOS 15"
+                return cell
             }
-            
-            if let data = report{
-                cell.configureCell(with: data, attachments:data.file_path ?? [])
-            }
-            cell.delegate = self
-            return cell
-        }else{
+        }
+        else{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
                 return UITableViewCell()
             }
@@ -105,12 +113,12 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
             let statusText = isNotSubmitted ? "Pending" : "Submitted"
             let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
-
+            
             // Background color & corner radius
             cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
             cell.statusView.layer.cornerRadius = 8
             cell.statusView.clipsToBounds = true
-
+            
             // Attributed text
             let fullText = NSMutableAttributedString(
                 string: statusText,
@@ -119,9 +127,9 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                     .foregroundColor: statusColor
                 ]
             )
-
+            
             cell.statusView.setAttributedTitle(fullText, for: .normal)
-
+            
             // Resize icon to match text height
             let iconSize: CGFloat = 13 // same as text size
             let iconConfig = UIImage.SymbolConfiguration(pointSize: iconSize, weight: .medium)
@@ -132,7 +140,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             let lastSubmittedOn = student.submissions_details?.last?.submitted_on
             var date: String?
             let txt: String
-
+            
             if let submittedOn = lastSubmittedOn, !submittedOn.isEmpty {
                 date = submittedOn
                 txt = "Submitted"
@@ -140,11 +148,11 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 date = "\(report?.created_on ?? "")"
                 txt = "Due Date"
             }
-
+            
             cell.submitDate.text = "\(txt): \(formattedDateStatus(from: date ?? ""))"
             cell.statusView.setImage(icon, for: .normal)
             cell.statusView.tintColor = statusColor
-
+            
             // Optional: Adjust image & title spacing
             cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)

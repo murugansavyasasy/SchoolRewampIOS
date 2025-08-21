@@ -51,13 +51,31 @@
                                     <constraint firstItem="jCt-is-O4X" firstAttribute="top" secondItem="mzp-7U-XZt" secondAttribute="top" constant="10" id="vXz-3c-z9t"/>
                                 </constraints>
                             </view>
+                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMG-wz-tw5">
+                                <rect key="frame" x="276" y="0.0" width="25" height="25"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="7Hh-Oe-oe2"/>
+                                    <constraint firstAttribute="width" constant="25" id="Rkb-R1-fCA"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="delete (1)">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteImg:" destination="gTV-IL-0wX" eventType="touchUpInside" id="UuL-24-jxf"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="GMG-wz-tw5" firstAttribute="top" secondItem="mzp-7U-XZt" secondAttribute="top" constant="-10" id="E3J-P8-zFA"/>
                             <constraint firstAttribute="trailing" secondItem="mzp-7U-XZt" secondAttribute="trailing" constant="10" id="EA9-di-J1H"/>
                             <constraint firstAttribute="bottom" secondItem="mzp-7U-XZt" secondAttribute="bottom" constant="10" id="EP6-Jx-5Xu"/>
                             <constraint firstItem="mzp-7U-XZt" firstAttribute="top" secondItem="JOD-6u-ALQ" secondAttribute="top" constant="10" id="REP-vi-pyi"/>
                             <constraint firstItem="mzp-7U-XZt" firstAttribute="leading" secondItem="JOD-6u-ALQ" secondAttribute="leading" constant="10" id="xzb-Bu-DsX"/>
+                            <constraint firstItem="GMG-wz-tw5" firstAttribute="trailing" secondItem="mzp-7U-XZt" secondAttribute="trailing" constant="10" id="yT0-dP-Tls"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -71,6 +89,7 @@
             </constraints>
             <size key="customSize" width="301" height="108"/>
             <connections>
+                <outlet property="TrashIcon" destination="GMG-wz-tw5" id="DhF-1K-kZ8"/>
                 <outlet property="playBtn" destination="W1N-Ad-WtZ" id="vbt-gQ-GLS"/>
                 <outlet property="playerView" destination="mzp-7U-XZt" id="Ydp-KG-stq"/>
                 <outlet property="waveView" destination="jCt-is-O4X" id="9OQ-8P-jIW"/>
@@ -79,9 +98,13 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="delete (1)" width="16" height="16"/>
         <image name="play-button" width="75" height="75"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

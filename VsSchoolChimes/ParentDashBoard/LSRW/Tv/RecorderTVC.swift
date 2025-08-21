@@ -52,7 +52,7 @@ class RecorderTVC: UITableViewCell {
     private func setupUI() {
         deleteBtn.isHidden = true
         outerplayerView.isHidden = true
-        vicecImg.image = UIImage(named: "mic 1")
+        vicecImg.image = UIImage(systemName: "microphone.circle.fill")
     }
     
     private func setupAudio() {
@@ -91,7 +91,7 @@ class RecorderTVC: UITableViewCell {
     
     private func resetUI() {
         playBtn.setImage(UIImage(named: "play-button"), for: .normal)
-        vicecImg.image = UIImage(named: "mic 1")
+        vicecImg.image = UIImage(systemName: "microphone.circle.fill")
         deleteBtn.isHidden = true
         outerplayerView.isHidden = true
         waveView.reset()
@@ -136,7 +136,7 @@ class RecorderTVC: UITableViewCell {
             DispatchQueue.main.async {
                 self.isRecording = false
                 self.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
-                self.vicecImg.image = UIImage(named: "mic 1")
+                self.vicecImg.image = UIImage(systemName: "microphone.circle.fill")
                 self.deleteBtn.isHidden = false
                 
                 if let url = url {
@@ -384,15 +384,45 @@ class AudioManager: NSObject {
         }
     }
     
+//    private func setupRecorder() -> Bool {
+//        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        let timestamp = Int(Date().timeIntervalSince1970)
+//        let fileURL = documentsPath.appendingPathComponent("RecordedAudio.m4a")
+//        
+//        if FileManager.default.fileExists(atPath: fileURL.path) {
+//            try? FileManager.default.removeItem(at: fileURL)
+//        }
+//        
+//        audioURL = fileURL
+//        
+//        let settings: [String: Any] = [
+//            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+//            AVSampleRateKey: 44100,
+//            AVNumberOfChannelsKey: 1,
+//            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue,
+//            AVEncoderBitRateKey: 64000
+//        ]
+//        
+//        do {
+//            audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
+//            audioRecorder?.delegate = self
+//            audioRecorder?.isMeteringEnabled = true
+//            audioRecorder?.prepareToRecord()
+//            return true
+//        } catch {
+//            print("AudioRecorder setup error: \(error.localizedDescription)")
+//            return false
+//        }
+//    }
     private func setupRecorder() -> Bool {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let timestamp = Int(Date().timeIntervalSince1970)
-        let fileURL = documentsPath.appendingPathComponent("RecordedAudio.m4a")
-        
+        let timestamp = Int(Date().timeIntervalSince1970) // unique name
+        let fileURL = documentsPath.appendingPathComponent("RecordedAudio_\(timestamp).m4a")
+
         if FileManager.default.fileExists(atPath: fileURL.path) {
             try? FileManager.default.removeItem(at: fileURL)
         }
-        
+
         audioURL = fileURL
         
         let settings: [String: Any] = [
@@ -414,7 +444,7 @@ class AudioManager: NSObject {
             return false
         }
     }
-    
+
     // MARK: - Level Monitoring
     private func startLevelMonitoring() {
         levelTimer?.invalidate()

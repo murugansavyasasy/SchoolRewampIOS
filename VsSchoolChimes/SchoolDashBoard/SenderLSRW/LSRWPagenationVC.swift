@@ -17,7 +17,7 @@ class LSRWPagenationVC:  UIViewController, UIPageViewControllerDelegate, UIPageV
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var page1 = SenderLSRWVC()
-    var page2 = LSRWReportsVC()
+    var page2 = LSRWVC()
     var titleLbl = ""
 
     override func viewDidLoad() {

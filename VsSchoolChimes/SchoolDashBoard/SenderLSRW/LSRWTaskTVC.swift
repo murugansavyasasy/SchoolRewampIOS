@@ -15,6 +15,7 @@ class LSRWTaskTVC: UITableViewCell {
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var iconBtn: UIButton!
     
     override func awakeFromNib() {
@@ -48,16 +49,10 @@ class LSRWTaskTVC: UITableViewCell {
     }
     
     private func setupLabels() {
-        titleLbl.font = .systemFont(ofSize: 16, weight: .semibold)
-        titleLbl.textColor = .label
-        titleLbl.numberOfLines = 2
         
-        typeLbl.font = .systemFont(ofSize: 14, weight: .medium)
+        typeLbl.font = .systemFont(ofSize: 13, weight: .medium)
         typeLbl.textColor = .systemBlue
         
-        descriptionLbl.font = .systemFont(ofSize: 12, weight: .regular)
-        descriptionLbl.textColor = .systemGray2
-        descriptionLbl.numberOfLines = 1
         
         dateLbl.font = .systemFont(ofSize: 12, weight: .medium)
         dateLbl.textColor = .systemGray
@@ -67,8 +62,8 @@ class LSRWTaskTVC: UITableViewCell {
 
     func configure(with task: LSRWTask) {
         titleLbl.text = task.title
-        typeLbl.text = task.activity_type.displayName
-        
+        typeLbl.text = task.activity_type?.displayName
+        subjectLbl.text = task.subject
         // Format date
         let dateText: String
         if let date = task.created_on {
@@ -93,16 +88,16 @@ class LSRWTaskTVC: UITableViewCell {
         personAttachment.bounds = CGRect(x: 0, y: -2, width: 16, height: 16)
         
         let submittedAttrString = NSMutableAttributedString(attachment: personAttachment)
-        submittedAttrString.append(NSAttributedString(string: " \(task.submittedCount)/\(task.totalCount) submitted"))
+        submittedAttrString.append(NSAttributedString(string: " \(task.submitted_average ?? "") submitted"))
         submitedCountLbl.attributedText = submittedAttrString
         submitedCountLbl.textColor = .secondaryLabel
-        
-        // Icon button setup
-        let iconConfig = getIconConfiguration(for: task.activity_type)
-        iconBtn.setTitle(task.activity_type.icon, for: .normal)
-        iconBtn.backgroundColor = iconConfig.backgroundColor
-        iconBtn.setTitleColor(iconConfig.textColor, for: .normal)
-        
+        if let type = task.activity_type{
+            // Icon button setup
+            let iconConfig = getIconConfiguration(for: type)
+            iconBtn.setTitle(type.icon, for: .normal)
+            iconBtn.backgroundColor = iconConfig.backgroundColor
+            iconBtn.setTitleColor(iconConfig.textColor, for: .normal)
+        }
         // Description
         descriptionLbl.text = task.description
         
@@ -121,6 +116,8 @@ class LSRWTaskTVC: UITableViewCell {
         case .reading:
             return (.systemOrange.withAlphaComponent(0.2), .systemOrange)
         case .writing:
+            return (.systemPurple.withAlphaComponent(0.2), .systemPurple)
+        case .unknown(_):
             return (.systemPurple.withAlphaComponent(0.2), .systemPurple)
         }
     }

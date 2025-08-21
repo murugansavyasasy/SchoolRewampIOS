@@ -14,7 +14,6 @@
             <connections>
                 <outlet property="MenuCollection" destination="3hx-dl-iR8" id="jQF-oi-YdR"/>
                 <outlet property="headerView" destination="vhc-Au-UGH" id="SKk-0E-CFA"/>
-                <outlet property="menuButton" destination="3KO-gs-lDP" id="5zC-TK-sH0"/>
                 <outlet property="nameLabel" destination="qY3-iO-aCN" id="Cbu-no-eEV"/>
                 <outlet property="pagecontroller" destination="tIF-vE-If0" id="a4n-Xw-U8U"/>
                 <outlet property="profileImageView" destination="Xnk-us-IRt" id="FMg-2d-eAK"/>

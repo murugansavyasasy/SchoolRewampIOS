@@ -1,9 +1,19 @@
 import UIKit
 
-class LSWTaskTVC: UITableViewCell{
+@available(iOS 15.0, *)
+class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
+    func audioCell(_ cell: AudioCVC, willStartPlayingAtIndex index: Int) {
+        stopAllOtherAudioCells(except: index)
+    }
+    
+    func audioCell(_ cell: AudioCVC, didStopPlayingAtIndex index: Int) {
+        print("Audio stopped playing at index: \(index)")
+    }
+    
 
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var subject: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var attachmentLbl: UILabel!
     @IBOutlet weak var attachmentCollectionView: UICollectionView!
@@ -28,13 +38,16 @@ class LSWTaskTVC: UITableViewCell{
     func configureCell(with assignment: LSRWTask, attachments: [FilePath]) {
         outerView.setShadow()
         titleLbl.text = assignment.title
-        type.text = "\(assignment.activity_type)"
+        subject.text = assignment.subject
         descriptionLbl.text = assignment.description
         // Icon button setup
-        let iconConfig = getIconConfiguration(for: assignment.activity_type)
-        iconBtn.setTitle(assignment.activity_type.icon, for: .normal)
-        iconBtn.backgroundColor = iconConfig.backgroundColor
-        iconBtn.setTitleColor(iconConfig.textColor, for: .normal)
+        if let type = assignment.activity_type{
+            self.type.text = "\(type)"
+            let iconConfig = getIconConfiguration(for: type)
+            iconBtn.setTitle(type.icon, for: .normal)
+            iconBtn.backgroundColor = iconConfig.backgroundColor
+            iconBtn.setTitleColor(iconConfig.textColor, for: .normal)
+        }
         dateBtn.setTitle(formattedDateStatus(from: assignment.created_on ?? ""), for: .normal)
         dateBtn.setImage(UIImage(systemName: "calendar")?.withRenderingMode(.alwaysTemplate), for: .normal)
         reminderBtn.layer.cornerRadius = 8
@@ -42,6 +55,14 @@ class LSWTaskTVC: UITableViewCell{
         attachmentList = attachments
         attachmentLbl.text = "𓄲 Attachments (\(attachments.count))"
         reloadCollectionAndUpdateHeight()
+    }
+    private func stopAllOtherAudioCells(except playingIndex: Int) {
+        for visibleCell in attachmentCollectionView.visibleCells {
+            if let audioCell = visibleCell as? AudioCVC,
+               audioCell.cellIndex != playingIndex {
+                audioCell.stopPlayback()
+            }
+        }
     }
     private func getIconConfiguration(for type: LSRWType) -> (backgroundColor: UIColor, textColor: UIColor) {
         switch type {
@@ -52,6 +73,8 @@ class LSWTaskTVC: UITableViewCell{
         case .reading:
             return (.systemOrange.withAlphaComponent(0.2), .systemOrange)
         case .writing:
+            return (.systemPurple.withAlphaComponent(0.2), .systemPurple)
+        case .unknown(_):
             return (.systemPurple.withAlphaComponent(0.2), .systemPurple)
         }
     }
@@ -69,6 +92,7 @@ class LSWTaskTVC: UITableViewCell{
         attachmentCollectionHeight.constant = attachmentCollectionView.collectionViewLayout.collectionViewContentSize.height
     }
 }
+@available(iOS 15.0, *)
 extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
    
    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -79,7 +103,7 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
         let file = attachmentList[indexPath.item]
         
         // 🔊 AUDIO CELL
-        if file.type?.lowercased() == "audio" {
+        if file.type?.uppercased() == CommonStringFile.M4A {
             if #available(iOS 15.0, *) {
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "AudioCVC",
@@ -89,7 +113,10 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
                 }
                 
                 if let urlString = file.url, let url = URL(string: urlString) {
-                    cell.audioURL = url   // ✅ IMP: assign audio file to cell
+                    cell.audioURL = url
+                    cell.audioDelegate = self
+                    cell.cellIndex = indexPath.item
+                    cell.waveView.setParentCell(cell)
                 }
                 
                 return cell
@@ -181,8 +208,11 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
        let totalSpacing = (itemsPerRow - 1) * spacing
        let availableWidth = collectionView.frame.width - totalSpacing
        let itemWidth = floor(availableWidth / itemsPerRow)
-       
-       return CGSize(width: itemWidth, height: 70)
+       if attachmentList[indexPath.row].type?.uppercased() == CommonStringFile.M4A{
+           return CGSize(width: availableWidth, height: 70)
+       }else{
+           return CGSize(width: itemWidth, height: 70)
+       }
    }
 
    func collectionView(_ collectionView: UICollectionView,

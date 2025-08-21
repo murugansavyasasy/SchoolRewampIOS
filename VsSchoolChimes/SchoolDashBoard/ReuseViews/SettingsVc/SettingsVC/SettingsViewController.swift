@@ -9,8 +9,8 @@ import UIKit
 
 @available(iOS 14.0, *)
 class SettingsViewController: UIViewController, BaktoHome {
-    func backtohome() {
-        delegate?.backtohome()
+    func backtohome(type: String) {
+        delegate?.backtohome(type: "")
         tableview.reloadData()
     }
     

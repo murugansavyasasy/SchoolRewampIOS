@@ -21,7 +21,7 @@ class LSRWVC: UIViewController, FilterDelegate {
         if selectedFilter == "All" {
             filterTask = recentTasks
         } else {
-            filterTask = recentTasks.filter { $0.activity_type.rawValue == selectedFilter }
+            filterTask = recentTasks.filter { $0.activity_type?.displayName == selectedFilter }
         }
         lsrwTable.reloadData()
     }
