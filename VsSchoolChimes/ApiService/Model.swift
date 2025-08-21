@@ -1612,6 +1612,11 @@ struct ValidatedSlotData: Codable {
     var std_sec_details: [StdSecDetail]?
 }
 
+struct Slot: Codable {
+    var from_time: String?
+    var to_time: String?
+}
+
 struct ValidatedSlot: Codable {
     var slot_from: String?
     var slot_to: String?
@@ -1622,12 +1627,6 @@ struct ValidatedSlot: Codable {
 struct StdSecDetail: Codable {
     var class_id: String?
     var section_id: String?
-}
-
-struct ClassDisplayItem {
-    let displayName: String
-    let standardId: String
-    let sectionId: String
 }
 
 struct LSRWResponse: Codable {
@@ -1708,7 +1707,6 @@ struct LSRWTask: Codable {
 
 }
 
-<<<<<<< HEAD
 
 struct notificationSuc : Codable{
     
@@ -1788,7 +1786,7 @@ struct QuizQuestionDataDetails : Codable{
     let mark : Int?
     let correctOptionIndex : Int?
     let options : [String]?
-=======
+}
 enum LSRWType: String, Codable {
     case listening = "Listening"
     case speaking = "Speaking"
@@ -1833,5 +1831,4 @@ enum LSRWType: String, Codable {
         case .writing:   return "Writing"
         }
     }
->>>>>>> development
 }

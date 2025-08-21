@@ -9,6 +9,12 @@ import UIKit
 import FSCalendar
 import DropDown
 
+struct ClassDisplayItem {
+    let displayName: String
+    let standardId: String
+    let sectionId: String
+}
+
 @available(iOS 14.0, *)
 class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalendarDataSource, reloadDelegate {
     
@@ -63,10 +69,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var academicYearView: UIView!
     @IBOutlet weak var chooseAcademicyeardefLbl: UILabel!
     @IBOutlet weak var academicYearLabel: UILabel!
+    @IBOutlet weak var academicyearView: UIView!
     
+    @IBOutlet weak var BreakAfterCountLbl: UILabel!
     var breakDuration = ["5 Min", "10 Min", "15 Min", "30 Min"]
     var SelectedClasses = Set<IndexPath>()
-    var SelectedDuration: IndexPath?
+    var SelectedDuration: IndexPath = IndexPath(item: 0, section: 0)
     var SelectedDates: [String] = []
     private var fromTimePickerContainer: UIView?
     private var toTimePickerContainer: UIView?
@@ -80,7 +88,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     var academicDropDown = DropDown()
     var academicId: Int?
     var classList: [ClassDisplayItem] = []
-    var selectedClasses: [StdSecDetail] = []
+    var selectedClasses: [[String: String]] = []
+    var meetingMode = "In Person"
+    var BreakBetweenSlot = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +101,6 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         backBtn.configureAsBackButton(firstLine: "PTM", secondLine: "savyasasy School", colour: .white)
         
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        
         purposeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         ModeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         EnterMobileDefLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -103,33 +112,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         fromTimeLbl.setFont(style: .body, size: FontSize.BodySize)
         toTimeLbl.setFont(style: .body, size: FontSize.BodySize)
         
-        firstView.layer.cornerRadius = 10
-        firstView.layer.shadowColor = UIColor.black.cgColor
-        firstView.layer.shadowOpacity = 0.1   // very light shadow
-        firstView.layer.shadowOffset = CGSize(width: 0, height: 2) // subtle vertical shadow
-        firstView.layer.shadowRadius = 4      // soft blur
-        firstView.layer.masksToBounds = false // important: let shadow show outside bounds
-        
-        SelectClassBaseView.layer.cornerRadius = 10
-        SelectClassBaseView.layer.shadowColor = UIColor.black.cgColor
-        SelectClassBaseView.layer.shadowOpacity = 0.1   // very light shadow
-        SelectClassBaseView.layer.shadowOffset = CGSize(width: 0, height: 2) // subtle vertical shadow
-        SelectClassBaseView.layer.shadowRadius = 4      // soft blur
-        SelectClassBaseView.layer.masksToBounds = false // important: let shadow show outside bounds
-        
-        selectDateTimeBaseView.layer.cornerRadius = 10
-        selectDateTimeBaseView.layer.shadowColor = UIColor.black.cgColor
-        selectDateTimeBaseView.layer.shadowOpacity = 0.1   // very light shadow
-        selectDateTimeBaseView.layer.shadowOffset = CGSize(width: 0, height: 2) // subtle vertical shadow
-        selectDateTimeBaseView.layer.shadowRadius = 4      // soft blur
-        selectDateTimeBaseView.layer.masksToBounds = false // important: let shadow show outside bounds
-        
-        DurationBaseView.layer.cornerRadius = 10
-        DurationBaseView.layer.shadowColor = UIColor.black.cgColor
-        DurationBaseView.layer.shadowOpacity = 0.1   // very light shadow
-        DurationBaseView.layer.shadowOffset = CGSize(width: 0, height: 2) // subtle vertical shadow
-        DurationBaseView.layer.shadowRadius = 4      // soft blur
-        DurationBaseView.layer.masksToBounds = false // important: let shadow show outside bounds
+        [firstView, SelectClassBaseView, selectDateTimeBaseView, DurationBaseView]
+          .compactMap { $0 }
+          .forEach { $0.applyCardStyle() }
         
         customDurationView.isHidden = true
         
@@ -157,12 +142,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         toTimeView.layer.borderColor = UIColor.systemGray4.cgColor
         selectDurationView.layer.borderColor = UIColor.systemGray4.cgColor
         
-        academicYearView.layer.cornerRadius = 10
-        academicYearView.layer.shadowColor = UIColor.black.cgColor
-        academicYearView.layer.shadowOpacity = 0.4
-        academicYearView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        academicYearView.layer.shadowRadius = 4
-        academicYearView.layer.masksToBounds = false
+        academicyearView.layer.cornerRadius = 10
+        academicyearView.layer.shadowColor = UIColor.black.cgColor
+        academicyearView.layer.shadowOpacity = 0.4
+        academicyearView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        academicyearView.layer.shadowRadius = 4
+        academicyearView.layer.masksToBounds = false
         
         getAcadmicYear()
         Get_Standards_Api()
@@ -230,12 +215,6 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         academicId = localData.accidamic_year_data?.data?.last?.id ?? 0
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        classCv.layoutIfNeeded()
-//        classCVHeight.constant = classCv.contentSize.height
-//    }
-    
     
     @IBAction func backAct(_ sender: Any) {
         
@@ -245,6 +224,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     @IBAction func inpersonAct(_ sender: Any) {
         
+        meetingMode = "In Person"
         inpersonBtn.backgroundColor = .systemBlue
         inpersonBtn.setTitleColor(.white, for: .normal)
         
@@ -259,6 +239,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     @IBAction func PhoneCallAct(_ sender: Any) {
         
+        meetingMode = "Phone Call"
         phonecallBtn.backgroundColor = .systemBlue
         phonecallBtn.setTitleColor(.white, for: .normal)
         
@@ -273,6 +254,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     @IBAction func OnlineAct(_ sender: Any) {
         
+        meetingMode = "Online"
         onlineBtn.backgroundColor = .systemBlue
         onlineBtn.setTitleColor(.white, for: .normal)
         
@@ -327,7 +309,6 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         // Picker
         let picker = UIDatePicker()
         picker.datePickerMode = .time
-        
         picker.preferredDatePickerStyle = .wheels
         picker.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(picker)
@@ -336,6 +317,10 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         let doneButton = UIButton(type: .system)
         doneButton.setTitle("Done", for: .normal)
         doneButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.backgroundColor = UIColor.systemBlue
+        doneButton.layer.cornerRadius = 6
+        doneButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(doneButton)
         
@@ -351,8 +336,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             picker.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -4),
             picker.heightAnchor.constraint(equalToConstant: 110),
             
-            doneButton.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
-            doneButton.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -6)
+            doneButton.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12),
+            doneButton.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -12)
         ])
         
         // Assign
@@ -369,6 +354,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         // Done button action
         doneButton.addTarget(self, action: #selector(doneTapped(_:)), for: .touchUpInside)
     }
+
     
     // MARK: - Done Action
     @objc private func doneTapped(_ sender: UIButton) {
@@ -377,9 +363,11 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         if sender.tag == 1, let picker = fromTimePicker {
             print("From Time: \(formatter.string(from: picker.date))")
+            fromTimeLbl.text = formatter.string(from: picker.date)
             fromTimePickerContainer?.removeFromSuperview()
         } else if sender.tag == 2, let picker = toTimePicker {
             print("To Time: \(formatter.string(from: picker.date))")
+            toTimeLbl.text = formatter.string(from: picker.date)
             toTimePickerContainer?.removeFromSuperview()
         }
     }
@@ -482,9 +470,39 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         }
     }
     
+    @IBAction func StepperAct(_ sender: UIStepper) {
+        
+        BreakAfterCountLbl.text = String(sender.value)
+        BreakBetweenSlot = Int(sender.value)
+    }
     
     @available(iOS 15.0, *)
     @IBAction func checkSlotAct(_ sender: Any) {
+        
+        if purposeTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true{
+            
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the purpose of meeting", on: self)
+        }
+        
+        if meetingMode == "Phone Call" && mobileTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+            
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the mobile number", on: self)
+        }
+        
+        if meetingMode == "Online" && meetingLinkTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+            
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the mobile number", on: self)
+        }
+        
+        if selectedClasses.isEmpty {
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Plese Select the class", on: self)
+        }
+        
+        if SelectedDates.isEmpty {
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Plese Select the Dates for the meeting", on: self)
+        }
+        
+        Check_Slots_Api_call()
         
         let bottomSheetVC = CreateSlotsBottomVC()
         
@@ -494,6 +512,50 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true
         }
         present(bottomSheetVC, animated: true)
+    }
+
+    func generateSlots(
+        from startTime: String,
+        to endTime: String,
+        slotDuration: Int,
+        breakDuration: Int = 0,
+        breakAfterSlots: Int = 1
+    ) -> [[String: String]] {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let start = formatter.date(from: startTime),
+              let end = formatter.date(from: endTime) else {
+            return []
+        }
+        
+        var slots: [[String: String]] = []
+        var currentStart = start
+        var slotCount = 0
+        
+        while true {
+            let currentEnd = currentStart.addingTimeInterval(TimeInterval(slotDuration * 60))
+            
+            // Stop if next slot exceeds end time (skip partial slot)
+            if currentEnd > end { break }
+            
+            slots.append([
+                "from_time": formatter.string(from: currentStart).lowercased(),
+                "to_time": formatter.string(from: currentEnd).lowercased()
+            ])
+            
+            slotCount += 1
+            currentStart = currentEnd
+            
+            // Add break if needed
+            if breakDuration > 0 && breakAfterSlots > 0 && slotCount % breakAfterSlots == 0 {
+                currentStart = currentStart.addingTimeInterval(TimeInterval(breakDuration * 60))
+            }
+        }
+        
+        return slots
     }
     
     func Get_Standards_Api(){
@@ -543,27 +605,19 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     }
     
     func Check_Slots_Api_call(){
+        
+        let slots = generateSlots(from: fromTimeLbl.text ?? "", to: toTimeLbl.text ?? "", slotDuration: 15,breakDuration: 0,breakAfterSlots: BreakBetweenSlot)
 
         let param: [String: Any] = [
-            PTMRequestStringFile.event_name: "test",
-            PTMRequestStringFile.from_time: "3:23 am",
-            PTMRequestStringFile.to_time: "6:23 am",
-            PTMRequestStringFile.duration: 10,
-            PTMRequestStringFile.event_link: "",
+            PTMRequestStringFile.event_name: purposeTextfield.text ?? "",
+            PTMRequestStringFile.from_time: fromTimeLbl.text ?? "",
+            PTMRequestStringFile.to_time: toTimeLbl.text ?? "",
+            PTMRequestStringFile.duration: durationLbl.text ?? "",
+            PTMRequestStringFile.event_link: meetingLinkTextfield.text ?? "",
             PTMRequestStringFile.break_time: 5,
-            PTMRequestStringFile.meeting_mode: "In Person",
-            PTMRequestStringFile.std_sec_details: [
-                [
-                    PTMRequestStringFile.section_id: "90813",
-                    PTMRequestStringFile.class_id: "32582"
-                ]
-            ],
-            PTMRequestStringFile.slots: [
-                [
-                    PTMRequestStringFile.from_time: "03:43 am",
-                    PTMRequestStringFile.to_time: "03:53 am"
-                ]
-            ]
+            PTMRequestStringFile.meeting_mode: meetingMode,
+            PTMRequestStringFile.std_sec_details:selectedClasses,
+            PTMRequestStringFile.slots: slots
         ]
 
         let finalParams: [[String: Any]] = SelectedDates.map { date in
@@ -571,8 +625,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             allParam[PTMRequestStringFile.date] = date
             return allParam
         }
-
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_validate_slots_for_staff, parameters: [:], type: ApitTypeSringFile.POST, token: staffDetails?.access_token ??  "") { [weak self] (result: Result<SlotValidationResponse,Error>) in
+        
+        APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_validate_slots_for_staff, parameters: finalParams, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<SlotValidationResponse,Error>) in
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -620,17 +674,17 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             cell.label.textAlignment = .center
             cell.label.text = classList[indexPath.item].displayName
             
-            let classItem = classList[indexPath.row]
-            let detail = StdSecDetail(class_id: classItem.standardId, section_id: classItem.sectionId)
+            //let classItem = classList[indexPath.row]
+           // let detail = StdSecDetail(class_id: classItem.standardId, section_id: classItem.sectionId)
             
             // ✅ Highlight if this class is in selectedClasses
-            if selectedClasses.contains(where: { $0.class_id == detail.class_id && $0.section_id == detail.section_id }) {
-                cell.cellView.backgroundColor = .systemBlue
-                cell.label.textColor = .white
-            } else {
-                cell.cellView.backgroundColor = .systemGray4
-                cell.label.textColor = .black
-            }
+//            if selectedClasses.contains(where: { $0.class_id == detail.class_id && $0.section_id == detail.section_id }) {
+//                cell.cellView.backgroundColor = .systemBlue
+//                cell.label.textColor = .white
+//            } else {
+//                cell.cellView.backgroundColor = .systemGray4
+//                cell.label.textColor = .black
+//            }
             
             return cell
             
@@ -656,17 +710,22 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == classCv {
-            let classItem = classList[indexPath.row]
-                    let detail = StdSecDetail(class_id: classItem.standardId, section_id: classItem.sectionId)
-                    
-                    if !selectedClasses.contains(where: { $0.section_id == detail.section_id && $0.class_id == detail.class_id }) {
-                        selectedClasses.append(detail)
-                    }
-                    
-                    if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
-                        cell.cellView.backgroundColor = .systemBlue
-                        cell.label.textColor = .white
-                    }
+                let classItem = classList[indexPath.row]
+                
+                let detail: [String: String] = [
+                    "class_id": classItem.standardId,
+                    "section_id": classItem.sectionId
+                ]
+                
+                // Add if not already in the array
+                if !selectedClasses.contains(where: { $0["class_id"] == detail["class_id"] && $0["section_id"] == detail["section_id"] }) {
+                    selectedClasses.append(detail)
+                }
+                
+                if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
+                    cell.cellView.backgroundColor = .systemBlue
+                    cell.label.textColor = .white
+                }
             
         } else if collectionView == breakDurationCV {
             if SelectedDuration == indexPath { return }
@@ -677,14 +736,17 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if collectionView == classCv {
-            let classItem = classList[indexPath.row]
-            selectedClasses.removeAll { $0.section_id == classItem.sectionId && $0.class_id == classItem.standardId }
-            
-            if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
-                cell.cellView.backgroundColor = .systemGray4
-                cell.label.textColor = .black
+                let classItem = classList[indexPath.row]
+                
+                selectedClasses.removeAll {
+                    $0["class_id"] == classItem.standardId && $0["section_id"] == classItem.sectionId
+                }
+                
+                if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
+                    cell.cellView.backgroundColor = .systemGray4
+                    cell.label.textColor = .black
+                }
             }
-        }
     }
 
     
@@ -739,4 +801,24 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
         return .zero // remove extra padding around the section
     }
     
+}
+
+
+extension UIView {
+    func applyCardStyle(
+        cornerRadius: CGFloat = 10,
+        shadowColor: UIColor = .black,
+        shadowOpacity: Float = 0.1,
+        shadowOffset: CGSize = CGSize(width: 0, height: 2),
+        shadowRadius: CGFloat = 4,
+        backgroundColor: UIColor = .white
+    ) {
+        self.layer.cornerRadius = cornerRadius
+        self.layer.shadowColor = shadowColor.cgColor
+        self.layer.shadowOpacity = shadowOpacity
+        self.layer.shadowOffset = shadowOffset
+        self.layer.shadowRadius = shadowRadius
+        self.layer.masksToBounds = false
+        self.backgroundColor = backgroundColor
+    }
 }

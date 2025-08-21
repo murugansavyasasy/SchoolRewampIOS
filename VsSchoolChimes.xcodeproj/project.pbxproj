@@ -715,6 +715,8 @@
 		FAAC9F482E4B006600203F04 /* PtmCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC9F452E4B006600203F04 /* PtmCV.swift */; };
 		FAAF79902DFBE3C400227DCC /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */; };
 		FAAF79922DFBE3E000227DCC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */; };
+		FAB3C1D12E567B8400E361CA /* CreatedSlotsTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C1D02E567B8400E361CA /* CreatedSlotsTv.xib */; };
+		FAB3C1D22E567B8400E361CA /* CreatedSlotsTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB3C1CF2E567B8400E361CA /* CreatedSlotsTv.swift */; };
 		FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = FACD4D692E30BE6D0084B125 /* FSCalendar */; };
 		FACD4D712E30F46F0084B125 /* TimetableBottomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */; };
 		FACD4D722E30F46F0084B125 /* TimetableBottomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD4D702E30F46F0084B125 /* TimetableBottomVC.xib */; };
@@ -1567,6 +1569,8 @@
 		FAAC9F462E4B006600203F04 /* PtmCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmCV.xib; sourceTree = "<group>"; };
 		FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		FAB3C1CF2E567B8400E361CA /* CreatedSlotsTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedSlotsTv.swift; sourceTree = "<group>"; };
+		FAB3C1D02E567B8400E361CA /* CreatedSlotsTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatedSlotsTv.xib; sourceTree = "<group>"; };
 		FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBottomVC.swift; sourceTree = "<group>"; };
 		FACD4D702E30F46F0084B125 /* TimetableBottomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableBottomVC.xib; sourceTree = "<group>"; };
 		FACD4D752E30F8B40084B125 /* TimetableTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTvCell.swift; sourceTree = "<group>"; };
@@ -3746,6 +3750,8 @@
 				FAF4C7AC2E54614E0092B938 /* MeetingDataTV.xib */,
 				FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */,
 				FA7C7BAE2E55B55B009BD4CF /* CreateSlotsBottomVC.xib */,
+				FAB3C1CF2E567B8400E361CA /* CreatedSlotsTv.swift */,
+				FAB3C1D02E567B8400E361CA /* CreatedSlotsTv.xib */,
 			);
 			path = NewPTM;
 			sourceTree = "<group>";
@@ -4450,6 +4456,7 @@
 				84EAE7832DB20B250083AD9E /* ReciverAttachmentrVC.xib in Resources */,
 				846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */,
 				840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */,
+				FAB3C1D12E567B8400E361CA /* CreatedSlotsTv.xib in Resources */,
 				845F21762E45C0DD0078AF69 /* AssignmentPriview.xib in Resources */,
 				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
 				FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */,
@@ -4923,6 +4930,7 @@
 				849AD0102D1A83CA002DEC07 /* HomeworkreportTV.swift in Sources */,
 				849AD0112D1A83CA002DEC07 /* SenderSideHomeWorkViewController.swift in Sources */,
 				840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */,
+				FAB3C1D22E567B8400E361CA /* CreatedSlotsTv.swift in Sources */,
 				842FBABE2D0BEDBF007C0B51 /* ReportStudentTVC.swift in Sources */,
 				842FBABF2D0BEDBF007C0B51 /* ReportStudentListVC.swift in Sources */,
 				842FBAC02D0BEDBF007C0B51 /* StudentReportVC.swift in Sources */,

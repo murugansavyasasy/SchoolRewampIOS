@@ -136,6 +136,59 @@ class APIService: NSObject, URLSessionDelegate {
     ) {
         makeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
     }
+    
+    // MARK: - PTM Api
+    func PtmApi<T: Codable>(
+        url: String,
+        parameters: [[String: Any]],
+        token: String,
+        completionHandler: @escaping (Result<T, Error>) -> Void
+    ) {
+        print("Param",parameters)
+        // Build URL
+        guard let fullURL = URL(string: ServiceUrl.baseurl + url) else {
+            let error = getError(statusCode: 0, description: "Invalid URL")
+            completionHandler(.failure(error))
+            return
+        }
+        
+        var request = URLRequest(url: fullURL)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if token != PaucketHeader.Paucket {
+            request.addValue(token, forHTTPHeaderField: "Authorization")
+        } else {
+            request.addValue(PaucketHeader.api_key_value, forHTTPHeaderField: PaucketHeader.api_key)
+            request.addValue(PaucketHeader.partner_name_value, forHTTPHeaderField: PaucketHeader.partner_name)
+        }
+        
+        // Encode array of dictionaries
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+        } catch {
+            completionHandler(.failure(error))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let result = try JSONDecoder().decode(T.self, from: data)
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            } else if let error = error {
+                completionHandler(.failure(error))
+            } else {
+                let error = self.getError(statusCode: 0, description: "Unknown error")
+                completionHandler(.failure(error))
+            }
+        }.resume()
+    }
+
 }
 //import Foundation
 //
