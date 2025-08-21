@@ -29,7 +29,7 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     var getStaffId : Int!
     var slotdetails = [Slot]()
     var slotdetails1 = [Slot]()
-    var events : [Event] = []
+  //  var events : [Event] = []
     let dateFormatter = DateFormatter()
     var ids : [Int] = []
     var slotIdArr : [Int] = []
@@ -242,8 +242,8 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeCollectionViewCell", for: indexPath) as! TimeCollectionViewCell
 
 //            DefaultsKeys.ClickID = slotdetails[indexPath.row].slotId
-            print("slotde.row.isBooked",slotdetails[indexPath.row].isBooked)
-            print("slotdDefaultsKeys.ClickIDd",slotdetails[indexPath.row].isBooked)
+//            print("slotde.row.isBooked",slotdetails[indexPath.row].isBooked)
+//            print("slotdDefaultsKeys.ClickIDd",slotdetails[indexPath.row].isBooked)
 
 
 //            if slotdetails[indexPath.row].isBooked == 1{
@@ -260,83 +260,83 @@ print("COLRR",cell.timeHoleView.backgroundColor)
 //                }
 //                else{
 
-                    for i in slotdetails{
-
-                        ids.append(i.slotId)
-
-
-                    }
-
-
-                    if ids.contains(slotdetails[indexPath.row].slotId){
-
-                        slotIdArr.append(slotdetails[indexPath.row].slotId)
-//                        DefaultsKeys.bookingSlotId.append(contentsOf: slotIdArr)
-
-                    }else{
-
-                    }
-
-                    let time = slotdetails[indexPath.row].fromTime
-                    let time2 = slotdetails[indexPath.row].toTime
-                    var frmHr : Int!
-                    var fromMins : Int!
-                    var toHr : Int!
-                    var tomins : Int!
-
-                    if let (hour, minute) = extractHoursAndMinutes(from: time) {
-                        print("Hour: \(hour), Minute: \(minute)")
-
-
-                        frmHr = hour
-                        fromMins = minute
-                        // Define 1:30 PM and 1:40 PM as DateComponents
-
-                    } else {
-                        print("Invalid time format")
-                    }
-
-                    if let (hours, minutes) = extractHoursAndMinutes1(from: time2) {
-                        print("Hour: \(hours), Minute: \(minutes)")
-                        toHr = hours
-                        tomins = minutes
-                    } else {
-                        print("Invalid time format")
-                    }
-
-                    let calendar = Calendar.current
-
-                    let currentDate = Date()
-                    let startTimeComponents = DateComponents(hour: frmHr, minute: fromMins)
-                    let endTimeComponents = DateComponents(hour: toHr, minute: tomins)
-
-                    // Create dates for 1:30 PM and 1:40 PM
-                    if let startTime = calendar.date(bySettingHour: startTimeComponents.hour!, minute: startTimeComponents.minute!, second: 0, of: currentDate),
-                       let endTime = calendar.date(bySettingHour: endTimeComponents.hour!, minute: endTimeComponents.minute!, second: 0, of: currentDate) {
-
-                        // Loop through the time range and print each minute
-                        var time = startTime
-                        while time <= endTime {
-                            let timeFormatter = DateFormatter()
-                            timeFormatter.dateFormat = "hh:mm a"
-
-                            // Format for displaying time in 12-hour format with AM/PM
-                            var timeGetList = timeFormatter.string(from: time)
-
-
-
-//                            DefaultsKeys.timesarr.append(timeGetList)
-//                            print("DefaultsKeys.timesarr", DefaultsKeys.timesarr)
-
-
-                            time = calendar.date(byAdding: .minute, value: 1, to: time)!
-                        }
-
-                    }
-
-
-                    call_back?("")
-//                }
+//                    for i in slotdetails{
+//
+//                        ids.append(i.slotId)
+//
+//
+//                    }
+//
+//
+//                    if ids.contains(slotdetails[indexPath.row].slotId){
+//
+//                        slotIdArr.append(slotdetails[indexPath.row].slotId)
+////                        DefaultsKeys.bookingSlotId.append(contentsOf: slotIdArr)
+//
+//                    }else{
+//
+//                    }
+//
+//                    let time = slotdetails[indexPath.row].fromTime
+//                    let time2 = slotdetails[indexPath.row].toTime
+//                    var frmHr : Int!
+//                    var fromMins : Int!
+//                    var toHr : Int!
+//                    var tomins : Int!
+//
+//                    if let (hour, minute) = extractHoursAndMinutes(from: time) {
+//                        print("Hour: \(hour), Minute: \(minute)")
+//
+//
+//                        frmHr = hour
+//                        fromMins = minute
+//                        // Define 1:30 PM and 1:40 PM as DateComponents
+//
+//                    } else {
+//                        print("Invalid time format")
+//                    }
+//
+//                    if let (hours, minutes) = extractHoursAndMinutes1(from: time2) {
+//                        print("Hour: \(hours), Minute: \(minutes)")
+//                        toHr = hours
+//                        tomins = minutes
+//                    } else {
+//                        print("Invalid time format")
+//                    }
+//
+//                    let calendar = Calendar.current
+//
+//                    let currentDate = Date()
+//                    let startTimeComponents = DateComponents(hour: frmHr, minute: fromMins)
+//                    let endTimeComponents = DateComponents(hour: toHr, minute: tomins)
+//
+//                    // Create dates for 1:30 PM and 1:40 PM
+//                    if let startTime = calendar.date(bySettingHour: startTimeComponents.hour!, minute: startTimeComponents.minute!, second: 0, of: currentDate),
+//                       let endTime = calendar.date(bySettingHour: endTimeComponents.hour!, minute: endTimeComponents.minute!, second: 0, of: currentDate) {
+//
+//                        // Loop through the time range and print each minute
+//                        var time = startTime
+//                        while time <= endTime {
+//                            let timeFormatter = DateFormatter()
+//                            timeFormatter.dateFormat = "hh:mm a"
+//
+//                            // Format for displaying time in 12-hour format with AM/PM
+//                            var timeGetList = timeFormatter.string(from: time)
+//
+//
+//
+////                            DefaultsKeys.timesarr.append(timeGetList)
+////                            print("DefaultsKeys.timesarr", DefaultsKeys.timesarr)
+//
+//
+//                            time = calendar.date(byAdding: .minute, value: 1, to: time)!
+//                        }
+//
+//                    }
+//
+//
+//                    call_back?("")
+////                }
 
         }
     

@@ -217,6 +217,16 @@ protocol ProfileSwitchDelegate {
 
 @available(iOS 14.0, *)
 class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDelegate, backNavigation {
+    func backtohome(type: String) {
+        setupTabBar()
+        setupContainerView()
+        if login_astype == 1 {
+            selectViewController(firstVCNav)
+        } else if login_astype == 2 {
+            selectViewController(parentVCNav)
+        }
+    }
+    
     
     func back() {
         // Check if we can pop from navigation stack
@@ -237,15 +247,6 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
         tabBar.selectedItem = tabBar.items?[3]
     }
 
-    func backtohome() {
-        setupTabBar()
-        setupContainerView()
-        if login_astype == 1 {
-            selectViewController(firstVCNav)
-        } else if login_astype == 2 {
-            selectViewController(parentVCNav)
-        }
-    }
 
     private let tabBar = UITabBar()
     private var containerView = UIView()

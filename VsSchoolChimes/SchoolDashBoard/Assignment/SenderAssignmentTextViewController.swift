@@ -673,7 +673,9 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             } else {
                 cell.imageViews.image = nil
             }
-            
+            // Set collection view height dynamically
+            let totalItems = attachments.count
+            collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
         }
     }

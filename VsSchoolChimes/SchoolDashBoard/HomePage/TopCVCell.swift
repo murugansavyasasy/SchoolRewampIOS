@@ -18,7 +18,13 @@ class TopCVCell: UICollectionViewCell {
         readVieaw.layer.cornerRadius = readVieaw.frame.width/2
     }
     func configure(with item: MenuDetail) {
-        iconBtn.setImage(UIImage(named: "Homework"), for: .normal)
-        nameLbl.text = item.name
+        if let name = item.id {
+            if #available(iOS 14.0, *) {
+                let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
+                let img = UIImage(named: filteredItems.first?.name ?? "")
+                iconBtn.setImage(img, for: .normal)
+                nameLbl.text = item.name
+            }
+        }
     }
 }

@@ -92,7 +92,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     var staffIdss : Int!
     let calendar = Calendar.current
        var dates = [Date]()
-    var exNames : [Event] = []
+  //  var exNames : [Event] = []
     var slotdetails : [Slot] = []
     
    
@@ -518,21 +518,21 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         var selectClickId : Int!
     }
 
-    struct Slot: Codable {
-        let fromTime: String
-        let toTime: String
-        let slotId: Int
-        let isBooked: Int
-    }
-
-    struct Event: Codable {
-        let staffId: Int
-        let eventName: String
-        let subjectName: String
-        let staff_name: String
-        let event_mode: String
-        var slots: [Slot]
-    }
+//    struct Slot: Codable {
+//        let fromTime: String
+//        let toTime: String
+//        let slotId: Int
+//        let isBooked: Int
+//    }
+//
+//    struct Event: Codable {
+//        let staffId: Int
+//        let eventName: String
+//        let subjectName: String
+//        let staff_name: String
+//        let event_mode: String
+//        var slots: [Slot]
+//    }
 
     struct SlotData: Codable {
         let event_link: String

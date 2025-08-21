@@ -73,6 +73,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     @IBOutlet weak var upcomingView: customView!
     
+    @IBOutlet weak var CompletedView: customView!
     var instituteId  = Int()
     var sectionId = Int()
     var staffId  = Int()
@@ -111,6 +112,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         createView.addGestureRecognizer(create)
         
         upcomingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNewPtmVC)))
+        CompletedView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNewPtmVC2)))
         
         tv.delegate = self
         tv.dataSource = self
@@ -122,6 +124,15 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let vc = NewPtmVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
+        vc.tvHidden = false
+        present(vc, animated: true)
+    }
+    
+    @objc func gotoNewPtmVC2(){
+        
+        let vc = NewPtmVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.tvHidden = true
         present(vc, animated: true)
     }
     
