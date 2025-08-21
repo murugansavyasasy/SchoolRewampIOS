@@ -36,7 +36,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jgW-Im-RnA">
-                                        <rect key="frame" x="10" y="237.33333333333329" width="258" height="127.66666666666666"/>
+                                        <rect key="frame" x="10" y="237.33333333333331" width="258" height="127.66666666666669"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Sample Quiz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNO-UG-M9B">
                                                 <rect key="frame" x="0.0" y="0.0" width="258" height="57.333333333333336"/>
@@ -64,15 +64,17 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-eC-PnL">
-                                        <rect key="frame" x="244" y="150" width="34" height="35"/>
+                                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-eC-PnL">
+                                        <rect key="frame" x="168" y="150" width="110" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="dEe-pr-22g"/>
-                                            <constraint firstAttribute="width" constant="34" id="pLl-dT-Bfe"/>
+                                            <constraint firstAttribute="width" constant="110" id="pLl-dT-Bfe"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="play-button">
+                                        <state key="normal" title="Play Now" image="play.circle.fill" catalog="system">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="heavy"/>
                                         </state>
                                     </button>
@@ -151,7 +153,7 @@
     </objects>
     <resources>
         <image name="Quiz1" width="2048" height="2048"/>
-        <image name="play-button" width="75" height="75"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

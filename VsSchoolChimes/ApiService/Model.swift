@@ -1669,7 +1669,7 @@ struct LSRWTask: Codable {
 
 }
 
-<<<<<<< HEAD
+
 
 struct notificationSuc : Codable{
     
@@ -1707,7 +1707,6 @@ struct QuizListSuc : Codable{
 
 
 
-
 struct QuizListData : Codable{
     let id : String?
     let quiz_id : String?
@@ -1725,7 +1724,7 @@ struct QuizListData : Codable{
     let no_of_questions : Int?
     let right_answer : Int?
     let wrong_answer : Int?
-    let total_mark : Int?
+    let total_mark : String?
     let no_of_levels : String?
 }
 
@@ -1749,7 +1748,7 @@ struct QuizQuestionDataDetails : Codable{
     let mark : Int?
     let correctOptionIndex : Int?
     let options : [String]?
-=======
+}
 enum LSRWType: String, Codable {
     case listening = "Listening"
     case speaking = "Speaking"
@@ -1794,5 +1793,5 @@ enum LSRWType: String, Codable {
         case .writing:   return "Writing"
         }
     }
->>>>>>> development
+
 }
