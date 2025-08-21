@@ -1613,8 +1613,8 @@ struct ValidatedSlotData: Codable {
 }
 
 struct Slot: Codable {
-    var from_time: String?
-    var to_time: String?
+    var slot_from: String?
+    var slot_to: String?
 }
 
 struct ValidatedSlot: Codable {

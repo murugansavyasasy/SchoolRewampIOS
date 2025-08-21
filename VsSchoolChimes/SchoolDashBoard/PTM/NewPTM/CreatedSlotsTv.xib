@@ -11,21 +11,27 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="CreatedSlotsTv" customModule="School_Chimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="110" id="KGk-i7-Jjw" customClass="CreatedSlotsTv" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pZ3-JQ-pSZ">
-                        <rect key="frame" x="10" y="10" width="300" height="50"/>
+                        <rect key="frame" x="10" y="10" width="300" height="90"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="krH-Q5-s35">
+                                <rect key="frame" x="10" y="10" width="280" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ncF-pQ-PYk">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                <rect key="frame" x="0.0" y="40" width="300" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="VpA-Z6-mCc"/>
+                                    <constraint firstAttribute="height" constant="50" id="UlO-t7-Nfv"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ocd-eK-nCo">
                                     <size key="itemSize" width="128" height="128"/>
@@ -35,12 +41,15 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="ncF-pQ-PYk" secondAttribute="trailing" id="8bY-25-w60"/>
                             <constraint firstAttribute="bottom" secondItem="ncF-pQ-PYk" secondAttribute="bottom" id="9LX-ob-Nhl"/>
-                            <constraint firstItem="ncF-pQ-PYk" firstAttribute="top" secondItem="pZ3-JQ-pSZ" secondAttribute="top" id="E7Z-JJ-XSK"/>
+                            <constraint firstItem="krH-Q5-s35" firstAttribute="leading" secondItem="pZ3-JQ-pSZ" secondAttribute="leading" constant="10" id="Hkz-Lr-Vkb"/>
+                            <constraint firstItem="krH-Q5-s35" firstAttribute="top" secondItem="pZ3-JQ-pSZ" secondAttribute="top" constant="10" id="K9w-vT-eJ6"/>
                             <constraint firstItem="ncF-pQ-PYk" firstAttribute="leading" secondItem="pZ3-JQ-pSZ" secondAttribute="leading" id="PCN-Z7-UcC"/>
+                            <constraint firstAttribute="trailing" secondItem="krH-Q5-s35" secondAttribute="trailing" constant="10" id="QCV-O7-pfI"/>
+                            <constraint firstItem="ncF-pQ-PYk" firstAttribute="top" secondItem="krH-Q5-s35" secondAttribute="bottom" constant="10" id="baZ-nL-qUy"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -54,14 +63,17 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="collectionView" destination="ncF-pQ-PYk" id="CQe-Or-xNh"/>
-                <outlet property="collectionViewHeightConstraint" destination="VpA-Z6-mCc" id="Jbc-OC-86X"/>
+                <outlet property="collectionViewHeightConstraint" destination="UlO-t7-Nfv" id="YZ7-tL-Etd"/>
             </connections>
-            <point key="canvasLocation" x="27.480916030534349" y="28.87323943661972"/>
+            <point key="canvasLocation" x="27.480916030534349" y="42.253521126760567"/>
         </tableViewCell>
     </objects>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
