@@ -1591,6 +1591,44 @@ struct ClassSectionDetail: Codable {
     let class_name: String?
     let section_name: String?
 }
+
+struct SlotValidationResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [ValidatedSlotData]?
+}
+
+struct ValidatedSlotData: Codable {
+    var institute_id: String?
+    var staff_id: String?
+    var break_time: Int?
+    var date: String?
+    var duration: Int?
+    var event_name: String?
+    var meeting_mode: String?
+    var from_time: String?
+    var to_time: String?
+    var slots: [Slot]?
+    var std_sec_details: [StdSecDetail]?
+}
+
+struct Slot: Codable {
+    var from_time: String?
+    var to_time: String?
+}
+
+struct ValidatedSlot: Codable {
+    var slot_from: String?
+    var slot_to: String?
+    var type: Int?
+    var slot_availablity: String?
+}
+
+struct StdSecDetail: Codable {
+    var class_id: String?
+    var section_id: String?
+}
+
 struct LSRWResponse: Codable {
     let status: Bool?
     let message: String?
@@ -1752,6 +1790,42 @@ struct QuizQuestionDataDetails : Codable{
     let mark : Int?
     let correctOptionIndex : Int?
     let options : [String]?
+}
+enum LSRWType: String, Codable {
+    case listening = "Listening"
+    case speaking = "Speaking"
+    case reading = "Reading"
+    case writing = "Writing"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        
+        // Normalize variations like "Take Reading Skill"
+        if rawValue.lowercased().contains("listen") {
+            self = .listening
+        } else if rawValue.lowercased().contains("speak") {
+            self = .speaking
+        } else if rawValue.lowercased().contains("read") {
+            self = .reading
+        } else if rawValue.lowercased().contains("write") {
+            self = .writing
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Invalid LSRW type: \(rawValue)"
+            )
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .listening: return "🎧"
+        case .speaking:  return "🎤"
+        case .reading:   return "📖"
+        case .writing:   return "✏️"
+        }
+    }
     
 }
 

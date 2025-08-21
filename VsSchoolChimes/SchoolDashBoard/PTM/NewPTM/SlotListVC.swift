@@ -17,7 +17,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tv.register(UINib(nibName: "MeetingDetailTV", bundle: nil), forCellReuseIdentifier: "MeetingDetailTV")
+        tv.register(UINib(nibName: "MeetingDataTV", bundle: nil), forCellReuseIdentifier: "MeetingDataTV")
         tv.register(UINib(nibName: "SlotListTV", bundle: nil), forCellReuseIdentifier: "SlotListTV")
         tv.delegate = self
         tv.dataSource = self
@@ -38,7 +38,14 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0{
-            let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
+            let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDataTV", for: indexPath) as! MeetingDataTV
+            
+            cell.dateLbl.text = slotData?.date
+            cell.meetingNameLbl.text = slotData?.details?.first?.event_name
+            cell.durationLbl.text = String(slotData?.details?.first?.meeting_duration ?? 0) + " minutes"
+            cell.modeLbl.text = slotData?.details?.first?.event_mode
+            cell.JoinBtn.isHidden = slotData?.details?.first?.event_mode == "Online" ? false : true
+            cell.TimeLbl.text = (slotData?.details?.first?.slots?.first?.from_time ?? "") + " - " + (slotData?.details?.first?.slots?.last?.to_time ?? "")
             
             return cell
         }else {

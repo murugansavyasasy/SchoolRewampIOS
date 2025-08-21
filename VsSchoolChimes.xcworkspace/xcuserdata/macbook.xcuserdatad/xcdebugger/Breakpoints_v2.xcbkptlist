@@ -20,32 +20,32 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - b2f83422a8d0fcdf"
+                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - eb7a9e0d37277bc8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  symbolName = "closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
                   moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS%202/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "891"
-                  endingLineNumber = "891">
+                  startingLineNumber = "889"
+                  endingLineNumber = "889">
                </Location>
                <Location
-                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - b2f83422a8d0fcdf"
+                  uuid = "79553138-2599-43B0-9245-AFD3BAEDB91C - 145ec7d745527bc8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
                   moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS%202/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "891"
-                  endingLineNumber = "891">
+                  startingLineNumber = "893"
+                  endingLineNumber = "893">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -64,6 +64,36 @@
             endingLineNumber = "902"
             landmarkName = "SendingNoticeboardFlow()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0D3DE78A-3C47-4B4F-8927-7A8469C72563 - 560f92ba20fb7a50"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS%202/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "902"
+                  endingLineNumber = "902">
+               </Location>
+               <Location
+                  uuid = "0D3DE78A-3C47-4B4F-8927-7A8469C72563 - be6dda61cae88367"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS%202/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "904"
+                  endingLineNumber = "904">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -80,36 +110,6 @@
             endingLineNumber = "912"
             landmarkName = "SendingNoticeboardFlow()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "68C1FA4F-6A28-4F70-AABE-3BF228F260F4 - f7044a2db0a6a026"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "912"
-                  endingLineNumber = "912">
-               </Location>
-               <Location
-                  uuid = "68C1FA4F-6A28-4F70-AABE-3BF228F260F4 - 18cb2994276a1892"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.NoticeResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 () -&gt; () in School_Chimes.SchoolListVC.SendingNoticeboardFlow() -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchool/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SchoolList/SchoolListVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "914"
-                  endingLineNumber = "914">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
