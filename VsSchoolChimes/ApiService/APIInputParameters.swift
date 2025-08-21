@@ -244,6 +244,7 @@ class assignmentResquestStringKey{
     static let venue = "venue"
     static let event_date = "event_date"
     static let event_time = "event_time"
+    static let activity_type = "activity_type"
    
 }
 

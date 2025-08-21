@@ -313,10 +313,12 @@ class  commonApi_forSending {
                 SendAttachmentStringFile.target_type: target_type,
                 SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId
             ]
-            
             // Conditionally add value
-            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId{
                 parameters[UploadMessageKeys.subjectId] = subjectId
+            }else if Menu_id.lsrw == Menu_id.staffSelectedMenuId{
+                parameters[UploadMessageKeys.subjectId] = subjectId
+                parameters.removeValue(forKey: SendAttachmentStringFile.academic_year_id)
             }
             
             var finalParams = parameters

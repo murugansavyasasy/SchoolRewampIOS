@@ -95,7 +95,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     private let waveformView = UIStackView()
     private let durationLabel = UILabel()
     private let progressView = UIView()
-    
+    weak var parentCell: AudioCVC?
     private var waveformBars: [UIView] = []
     private var barHeightConstraints: [NSLayoutConstraint] = []
 
@@ -415,10 +415,14 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         progressView.alpha = 0
         durationLabel.text = "0:00"
     }
-
+    func setParentCell(_ cell: AudioCVC) {
+        parentCell = cell
+    }
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         DispatchQueue.main.async {
             self.reset()
+            self.parentCell?.stopPlayback()
+//            self.parentCell?.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
         }
     }
     
@@ -429,6 +433,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             self.durationLabel.text = "Error"
         }
     }
+    
 }
 //
 //// MARK: - AudioProcessor

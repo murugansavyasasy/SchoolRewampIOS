@@ -7,7 +7,7 @@
 
 import UIKit
 protocol BaktoHome{
-    func backtohome()
+    func backtohome(type:String)
 }
 @available(iOS 14.0, *)
 class LanguageVc: UIViewController {

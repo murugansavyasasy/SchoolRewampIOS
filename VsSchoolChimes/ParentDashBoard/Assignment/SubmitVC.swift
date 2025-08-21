@@ -227,12 +227,47 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         }
     }
     
+//    func imageSelection(){
+//        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+//            
+//            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+//            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+//            selectedVideoURL = nil
+//            
+//            user_inputs.selectedFileType = CommonStringFile.IMAGE
+//            selectImgPdfview.imageCollectionview.reloadData()
+//        }
+//        
+//        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+//            user_inputs.selectedFileType = CommonStringFile.IMAGE
+//            
+//            let imageItems = images.map {
+//                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
+//            }
+//            attachments.append(contentsOf: imageItems)
+//            if imageItems.count != 0{
+//                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+//            }
+//            selectedVideoURL = nil
+//            selectImgPdfview.imageCollectionview.reloadData()
+//        }
+//        
+//        PhotoPickerManager.shared.onFilePicked = { [self] data in
+//            // handle picked PDF
+//            user_inputs.selectedFileType = CommonStringFile.pdf
+//            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+//            selectedVideoURL = nil
+//            selectImgPdfview.imageCollectionview.reloadData()
+//        }
+//    }
+    
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
-            selectedVideoURL = nil
+            //            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
@@ -245,10 +280,9 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
-            }
-            selectedVideoURL = nil
+            //            if imageItems.count != 0{
+            //                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            //            }
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
@@ -256,8 +290,22 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            selectedVideoURL = nil
+            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+        PhotoPickerManager.shared.onVideoPicked = { [self] data in
+            // handle picked PDF
+            user_inputs.selectedFileType = CommonStringFile.VIDEO
+            attachments
+                .append(
+                    AttachmentItem(
+                        image:nil,
+                        imageURL: nil,
+                        fileType: CommonStringFile.VIDEO,
+                        VideoURl: data
+                    )
+                )
+            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             selectImgPdfview.imageCollectionview.reloadData()
         }
     }

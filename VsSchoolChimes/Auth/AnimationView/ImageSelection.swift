@@ -44,6 +44,10 @@ class ImageSelection:UIView{
     func registerCell(){
         imageCollectionview.register(UINib(nibName: CellConfingName.AttachmentCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.AttachmentCVCell)
         imageCollectionview.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
+        imageCollectionview.register(UINib(nibName: CellConfingName.VideoPlayerCVC, bundle: nil),
+                        forCellWithReuseIdentifier: CellConfingName.VideoPlayerCVC)
+        imageCollectionview.register(UINib(nibName: "AudioCVC", bundle: nil),
+                        forCellWithReuseIdentifier: "AudioCVC")
     }
     
 }

@@ -180,6 +180,7 @@ struct Menu_id{
     static var homeWorkMenuId = 15
     static let isAssaignment = 2
     static let AttachmentMenuId = 39
+    static let lsrw = 30
     static let staffGeoAttendaceReport = 33
     static let geoMatricAttendace = 21
     static let noticeboardMenuId = 23

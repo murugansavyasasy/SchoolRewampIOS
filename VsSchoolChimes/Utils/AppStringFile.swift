@@ -243,6 +243,7 @@ class CommonStringFile{
     static let Video = "Video".translated()
     static let Photos = "Photos".translated()
     static let VIDEO = "VIDEO"
+    static let M4A = "M4A"
     static let seeLess = "See less".translated()
     static let seemore = " See more".translated()
     static let selectedText = " selected Text".translated()
@@ -342,6 +343,7 @@ class CommonStringFile{
     static let url = "url"
     static let type = "type"
     static let pdf = "pdf"
+    static let audio = "audio"
     static let Tap_on_the_punch = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
     
     static let locationErrorMessage = """

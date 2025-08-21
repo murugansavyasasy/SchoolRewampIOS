@@ -7,12 +7,25 @@
 
 import UIKit
 
+// MARK: - Protocol for managing audio playback across cells
+@available(iOS 15.0, *)
+protocol AudioPlaybackDelegate: AnyObject {
+    func audioCell(_ cell: AudioCVC, willStartPlayingAtIndex index: Int)
+    func audioCell(_ cell: AudioCVC, didStopPlayingAtIndex index: Int)
+}
+
 @available(iOS 15.0, *)
 class AudioCVC: UICollectionViewCell {
     
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var waveView: AudioMessageView!
     @IBOutlet weak var playerView: UIView!
+    @IBOutlet weak var TrashIcon: UIButton!
+    
+    var delegate: DeleteImge?
+    weak var audioDelegate: AudioPlaybackDelegate?
+    var cellIndex: Int = 0
+    
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
@@ -28,14 +41,55 @@ class AudioCVC: UICollectionViewCell {
                 // Remote URL - download it first
                 downloadAndPrepareAudio(from: url)
             }
-            
         }
     }
     
     private let audioManager = AudioManager()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupUI()
+        setupNotifications()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stopPlayback()
+        audioURL = nil
+        cellIndex = 0
+        audioDelegate = nil
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupUI() {
+        TrashIcon.layer.cornerRadius = TrashIcon.frame.width/2
+        TrashIcon.layer.borderWidth = 1
+        TrashIcon.layer.borderColor = UIColor.red.cgColor
         playerView.setShadow(cornerRadius: 10)
+        
+        // Set initial play button state
+        updatePlayButtonState(isPlaying: false)
+    }
+    
+    private func setupNotifications() {
+        // Listen for notifications to stop playback when other cells start playing
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(otherAudioStartedPlaying(_:)),
+            name: NSNotification.Name("AudioCellStartedPlaying"),
+            object: nil
+        )
+    }
+    
+    @objc private func otherAudioStartedPlaying(_ notification: Notification) {
+        guard let playingCellIndex = notification.object as? Int,
+              playingCellIndex != cellIndex else { return }
+        
+        // Stop this cell's playback if another cell started playing
+        stopPlayback()
     }
     
     private func downloadAndPrepareAudio(from remoteURL: URL) {
@@ -65,15 +119,45 @@ class AudioCVC: UICollectionViewCell {
     }
     
     @IBAction func playAudio(_ sender: UIButton) {
-        waveView.isPlaying.toggle()
-        playBtn.isSelected = waveView.isPlaying
-        playBtn.setImage(UIImage(named: waveView.isPlaying ? "pause-button" : "play-button"), for: .normal)
         if waveView.isPlaying {
-            waveView.startPlaybackAnimation()
+            stopPlayback()
         } else {
-            waveView.stopPlaybackAnimation()
+            startPlayback()
         }
     }
+    
+    private func startPlayback() {
+        // Notify other cells to stop playing
+        NotificationCenter.default.post(
+            name: NSNotification.Name("AudioCellStartedPlaying"),
+            object: cellIndex
+        )
+        
+        // Notify delegate
+        audioDelegate?.audioCell(self, willStartPlayingAtIndex: cellIndex)
+        
+        // Start playback
+        waveView.isPlaying = true
+        waveView.startPlaybackAnimation()
+        updatePlayButtonState(isPlaying: true)
+    }
+    
+    func stopPlayback() {
+        playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+        waveView.isPlaying = false
+        waveView.stopPlaybackAnimation()
+        updatePlayButtonState(isPlaying: false)
+        
+        // Notify delegate
+        audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
+    }
+    
+    private func updatePlayButtonState(isPlaying: Bool) {
+        playBtn.isSelected = isPlaying
+        let imageName = isPlaying ? "pause-button" : "play-button"
+        playBtn.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -88,4 +172,9 @@ class AudioCVC: UICollectionViewCell {
             .rootViewController?
             .topMostViewController()
     }
+    
+    @IBAction func deleteImg(_ sender: UIButton) {
+        delegate?.deleteImage(index: sender.tag)
+    }
 }
+

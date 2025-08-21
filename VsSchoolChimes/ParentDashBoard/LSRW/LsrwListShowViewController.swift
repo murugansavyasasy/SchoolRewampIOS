@@ -31,7 +31,8 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         searchBar.delegate = self
         searchBar.addDoneButton()
         backBtn.applyBackButton()
-        
+        NameLbl.text = UserDefaultFileManager.get_child_Details()?.name
+        StandardLbl.text = "\(UserDefaultFileManager.get_child_Details()?.standard_name ?? "") - \(UserDefaultFileManager.get_child_Details()?.section_name ?? "")"
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
@@ -43,7 +44,8 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
         tv.delegate = self
         tv.dataSource = self
-        
+        tv.estimatedRowHeight = 80   // give any reasonable estimate
+           tv.rowHeight = UITableView.automaticDimension
         SkillListApi()
     }
     
@@ -74,10 +76,6 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5), endPoint: CGPoint(x: 0, y: 0.5))
-    }
-    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -94,38 +92,18 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tv.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as? NewLSRWTVcell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as? NewLSRWTVcell else {
             return UITableViewCell()
         }
         
         let item = filteredTasks[indexPath.row]
-        cell.TitleLbl.text = item.title
-        cell.DescriptionLbl.text = item.description
-        cell.Subject.setTitle(item.subject, for: .normal)
-        cell.StaffName.setTitle(item.sent_by, for: .normal)
-        cell.SkillType.setTitle(item.activity_type.displayName, for: .normal)
-        cell.Date.setTitle(item.date, for: .normal)
-
-        // Use LSRWType enum for icons
-        let iconName: String
-        switch item.activity_type {
-        case .reading:
-            iconName = "book.pages.fill"
-        case .listening:
-            iconName = "headphones"
-        case .writing:
-            iconName = "pencil.and.list.clipboard"
-        case .speaking:
-            iconName = "mic.fill"
-        }
-        cell.SkillType.setImage(UIImage(systemName: iconName), for: .normal)
-
-        cell.TakeSkillBtn.tag = indexPath.row
-        cell.TakeSkillBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
+        cell.configure(with: item)
+        cell.startBtn.tag = indexPath.row
+        cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
         
         return cell
     }
-    
+  
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -159,7 +137,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
                 ($0.title ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.description ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.subject ?? "").lowercased().contains(searchText.lowercased()) ||
-                $0.activity_type.displayName.lowercased().contains(searchText.lowercased())
+                ($0.activity_type?.displayName.lowercased().contains(searchText.lowercased()) ?? false)
             }
         }
         tv.reloadData()
@@ -194,7 +172,6 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     }
 }
 
-
-class LsrwListShowGesture : UITapGestureRecognizer {
-    var getSkillId : String!
+class LsrwListShowGesture: UITapGestureRecognizer {
+    var getSkillId: String!
 }

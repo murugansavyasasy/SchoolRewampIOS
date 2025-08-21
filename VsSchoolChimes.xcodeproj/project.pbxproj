@@ -310,6 +310,8 @@
 		8451ECFA2E25076300D6DBB4 /* ViewProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451ECF72E25076300D6DBB4 /* ViewProgressVC.swift */; };
 		845988412DD61382007CDB23 /* EventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845988402DD61382007CDB23 /* EventTVC.xib */; };
 		845988422DD61382007CDB23 /* EventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459883F2DD61382007CDB23 /* EventTVC.swift */; };
+		845CAC882E54B06C000FA540 /* LSRWSubmisionListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845CAC872E54B06C000FA540 /* LSRWSubmisionListVC.xib */; };
+		845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		845F21752E45C0DD0078AF69 /* AssignmentPriview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F21732E45C0DD0078AF69 /* AssignmentPriview.swift */; };
 		845F21762E45C0DD0078AF69 /* AssignmentPriview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F21742E45C0DD0078AF69 /* AssignmentPriview.xib */; };
 		845F21792E45C2660078AF69 /* AssignmentDetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F21772E45C2660078AF69 /* AssignmentDetailTVC.swift */; };
@@ -1153,6 +1155,8 @@
 		8451ECF82E25076300D6DBB4 /* ViewProgressVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewProgressVC.xib; sourceTree = "<group>"; };
 		8459883F2DD61382007CDB23 /* EventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTVC.swift; sourceTree = "<group>"; };
 		845988402DD61382007CDB23 /* EventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTVC.xib; sourceTree = "<group>"; };
+		845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWSubmisionListVC.swift; sourceTree = "<group>"; };
+		845CAC872E54B06C000FA540 /* LSRWSubmisionListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWSubmisionListVC.xib; sourceTree = "<group>"; };
 		845F21732E45C0DD0078AF69 /* AssignmentPriview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentPriview.swift; sourceTree = "<group>"; };
 		845F21742E45C0DD0078AF69 /* AssignmentPriview.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentPriview.xib; sourceTree = "<group>"; };
 		845F21772E45C2660078AF69 /* AssignmentDetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentDetailTVC.swift; sourceTree = "<group>"; };
@@ -1881,6 +1885,8 @@
 				846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */,
 				84E5A25D2E53255100A71420 /* AudioCVC.swift */,
 				84E5A25E2E53255100A71420 /* AudioCVC.xib */,
+				845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */,
+				845CAC872E54B06C000FA540 /* LSRWSubmisionListVC.xib */,
 			);
 			path = Tv;
 			sourceTree = "<group>";
@@ -4352,6 +4358,7 @@
 				FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */,
 				84079FF72D15A7B000D6DF04 /* NavigationVC.xib in Resources */,
 				8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */,
+				845CAC882E54B06C000FA540 /* LSRWSubmisionListVC.xib in Resources */,
 				FA3230972D95292B0070BA51 /* ExamDetailsVC.xib in Resources */,
 				84079FF82D15A7B000D6DF04 /* LeveHistoryVC.xib in Resources */,
 				845F217D2E45D9C40078AF69 /* AttachmentCVC.xib in Resources */,
@@ -4724,6 +4731,7 @@
 				FA31A7C22D7023890069C954 /* VideoTVCell.swift in Sources */,
 				FA31A7C32D7023890069C954 /* VideoVC.swift in Sources */,
 				FAFF9DDF2D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift in Sources */,
+				845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */,
 				FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */,
 				FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */,
 				FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */,

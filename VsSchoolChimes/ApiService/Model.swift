@@ -24,7 +24,7 @@ struct CountryData : Codable{
     let base_url : String?
     let reporting_url : String?
     let flag_url : String?
-
+    
 }
 
 //MARK: Version Check API
@@ -138,8 +138,8 @@ struct ChildDetails: Codable {
 }
 
 
-                       
-                       
+
+
 
 // MARK: Validate OTP
 struct ValidateOTPSuc: Codable {
@@ -276,32 +276,32 @@ struct GetStaffDetails:Codable{
 }
 
 //MARK: Dashboard API
-    struct DashboardResponse: Codable {
-        let status: Bool?
-        let message: String?
-        let data: [DashboardData]?
-    }
-    
-    struct DashboardData: Codable {
-        let contact_details: ContactDetails?
-        let menu_details: [MenuDetail]?
-    }
-    
-    struct ContactDetails: Codable {
-        let alert_message: String?
-        let alert_content: String?
-        let alert_title: String?
-        let display_name: String?
-        let numbers: String?
-        let button_content: String?
-    }
-    
-    struct MenuDetail: Codable {
-        let id: Int?
-        let name: String?
-        let unread_count: Int?
-        let description: String?
-    }
+struct DashboardResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [DashboardData]?
+}
+
+struct DashboardData: Codable {
+    let contact_details: ContactDetails?
+    let menu_details: [MenuDetail]?
+}
+
+struct ContactDetails: Codable {
+    let alert_message: String?
+    let alert_content: String?
+    let alert_title: String?
+    let display_name: String?
+    let numbers: String?
+    let button_content: String?
+}
+
+struct MenuDetail: Codable {
+    let id: Int?
+    let name: String?
+    let unread_count: Int?
+    let description: String?
+}
 
 struct MenuResponse: Codable {
     let status: Bool?
@@ -372,7 +372,7 @@ struct Homework: Codable {
     let detail_id : String?
     let can_edit : Bool?
     let can_delete : Bool?
- 
+    
 }
 
 
@@ -510,7 +510,7 @@ struct StaffAttendance: Codable {
 struct attendanceType: Codable{
     let FD : String?
     let FH : String?
-    let SH : String?   
+    let SH : String?
 }
 
 
@@ -596,7 +596,7 @@ struct Notice: Codable {
 //MARK: Attendence
 
 struct AttendanceReportResponse: Codable {
-   
+    
     let status: Bool?
     let message: String?
     let data: [AttenenceReportData]?
@@ -1060,7 +1060,7 @@ struct CampaignPagination: Codable {
     var per_page: String?
     var prev_page_url: String?
     var to: Int?
-
+    
 }
 
 struct Campaign: Codable {
@@ -1104,9 +1104,9 @@ struct Categorys: Codable {
     var category_image: String?
     
     init(id: Int, category_name: String) {
-            self.id = id
-            self.category_name = category_name
-        }
+        self.id = id
+        self.category_name = category_name
+    }
 }
 
 
@@ -1274,17 +1274,17 @@ struct StaffMember: Codable {
     let section_id: String?
     let section_name: String?
     init() {
-           self.id = nil
-           self.name = nil
-           self.subject_id = nil
-           self.subject_name = nil
-           self.is_assigned = nil
-           self.is_class_teacher = nil
-           self.unread_count = nil
-           self.section_id = nil
-           self.section_name = nil
-       }
-
+        self.id = nil
+        self.name = nil
+        self.subject_id = nil
+        self.subject_name = nil
+        self.is_assigned = nil
+        self.is_class_teacher = nil
+        self.unread_count = nil
+        self.section_id = nil
+        self.section_name = nil
+    }
+    
 }
 
 
@@ -1310,7 +1310,7 @@ struct ChatMessage: Codable {
     let ans_file_path: [MediaFile]?
     let chat_count: Int?
     let my_question: Bool?
-
+    
     
 }
 struct MediaFile: Codable {
@@ -1364,7 +1364,7 @@ struct ManagemantMessageData: Codable {
     let order_date: String?
     let duration: Int?
     var isExpand:Bool?
-    }
+}
 //MARK: CLASS TIMETABLE
 struct TimetableResponse: Codable {
     let status: Bool?
@@ -1634,54 +1634,14 @@ struct LSRWResponse: Codable {
     let message: String?
     let data: [LSRWTask]?
 }
-//struct LSRWTask: Codable {
-//    let id: String?
-//    let title: String
-//    let description: String
-//    let sent_to: String?
-//    let activity_type: LSRWType
-//    let created_on: String?
-//    let iframe: String?
-//    let file_size: String?
-//    let thumbnail: String?
-//    let file_path: [FilePath]
-//    let submittedCount: Int?
-//    let totalCount: Int?
-//    
-//    var progressPercentage: Float {
-//        guard let submittedCount = submittedCount,
-//              let totalCount = totalCount,
-//              totalCount > 0 else { return 0 }
-//        return Float(submittedCount) / Float(totalCount)
-//    }
-//}
-//
-//enum LSRWType: String, Codable {
-//    case listening = "Listening"
-//    case speaking = "Speaking"
-//    case reading = "Reading"
-//    case writing = "Writing"
-//    
-//    var icon: String {
-//        switch self {
-//        case .listening: return "🎧"
-//        case .speaking:  return "🎤"
-//        case .reading:   return "📖"
-//        case .writing:   return "✏️"
-//        }
-//    }
-//    
-//    var displayName: String {
-//        return rawValue
-//    }
-//}
+
 struct LSRWTask: Codable {
     let id: String?
     let detail_id: String?
     let title: String?
     let description: String?
     let sent_to: String?
-    let activity_type: LSRWType
+    let activity_type: LSRWType?
     let subject: String?
     let date: String?
     let time: String?
@@ -1694,17 +1654,61 @@ struct LSRWTask: Codable {
     let file_size: String?
     let thumbnail: String?
     let file_path: [FilePath]?
-    var test:[TestQuestion]?
+    var test: [TestQuestion]?
     let submittedCount: Int?
     let totalCount: Int?
-    
-    var progressPercentage: Float {
-        guard let submittedCount = submittedCount,
-              let totalCount = totalCount,
-              totalCount > 0 else { return 0 }
-        return Float(submittedCount) / Float(totalCount)
+    let submitted_average: String?
+}
+
+enum LSRWType: Codable {
+    case listening
+    case speaking
+    case reading
+    case writing
+    case unknown(String)  // store raw value if it doesn't match
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = (try? container.decode(String.self)) ?? ""
+
+        switch rawValue.lowercased() {
+        case "listening": self = .listening
+        case "speaking":  self = .speaking
+        case "reading":   self = .reading
+        case "writing":   self = .writing
+        default:          self = .unknown(rawValue)
+        }
     }
 
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .listening: try container.encode("Listening")
+        case .speaking:  try container.encode("Speaking")
+        case .reading:   try container.encode("Reading")
+        case .writing:   try container.encode("Writing")
+        case .unknown(let value): try container.encode(value)
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .listening: return "🎧"
+        case .speaking:  return "🎤"
+        case .reading:   return "📖"
+        case .writing:   return "✏️"
+        case .unknown:   return "❓"
+        }
+    }
+
+    var displayName: String {
+        switch self {
+        case .listening: return "Listening"
+        case .speaking:  return "Speaking"
+        case .reading:   return "Reading"
+        case .writing:   return "Writing"
+        case .unknown(let value): return value
+        }
+    }
 }
 
 
@@ -1787,48 +1791,19 @@ struct QuizQuestionDataDetails : Codable{
     let correctOptionIndex : Int?
     let options : [String]?
 }
-enum LSRWType: String, Codable {
-    case listening = "Listening"
-    case speaking = "Speaking"
-    case reading = "Reading"
-    case writing = "Writing"
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        
-        // Normalize variations like "Take Reading Skill"
-        if rawValue.lowercased().contains("listen") {
-            self = .listening
-        } else if rawValue.lowercased().contains("speak") {
-            self = .speaking
-        } else if rawValue.lowercased().contains("read") {
-            self = .reading
-        } else if rawValue.lowercased().contains("write") {
-            self = .writing
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Invalid LSRW type: \(rawValue)"
-            )
-        }
-    }
-    
-    var icon: String {
-        switch self {
-        case .listening: return "🎧"
-        case .speaking:  return "🎤"
-        case .reading:   return "📖"
-        case .writing:   return "✏️"
-        }
-    }
-    
-    var displayName: String {
-        switch self {
-        case .listening: return "Listening"
-        case .speaking:  return "Speaking"
-        case .reading:   return "Reading"
-        case .writing:   return "Writing"
-        }
-    }
+
+struct SubmittedActivitiesResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SubmittedActivity]?
+}
+
+struct SubmittedActivity: Codable {
+    let id: String?
+    let header_id: String?
+    let submitted_date: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let file_path: [FilePath]?
 }

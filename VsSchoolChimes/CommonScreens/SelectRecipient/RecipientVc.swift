@@ -85,7 +85,6 @@ class RecipientVc: UIViewController{
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr{
-            
             self.homeWorkShowProps()
         }
         
@@ -184,7 +183,7 @@ class RecipientVc: UIViewController{
         guard accedmicYrEligible else { return }
         nodataFound.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-            let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz
+            let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId || Menu_id.staffSelectedMenuId == Menu_id.lsrw || Menu_id.staffSelectedMenuId == Menu_id.quiz
             
             if isAssignmentOrHomework {
                 segmentName.isHidden = true
@@ -274,7 +273,20 @@ class RecipientVc: UIViewController{
                 url: ServiceUrl.comm_attachment_send_attachment,
                 subjectId: subjectId ?? ""
             )
-            
+        case Menu_id.lsrw:
+            guard let subjectId = subjectId, !subjectId.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_section,
+                    on: self
+                )
+                return
+            }
+            sendAttachmentFlow(
+                via: comm,
+                url: ServiceUrl.lms_api_lsrw_create_skill,
+                subjectId: subjectId
+            )
         case Menu_id.event:
             sendAttachmentFlow(
                 via: comm,
@@ -411,7 +423,7 @@ class RecipientVc: UIViewController{
     
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
-        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.quiz == Menu_id.staffSelectedMenuId {
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
             if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                 getSubjectListAPI(finalSectionIds)
             }
@@ -788,7 +800,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.quiz == Menu_id.quiz {
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
                     getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
                         selectSubject.isHidden =  !getSubject.isHidden
@@ -876,7 +888,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             
             sectionIds = array_selectedId.joined(separator: ",")
             
-            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
+            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
                 sectionIds = ""
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
@@ -1000,7 +1012,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         tv.isHidden = !ishide
         noRecordLbl.isHidden = ishide
         noRecordLbl.text = message
-        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
             getSubject.isHidden = !ishide
         }
         
