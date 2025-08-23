@@ -36,6 +36,9 @@ class CreateQuizQutionVc: UIViewController, UITableViewDataSource, UITableViewDe
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuistionTvTableViewCell", for: indexPath) as? QuistionTvTableViewCell else {
             return UITableViewCell()
         }
+        
+        
+//        if indexPath.row
         cell.layoutIfNeeded()
         cell.indexPath = indexPath
         cell.delegate = self
