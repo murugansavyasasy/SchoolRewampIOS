@@ -1553,11 +1553,19 @@ struct PTMSlotResponse: Codable {
 }
 
 struct SlotDateData: Codable {
-    let date: String?
+    let today: [EventGroup]?
+    let upcoming: [EventGroup]?
+    let completed: [EventGroup]?
+}
+
+struct EventGroup: Codable {
     let details: [SlotEventDetail]?
 }
 
 struct SlotEventDetail: Codable {
+    let date: String?
+    let start_time: String?
+    let end_time: String?
     let event_name: String?
     let event_mode: String?
     let meeting_duration: Int?
@@ -1613,8 +1621,8 @@ struct ValidatedSlotData: Codable {
 }
 
 struct Slot: Codable {
-    var from_time: String?
-    var to_time: String?
+    var slot_from: String?
+    var slot_to: String?
 }
 
 struct ValidatedSlot: Codable {
