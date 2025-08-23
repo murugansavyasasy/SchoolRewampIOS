@@ -359,15 +359,19 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     // MARK: - Done Action
     @objc private func doneTapped(_ sender: UIButton) {
         let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        
+        formatter.dateFormat = "hh:mm a"  // 12-hour with leading zero + AM/PM
+        formatter.amSymbol = "am"        // force lowercase
+        formatter.pmSymbol = "pm"        // force lowercase
+
         if sender.tag == 1, let picker = fromTimePicker {
-            print("From Time: \(formatter.string(from: picker.date))")
-            fromTimeLbl.text = formatter.string(from: picker.date)
+            let formattedTime = formatter.string(from: picker.date)
+            print("From Time: \(formattedTime)")
+            fromTimeLbl.text = formattedTime
             fromTimePickerContainer?.removeFromSuperview()
         } else if sender.tag == 2, let picker = toTimePicker {
-            print("To Time: \(formatter.string(from: picker.date))")
-            toTimeLbl.text = formatter.string(from: picker.date)
+            let formattedTime = formatter.string(from: picker.date)
+            print("To Time: \(formattedTime)")
+            toTimeLbl.text = formattedTime
             toTimePickerContainer?.removeFromSuperview()
         }
     }
@@ -503,15 +507,6 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         }
         
         Check_Slots_Api_call()
-        
-        let bottomSheetVC = CreateSlotsBottomVC()
-        
-        if let sheet = bottomSheetVC.sheetPresentationController{
-            sheet.detents = [.large(), .large()] // Height options
-            sheet.prefersGrabberVisible = true    // Shows the little grab bar
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = true
-        }
-        present(bottomSheetVC, animated: true)
     }
 
     func generateSlots(
@@ -612,7 +607,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             PTMRequestStringFile.event_name: purposeTextfield.text ?? "",
             PTMRequestStringFile.from_time: fromTimeLbl.text ?? "",
             PTMRequestStringFile.to_time: toTimeLbl.text ?? "",
-            PTMRequestStringFile.duration: durationLbl.text ?? "",
+            PTMRequestStringFile.duration: 15,
             PTMRequestStringFile.event_link: meetingLinkTextfield.text ?? "",
             PTMRequestStringFile.break_time: 5,
             PTMRequestStringFile.meeting_mode: meetingMode,
@@ -635,12 +630,25 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                 switch result {
                 case .success(let success):
                     
-                    if success.status == true {
-                        
-                        
-                    }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    self.validatedData = success.data ?? []
+                    
+                    let bottomSheetVC = CreateSlotsBottomVC()
+                    
+                    if #available(iOS 15.0, *) {
+                        if let sheet = bottomSheetVC.sheetPresentationController{
+                            if #available(iOS 16.0, *) {
+                                sheet.detents = [.custom(resolver: { _ in 800 })]
+                            } else {
+                                sheet.detents = [.large()]
+                            } // Height options
+                            sheet.prefersGrabberVisible = true    // Shows the little grab bar
+                            sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                        }
+                    } else {
+                        // Fallback on earlier versions
                     }
+                    bottomSheetVC.slotData = validatedData
+                    present(bottomSheetVC, animated: true)
                     
                 case .failure(let failure):
                     CustomAlert.showAlertWithOkAction(title: "Error", message: "Something went Wrong", on: self)
@@ -674,18 +682,6 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             cell.label.textAlignment = .center
             cell.label.text = classList[indexPath.item].displayName
             
-            //let classItem = classList[indexPath.row]
-           // let detail = StdSecDetail(class_id: classItem.standardId, section_id: classItem.sectionId)
-            
-            // ✅ Highlight if this class is in selectedClasses
-//            if selectedClasses.contains(where: { $0.class_id == detail.class_id && $0.section_id == detail.section_id }) {
-//                cell.cellView.backgroundColor = .systemBlue
-//                cell.label.textColor = .white
-//            } else {
-//                cell.cellView.backgroundColor = .systemGray4
-//                cell.label.textColor = .black
-//            }
-            
             return cell
             
         } else if collectionView == breakDurationCV {
@@ -700,6 +696,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
         } else if collectionView == selectedDatesCv {
             let cell = selectedDatesCv.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCVC, for: indexPath) as! DateCVC
             cell.dateLbl.text = SelectedDates[indexPath.item].convertToTargetDateFormat()
+            cell.dateLbl.setFont(style: .body, size: FontSize.BodySize)
             cell.dateDelet.tag = indexPath.item
             cell.delegate = self
             return cell
@@ -764,7 +761,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             let availableWidth = collectionView.bounds.width - totalSpacing
             let width = floor(availableWidth / columns)
             
-            return CGSize(width: width, height: 50)
+            return CGSize(width: width, height: 60)
             
         }
         

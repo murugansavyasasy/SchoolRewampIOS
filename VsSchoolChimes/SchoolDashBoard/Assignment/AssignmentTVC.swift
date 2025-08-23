@@ -194,7 +194,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         var cats: [SubCategories] = []
         if let subject = assignment.created_date {
             cats.append(SubCategories(
-                name: "Assigned : \(formatDate(assignment.created_date ?? ""))",
+                name: "Assigned : \(assignment.created_date?.convertToTargetDateFormat() ?? "")",
                 icon: "calendar",
                 backgroundColor: .systemBlue.withAlphaComponent(0.15),
                 textColor: .systemBlue
@@ -216,7 +216,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         }
         if let endDate = assignment.end_date {
             cats.append(SubCategories(
-                name: "Deadline \(formatDate(endDate))",
+                name: "Deadline \(endDate.convertToTargetDateFormat() ?? "")",
                 icon: "calendar",
                 backgroundColor: .systemOrange.withAlphaComponent(0.15),
                 textColor: .systemOrange

@@ -24,51 +24,96 @@ class LSRWProgressCVC: UICollectionViewCell {
         outerView.setShadow()
         iconBtn.isUserInteractionEnabled = false
         iconBtn.layer.cornerRadius = 8
+        iconBtn.clipsToBounds = true
     }
     
-    func configure(with data: DashboardItem) {
+    func configure(with data: Overview) {
         titleLbl.text = data.title
         valueLbl.text = data.value
         descriptionLbl.text = data.subtitle
         
-        // Configure icon and colors based on dashboard item type
-        let iconConfig = getIconConfiguration(for: data.title)
-        iconBtn.setTitle(data.icon, for: .normal)
+        // Configure icon + colors
+        let iconConfig = getIconConfiguration(for: data.title ?? "")
+        iconBtn.setTitle(iconConfig.icon, for: .normal)
         iconBtn.backgroundColor = iconConfig.backgroundColor
-        iconBtn.tintColor = iconConfig.tintColor
+        iconBtn.setTitleColor(iconConfig.tintColor, for: .normal)
         
-        // Configure label styles
-        titleLbl.textColor = UIColor.black
+        // Label styles
+        titleLbl.textColor = .black
         titleLbl.numberOfLines = 2
-        valueLbl.textColor = UIColor.label
+        valueLbl.textColor = .label
         
-        descriptionLbl.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        descriptionLbl.textColor = UIColor.gray
+        descriptionLbl.font = .systemFont(ofSize: 12, weight: .regular)
+        descriptionLbl.textColor = .gray
         descriptionLbl.numberOfLines = 2
         
-        // Add subtle animation on configuration
+        // Subtle bounce animation
         animateConfiguration()
     }
     
-    private func getIconConfiguration(for title: String) -> (backgroundColor: UIColor, tintColor: UIColor) {
+    private func getIconConfiguration(for title: String) -> DashboardIconConfig {
         switch title {
         case "Active Tasks":
-            return (UIColor.systemBlue.withAlphaComponent(0.2), UIColor.systemBlue)
+            return DashboardIconConfig(
+                icon: "📋",
+                backgroundColor: UIColor.systemBlue.withAlphaComponent(0.2),
+                tintColor: UIColor.systemBlue
+            )
         case "Total Students":
-            return (UIColor.systemGreen.withAlphaComponent(0.2), UIColor.systemGreen)
+            return DashboardIconConfig(
+                icon: "👥",
+                backgroundColor: UIColor.systemGreen.withAlphaComponent(0.2),
+                tintColor: UIColor.systemGreen
+            )
         case "Avg. Performance":
-            return (UIColor.systemOrange.withAlphaComponent(0.2), UIColor.systemOrange)
-        case "Completed Today":
-            return (UIColor.systemPurple.withAlphaComponent(0.2), UIColor.systemPurple)
+            return DashboardIconConfig(
+                icon: "📈",
+                backgroundColor: UIColor.systemOrange.withAlphaComponent(0.2),
+                tintColor: UIColor.systemOrange
+            )
+        case "Listening":
+            return DashboardIconConfig(
+                icon: "🎧",
+                backgroundColor: UIColor.systemPurple.withAlphaComponent(0.2),
+                tintColor: UIColor.systemPurple
+            )
+        case "Speaking":
+            return DashboardIconConfig(
+                icon: "🎤",
+                backgroundColor: UIColor.systemOrange.withAlphaComponent(0.2),
+                tintColor: UIColor.systemOrange
+            )
+        case "Reading":
+            return DashboardIconConfig(
+                icon: "📖",
+                backgroundColor: UIColor.systemGreen.withAlphaComponent(0.2),
+                tintColor: UIColor.systemGreen
+            )
+        case "Writing":
+            return DashboardIconConfig(
+                icon: "✏️",
+                backgroundColor: UIColor.systemBlue.withAlphaComponent(0.2),
+                tintColor: UIColor.systemBlue
+            )
+        case "Completed Tasks":
+            return DashboardIconConfig(
+                icon: "✅",
+                backgroundColor: UIColor.systemPurple.withAlphaComponent(0.2),
+                tintColor: UIColor.systemPurple
+            )
         default:
-            return (UIColor.systemGray.withAlphaComponent(0.2), UIColor.systemGray)
+            return DashboardIconConfig(
+                icon: "❔",
+                backgroundColor: UIColor.systemGray.withAlphaComponent(0.2),
+                tintColor: UIColor.systemGray
+            )
         }
     }
     
     private func animateConfiguration() {
         transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.transform = CGAffineTransform.identity
+            self.transform = .identity
         }
     }
     
@@ -78,6 +123,13 @@ class LSRWProgressCVC: UICollectionViewCell {
         valueLbl.text = nil
         descriptionLbl.text = nil
         iconBtn.setTitle(nil, for: .normal)
-        iconBtn.backgroundColor = UIColor.clear
+        iconBtn.backgroundColor = .clear
+        iconBtn.setTitleColor(.clear, for: .normal)
     }
+}
+
+struct DashboardIconConfig {
+    let icon: String
+    let backgroundColor: UIColor
+    let tintColor: UIColor
 }

@@ -9,7 +9,31 @@ import UIKit
 import AVFoundation
 
 @available(iOS 15.0, *)
-class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate {
+class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate, EditObjectDelegate {
+    func editDta(edit: Any?) {
+        testTable.beginUpdates()
+        if let audio = edit as? AttachmentItem {
+            attachments.append(audio)
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
+            
+        } else if let updatedAttachments = edit as? [AttachmentItem] {
+            attachments = updatedAttachments
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
+        }
+        testTable.endUpdates()
+    }
+
+    
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
         imageVC.fileURL = allAttachments
@@ -20,14 +44,25 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate 
         present(imageVC, animated: true)
     }
     
-    func backtohome(type:String){
-        if type == "Recording"{
-            captions += [.record]
+    func backtohome(type: String) {
+        testTable.beginUpdates()
+        
+        if type == "Recording" {
+            if !captions.contains(.record) {
+                captions.append(.record)
+                let indexPath = IndexPath(row: captions.count - 1, section: 1)
+                testTable.insertRows(at: [indexPath], with: .fade)
+            }
         }else{
-            captions.removeAll { $0 == .record }
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
         }
-        testTable.reloadSections(IndexSet(integer: 1), with: .automatic)
+        testTable.endUpdates()
     }
+
     
     // MARK: - IBOutlets
     @IBOutlet weak var testTable: UITableView!
@@ -35,12 +70,11 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate 
     // MARK: - Properties
     var lsrw: LSRWTask?
     private var captions: [CaptionType] = []
-    
+    var attachments: [AttachmentItem] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptions()
         setupTableView()
-        testTable.sectionHeaderTopPadding = 0
     }
     
     // MARK: - Setup
@@ -65,8 +99,6 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate 
                 print("unkown")
             }
         }
-        // Always insert task first
-        captions.insert(.task, at: 0)
     }
     
     private func setupTableView() {
@@ -75,7 +107,6 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate 
             "LSWTaskTVC", "AudioPlayerTVC"
         ]
         testTable.register(SubmitFooterCell.self, forCellReuseIdentifier: SubmitFooterCell.identifier)
-
         nibs.forEach { testTable.register(UINib(nibName: $0, bundle: nil), forCellReuseIdentifier: $0) }
         
         testTable.delegate = self
@@ -155,11 +186,14 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             case .addAttachment:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AddAttachmentTVC", for: indexPath) as! AddAttachmentTVC
                 cell.delegate = self
+                cell.Adddelegate = self
+                cell.config(attachments)
                 return cell
                 
             case .record:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RecorderTVC", for: indexPath) as! RecorderTVC
                 cell.recoderTime.text = "00:00"
+                cell.delegate = self
                 return cell
                 
             default:
@@ -170,6 +204,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: SubmitFooterCell.identifier, for: indexPath) as! SubmitFooterCell
             cell.submitButton.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
             cell.contentView.backgroundColor = .clear
+            cell.backgroundColor = .clear
             return cell
             
         default:
@@ -179,7 +214,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+   
   
     @objc private func submitTapped() {
         print("✅ Submit button pressed")
