@@ -11,10 +11,28 @@ import AVFoundation
 @available(iOS 15.0, *)
 class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate, EditObjectDelegate {
     func editDta(edit: Any?) {
-        if let audio = edit{
-            print(audio)
+        testTable.beginUpdates()
+        if let audio = edit as? AttachmentItem {
+            attachments.append(audio)
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
+            
+        } else if let updatedAttachments = edit as? [AttachmentItem] {
+            attachments = updatedAttachments
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
         }
+        testTable.endUpdates()
     }
+
     
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
@@ -35,14 +53,13 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
                 let indexPath = IndexPath(row: captions.count - 1, section: 1)
                 testTable.insertRows(at: [indexPath], with: .fade)
             }
-        } else {
+        }else{
             if let index = captions.firstIndex(of: .record) {
                 captions.remove(at: index)
                 let indexPath = IndexPath(row: index, section: 1)
                 testTable.deleteRows(at: [indexPath], with: .fade)
             }
         }
-        
         testTable.endUpdates()
     }
 
@@ -168,8 +185,9 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 
             case .addAttachment:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AddAttachmentTVC", for: indexPath) as! AddAttachmentTVC
-                print(cell.attachments)
                 cell.delegate = self
+                cell.Adddelegate = self
+                cell.config(attachments)
                 return cell
                 
             case .record:

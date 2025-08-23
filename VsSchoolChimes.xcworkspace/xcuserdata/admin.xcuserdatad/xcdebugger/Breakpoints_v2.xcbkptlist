@@ -324,36 +324,6 @@
             endingLineNumber = "337"
             landmarkName = "AudioManager"
             landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "0B6F2456-33D2-479E-BDAB-74C383DD91F4 - b4ab31e86955c7d8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "School_Chimes.AudioManager.checkRecordPermission(completion: (Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/LSRW/Tv/RecorderTVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "337"
-                  endingLineNumber = "337">
-               </Location>
-               <Location
-                  uuid = "0B6F2456-33D2-479E-BDAB-74C383DD91F4 - b4ab31e86955c7d8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "School_Chimes.AudioManager.checkRecordPermission(completion: (Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/LSRW/Tv/RecorderTVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "337"
-                  endingLineNumber = "337">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

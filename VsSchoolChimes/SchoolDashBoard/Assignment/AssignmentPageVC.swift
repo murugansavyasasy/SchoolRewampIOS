@@ -310,10 +310,10 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
             self.searcchBtn.isHidden = index == 0
-            self.createLbl.backgroundColor = index == 0 ? .blue : .clear
-            self.reportsLb.backgroundColor = index == 0 ? .clear : .blue
-            self.reportsBtn.tintColor = index == 0 ? .black : .blue
-            self.createBtn.tintColor = index == 1 ? .black : .blue
+            self.createLbl.backgroundColor = index == 0 ? UIColor.parentClr : .clear
+            self.reportsLb.backgroundColor = index == 0 ? .clear : UIColor.parentClr
+            self.reportsBtn.tintColor = index == 0 ? .black : UIColor.parentClr
+            self.createBtn.tintColor = index == 1 ? .black : UIColor.parentClr
         }
     }
 

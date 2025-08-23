@@ -1629,12 +1629,31 @@ struct StdSecDetail: Codable {
     var section_id: String?
 }
 
-struct LSRWResponse: Codable {
+struct LSRWReportResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [LSRWData]?
+}
+struct LSRWListResponse: Codable {
     let status: Bool?
     let message: String?
     let data: [LSRWTask]?
 }
+// MARK: - Top level "data"
+struct LSRWData: Codable {
+    let overview: [Overview]?
+    let active: [LSRWTask]?
+    let completed: [LSRWTask]?
+}
 
+// MARK: - Overview
+struct Overview: Codable {
+    let title: String?
+    let value: String?
+    let subtitle: String?
+}
+
+// MARK: - Task
 struct LSRWTask: Codable {
     let id: String?
     let detail_id: String?
@@ -1660,12 +1679,14 @@ struct LSRWTask: Codable {
     let submitted_average: String?
 }
 
+// MARK: - Enum for activity_type
 enum LSRWType: Codable {
     case listening
     case speaking
     case reading
     case writing
     case unknown(String)  // store raw value if it doesn't match
+
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = (try? container.decode(String.self)) ?? ""
@@ -1710,6 +1731,7 @@ enum LSRWType: Codable {
         }
     }
 }
+
 
 
 struct notificationSuc : Codable{
