@@ -24,21 +24,35 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zCe-PW-shx">
-                            <rect key="frame" x="0.0" y="50" width="393" height="768"/>
+                            <rect key="frame" x="0.0" y="50" width="393" height="688"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T88-ew-TNt">
+                            <rect key="frame" x="30" y="758" width="333" height="40"/>
+                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="h4o-Ft-mia"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Create Meeting">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="zCe-PW-shx" secondAttribute="trailing" id="9mq-DE-ilx"/>
+                        <constraint firstAttribute="trailing" secondItem="T88-ew-TNt" secondAttribute="trailing" constant="30" id="aCz-oY-vwy"/>
                         <constraint firstItem="zCe-PW-shx" firstAttribute="top" secondItem="aVJ-wv-4t0" secondAttribute="top" constant="50" id="cmY-kh-FP5"/>
+                        <constraint firstItem="T88-ew-TNt" firstAttribute="top" secondItem="zCe-PW-shx" secondAttribute="bottom" constant="20" id="hCJ-X6-zA4"/>
+                        <constraint firstItem="T88-ew-TNt" firstAttribute="leading" secondItem="aVJ-wv-4t0" secondAttribute="leading" constant="30" id="kvA-Yx-INN"/>
                         <constraint firstItem="zCe-PW-shx" firstAttribute="leading" secondItem="aVJ-wv-4t0" secondAttribute="leading" id="okX-Hi-8Gd"/>
-                        <constraint firstAttribute="bottom" secondItem="zCe-PW-shx" secondAttribute="bottom" id="uWh-zL-KLV"/>
+                        <constraint firstAttribute="bottom" secondItem="T88-ew-TNt" secondAttribute="bottom" constant="20" id="sjY-qB-8SU"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemGray6Color"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="aVJ-wv-4t0" secondAttribute="bottom" id="BfP-56-ww6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="aVJ-wv-4t0" secondAttribute="trailing" id="aMZ-sP-E1m"/>
@@ -49,8 +63,8 @@
         </view>
     </objects>
     <resources>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

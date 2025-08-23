@@ -12,7 +12,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     
-    var slotData: SlotDateData?
+    var slotData: SlotEventDetail?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : slotData?.details?.first?.slots?.count ?? 0
+        return section == 0 ? 1 : slotData?.slots?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -41,17 +41,17 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
             let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDataTV", for: indexPath) as! MeetingDataTV
             
             cell.dateLbl.text = slotData?.date
-            cell.meetingNameLbl.text = slotData?.details?.first?.event_name
-            cell.durationLbl.text = String(slotData?.details?.first?.meeting_duration ?? 0) + " minutes"
-            cell.modeLbl.text = slotData?.details?.first?.event_mode
-            cell.JoinBtn.isHidden = slotData?.details?.first?.event_mode == "Online" ? false : true
-            cell.TimeLbl.text = (slotData?.details?.first?.slots?.first?.from_time ?? "") + " - " + (slotData?.details?.first?.slots?.last?.to_time ?? "")
+            cell.meetingNameLbl.text = slotData?.event_name
+            cell.durationLbl.text = String(slotData?.meeting_duration ?? 0) + " minutes"
+            cell.modeLbl.text = slotData?.event_mode
+            cell.JoinBtn.isHidden = slotData?.event_mode == "Online" ? false : true
+            cell.TimeLbl.text = (slotData?.start_time ?? "") + " - " + (slotData?.end_time ?? "")
             
             return cell
         }else {
                 let cell = tv.dequeueReusableCell(withIdentifier: "SlotListTV", for: indexPath) as! SlotListTV
             
-            let slot = slotData?.details?.first?.slots?[indexPath.row]
+            let slot = slotData?.slots?[indexPath.row]
             
             
             if slot?.is_booked == 1 {
