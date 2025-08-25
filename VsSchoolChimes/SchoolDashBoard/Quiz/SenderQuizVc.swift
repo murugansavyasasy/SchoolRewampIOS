@@ -16,6 +16,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
+    var selectNotice: SelectNotice?
     override func viewDidLoad() {
         super.viewDidLoad()
         fullView.layer.cornerRadius = 10
@@ -61,15 +62,15 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         ]
         
         
-//        let vc = RecipientVc(nibName: nil, bundle: nil)
-//        vc.ScreenType = Menu_id.event
-//        vc.Common_request_params = params
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-        
-        let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        vc.ScreenType = Menu_id.event
+        vc.Common_request_params = params
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+        
+//        let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
         
     }
    

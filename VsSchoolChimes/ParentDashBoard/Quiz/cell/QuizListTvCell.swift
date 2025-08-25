@@ -6,9 +6,14 @@
 //
 
 import UIKit
-
+protocol addQuestionAndSubmitedListDelegate {
+    
+    func addQuestionAndSubmitedList(index : Int)
+}
 class QuizListTvCell: UITableViewCell {
     
+    @IBOutlet weak var addQuestionBtnName: UIButton!
+    @IBOutlet weak var submittedListBtnName: UIButton!
     @IBOutlet weak var postedByLbl: UILabel!
     @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var discretiponsLbl: UILabel!
@@ -17,14 +22,9 @@ class QuizListTvCell: UITableViewCell {
     @IBOutlet weak var strtTimeLbl: UILabel!
     @IBOutlet weak var exameDateLbl: UILabel!
     @IBOutlet weak var DeafultimageView: UIImageView!
-    //    @IBOutlet weak var LevelView: UIView!
     @IBOutlet weak var CellView: UIView!
-//    @IBOutlet weak var TitleLbl: UILabel!
-//    @IBOutlet weak var SubjectLbl: UILabel!
-//    @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var PlayBtn: UIButton!
-//    @IBOutlet weak var LevelLbl: UILabel!
-//    
+    var delegate : addQuestionAndSubmitedListDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         CellView.layer.cornerRadius = 10
@@ -48,6 +48,13 @@ class QuizListTvCell: UITableViewCell {
 //        PlayBtn.applyRightButton()
     }
 
+    @IBAction func addQestBtn(_ sender: UIButton) {
+        
+        delegate?.addQuestionAndSubmitedList(index: sender.tag)
+    }
+    
+    @IBAction func submitedList(_ sender: UIButton) {
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

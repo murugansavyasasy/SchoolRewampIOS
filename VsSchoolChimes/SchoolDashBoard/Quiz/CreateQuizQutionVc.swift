@@ -8,22 +8,19 @@
 import UIKit
 extension CreateQuizQutionVc: QuestionCellDelegate {
     func addAnotherCell(at indexPath: IndexPath) {
-        questions.insert(
-            QuestionModel(chapter: "", marks: "", optionA: "", optionB: "", optionC: "", optionD: "", question: ""),
-            at: indexPath.row + 1
-        )
-        tv.reloadData()
-    }
-
-    
-    func updateQuestion(at indexPath: IndexPath, model: QuestionModel) {
-        questions[indexPath.row] = model
-    }
-    func removeCell(at indexPath: IndexPath) {
-           guard questions.count > 1 else { return } // keep at least one cell
-           questions.remove(at: indexPath.row)
-        tv.reloadData()
-       }
+            questions.insert(QuizQuestiondata(), at: indexPath.row + 1)
+            tv.reloadData()
+        }
+        
+        func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata) {
+            questions[indexPath.row] = model
+        }
+        
+        func removeCell(at indexPath: IndexPath) {
+            guard questions.count > 1 else { return }
+            questions.remove(at: indexPath.row)
+            tv.reloadData()
+        }
 }
 class CreateQuizQutionVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,14 +33,15 @@ class CreateQuizQutionVc: UIViewController, UITableViewDataSource, UITableViewDe
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuistionTvTableViewCell", for: indexPath) as? QuistionTvTableViewCell else {
             return UITableViewCell()
         }
-        
-        
-//        if indexPath.row
         cell.layoutIfNeeded()
-        cell.indexPath = indexPath
-        cell.delegate = self
-        let isLastCell = (indexPath.row == questions.count - 1)
-        cell.configureCell(isLast: isLastCell)
+       
+        let model = questions[indexPath.row]
+           let isLastCell = (indexPath.row == questions.count - 1)
+           
+           cell.indexPath = indexPath
+           cell.delegate = self
+           cell.configureCell(with: model, isLast: isLastCell)
+        
         
         return cell
     }
@@ -53,8 +51,10 @@ class CreateQuizQutionVc: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     @IBOutlet weak var tv: UITableView!
-    var questions: [QuestionModel] = [QuestionModel(chapter: "", marks: "", optionA: "", optionB: "", optionC: "", optionD: "", question: "")]
+//    var questions: [QuestionModel] = [QuestionModel(chapter: "", marks: "", optionA: "", optionB: "", optionC: "", optionD: "", question: "")]
     let staffDetails = UserDefaultFileManager.get_staff_Details()
+    var id  : String?
+    var questions: [QuizQuestiondata] = [QuizQuestiondata()]
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -64,7 +64,7 @@ class CreateQuizQutionVc: UIViewController, UITableViewDataSource, UITableViewDe
                 forCellReuseIdentifier: "QuistionTvTableViewCell")
         tv.dataSource = self
         tv.delegate = self
-        tv.reloadData()
+        addQuestion(id:id ?? "" )
     }
 
     @objc private func keyboardWillShow(_ notification: Notification) {
@@ -84,47 +84,32 @@ class CreateQuizQutionVc: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
-     func addQuestion() {
+    func addQuestion(id :String) {
          
 
-//         APIService.shared.makeApi(
-//             url: ServiceUrl.recipient_get_standards,
-//             parameters: ["quiz_id": "questions" : [] ,],
-//             type: ApitTypeSringFile.POST,
-//             token: staffDetails?.access_token ?? ""
-//         ) { [weak self] (result: Result<GetStandardsSuc, Error>) in
-//             guard let self = self else { return }
-//             DispatchQueue.main.async {
-//                 switch result {
-//                 case .success(let res):
-//                     guard res.status == true else {
-////                         self.handleNoData(message: res.message ?? "No data")
-//                         return
-//                     }
-//
-////                     self.standardDetails = res.data
-////                     self.standerdList = res.data?.compactMap { $0.name } ?? []
-////
-////                     if let first = res.data?.first {
-////                         self.sectionsDetails = first.sections
-////                         self.sectionList = first.sections?.compactMap { $0.name } ?? []
-////                         self.sectionId = first.sections?.first?.id
-////                         self.StandardLbl.text = first.name
-////                         self.SectionLbl.text = first.sections?.first?.name
-////                         self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
-////                     }
-////
-////                     self.dropDownStack.isHidden = false
-////                     self.searchBar.isHidden = true
-////                     self.nodataFoundLbl.isHidden = true
-////                     self.noDataFound.isHidden = true
-//                 case .failure(let err):
-////                     self.handleNoData(message: err.localizedDescription)
-//                 }
-//             }
-//         }
-        
-    }
+         APIService.shared.makeApi(
+             url: ServiceUrl.quiz_questions_report,
+             parameters: ["id": id ],
+             type: ApitTypeSringFile.GET,
+             token: staffDetails?.access_token ?? ""
+         ) { [weak self] (result: Result<QuizaddQuestionSuc, Error>) in
+                     guard let self = self else { return }
+                     DispatchQueue.main.async {
+                         switch result {
+                         case .success(let res):
+                             if res.status == true, let data = res.data, !data.isEmpty {
+                                 self.questions = data   // use API data
+                             } else {
+                                 self.questions = [QuizQuestiondata()] // fallback to one empty
+                             }
+                             self.tv.reloadData()
+                         case .failure:
+                             self.questions = [QuizQuestiondata()] // fallback
+                             self.tv.reloadData()
+                         }
+                     }
+                 }
+             }
     
     
    

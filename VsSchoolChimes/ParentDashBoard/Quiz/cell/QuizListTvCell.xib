@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,29 +36,59 @@
                                             </imageView>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jgW-Im-RnA">
-                                        <rect key="frame" x="10" y="237.33333333333331" width="258" height="127.66666666666669"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="jgW-Im-RnA">
+                                        <rect key="frame" x="10" y="205.33333333333337" width="258" height="137.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Sample Quiz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNO-UG-M9B">
-                                                <rect key="frame" x="0.0" y="0.0" width="258" height="57.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="258" height="24"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Testing purpose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0Y-KB-GYS">
-                                                <rect key="frame" x="0.0" y="62.33333333333335" width="258" height="19.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="31" width="258" height="19.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Tamil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJm-Op-J5b">
-                                                <rect key="frame" x="0.0" y="86.666666666666657" width="258" height="18"/>
+                                                <rect key="frame" x="0.0" y="57.333333333333343" width="258" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nCv-AM-CqV">
+                                                <rect key="frame" x="0.0" y="82.333333333333343" width="258" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZb-YY-mAr">
+                                                        <rect key="frame" x="0.0" y="0.0" width="119" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="anJ-xo-AcC"/>
+                                                        </constraints>
+                                                        <color key="tintColor" systemColor="systemGreenColor"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="filled" title="Add Question">
+                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleFootnote"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="addQestBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YFn-dy-m6T"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAX-GK-DGn">
+                                                        <rect key="frame" x="139" y="0.0" width="119" height="30"/>
+                                                        <color key="tintColor" name="pending"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="filled" title="Submit List">
+                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleFootnote"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="submitedList:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="87m-mr-UQg"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Posted by : SaranRaj" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUI-rt-sn3">
-                                                <rect key="frame" x="0.0" y="109.66666666666666" width="258" height="18"/>
+                                                <rect key="frame" x="0.0" y="119.33333333333334" width="258" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -79,22 +110,22 @@
                                         </state>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="d9j-65-dmb">
-                                        <rect key="frame" x="10" y="180" width="175.33333333333334" height="20.333333333333343"/>
+                                        <rect key="frame" x="10" y="180" width="175.33333333333334" height="10.666666666666657"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Exam date 13,oct 2000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w1d-2C-ICZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="175.33333333333334" height="20.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="175.33333333333334" height="10.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start On : 11:00 AM " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v98-nk-f4o">
-                                                <rect key="frame" x="0.0" y="20.333333333333343" width="175.33333333333334" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="10.666666666666657" width="175.33333333333334" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End On : 11:00 AM " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuK-By-aI3">
-                                                <rect key="frame" x="0.0" y="20.333333333333343" width="175.33333333333334" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="10.666666666666657" width="175.33333333333334" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -128,8 +159,8 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="YYd-ft-7iG" secondAttribute="bottom" constant="10" id="Ogf-hj-N2s"/>
                     <constraint firstItem="YYd-ft-7iG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="YPe-Nw-v7h"/>
+                    <constraint firstAttribute="bottom" secondItem="YYd-ft-7iG" secondAttribute="bottom" constant="10" id="ktA-KN-vYd"/>
                     <constraint firstItem="YYd-ft-7iG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="xHV-Rq-HRD"/>
                     <constraint firstAttribute="trailing" secondItem="YYd-ft-7iG" secondAttribute="trailing" constant="5" id="xtU-Bh-2g9"/>
                 </constraints>
@@ -141,11 +172,13 @@
                 <outlet property="DeafultimageView" destination="PVt-vf-ryn" id="3OX-U1-7LX"/>
                 <outlet property="EndTimeLbl" destination="uuK-By-aI3" id="hdt-E6-eSA"/>
                 <outlet property="PlayBtn" destination="oCi-eC-PnL" id="WPG-vf-ThW"/>
+                <outlet property="addQuestionBtnName" destination="NZb-YY-mAr" id="HUL-cD-bkN"/>
                 <outlet property="discretiponsLbl" destination="R0Y-KB-GYS" id="EHJ-Wh-cNG"/>
                 <outlet property="exameDateLbl" destination="w1d-2C-ICZ" id="d5m-Xg-t3h"/>
                 <outlet property="postedByLbl" destination="FUI-rt-sn3" id="ds5-y0-JHq"/>
                 <outlet property="strtTimeLbl" destination="v98-nk-f4o" id="Cck-w2-w1b"/>
                 <outlet property="subjectLbl" destination="NJm-Op-J5b" id="qKF-Mz-bw1"/>
+                <outlet property="submittedListBtnName" destination="TAX-GK-DGn" id="Sbd-gy-2Nv"/>
                 <outlet property="titleLbl" destination="HNO-UG-M9B" id="a3W-Ik-KWV"/>
             </connections>
             <point key="canvasLocation" x="119.08396946564885" y="118.66197183098592"/>
@@ -154,11 +187,17 @@
     <resources>
         <image name="Quiz1" width="2048" height="2048"/>
         <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="pending">
+            <color red="0.94900000095367432" green="0.57599997520446777" blue="0.22400000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

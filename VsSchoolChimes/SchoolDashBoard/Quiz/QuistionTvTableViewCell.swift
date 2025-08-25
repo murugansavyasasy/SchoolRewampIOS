@@ -9,7 +9,7 @@ import UIKit
 import DropDown
 protocol QuestionCellDelegate: AnyObject {
     func addAnotherCell(at indexPath: IndexPath)
-    func updateQuestion(at indexPath: IndexPath, model: QuestionModel)
+    func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata)
     func removeCell(at indexPath: IndexPath)
 }
 
@@ -163,17 +163,42 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 }
             }
         }
-    func captureModel() -> QuestionModel {
-        return QuestionModel(
-            chapter: ChapterTxtFld.text ?? "",
-            marks: markTxtFild.text ?? "",
-            optionA: opATxtView.text ?? "",
-            optionB: opBTxtView.text ?? "",
-            optionC: opCTxtView.text ?? "",
-            optionD: opDTxtView.text ?? "",
-            question: questionTxtView.text ?? ""
-        )
-    }
+    func configureCell(with model: QuizQuestiondata, isLast: Bool) {
+            // Fill values if API data available
+            ChapterTxtFld.text = model.chapter
+            markTxtFild.text   = model.marks
+            opATxtView.text    = model.optionA.isEmpty ? "Enter Option A" : model.optionA
+            opBTxtView.text    = model.optionB.isEmpty ? "Enter Option B" : model.optionB
+            opCTxtView.text    = model.optionC.isEmpty ? "Enter Option C" : model.optionC
+            opDTxtView.text    = model.optionD.isEmpty ? "Enter Option D" : model.optionD
+            questionTxtView.text = model.question.isEmpty ? "Enter Question" : model.question
+            correctAnsLbl.text = model.correctAnswer ?? "Select"
+            
+            // Placeholder color handle
+            [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
+                if tv?.text?.hasPrefix("Enter") == true {
+                    tv?.textColor = .lightGray
+                } else {
+                    tv?.textColor = .label
+                }
+            }
+            
+            // Show "Add Another" only if last cell and it's new question (id == nil)
+            addAnotherName.isHidden = !(isLast && model.id == nil)
+        }
+        
+        func captureModel() -> QuizQuestiondata {
+            return QuizQuestiondata(
+                chapter: ChapterTxtFld.text ?? "",
+                question: questionTxtView.text ?? "",
+                optionA: opATxtView.text ?? "",
+                optionB: opBTxtView.text ?? "",
+                optionC: opCTxtView.text ?? "",
+                optionD: opDTxtView.text ?? "",
+                marks: markTxtFild.text ?? "",
+                correctAnswer: correctAnsLbl.text
+            )
+        }
     func textViewDidChange(_ textView: UITextView) {
         
         if let index = indexPath {
