@@ -141,9 +141,13 @@ struct ServiceUrl{
     static let dashboard_notifications = "dashboard/api/dashboard/notifications"
     static let dashboard_delete_notification = "dashboard/api/dashboard/delete-notification"
     static let quiz_exam_list = "lms/api/quiz/quiz-exam-list"
+    static let quiz_report = "lms/api/quiz/report"
     static let quiz_get_questions = "lms/api/quiz/get-questions"
     static let quiz_create_quiz = "lms/api/quiz/create-quiz"
+    static let quiz_add_question = "lms/api/quiz/add-question"
     static let lms_api_lsrw_skills_report = "lms/api/lsrw/skills-report"
+    static let quiz_questions_report = "lms/api/quiz/questions-report"
+
     static let lms_api_lsrw_remark = "lms/api/lsrw/remark"
     static let lms_api_lsrw_submission_list = "lms/api/lsrw/submission-list"
     static let lms_api_lsrw_my_submissions = "lms/api/lsrw/my-submissions"

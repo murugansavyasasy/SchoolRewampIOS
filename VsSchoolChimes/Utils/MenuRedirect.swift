@@ -289,7 +289,11 @@ class MenuRedirectHandler {
         
     }
     func senderQuiz(from viewController: UIViewController) {
-        let vc = SenderQuizVc(nibName: nil, bundle: nil)
+        
+        let vc = QuistionPagenationVc(nibName: nil, bundle: nil)
+        vc.page1 = SenderQuizVc(nibName: nil, bundle: nil)
+        vc.page2 = ReportsQuizVc(nibName: nil, bundle: nil)
+//        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         

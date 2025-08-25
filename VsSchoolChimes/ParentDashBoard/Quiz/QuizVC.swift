@@ -29,6 +29,7 @@ class QuizVC: UIViewController {
     var incorrectAnswers = ""
     var childDetails = UserDefaultFileManager.get_child_Details()
     let images = ["Quiz1", "Quiz2", "Quiz3"]
+    var stausType   = "1"
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -55,7 +56,7 @@ class QuizVC: UIViewController {
     func Get_Quiz() {
        
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: ["type" : "2","status_type" : "1"], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: ["type" : "2","status_type" : stausType], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
                 result: Result<QuizListSuc,
                 Error>
             ) in
@@ -144,6 +145,7 @@ class QuizVC: UIViewController {
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
         id = 0
+        stausType = "1"
         tv.dataSource = self
         tv.reloadData()
     }
@@ -157,7 +159,8 @@ class QuizVC: UIViewController {
         IncorrectAnswerLbl.isHidden = false
         CorrectAnswerLbl.isHidden = false
         id = 1
-        tv.reloadData()
+        stausType = "2"
+        
     }
     
     @available(iOS 14.0, *)
@@ -172,46 +175,44 @@ class QuizVC: UIViewController {
 //MARK: Tableview Delegate Functions
 extension QuizVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if id == 1 {
-            return questions.count
-        }else{
+      
             return get_QuizDetails.count
-        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if id == 1 {
-            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
-
-            // Set the question text
-            cell.QuestionLbl.text = String(indexPath.row+1) + ". " + questions[indexPath.row].text
-
-            // Reset button colors to a default state (e.g., .clear or another default color)
-            for button in cell.buttons {
-                button.backgroundColor = .clear
-                button.setTitleColor(.systemBlue, for: .normal)
-                button.layer.borderWidth = 1
-                button.layer.borderColor = UIColor.systemBlue.cgColor
-            }
-
-            // Configure the button titles
-            for (i, button) in cell.buttons.enumerated() {
-                button.setTitle(questions[indexPath.row].options[i], for: .normal)
-            }
-
-            // Highlight the selected and correct options
-            if selectedOption[indexPath.row] != questions[indexPath.row].correctOptionIndex {
-                cell.buttons[selectedOption[indexPath.row]].backgroundColor = .systemRed // Incorrect selection
-                cell.buttons[selectedOption[indexPath.row]].setTitleColor(.white, for: .normal)
-                cell.buttons[selectedOption[indexPath.row]].layer.borderColor = UIColor.systemRed.cgColor
-            }
-            cell.buttons[questions[indexPath.row].correctOptionIndex].backgroundColor = .systemGreen // Correct answer
-            cell.buttons[questions[indexPath.row].correctOptionIndex].setTitleColor(.white, for: .normal)
-            cell.buttons[questions[indexPath.row].correctOptionIndex].layer.borderColor = UIColor.systemGreen.cgColor
-            return cell
-
-        }else{
+//        if id == 1 {
+//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
+//
+//            // Set the question text
+//            cell.QuestionLbl.text = String(indexPath.row+1) + ". " + questions[indexPath.row].text
+//
+//            // Reset button colors to a default state (e.g., .clear or another default color)
+//            for button in cell.buttons {
+//                button.backgroundColor = .clear
+//                button.setTitleColor(.systemBlue, for: .normal)
+//                button.layer.borderWidth = 1
+//                button.layer.borderColor = UIColor.systemBlue.cgColor
+//            }
+//
+//            // Configure the button titles
+//            for (i, button) in cell.buttons.enumerated() {
+//                button.setTitle(questions[indexPath.row].options[i], for: .normal)
+//            }
+//
+//            // Highlight the selected and correct options
+//            if selectedOption[indexPath.row] != questions[indexPath.row].correctOptionIndex {
+//                cell.buttons[selectedOption[indexPath.row]].backgroundColor = .systemRed // Incorrect selection
+//                cell.buttons[selectedOption[indexPath.row]].setTitleColor(.white, for: .normal)
+//                cell.buttons[selectedOption[indexPath.row]].layer.borderColor = UIColor.systemRed.cgColor
+//            }
+//            cell.buttons[questions[indexPath.row].correctOptionIndex].backgroundColor = .systemGreen // Correct answer
+//            cell.buttons[questions[indexPath.row].correctOptionIndex].setTitleColor(.white, for: .normal)
+//            cell.buttons[questions[indexPath.row].correctOptionIndex].layer.borderColor = UIColor.systemGreen.cgColor
+//            return cell
+//
+//        }else{
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? QuizListTvCell else {
                 return UITableViewCell()
@@ -228,7 +229,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
                 get_QuizDetails[indexPath.row].SentBy ?? ""
             )
             return cell
-        }
+//        }
     }
     
     

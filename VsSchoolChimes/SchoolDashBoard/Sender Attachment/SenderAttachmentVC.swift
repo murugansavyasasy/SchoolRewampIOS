@@ -350,7 +350,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                             message: response.message,
                             on: self
                         ) { [self] in
-                            print("success")
+                           
+
+                            
                         }
                     }
                 }

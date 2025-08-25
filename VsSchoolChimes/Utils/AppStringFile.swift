@@ -233,6 +233,18 @@ class SettingStringFile{
     
 }
 
+
+class QuizListStringFile{
+    static let Chapter = "Chapter"
+    static let Question = "Question"
+    static let Option_A = "Option A"
+    static let Option_B = "Option B"
+    static let Option_C = "Option C"
+    static let Option_D = "Option D"
+    static let Correct_Ans = "Correct Ans"
+    static let Mark = "Mark"
+}
+
 class CommonStringFile{
     
     static let Search = "Search".translated()
