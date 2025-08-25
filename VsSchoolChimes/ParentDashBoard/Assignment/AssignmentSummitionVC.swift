@@ -38,18 +38,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
         }
         
     }
-    override func viewDidLayoutSubviews() {
-        
-        if !submitedList{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }else{
-            view.applyGradient(
-                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }
-    }
+
     func ReadStatusUpdate(){
         
         APIService.shared.makeApi(url: ServiceUrl.comm_api_my_submissions, parameters: ["id":id ?? ""], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [self] (result : Result<SubmissionResponse,Error>) in

@@ -9,12 +9,11 @@
 import UIKit
 
 class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    
-    @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
+
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     
     var rowIdentifier = "NewLSRWTVcell"
@@ -22,7 +21,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     var filteredTasks: [LSRWTask] = []
     var instituteId = Int()
     var studentId = String()
-    
+    var childDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,11 +30,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         searchBar.delegate = self
         searchBar.addDoneButton()
         backBtn.applyBackButton()
-        NameLbl.text = UserDefaultFileManager.get_child_Details()?.name
-        StandardLbl.text = "\(UserDefaultFileManager.get_child_Details()?.standard_name ?? "") - \(UserDefaultFileManager.get_child_Details()?.section_name ?? "")"
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        
+        backBtn.configureAsBackButton(firstLine: "\(childDetails?.name ?? "")", secondLine:"\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")")
         let formattedText = breakIntoLines(text: ReceiverMenuItems.LSRW.translated(), maxCharactersPerLine: 15)
         backBtn.setTitle(formattedText, for: .normal)
         backBtn.titleLabel?.numberOfLines = 0
@@ -104,7 +99,13 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         
         return cell
     }
-  
+    @IBAction func search(_ sender: UIButton) {
+        searchBar.becomeFirstResponder()
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar.isHidden = !sender.isSelected
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

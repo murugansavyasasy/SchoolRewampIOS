@@ -9,15 +9,22 @@ import UIKit
 
 class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegate, AssignmentDetailTVCDelegate {
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
-        
-        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-        imageVC.fileURL = allAttachments
-        imageVC.subjectName = "Event"
-        imageVC.scrollIndex = IndexPath(index:index)
-        imageVC.index = index
-        imageVC.modalPresentationStyle = .fullScreen
-        present(imageVC, animated: true)
+        let filterArray = allAttachments.filter { $0.type?.uppercased() != CommonStringFile.M4A }
+        if allAttachments[index].type?.uppercased() != CommonStringFile.M4A {
+            // Find new index inside filtered array
+            let selectedFile = allAttachments[index]
+            if let newIndex = filterArray.firstIndex(where: { $0.url == selectedFile.url }) {
+                let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+                imageVC.fileURL = filterArray
+                imageVC.subjectName = subjectName
+                imageVC.scrollIndex = IndexPath(item: newIndex, section: 0)
+                imageVC.index = newIndex
+                imageVC.modalPresentationStyle = .fullScreen
+                present(imageVC, animated: true)
+            }
+        }
     }
+
     
     @IBOutlet weak var priviewTable: UITableView!
     @IBOutlet weak var backBtn: UIButton!

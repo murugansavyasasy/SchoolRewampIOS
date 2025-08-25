@@ -264,12 +264,15 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         
         user_inputs.SelectedUrls = attachments
         user_inputs.VideoPath = selectedVideoURL
-        
+        let dateString = convertDate(dateLbl.text ?? "")
+
         let params: [String: Any] = [
             assignmentResquestStringKey.title: title,
             assignmentResquestStringKey.description: description,
+            assignmentResquestStringKey.submission_date: dateString ?? "",
             assignmentResquestStringKey.activity_type: taskTypes[selectedTaskIndex].0,
         ]
+
         
         let vc = RecipientVc(nibName: nil, bundle: nil)
         vc.ScreenType = Menu_id.homeWorkMenuId

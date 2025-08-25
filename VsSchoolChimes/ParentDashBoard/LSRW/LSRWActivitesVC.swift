@@ -35,14 +35,22 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     
     
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
-        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-        imageVC.fileURL = allAttachments
-        imageVC.subjectName = "Event"
-        imageVC.scrollIndex = IndexPath(index:index)
-        imageVC.index = index
-        imageVC.modalPresentationStyle = .fullScreen
-        present(imageVC, animated: true)
+        let filterArray = allAttachments.filter { $0.type?.uppercased() != CommonStringFile.M4A }
+        if allAttachments[index].type?.uppercased() != CommonStringFile.M4A {
+            // Find new index inside filtered array
+            let selectedFile = allAttachments[index]
+            if let newIndex = filterArray.firstIndex(where: { $0.url == selectedFile.url }) {
+                let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+                imageVC.fileURL = filterArray
+                imageVC.subjectName = subjectName
+                imageVC.scrollIndex = IndexPath(item: newIndex, section: 0) // ✅ Correct adjusted index
+                imageVC.index = newIndex
+                imageVC.modalPresentationStyle = .fullScreen
+                present(imageVC, animated: true)
+            }
+        }
     }
+
     
     func backtohome(type: String) {
         testTable.beginUpdates()
