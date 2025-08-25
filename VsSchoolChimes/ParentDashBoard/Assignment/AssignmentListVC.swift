@@ -11,10 +11,8 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
        
     }
     
-    @IBOutlet weak var calanderCollectionView: UICollectionView!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordImg: UIImageView!
-    @IBOutlet weak var monthBtn: UIButton!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
@@ -37,26 +35,12 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        monthBtn.setShadow()
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         nodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         searchview.placeholder = CommonStringFile.Search.translated()
         searchview.delegate = self
         calendarItems = getAllPastDatesIncludingTodayForLastMonth()
-        if let todayIndex = calendarItems.firstIndex(where: { Calendar.current.isDateInToday($0.date) }) {
-            selectedIndexPath = IndexPath(item: todayIndex, section: 0)
-            let selectedDate = calendarItems[todayIndex].date
-            monthBtn.setTitle(selectedDate.getMonthName(), for: .normal)
-            // Scroll to today's date
-            DispatchQueue.main.async { [weak self] in
-                self?.calanderCollectionView.scrollToItem(at: IndexPath(item: todayIndex, section: 0), at: .centeredHorizontally, animated: true)
-            }
-        }
-    
-        calanderCollectionView.delegate = self
-        calanderCollectionView.dataSource = self
-        calanderCollectionView.register(UINib(nibName: "AssignmentDateCVC", bundle: nil), forCellWithReuseIdentifier: "AssignmentDateCVC")
         searchview.searchTextField.addDoneButton()
         nodataLbl.isHidden = true
         noRecordImg.isHidden = true
@@ -244,64 +228,7 @@ extension AssignmentListVC: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 }
-import UIKit
 
-extension AssignmentListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarItems.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = calendarItems[indexPath.item]
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssignmentDateCVC", for: indexPath) as? AssignmentDateCVC else {
-            return UICollectionViewCell()
-        }
-        
-        let isSelected = indexPath == selectedIndexPath
-        cell.configure(with: item.date, isSelected: isSelected, status: item.status)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndexPath = indexPath
-        let selectedDate = calendarItems[indexPath.item].date
-        monthBtn.setTitle(selectedDate.getMonthName(), for: .normal)
-
-        collectionView.reloadData()
-           DispatchQueue.main.async {
-               self.scrollToCenter(of: indexPath, in: collectionView)
-           }
-    }
-    func scrollToCenter(of indexPath: IndexPath, in collectionView: UICollectionView) {
-        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
-        guard let attributes = layout.layoutAttributesForItem(at: indexPath) else {
-            collectionView.layoutIfNeeded()
-            if let newAttributes = layout.layoutAttributesForItem(at: indexPath) {
-                centerScrollLogic(attributes: newAttributes, collectionView: collectionView)
-            }
-            return
-        }
-
-        centerScrollLogic(attributes: attributes, collectionView: collectionView)
-    }
-
-    private func centerScrollLogic(attributes: UICollectionViewLayoutAttributes, collectionView: UICollectionView) {
-        let cellFrame = attributes.frame
-        let collectionViewWidth = collectionView.bounds.size.width
-        let targetX = cellFrame.midX - collectionViewWidth / 2
-        let maxOffsetX = collectionView.contentSize.width - collectionViewWidth
-        let finalOffsetX = max(0, min(targetX, maxOffsetX))
-
-        let targetOffset = CGPoint(x: finalOffsetX, y: 0)
-        collectionView.setContentOffset(targetOffset, animated: true)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 110)
-    }
-}
 struct AssignmentCalendar {
     var date: Date
     var status: DotStatus?

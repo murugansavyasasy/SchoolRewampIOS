@@ -72,6 +72,9 @@
             <connections>
                 <outlet property="addAttachmentView" destination="sz0-Pt-7hn" id="8XH-Rl-3yH"/>
                 <outlet property="collectionViewHeight" destination="rxV-xf-fWa" id="WEU-8p-3O7"/>
+                <outlet property="descriptionLbl" destination="Nsa-V6-iGW" id="Tih-FD-Ppn"/>
+                <outlet property="descriptionTXT" destination="YNb-nd-zlO" id="Z42-LA-rW4"/>
+                <outlet property="discriptionView" destination="P5M-qb-EC1" id="QlL-VE-cLG"/>
             </connections>
             <point key="canvasLocation" x="51.145038167938928" y="69.014084507042256"/>
         </tableViewCell>

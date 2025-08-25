@@ -128,30 +128,42 @@ class LSRWVC: UIViewController, FilterDelegate {
     
     // MARK: - FilterDelegate
     func selectedIndex(index: Int?) {
-        guard let idx = index, idx >= 0, idx < filterArray.count else {
-            filterTask = recentTasks
-            return
-        }
+        guard let idx = index, idx >= 0, idx < filterArray.count else { return }
         selectedIndex = idx
         let selectedFilter = filterArray[idx]
         
         switch selectedFilter {
         case "All":
+            // Restore all tasks (reset)
             filterTask = recentTasks
             
         case "Completed":
-            filterTask = [.completed(completedTask)]
+            updateSection(.completed(completedTask))
             
         case "Pending":
             let pending = activeTask.filter { $0.is_submitted == false }
-            filterTask = [.active(pending)]
+            updateSection(.active(pending))
             
         default:
             let filtered = activeTask.filter { $0.activity_type?.displayName == selectedFilter }
-            filterTask = [.active(filtered)]
+            updateSection(.active(filtered))
         }
         
         lsrwTable.reloadData()
+    }
+
+    // MARK: - Helper (replace only matching section)
+    private func updateSection(_ newSection: LsrwDisplaySection) {
+        filterTask = filterTask.map { section in
+            switch (section, newSection) {
+            case (.active, .active(let tasks)):
+                return .active(tasks)
+            case (.completed, .completed(let tasks)):
+                return .completed(tasks)
+            default:
+                return section
+            }
+        }
     }
     
     func navigate(index: Int?) {
@@ -159,10 +171,21 @@ class LSRWVC: UIViewController, FilterDelegate {
         
         switch index {
         case 0:
+            let vc = LSRWSubmissionVC()
+            vc.modalPresentationStyle = .fullScreen
+            vc.report = activeTask
+            vc.btnTitle = "Active Task"
+            present(vc, animated: true)
+        case 1:
             let vc = SelectedLSRWSubmissionVC()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
-            
+        case 2:
+            let vc = LSRWSubmissionVC()
+            vc.modalPresentationStyle = .fullScreen
+            vc.report = completedTask
+            vc.btnTitle = "Completed Task"
+            present(vc, animated: true)
         default:
             print("Navigate index: \(index)")
         }

@@ -95,6 +95,12 @@ class LSRWProgressCVC: UICollectionViewCell {
                 backgroundColor: UIColor.systemBlue.withAlphaComponent(0.2),
                 tintColor: UIColor.systemBlue
             )
+        case "Today Submitted":
+            return DashboardIconConfig(
+                icon: "✅",
+                backgroundColor: UIColor.systemPurple.withAlphaComponent(0.2),
+                tintColor: UIColor.systemPurple
+            )
         case "Completed Tasks":
             return DashboardIconConfig(
                 icon: "✅",

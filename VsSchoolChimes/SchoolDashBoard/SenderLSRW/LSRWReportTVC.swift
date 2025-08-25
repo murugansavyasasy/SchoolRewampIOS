@@ -59,7 +59,7 @@ extension LSRWReportTVC: UICollectionViewDelegate, UICollectionViewDataSource, U
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let newWidth = collectionView.frame.width
-        return CGSize(width: newWidth - 30, height: 230)
+        return CGSize(width: newWidth - 30, height: 250)
     }
 
 }

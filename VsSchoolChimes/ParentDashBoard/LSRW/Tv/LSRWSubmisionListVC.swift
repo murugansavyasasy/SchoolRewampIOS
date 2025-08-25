@@ -7,28 +7,42 @@
 
 import UIKit
 
+enum AttachmentSection {
+    case videos([FilePath])
+    case audios([FilePath])
+    case images([FilePath])
+}
+
 @available(iOS 15.0, *)
 class LSRWSubmisionListVC: UIViewController,
                            UICollectionViewDelegate,
                            UICollectionViewDataSource,
                            UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var remarkView: UIView!
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var percentageLbl: UILabel!
     @IBOutlet weak var lsrwCV: UICollectionView!
-    
+    @IBOutlet weak var backBtn: UIButton!
     var attachment: [FilePath]?
-    var videos: [FilePath] = []
-    var audios: [FilePath] = []
-    var images: [FilePath] = []
-    
+    var filterSection: [AttachmentSection] = []
+    var id :String?
+    var student_id :String?
+    var backTitle1:String?
+    var backTitle2:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         lsrwCV.delegate = self
         lsrwCV.dataSource = self
         slider.transform = CGAffineTransform(scaleX: 1, y: 1.5)
-        
+        if let st_id = student_id{
+            remarkView.isHidden = false
+            backBtn.configureAsBackButton(firstLine: backTitle1 ?? "", secondLine:backTitle2 ?? "")
+        }else{
+            remarkView.isHidden = true
+            backBtn.setTitle("My Submission", for: .normal)
+        }
         // Cell register
         lsrwCV.register(UINib(nibName: CellConfingName.VideoPlayerCVC, bundle: nil),
                         forCellWithReuseIdentifier: CellConfingName.VideoPlayerCVC)
@@ -42,17 +56,6 @@ class LSRWSubmisionListVC: UIViewController,
                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                         withReuseIdentifier: "SectionHeader")
         
-        // 👉 Dummy data
-        attachment = [
-            FilePath(url: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2025-04-04/5512/960x0.jpg", type: "image"),
-            FilePath(url: "https://example.com/sample2.pdf", type: "pdf"),
-            FilePath(url: "https://player.vimeo.com/video/1097487862?h=57b122eb27", type: "video"),
-            FilePath(url: "https://example.com/sample4.mp3", type: "audio"),
-            FilePath(url: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//A09E6930-B2B3-441D-94DE-58916BD39CB7.jpg", type: "image"),
-            FilePath(url: "https://example.com/sample6.mp3", type: "audio"),
-            FilePath(url: "https://player.vimeo.com/video/1097487862?h=57b122eb27", type: "video"),
-        ]
-        
         prepareAttachments()
         lsrwCV.reloadData()
         
@@ -64,16 +67,53 @@ class LSRWSubmisionListVC: UIViewController,
     }
     
     private func prepareAttachments() {
-        videos = attachment?.filter { $0.type?.lowercased() == "video" } ?? []
-        audios = attachment?.filter { $0.type?.lowercased() == "audio" } ?? []
-        images = attachment?.filter { ["image", "pdf"].contains($0.type?.lowercased() ?? "") } ?? []
+        filterSection.removeAll()
+        
+        let videos = attachment?.filter { $0.type?.lowercased() == "video" } ?? []
+        if !videos.isEmpty { filterSection.append(.videos(videos)) }
+        
+        let audios = attachment?.filter { $0.type?.lowercased() == "audio" } ?? []
+        if !audios.isEmpty { filterSection.append(.audios(audios)) }
+        
+        let images = attachment?.filter { ["image", "pdf"].contains($0.type?.lowercased() ?? "") } ?? []
+        if !images.isEmpty { filterSection.append(.images(images)) }
     }
-
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    @IBAction func updateRemark(_ sender: UIButton) {}
-    
+    @IBAction func updateRemark(_ sender: UIButton) {
+        let parms:[String:Any] = ["id":id ?? "","student_id":student_id ?? "","percentage":percentageLbl.text ?? ""]
+        remoarkLSRW(with: parms)
+    }
+    func remoarkLSRW(with parameters: [String: Any]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            APIService.shared.makeApi(
+                url: ServiceUrl.lms_api_lsrw_remark,
+                parameters: parameters,
+                type: ApitTypeSringFile.PUT,
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    DispatchQueue.main.async {
+                        CustomAlert.showAlertWithOkAction(
+                            title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: response.message,
+                            on: self
+                        ) {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                case .failure(let error):
+                    print("❌ API error: \(error.localizedDescription)")
+                    // Optionally show error alert here
+                }
+            }
+        }
+    }
     // MARK: - Slider Action
     @IBAction func sliderChanged(_ sender: UISlider) {
         let percentage = Int(sender.value)
@@ -97,7 +137,6 @@ class LSRWSubmisionListVC: UIViewController,
         }
     }
     
-    // ✅ Fixed emoji scaling
     private func emojiToImage(emoji: String, size: CGSize) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { _ in
@@ -127,46 +166,47 @@ class LSRWSubmisionListVC: UIViewController,
     
     // MARK: - CollectionView DataSource
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return filterSection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return videos.count
-        case 1: return audios.count
-        case 2: return images.count
-        default: return 0
+        switch filterSection[section] {
+        case .videos(let list): return list.count
+        case .audios(let list): return list.count
+        case .images(let list): return list.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
+        switch filterSection[indexPath.section] {
+        case .videos(let list):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.VideoPlayerCVC,
                 for: indexPath) as? VideoPlayerCVC else { return UICollectionViewCell() }
-            let file = videos[indexPath.row]
+            let file = list[indexPath.row]
             if let url = URL(string:file.url ?? "") { cell.configure(with:url, parentVC: self) }
             return cell
-        case 1:
+            
+        case .audios(let list):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "AudioCVC",
                 for: indexPath) as? AudioCVC else { return UICollectionViewCell() }
+            let file = list[indexPath.row]
+//            cell.configure(with: file)
             return cell
-        case 2:
+            
+        case .images(let list):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.ImagePdfCvCell,
                 for: indexPath) as? ImagePdfCvCell else { return UICollectionViewCell() }
-            let file = images[indexPath.row]
+            let file = list[indexPath.row]
             cell.imageView.kf.setImage(with: URL(string:file.url ?? ""))
             return cell
-        default:
-            return UICollectionViewCell()
         }
     }
     
-    // MARK: - Section Headers (Titles only)
+    // MARK: - Section Headers
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
@@ -176,8 +216,6 @@ class LSRWSubmisionListVC: UIViewController,
                 withReuseIdentifier: "SectionHeader",
                 for: indexPath
             )
-            
-            // clear old subviews
             header.subviews.forEach { $0.removeFromSuperview() }
             
             let titleLabel = UILabel(frame: CGRect(x: 16, y: 0,
@@ -186,11 +224,10 @@ class LSRWSubmisionListVC: UIViewController,
             titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
             titleLabel.textColor = .black
             
-            switch indexPath.section {
-            case 0: titleLabel.text = "📹 Videos"
-            case 1: titleLabel.text = "🎵 Audios"
-            case 2: titleLabel.text = "🖼 Images & Docs"
-            default: titleLabel.text = ""
+            switch filterSection[indexPath.section] {
+            case .videos: titleLabel.text = "📹 Videos"
+            case .audios: titleLabel.text = "🎵 Audios"
+            case .images: titleLabel.text = "🖼 Images & Docs"
             }
             
             header.addSubview(titleLabel)
@@ -214,11 +251,10 @@ class LSRWSubmisionListVC: UIViewController,
         let totalSpacing = spacing * 3
         let cellWidth = (width - totalSpacing) / 2
         
-        switch indexPath.section {
-        case 0: return CGSize(width: cellWidth, height: cellWidth)
-        case 1: return CGSize(width: collectionView.frame.width - 20, height: 60)
-        case 2: return CGSize(width: cellWidth, height: cellWidth)
-        default: return CGSize(width: cellWidth, height: cellWidth)
+        switch filterSection[indexPath.section] {
+        case .videos: return CGSize(width: cellWidth, height: cellWidth)
+        case .audios: return CGSize(width: collectionView.frame.width - 20, height: 60)
+        case .images: return CGSize(width: cellWidth, height: cellWidth)
         }
     }
     

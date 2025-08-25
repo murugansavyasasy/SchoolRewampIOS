@@ -12,8 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LSRWSubmisionListVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="backBtn" destination="w4h-BE-IiX" id="ugR-jl-T9P"/>
                 <outlet property="lsrwCV" destination="xWy-zP-QTT" id="3Cd-26-qL4"/>
                 <outlet property="percentageLbl" destination="BaB-uE-3dx" id="81Q-gm-GTw"/>
+                <outlet property="remarkView" destination="QYg-tg-tEz" id="2EQ-q7-aYP"/>
                 <outlet property="slider" destination="lix-fw-vuL" id="ArZ-Sr-tOT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,15 +25,15 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
-                    <rect key="frame" x="10" y="69" width="136" height="35"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
+                    <rect key="frame" x="10" y="69" width="363" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="JRH-1Y-hAd"/>
                     </constraints>
-                    <color key="tintColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="MySubmistion " image="chevron.left" catalog="system">
-                        <color key="titleColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -45,7 +47,7 @@
                             <rect key="frame" x="0.0" y="10" width="393" height="694"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xWy-zP-QTT">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="548.66666666666663"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="694"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aR3-1x-lSR">
                                         <size key="itemSize" width="128" height="128"/>
@@ -54,8 +56,8 @@
                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </collectionViewFlowLayout>
                                 </collectionView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYg-tg-tEz">
-                                    <rect key="frame" x="0.0" y="548.66666666666663" width="393" height="145.33333333333337"/>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYg-tg-tEz">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="145.33333333333334"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-G5-TT5">
                                             <rect key="frame" x="20" y="10.000000000000004" width="353" height="60.333333333333343"/>
@@ -70,7 +72,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lix-fw-vuL" customClass="CustomSlider" customModule="School_Chimes" customModuleProvider="target">
-                                                    <rect key="frame" x="-2" y="30.333333333333371" width="357" height="31"/>
+                                                    <rect key="frame" x="-2" y="30.333333333333343" width="357" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="HOX-ma-eHV"/>
                                                     </constraints>
@@ -81,7 +83,7 @@
                                             </subviews>
                                         </stackView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McO-oQ-Biu">
-                                            <rect key="frame" x="126.66666666666669" y="100.33333333333337" width="140" height="35"/>
+                                            <rect key="frame" x="126.66666666666669" y="100.33333333333334" width="140" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="HHT-B8-NiN"/>
                                             </constraints>
@@ -127,6 +129,7 @@
                 <constraint firstItem="vpG-AJ-hy7" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="UwB-p3-Cks"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="anq-kt-saI" secondAttribute="trailing" id="cfv-Ka-pd8"/>
                 <constraint firstItem="anq-kt-saI" firstAttribute="top" secondItem="w4h-BE-IiX" secondAttribute="bottom" constant="10" id="ecW-uq-KeX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="w4h-BE-IiX" secondAttribute="trailing" constant="20" id="gIg-th-hok"/>
                 <constraint firstItem="w4h-BE-IiX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="gmT-Lr-437"/>
             </constraints>
             <point key="canvasLocation" x="59" y="20"/>
