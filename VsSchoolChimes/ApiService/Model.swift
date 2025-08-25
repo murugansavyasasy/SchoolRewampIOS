@@ -1955,3 +1955,66 @@ struct SubmittedActivity: Codable {
     let thumbnail: String?
     let file_path: [FilePath]?
 }
+ //MARK: LSRWSUBMISION
+struct LSWSubmissionResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [LSRWStudent]?
+}
+
+struct LSRWStudent: Codable {
+    let id: String?
+    let student_id: String?
+    let student_name: String?
+    let standard: String?
+    let description: String?
+    let header_id: String?
+    let remark: String?
+    let section: String?
+    let mobile_no: String?
+    let submit_status: String?
+    let submitted_date: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let file_path: [FilePath]?
+}
+// MARK: - Main Response
+struct SkillResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [PerfomenceData]
+}
+
+// MARK: - Skill Data
+struct PerfomenceData: Codable {
+    let today_submitted: [SkillSubmission]?
+    let listening: SkillCategory?
+    let speaking: SkillCategory?
+    let reading: SkillCategory?
+    let writing: SkillCategory?
+}
+
+// MARK: - Skill Category
+struct SkillCategory: Codable {
+    let over_all_percentage: String?
+    let student_count: String?
+    let details: [SkillSubmission]?
+}
+
+// MARK: - Skill Submission
+struct SkillSubmission: Codable {
+    let id: String?
+    let title: String?
+    let description: String?
+    let activity_type: String?
+    let submitted_average: String?
+    let submission_date: String?
+    let submitted_count: Int?
+    let student_id: String?
+    let student_name: String?
+    let remark: String?
+    let std_sec: String?
+    let student_submited_on: String?
+    let is_submitted: Bool?
+}

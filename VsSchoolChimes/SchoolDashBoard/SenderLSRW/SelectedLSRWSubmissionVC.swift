@@ -8,204 +8,294 @@
 import UIKit
 import DropDown
 
-class SelectedLSRWSubmissionVC: UIViewController {
+// MARK: - Enum
+enum ReportData {
+    case filterList([Overview])
+    case monthlyReport(MonthlyReport)
+    case studentList([SkillSubmission])
+}
+
+// MARK: - ViewController
+class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     
+    // MARK: - Outlets
     @IBOutlet weak var monthLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dropDownView: UIView!
-    private var reportData: ReportData?
+    
+    // MARK: - Properties
+    private var reportData: [ReportData]?
+    private var currentData: PerfomenceData?   // ✅ store API response
     let dropDown = DropDown()
+    var monthId: Int = 1
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableCells()
-        setupDummyData()
+        
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 10
-            }
+        }
+        
         tableView.delegate = self
         tableView.dataSource = self
         dropDownView.setShadow(cornerRadius: 4)
+        
+        // Set current month in label
         let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM"   // Full month name (e.g., "August")
+        dateFormatter.dateFormat = "MMMM"
+        monthId = Calendar.current.component(.month, from: date)
         monthLbl.text = dateFormatter.string(from: date)
+        
+        // Dropdown tap gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         dropDownView.isUserInteractionEnabled = true
         dropDownView.addGestureRecognizer(tapGesture)
+        
+        getSubmission()
     }
+    
+    // MARK: - Dropdown
     @objc func viewTapped() {
-        dropDown.dataSource = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ]
+        dropDown.dataSource = Calendar.current.monthSymbols
         dropDown.anchorView = dropDownView
         dropDown.bottomOffset = CGPoint(x: 0, y: dropDown.anchorView?.plainView.bounds.height ?? 0)
-        dropDown.selectionAction = { [weak self] (_, item: String) in
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             self?.monthLbl.text = item
+            self?.monthId = index + 1
+            self?.getSubmission()
         }
         dropDown.show()
-       }
+    }
+    
     private func registerTableCells() {
         tableView.register(UINib(nibName: "LSRWReportTVC", bundle: nil), forCellReuseIdentifier: "LSRWReportTVC")
         tableView.register(UINib(nibName: "LSRWProgressTVC", bundle: nil), forCellReuseIdentifier: "LSRWProgressTVC")
         tableView.register(UINib(nibName: "LSRWPerformenceTVC", bundle: nil), forCellReuseIdentifier: "LSRWPerformenceTVC")
     }
     
-    private func setupDummyData() {
-        let filters = [
-            Overview(title: "Listening", value: "85%", subtitle: "28 students"),
-            Overview(title: "Speaking", value: "78%", subtitle: "25 students"),
-            Overview(title: "Reading", value: "92%", subtitle: "30 students"),
-            Overview(title: "Writing", value: "88%", subtitle: "27 students")
-        ]
+    // MARK: - API Call
+    func getSubmission() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.lms_api_lsrw_stats,
+            parameters: ["month_id": monthId],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<SkillResponse, Error>) in
+            switch result {
+            case .success(let response):
+                if response.status, let data = response.data.first {
+                    DispatchQueue.main.async {
+                        self?.mapResponseToReportData(data: data)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self?.reportData = nil
+                        self?.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func mapResponseToReportData(data: PerfomenceData) {
+        self.currentData = data   // ✅ Save for later (navigate)
         
-        let weeklyReports = [
-            PerformanceReport(title: "Week 1", percentage: 70),
-            PerformanceReport(title: "Week 2", percentage: 80),
-            PerformanceReport(title: "Week 3", percentage: 90),
-            PerformanceReport(title: "Week 4", percentage: 85)
-        ]
+        var newReportData: [ReportData] = []
         
-        let topPerformers = [
-            TopReport(name: "Arun Kumar", studentClass: "10", section: "A", percentage: 95.5),
-            TopReport(name: "Divya", studentClass: "10", section: "B", percentage: 93.0),
-            TopReport(name: "Rahul", studentClass: "9", section: "A", percentage: 92.5)
-        ]
+        // ✅ Weekly Reports
+        let totalWeeks = weeksInCurrentMonth()
+        var weeklyReports: [PerformanceReport] = []
+        for week in 1...totalWeeks {
+            let remarkValue = data.reading?.details?[safe: week - 1]?.remark ?? "0"
+            let percentage = Int(remarkValue.replacingOccurrences(of: "%", with: "")) ?? 0
+            weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
+        }
         
-        let students = [
-            Student(id: 1, name: "Arun Kumar", studentClass: "10"),
-            Student(id: 2, name: "Divya", studentClass: "10"),
-            Student(id: 3, name: "Rahul", studentClass: "9")
-        ]
+        // ✅ Top Performers
+        let topPerformers = data.reading?.details?.map {
+            TopReport(
+                name: $0.student_name ?? "",
+                studentClass: $0.std_sec ?? "",
+                section: "",
+                percentage: Double($0.remark?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
+            )
+        } ?? []
         
-        reportData = ReportData(
-            filterList: filters,
-            monthlyReport: MonthlyReport(weeklyReport: weeklyReports, topPerformance: topPerformers),
-            studentList: students
+        let monthlyReport = MonthlyReport(
+            weeklyReport: weeklyReports,
+            topPerformance: topPerformers
         )
         
-        tableView.reloadData()
+        // ✅ Today Submitted → Student List
+        let studentList = data.today_submitted ?? []
+        
+        // ✅ Map Categories → Overview
+        var filterArray: [Overview] = []
+        if let todaySubmitted = data.today_submitted {
+            filterArray.append(Overview(title: "Today Submitted", value: "", subtitle: "\(todaySubmitted.count) Students"))
+        }
+        if let listening = data.listening {
+            filterArray.append(Overview(title: "Listening", value: listening.over_all_percentage ?? "0%", subtitle: "\(listening.student_count ?? "0") Students"))
+        }
+        if let speaking = data.speaking {
+            filterArray.append(Overview(title: "Speaking", value: speaking.over_all_percentage ?? "0%", subtitle: "\(speaking.student_count ?? "0") Students"))
+        }
+        if let reading = data.reading {
+            filterArray.append(Overview(title: "Reading", value: reading.over_all_percentage ?? "0%", subtitle: "\(reading.student_count ?? "0") Students"))
+        }
+        if let writing = data.writing {
+            filterArray.append(Overview(title: "Writing", value: writing.over_all_percentage ?? "0%", subtitle: "\(writing.student_count ?? "0") Students"))
+        }
+        
+        newReportData.append(.filterList(filterArray))
+        newReportData.append(.monthlyReport(monthlyReport))
+        newReportData.append(.studentList(studentList))
+        
+        self.reportData = newReportData
+        self.tableView.reloadData()
     }
+    
+    // MARK: - Weeks in Current Month
+    func weeksInCurrentMonth() -> Int {
+        let calendar = Calendar.current
+        let date = Date()
+        guard let monthRange = calendar.range(of: .day, in: .month, for: date) else { return 4 }
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
+        let endOfMonth = calendar.date(byAdding: .day, value: monthRange.count - 1, to: startOfMonth)!
+        
+        let startWeek = calendar.component(.weekOfMonth, from: startOfMonth)
+        let endWeek = calendar.component(.weekOfMonth, from: endOfMonth)
+        
+        return endWeek - startWeek + 1
+    }
+    
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
+    // MARK: - FilterDelegate
+    func selectedIndex(index: Int?) {
+        navigate(index: index)
+    }
+    
+    func navigate(index: Int?) {
+        guard let index = index, let currentData = currentData else { return }
+        
+        switch index {
+        case 0: updateStudentList(with: currentData.today_submitted ?? [])
+        case 1: updateStudentList(with: currentData.listening?.details ?? [])
+        case 2: updateStudentList(with: currentData.speaking?.details ?? [])
+        case 3: updateStudentList(with: currentData.reading?.details ?? [])
+        case 4: updateStudentList(with: currentData.writing?.details ?? [])
+        default: break
+        }
+    }
+    
+    private func updateStudentList(with students: [SkillSubmission]) {
+        guard var reportData = reportData else { return }
+        
+        if let index = reportData.firstIndex(where: {
+            if case .studentList = $0 { return true }
+            return false
+        }) {
+            reportData[index] = .studentList(students)
+        }
+        
+        self.reportData = reportData
+        tableView.reloadSections(IndexSet(integer: 2), with: .automatic)
+    }
 }
 
 // MARK: - UITableView Delegate & DataSource
 extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3 // filterList, monthlyReport, studentList
+        return reportData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let reportData = reportData else { return 0 }
-        
-        switch section {
-        case 0: return 1
-        case 1:
-            return 1
-        case 2: return reportData.studentList.count
-        default: return 0
+        switch reportData[section] {
+        case .filterList: return 1
+        case .monthlyReport: return 1
+        case .studentList(let students): return students.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let reportData = reportData else { return UITableViewCell() }
         
-        switch indexPath.section {
-        case 0: // Filter List
+        switch reportData[indexPath.section] {
+        case .filterList(let filters):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
-            let item = reportData.filterList
-            cell.configure(with: item,selectedIndex:0)
+            cell.configure(with: filters, selectedIndex: 0)
+            cell.delegate = self
             return cell
             
-        case 1:
+        case .monthlyReport(let monthly):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWReportTVC", for: indexPath) as! LSRWReportTVC
+            cell.confic(weeklyReports: monthly.weeklyReport, topPerformers: monthly.topPerformance)
+            return cell
             
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWReportTVC", for: indexPath) as! LSRWReportTVC
-                let item = reportData.monthlyReport
-            cell.confic(weeklyReports: item.weeklyReport, topPerformers: item.topPerformance)
-                return cell
-        case 2: // Student List
+        case .studentList(let students):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWPerformenceTVC", for: indexPath) as! LSRWPerformenceTVC
-            if let firstLetter = reportData.studentList[indexPath.row].name?.first {
+            let student = students[indexPath.row]
+            
+            if let firstLetter = student.student_name?.first {
                 cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
             } else {
                 cell.initialBtn.setTitle("-", for: .normal)
             }
-            cell.nameLbl.text = reportData.studentList[indexPath.row].name
-            cell.classLbl.text = reportData.studentList[indexPath.row].studentClass
-            cell.pesantageProgress.isHidden = true
-            cell.persantageLbl.isHidden = true
-            return cell
             
-        default:
-            return UITableViewCell()
+            cell.nameLbl.text = student.student_name
+            cell.classLbl.text = student.std_sec
+            cell.pesantageProgress.isHidden = true
+            cell.persantageLbl.text = student.remark
+            cell.persantageLbl.textColor = .systemGreen
+            return cell
         }
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            return nil // removes unwanted space
-        }
-
+        if section == 0 { return nil }
+        
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGroupedBackground
-
+        
         let label = UILabel(frame: CGRect(x: 16, y: 8, width: tableView.frame.width - 32, height: 20))
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .darkGray
-
-        if section == 1 {
-            label.text = "Monthly Report"
-        } else if section == 2 {
-            label.text = "Students"
+        switch reportData?[section] {
+        case .monthlyReport: label.text = "Monthly Report"
+        case .studentList: label.text = "Students"
+        default: label.text = ""
         }
-
         headerView.addSubview(label)
         return headerView
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 0
-        default:
-            return 30 // standard height for others
-        }
+        return section == 0 ? 0 : 30
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 120
-        case 1:
-            return 230
-        case 2:
-            return UITableView.automaticDimension
-        default:
-            return 0
+        switch reportData?[indexPath.section] {
+        case .filterList: return 120
+        case .monthlyReport: return 250
+        case .studentList: return UITableView.automaticDimension
+        default: return 0
         }
     }
 }
 
-
-// MARK: - Root JSON
-struct ReportData: Codable {
-    let filterList: [Overview]
-    let monthlyReport: MonthlyReport
-    let studentList: [Student]
-}
-
-// MARK: - Monthly Report
+// MARK: - Models
 struct MonthlyReport: Codable {
     let weeklyReport: [PerformanceReport]
     let topPerformance: [TopReport]
@@ -223,9 +313,9 @@ struct PerformanceReport: Codable {
     let percentage: Int
 }
 
-// MARK: - Student
-struct Student: Codable {
-    let id: Int
-    let name: String?
-    let studentClass: String
+// MARK: - Array Safe Index Extension
+extension Array {
+    subscript(safe index: Int) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
 }

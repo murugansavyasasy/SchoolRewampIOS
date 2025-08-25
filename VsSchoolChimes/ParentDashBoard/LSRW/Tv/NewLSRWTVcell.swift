@@ -15,6 +15,7 @@ class NewLSRWTVcell: UITableViewCell {
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var sendedByLbl: UILabel!
     @IBOutlet weak var startBtn: UIButton!
+    @IBOutlet weak var starticon: UIButton!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var iconBtn: UIButton!
     

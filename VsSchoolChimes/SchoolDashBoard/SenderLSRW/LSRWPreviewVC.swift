@@ -21,8 +21,8 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     @IBOutlet weak var priviewTable: UITableView!
     @IBOutlet weak var backBtn: UIButton!
-    var filterAssignment: [StudentSubmission] = []
-    var submittedAssignment: [StudentSubmission] = []
+    var filterAssignment: [LSRWStudent] = []
+    var submittedAssignment: [LSRWStudent] = []
     var report:LSRWTask?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +43,11 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     func getSubmission() {
         APIService.shared.makeApi(
-            url: ServiceUrl.comm_api_assignment_submissions_list,
-            parameters: ["id":"180652", "type": "TOTAL"],
+            url: ServiceUrl.lms_api_lsrw_submission_list,
+            parameters: ["id":report?.id ?? ""],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<StudentSubmissionResponse, Error>) in
+        ) { [weak self] (result: Result<LSWSubmissionResponse, Error>) in
             switch result {
             case .success(let response):
                 if response.status ?? false {
@@ -89,6 +89,8 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 if let data = report {
                     cell.configureCell(with: data, attachments: data.file_path ?? [])
                 }
+                cell.exportRecordBtn.isHidden = true
+                cell.reminderBtn.isHidden = true
                 cell.delegate = self
                 return cell
             } else {
@@ -137,7 +139,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill",
                 withConfiguration: iconConfig
             )
-            let lastSubmittedOn = student.submissions_details?.last?.submitted_on
+            let lastSubmittedOn = student.submitted_date
             var date: String?
             let txt: String
             
@@ -152,7 +154,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             cell.submitDate.text = "\(txt): \(formattedDateStatus(from: date ?? ""))"
             cell.statusView.setImage(icon, for: .normal)
             cell.statusView.tintColor = statusColor
-            
             // Optional: Adjust image & title spacing
             cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
@@ -176,5 +177,19 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if filterAssignment[indexPath.row].submit_status != "NOTSUBMITTED"{
+            if #available(iOS 15.0, *) {
+                let vc = LSRWSubmisionListVC()
+                vc.attachment = filterAssignment[indexPath.row].file_path
+                vc.id = filterAssignment[indexPath.row].id
+                vc.student_id = filterAssignment[indexPath.row].student_id
+                vc.backTitle1 = filterAssignment[indexPath.row].student_name
+                vc.backTitle2 = "\(filterAssignment[indexPath.row].standard ?? "") - \(filterAssignment[indexPath.row].section ?? "")"
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }
     }
 }

@@ -98,7 +98,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         let item = filteredTasks[indexPath.row]
         cell.configure(with: item)
         cell.startBtn.tag = indexPath.row
+        cell.starticon.tag = indexPath.row
         cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
+        cell.starticon.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
         
         return cell
     }
