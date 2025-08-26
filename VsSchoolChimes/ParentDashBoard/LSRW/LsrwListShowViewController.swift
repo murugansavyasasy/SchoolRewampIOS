@@ -53,13 +53,12 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
-        
         APIService.shared.makeApi(
             url: ServiceUrl.lms_api_lsrw_skill_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<LSRWResponse, Error>) in
+        ) { [weak self] (result: Result<LSRWListResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     self?.hideLottieProgressLoader()
@@ -99,7 +98,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         let item = filteredTasks[indexPath.row]
         cell.configure(with: item)
         cell.startBtn.tag = indexPath.row
+        cell.starticon.tag = indexPath.row
         cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
+        cell.starticon.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
         
         return cell
     }

@@ -29,13 +29,13 @@
                     <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create  QuizQuestion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7i-Fn-3Rk">
-                            <rect key="frame" x="8" y="40" width="203.33333333333334" height="26.333333333333329"/>
+                            <rect key="frame" x="8" y="30" width="203.33333333333334" height="26.333333333333329"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfJ-8T-D6T">
-                            <rect key="frame" x="15" y="96.333333333333371" width="363" height="373"/>
+                            <rect key="frame" x="15" y="86.333333333333371" width="363" height="373"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="lM6-09-9hm">
                                     <rect key="frame" x="12" y="15" width="339" height="50"/>
@@ -226,7 +226,7 @@
                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                     <constraints>
                         <constraint firstItem="XfJ-8T-D6T" firstAttribute="leading" secondItem="wfS-84-ywi" secondAttribute="leading" constant="15" id="AIh-uR-6Ci"/>
-                        <constraint firstItem="l7i-Fn-3Rk" firstAttribute="top" secondItem="wfS-84-ywi" secondAttribute="top" constant="40" id="iLp-1Q-0l1"/>
+                        <constraint firstItem="l7i-Fn-3Rk" firstAttribute="top" secondItem="wfS-84-ywi" secondAttribute="top" constant="30" id="iLp-1Q-0l1"/>
                         <constraint firstItem="XfJ-8T-D6T" firstAttribute="top" secondItem="l7i-Fn-3Rk" secondAttribute="bottom" constant="30" id="lGO-Tg-K9N"/>
                         <constraint firstItem="l7i-Fn-3Rk" firstAttribute="leading" secondItem="wfS-84-ywi" secondAttribute="leading" constant="8" id="lag-l2-4bB"/>
                         <constraint firstAttribute="trailing" secondItem="XfJ-8T-D6T" secondAttribute="trailing" constant="15" id="uQJ-R2-WD4"/>

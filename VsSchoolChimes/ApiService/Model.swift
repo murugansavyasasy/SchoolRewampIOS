@@ -1640,12 +1640,31 @@ struct StdSecDetail: Codable {
     var section_id: String?
 }
 
-struct LSRWResponse: Codable {
+struct LSRWReportResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [LSRWData]?
+}
+struct LSRWListResponse: Codable {
     let status: Bool?
     let message: String?
     let data: [LSRWTask]?
 }
+// MARK: - Top level "data"
+struct LSRWData: Codable {
+    let overview: [Overview]?
+    let active: [LSRWTask]?
+    let completed: [LSRWTask]?
+}
 
+// MARK: - Overview
+struct Overview: Codable {
+    let title: String?
+    let value: String?
+    let subtitle: String?
+}
+
+// MARK: - Task
 struct LSRWTask: Codable {
     let id: String?
     let detail_id: String?
@@ -1671,12 +1690,14 @@ struct LSRWTask: Codable {
     let submitted_average: String?
 }
 
+// MARK: - Enum for activity_type
 enum LSRWType: Codable {
     case listening
     case speaking
     case reading
     case writing
     case unknown(String)  // store raw value if it doesn't match
+
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = (try? container.decode(String.self)) ?? ""
@@ -1723,6 +1744,7 @@ enum LSRWType: Codable {
 }
 
 
+
 struct notificationSuc : Codable{
     
     let status : Bool?
@@ -1754,14 +1776,25 @@ struct QuizListSuc : Codable{
     let status : Bool?
     let message : String?
     let data : [QuizListData]?
-    
+
 }
 
+struct senderQuizListSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [senderQuizListData]?
 
-
+}
 
 struct QuizListData : Codable{
     let id : String?
+    let standard : String?
+    let mark : String?
+    let type_name : String?
+    let submission_date : String?
+    let section : String?
+    let sent_time : String?
     let quiz_id : String?
     let title : String?
     let description : String?
@@ -1774,11 +1807,48 @@ struct QuizListData : Codable{
     let is_submitted : Bool?
     let is_unread : Bool?
     let SentBy : String?
+    let sent_by : String?
     let no_of_questions : Int?
     let right_answer : Int?
     let wrong_answer : Int?
-    let total_mark : Int?
+    let submitted_count : Int?
+    let total_mark : String?
     let no_of_levels : String?
+    
+}
+
+
+            
+          
+           
+           
+            
+            
+            
+           
+           
+           
+           
+            
+            
+struct senderQuizListData : Codable{
+    
+    var id : String?
+    var sent_time : String?
+    var title : String?
+    var description : String?
+    var standard : String?
+    var section : String?
+    var level : Int?
+    var subject_id : String?
+    var subject : String?
+    var sent_by : String?
+    var submission_date : String?
+//    var mark : String?
+    var type_name : String?
+    var no_of_questions : Int?
+    var submitted_count : Int?
+    
 }
 
 struct QuizQuestionSuc : Codable{
@@ -1803,6 +1873,76 @@ struct QuizQuestionDataDetails : Codable{
     let options : [String]?
 }
 
+struct QuizaddQuestionSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [QuizQuestiondata]?
+}
+
+//"id": "22764",
+//           "quiz_id": "1287",
+//           "question": "How many sides does a triangle have?",
+//           "chapter": "Chapter-1",
+//           "answer": "3",
+//           "a_option": "2",
+//           "b_option": "4",
+//           "c_option": "3",
+//           "d_option": "6",
+//           "mark": 2,
+//           "option_a_counts": 0,
+//           "option_b_counts": 1,
+//           "option_c_counts": 0,
+//           "option_d_counts": 0,
+//           "correct_answer_counts": 0,
+//           "incorrect_answer_counts": 1,
+//           "correct_answer": "3",
+//           "file_path": []
+
+struct QuizQuestiondata: Codable {
+    var id: String?         // for Quizdata from API
+    var quizId: String?     // for API
+    var chapter: String
+    var question: String
+    var answer: String?
+    var optionA: String
+    var optionB: String
+    var optionC: String
+    var optionD: String
+    var marks: Int
+    var correctAnswer: String?
+    var filePath: [FilePath]?
+    
+    // Local init for empty question (when adding manually)
+    init(
+        id: String? = nil,
+        quizId: String? = nil,
+        chapter: String = "",
+        question: String = "",
+        answer: String? = nil,
+        optionA: String = "",
+        optionB: String = "",
+        optionC: String = "",
+        optionD: String = "",
+        marks: Int = 0,
+        correctAnswer: String? = nil,
+        filePath: [FilePath]? = nil
+    ) {
+        self.id = id
+        self.quizId = quizId
+        self.chapter = chapter
+        self.question = question
+        self.answer = answer
+        self.optionA = optionA
+        self.optionB = optionB
+        self.optionC = optionC
+        self.optionD = optionD
+        self.marks = marks
+        self.correctAnswer = correctAnswer
+        self.filePath = filePath
+    }
+}
+
 struct SubmittedActivitiesResponse: Codable {
     let status: Bool?
     let message: String?
@@ -1817,4 +1957,67 @@ struct SubmittedActivity: Codable {
     let file_size: String?
     let thumbnail: String?
     let file_path: [FilePath]?
+}
+ //MARK: LSRWSUBMISION
+struct LSWSubmissionResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [LSRWStudent]?
+}
+
+struct LSRWStudent: Codable {
+    let id: String?
+    let student_id: String?
+    let student_name: String?
+    let standard: String?
+    let description: String?
+    let header_id: String?
+    let remark: String?
+    let section: String?
+    let mobile_no: String?
+    let submit_status: String?
+    let submitted_date: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
+    let file_path: [FilePath]?
+}
+// MARK: - Main Response
+struct SkillResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [PerfomenceData]
+}
+
+// MARK: - Skill Data
+struct PerfomenceData: Codable {
+    let today_submitted: [SkillSubmission]?
+    let listening: SkillCategory?
+    let speaking: SkillCategory?
+    let reading: SkillCategory?
+    let writing: SkillCategory?
+}
+
+// MARK: - Skill Category
+struct SkillCategory: Codable {
+    let over_all_percentage: String?
+    let student_count: String?
+    let details: [SkillSubmission]?
+}
+
+// MARK: - Skill Submission
+struct SkillSubmission: Codable {
+    let id: String?
+    let title: String?
+    let description: String?
+    let activity_type: String?
+    let submitted_average: String?
+    let submission_date: String?
+    let submitted_count: Int?
+    let student_id: String?
+    let student_name: String?
+    let remark: String?
+    let std_sec: String?
+    let student_submited_on: String?
+    let is_submitted: Bool?
 }

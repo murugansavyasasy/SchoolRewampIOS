@@ -12,7 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LSRWSubmisionListVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="backBtn" destination="w4h-BE-IiX" id="ugR-jl-T9P"/>
                 <outlet property="lsrwCV" destination="xWy-zP-QTT" id="3Cd-26-qL4"/>
+                <outlet property="percentageLbl" destination="BaB-uE-3dx" id="81Q-gm-GTw"/>
+                <outlet property="remarkView" destination="QYg-tg-tEz" id="2EQ-q7-aYP"/>
+                <outlet property="slider" destination="lix-fw-vuL" id="ArZ-Sr-tOT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,15 +25,15 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
-                    <rect key="frame" x="10" y="69" width="136" height="35"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
+                    <rect key="frame" x="10" y="69" width="363" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="JRH-1Y-hAd"/>
                     </constraints>
-                    <color key="tintColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="MySubmistion " image="chevron.left" catalog="system">
-                        <color key="titleColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -37,25 +41,82 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anq-kt-saI">
-                    <rect key="frame" x="0.0" y="114" width="393" height="704"/>
+                    <rect key="frame" x="0.0" y="114" width="393" height="738"/>
                     <subviews>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xWy-zP-QTT">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="704"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aR3-1x-lSR">
-                                <size key="itemSize" width="128" height="128"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vpG-AJ-hy7">
+                            <rect key="frame" x="0.0" y="10" width="393" height="694"/>
+                            <subviews>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xWy-zP-QTT">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="694"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aR3-1x-lSR">
+                                        <size key="itemSize" width="128" height="128"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYg-tg-tEz">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="145.33333333333334"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-G5-TT5">
+                                            <rect key="frame" x="20" y="10.000000000000004" width="353" height="60.333333333333343"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-uE-3dx">
+                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="20.333333333333332"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20.333333333333332" id="FN3-TP-5y4"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lix-fw-vuL" customClass="CustomSlider" customModule="School_Chimes" customModuleProvider="target">
+                                                    <rect key="frame" x="-2" y="30.333333333333343" width="357" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="HOX-ma-eHV"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="sliderChanged:" destination="-1" eventType="valueChanged" id="SDt-Yi-mXY"/>
+                                                    </connections>
+                                                </slider>
+                                            </subviews>
+                                        </stackView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McO-oQ-Biu">
+                                            <rect key="frame" x="126.66666666666669" y="100.33333333333334" width="140" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="HHT-B8-NiN"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Submit Remark">
+                                                <backgroundConfiguration key="background" cornerRadius="6">
+                                                    <color key="backgroundColor" name="ParentClr"/>
+                                                </backgroundConfiguration>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="updateRemark:" destination="-1" eventType="touchUpInside" id="zDa-T8-XXF"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="McO-oQ-Biu" firstAttribute="top" secondItem="lxd-G5-TT5" secondAttribute="bottom" constant="30" id="BCO-yf-3Uy"/>
+                                        <constraint firstItem="lxd-G5-TT5" firstAttribute="leading" secondItem="QYg-tg-tEz" secondAttribute="leading" constant="20" id="IaP-in-gbO"/>
+                                        <constraint firstAttribute="bottom" secondItem="McO-oQ-Biu" secondAttribute="bottom" constant="10" id="egZ-pb-tR5"/>
+                                        <constraint firstItem="lxd-G5-TT5" firstAttribute="top" secondItem="QYg-tg-tEz" secondAttribute="top" constant="10" id="fmK-sV-hbi"/>
+                                        <constraint firstAttribute="trailing" secondItem="lxd-G5-TT5" secondAttribute="trailing" constant="20" id="k3V-SY-dvK"/>
+                                        <constraint firstItem="McO-oQ-Biu" firstAttribute="centerX" secondItem="QYg-tg-tEz" secondAttribute="centerX" id="sP9-td-Urp"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
-                        <constraint firstItem="xWy-zP-QTT" firstAttribute="top" secondItem="anq-kt-saI" secondAttribute="top" id="0rx-1v-YgC"/>
-                        <constraint firstItem="xWy-zP-QTT" firstAttribute="leading" secondItem="anq-kt-saI" secondAttribute="leading" id="41Z-uB-7wu"/>
-                        <constraint firstAttribute="trailing" secondItem="xWy-zP-QTT" secondAttribute="trailing" id="Urq-RD-id3"/>
-                        <constraint firstAttribute="bottom" secondItem="xWy-zP-QTT" secondAttribute="bottom" id="mGg-yn-ftK"/>
+                        <constraint firstAttribute="trailing" secondItem="vpG-AJ-hy7" secondAttribute="trailing" id="QID-mD-Gb6"/>
+                        <constraint firstItem="vpG-AJ-hy7" firstAttribute="leading" secondItem="anq-kt-saI" secondAttribute="leading" id="ZsU-Zd-OdW"/>
+                        <constraint firstItem="vpG-AJ-hy7" firstAttribute="top" secondItem="anq-kt-saI" secondAttribute="top" constant="10" id="d8V-Bh-G5x"/>
                     </constraints>
                 </view>
             </subviews>
@@ -63,10 +124,12 @@
             <color key="backgroundColor" name="PrimeryColor"/>
             <constraints>
                 <constraint firstItem="anq-kt-saI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Af0-uM-MEM"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="anq-kt-saI" secondAttribute="bottom" id="CHP-hm-LHu"/>
+                <constraint firstAttribute="bottom" secondItem="anq-kt-saI" secondAttribute="bottom" id="CHP-hm-LHu"/>
                 <constraint firstItem="w4h-BE-IiX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="SoY-cl-VEm"/>
+                <constraint firstItem="vpG-AJ-hy7" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="UwB-p3-Cks"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="anq-kt-saI" secondAttribute="trailing" id="cfv-Ka-pd8"/>
                 <constraint firstItem="anq-kt-saI" firstAttribute="top" secondItem="w4h-BE-IiX" secondAttribute="bottom" constant="10" id="ecW-uq-KeX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="w4h-BE-IiX" secondAttribute="trailing" constant="20" id="gIg-th-hok"/>
                 <constraint firstItem="w4h-BE-IiX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="gmT-Lr-437"/>
             </constraints>
             <point key="canvasLocation" x="59" y="20"/>
@@ -74,6 +137,9 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="ParentClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

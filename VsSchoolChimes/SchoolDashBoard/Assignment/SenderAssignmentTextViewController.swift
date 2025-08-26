@@ -351,9 +351,6 @@ class SenderAssignmentTextViewController: UIViewController,
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            //            if imageItems.count != 0{
-            //                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            //            }
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
@@ -361,7 +358,6 @@ class SenderAssignmentTextViewController: UIViewController,
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             selectImgPdfview.imageCollectionview.reloadData()
         }
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
@@ -376,7 +372,6 @@ class SenderAssignmentTextViewController: UIViewController,
                         VideoURl: data
                     )
                 )
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             selectImgPdfview.imageCollectionview.reloadData()
         }
     }
@@ -651,12 +646,12 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             cell.layer.cornerRadius = 20
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell,
-                                                          for: indexPath) as! ImageCvCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.ImageCvCell,
+                for: indexPath
+            ) as! ImageCvCell
             
             let adjustedIndex = indexPath.item - 1
-            guard attachments.indices.contains(adjustedIndex) else { return cell }
-            
             let item = attachments[adjustedIndex]
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
@@ -670,9 +665,14 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
                 } else {
                     cell.imageViews.kf.setImage(with: url)
                 }
-            } else {
+            } else if let vido = item.VideoURl{
+                let iconName = getFileIconName(for: vido)
+                cell.imageViews.image = UIImage(named: iconName)
+                
+            }else{
                 cell.imageViews.image = nil
             }
+            
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height

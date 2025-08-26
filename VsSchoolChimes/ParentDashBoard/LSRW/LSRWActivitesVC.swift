@@ -9,12 +9,30 @@ import UIKit
 import AVFoundation
 
 @available(iOS 15.0, *)
-class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate, EditObjectDelegate {
+class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate, EditObjectDelegate, UITextFieldDelegate {
     func editDta(edit: Any?) {
-        if let audio = edit{
-            print(audio)
+        testTable.beginUpdates()
+        if let audio = edit as? AttachmentItem {
+            attachments.append(audio)
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
+            
+        } else if let updatedAttachments = edit as? [AttachmentItem] {
+            attachments = updatedAttachments
+            if let index = captions.firstIndex(of: .record) {
+                captions.remove(at: index)
+                let indexPath = IndexPath(row: index, section: 1)
+                testTable.deleteRows(at: [indexPath], with: .fade)
+            }
+            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
         }
+        testTable.endUpdates()
     }
+    
     
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
@@ -35,17 +53,16 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
                 let indexPath = IndexPath(row: captions.count - 1, section: 1)
                 testTable.insertRows(at: [indexPath], with: .fade)
             }
-        } else {
+        }else{
             if let index = captions.firstIndex(of: .record) {
                 captions.remove(at: index)
                 let indexPath = IndexPath(row: index, section: 1)
                 testTable.deleteRows(at: [indexPath], with: .fade)
             }
         }
-        
         testTable.endUpdates()
     }
-
+    
     
     // MARK: - IBOutlets
     @IBOutlet weak var testTable: UITableView!
@@ -54,6 +71,9 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     var lsrw: LSRWTask?
     private var captions: [CaptionType] = []
     var attachments: [AttachmentItem] = []
+    var descriptionString:String?
+    var alert = CustomAlert()
+    var vimeoUploader: VimeoUploader?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptions()
@@ -137,7 +157,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             }
             cell.reminderBtn.isHidden = true
             cell.exportRecordBtn.isHidden = false
-            cell.exportRecordBtn.setTitle("View Submission", for: .normal)
+            cell.exportRecordBtn.setTitle("My Submission", for: .normal)
             cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
             cell.delegate = self
             return cell
@@ -168,8 +188,10 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 
             case .addAttachment:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AddAttachmentTVC", for: indexPath) as! AddAttachmentTVC
-                print(cell.attachments)
                 cell.delegate = self
+                cell.Adddelegate = self
+                cell.descriptionTXT.delegate = self
+                cell.config(attachments)
                 return cell
                 
             case .record:
@@ -196,18 +218,245 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-   
-  
-    @objc private func submitTapped() {
-        print("✅ Submit button pressed")
-        // add your submit logic here
+    
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        return true
     }
     
-    @objc func exportBtnTapped() {
-        let vc = LSRWSubmisionListVC()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        descriptionString = currentText
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        return true
     }
+    
+    @objc private func submitTapped() {
+        guard !attachments.isEmpty else {
+            alert.showAlert(title: "", message: AlertstringFile.Please_Add_Attachment, on: self)
+            return
+        }
+        
+        uploadMedia(file: attachments, viewController: self, title: lsrw?.title ?? "", description: descriptionString ?? "") { [weak self] urls, iframe, fileSize, embedUrl in
+            guard let self = self else { return }
+            let uploadedFiles: [[String: String]] = urls.compactMap { urlString in
+                guard let url = URL(string: urlString) else { return nil }
+                
+                let fileType = url.pathExtension.lowercased()
+                let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+                
+                return [
+                    CommonStringFile.url: urlString,
+                    CommonStringFile.type: type
+                ]
+            }
+            let iframeValue = iframe ?? ""
+            let fileSizeStr = fileSize != nil ? "\(fileSize!)" : ""
+            let params: [String: Any] = [
+                SendAttachmentStringFile.id:lsrw?.id ?? "",
+                assignmentResquestStringKey.description: descriptionString ?? "",
+                assignmentResquestStringKey.iframe: iframeValue,
+                assignmentResquestStringKey.file_size: fileSizeStr,
+                assignmentResquestStringKey.filePath: uploadedFiles
+            ]
+            // 🔹 Call API
+            self.sendAttachment(with: params)
+        }
+    }
+    
+    func sendAttachment(with parameters: [String: Any]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            APIService.shared.makeApi(
+                url: ServiceUrl.lms_api_lsrw_submit_skill,
+                parameters: parameters,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    DispatchQueue.main.async {
+                        CustomAlert.showAlertWithOkAction(
+                            title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: response.message,
+                            on: self
+                        ) {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                case .failure(let error):
+                    print("❌ API error: \(error.localizedDescription)")
+                    // Optionally show error alert here
+                }
+            }
+        }
+    }
+    @objc func exportBtnTapped() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.lms_api_lsrw_my_submissions,
+            parameters: ["id":lsrw?.id ?? ""],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<LSWSubmissionResponse, Error>) in
+            switch result {
+            case .success(let response):
+                if response.status ?? false {
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        
+                        let data = response.data ?? []
+                        if data.count == 1 {
+                            let vc = LSRWSubmisionListVC()
+                            vc.attachment = data.first?.file_path
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        } else {
+                            let vc = LSRWSubmissionVC()
+                            vc.submitedAssignment = data
+                            vc.modalPresentationStyle = .pageSheet
+                            
+                            if let sheet = vc.sheetPresentationController {
+                                if data.count > 2 {
+                                    sheet.detents = [.large()]
+                                } else {
+                                    sheet.detents = [.medium()]
+                                }
+                                sheet.prefersGrabberVisible = true
+                            }
+                            self.present(vc, animated: true)
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        // Handle no data / error case
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    // MARK: - Upload Media (Images + Video)
+    private func uploadMedia(
+        file: Any,
+        viewController: UIViewController,
+        title: String = "",
+        description: String = "",
+        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
+    ) {
+        var uploadedURLs: [String] = []
+        var completed = 0
+        
+        func updateAndCheckCompletion(total: Int, iframe: String? = nil, size: Int? = nil, embed: String? = nil) {
+            let progress = (Double(completed) / Double(total)) * 100
+            CircularProgressLoader.shared.updateProgress(to: progress)
+            if completed == total {
+                CircularProgressLoader.shared.hide()
+                completion(uploadedURLs, iframe, size, embed)
+            }
+        }
+        
+        switch file {
+        case let attachments as [AttachmentItem]:
+            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
+            let total = uploadableItems.count
+            guard total > 0 else {
+                completion([], nil, nil, nil)
+                return
+            }
+            
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            
+            for item in uploadableItems {
+                if let image = item.image {
+                    // Upload local image to AWS
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: image,
+                        bucketPath: "uploads/images/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: nil
+                    ) { url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                        }
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    }
+                } else if let fileURLStr = item.imageURL {
+                    if fileURLStr.lowercased().starts(with: "http") {
+                        // Already an uploaded file (skip upload)
+                        uploadedURLs.append(fileURLStr)
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    } else if let fileURL = URL(string: fileURLStr) {
+                        if item.fileType.lowercased() == CommonStringFile.VIDEO {
+                            // 🎥 Video Handling
+                            if fileURLStr.lowercased().starts(with: "http") {
+                                // ✅ Already remote video URL → skip Vimeo upload
+                                uploadedURLs.append(fileURLStr)
+                                completed += 1
+                                updateAndCheckCompletion(total: total)
+                            } else {
+                                // 🚀 Upload to Vimeo (local file only)
+                                CircularProgressLoader.shared.show()
+                                vimeoUploader = VimeoUploader(
+                                    accessToken: YOUR_VIMEO_TOKEN,
+                                    presentingViewController: viewController
+                                )
+                                vimeoUploader?.upload(
+                                    videoFileURL: fileURL,
+                                    title: title,
+                                    description: description,
+                                    progress: { progress in
+                                        CircularProgressLoader.shared.updateProgress(to: progress)
+                                    },
+                                    completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
+                                        completed += 1
+                                        if let videoURL = videoURL {
+                                            uploadedURLs.append(videoURL)
+                                        }
+                                        updateAndCheckCompletion(total: total, iframe: iframeHTML, size: fileSize, embed: finalEmbedUrl)
+                                    }
+                                )
+                            }
+                        } else {
+                            // 📄 Docs / Images → upload to AWS
+                            let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
+                            AWSUploadManager.shared.uploadFileToAWS(
+                                file: fileURL,
+                                bucketPath: path,
+                                bucketName: "schoolchimes-communication",
+                                progressHandler: nil
+                            ) { url in
+                                if let uploadedURL = url {
+                                    uploadedURLs.append(uploadedURL)
+                                }
+                                completed += 1
+                                updateAndCheckCompletion(total: total)
+                            }
+                        }
+                    } else {
+                        print("❌ Invalid fileURL: \(fileURLStr)")
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    }
+                }
+            }
+            
+        default:
+            print("❌ Unsupported file type")
+            completion([], nil, nil, nil)
+        }
+    }
+    
+    
 }
 
 // MARK: - CaptionType Enum

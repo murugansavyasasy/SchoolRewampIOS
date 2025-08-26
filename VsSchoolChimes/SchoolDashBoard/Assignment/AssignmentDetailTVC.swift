@@ -38,7 +38,7 @@ class AssignmentDetailTVC: UITableViewCell {
     func configureCell(with assignment: Report, attachments: [FilePath]) {
         titleLbl.text = assignment.title ?? ""
         descriptionLbl.text = assignment.description ?? ""
-        dueDate.text = "🗓️\(assignment.end_date ?? "")"
+        dueDate.text = "🗓️\(assignment.end_date?.convertToTargetDateFormat() ?? "")"
         subject.text = "📖\(assignment.subject ?? "")"
         classLbl.text = "⿻\(assignment.category ?? "")"
         

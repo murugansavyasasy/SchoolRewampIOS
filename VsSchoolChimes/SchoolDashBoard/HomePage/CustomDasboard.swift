@@ -343,15 +343,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         Menu_id.staffSelectedMenuId = item.id ?? 0
         MenuStringFile.selectedMenuName = item.name ?? ""
         
-        // Short helper for avoiding repeated code
-        func navigateOrSchoolList(_ defaultAction: () -> Void) {
-            if checkMutipleSchool() {
-                MenuRedirect.SchoolListVc(from: self)
-            } else {
-                defaultAction()
-            }
-        }
-        
+       
         switch item.id {
         case 1:
             navigateOrSchoolList { MenuRedirect.senderAbsenteesReport(from: self) }
@@ -387,6 +379,9 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             MenuRedirect.senderOnlineNavigate(from: self)
         case 26:
             navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
+            MenuRedirect.senderPtmNavigate(from: self)
+        case 27 :
+            navigateOrSchoolList{ MenuRedirect.senderQuiz(from: self)}
         case 28:
             MenuRedirect.senderLeaveRequestNavigate(from: self)
         case 29:
@@ -410,6 +405,14 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
 
+    // Short helper for avoiding repeated code
+    func navigateOrSchoolList(_ defaultAction: () -> Void) {
+        if checkMutipleSchool() {
+            MenuRedirect.SchoolListVc(from: self)
+        } else {
+            defaultAction()
+        }
+    }
 }
 @available(iOS 14.0, *)
 extension CustomDasboard: UICollectionViewDelegateFlowLayout {

@@ -6,31 +6,36 @@
 //
 
 import UIKit
-protocol FilterDelegate{
-    func selectedIndex(index:Int?)
-}
-class LSRWVC: UIViewController, FilterDelegate {
-    func selectedIndex(index: Int?) {
-        guard let idx = index, idx >= 0, idx < filtterArray.count else {
-            filterTask = recentTasks
-            return
-        }
-        selectedIndex = idx
-        let selectedFilter = filtterArray[idx]
-        
-        if selectedFilter == "All" {
-            filterTask = recentTasks
-        } else {
-            filterTask = recentTasks.filter { $0.activity_type?.displayName == selectedFilter }
-        }
-        lsrwTable.reloadData()
-    }
 
+protocol FilterDelegate {
+    func selectedIndex(index: Int?)
+    func navigate(index: Int?)
+}
+
+enum LsrwDisplaySection {
+    case overview([Overview])
+    case filterArray([String])
+    case active([LSRWTask])
+    case completed([LSRWTask])
+}
+
+class LSRWVC: UIViewController, FilterDelegate {
+    
+    // MARK: - IBOutlets
     @IBOutlet weak var lsrwTable: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
-    // Dashboard overview data
-    var dashboardData: [DashboardItem] = []
-    private var filtterArray = [
+    
+    // MARK: - Data
+    var dashboardData: [Overview] = []
+    var recentTasks: [LsrwDisplaySection] = []
+    var filterTask: [LsrwDisplaySection] = []
+    var allTask: LSRWData?
+    var activeTask: [LSRWTask] = []
+    var completedTask: [LSRWTask] = []
+    var selectedIndex = 0
+    
+    // Filters
+    let filterArray = [
         "All",
         "Listening",
         "Speaking",
@@ -39,19 +44,17 @@ class LSRWVC: UIViewController, FilterDelegate {
         "Completed",
         "Pending"
     ]
-    // Recent tasks list
-    var recentTasks: [LSRWTask] = []
-    var filterTask: [LSRWTask] = []
-    var selectedIndex = 0
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 15.0, *) {
-                lsrwTable.sectionHeaderTopPadding = 0
-            }
+            lsrwTable.sectionHeaderTopPadding = 0
+        }
         setupTableView()
-        loadData()
     }
     
+    // MARK: - Setup
     private func setupTableView() {
         lsrwTable.dataSource = self
         lsrwTable.delegate = self
@@ -62,61 +65,48 @@ class LSRWVC: UIViewController, FilterDelegate {
         
         lsrwTable.separatorStyle = .none
         lsrwTable.showsVerticalScrollIndicator = false
-        BackBtn.configureAsBackButton(firstLine: "LSRW",secondLine:"Listening, Speaking, Reading,Writing")
+        
+        BackBtn.configureAsBackButton(firstLine: "LSRW", secondLine:"Listening, Speaking, Reading, Writing")
+        
         getLSRW()
     }
     
-    private func loadData() {
-        // Dashboard stats
-        dashboardData = [
-            DashboardItem(
-                title: "Active Tasks",
-                value: "3",
-                subtitle: "1 overdue",
-                icon: "📋"
-            ),
-            DashboardItem(
-                title: "Total Students",
-                value: "248",
-                subtitle: "Across 8 classes",
-                icon: "👥"
-            ),
-            DashboardItem(
-                title: "Avg. Performance",
-                value: "87%",
-                subtitle: "↑ 5% from last month",
-                icon: "📈"
-            ),
-            DashboardItem(
-                title: "Completed Today",
-                value: "156",
-                subtitle: "Great progress!",
-                icon: "✅"
-            )
-        ]
-
-        
-        // Date formatter for sample data
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        lsrwTable.reloadData()
-    }
+    // MARK: - API
     func getLSRW() {
         APIService.shared.makeApi(
             url: ServiceUrl.lms_api_lsrw_skills_report,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<LSRWResponse, Error>) in
+        ) { [weak self] (result: Result<LSRWReportResponse, Error>) in
             switch result {
             case .success(let response):
-                if response.status ?? false {
+                if response.status ?? false,
+                   let firstData = response.data?.first {
+                    
                     DispatchQueue.main.async {
-                        self?.recentTasks = response.data ?? []
-                        self?.filterTask = response.data ?? []
+                        self?.dashboardData = firstData.overview ?? []
+                        self?.activeTask = firstData.active ?? []
+                        self?.completedTask = firstData.completed ?? []
+                        self?.recentTasks = []
+                        
+                        if !(firstData.overview?.isEmpty ?? true) {
+                            self?.recentTasks.append(.overview(firstData.overview ?? []))
+                        }
+                        self?.recentTasks.append(.filterArray(self?.filterArray ?? []))
+                        
+                        if !(firstData.active?.isEmpty ?? true) {
+                            self?.recentTasks.append(.active(firstData.active ?? []))
+                        }
+                        if !(firstData.completed?.isEmpty ?? true) {
+                            self?.recentTasks.append(.completed(firstData.completed ?? []))
+                        }
+                        
+                        self?.filterTask = self?.recentTasks ?? []
+                        self?.allTask = firstData
                         self?.lsrwTable.reloadData()
-//                        self?.updateCountLabels()
                     }
+                    
                 } else {
                     DispatchQueue.main.async {
                         self?.lsrwTable.reloadData()
@@ -125,43 +115,124 @@ class LSRWVC: UIViewController, FilterDelegate {
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
-//                    self?.showAlert(message: "Network error occurred. Please try again.")
                     self?.lsrwTable.reloadData()
                 }
             }
         }
     }
+    
+    // MARK: - Actions
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
+    // MARK: - FilterDelegate
+    func selectedIndex(index: Int?) {
+        guard let idx = index, idx >= 0, idx < filterArray.count else { return }
+        selectedIndex = idx
+        let selectedFilter = filterArray[idx]
+        
+        switch selectedFilter {
+        case "All":
+            // Restore all tasks (reset)
+            filterTask = recentTasks
+            
+        case "Completed":
+            updateSection(.completed(completedTask))
+            
+        case "Pending":
+            let pending = activeTask.filter { $0.is_submitted == false }
+            updateSection(.active(pending))
+            
+        default:
+            let filtered = activeTask.filter { $0.activity_type?.displayName == selectedFilter }
+            updateSection(.active(filtered))
+        }
+        
+        lsrwTable.reloadData()
+    }
+
+    // MARK: - Helper (replace only matching section)
+    private func updateSection(_ newSection: LsrwDisplaySection) {
+        filterTask = filterTask.map { section in
+            switch (section, newSection) {
+            case (.active, .active(let tasks)):
+                return .active(tasks)
+            case (.completed, .completed(let tasks)):
+                return .completed(tasks)
+            default:
+                return section
+            }
+        }
+    }
+    
+    func navigate(index: Int?) {
+        guard let index = index else { return }
+        
+        switch index {
+        case 0:
+            let vc = LSRWSubmissionVC()
+            vc.modalPresentationStyle = .fullScreen
+            vc.report = activeTask
+            vc.btnTitle = "Active Task"
+            present(vc, animated: true)
+        case 1:
+            let vc = SelectedLSRWSubmissionVC()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        case 2:
+            let vc = LSRWSubmissionVC()
+            vc.modalPresentationStyle = .fullScreen
+            vc.report = completedTask
+            vc.btnTitle = "Completed Task"
+            present(vc, animated: true)
+        default:
+            print("Navigate index: \(index)")
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension LSRWVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3 // Dashboard + Recent Tasks
+        return filterTask.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (section == 2) ? filterTask.count : 1
+        switch filterTask[section] {
+        case .overview:
+            return 1
+        case .filterArray:
+            return 1
+        case .active(let tasks), .completed(let tasks):
+            return tasks.count
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch filterTask[indexPath.section] {
+        case .overview(let overview):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
-            cell.configure(with: dashboardData)
-            return cell
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
-            cell.configure(with: nil,selectedIndex: selectedIndex)
+            cell.configure(with: overview)
             cell.delegate = self
             return cell
-        }else{
+            
+        case .filterArray:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
+            cell.configure(with: nil, selectedIndex: selectedIndex)
+            cell.delegate = self
+            return cell
+            
+        case .active(let tasks):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
-            let task = filterTask[indexPath.row]
-            cell.configure(with: task)
+            cell.configure(with: tasks[indexPath.row])
+            return cell
+            
+        case .completed(let tasks):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
+            cell.configure(with: tasks[indexPath.row])
             return cell
         }
     }
@@ -170,47 +241,20 @@ extension LSRWVC: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension LSRWVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 120
-        case 1:
-            return 60
-        case 2:
-            return UITableView.automaticDimension
-        default:
-            return 0
+        switch filterTask[indexPath.section] {
+        case .overview: return 120
+        case .filterArray: return 60
+        case .active, .completed: return UITableView.automaticDimension
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 50
-        case 2:
-            return 40
-        default:
-            return 0
-        }
-        
-    }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        switch section {
-//        case 0:
-//            return "Dashboard Overview"
-//        case 2:
-//            return "Recent Tasks"
-//        default:
-//            return nil
-//        }
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        if indexPath.section == 2 {
-            let selectedTask = filterTask[indexPath.row]
+        switch filterTask[indexPath.section] {
+        case .active(let tasks), .completed(let tasks):
+            let selectedTask = tasks[indexPath.row]
             navigateToTaskDetail(task: selectedTask)
+        default:
+            break
         }
     }
     
@@ -219,12 +263,13 @@ extension LSRWVC: UITableViewDelegate {
         vc.modalPresentationStyle = .fullScreen
         vc.report = task
         present(vc, animated: true)
-        
     }
 }
+
 // MARK: - Custom Section Header with Button
 extension LSRWVC {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = .clear
         
@@ -232,14 +277,11 @@ extension LSRWVC {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.textColor = .label
         
-        // Set section title
-        switch section {
-        case 0:
-            titleLabel.text = "Dashboard Overview"
-        case 2:
-            titleLabel.text = "Recent Tasks"
-        default:
-            titleLabel.text = nil
+        switch filterTask[section] {
+        case .overview: titleLabel.text = "Dashboard Overview"
+        case .filterArray: titleLabel.text = ""
+        case .active: titleLabel.text = "Active Tasks"
+        case .completed: titleLabel.text = "Completed Tasks"
         }
         
         headerView.addSubview(titleLabel)
@@ -249,8 +291,7 @@ extension LSRWVC {
             titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
         
-        // Add button only for section 0
-        if section == 0 {
+        if case .overview = filterTask[section] {
             let newTaskButton = UIButton(type: .system)
             newTaskButton.setImage(UIImage(systemName: "plus"), for: .normal)
             newTaskButton.tintColor = .white
@@ -273,24 +314,31 @@ extension LSRWVC {
         
         return headerView
     }
-
-    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch filterTask[section] {
+        case .overview:
+            return 50
+        case .active,.completed:
+            return 40
+        default:
+            return 0
+        }
+    }
     @objc private func newTaskTapped() {
-        // Navigate to Create Task screen
         if #available(iOS 15.0, *) {
             let vc = SenderLSRWVC()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
-        
     }
 }
 
-
-// MARK: - Data Models
-struct DashboardItem {
-    let title: String
-    let value: String
-    let subtitle: String
-    let icon: String
+// MARK: - String to Date Helper
+extension String {
+    func toDate(format: String = "dd-MM-yyyy") -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.date(from: self)
+    }
 }

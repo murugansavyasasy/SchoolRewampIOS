@@ -10,7 +10,7 @@ import UIKit
 class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var progressCV: UICollectionView!
-    private var progressDataArray: [DashboardItem]?
+    private var progressDataArray: [Overview]?
     var delegate:FilterDelegate?
     private var filtterArray = [
         "All",
@@ -47,7 +47,7 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
     
     // MARK: - Public Methods
     func configure(with data: Any?, selectedIndex:Int? = 0) {
-        self.progressDataArray = data as? [DashboardItem]
+        self.progressDataArray = data as? [Overview]
         self.filter = data == nil
         self.selectedIndex = selectedIndex ?? 0
         progressCV.reloadData()
@@ -106,10 +106,12 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if filter == true {
             delegate?.selectedIndex(index: indexPath.item)
+        }else{
+            delegate?.navigate(index: indexPath.item)
         }
     }
     
-    private func handleProgressItemTap(_ item: DashboardItem) {
+    private func handleProgressItemTap(_ item: Overview) {
         switch item.title {
         case "Active Tasks": break
         case "Total Students": break
