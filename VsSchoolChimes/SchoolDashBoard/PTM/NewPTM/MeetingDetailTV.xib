@@ -25,26 +25,44 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zF2-30-biD">
                                 <rect key="frame" x="16" y="15" width="381" height="35"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0B7-C1-kEf">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="35"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ukg-Gd-FYi">
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="35"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0B7-C1-kEf">
+                                                <rect key="frame" x="10" y="5" width="120" height="25"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="13 Aug 2025">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="LNo-9w-q5J"/>
+                                            <constraint firstItem="0B7-C1-kEf" firstAttribute="leading" secondItem="Ukg-Gd-FYi" secondAttribute="leading" constant="10" id="8CQ-pJ-BRm"/>
+                                            <constraint firstAttribute="trailing" secondItem="0B7-C1-kEf" secondAttribute="trailing" constant="10" id="akX-3o-29B"/>
+                                            <constraint firstAttribute="bottom" secondItem="0B7-C1-kEf" secondAttribute="bottom" constant="5" id="quN-il-Cyd"/>
+                                            <constraint firstItem="0B7-C1-kEf" firstAttribute="top" secondItem="Ukg-Gd-FYi" secondAttribute="top" constant="5" id="tmF-Ja-bCG"/>
                                         </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="13 Aug 2025">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NkO-he-sd7">
-                                        <rect key="frame" x="173" y="0.0" width="150" height="35"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xRc-9V-JIi">
+                                        <rect key="frame" x="170.66666666666666" y="0.0" width="144.99999999999997" height="35"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NkO-he-sd7">
+                                                <rect key="frame" x="10" y="5" width="125" height="25"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="3:00 - 4:30 PM">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="vAm-B3-hSz"/>
+                                            <constraint firstItem="NkO-he-sd7" firstAttribute="leading" secondItem="xRc-9V-JIi" secondAttribute="leading" constant="10" id="Dqj-t2-hu3"/>
+                                            <constraint firstAttribute="bottom" secondItem="NkO-he-sd7" secondAttribute="bottom" constant="5" id="EPO-aM-lh4"/>
+                                            <constraint firstItem="NkO-he-sd7" firstAttribute="top" secondItem="xRc-9V-JIi" secondAttribute="top" constant="5" id="FPi-eE-tl7"/>
+                                            <constraint firstAttribute="trailing" secondItem="NkO-he-sd7" secondAttribute="trailing" constant="10" id="itU-tw-s2A"/>
                                         </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="3:00 - 4:30 PM">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGh-go-ZqM">
                                         <rect key="frame" x="346" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -175,6 +193,7 @@
                 <outlet property="cellView" destination="D9Y-eO-XIJ" id="FrL-0i-VKd"/>
                 <outlet property="countBtn" destination="76H-Np-WxT" id="Vde-ax-ZAN"/>
                 <outlet property="dateBtn" destination="0B7-C1-kEf" id="WQv-j3-M84"/>
+                <outlet property="datebaseView" destination="Ukg-Gd-FYi" id="hsw-pc-fo7"/>
                 <outlet property="img1" destination="hNZ-74-V8O" id="noc-cK-IFH"/>
                 <outlet property="img2" destination="3Dl-0F-VcJ" id="Okf-KU-Vx0"/>
                 <outlet property="img3" destination="Thc-ly-lso" id="rfV-DI-cnf"/>
@@ -182,6 +201,7 @@
                 <outlet property="modeLbl" destination="Pwd-HY-W1c" id="piV-rL-SQp"/>
                 <outlet property="optionsBtn" destination="LGh-go-ZqM" id="IK0-xy-FQQ"/>
                 <outlet property="timeBtn" destination="NkO-he-sd7" id="BRp-RK-bC8"/>
+                <outlet property="timebaseView" destination="xRc-9V-JIi" id="oXR-Ea-QJQ"/>
             </connections>
             <point key="canvasLocation" x="232.82442748091603" y="76.760563380281695"/>
         </tableViewCell>
@@ -190,11 +210,14 @@
         <image name="Default_profile" width="170.66667175292969" height="170.66667175292969"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

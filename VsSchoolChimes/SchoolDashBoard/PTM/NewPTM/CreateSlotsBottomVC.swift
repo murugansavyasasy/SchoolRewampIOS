@@ -38,6 +38,18 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         }
         cell.dateBtn.setTitle(slotData[indexPath.row].date?.convertToTargetDateFormat(), for: .normal)
         cell.configure(with: slotData[indexPath.row].slots ?? [], parentTableView: tableView)
+        
+        cell.onSlotRemoved = { [weak self, weak cell] removedIndex in
+            guard let self = self,
+                  let cell = cell,
+                  let currentIndexPath = tableView.indexPath(for: cell) else { return }
+
+            self.slotData[currentIndexPath.row].slots?.remove(at: removedIndex)
+
+            // Reload just that row to reflect height change
+            self.tableView.reloadRows(at: [currentIndexPath], with: .automatic)
+        }
+        
         return cell
     }
     

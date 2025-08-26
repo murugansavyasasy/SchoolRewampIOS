@@ -24,15 +24,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zxz-Db-L4G">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-0t-tOf">
-                            <rect key="frame" x="0.0" y="50" width="393" height="709"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-0t-tOf">
+                            <rect key="frame" x="0.0" y="52" width="393" height="707"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5Z-qp-aBk">
-                            <rect key="frame" x="10" y="10" width="13" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="35" id="1hl-WX-bWg"/>
-                            </constraints>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5Z-qp-aBk">
+                            <rect key="frame" x="10" y="10" width="373" height="22"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" image="chevron.backward" catalog="system"/>
                             <connections>
@@ -40,19 +38,20 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="tTg-0t-tOf" secondAttribute="trailing" id="8Lj-0Q-shw"/>
+                        <constraint firstItem="tTg-0t-tOf" firstAttribute="top" secondItem="V5Z-qp-aBk" secondAttribute="bottom" constant="20" id="GAv-5B-nZ6"/>
+                        <constraint firstAttribute="trailing" secondItem="V5Z-qp-aBk" secondAttribute="trailing" constant="10" id="Hnt-SG-0dz"/>
                         <constraint firstItem="tTg-0t-tOf" firstAttribute="leading" secondItem="Zxz-Db-L4G" secondAttribute="leading" id="Kxg-4j-XnR"/>
                         <constraint firstAttribute="bottom" secondItem="tTg-0t-tOf" secondAttribute="bottom" id="Ndx-R4-yTY"/>
                         <constraint firstItem="V5Z-qp-aBk" firstAttribute="leading" secondItem="Zxz-Db-L4G" secondAttribute="leading" constant="10" id="Wye-Zv-slL"/>
-                        <constraint firstItem="tTg-0t-tOf" firstAttribute="top" secondItem="Zxz-Db-L4G" secondAttribute="top" constant="50" id="eN6-ME-yXc"/>
                         <constraint firstItem="V5Z-qp-aBk" firstAttribute="top" secondItem="Zxz-Db-L4G" secondAttribute="top" constant="10" id="hB5-Ub-nRP"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
                 <constraint firstItem="Zxz-Db-L4G" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8pY-Qj-dRI"/>
                 <constraint firstItem="Zxz-Db-L4G" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="apt-IM-dVg"/>
@@ -64,8 +63,8 @@
     </objects>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

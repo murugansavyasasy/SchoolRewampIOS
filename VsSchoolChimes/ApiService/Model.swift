@@ -1570,6 +1570,7 @@ struct SlotEventDetail: Codable {
     let event_mode: String?
     let meeting_duration: Int?
     let break_duration: Int?
+    let profiles: [String]?
     let slots: [SlotItem]?
     let std_sec_details: [ClassSectionDetail]?
 }
@@ -1578,18 +1579,19 @@ struct SlotItem: Codable {
     let slot_id: String?
     let from_time: String?
     let to_time: String?
-    let is_cancelled: Int?
-    let is_booked: Int?
+    let is_cancelled: Bool?
+    let is_booked: Bool?
     let booked_by: String?
     let my_class: String?
     let my_section: String?
     let profile_url: String?
+    let mobile_no: String?
     let status: String?
     let event_name: String?
     let event_mode: String?
     let meeting_duration: Int?
     let break_duration: Int?
-    let is_cancelled_by_staff: Int?
+    let is_cancelled_by_staff: Bool?
     let date: String?
 }
 
@@ -1599,6 +1601,7 @@ struct ClassSectionDetail: Codable {
     let class_name: String?
     let section_name: String?
 }
+
 
 struct SlotValidationResponse: Codable {
     var status: Bool?

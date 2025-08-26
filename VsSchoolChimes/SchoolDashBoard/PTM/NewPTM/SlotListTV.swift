@@ -22,12 +22,13 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var BookedStatusView: UIView!
     @IBOutlet weak var WaitingLbl: UILabel!
     
+    @IBOutlet weak var bookedByNameLbl: UILabel!
     var showpopup:ShowPopupDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
        
-        cellView.layer.cornerRadius = 10
+        cellView.layer.cornerRadius = 12
         cellView.layer.borderWidth = 0.5
         cellView.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -36,6 +37,7 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         
         TimeLbl.setFont(style: .header, size: FontSize.HeaderSize)
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
+        bookedByNameLbl.setFont(style: .body, size: FontSize.BodySize)
         
         BookingBaseview.layer.cornerRadius = 10
         BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.5)

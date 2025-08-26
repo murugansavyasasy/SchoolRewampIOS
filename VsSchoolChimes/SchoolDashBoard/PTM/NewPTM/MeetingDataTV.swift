@@ -19,21 +19,24 @@ class MeetingDataTV: UITableViewCell {
     @IBOutlet weak var modeDefBtn: UIButton!
     @IBOutlet weak var modeLbl: UILabel!
     @IBOutlet weak var JoinBtn: UIButton!
-    
+    @IBOutlet weak var classBtn: UIButton!
+    @IBOutlet weak var classesLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        meetingNameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        dateLbl.setFont(style: .body, size: FontSize.BodySize)
-        TimeLbl.setFont(style: .body, size: FontSize.BodySize)
-        durationLbl.setFont(style: .body, size: FontSize.BodySize)
-        modeLbl.setFont(style: .body, size: FontSize.BodySize)
+        meetingNameLbl.setFont(style: .title, size: FontSize.HeaderSize)
+        dateLbl.setFont(style: .body, size: FontSize.HeaderSize)
+        TimeLbl.setFont(style: .body, size:  FontSize.HeaderSize)
+        durationLbl.setFont(style: .body, size:  FontSize.HeaderSize)
+        modeLbl.setFont(style: .body, size:  FontSize.HeaderSize)
+        classesLbl.setFont(style: .body, size:  FontSize.HeaderSize)
         
         dateDefBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TimeDefBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         durationDefBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         modeDefBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        classBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         JoinBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         JoinBtn.layer.cornerRadius = 10

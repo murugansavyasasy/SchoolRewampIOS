@@ -195,6 +195,7 @@ struct Menu_id{
     static let  MessageFromManagement = 22
     static let  senderChat = 17
     static let  quiz = 27
+    static let  ptm = 26
 }
 struct TargetTypes{
     

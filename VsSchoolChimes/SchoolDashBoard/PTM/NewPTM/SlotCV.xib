@@ -39,6 +39,9 @@
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="trashcan"/>
+                                        <connections>
+                                            <action selector="removeAct:" destination="gTV-IL-0wX" eventType="touchUpInside" id="o7E-fG-Hcb"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -79,7 +82,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
