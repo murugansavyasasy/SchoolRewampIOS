@@ -250,6 +250,43 @@ extension NewPtmVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: true)
     }
+    
+    func loadImages(into cell: MeetingDetailTV, urls: [String]) {
+        // Hide all image views and button initially
+        [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
+        cell.countBtn.isHidden = true
+        
+        let imageViews = [cell.img1, cell.img2, cell.img3]
+        
+        // Show first 3 images
+        for (index, urlString) in urls.prefix(3).enumerated() {
+            guard let imageView = imageViews[safe: index] else { continue }
+            
+            imageView?.isHidden = false
+            
+            if let url = URL(string: urlString), !urlString.isEmpty {
+                // Load from URL
+                imageView?.sd_setImage(
+                    with: url,
+                    placeholderImage: UIImage(named: "Default_profile"),
+                    options: [.retryFailed, .continueInBackground]
+                )
+            } else {
+                // Invalid/empty → set default image
+                imageView?.image = UIImage(named: "Default_profile")
+            }
+        }
+        
+        // Show remaining count if more than 3
+        if urls.count > 3 {
+            let extraCount = urls.count - 3
+            cell.countBtn.setTitle("+\(extraCount)", for: .normal)
+            cell.countBtn.isHidden = false
+        }
+    }
+
+
+    
 }
 
 
@@ -286,13 +323,23 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
-        cell.cellView.backgroundColor = colours[indexPath.row % colours.count]
+        cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
         let event = sections[indexPath.section].events[indexPath.row]
         cell.MeetingNameLbl.text = event.event_name
         cell.dateBtn.setTitle(event.date?.convertToTargetDateFormat(), for: .normal)
         let time = (event.start_time ?? "") + " - " + (event.end_time ?? "")
         cell.timeBtn.setTitle(time, for: .normal)
         cell.modeLbl.text = event.event_mode
+        if event.profiles?.count == 0 {
+            cell.imageStack.isHidden = true
+            cell.joinBtn.isHidden = false
+        }else {
+            cell.imageStack.isHidden = false
+            cell.joinBtn.isHidden = true
+            loadImages(into: cell, urls: event.profiles ?? [])
+        }
+       
+       
         return cell
     }
     

@@ -7,7 +7,16 @@
 
 import UIKit
 
-class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SelectedId{
+    func selectId(id: String?, edit: Bool?) {
+        if edit ?? false{
+            
+        }else{
+            
+        }
+        print(id)
+    }
+    
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
@@ -23,6 +32,36 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
         tv.register(UINib(nibName: "SlotListTV", bundle: nil), forCellReuseIdentifier: "SlotListTV")
         tv.delegate = self
         tv.dataSource = self
+    }
+    
+    //MARK: API call functions
+    
+    func Cancel_and_Reopen_Slot_api(indexpath:IndexPath){
+        
+        var slot = slotData?.slots?[indexpath.row]
+        let param : [String:Any] = ["slot_id":slot?.slot_id ?? ""]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        slot?.is_cancelled_by_staff = true
+                        self.tv.reloadRows(at: [indexpath], with: .automatic)
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                case .failure(let failure):
+                    print("Error: ",failure.localizedDescription)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+                
+            }
+        }
     }
 
     @IBAction func BackAct(_ sender: Any) {
@@ -79,7 +118,8 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate{
             cell.TimeLbl.text = (slot?.from_time ?? "") + " - " + (slot?.to_time ?? "")
             cell.DurationLbl.text = "Duration - " + String(slot?.meeting_duration ?? 0) + " minutes"
             cell.bookedByNameLbl.text = slot?.booked_by
-            
+            cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
+            cell.delegate = self
             if slot?.is_booked == true {
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)

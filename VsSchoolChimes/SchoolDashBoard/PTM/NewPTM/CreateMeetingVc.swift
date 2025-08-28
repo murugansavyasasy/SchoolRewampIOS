@@ -91,6 +91,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     var selectedClasses: [[String: String]] = []
     var meetingMode = "In Person"
     var BreakBetweenSlot = 1
+    var durationValue: Int? // store the duration you'll send in API
+    var breakDurationValue = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -438,28 +441,37 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     }
     
     private func setupDropDown() {
-        dropDown.anchorView = selectDurationView       // The view dropdown will appear from
-        dropDown.dataSource = ["10 Minutes", "15 Minutes", "20 Minutes", "30 Minutes","Custom"]
-        
-        // Dropdown selection action
+        dropDown.anchorView = selectDurationView
+        dropDown.dataSource = ["10 Minutes", "15 Minutes", "20 Minutes", "30 Minutes", "Custom"]
+
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             durationLbl.text = item
-            if index == dropDown.dataSource.count - 1{
+            
+            if index == dropDown.dataSource.count - 1 {
+                // Custom option selected
                 customDurationView.isHidden = false
-            }else {
+                durationValue = nil // will be set when user enters custom value
+            } else {
                 customDurationView.isHidden = true
                 durationTextfield.text = ""
+                
+                // Extract the number from the string and store it as Int
+                let components = item.components(separatedBy: " ")
+                if let firstPart = components.first, let intValue = Int(firstPart) {
+                    durationValue = intValue
+                }
             }
         }
         
-        // Optional customizations
+        // UI tweaks
         dropDown.direction = .bottom
         dropDown.bottomOffset = CGPoint(x: 0, y: selectDurationView.bounds.height)
         dropDown.cellHeight = 50
         dropDown.backgroundColor = .white
         dropDown.textColor = .black
     }
+
     
     @IBAction func breakSwitchAct(_ sender: Any) {
         
@@ -467,10 +479,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             breakSlotView.isHidden = false
             BreakDurationDefLbl.isHidden = false
             breakDurationCV.isHidden = false
+            breakDurationValue = 5
         }else {
             breakSlotView.isHidden = true
             BreakDurationDefLbl.isHidden = true
             breakDurationCV.isHidden = true
+            breakDurationValue = 0
         }
     }
     
@@ -601,15 +615,23 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     func Check_Slots_Api_call(){
         
-        let slots = generateSlots(from: fromTimeLbl.text ?? "", to: toTimeLbl.text ?? "", slotDuration: 15,breakDuration: 0,breakAfterSlots: BreakBetweenSlot)
+        var finalValue: Int?
+
+           if customDurationView.isHidden {
+               finalValue = durationValue // from preset selection
+           } else {
+               finalValue = Int(durationTextfield.text ?? "")
+           }
+        
+        let slots = generateSlots(from: fromTimeLbl.text ?? "", to: toTimeLbl.text ?? "", slotDuration: finalValue ?? 0,breakDuration: breakDurationValue,breakAfterSlots: BreakBetweenSlot)
 
         let param: [String: Any] = [
             PTMRequestStringFile.event_name: purposeTextfield.text ?? "",
             PTMRequestStringFile.from_time: fromTimeLbl.text ?? "",
             PTMRequestStringFile.to_time: toTimeLbl.text ?? "",
-            PTMRequestStringFile.duration: 15,
+            PTMRequestStringFile.duration: finalValue ?? "",
             PTMRequestStringFile.event_link: meetingLinkTextfield.text ?? "",
-            PTMRequestStringFile.break_time: 5,
+            PTMRequestStringFile.break_time: breakDurationValue,
             PTMRequestStringFile.meeting_mode: meetingMode,
             PTMRequestStringFile.std_sec_details:selectedClasses,
             PTMRequestStringFile.slots: slots
@@ -727,6 +749,10 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
         } else if collectionView == breakDurationCV {
             if SelectedDuration == indexPath { return }
             SelectedDuration = indexPath
+            let components = breakDuration[indexPath.item].components(separatedBy: " ")
+            if let firstPart = components.first, let intValue = Int(firstPart) {
+                durationValue = intValue
+            }
             collectionView.reloadData()
         }
     }

@@ -1579,7 +1579,7 @@ struct SlotItem: Codable {
     let slot_id: String?
     let from_time: String?
     let to_time: String?
-    let is_cancelled: Bool?
+    var is_cancelled: Bool?
     let is_booked: Bool?
     let booked_by: String?
     let my_class: String?
@@ -1591,7 +1591,7 @@ struct SlotItem: Codable {
     let event_mode: String?
     let meeting_duration: Int?
     let break_duration: Int?
-    let is_cancelled_by_staff: Bool?
+    var is_cancelled_by_staff: Bool?
     let date: String?
 }
 
@@ -1628,6 +1628,11 @@ struct Slot: Codable {
     var slot_to: String?
 }
 
+struct StdSecDetail: Codable {
+    var class_id: String?
+    var section_id: String?
+}
+
 struct ValidatedSlot: Codable {
     var slot_from: String?
     var slot_to: String?
@@ -1635,10 +1640,6 @@ struct ValidatedSlot: Codable {
     var slot_availablity: String?
 }
 
-struct StdSecDetail: Codable {
-    var class_id: String?
-    var section_id: String?
-}
 
 struct LSRWReportResponse: Codable {
     let status: Bool?
@@ -1909,7 +1910,7 @@ struct QuizQuestiondata: Codable {
     var optionB: String
     var optionC: String
     var optionD: String
-    var marks: Int
+    var marks: String
     var correctAnswer: String?
     var filePath: [FilePath]?
     
@@ -1924,7 +1925,7 @@ struct QuizQuestiondata: Codable {
         optionB: String = "",
         optionC: String = "",
         optionD: String = "",
-        marks: Int = 0,
+        marks: String = "",
         correctAnswer: String? = nil,
         filePath: [FilePath]? = nil
     ) {

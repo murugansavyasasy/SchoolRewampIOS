@@ -154,6 +154,7 @@ struct ServiceUrl{
     static let lms_api_lsrw_stats = "lms/api/lsrw/stats"
     static let ptm_api_ptm_schedule_cancel_and_reopen_slot = "ptm/api/ptm-schedule/cancel-and-reopen-slot"
     static let ptm_api_ptm_schedule_cancel_and_close_slot = "ptm/api/ptm-schedule/cancel-and-close-slot"
+    static let ptm_api_ptm_schedule_create_slots = "ptm/api/ptm-schedule/create-slots"
     
 }
 

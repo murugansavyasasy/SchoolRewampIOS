@@ -9,7 +9,7 @@ import UIKit
 
 class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
     func selectId(id: String?, edit: Bool?) {
-        print("")
+        delegate?.selectId(id: id, edit: edit)
     }
     
 
@@ -21,10 +21,12 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var BookingBaseview: UIView!
     @IBOutlet weak var BookedStatusView: UIView!
     @IBOutlet weak var WaitingLbl: UILabel!
-    
     @IBOutlet weak var bookedByNameLbl: UILabel!
     var showpopup:ShowPopupDelegate?
-    
+    var edit:Bool?
+    var delete:Bool?
+    var delegate:SelectedId?
+    var selectedId:String?
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -45,15 +47,16 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         WaitingLbl.isHidden = true
         
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        optionsBtn.isHidden = !(edit || delete)
     }
     
     @IBAction func optionBtnAct(_ sender: UIButton) {
         
-        let popoverContentVC = PopupVC(edit: false, delete: false, selectedId: "")
+        let popoverContentVC = PopupVC(edit: false, delete: false, selectedId: selectedId)
         popoverContentVC.delegate = self
         popoverContentVC.ptm = true
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: 60)
