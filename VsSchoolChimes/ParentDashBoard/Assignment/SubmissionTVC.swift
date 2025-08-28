@@ -9,9 +9,14 @@ import UIKit
 import AVFoundation
 import AVKit
 
-class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
+class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate, SelectedId, UIPopoverPresentationControllerDelegate {
+    func selectId(id: String?, edit: Bool?) {
+        delegate?.selectId(id:id, edit: edit)
+    }
     
     
+    @IBOutlet weak var EditBtn1: UIButton!
+    @IBOutlet weak var EditBtn: UIButton!
     @IBOutlet weak var sumisionCollectionView: UICollectionView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var assignmentTitle: UILabel!
@@ -21,6 +26,10 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
     @IBOutlet weak var timeLeft: UILabel!
     var FilesUrl:[FilePath]?
     var player: AVPlayer?
+    var delegate:SelectedId?
+    var selectedId:String?
+    var edit:Bool?
+    var delete:Bool?
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -42,7 +51,36 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         timeLeft.setFont(style: .body, size: FontSize.BodySize)
         sumisionCollectionView.register(UINib(nibName: CellConfingName.ImagePdfCvCell, bundle:nil), forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
+        EditBtn.isHidden = true
+        EditBtn1.isHidden = true
+    }
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        EditBtn.isHidden = !(edit || delete)
+        EditBtn1.isHidden = !(edit || delete)
+    }
+    @IBAction func edit(_ sender: UIButton) {
+        let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
+        popoverContentVC.delegate = self
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: edit ?? false ? 90:50)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .down
+            popoverController.delegate = self
+        }
         
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
     }
 }
 extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
@@ -93,7 +131,7 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
             }
             
         }
-
+        
         return cell
     }
     
@@ -104,9 +142,9 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("didSelectItemAt")
         guard let file = FilesUrl?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
-                let fileExtension = url.pathExtension.lowercased()
+        let fileExtension = url.pathExtension.lowercased()
         
-                let vc = getCurrentViewController()
+        let vc = getCurrentViewController()
         if file.type?.uppercased() == "VIDEO"{
             playVimeoVideo(from: file.url ?? "")
         }else{
@@ -121,11 +159,11 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
             vcc.fileURL =  homeworkDocs
             vcc.pdfUrl = FilesUrl?[indexPath.row].url
             vcc.scrollIndex = indexPath
-//            vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+            //            vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
             vcc.modalPresentationStyle = .fullScreen
             vc?.present(vcc, animated: true)
         }
-               
+        
     }
     func playVimeoVideo(from url: String) {
         if let videoID = extractVimeoID(from: url) {
@@ -160,5 +198,8 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
             .filter { $0.activationState == .foregroundActive }
             .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
             .first?.rootViewController?.topMostViewController()
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

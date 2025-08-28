@@ -76,6 +76,8 @@ class AddAttachmentTVC: UITableViewCell,
                           forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         imageCV?.register(UINib(nibName: "AudioCVC", bundle: nil),
                           forCellWithReuseIdentifier: "AudioCVC")
+        let layout = LeftAlignedFlowLayout()
+        imageCV?.collectionViewLayout = layout
         imageCV?.delegate = self
         imageCV?.dataSource = self
         imageCV?.backgroundColor = .clear
@@ -154,6 +156,7 @@ class AddAttachmentTVC: UITableViewCell,
                 for: indexPath
             ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
+            
             return cell
             
         case "audio":
@@ -320,8 +323,10 @@ class AddAttachmentTVC: UITableViewCell,
             }
         ]
         
-        if task == "Reading" {
+        if task == "Reading" || task == "Listening"{
             options.removeAll { $0.type == .recording || $0.type == .audio }
+        }else if task == "Speaking"{
+            options.removeAll { $0.type != .recording || $0.type != .audio ||  $0.type != .video}
         }
         
         for option in options {

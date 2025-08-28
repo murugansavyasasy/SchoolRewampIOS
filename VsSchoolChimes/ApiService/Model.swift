@@ -954,8 +954,8 @@ struct LessonPlanDetail: Codable {
 }
 
 struct LessonDetailItem: Codable {
-    let name: String
-    let value: String
+    let name: String?
+    let value: String?
 }
 
 struct LessonEditResponse: Codable {
@@ -1910,7 +1910,7 @@ struct QuizQuestiondata: Codable {
     var optionB: String
     var optionC: String
     var optionD: String
-    var marks: String
+    var marks:String?
     var correctAnswer: String?
     var filePath: [FilePath]?
     

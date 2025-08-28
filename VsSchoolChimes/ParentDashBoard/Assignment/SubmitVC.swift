@@ -23,7 +23,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var addPhotosLabel: UILabel!
     @IBOutlet weak var titleHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionHeght: NSLayoutConstraint!
-    @IBOutlet weak var descriptionCountLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var titleTxt: UITextView!
     @IBOutlet weak var descriptionLbl: UILabel!
@@ -31,7 +30,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var bagrountview: UIView!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
-    @IBOutlet weak var VideoView: UIView!
     
     var placeholderLabel: UILabel!
     var attachments: [AttachmentItem] = []
@@ -91,11 +89,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     // MARK: - Setup
     
     func setupUI() {
-        VideoView.layer.cornerRadius = 10
-        VideoView.isHidden = true
-        //          bagrountview.layer.cornerRadius = 10
-        //          bagrountview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //          bagrountview.clipsToBounds = true
         DescriptionTextview.layer.cornerRadius = 10
         DescriptionTextview.layer.borderWidth = 1
         DescriptionTextview.layer.borderColor = UIColor.gray.cgColor
@@ -105,8 +98,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         descriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
-        descriptionCountLbl.setFont(style: .body, size: FontSize.BodySize)
-        
         addPhotosLabel.setRequiredText(CommonStringFile.Add_attachment)
         descriptionLbl.setRequiredText(CommonStringFile.Description)
     }
@@ -226,48 +217,11 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-    
-//    func imageSelection(){
-//        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-//            
-//            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-//            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
-//            selectedVideoURL = nil
-//            
-//            user_inputs.selectedFileType = CommonStringFile.IMAGE
-//            selectImgPdfview.imageCollectionview.reloadData()
-//        }
-//        
-//        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-//            user_inputs.selectedFileType = CommonStringFile.IMAGE
-//            
-//            let imageItems = images.map {
-//                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
-//            }
-//            attachments.append(contentsOf: imageItems)
-//            if imageItems.count != 0{
-//                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
-//            }
-//            selectedVideoURL = nil
-//            selectImgPdfview.imageCollectionview.reloadData()
-//        }
-//        
-//        PhotoPickerManager.shared.onFilePicked = { [self] data in
-//            // handle picked PDF
-//            user_inputs.selectedFileType = CommonStringFile.pdf
-//            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-//            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-//            selectedVideoURL = nil
-//            selectImgPdfview.imageCollectionview.reloadData()
-//        }
-//    }
-    
     func imageSelection(){
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            //            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
@@ -280,9 +234,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            //            if imageItems.count != 0{
-            //                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            //            }
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
@@ -290,7 +241,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             selectImgPdfview.imageCollectionview.reloadData()
         }
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
@@ -305,13 +255,30 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                         VideoURl: data
                     )
                 )
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             selectImgPdfview.imageCollectionview.reloadData()
         }
     }
     
-    func selectVideo() {
-        videoPicker?.pickVideo()
+    func VideoPick() {
+        let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
+        
+        if  video.count != 2{
+            
+            if attachments.count <= 10{
+                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
+                PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
+                
+            }else{
+                let alert = CustomAlert()
+                alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+            
+        }else{
+            
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+        
     }
     
 
@@ -320,13 +287,10 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         if #available(iOS 15.0, *) {
             self.hideLottieProgressLoader()
         }
-        videoPicker?.playVideo(from: url, in: VideoView)
         attachments.removeAll()
         selectImgPdfview.isHidden = true
         collectionViewHeght.constant = 0
         selectedVideoURL = url
-        
-        VideoView.isHidden = false
     }
     
     func videoPickerManagerDidCloseVideo() {
@@ -334,7 +298,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             self.hideLottieProgressLoader()
         }
         selectedVideoURL = nil
-        VideoView.isHidden = true
         selectImgPdfview.isHidden = false
         collectionViewHeght.constant = 120
         selectImgPdfview.imageCollectionview.reloadData()
@@ -441,7 +404,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 self?.selectPDF()
             })
             alert.addAction(UIAlertAction(title: "Video".translated(), style: .default) { [weak self] _ in
-                self?.selectVideo()
+                self?.VideoPick()
             })
             alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
             present(alert, animated: true)
@@ -739,15 +702,15 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         // Current text in the UITextView
         let currentText = textView.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        
-        if newText.count <= 500 {
-            descriptionCountLbl.text = "\(newText.count) / 500" // Update the character count label
+//        
+//        if newText.count <= 500 {
+//            descriptionCountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false // Reject the change
-        }
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            return false // Reject the change
+//        }
     }
     
 }

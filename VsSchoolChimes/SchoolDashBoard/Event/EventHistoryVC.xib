@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -71,7 +70,7 @@
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uPs-Nu-uB3">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="749"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="05D-BK-bbW"/>
                                         <outlet property="delegate" destination="-1" id="7kv-Jp-OAa"/>
@@ -83,7 +82,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="cNI-ex-vb4" firstAttribute="leading" secondItem="Niq-vc-bpZ" secondAttribute="leading" id="0b7-Wg-bae"/>
                         <constraint firstAttribute="trailing" secondItem="cNI-ex-vb4" secondAttribute="trailing" id="M0L-z0-9ej"/>
@@ -96,7 +95,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Niq-vc-bpZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="I2g-oW-VZg"/>
                 <constraint firstItem="Niq-vc-bpZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="arD-nh-r2P"/>
@@ -108,8 +107,5 @@
     </objects>
     <resources>
         <image name="NoMessage" width="650" height="512"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

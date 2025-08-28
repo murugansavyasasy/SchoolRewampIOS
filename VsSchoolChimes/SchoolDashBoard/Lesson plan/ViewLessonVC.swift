@@ -8,7 +8,28 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class ViewLessonVC: UIViewController {
+class ViewLessonVC: UIViewController, SelectedId {
+    func selectId(id: String?, edit: Bool?) {
+        if edit ?? false{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                let vc = EditLessonVC(nibName: nil, bundle: nil)
+                vc.particular_Id = id
+                vc.ReqestType  = self.Reqest_Type
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_Delete_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    
+                    self.Delete_LessonPlan_Api(particularID: id ?? "")
+                }, onNo: {
+                    
+                })
+            }
+        }
+    }
+    
     
     
     @IBOutlet weak var BAckBtn: UIButton!
@@ -45,8 +66,10 @@ class ViewLessonVC: UIViewController {
         TableView.showsVerticalScrollIndicator = false
         TableView.showsHorizontalScrollIndicator = false
         
-        let nib = UINib(nibName: CellConfingName.LessonViewTvCell, bundle: nil)
-        TableView.register(nib, forCellReuseIdentifier: CellConfingName.LessonViewTvCell)
+//        let nib = UINib(nibName: CellConfingName.LessonViewTvCell, bundle: nil)
+        let nib = UINib(nibName: "LessonPlanTVC", bundle: nil)
+//        TableView.register(nib, forCellReuseIdentifier: CellConfingName.LessonViewTvCell)
+        TableView.register(nib, forCellReuseIdentifier: "LessonPlanTVC")
         
         TableView.delegate = self
         TableView.dataSource = self
@@ -61,14 +84,6 @@ class ViewLessonVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         View_Lesson_Plan_Api()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
     }
     
     //MARK: Api Call Functions
@@ -173,71 +188,36 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = TableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonViewTvCell, for: indexPath) as! LessonViewTvCell
+        let cell = TableView.dequeueReusableCell(withIdentifier: "LessonPlanTVC", for: indexPath) as! LessonPlanTVC
         
         let lesson = FilteredData?[indexPath.row]
-        let colour: UIColor
+//        let colour: UIColor
         switch lesson?.lesson_plan_status{
             
         case 1:
-            colour = .systemOrange
-            cell.StatusLbl.text = LessonplanStringFile.yetToStart
-            cell.ProgressImage.image = UIImage.pending
+            cell.statusBtn.setImage(UIImage.pending, for: .normal)
+            cell.statusBtn.tintColor = .systemOrange
             
         case 2:
-            colour = .systemBlue
-            cell.StatusLbl.text = LessonplanStringFile.inProgress
-            cell.ProgressImage.image = UIImage(systemName: "arrow.2.circlepath.circle.fill")
+            cell.statusBtn.setImage(UIImage(systemName: "arrow.2.circlepath.circle.fill"), for: .normal)
+            cell.statusBtn.tintColor = .systemBlue
             
         case 3:
-            colour = .systemGreen
-            cell.StatusLbl.text = CommonStringFile.completed
-            cell.ProgressImage.image = UIImage.completed1
+            cell.statusBtn.setImage(UIImage(systemName: "checkmark.arrow.trianglehead.counterclockwise"), for: .normal)
+            cell.statusBtn.tintColor = .systemGreen
         default:
-            colour = .systemOrange
+            cell.statusBtn.setImage(UIImage.pending, for: .normal)
+            cell.statusBtn.tintColor = .systemOrange
         }
-        
-        cell.DeleteBtn.isHidden = IsDeleteHiden
-        
+        cell.levelBtn.setTitle("\(indexPath.row+1)", for: .normal)
         cell.EditBtn.tag = indexPath.row
-        cell.EditBtn.addTarget(self, action: #selector(EditBtnAct(_:)), for: .touchUpInside)
-        
-        cell.DeleteBtn.tag = indexPath.row
-        cell.DeleteBtn.addTarget(self, action: #selector(DeleteBtnAct(_:)), for: .touchUpInside)
-        
-        cell.ProgressView2.backgroundColor = colour.withAlphaComponent(0.1)
-        cell.ProgressView2.layer.borderColor = colour.cgColor
-        cell.StatusLbl.textColor = colour
-        cell.ProgressImage.tintColor = colour
-        
+        cell.EditBtn1.tag = indexPath.row
         let details = FilteredData?[indexPath.row].details ?? []
-        
+        cell.edit(edit:true, delete:  IsDeleteHiden, selectedId: FilteredData?[indexPath.row].particular_id  ?? "")
+        cell.delegate = self
         cell.configure(with: details)
         
         return cell
-    }
-    
-    @objc func EditBtnAct(_ sender: UIButton) {
-        
-        let particularId = FilteredData?[sender.tag].particular_id
-        
-        let vc = EditLessonVC(nibName: nil, bundle: nil)
-        vc.particular_Id = particularId
-        vc.ReqestType  = Reqest_Type
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-    
-    @objc func DeleteBtnAct(_ sender: UIButton) {
-        
-        let particularId = FilteredData?[sender.tag].particular_id ?? ""
-        
-        CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_Delete_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-            
-            self.Delete_LessonPlan_Api(particularID: particularId)
-        }, onNo: {
-            
-        })
     }
 }
 
@@ -254,7 +234,8 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         cell.FilterLbl.text = Filters[indexPath.item]
         
-        cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.topBackgroundCLr : .systemGray5
+        cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.blue.withAlphaComponent(0.6) : .systemGray5
+        cell.FilterLbl.textColor = indexPath == selectedIndex ? UIColor.white : .black
         cell.CheckboxImg.isHidden = true
         
         return cell

@@ -9,23 +9,21 @@ import UIKit
 import WebKit
 
 class FeeDetails: UIViewController {
-
-    @IBOutlet weak var standerdSection: UILabel!
-    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var createBtn: UIButton!
+    @IBOutlet weak var reportsBtn: UIButton!
+    @IBOutlet weak var reportsLb: UILabel!
+    @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var tableOuterView: UIView!
     @IBOutlet weak var webOuterView: UIView!
-    @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var feeDetailTableView: UITableView!
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var backBtn: UIButton!
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var feeDetailsList: [FeeDetailModel] = []
     var isWebViewLoaded = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        userName.setFont(style: .body, size: FontSize.BodySize)
-        standerdSection.setFont(style: .body, size: FontSize.BodySize)
-        userName.text = studentDetails?.name ?? ""
-        standerdSection.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         tableOuterView.isHidden = true
         if let pdfURL = URL(string: "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063") {
             let request = URLRequest(url: pdfURL)
@@ -40,17 +38,17 @@ class FeeDetails: UIViewController {
         feeDetailTableView.dataSource = self
         loadDummyData()
     }
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
+
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
-    @IBAction func switchTab(_ sender: UISegmentedControl) {
+    @IBAction func switchController(_ sender: UIButton) {
+        let selectedIndex = sender.tag
+        updateTabUI(for: selectedIndex)
         DispatchQueue.main.async { [self] in
             UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve, animations: { [self] in
-                   switch sender.selectedSegmentIndex {
+                   switch selectedIndex {
                    case 0:
                        self.webOuterView.isHidden = false
                        self.tableOuterView.isHidden = true
@@ -66,7 +64,15 @@ class FeeDetails: UIViewController {
                })
            }
     }
-
+    func updateTabUI(for index: Int) {
+        UIView.animate(withDuration: 0.25) {
+//            self.searcchBtn.isHidden = index == 0
+            self.createLbl.backgroundColor = index == 0 ? UIColor.parentClr : .clear
+            self.reportsLb.backgroundColor = index == 0 ? .clear : UIColor.parentClr
+            self.reportsBtn.tintColor = index == 0 ? .black : UIColor.parentClr
+            self.createBtn.tintColor = index == 1 ? .black : UIColor.parentClr
+        }
+    }
     func loadDummyData() {
         feeDetailsList = [
             FeeDetailModel(invoiceNumber: "INV001", invoiceDate: "01-05-2025", invoiceAmount: "₹1200", pdfURL: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", generatedTime: "10:45 AM", fileSize: "234 KB"),

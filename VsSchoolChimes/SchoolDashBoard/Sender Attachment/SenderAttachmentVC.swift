@@ -53,6 +53,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var selectedImgUrl: [FilePath] = []
     var VideoPath_URL : URL?
     var DocumentpreviewURL : URL?
+    var selectNotice: EditObjectDelegate?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
@@ -62,7 +63,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     var placeholderLabel: UILabel?
-    var selectNotice: SelectNotice?
     var editId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +99,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         AssignmentTypeview.addGestureRecognizer(typeGesture)
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
-        
+        selectImgPdfview.imageCollectionview.backgroundColor = .clear
         imageSelection()
     }
     
@@ -126,26 +126,23 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             )
         }
         attachments = imageItems
-    
-        let size = contentTextView.sizeThatFits(CGSize(width: contentTextView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-        let newHeight = min(max(size.height, initialHeight), maxHeight)
-        TextviewHeight.constant = newHeight
+        updateTextViewHeight(contentTextView)
         attachments.removeAll()
         attachments.append(contentsOf: imageItems)
-        letterscountLbl.text = "\(content.count) / 500"
+
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
-    
-    override func viewDidLayoutSubviews() {
-        
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-    
+//    
+//    override func viewDidLayoutSubviews() {
+//        
+//        view.applyGradient(
+//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+//    }
+//    
     deinit {
         // Remove observers
         NotificationCenter.default.removeObserver(self)
@@ -153,11 +150,11 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     func  StyleAndTranslater(){
         
-        PopupView.layer.cornerRadius = 10
-        PopupView.layer.shadowColor = UIColor.black.cgColor
-        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        PopupView.layer.shadowRadius = 5
-        PopupView.layer.shadowOpacity = 0.3
+//        PopupView.layer.cornerRadius = 10
+//        PopupView.layer.shadowColor = UIColor.black.cgColor
+//        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        PopupView.layer.shadowRadius = 5
+//        PopupView.layer.shadowOpacity = 0.3
         
         AttachmentDropdownHeight.constant = 0
         AssignmentTypeview.isHidden = true
@@ -174,7 +171,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.layer.cornerRadius = 10
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.gray.cgColor
-        chooseRecipientsBtn.backgroundColor = .button
+        chooseRecipientsBtn.backgroundColor = UIColor.parentClr
         chooseRecipientsBtn.layer.cornerRadius = 10
         AssignmentTypeview.layer.cornerRadius = 10
         AssignmentTypeview.layer.borderWidth = 1
@@ -350,8 +347,10 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                             message: response.message,
                             on: self
                         ) { [self] in
-                           
-
+                            attachments.removeAll()
+                            assignTitleTxtFld.text = ""
+                            contentTextView.text = ""
+                            selectNotice?.editDta(edit:nil)
                             
                         }
                     }
@@ -649,15 +648,15 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
         // If the new text count is within the limit, update the character count label and allow the change
-        if updatedText.count <= 50 {
-            TitleLettersCount.text = "\(updatedText.count) / 50"
+//        if updatedText.count <= 50 {
+//            TitleLettersCount.text = "\(updatedText.count) / 50"
             return true
-        } else {
-            // If the limit is exceeded, show an alert and reject the change
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false
-        }
+//        } else {
+//            // If the limit is exceeded, show an alert and reject the change
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            return false
+//        }
     }
 
     
@@ -678,16 +677,17 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         
         // Compute the new text length
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        
-        if newText.count <= 500 {
-            letterscountLbl.text = "\(newText.count) / 500" // Update the character count label
+//        
+//        if newText.count <= 500 {
+//            letterscountLbl.text = "\(newText.count) / 500" // Update the character count label
             return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            //contentTxtView.isEditable = false // Optionally disable editing
+//            return false // Reject the change
+//        }
+        updateTextViewHeight(textView)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -713,13 +713,9 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty
         let size = textView.contentSize
-        
-        // Check if the content exceeds the initial height
         if size.height > initialHeight {
-            // Update the height constraint based on content size
-            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            let newHeight = min(size.height, maxHeight)
             TextviewHeight.constant = newHeight
-            // Execute function when text exceeds boundary
             executeFunctionWhenTextExceeds()
         }
         
@@ -731,7 +727,14 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         // Scroll to make the UITextView visible
         scrollToView(textView)
     }
-    
+    func updateTextViewHeight(_ textView: UITextView) {
+        let size = textView.contentSize
+        let newHeight = max(60, min(size.height, maxHeight)) // Min = 60, Max = maxHeight
+        TextviewHeight.constant = newHeight
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
     // Helper Method: Scroll to a specific view inside the UIScrollView
     func scrollToView(_ view: UIView) {
         // Calculate the frame of the view relative to the UIScrollView

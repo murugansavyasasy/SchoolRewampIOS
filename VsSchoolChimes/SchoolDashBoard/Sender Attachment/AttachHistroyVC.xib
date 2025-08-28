@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Twd-id-6oO">
-                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="uif-k0-yZm">
                             <rect key="frame" x="10" y="20.000000000000004" width="373" height="60.333333333333343"/>
@@ -49,7 +49,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FhZ-hr-FC7">
-                                                    <rect key="frame" x="323" y="10.333333333333343" width="20" height="20"/>
+                                                    <rect key="frame" x="323" y="10.333333333333329" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="85d-Oq-YaD"/>
                                                         <constraint firstAttribute="width" constant="20" id="QcG-rW-0px"/>
@@ -85,7 +85,7 @@
                             </subviews>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="JkR-Od-5Vw">
-                            <rect key="frame" x="0.0" y="90.333333333333314" width="393" height="575.66666666666674"/>
+                            <rect key="frame" x="0.0" y="90.333333333333314" width="393" height="702.66666666666674"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
@@ -114,7 +114,7 @@
                 <constraint firstItem="Twd-id-6oO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="GoM-eO-ja7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jnE-pk-jdh" secondAttribute="trailing" constant="20" id="IGv-z0-Qaj"/>
                 <constraint firstItem="jnE-pk-jdh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="MN1-MB-EqI"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Twd-id-6oO" secondAttribute="bottom" id="ihe-K3-5pr"/>
+                <constraint firstAttribute="bottom" secondItem="Twd-id-6oO" secondAttribute="bottom" id="ihe-K3-5pr"/>
                 <constraint firstItem="Twd-id-6oO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kAc-nS-UDE"/>
                 <constraint firstItem="jnE-pk-jdh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="kLS-Uc-bwI"/>
                 <constraint firstItem="Twd-id-6oO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="sW9-uJ-SRt"/>

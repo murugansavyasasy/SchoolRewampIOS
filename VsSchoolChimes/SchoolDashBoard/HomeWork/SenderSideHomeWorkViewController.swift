@@ -53,10 +53,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var alert = CustomAlert()
     var selectedVideoURL: URL?
     var editId : String?
-    var selectNotice: SelectNotice?
+    var selectNotice: EditObjectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
         wordsCountLbl.applyRightTxt()
@@ -69,6 +69,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         StyleAndTranslater()
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
+        uploadAttachmentView.imageCollectionview.backgroundColor = .clear
         DetailsTxtview.delegate = self
         TitleTxtfield.delegate = self
         VideoView.isHidden = true
@@ -94,16 +95,16 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         TitleTxtfield.text = title
         self.editId = editId
         RecipientBtn.setTitle("UPDATE", for: .normal)
-            let imageItems: [AttachmentItem] = imageUrls.map { file in
-                let type = file.type?.lowercased() ?? ""
-                return AttachmentItem(
-                    image: nil,
-                    imageURL: type != "video" ? file.url : nil,
-                    fileType: type,
-                    VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
-                )
-            }
-            attachments = imageItems
+        let imageItems: [AttachmentItem] = imageUrls.map { file in
+            let type = file.type?.lowercased() ?? ""
+            return AttachmentItem(
+                image: nil,
+                imageURL: type != "video" ? file.url : nil,
+                fileType: type,
+                VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+            )
+        }
+        attachments = imageItems
         
         
         
@@ -147,7 +148,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-
+            
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
         }
@@ -222,18 +223,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                             print("success")
                             editId = nil
                             RecipientBtn.setTitle("Next", for: .normal)
-//                            selectNotice?
-//                                .didTapButton(
-//                                    title: <#T##String#>,
-//                                    content: <#T##String#>,
-//                                    items: <#T##[FilePath]#>,
-//                                    editId: <#T##String#>
-//                                )
-                            
-                            
-                          
-//                            updateTextViewHeight(contentTxtView)
-//                            delegate = self
+                            TitleTxtfield.text = ""
+                            DetailsTxtview.text = ""
+                            attachments.removeAll()
+                            uploadAttachmentView.imageCollectionview.reloadData()
+                            selectNotice?.editDta(edit: nil)
                         }
                     }
                 }
@@ -246,7 +240,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 present(vc, animated: true)
             }
             
-           
+            
         }else{
             alert
                 .showAlert(
@@ -307,13 +301,13 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-
+    
     
     func openCamera() {
-       
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+        
+        PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
     }
-
+    
     
     func selectDocuments() {
         let remaining = 10 - attachments.count
@@ -324,13 +318,13 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-
+    
     
     func VideoPick() {
         let totalRemaining = 10 - attachments.count
         let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
         let videoRemaining = 2 - videoCount
-
+        
         if totalRemaining <= 0 {
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         } else if videoRemaining <= 0 {
@@ -342,7 +336,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
         }
     }
-
+    
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
@@ -370,6 +364,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 for: indexPath
             ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
+            
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(
@@ -404,8 +399,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             else{
                 cell.imageViews.image = nil
             }
-    
-            // Set collection view height dynamically
+            
             let totalItems = attachments.count
             collectionViewHeight.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
@@ -555,30 +549,30 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         // Compute the new text length
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
-        if newText.count <= 500 {
-            wordsCountLbl.text = "\(newText.count) / 500" // Update the character count label
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false // Reject the change
-        }
+        //        if newText.count <= 500 {
+        //            wordsCountLbl.text = "\(newText.count) / 500" // Update the character count label
+        return true // Allow the change
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        //            return false // Reject the change
+        //        }
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Current text
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        if newText.count <= 50 {
-            titleCountLbl.text = "\(newText.count) / 50" // Update count label
-            return true
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false
-        }
+        //        if newText.count <= 50 {
+        //            titleCountLbl.text = "\(newText.count) / 50" // Update count label
+        return true
+        //        } else {
+        //            let alert = CustomAlert()
+        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        //            return false
+        //        }
     }
-
+    
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {

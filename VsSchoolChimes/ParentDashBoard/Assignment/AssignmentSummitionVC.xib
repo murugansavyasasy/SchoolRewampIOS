@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,10 +28,10 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-8w-IkJ">
                     <rect key="frame" x="10" y="69" width="105.33333333333333" height="55"/>
-                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Summision" image="chevron.left" catalog="system">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
                     </state>
                     <connections>
@@ -42,8 +43,9 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMn-eq-qFq">
                             <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOf-4J-nvX">
@@ -52,13 +54,13 @@
                                 <constraint firstAttribute="height" constant="19.666666666666671" id="G3T-Kh-frK"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5U-gl-fhB">
-                    <rect key="frame" x="0.0" y="124" width="393" height="694"/>
+                    <rect key="frame" x="0.0" y="124" width="393" height="728"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="3Bq-NB-0G3">
                             <rect key="frame" x="0.0" y="10" width="393" height="0.0"/>
@@ -78,7 +80,7 @@
                             </subviews>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dmi-AR-H9n">
-                            <rect key="frame" x="10" y="10" width="373" height="674"/>
+                            <rect key="frame" x="10" y="10" width="373" height="708"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="WaO-jn-cDc"/>
@@ -99,10 +101,10 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="PrimeryColor"/>
             <constraints>
                 <constraint firstItem="W5U-gl-fhB" firstAttribute="top" secondItem="gSz-8w-IkJ" secondAttribute="bottom" id="0Yu-d7-rEQ"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="W5U-gl-fhB" secondAttribute="bottom" id="2ap-68-bxZ"/>
+                <constraint firstAttribute="bottom" secondItem="W5U-gl-fhB" secondAttribute="bottom" id="2ap-68-bxZ"/>
                 <constraint firstItem="W5U-gl-fhB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6f6-UK-ZA1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="p8d-i2-rv5" secondAttribute="trailing" constant="10" id="VBJ-bQ-AUL"/>
                 <constraint firstItem="p8d-i2-rv5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="WxZ-82-np5"/>
@@ -117,11 +119,11 @@
     <resources>
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

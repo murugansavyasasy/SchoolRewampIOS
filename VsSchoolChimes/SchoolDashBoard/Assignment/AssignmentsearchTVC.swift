@@ -78,6 +78,9 @@ class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
         sender.setImage(UIImage(systemName: icon), for: .normal)
         searchBar.isHidden = !sender.isSelected
         delegate?.searchText("true")
+        if !sender.isSelected{
+            searchBar.endEditing(true)
+        }
     }
     // MARK: - UISearchBarDelegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

@@ -16,16 +16,8 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         
         if edit ?? false{
             if let selectedEvent = HomeWork(withId: id ?? "") {
-                selectNotice?
-                    .didTapButton(
-                        title: selectedEvent.title ?? "",
-                        content: selectedEvent.description ?? "",
-                        items: selectedEvent.file_path ?? [], editId: id ?? ""
-                    )
-                
-                
+                selectNotice?.editDta(edit: selectedEvent)
             }
-
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.homeWorkDelete(id:id ?? "")
@@ -49,7 +41,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     @IBOutlet weak var dropDownStack: UIStackView!
     @IBOutlet weak var todayLbl: UILabel!
     @IBOutlet weak var dateView: UIView!
-    @IBOutlet weak var acodemicView: UIView!
+    @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var acodemicdropView: UIView!
 
     // MARK: - Properties
@@ -69,7 +61,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     var selectedImgUrl: [FilePath] = []
     var acodemicId: Int?
     var sectionId: String?
-    var selectNotice: SelectNotice?
+    var selectNotice: EditObjectDelegate?
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let transitionDelegate = TransitioningDelegate()
@@ -92,15 +84,17 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     // MARK: - Setup
     private func setupViews() {
 //        applyShadowAndCornerRadius(to: dateView)
-        applyShadowAndCornerRadius(to: acodemicView)
-        applyShadowAndCornerRadius(to: standerdView)
-        applyShadowAndCornerRadius(to: sectionView)
+        acodemicdropView.setShadow()
+        standerdView.setShadow(cornerRadius: 8)
+        sectionView.setShadow(cornerRadius: 8)
         searchBar.addDoneButton()
-//        dateView.layer.borderColor = UIColor.lightGray.cgColor
-//        dateView.layer.borderWidth = 0.5
-        
-        acodemicView.layer.borderColor = UIColor.lightGray.cgColor
-        acodemicView.layer.borderWidth = 0.5
+        dateView.layer.borderColor = UIColor.lightGray.cgColor
+        dateView.layer.borderWidth = 0.5
+        dateView.layer.cornerRadius = 8
+        dateBtn.layer.cornerRadius = 8
+        dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
+        acodemicdropView.layer.borderColor = UIColor.lightGray.cgColor
+        acodemicdropView.layer.borderWidth = 0.5
         
         standerdView.layer.borderColor = UIColor.lightGray.cgColor
         standerdView.layer.borderWidth = 0.5
@@ -318,7 +312,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
 //                        self.Cv.layoutIfNeeded()
 //                        self.cvHeight.constant = self.Cv.contentSize.height
 //                    }
-
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
                     self.noDataFound.isHidden = false
@@ -363,8 +356,6 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
             cell.PieChartTrailling.constant = -10
         cell.pieChartHeight.constant = 5
             cell.pieChart.isHidden = true
-        
-
             return cell
         }
     
@@ -404,21 +395,8 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
 
 // MARK: - Delegates
 @available(iOS 14.0, *)
-extension SenderHomeWorkVC: SelectNotice, Datepicker, UISearchBarDelegate {
-    func didTapButton(
-        title: String,
-        content: String,
-        items: [FilePath],
-        editId: String
-    ) {
-        selectNotice?
-            .didTapButton(
-                title: title,
-                content: content,
-                items: items,
-                editId: editId
-            )
-    }
+extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
+
 
     func date(date: String) {
         dateSelect(date)

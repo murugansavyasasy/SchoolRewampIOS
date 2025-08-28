@@ -51,10 +51,7 @@ class ExamDetailsVC: UIViewController {
         add(asChildViewController: firstChildVC)
         
     }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
+
     
     func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
         // Remove underline from both buttons
