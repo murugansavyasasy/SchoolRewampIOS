@@ -67,7 +67,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
         let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
         calendarView.addGestureRecognizer(fromdateTap)
-        
+        segmentName.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        segmentName.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentName.selectedSegmentTintColor = .blue.withAlphaComponent(0.6)
         let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
         TodateView.addGestureRecognizer(todateTap)
         tv.dataSource = self
@@ -75,11 +77,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         daily_collectionApi(type: "1")
     }
     override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
         totalCollectionView.layer.cornerRadius = 16
         totalCollectionView.layer.masksToBounds = false
         totalCollectionView.layer.shadowColor = UIColor.black.cgColor

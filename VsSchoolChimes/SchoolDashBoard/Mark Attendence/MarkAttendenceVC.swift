@@ -13,15 +13,15 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yy"
-            let DayDate = dateFormatter.date(from: date)!
-            // Change to output format
-            dateFormatter.dateFormat = "EEE dd"
-            let outputDateString = dateFormatter.string(from: DayDate)
-           DateBtn.setTitle(date, for: .normal)
-           setFormattedDate(outputDateString, label: CustomDateLbl)
-
-        }
+        dateFormatter.dateFormat = "dd MMM yy"
+        let DayDate = dateFormatter.date(from: date)!
+        // Change to output format
+        dateFormatter.dateFormat = "EEE dd"
+        let outputDateString = dateFormatter.string(from: DayDate)
+        DateBtn.setTitle(date, for: .normal)
+        setFormattedDate(outputDateString, label: CustomDateLbl)
+        
+    }
     @IBOutlet weak var ChooseAcademicYearLbl: UILabel!
     @IBOutlet weak var AcademicYearLbl: UILabel!
     @IBOutlet weak var AcademicYearView: UIView!
@@ -127,17 +127,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         SearchBar.delegate = self
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Ensure the gradient resizes with the button
-        //CustumDateBtn.layer.sublayers?.first?.frame = CustumDateBtn.bounds
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-    
     func UIupdate() {
         
         TV.isHidden = true
@@ -207,7 +196,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         }else {
             
             student_attendance_report()
-
+            
             SearchBar.isHidden = false
             TV.isHidden = false
             TV.delegate = self
@@ -245,7 +234,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         addUnderline(to: ReportsBtn, unselectedButton: MarkAttendanceBtn)
         student_attendance_report()
-
+        
         SearchBar.isHidden = false
         TV.isHidden = false
         TV.delegate = self
@@ -266,7 +255,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
             button.tintColor = .black
         }
-
+        
         // Add underline to the selected button
         selectedButton.tintColor = .systemBlue
         let underline = UIView()
@@ -274,7 +263,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         underline.backgroundColor = .systemBlue
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
-
+        
         NSLayoutConstraint.activate([
             underline.heightAnchor.constraint(equalToConstant: 2),
             underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
@@ -298,7 +287,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         MarkAbsentiesBtn.isUserInteractionEnabled = true
     }
     @objc func HalfdayAction(){
-    
+        
         user_inputs.attendance_type = "H"
         user_inputs.session_type = ""
         user_inputs.all_present = "T"
@@ -362,7 +351,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                 
                 SectionList.append(StandardData?[index].sections?[i].name ?? "")
             }
-        
+            
             sectionLbl.text = "Section"
             sectionId = ""
             SectionData = StandardData?[index].sections
@@ -395,7 +384,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             TV.reloadData()
         }
     }
-
+    
     @IBAction func SelectSection() {
         SectionDropdown.anchorView = SectionView
         SectionDropdown.dataSource = SectionList
@@ -415,50 +404,50 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     
     @IBAction func DateBtnAct(_ sender: Any) {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
-             vc.dateSelection = 2
-             vc.delegate = self
-             vc.modalPresentationStyle = .overCurrentContext
-             vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-             self.present(vc, animated: false)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
-   
+    
     func setFormattedDate(_ date: String, label: UILabel) {
-           let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-           let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-           
-           // Function to create an attributed string from a given date
-           func createAttributedText(from date: String) -> NSMutableAttributedString {
-               let components = date.split(separator: " ")
-               guard components.count > 1 else {
-                   print("Error: Invalid date format")
-                   return NSMutableAttributedString()
-               }
-               
-               let day = components[0]
-               let month = components[1]
-               
-               let attributedText = NSMutableAttributedString()
-               attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
-                   .font: weekdayFont,
-                   .foregroundColor: UIColor.darkGray
-               ]))
-               attributedText.append(NSAttributedString(string: "\(month)", attributes: [
-                   .font: dayFont,
-                   .foregroundColor: UIColor.black
-               ]))
-               
-               // Set paragraph style for centered alignment
-               let paragraphStyle = NSMutableParagraphStyle()
-               paragraphStyle.alignment = .center
-               attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-               
-               return attributedText
-           }
-           
-           // Create attributed text and set to label
-           label.attributedText = createAttributedText(from: date)
-           label.numberOfLines = 0
-       }
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+        
+        // Function to create an attributed string from a given date
+        func createAttributedText(from date: String) -> NSMutableAttributedString {
+            let components = date.split(separator: " ")
+            guard components.count > 1 else {
+                print("Error: Invalid date format")
+                return NSMutableAttributedString()
+            }
+            
+            let day = components[0]
+            let month = components[1]
+            
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                .font: weekdayFont,
+                .foregroundColor: UIColor.darkGray
+            ]))
+            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                .font: dayFont,
+                .foregroundColor: UIColor.black
+            ]))
+            
+            // Set paragraph style for centered alignment
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+            
+            return attributedText
+        }
+        
+        // Create attributed text and set to label
+        label.attributedText = createAttributedText(from: date)
+        label.numberOfLines = 0
+    }
     
     
     @IBAction func BackBtnAct(_ sender: Any) {
@@ -565,25 +554,25 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                 DispatchQueue.main.async { [self] in
                     if successMessage.status == true{
                         
-                    
-                            StandardData = successMessage.data
-                            StandardData?.enumerated().forEach { index, standard in
-                                StandardList.append(standard.name ?? "")
+                        
+                        StandardData = successMessage.data
+                        StandardData?.enumerated().forEach { index, standard in
+                            StandardList.append(standard.name ?? "")
+                        }
+                        
+                        StandardId = StandardData?.first?.id ?? ""
+                        
+                        if let sections = StandardData?.first?.sections{
+                            SectionData = sections
+                            for j in 0..<sections.count {
+                                SectionList.append(SectionData?[j].name ?? "")
                             }
-                            
-                            StandardId = StandardData?.first?.id ?? ""
-                            
-                            if let sections = StandardData?.first?.sections{
-                                SectionData = sections
-                                for j in 0..<sections.count {
-                                    SectionList.append(SectionData?[j].name ?? "")
-                                }
-                            }
-                            sectionId = StandardData?.first?.sections?.first?.id ?? ""
-                            
-                            standardLbl.text = StandardData?.first?.name
-                            sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
-                            student_attendance_report()
+                        }
+                        sectionId = StandardData?.first?.sections?.first?.id ?? ""
+                        
+                        standardLbl.text = StandardData?.first?.name
+                        sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
+                        student_attendance_report()
                         
                     }else{
                         CustomAlert
@@ -686,7 +675,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             }
         }
     }
-
+    
 }
 
 @available(iOS 14.0, *)
@@ -707,14 +696,14 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
         
         if report?.att_status == "P"{
             
-           // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
+            // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
             cell.statusView.backgroundColor = .systemGreen
             cell.statusLbl.text = "Present"
         }else if report?.att_status == "Not taken"{
             cell.statusLbl.text = "Not taken"
         }
         else{
-           // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
+            // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
             cell.statusView.backgroundColor = .systemRed
             cell.statusLbl.text = "Absent"
         }

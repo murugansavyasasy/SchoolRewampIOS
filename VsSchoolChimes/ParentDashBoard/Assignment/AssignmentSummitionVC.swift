@@ -7,7 +7,19 @@
 
 import UIKit
 
-class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
+class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDataSource, SelectedId{
+    func selectId(id: String?, edit: Bool?) {
+        if edit ?? false{
+            if let selectedNotice = self.assignments?.first(where: { $0.id == id }) {
+                
+            }
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.deleteEvent(id: id)
+            }
+        }
+    }
+    
     
     @IBOutlet weak var standerdSectionLbl: UILabel!
     @IBOutlet weak var sudentName: UILabel!
@@ -22,6 +34,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     var studentDetails = UserDefaultFileManager.get_child_Details()
     let transitionDelegate = TransitioningDelegate()
     var submissions_details: [SubmissionDetail]?
+    let alert = CustomAlert()
     var submitedList = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +75,59 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
     }
+    func deleteEvent(id: String?) {
+        guard let targetID = id, !targetID.isEmpty else {
+            print("Invalid notice ID")
+            return
+        }
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm,
+            message: AlertstringFile.deletemessage,
+            actionLbl1: AlertstringFile.delete,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                APIService.shared.makeApi(
+                    url: ServiceUrl.comm_api_assignment_delete_submission,
+                    parameters: ["id": targetID],
+                    type: ApitTypeSringFile.PUT,
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        
+                        switch result {
+                        case .success(let successResponse):
+                            if successResponse.status == true {
+                                CustomAlert.showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                ) {
+                                    self.assignments?.removeAll { $0.id == targetID }
+                                    
+                                    self.sumitionList.reloadData()
+                                }
+                            } else {
+                                self.alert.showAlert(
+                                    title: AlertstringFile.Failed,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                )
+                            }
+                            
+                        case .failure(let error):
+                            print("Error deleting notice: \(error.localizedDescription)")
+                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
+                        }
+                    }
+                }
+            },
+            onNo: {
+                print("User canceled deletion")
+            }
+        )
+    }
     @IBAction func BackBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -100,6 +166,8 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                 cell.FilesUrl = data.file_path
                 cell.timeLeft.text = "Submited: \(timeAgo)"
                 cell.descriptionLbl.text = data.description
+                cell.edit(edit:true, delete: true, selectedId: data.id)
+                cell.delegate = self
 //                cell.descriptionLbl.setupExpandable(text: data.description)
 //                cell.descriptionLbl.onExpandableTap = {
 //                    cell.descriptionLbl.isExpanded.toggle()

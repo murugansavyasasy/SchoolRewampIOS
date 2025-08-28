@@ -86,6 +86,8 @@ struct ServiceUrl{
     static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date"
     static let   comm_assignment_send_assignment = "comm/api/assignment/send-assignment"
     static let   comm_api_assignment_delete = "comm/api/assignment/delete"
+    static let   comm_api_assignment_delete_submission
+ = "comm/api/assignment/delete-submission"
     static let   comm_api_assignment_update = "comm/api/assignment/update"
     static let comm_api_assignment_submit_assignment = "comm/api/assignment/submit-assignment"
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"

@@ -7,11 +7,44 @@
 
 import UIKit
 
-protocol goToReportPage{
+class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, EditObjectDelegate {
+    func editDta(edit: Any?) {
+        guard #available(iOS 14.0, *) else { return }
+        var pageToShowIndex = 0
+        if let attachment = edit as? Homework {
+            // Editing Mode
+            pageToShowIndex = 0
+            if let page1 = pages.first as? SenderSideHomeWorkViewController {
+                createBtn.setTitle("Update", for: .normal)
+                updateTabUI(for: pageToShowIndex)
+
+                // Pass to VC
+                page1.setSelectedHomeWork(
+                    title: attachment.title ?? "",
+                    content: attachment.description ?? "",
+                    imageUrls: attachment.file_path ?? [],
+                    editId: attachment.id ?? ""
+                )
+            }
+
+        } else if edit == nil {
+            // Creating Mode
+            pageToShowIndex = 1
+            if let senderVC = pages[safe: 1] as? SenderHomeWorkVC {
+                createBtn.setTitle("Create", for: .normal)
+                // Do any setup for senderVC here
+            }
+        }
+
+        // Switch Page
+        let currentIndex = pageViewController.viewControllers?.first
+            .flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = (pageToShowIndex > currentIndex) ? .forward : .reverse
+
+        updateTabUI(for: pageToShowIndex)
+        pageViewController.setViewControllers([pages[pageToShowIndex]], direction: direction, animated: true)
+    }
     
-    func goToReportPage(index:Int)
-}
-class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, SelectNotice {
 
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
@@ -25,21 +58,8 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     var page1 = UIViewController()
     var page2 = UIViewController()
     var titleLbl = ""
-    var deleate : goToReportPage?
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        let index = 1
-//        guard index >= 0 && index < pages.count else {
-//            print("Index out of bounds")
-//            return
-//        }
-//        updateTabUI(for: index)
-//        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-//        let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
-//
-//        pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
-        
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
@@ -49,7 +69,9 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
 
         uiConficration()
         setupPageViewController()
-        loadPages([page1, page2])
+        if #available(iOS 14.0, *) {
+            loadPages([page1, page2])
+        }
 //        disableSwipeGesture()
 
         if let firstPage = pages.first {
@@ -57,14 +79,14 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        view.applyGradient(
+//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+//    }
 
     func uiConficration() {
 //        BackBtn.setTitle(titleLbl, for: .normal)
@@ -127,27 +149,32 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
 //            self.searcchBtn.isHidden = index == 0
-            self.createLbl.backgroundColor = index == 0 ? .blue : .white
-            self.reportsLb.backgroundColor = index == 0 ? .white : .blue
+            self.createLbl.backgroundColor = index == 0 ? .blue : .clear
+            self.reportsLb.backgroundColor = index == 0 ? .clear : .blue
             self.reportsBtn.tintColor = index == 0 ? .black : .blue
             self.createBtn.tintColor = index == 1 ? .black : .blue
         }
     }
+    @available(iOS 14.0, *)
     func loadPages(_ CV: [UIViewController]) {
-        if #available(iOS 14.0, *) {
-            if let page2 = CV[1] as? SenderHomeWorkVC {
-                page2.selectNotice = self
-            }
-        } 
-            pages = CV
+        // Assign immediately so `pages` is always in sync
+        pages = CV
+
+        if let historyVC = pages[safe: 0] as? SenderSideHomeWorkViewController {
+            historyVC.selectNotice = self
+        }
+
+        if let page2 = pages[safe: 1] as? SenderHomeWorkVC {
+            page2.selectNotice = self
+        }
     }
+
 
     func SelectedVC(index: Int) {
         guard index >= 0 && index < pages.count else {
             print("Index out of bounds")
             return
         }
-
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
 
@@ -163,6 +190,20 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let currentIndex = pages.firstIndex(of: viewController), currentIndex < pages.count - 1 else { return nil }
         return pages[currentIndex + 1]
+    }
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+        guard completed,
+              let currentVC = pageViewController.viewControllers?.first,
+              let currentIndex = pages.firstIndex(of: currentVC) else {
+            return
+        }
+
+        // ✅ Now you have the final index after swipe
+        updateTabUI(for: currentIndex)
+        print("Swiped to page index:", currentIndex)
     }
 
 //    private func disableSwipeGesture() {
@@ -185,35 +226,6 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         return currentIndex
  
     }
-    func didTapButton(
-        title: String,
-        content: String,
-        items: [FilePath],
-        editId editID:String
-    ) {
-        if #available(iOS 14.0, *) {
-            
-          
-                if let page1 = pages.first as? SenderSideHomeWorkViewController{
-                    //                segmentController.selectedSegmentIndex = 0
-                    
-                    createBtn.setTitle("Update", for: .normal)
-                    updateTabUI(for: 0)
-                    page1
-                        .setSelectedHomeWork(
-                            title: title,
-                            content: content,
-                            imageUrls: items,
-                            editId: editID
-                        )
-                    let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-                    let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
-                    pageViewController.setViewControllers([page1], direction: direction, animated: true, completion: nil)
-                }
-            
-        }
-    }
-    
     
 }
 

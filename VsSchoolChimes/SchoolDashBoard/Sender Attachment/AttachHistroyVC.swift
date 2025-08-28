@@ -12,14 +12,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedEvent = Attachments(withId: id ?? "") {
-                selectNotice?
-                    .didTapButton(
-                        title: selectedEvent.title ?? "",
-                        content: selectedEvent.description ?? "",
-                        items: selectedEvent.file_path ?? [], editId: id ?? ""
-                    )
-                
-                
+                selectNotice?.editDta(edit: selectedEvent) 
             }
 
         }else{
@@ -44,7 +37,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     var isHeaderExpandedDict: [Int: Bool] = [:]
     var search = true
     var isExpanded: Bool = false
-    var selectNotice: SelectNotice?
+    var selectNotice: EditObjectDelegate?
     var staffdetails = UserDefaultFileManager.get_staff_Details()
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let dropDown = DropDown()

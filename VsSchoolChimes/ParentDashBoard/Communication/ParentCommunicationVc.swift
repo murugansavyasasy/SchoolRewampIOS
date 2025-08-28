@@ -56,9 +56,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var FilterImage: UIImageView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodataImgHeight: NSLayoutConstraint!
@@ -93,12 +90,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
        
         SearchBar.delegate = self
         SearchBar.searchTextField.addDoneButton()
-        
-        if passValue == 1{
-            NameLbl.text = ""
-            StandardLbl.text = ""
-        }
-        
+
+        backBtn.configureAsBackButton(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         backBtn.applyBackButton()
         
       
@@ -166,15 +159,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
         NodataLbl.setFont(style: .title, size: 17)
-        
-        NameLbl.text = studentDetails?.name
-        StandardLbl.text = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-        
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        
-        backBtn.setTitle(MenuStringFile.selectedMenuName.translated(), for: .normal)
     }
     
     //MARK: Cell registration

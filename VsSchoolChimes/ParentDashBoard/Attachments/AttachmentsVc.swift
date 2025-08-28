@@ -10,10 +10,12 @@ import UIKit
 
 class AttachmentsVc: UIViewController {
     
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var noDataLabel: UILabel!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
-   
+    
     var attachmentHeaders: [AttachmentHeaderInfo] = []
     var attachmentFiles: [[FilePath]]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
@@ -26,31 +28,35 @@ class AttachmentsVc: UIViewController {
     var clickedMessageId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
         searchBar.layer.cornerRadius = 5
         tv.register(
             UINib(nibName: CellConfingName.AttachTvHeader, bundle: nil),
-                forHeaderFooterViewReuseIdentifier: CellConfingName.AttachTvHeader
-            )
+            forHeaderFooterViewReuseIdentifier: CellConfingName.AttachTvHeader
+        )
         tv.register(UINib(nibName: CellConfingName.ContentCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ContentCell)
         
         fetchAttachments()
         
         
-       
+        
     }
-
     
-
+    
+    
     @IBAction func back(_ sender: Any) {
         
         dismiss(animated: true)
     }
-   
-    @IBAction func searchBtnCilck(_ sender: Any) {
-        search.toggle()
-        searchBar.isHidden = search
+    
+    @IBAction func searchBtnCilck(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        searchBar.isHidden =
+        !sender.isSelected
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
     }
     
     private func fetchAttachments() {
@@ -130,7 +136,7 @@ class AttachmentsVc: UIViewController {
                             }
                             return updated
                         }
-                      
+                        
                     }
                 }
             case .failure(let error):
@@ -141,18 +147,18 @@ class AttachmentsVc: UIViewController {
             }
         }
     }
-
+    
 }
 
 extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
-   func numberOfSections(in tableView: UITableView) -> Int {
-            return attachmentHeaders.count
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return attachmentHeaders.count
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
+    
     func scrollToHeaderMessageId(_ messageId: String) {
         // 1. Find section index where header.id == messageId
         
@@ -173,7 +179,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             print("⚠️ Message ID \(messageId) not found in attachmentHeaders")
         }
     }
-
+    
     func loadDataAndScrollIfNeeded() {
         // API Call → update attachmentHeaders → reloadData
         tv.reloadData()
@@ -184,41 +190,41 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             clickedMessageId = nil
         }
     }
-
-     func tableView(_ tableView: UITableView,
-                    viewForHeaderInSection section: Int) -> UIView? {
-         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
-         header.configure(with: attachmentHeaders[section])
-         
-         header.discretpionLbl
-             .setupExpandable(
+    
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
+        header.configure(with: attachmentHeaders[section])
+        
+        header.discretpionLbl
+            .setupExpandable(
                 text: attachmentHeaders[section].description ?? "",
                 isExpanded: attachmentHeaders[section].isExpanded
-             )
-         
-         
-         header.discretpionLbl.onExpandableTap = { [weak self] in
-             guard let self = self else { return }
-             
-             let newValue = !header.discretpionLbl.isExpanded
-             header.discretpionLbl.isExpanded = newValue
-             self.attachmentHeaders[section].isExpanded = newValue
-             
-             //             if self.attachmentHeaders[section].is_unread == true {
-             //                 self.ReadStatusUpdate(
-             //                     type: "ATTACHMENT",
-             //                     detail_id: self.attachmentHeaders[section].id ?? "")
-             //             }
-             
-             tableView.beginUpdates()
-             tableView.endUpdates()
-         }
-         
-         header.layoutIfNeeded()
-         
-         return header
-     }
-
+            )
+        
+        
+        header.discretpionLbl.onExpandableTap = { [weak self] in
+            guard let self = self else { return }
+            
+            let newValue = !header.discretpionLbl.isExpanded
+            header.discretpionLbl.isExpanded = newValue
+            self.attachmentHeaders[section].isExpanded = newValue
+            
+            //             if self.attachmentHeaders[section].is_unread == true {
+            //                 self.ReadStatusUpdate(
+            //                     type: "ATTACHMENT",
+            //                     detail_id: self.attachmentHeaders[section].id ?? "")
+            //             }
+            
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+        
+        header.layoutIfNeeded()
+        
+        return header
+    }
+    
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
@@ -254,8 +260,8 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         return cell.collectionContentHeight() + 60
     }
     
-   
-
+    
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterAttachments(with: searchText)
@@ -271,7 +277,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 return titleMatch || descriptionMatch
             }
         }
-
+        
         // Rebuild header & file list
         self.attachmentHeaders = []
         self.attachmentFiles = []
@@ -292,7 +298,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 self.attachmentFiles?.append(item.file_path ?? [])
             }
         }
-    
+        
         self.tv.reloadData()
         
         if self.filteredAttachments?.isEmpty ?? true {
@@ -304,7 +310,6 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             self.tv.isHidden = false
         }
     }
-
 }
 struct AttachmentHeaderInfo {
     let title: String?

@@ -66,7 +66,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var catagoryDropDownView: UIView!
     @IBOutlet weak var selectedCatagoryImg: UIImageView!
     @IBOutlet weak var selecctedCatagory: UILabel!
-    @IBOutlet weak var VideoView: UIView!
     
     var placeholderLabel: UILabel!
     var activeButton: UIButton?
@@ -118,13 +117,10 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         eventTxt.addDoneButton()
         contentTxtView.addDoneButton()
         imageSelection()
-        
+        costomView.imageCollectionview.backgroundColor = .clear
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         catagoryDropDownView.isUserInteractionEnabled = true
         catagoryDropDownView.addGestureRecognizer(tapGesture)
-        
-        VideoView.isHidden = true
-        
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,

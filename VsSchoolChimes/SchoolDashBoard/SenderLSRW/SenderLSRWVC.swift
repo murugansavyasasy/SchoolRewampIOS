@@ -628,6 +628,7 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                         for: indexPath
                     ) as! AttachmentCVCell
                     cell.layer.cornerRadius = 20
+                    
                     return cell
                 } else {
                     // Non-audio files

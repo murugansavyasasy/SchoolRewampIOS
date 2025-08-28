@@ -9,9 +9,11 @@ import UIKit
 
 class InteractionVC: UIViewController {
    
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var FullView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
    
     var passvalue = 0
     var staffMembersData: [StaffMember]?
@@ -35,10 +37,14 @@ class InteractionVC: UIViewController {
         tv.dataSource = self
         getStaff()
         
-       
-        
     }
-    
+    @IBAction func search(_ sender: UIButton) {
+        searchBar.becomeFirstResponder()
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar.isHidden = !sender.isSelected
+    }
     
     
     @IBAction func backBtnAct(_ sender: Any) {

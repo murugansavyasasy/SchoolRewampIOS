@@ -7,7 +7,47 @@
 
 import UIKit
 
-class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageViewControllerDataSource, SelectNotice {
+class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageViewControllerDataSource, EditObjectDelegate {
+    func editDta(edit: Any?) {
+        guard #available(iOS 14.0, *) else { return }
+
+        var pageToShowIndex = 0
+
+        if let attachment = edit as? Attachment {
+            // Editing Mode
+            pageToShowIndex = 0
+
+            if let page1 = pages.first as? SenderAttachmentVC {
+                createBtn.setTitle("Update", for: .normal)
+                updateTabUI(for: pageToShowIndex)
+
+                // Pass to VC
+                page1.setSelectedHomeWork(
+                    title: attachment.title ?? "",
+                    content: attachment.description ?? "",
+                    imageUrls: attachment.file_path ?? [],
+                    editId: attachment.id ?? ""
+                )
+            }
+
+        } else if edit == nil {
+            // Creating Mode
+            pageToShowIndex = 1
+            if let senderVC = pages[safe: 1] as? AttachHistroyVC {
+                // Do any setup for senderVC here
+            }
+        }
+
+        // Switch Page
+        let currentIndex = pageViewController.viewControllers?.first
+            .flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = (pageToShowIndex > currentIndex) ? .forward : .reverse
+
+        updateTabUI(for: pageToShowIndex)
+        pageViewController.setViewControllers([pages[pageToShowIndex]], direction: direction, animated: true)
+    }
+
+    
     
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
@@ -42,17 +82,7 @@ class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageVie
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-
     func uiConficration() {
-//        BackBtn.setTitle(titleLbl, for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
     }
 
@@ -107,25 +137,39 @@ class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageVie
 
         pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
     }
-
-    
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+        guard completed,
+              let currentVC = pageViewController.viewControllers?.first,
+              let currentIndex = pages.firstIndex(of: currentVC) else {
+            return
+        }
+        updateTabUI(for: currentIndex)
+    }
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
 //            self.searcchBtn.isHidden = index == 0
-            self.createLbl.backgroundColor = index == 0 ? .blue : .white
-            self.reportsLb.backgroundColor = index == 0 ? .white : .blue
+            self.createLbl.backgroundColor = index == 0 ? .blue : .clear
+            self.reportsLb.backgroundColor = index == 0 ? .clear : .blue
             self.reportsBtn.tintColor = index == 0 ? .black : .blue
             self.createBtn.tintColor = index == 1 ? .black : .blue
         }
     }
     func loadPages(_ CV: [UIViewController]) {
+        // Always assign first
+        pages = CV
         if #available(iOS 14.0, *) {
-            if let page2 = CV[1] as? AttachHistroyVC {
+            if let historyVC = pages[safe: 0] as? SenderAttachmentVC {
+                historyVC.selectNotice = self
+            }
+            if let page2 = pages[safe: 1] as? AttachHistroyVC {
                 page2.selectNotice = self
             }
         }
-            pages = CV
     }
+
 
     func SelectedVC(index: Int) {
         guard index >= 0 && index < pages.count else {
@@ -170,34 +214,5 @@ class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageVie
         return currentIndex
  
     }
-    func didTapButton(
-        title: String,
-        content: String,
-        items: [FilePath],
-        editId editID:String
-    ) {
-        if #available(iOS 14.0, *) {
-            if let page1 = pages.first as? SenderAttachmentVC{
-//                segmentController.selectedSegmentIndex = 0
-                
-                createBtn.setTitle("Update", for: .normal)
-                updateTabUI(for: 0)
-                
-               
-                page1
-                    .setSelectedHomeWork(
-                        title: title,
-                        content: content,
-                        imageUrls: items,
-                        editId: editID
-                    )
-                let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-                let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
-                pageViewController.setViewControllers([page1], direction: direction, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    
 }
 

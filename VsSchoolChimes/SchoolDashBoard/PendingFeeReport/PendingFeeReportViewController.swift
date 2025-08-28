@@ -18,7 +18,6 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordsView: UIImageView!
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var acodemicView: UIView!
     @IBOutlet weak var acodemicdropView: UIView!
     @IBOutlet weak var acodomicYearLbl: UILabel!
 
@@ -48,8 +47,6 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         DropDownStr = ["2012 - 2013", "2014 - 2015", "2016 - 2017", "2018 - 2019"]
-
-        applyShadowAndCornerRadius(to: acodemicView)
         nodataLbl.isHidden = true
         noRecordsView.isHidden = true
 
@@ -61,16 +58,6 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
 
         getacadmicYr()
     }
-
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-    
-    
 
     func getacadmicYr() {
         APIService.shared.makeApi(

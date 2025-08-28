@@ -28,7 +28,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         // UI Setup
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
-        searchBar.addDoneButton()
+        searchBar.searchTextField.addDoneButton()
         backBtn.applyBackButton()
         backBtn.configureAsBackButton(firstLine: "\(childDetails?.name ?? "")", secondLine:"\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")")
         let formattedText = breakIntoLines(text: ReceiverMenuItems.LSRW.translated(), maxCharactersPerLine: 15)
@@ -100,12 +100,18 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     @IBAction func search(_ sender: UIButton) {
-        searchBar.becomeFirstResponder()
-        sender.isSelected.toggle()
-        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
-        searchBar.isHidden = !sender.isSelected
+        sender.isSelected.toggle() 
+        if sender.isSelected {
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        } else {
+            searchBar.resignFirstResponder()
+            searchBar.isHidden = true
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        }
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
