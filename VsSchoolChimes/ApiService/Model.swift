@@ -1640,6 +1640,53 @@ struct ValidatedSlot: Codable {
     var slot_availablity: String?
 }
 
+//MARK: Student PTM
+
+struct StudentSlotResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [EventData]?
+}
+
+struct EventData: Codable {
+    var staff_id: String?
+    var staff_name: String?
+    var event_name: String?
+    var subject_name: String?
+    var start_time: String?
+    var end_time: String?
+    var slots: [StudentSlot]?
+}
+
+struct StudentSlot: Codable {
+    let id: String?
+    let slot_from: String?
+    let slot_to: String?
+    let is_booked: Bool?
+    let staff_id: String?
+    let staff_name: String?
+    let subject_name: String?
+    let event_name: String?
+    let event_mode: String?
+    let event_link: String?
+    let my_booking: Bool?
+
+    // Local state (not from API)
+    var userSelected: Bool? = false // temporary selection
+    var is_conflictDisabled: Bool? = false // disabled due to overlap
+}
+
+
+struct SubjectListResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [Subject]?
+}
+
+struct Subject: Codable {
+    var id: String?
+    var name: String?
+}
 
 struct LSRWReportResponse: Codable {
     let status: Bool?

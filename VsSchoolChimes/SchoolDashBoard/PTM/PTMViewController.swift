@@ -185,6 +185,49 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     @IBAction func backAct(){
         dismiss(animated: true)
     }
+    
+    
+    @IBAction func bookSlotAct(_ sender: Any) {
+        
+        
+        let vc = PtmParentVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    //
+    //if DefaultsKeys.bookingSlotId.count == 0{
+    //
+    //    let refreshAlert = UIAlertController(title: "", message: "Select time", preferredStyle: UIAlertController.Style.alert)
+    //
+    //                       refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+    //
+    //
+    //                       }))
+    //                   present(refreshAlert, animated: true, completion: nil)
+    //
+    //}else{
+    //
+    //
+    //    let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to Book Slot?", preferredStyle: UIAlertController.Style.alert)
+    //
+    //    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+    //
+    //
+    //
+    //        bookingSlot()
+    //
+    //    }))
+    //
+    //
+    //    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+    //    print("Handle Cancel Logic here")
+    //    }))
+    //
+    //    present(refreshAlert, animated: true, completion: nil)
+    //
+    //
+    //
+    //}
+        }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        dates.count
@@ -1612,42 +1655,7 @@ class LinkSClicks : UITapGestureRecognizer{
  //MARK: func bookSlotAct
  
  
- //        @IBAction func bookSlotAct(_ sender: Any) {
  //
- //if DefaultsKeys.bookingSlotId.count == 0{
- //
- //    let refreshAlert = UIAlertController(title: "", message: "Select time", preferredStyle: UIAlertController.Style.alert)
- //
- //                       refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
- //
- //
- //                       }))
- //                   present(refreshAlert, animated: true, completion: nil)
- //
- //}else{
- //
- //
- //    let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to Book Slot?", preferredStyle: UIAlertController.Style.alert)
- //
- //    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
- //
- //
- //
- //        bookingSlot()
- //
- //    }))
- //
- //
- //    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
- //    print("Handle Cancel Logic here")
- //    }))
- //
- //    present(refreshAlert, animated: true, completion: nil)
- //
- //
- //
- //}
- //        }
 
          
  
