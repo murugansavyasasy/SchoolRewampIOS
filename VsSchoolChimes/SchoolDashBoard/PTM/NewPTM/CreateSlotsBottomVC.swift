@@ -10,8 +10,10 @@ import UIKit
 class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var createMeetingBtn: UIButton!
     
     var slotData: [ValidatedSlotData] = [] // contains [Slot]
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,99 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         tableView.rowHeight = UITableView.automaticDimension
     }
     
+    //MARK: Api Call Function
+    
+    func Create_meeting_api(){
+        
+        var param = [[String: Any]]()
+        param.reserveCapacity(slotData.count) // small perf boost
+
+        for data in slotData {
+            // Pre-map nested arrays first
+            let stdSecDetails: [[String: Any]] = (data.std_sec_details ?? []).map { detail in
+                [
+                    PTMRequestStringFile.class_id: detail.class_id ?? "",
+                    PTMRequestStringFile.section_id: detail.section_id ?? ""
+                ]
+            }
+
+            let slotsArray: [[String: Any]] = (data.slots ?? []).map { slot in
+                [
+                    PTMRequestStringFile.from_time: slot.slot_from ?? "",
+                    PTMRequestStringFile.to_time: slot.slot_to ?? ""
+                ]
+            }
+
+            // Build the main dictionary
+            let dict: [String: Any] = [
+                PTMRequestStringFile.date: data.date ?? "",
+                PTMRequestStringFile.event_name: data.event_name ?? "",
+                PTMRequestStringFile.from_time: data.from_time ?? "",
+                PTMRequestStringFile.to_time: data.to_time ?? "",
+                PTMRequestStringFile.duration: data.duration ?? 0,
+                PTMRequestStringFile.break_time: data.break_time ?? 0,
+                PTMRequestStringFile.event_link: "",
+                PTMRequestStringFile.meeting_mode: data.meeting_mode ?? "",
+                PTMRequestStringFile.std_sec_details: stdSecDetails,
+                PTMRequestStringFile.slots: slotsArray
+            ]
+
+            param.append(dict)
+        }
+
+        
+        APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: param, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else{return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self,okAction: {
+                            self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+                        })
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+            
+        }
+        
+        
+        
+//        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: [:], type: ApitTypeSringFile.POST, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc , Error>) in
+//            
+//            guard let self = self else{return}
+//            
+//            DispatchQueue.main.async {
+//                
+//                switch result {
+//                case .success(let success):
+//                    if success.status == true {
+//                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self,okAction: {
+//                            self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+//                        })
+//                    }else {
+//                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+//                    }
+//                case .failure(let failure):
+//                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+//                }
+//            }
+//        }
+    }
+    
+    
+    @IBAction func createMeetingBtnAct(_ sender: Any) {
+        
+        Create_meeting_api()
+    }
+    
     // MARK: - TableView DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return slotData.count
@@ -38,6 +133,18 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         }
         cell.dateBtn.setTitle(slotData[indexPath.row].date?.convertToTargetDateFormat(), for: .normal)
         cell.configure(with: slotData[indexPath.row].slots ?? [], parentTableView: tableView)
+        
+        cell.onSlotRemoved = { [weak self, weak cell] removedIndex in
+            guard let self = self,
+                  let cell = cell,
+                  let currentIndexPath = tableView.indexPath(for: cell) else { return }
+
+            self.slotData[currentIndexPath.row].slots?.remove(at: removedIndex)
+
+            // Reload just that row to reflect height change
+            self.tableView.reloadRows(at: [currentIndexPath], with: .automatic)
+        }
+        
         return cell
     }
     
@@ -45,4 +152,28 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+}
+
+
+struct RequestSlot: Codable {
+    var from_time: String
+    var to_time: String
+}
+
+struct RequestStdSecDetail: Codable {
+    var class_id: String
+    var section_id: String
+}
+
+struct RequestBodyItem: Codable {
+    var date: String
+    var event_name: String
+    var from_time: String
+    var to_time: String
+    var duration: Int
+    var break_time: Int
+    var event_link: String
+    var meeting_mode: String
+    var std_sec_details: [RequestStdSecDetail]
+    var slots: [RequestSlot]
 }

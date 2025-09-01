@@ -45,11 +45,11 @@ class PopupVC: UIViewController {
     }
 
     @IBAction func cancelBtn(_ sender: UIButton) {
-        print("cancelBtn")
+        delegate?.selectId(id: selectedId ?? "", edit: false)
         dismiss(animated: true)
     }
     @IBAction func reOpenBtn(_ sender: UIButton) {
-        print("reOpenBtn")
+        delegate?.selectId(id: selectedId ?? "", edit: true)
         dismiss(animated: true)
     }
     @IBAction func deleteBtn(_ sender: UIButton) {

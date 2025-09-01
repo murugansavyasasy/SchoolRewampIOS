@@ -738,6 +738,8 @@
 		FACD4D782E30F8B40084B125 /* TimetableTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD4D762E30F8B40084B125 /* TimetableTvCell.xib */; };
 		FAD14FD82DBFAE01006BD3E1 /* StudentTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */; };
 		FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */; };
+		FAD4D72F2E606449007A3FC0 /* PtmParentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD4D72D2E606449007A3FC0 /* PtmParentVC.swift */; };
+		FAD4D7302E606449007A3FC0 /* PtmParentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */; };
 		FAD5DADB2E3B263F00A3CE97 /* NewAttendanceReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD5DADA2E3B263F00A3CE97 /* NewAttendanceReportVC.xib */; };
 		FAD5DADC2E3B263F00A3CE97 /* NewAttendanceReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5DAD92E3B263F00A3CE97 /* NewAttendanceReportVC.swift */; };
 		FAED58542E4B4E6E00497026 /* SlotListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAED58532E4B4E6E00497026 /* SlotListVC.xib */; };
@@ -1605,6 +1607,8 @@
 		FACD4D762E30F8B40084B125 /* TimetableTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableTvCell.xib; sourceTree = "<group>"; };
 		FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTVCell.swift; sourceTree = "<group>"; };
 		FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentTVCell.xib; sourceTree = "<group>"; };
+		FAD4D72D2E606449007A3FC0 /* PtmParentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtmParentVC.swift; sourceTree = "<group>"; };
+		FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmParentVC.xib; sourceTree = "<group>"; };
 		FAD5DAD92E3B263F00A3CE97 /* NewAttendanceReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttendanceReportVC.swift; sourceTree = "<group>"; };
 		FAD5DADA2E3B263F00A3CE97 /* NewAttendanceReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAttendanceReportVC.xib; sourceTree = "<group>"; };
 		FAED58522E4B4E6E00497026 /* SlotListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotListVC.swift; sourceTree = "<group>"; };
@@ -3327,6 +3331,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				FAD4D72C2E60640C007A3FC0 /* PTM */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				84127AC72E03C8F00092159D /* Pauckt */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
@@ -3833,6 +3838,15 @@
 			path = "Seemore Footer";
 			sourceTree = "<group>";
 		};
+		FAD4D72C2E60640C007A3FC0 /* PTM */ = {
+			isa = PBXGroup;
+			children = (
+				FAD4D72D2E606449007A3FC0 /* PtmParentVC.swift */,
+				FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */,
+			);
+			path = PTM;
+			sourceTree = "<group>";
+		};
 		FAFF9D9C2D6C7B7A00498368 /* StaffSide */ = {
 			isa = PBXGroup;
 			children = (
@@ -4308,6 +4322,7 @@
 				84A271832CEDAB9F0033EB02 /* ImagePdfTv.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8466E83E2D6ED0CB004F4EFC /* PopupVC.xib in Resources */,
+				FAD4D7302E606449007A3FC0 /* PtmParentVC.xib in Resources */,
 				843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */,
 				84017C012E4082D8006CB477 /* AttachCommonPage.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
@@ -5094,6 +5109,7 @@
 				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
 				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,
 				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
+				FAD4D72F2E606449007A3FC0 /* PtmParentVC.swift in Sources */,
 				84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */,
 				84C82A0C2D086A490024A46A /* CircleColorSparkView.swift in Sources */,
 				84127DBE2E152DDB0092159D /* chatAttachmentPicker.swift in Sources */,

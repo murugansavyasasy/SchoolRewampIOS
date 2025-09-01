@@ -18,7 +18,8 @@ class CreatedSlotsTv: UITableViewCell,
     
     private var slots: [Slot] = []
     private weak var parentTableView: UITableView?
-
+    var onSlotRemoved: ((_ index: Int) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -76,6 +77,24 @@ class CreatedSlotsTv: UITableViewCell,
         let slot = slots[indexPath.item]
         cell.cellView.backgroundColor = .systemGray6
         cell.label.text = "\(slot.slot_from ?? "") - \(slot.slot_to ?? "")"
+        
+        cell.onRemove = { [weak self, weak cell] in
+            guard let self = self,
+                  let cell = cell,
+                  let indexPath = collectionView.indexPath(for: cell) else { return }
+
+            // Safely remove slot
+            self.slots.remove(at: indexPath.item)
+            collectionView.deleteItems(at: [indexPath])
+            
+            DispatchQueue.main.async {
+                self.collectionView.layoutIfNeeded()
+                self.updateCollectionHeight()
+            }
+            
+            self.onSlotRemoved?(indexPath.item)
+        }
+        
         return cell
     }
 

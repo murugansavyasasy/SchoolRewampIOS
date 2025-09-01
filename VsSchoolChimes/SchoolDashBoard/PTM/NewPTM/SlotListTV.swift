@@ -9,7 +9,7 @@ import UIKit
 
 class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
     func selectId(id: String?, edit: Bool?) {
-        print("")
+        delegate?.selectId(id: id, edit: edit)
     }
     
 
@@ -21,13 +21,16 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var BookingBaseview: UIView!
     @IBOutlet weak var BookedStatusView: UIView!
     @IBOutlet weak var WaitingLbl: UILabel!
-    
+    @IBOutlet weak var bookedByNameLbl: UILabel!
     var showpopup:ShowPopupDelegate?
-    
+    var edit:Bool?
+    var delete:Bool?
+    var delegate:SelectedId?
+    var selectedId:String?
     override func awakeFromNib() {
         super.awakeFromNib()
        
-        cellView.layer.cornerRadius = 10
+        cellView.layer.cornerRadius = 12
         cellView.layer.borderWidth = 0.5
         cellView.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -36,6 +39,7 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         
         TimeLbl.setFont(style: .header, size: FontSize.HeaderSize)
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
+        bookedByNameLbl.setFont(style: .body, size: FontSize.BodySize)
         
         BookingBaseview.layer.cornerRadius = 10
         BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.5)
@@ -43,15 +47,16 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         WaitingLbl.isHidden = true
         
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        optionsBtn.isHidden = !(edit || delete)
     }
     
     @IBAction func optionBtnAct(_ sender: UIButton) {
         
-        let popoverContentVC = PopupVC(edit: false, delete: false, selectedId: "")
+        let popoverContentVC = PopupVC(edit: false, delete: false, selectedId: selectedId)
         popoverContentVC.delegate = self
         popoverContentVC.ptm = true
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: 60)

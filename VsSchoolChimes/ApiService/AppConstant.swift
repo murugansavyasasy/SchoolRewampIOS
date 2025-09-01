@@ -155,6 +155,9 @@ struct ServiceUrl{
     static let lms_api_lsrw_my_submissions = "lms/api/lsrw/my-submissions"
     static let lms_api_lsrw_stats = "lms/api/lsrw/stats"
     static let dashboard_api_pauket_add_points = "dashboard/api/pauket/add-points"
+    static let ptm_api_ptm_schedule_cancel_and_reopen_slot = "ptm/api/ptm-schedule/cancel-and-reopen-slot"
+    static let ptm_api_ptm_schedule_cancel_and_close_slot = "ptm/api/ptm-schedule/cancel-and-close-slot"
+    static let ptm_api_ptm_schedule_create_slots = "ptm/api/ptm-schedule/create-slots"
     
 }
 
@@ -206,6 +209,7 @@ struct Menu_id{
     static let  MessageFromManagement = 22
     static let  senderChat = 17
     static let  quiz = 27
+    static let  ptm = 26
 }
 struct TargetTypes{
     

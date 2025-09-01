@@ -14,6 +14,8 @@ class SlotCV: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var closeBtn: UIButton!
     
+    var onRemove: (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -22,4 +24,7 @@ class SlotCV: UICollectionViewCell {
         label.setFont(style: .body, size: FontSize.BodySize)
     }
 
+    @IBAction func removeAct(_ sender: UIButton) {
+        onRemove?()
+    }
 }

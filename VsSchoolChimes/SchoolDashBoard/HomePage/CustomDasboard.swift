@@ -355,7 +355,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 3:
             navigateOrSchoolList { MenuRedirect.senderMarkAttendence(from: self) }
         case 5:
-            MenuRedirect.senderPtmNavigate(from: self)
+            navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
         case 7:
             MenuRedirect.senderCommunicationNavigate(from: self)
         case 8:
@@ -381,6 +381,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 24:
             MenuRedirect.senderOnlineNavigate(from: self)
         case 26:
+            navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
             MenuRedirect.senderPtmNavigate(from: self)
         case 27 :
             navigateOrSchoolList{ MenuRedirect.senderQuiz(from: self)}

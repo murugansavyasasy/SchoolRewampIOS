@@ -244,6 +244,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.senderMgmt(from: self)
             case Menu_id.MessageFromManagement:
                  MenuRedirect.Senderchat(from: self)
+            case Menu_id.ptm :
+                MenuRedirect.senderPtmNavigate(from: self)
             case Menu_id.quiz :
                 MenuRedirect.senderQuiz(from: self)
             default:

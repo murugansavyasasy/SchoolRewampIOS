@@ -20,18 +20,25 @@ class MeetingDetailTV: UITableViewCell {
     @IBOutlet weak var countBtn: UIButton!
     @IBOutlet weak var optionsBtn: UIButton!
     @IBOutlet weak var modeLbl: UILabel!
+    @IBOutlet weak var datebaseView: UIView!
+    @IBOutlet weak var timebaseView: UIView!
+    @IBOutlet weak var imageStack: UIStackView!
     
+
     override func awakeFromNib() {
         super.awakeFromNib()
         cellView.layer.cornerRadius = 15
-        dateBtn.layer.cornerRadius = 15
-        timeBtn.layer.cornerRadius = 15
+        cellView.layer.borderWidth = 1
+        cellView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        datebaseView.layer.cornerRadius = 15
+        timebaseView.layer.cornerRadius = 15
         joinBtn.layer.cornerRadius = 15
         optionsBtn.layer.cornerRadius = optionsBtn.frame.width / 2
         
-        optionsBtn.backgroundColor = .white
-        dateBtn.backgroundColor = .white.withAlphaComponent(1)
-        timeBtn.backgroundColor = .white.withAlphaComponent(1)
+        optionsBtn.backgroundColor = .systemGray6
+        datebaseView.backgroundColor = .systemGray6
+        timebaseView.backgroundColor = .systemGray6
         
         dateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         timeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
