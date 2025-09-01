@@ -24,7 +24,7 @@ class LSRWVC: UIViewController, FilterDelegate {
     // MARK: - IBOutlets
     @IBOutlet weak var lsrwTable: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
-    
+    @IBOutlet weak var nodataImg: UIImageView!
     // MARK: - Data
     var dashboardData: [Overview] = []
     var recentTasks: [LsrwDisplaySection] = []
@@ -104,6 +104,7 @@ class LSRWVC: UIViewController, FilterDelegate {
                         
                         self?.filterTask = self?.recentTasks ?? []
                         self?.allTask = firstData
+                        self?.nodataImg.isHidden = !(self?.filterTask.isEmpty ?? true)
                         self?.lsrwTable.reloadData()
                     }
                     

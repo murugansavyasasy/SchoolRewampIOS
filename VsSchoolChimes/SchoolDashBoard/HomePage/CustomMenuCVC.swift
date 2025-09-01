@@ -16,7 +16,14 @@ class CustomMenuCVC: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        outerView.setShadow(cornerRadius: 4)
+        outerView.layer.cornerRadius = 10
+        outerView.layer.masksToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 0.04
+        outerView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        outerView.layer.shadowRadius = 4
+        outerView.layer.borderWidth = 0.3
+        outerView.layer.borderColor = UIColor.systemGray5.cgColor
     }
-
+    
 }

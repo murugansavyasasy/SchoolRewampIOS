@@ -9,19 +9,22 @@
 import UIKit
 
 class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
+    
+    @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     
-    var rowIdentifier = "NewLSRWTVcell"
-    var tasks: [LSRWTask]?
-    var filteredTasks: [LSRWTask] = []
+    private let rowIdentifier = "NewLSRWTVcell"
+    private var tasks: [LSRWTask] = []
+    private var filteredTasks: [LSRWTask] = []
+    
     var instituteId = Int()
     var studentId = String()
     var childDetails = UserDefaultFileManager.get_child_Details()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,8 +32,13 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        
         backBtn.applyBackButton()
-        backBtn.configureAsBackButton(firstLine: "\(childDetails?.name ?? "")", secondLine:"\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")")
+        backBtn.configureAsBackButton(
+            firstLine: "\(childDetails?.name ?? "")",
+            secondLine: "\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")"
+        )
+        
         let formattedText = breakIntoLines(text: ReceiverMenuItems.LSRW.translated(), maxCharactersPerLine: 15)
         backBtn.setTitle(formattedText, for: .normal)
         backBtn.titleLabel?.numberOfLines = 0
@@ -39,30 +47,36 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
         tv.delegate = self
         tv.dataSource = self
-        tv.estimatedRowHeight = 80   // give any reasonable estimate
-           tv.rowHeight = UITableView.automaticDimension
+        tv.estimatedRowHeight = 80
+        tv.rowHeight = UITableView.automaticDimension
+        
         SkillListApi()
     }
     
-    func SkillListApi() {
+    private func SkillListApi() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
+        
         APIService.shared.makeApi(
             url: ServiceUrl.lms_api_lsrw_skill_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: childDetails?.access_token ?? ""
         ) { [weak self] (result: Result<LSRWListResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     self?.hideLottieProgressLoader()
                 }
+                
                 switch result {
                 case .success(let response):
-                    self?.tasks = response.data
-                    self?.filteredTasks = response.data ?? []
+                    self?.tasks = response.data ?? []
+                    self?.filteredTasks = self?.tasks ?? []
+                    self?.nodataImg.isHidden = !(self?.filteredTasks.isEmpty ?? true)
+                    self?.nodataImg.image = UIImage(named: "noRecords")
                     self?.tv.reloadData()
+                    
                 case .failure(let error):
                     print("API Error:", error)
                 }
@@ -70,6 +84,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    // MARK: - Actions
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -78,6 +93,20 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+    }
+    
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        } else {
+            searchBar.resignFirstResponder()
+            searchBar.isHidden = true
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        }
     }
     
     // MARK: - Table View
@@ -92,6 +121,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         
         let item = filteredTasks[indexPath.row]
         cell.configure(with: item)
+        
         cell.startBtn.tag = indexPath.row
         cell.starticon.tag = indexPath.row
         cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
@@ -99,26 +129,16 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         
         return cell
     }
-    @IBAction func search(_ sender: UIButton) {
-        sender.isSelected.toggle() 
-        if sender.isSelected {
-            searchBar.isHidden = false
-            searchBar.becomeFirstResponder()
-            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
-        } else {
-            searchBar.resignFirstResponder()
-            searchBar.isHidden = true
-            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        }
-    }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-    @objc func AttachmentRedirect(_ sender: UIButton) {
+    @objc private func AttachmentRedirect(_ sender: UIButton) {
         let index = sender.tag
-        guard let selectedTask = filteredTasks[safe: index] else { return }
+        guard filteredTasks.indices.contains(index) else { return }
+        
+        let selectedTask = filteredTasks[index]
         
         if #available(iOS 15.0, *) {
             let vc = LSRWActivitesVC(nibName: nil, bundle: nil)
@@ -139,23 +159,26 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            filteredTasks = tasks ?? []
+            filteredTasks = tasks
         } else {
-            filteredTasks = (tasks ?? []).filter {
+            filteredTasks = tasks.filter {
                 ($0.title ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.description ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.subject ?? "").lowercased().contains(searchText.lowercased()) ||
                 ($0.activity_type?.displayName.lowercased().contains(searchText.lowercased()) ?? false)
             }
         }
+        
+        nodataImg.isHidden = !filteredTasks.isEmpty
+        nodataImg.image = UIImage(named: "noSearchData")
         tv.reloadData()
     }
     
     // MARK: - Helper
-    func breakIntoLines(text: String, maxCharactersPerLine: Int) -> String {
+    private func breakIntoLines(text: String, maxCharactersPerLine: Int) -> String {
         var result = ""
         var currentLine = ""
-
+        
         for word in text.split(separator: " ") {
             if currentLine.count + word.count + 1 <= maxCharactersPerLine {
                 currentLine += (currentLine.isEmpty ? "" : " ") + word
@@ -180,6 +203,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     }
 }
 
+// MARK: - Gesture
 class LsrwListShowGesture: UITapGestureRecognizer {
-    var getSkillId: String!
+    var getSkillId: String?
 }

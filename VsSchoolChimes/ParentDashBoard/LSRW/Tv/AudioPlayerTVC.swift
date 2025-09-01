@@ -95,7 +95,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     private let waveformView = UIStackView()
     private let durationLabel = UILabel()
     private let progressView = UIView()
-    weak var parentCell: AudioCVC?
+    var parentCell: Any?
     private var waveformBars: [UIView] = []
     private var barHeightConstraints: [NSLayoutConstraint] = []
 
@@ -224,42 +224,57 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     private func loadAudio() {
         guard let url = audioURL else {
             print("Invalid audio URL: nil")
-            durationLabel.text = "Error"
+            DispatchQueue.main.async { [weak self] in
+                self?.durationLabel.text = "Error"
+            }
             return
         }
         
-        // For debugging
+        // Debugging
         print("Trying to load audio at: \(url)")
         print("File exists: \(FileManager.default.fileExists(atPath: url.path))")
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
+        // Run heavy work off the main thread
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
             
-            // AVAudioPlayer only works with *file-based* URLs
-            guard url.isFileURL else {
-                print("AVAudioPlayer cannot load non-file URLs")
-                durationLabel.text = "Error"
-                return
-            }
-
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.delegate = self
-            audioPlayer?.prepareToPlay()
-
-            let duration = audioPlayer?.duration ?? 0
-            durationLabel.text = formatTime(duration)
-
-            // Generate waveform
-            let sampleCount = Int(bounds.width / 4)
-            AudioProcessor.extractAmplitudes(from: url, sampleCount: sampleCount) { [weak self] amplitudes in
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                try AVAudioSession.sharedInstance().setActive(true)
+                
+                // AVAudioPlayer only works with file URLs
+                guard url.isFileURL else {
+                    print("AVAudioPlayer cannot load non-file URLs")
+                    DispatchQueue.main.async {
+                        self.durationLabel.text = "Error"
+                    }
+                    return
+                }
+                
+                let player = try AVAudioPlayer(contentsOf: url)
+                player.delegate = self
+                player.prepareToPlay()
+                self.audioPlayer = player
+                let duration = player.duration
+                
+                // Store player safely
                 DispatchQueue.main.async {
-                    self?.barsGenerated = true
+                    self.durationLabel.text = self.formatTime(duration)
+                // Generate waveform (heavy task)
+                let sampleCount = Int(self.bounds.width / 4)
+                AudioProcessor.extractAmplitudes(from: url, sampleCount: sampleCount) { [weak self] amplitudes in
+                    guard let self
+                            = self else { return }
+                        self.barsGenerated = true
+                    }
+                }
+                
+            } catch {
+                print("Error loading audio: \(error.localizedDescription) (Code: \((error as NSError).code))")
+                DispatchQueue.main.async {
+                    self.durationLabel.text = "Error"
                 }
             }
-        } catch {
-            print("Error loading audio: \(error.localizedDescription) (Code: \((error as NSError).code))")
-            durationLabel.text = "Error"
         }
     }
 
@@ -298,11 +313,14 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     }
     
     private func stopAnimations() {
-        waveformBars.forEach { bar in
-            bar.layer.removeAllAnimations()
-            bar.alpha = 1.0
+        DispatchQueue.main.async {
+            self.waveformBars.forEach { bar in
+                bar.layer.removeAllAnimations()
+                bar.alpha = 1.0
+            }
         }
     }
+
     
     private func updatePlayingState() {
         if isPlaying {
@@ -399,7 +417,6 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         durationLabel.text = formatTime(audioPlayer?.duration ?? 0)
         updateWaveformColor(progress: 0)
     }
-    
     private func resetState() {
         timer?.invalidate()
         timer = nil
@@ -407,22 +424,30 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         audioPlayer = nil
         isPlaying = false
         barsGenerated = false
-        
-        waveformBars.forEach { $0.removeFromSuperview() }
-        waveformBars.removeAll()
-        barHeightConstraints.removeAll()
-        
-        progressView.alpha = 0
-        durationLabel.text = "0:00"
+
+        DispatchQueue.main.async {
+            self.waveformBars.forEach { $0.removeFromSuperview() }
+            self.waveformBars.removeAll()
+            self.barHeightConstraints.removeAll()
+            
+            self.progressView.alpha = 0
+            self.durationLabel.text = "0:00"
+        }
     }
-    func setParentCell(_ cell: AudioCVC) {
+
+    func setParentCell(_ cell: Any?) {
         parentCell = cell
     }
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         DispatchQueue.main.async {
+            
             self.reset()
-            self.parentCell?.stopPlayback()
-//            self.parentCell?.playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+            if let cell = self.parentCell as? AudioCVC {
+                cell.stopPlayback()
+            }
+            if let cell = self.parentCell as? CommunicationTVC {
+                cell.stopPlayback()
+            }
         }
     }
     
@@ -516,7 +541,6 @@ class AudioProcessor {
         guard !amplitudes.isEmpty else {
             return generateDefaultAmplitudes(count: sampleCount)
         }
-
         if amplitudes.count <= sampleCount {
             let padding = Array(repeating: Float(0.2), count: sampleCount - amplitudes.count)
             return amplitudes + padding

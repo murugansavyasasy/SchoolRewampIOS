@@ -22,10 +22,11 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     @IBOutlet weak var monthLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dropDownView: UIView!
+    @IBOutlet weak var nodataImg: UIImageView!
     
     // MARK: - Properties
     private var reportData: [ReportData]?
-    private var currentData: PerfomenceData?   // ✅ store API response
+    private var currentData: PerformanceData?   // ✅ store API response
     let dropDown = DropDown()
     var monthId: Int = 1
     
@@ -88,11 +89,13 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
             case .success(let response):
                 if response.status, let data = response.data.first {
                     DispatchQueue.main.async {
+                        self?.nodataImg.isHidden = true
                         self?.mapResponseToReportData(data: data)
                     }
                 } else {
                     DispatchQueue.main.async {
                         self?.reportData = nil
+                        self?.nodataImg.isHidden = false
                         self?.tableView.reloadData()
                     }
                 }
@@ -103,39 +106,35 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
             }
         }
     }
-    
-    private func mapResponseToReportData(data: PerfomenceData) {
-        self.currentData = data   // ✅ Save for later (navigate)
-        
+    private func mapResponseToReportData(data: PerformanceData) {
+        self.currentData = data
         var newReportData: [ReportData] = []
-        
+
         // ✅ Weekly Reports
         let totalWeeks = weeksInCurrentMonth()
         var weeklyReports: [PerformanceReport] = []
         for week in 1...totalWeeks {
-            let remarkValue = data.reading?.details?[safe: week - 1]?.remark ?? "0"
-            let percentage = Int(remarkValue.replacingOccurrences(of: "%", with: "")) ?? 0
-            weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
+            if let detail = data.reading?.details?[safe: week - 1] {
+                let submitted = detail.submitted_count ?? 0
+                let total = detail.memberCount ?? 0
+                let percentage = total > 0 ? Int((Double(submitted) / Double(total)) * 100) : 0
+                weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
+            } else {
+                weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: 0))
+            }
         }
-        
-        // ✅ Top Performers
-        let topPerformers = data.reading?.details?.map {
-            TopReport(
-                name: $0.student_name ?? "",
-                studentClass: $0.std_sec ?? "",
-                section: "",
-                percentage: Double($0.remark?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
-            )
-        } ?? []
-        
+
+        // ✅ Top Performers (all categories combined)
+        let topPerformers = getTopPerformers(from: data)
+
         let monthlyReport = MonthlyReport(
             weeklyReport: weeklyReports,
             topPerformance: topPerformers
         )
-        
+
         // ✅ Today Submitted → Student List
         let studentList = data.today_submitted ?? []
-        
+
         // ✅ Map Categories → Overview
         var filterArray: [Overview] = []
         if let todaySubmitted = data.today_submitted {
@@ -153,14 +152,61 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         if let writing = data.writing {
             filterArray.append(Overview(title: "Writing", value: writing.over_all_percentage ?? "0%", subtitle: "\(writing.student_count ?? "0") Students"))
         }
-        
+
+        // ✅ Final Report Data
         newReportData.append(.filterList(filterArray))
         newReportData.append(.monthlyReport(monthlyReport))
         newReportData.append(.studentList(studentList))
-        
+
         self.reportData = newReportData
         self.tableView.reloadData()
     }
+    func getTopPerformers(from data: PerformanceData) -> [TopReport] {
+        let readingDetails = data.reading?.details ?? []
+        let writingDetails = data.writing?.details ?? []
+        let speakingDetails = data.speaking?.details ?? []
+        let listeningDetails = data.listening?.details ?? []
+        
+        let allDetails = readingDetails + writingDetails + speakingDetails + listeningDetails
+        
+        var studentScores: [String: [Double]] = [:]
+        
+        for submission in allDetails {
+            guard
+                let name = submission.student_name,
+                let stdSec = submission.std_sec,
+                let remarkStr = submission.remark
+            else { continue }
+            
+            // 🔹 Clean remark → remove % + trim
+            let cleaned = remarkStr.replacingOccurrences(of: "%", with: "").trimmingCharacters(in: .whitespaces)
+            
+            guard let percentage = Double(cleaned), percentage > 0 else { continue }
+            
+            let key = "\(name)_\(stdSec)"
+            studentScores[key, default: []].append(percentage)
+        }
+        
+        var reports: [TopReport] = studentScores.compactMap { key, scores in
+            let components = key.split(separator: "_")
+            guard components.count >= 2 else { return nil }
+            
+            let name = String(components[0])
+            let stdSec = String(components[1])
+            
+            return TopReport(
+                name: name,
+                studentClass: stdSec,
+                section: "",
+                percentage: scores.max() ?? 0
+            )
+        }
+        
+        reports.sort { $0.percentage > $1.percentage }
+        
+        return Array(reports.prefix(4))
+    }
+
     
     // MARK: - Weeks in Current Month
     func weeksInCurrentMonth() -> Int {

@@ -338,6 +338,8 @@
 		846446912E4C410C007D1C5A /* NotificationsTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846446902E4C410C007D1C5A /* NotificationsTvCell.xib */; };
 		846446922E4C410C007D1C5A /* NotificationsTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8464468F2E4C410C007D1C5A /* NotificationsTvCell.swift */; };
 		8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 8464BA682DA6774100A52D8B /* percentage-circle.json */; };
+		8464BE382E62BB7D00518917 /* CommunicationTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8464BE362E62BB7D00518917 /* CommunicationTVC.swift */; };
+		8464BE392E62BB7D00518917 /* CommunicationTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8464BE372E62BB7D00518917 /* CommunicationTVC.xib */; };
 		84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */; };
 		84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */; };
 		84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */; };
@@ -1196,6 +1198,8 @@
 		8464468F2E4C410C007D1C5A /* NotificationsTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTvCell.swift; sourceTree = "<group>"; };
 		846446902E4C410C007D1C5A /* NotificationsTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsTvCell.xib; sourceTree = "<group>"; };
 		8464BA682DA6774100A52D8B /* percentage-circle.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "percentage-circle.json"; sourceTree = "<group>"; };
+		8464BE362E62BB7D00518917 /* CommunicationTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationTVC.swift; sourceTree = "<group>"; };
+		8464BE372E62BB7D00518917 /* CommunicationTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunicationTVC.xib; sourceTree = "<group>"; };
 		84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardTvcellTableViewCell.swift; sourceTree = "<group>"; };
 		84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardTvcellTableViewCell.xib; sourceTree = "<group>"; };
 		84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardVc.swift; sourceTree = "<group>"; };
@@ -3748,6 +3752,8 @@
 				84FC4DC62DBCAE6700BBEDD7 /* FiltersCvCell.xib */,
 				84FC4DC72DBCAE6700BBEDD7 /* ParentCommunicationVc.swift */,
 				84FC4DC82DBCAE6700BBEDD7 /* ParentCommunicationVc.xib */,
+				8464BE362E62BB7D00518917 /* CommunicationTVC.swift */,
+				8464BE372E62BB7D00518917 /* CommunicationTVC.xib */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -4358,6 +4364,7 @@
 				844DF00A2E5AD28F0016A347 /* QuistionPagenationVc.xib in Resources */,
 				84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */,
 				FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */,
+				8464BE392E62BB7D00518917 /* CommunicationTVC.xib in Resources */,
 				FA7C7BB02E55B55B009BD4CF /* CreateSlotsBottomVC.xib in Resources */,
 				FAFF9DFF2D6C7B7A00498368 /* SlotsCollectionViewCell.xib in Resources */,
 				FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */,
@@ -4876,6 +4883,7 @@
 				187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */,
 				18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */,
 				18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */,
+				8464BE382E62BB7D00518917 /* CommunicationTVC.swift in Sources */,
 				FAD14FD82DBFAE01006BD3E1 /* StudentTVCell.swift in Sources */,
 				84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */,
 				849AD03C2D1A845E002DEC07 /* MarkAttendenceVC.swift in Sources */,

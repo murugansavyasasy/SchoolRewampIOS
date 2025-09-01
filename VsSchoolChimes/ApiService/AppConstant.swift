@@ -154,6 +154,7 @@ struct ServiceUrl{
     static let lms_api_lsrw_submission_list = "lms/api/lsrw/submission-list"
     static let lms_api_lsrw_my_submissions = "lms/api/lsrw/my-submissions"
     static let lms_api_lsrw_stats = "lms/api/lsrw/stats"
+    static let dashboard_api_pauket_add_points = "dashboard/api/pauket/add-points"
     
 }
 

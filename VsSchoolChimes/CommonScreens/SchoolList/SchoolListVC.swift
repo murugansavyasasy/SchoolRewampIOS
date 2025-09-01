@@ -212,7 +212,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         if come_fromLogin{
             if let data = school_details?[indexPath.row]{
                 UserDefaultFileManager.saveStaffDetails(data: data)}
-            
             switch Menu_id.staffSelectedMenuId{
     
             case Menu_id.staffGeoAttendaceReport:

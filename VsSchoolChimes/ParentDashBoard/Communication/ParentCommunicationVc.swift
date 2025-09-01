@@ -118,7 +118,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
 //        if passValue == 1{
 //            view.backgroundColor = .topBackgroundCLr
 //            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//           
+//
 //        }else{
 //            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
 //        }
@@ -260,18 +260,18 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
 //        dropDown.dataSource = ["VOICE","TEXT","Read","Unread","All"]
 //        dropDown.anchorView = FilterImage
 //        dropDown.bottomOffset = CGPoint(x: 0, y: (FilterImage.bounds.height))
-//        
+//
 //        dropDown.direction = .bottom
-//        
+//
 //        dropDown.show()
 //        dropDown.selectionAction = { [self] (index: Int, item: String) in
 //           // self.filterBtn.setTitle(item.translated(), for: .normal)
-//            
+//
 //            filterSelection(FilterType: item)
-//            
+//
 //            isFiltered = true
 //            tv.reloadData()
-//            
+//
 //        }
         
         FilterCV.isHidden = false
@@ -299,7 +299,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
 //        case "Read" :
 //            FilteredMessages = TotalMessageList?.readMessages()
-//            
+//
 //        case "Unread" :
 //            FilteredMessages = TotalMessageList?.unreadMessages()
             

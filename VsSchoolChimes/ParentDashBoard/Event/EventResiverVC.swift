@@ -431,20 +431,20 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
         for section in allEventSections {
             switch section {
             case .featured(let events):
-                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.featured(filteredEvents))
                 }
             case .categories(let categories):
                 filteredSections.append(.categories(categories))
             case .upcoming(let events):
-                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.upcoming(filteredEvents))
                 }
 
             case .completed(let events):
-                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased()) }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.completed(filteredEvents))
                 }

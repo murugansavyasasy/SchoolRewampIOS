@@ -18,130 +18,130 @@ class  commonApi_forSending {
     
     
     
-//    func SendingAttachmentFlow(
-//        selectedAcadimicYearId : Int,
-//        target_type : Int,
-//        selectedId : [String] ,
-//        baseURL: String ,
-//        subjectId : String,
-//        message: String,
-//        from viewController: UIViewController,
-//        Common_request_params: [String: Any]? = nil,
-//        onComplete : @escaping(Send_AttachmentResponse) -> Void
-//    ) {
-//        let selectedType = user_inputs.selectedFileType
-//        var uploadedFiles: [[String: String]] = []
-//        var iframeValue = ""
-//        var fileSizeValue = ""
-//        let title = AlertstringFile.Confirm_title
-//        alert.showAlertCancel(
-//            title: title,
-//            message: message,
-//            actionLbl1: AlertstringFile.Yes_Send,
-//            actionLbl2: AlertstringFile.Cancel,
-//            on: viewController,
-//            onOk: { [self] in
-//                if selectedType == AttachmentTypeString.VIDEO {
-//                    guard let videoURL = user_inputs.VideoPath else {
-//                        print("❌ Video path is missing")
-//                        return
-//                    }
-//                    let videoTitle =  Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
-//                    let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
-//                    
-//                    
-////                    compressVideo(inputURL: videoURL) { [weak self] compressedURL in
-////                        //            guard let self = self, let compressedURL = compressedURL else { return }
-////
-////                    }
-//                    startUpload(
-//                        from: viewController,
-//                        videoURL: videoURL,
-//                        title: videoTitle,
-//                        description: videoDescription
-//                    ) {
-//                        videoURLString,
-//                        iframeHTML,
-//                        fileSize,
-//                        finalEmbedUrl in
-//                        
-//                        if let videoURLString = videoURLString {
-//                            uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
-//                            if let iframeHTML = iframeHTML {
-//                                iframeValue = iframeHTML
-//                            }
-//                            if let size = fileSize {
-//                                fileSizeValue = self
-//                                    .convertSize(size)//String(size)
-//                            }
-//                            
-//                            self.sendAttachment(
-//                                from: viewController,
-//                                with: uploadedFiles,
-//                                iframe: iframeValue,
-//                                filesize: fileSizeValue,
-//                                baseURl: baseURL,
-//                                array_selectedId: selectedId,
-//                                target_type: target_type,
-//                                selectedAcadimicYearId: selectedAcadimicYearId,
-//                                Common_request_params: Common_request_params,
-//                                subjectId: subjectId
-//                            ) { response in
-//                                print("✅ Upload complete: \(response)")
-//                                onComplete(response)
-//                            }
-//                            
-//                            
-//                        } else {
-//                            print("❌ Video upload failed")
-//                            // Optionally show alert or retry UI
-//                        }
-//                    }
-//                }else {
-//                    
-//                    
-//                    
-//                    let file: Any = user_inputs.SelectedUrls
-//                    uploadAWSMedia(file: file) { [self] in
-//                        CircularProgressLoader.shared.hide()
-//                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-//                            if let url = URL(string: url) {
-//                                let type = url.pathExtension.lowercased()
-//                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-//                            }
-//                            return [
-//                                CommonStringFile.url: url,
-//                                CommonStringFile.type: user_inputs.selectedFileType
-//                            ]
-//                        }
-//                        
-//                        sendAttachment(
-//                            from: viewController,
-//                            with: uploadedFiles,
-//                            iframe: iframeValue,
-//                            filesize: fileSizeValue,
-//                            baseURl: baseURL,
-//                            array_selectedId: selectedId,
-//                            target_type: target_type,
-//                            selectedAcadimicYearId: selectedAcadimicYearId,
-//                            Common_request_params: Common_request_params,
-//                            subjectId: subjectId
-//                        ) { response in
-//                            print("✅ Upload complete: \(response)")
-//                            onComplete(response)
-//                        }
-//                    }
-//                }
-//            },
-//            
-//            onNo: {
-//                print("User canceled.")
-//            }
-//        )
-//    }
+    //    func SendingAttachmentFlow(
+    //        selectedAcadimicYearId : Int,
+    //        target_type : Int,
+    //        selectedId : [String] ,
+    //        baseURL: String ,
+    //        subjectId : String,
+    //        message: String,
+    //        from viewController: UIViewController,
+    //        Common_request_params: [String: Any]? = nil,
+    //        onComplete : @escaping(Send_AttachmentResponse) -> Void
+    //    ) {
+    //        let selectedType = user_inputs.selectedFileType
+    //        var uploadedFiles: [[String: String]] = []
+    //        var iframeValue = ""
+    //        var fileSizeValue = ""
+    //        let title = AlertstringFile.Confirm_title
+    //        alert.showAlertCancel(
+    //            title: title,
+    //            message: message,
+    //            actionLbl1: AlertstringFile.Yes_Send,
+    //            actionLbl2: AlertstringFile.Cancel,
+    //            on: viewController,
+    //            onOk: { [self] in
+    //                if selectedType == AttachmentTypeString.VIDEO {
+    //                    guard let videoURL = user_inputs.VideoPath else {
+    //                        print("❌ Video path is missing")
+    //                        return
+    //                    }
+    //                    let videoTitle =  Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
+    //                    let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
+    //
+    //
+    ////                    compressVideo(inputURL: videoURL) { [weak self] compressedURL in
+    ////                        //            guard let self = self, let compressedURL = compressedURL else { return }
+    ////
+    ////                    }
+    //                    startUpload(
+    //                        from: viewController,
+    //                        videoURL: videoURL,
+    //                        title: videoTitle,
+    //                        description: videoDescription
+    //                    ) {
+    //                        videoURLString,
+    //                        iframeHTML,
+    //                        fileSize,
+    //                        finalEmbedUrl in
+    //
+    //                        if let videoURLString = videoURLString {
+    //                            uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
+    //                            if let iframeHTML = iframeHTML {
+    //                                iframeValue = iframeHTML
+    //                            }
+    //                            if let size = fileSize {
+    //                                fileSizeValue = self
+    //                                    .convertSize(size)//String(size)
+    //                            }
+    //
+    //                            self.sendAttachment(
+    //                                from: viewController,
+    //                                with: uploadedFiles,
+    //                                iframe: iframeValue,
+    //                                filesize: fileSizeValue,
+    //                                baseURl: baseURL,
+    //                                array_selectedId: selectedId,
+    //                                target_type: target_type,
+    //                                selectedAcadimicYearId: selectedAcadimicYearId,
+    //                                Common_request_params: Common_request_params,
+    //                                subjectId: subjectId
+    //                            ) { response in
+    //                                print("✅ Upload complete: \(response)")
+    //                                onComplete(response)
+    //                            }
+    //
+    //
+    //                        } else {
+    //                            print("❌ Video upload failed")
+    //                            // Optionally show alert or retry UI
+    //                        }
+    //                    }
+    //                }else {
+    //
+    //
+    //
+    //                    let file: Any = user_inputs.SelectedUrls
+    //                    uploadAWSMedia(file: file) { [self] in
+    //                        CircularProgressLoader.shared.hide()
+    //                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+    //                            if let url = URL(string: url) {
+    //                                let type = url.pathExtension.lowercased()
+    //                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+    //                            }
+    //                            return [
+    //                                CommonStringFile.url: url,
+    //                                CommonStringFile.type: user_inputs.selectedFileType
+    //                            ]
+    //                        }
+    //
+    //                        sendAttachment(
+    //                            from: viewController,
+    //                            with: uploadedFiles,
+    //                            iframe: iframeValue,
+    //                            filesize: fileSizeValue,
+    //                            baseURl: baseURL,
+    //                            array_selectedId: selectedId,
+    //                            target_type: target_type,
+    //                            selectedAcadimicYearId: selectedAcadimicYearId,
+    //                            Common_request_params: Common_request_params,
+    //                            subjectId: subjectId
+    //                        ) { response in
+    //                            print("✅ Upload complete: \(response)")
+    //                            onComplete(response)
+    //                        }
+    //                    }
+    //                }
+    //            },
+    //
+    //            onNo: {
+    //                print("User canceled.")
+    //            }
+    //        )
+    //    }
     
     
-//onComplete: (Send_AttachmentResponse) -> Void
+    //onComplete: (Send_AttachmentResponse) -> Void
     func SendingAttachmentFlow(
         selectedAcadimicYearId: Int,
         edit: Bool = false,
@@ -164,13 +164,13 @@ class  commonApi_forSending {
                 let totalUploads = user_inputs.SelectedUrls.count + 1 // 1 for AWS/media upload
                 
                 var completedUploads = 0
-
-                            func updateProgress() {
-                                let progress = Double(completedUploads) / Double(totalUploads)
-                                CircularProgressLoader.shared.updateProgress(to: progress * 100)
-                            }
-
-                            CircularProgressLoader.shared.show(style: .circle)
+                
+                func updateProgress() {
+                    let progress = Double(completedUploads) / Double(totalUploads)
+                    CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                }
+                
+                CircularProgressLoader.shared.show(style: .circle)
                 var uploadedFiles: [[String: String]] = []
                 var iframeValue = ""
                 var fileSizeValue = ""
@@ -185,7 +185,7 @@ class  commonApi_forSending {
                 
                 // 🚀 Serial video upload using inline recursive loop
                 var currentVideoIndex = 0
-            
+                
                 func uploadNextVideo() {
                     guard currentVideoIndex < videoFiles.count else {
                         dispatchGroup.leave()
@@ -254,7 +254,7 @@ class  commonApi_forSending {
                 dispatchGroup.notify(queue: .main) {
                     if uploadedFiles.isEmpty {
                         print("❌ No files uploaded.")
-//                        return
+                        //                        return
                     }
                     
                     if edit == true {
@@ -287,10 +287,10 @@ class  commonApi_forSending {
             }
         )
     }
-
-
-
-
+    
+    
+    
+    
     
     func sendAttachment(
         from viewController: UIViewController,
@@ -358,6 +358,7 @@ class  commonApi_forSending {
             }
             
         }
+    
     func EditAttachment(
         from viewController: UIViewController,
         with uploadedFiles: [[String: String]],
@@ -382,9 +383,9 @@ class  commonApi_forSending {
         print("📤 USER TOKEN \(UserDefaultFileManager.get_staff_Details()?.access_token ?? "")")
         
         let Updatetoken: String? = (localData.editToken == nil)
-            ? (UserDefaultFileManager.get_staff_Details()?.access_token ?? "")
-            : localData.editToken
-
+        ? (UserDefaultFileManager.get_staff_Details()?.access_token ?? "")
+        : localData.editToken
+        
         
         APIService.shared.makeApi(
             url: baseURl,
@@ -393,7 +394,7 @@ class  commonApi_forSending {
             token: Updatetoken ?? ""
         ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
             guard let viewController = viewController else { return }
-
+            
             switch result {
             case .success(let successMessage):
                 DispatchQueue.main.async {
@@ -401,7 +402,7 @@ class  commonApi_forSending {
                     CircularProgressLoader.shared.hide()
                     onComplete(successMessage)
                 }
-
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("❌ API error: \(error.localizedDescription)")
@@ -412,27 +413,27 @@ class  commonApi_forSending {
                         preferredStyle: .alert
                     )
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
-
+                    
                     viewController.present(alert, animated: true)
                 }
             }
         }
     }
-
+    
     
     
     //Function for video upload
     func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
         
-          
+        
         
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
         }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
             
-
+            
             if let videoURL = videoURL {
                 print("✅ Video uploaded! Watch it at: \(videoURL)")
                 if let iframeHTML = iframeHTML {
@@ -479,9 +480,9 @@ class  commonApi_forSending {
         var completed = 0
         func updateAndCheckCompletion(total: Int) {
             let progress = (Double(completed) / Double(total)) * 100
-//            CircularProgressLoader.shared.updateProgress(to: progress)
+            //            CircularProgressLoader.shared.updateProgress(to: progress)
             if completed == total {
-//                CircularProgressLoader.shared.hide()
+                //                CircularProgressLoader.shared.hide()
                 completion()
             }
         }
@@ -503,7 +504,7 @@ class  commonApi_forSending {
                 ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
-//                    CircularProgressLoader.shared.updateProgress(to: progress)
+                    //                    CircularProgressLoader.shared.updateProgress(to: progress)
                 },
                 completion: { url in
                     if let uploadedURL = url {
@@ -515,10 +516,10 @@ class  commonApi_forSending {
                     
                     completed += 1
                     let progress = (Double(completed) / Double(total)) * 100
-//                    CircularProgressLoader.shared.updateProgress(to: progress)
+                    //                    CircularProgressLoader.shared.updateProgress(to: progress)
                     
                     if completed == total {
-//                        CircularProgressLoader.shared.hide()
+                        //                        CircularProgressLoader.shared.hide()
                         completion()
                     }
                 }
@@ -531,9 +532,9 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-//            CircularProgressLoader.shared.show(style: .circle)
-//            CircularProgressLoader.shared.updateProgress(to: 0)
-//            
+            //            CircularProgressLoader.shared.show(style: .circle)
+            //            CircularProgressLoader.shared.updateProgress(to: 0)
+            //
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
@@ -552,9 +553,9 @@ class  commonApi_forSending {
                         
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
-//                        CircularProgressLoader.shared.updateProgress(to: progress)
+                        //                        CircularProgressLoader.shared.updateProgress(to: progress)
                         if completed == total {
-//                            CircularProgressLoader.shared.hide()
+                            //                            CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
                             completion()
                         }
@@ -569,9 +570,9 @@ class  commonApi_forSending {
                 return
             }
             
-//            CircularProgressLoader.shared.show(style: .circle)
-//            CircularProgressLoader.shared.updateProgress(to: 0)
-//            
+            //            CircularProgressLoader.shared.show(style: .circle)
+            //            CircularProgressLoader.shared.updateProgress(to: 0)
+            //
             for (index, url) in files.enumerated() {
                 guard let PdfURL = URL(string: url) else {
                     print("❌ Invalid audio URL.")
@@ -594,10 +595,10 @@ class  commonApi_forSending {
                         
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
-//                        CircularProgressLoader.shared.updateProgress(to: progress)
+                        //                        CircularProgressLoader.shared.updateProgress(to: progress)
                         
                         if completed == total {
-//                            CircularProgressLoader.shared.hide()
+                            //                            CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
                             completion()
                         }
@@ -611,9 +612,9 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-//            CircularProgressLoader.shared.show(style: .circle)
-//            CircularProgressLoader.shared.updateProgress(to: 0)
-//            
+            //            CircularProgressLoader.shared.show(style: .circle)
+            //            CircularProgressLoader.shared.updateProgress(to: 0)
+            //
             for item in uploadableItems {
                 if let image = item.image {
                     // 🖼️ Upload local image

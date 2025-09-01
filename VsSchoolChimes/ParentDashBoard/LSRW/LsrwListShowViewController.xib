@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="backBtn" destination="C3T-wS-ckn" id="Bu9-Xu-n9X"/>
                 <outlet property="bgView" destination="qjc-ha-zjw" id="uTP-JQ-BjA"/>
+                <outlet property="nodataImg" destination="k5K-0T-Gof" id="nWE-FL-dwy"/>
                 <outlet property="searchBar" destination="O0a-CO-gv6" id="8Hg-T6-2t1"/>
                 <outlet property="searchBtn" destination="Bmp-NF-BsC" id="mp6-As-fxi"/>
                 <outlet property="tv" destination="hXu-vi-gsd" id="cvg-AP-XrS"/>
@@ -75,7 +76,10 @@
                     <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Nodata" translatesAutoresizingMaskIntoConstraints="NO" id="k5K-0T-Gof">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="694"/>
+                            <rect key="frame" x="20" y="176" width="353" height="400"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="400" id="EgZ-z6-2HP"/>
+                            </constraints>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHl-hQ-OkN" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
                             <rect key="frame" x="5" y="8" width="383" height="41.666666666666664"/>
@@ -90,10 +94,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0a-CO-gv6">
-                                            <rect key="frame" x="0.0" y="0.0" width="363" height="50"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="fps-Px-qAx"/>
-                                            </constraints>
+                                            <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <scopeButtonTitles>
                                                 <string>Title</string>
@@ -133,20 +134,19 @@
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hXu-vi-gsd">
                             <rect key="frame" x="0.0" y="57.666666666666686" width="393" height="636.33333333333326"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="hXu-vi-gsd" secondAttribute="bottom" id="4NM-nz-sOP"/>
+                        <constraint firstItem="k5K-0T-Gof" firstAttribute="centerY" secondItem="hXu-vi-gsd" secondAttribute="centerY" id="5zs-SF-boU"/>
                         <constraint firstItem="hXu-vi-gsd" firstAttribute="top" secondItem="HHl-hQ-OkN" secondAttribute="bottom" constant="8" id="8td-FT-ZTx"/>
                         <constraint firstItem="hXu-vi-gsd" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" id="Mpw-rd-WXa"/>
-                        <constraint firstItem="k5K-0T-Gof" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" id="bpd-AP-DUG"/>
-                        <constraint firstAttribute="trailing" secondItem="k5K-0T-Gof" secondAttribute="trailing" id="bvm-6E-ab6"/>
+                        <constraint firstItem="k5K-0T-Gof" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" constant="20" id="bpd-AP-DUG"/>
+                        <constraint firstAttribute="trailing" secondItem="k5K-0T-Gof" secondAttribute="trailing" constant="20" id="bvm-6E-ab6"/>
                         <constraint firstAttribute="trailing" secondItem="hXu-vi-gsd" secondAttribute="trailing" id="cdo-RA-sQa"/>
                         <constraint firstItem="HHl-hQ-OkN" firstAttribute="top" secondItem="Ynr-y0-lTl" secondAttribute="top" constant="8" id="e00-u1-6d5"/>
-                        <constraint firstAttribute="bottom" secondItem="k5K-0T-Gof" secondAttribute="bottom" id="f6m-nd-cW1"/>
-                        <constraint firstItem="k5K-0T-Gof" firstAttribute="top" secondItem="Ynr-y0-lTl" secondAttribute="top" id="uQo-jM-IOZ"/>
                         <constraint firstAttribute="trailing" secondItem="HHl-hQ-OkN" secondAttribute="trailing" constant="5" id="wec-Zb-0u8"/>
                         <constraint firstItem="HHl-hQ-OkN" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" constant="5" id="xeJ-Zd-jpz"/>
                     </constraints>

@@ -69,7 +69,7 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
         uiConfiguration()
         setupPageViewController()
         loadPages([page1, page2])
-        disableSwipeGesture()
+//        disableSwipeGesture()
 
         if let firstPage = pages.first {
             pageViewController.setViewControllers([firstPage], direction: .forward, animated: true)
@@ -190,12 +190,24 @@ class AssignmentPageVC: UIViewController, UIPageViewControllerDelegate, UIPageVi
         guard let currentIndex = pages.firstIndex(of: viewController), currentIndex < pages.count - 1 else { return nil }
         return pages[currentIndex + 1]
     }
-
-    private func disableSwipeGesture() {
-        pageViewController.view.subviews
-            .compactMap { $0 as? UIScrollView }
-            .forEach { $0.isScrollEnabled = false }
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+        guard completed,
+              let currentVC = pageViewController.viewControllers?.first,
+              let currentIndex = pages.firstIndex(of: currentVC) else {
+            return
+        }
+       
+        
+        updateTabUI(for: currentIndex)
     }
+//    private func disableSwipeGesture() {
+//        pageViewController.view.subviews
+//            .compactMap { $0 as? UIScrollView }
+//            .forEach { $0.isScrollEnabled = false }
+//    }
 
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         pages.count
