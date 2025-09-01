@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1t-yF-atj">
-                    <rect key="frame" x="0.0" y="128" width="393" height="50"/>
+                    <rect key="frame" x="0.0" y="69" width="393" height="50"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4GE-PM-ugy">
                             <rect key="frame" x="350.66666666666669" y="0.0" width="37.333333333333314" height="45"/>
@@ -51,7 +51,7 @@
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBQ-hu-gG1">
-                            <rect key="frame" x="10" y="7.6666666666666572" width="350" height="35"/>
+                            <rect key="frame" x="10" y="7.6666666666666714" width="350" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="fFD-Ih-DXz"/>
                             </constraints>
@@ -88,7 +88,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Se-Jh-dr2">
-                    <rect key="frame" x="8" y="188" width="377" height="654"/>
+                    <rect key="frame" x="8" y="129" width="377" height="713"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuS-5x-mBm">
                             <rect key="frame" x="0.0" y="0.0" width="377" height="886.66666666666663"/>
@@ -218,7 +218,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ob4-gK-CHd">
-                                            <rect key="frame" x="0.0" y="117.33333333333339" width="357" height="44.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="117.33333333333333" width="357" height="44.666666666666671"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gir-j8-Sdb">
                                                     <rect key="frame" x="0.0" y="-0.3333333333333357" width="25" height="26.333333333333336"/>
@@ -237,7 +237,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Study Certificate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l42-hx-4OK">
-                                                            <rect key="frame" x="0.0" y="24.333333333333258" width="264" height="20.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="24.333333333333371" width="264" height="20.333333333333329"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -276,7 +276,7 @@
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iw0-84-0zB">
                                                             <rect key="frame" x="0.0" y="24.333333333333371" width="264" height="446.33333333333331"/>
-                                                            <mutableString key="text">In iOS development, if you want to apply a color only to the top portion of a view instead of coloring the entire background, you can achieve this by adding a separate subview with the desired color and positioning it at the top using Auto Layout constraints. This technique allows you to create a header-like effect or highlight the upper section of the screen without affecting the rest of the view. By setting the background color of the subview and adjusting its height (e.g., 60 points), you can precisely control how much of the top area is colored. This method is flexible and works well whether you're designing your interface programmatically or using Interface Builder in Storyboard.</mutableString>
+                                                            <string key="text">In iOS development, if you want to apply a color only to the top portion of a view instead of coloring the entire background, you can achieve this by adding a separate subview with the desired color and positioning it at the top using Auto Layout constraints. This technique allows you to create a header-like effect or highlight the upper section of the screen without affecting the rest of the view. By setting the background color of the subview and adjusting its height (e.g., 60 points), you can precisely control how much of the top area is colored. This method is flexible and works well whether you're designing your interface programmatically or using Interface Builder in Storyboard.</string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>

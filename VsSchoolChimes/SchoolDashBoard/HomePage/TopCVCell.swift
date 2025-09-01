@@ -14,7 +14,12 @@ class TopCVCell: UICollectionViewCell {
     @IBOutlet weak var iconBtn: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
-        outerView.setShadow(cornerRadius: 4)
+        outerView.layer.cornerRadius = 6
+        outerView.layer.masksToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 0.08
+        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        outerView.layer.shadowRadius = 6
         readVieaw.layer.cornerRadius = readVieaw.frame.width/2
     }
     func configure(with item: MenuDetail) {

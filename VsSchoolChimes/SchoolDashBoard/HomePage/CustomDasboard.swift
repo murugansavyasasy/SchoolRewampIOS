@@ -7,20 +7,23 @@ import UIKit
 class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate {
     func meunu(viewController: UIViewController?) {
         hideSideMenu()
-
-        guard let vc = viewController else {
-            dismiss(animated: true)
-            return
-        }
-        // 👇 Optional: Hide tab bar when pushing
-//        vc.hidesBottomBarWhenPushed = true
-
-        if vc is SettingsViewController || vc is ProfileViewController || vc is HelpVc {
-            self.navigationController?.pushViewController(vc, animated: true)
+        
+        if let vc = viewController {
+            if vc is SettingsViewController || vc is ProfileViewController || vc is HelpVc {
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+//                dismiss(animated: true)
+                delegate?.back()
+            }
         } else {
-            delegate?.back()
+            getacadmicYr {
+                self.get_dashboard_details()
+            }
         }
+        setupLabels()
+        setupProfileImage()
     }
+
     
     
     @IBOutlet weak var headerView: HeaderWaveView!

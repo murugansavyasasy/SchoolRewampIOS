@@ -4,9 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,7 +32,7 @@
                                                     <constraint firstAttribute="width" constant="25" id="3jd-lF-4zs"/>
                                                     <constraint firstAttribute="height" constant="25" id="Rbr-1Z-AJv"/>
                                                 </constraints>
-                                                <color key="tintColor" name="dotColour"/>
+                                                <color key="tintColor" red="0.043137254901960784" green="0.20000000000000001" blue="0.49803921568627452" alpha="0.91181053109720456" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="button:DRj-dA-EHv:image">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -42,22 +40,22 @@
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hu-1d-EV4">
                                                 <rect key="frame" x="35" y="45.333333333333336" width="165" height="15.666666666666664"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                                <color key="textColor" name="dotColour"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" red="0.043137254901960784" green="0.20000000000000001" blue="0.49803921568627452" alpha="0.90869763432716832" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a23-U0-b4a">
                                         <rect key="frame" x="0.0" y="106.33333333333333" width="200" height="56.666666666666671"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                        <color key="textColor" red="0.34509803921568627" green="0.38039215686274508" blue="0.44313725490196076" alpha="0.62554101230335879" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="XVT-6f-0Pz" firstAttribute="top" secondItem="jHx-1c-b4S" secondAttribute="top" constant="10" id="5bp-Sh-izK"/>
                             <constraint firstAttribute="bottom" secondItem="XVT-6f-0Pz" secondAttribute="bottom" constant="10" id="A4V-B8-59y"/>
@@ -12527,11 +12525,5 @@ oQALT6MAC2FDAAthSAALYVUAC2FYAAthZQALYWoAC2FyAAthdQALYXoAC2GCAAAAAAAABAEAAAAAAAAA
 VgAAAAAAAAAAAAAAAAALYYU
 </mutableData>
         </image>
-        <namedColor name="dotColour">
-            <color red="0.14117647058823529" green="0.38823529411764707" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

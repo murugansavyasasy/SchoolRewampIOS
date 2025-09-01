@@ -363,7 +363,27 @@ class RecipientVc: UIViewController{
             }
         
     }
-    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    self.gotoDashboard()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.gotoDashboard()
+                }
+            }
+        }
+    }
     
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
@@ -391,7 +411,11 @@ class RecipientVc: UIViewController{
                     Common_request_params.removeAll()
                     
                     if user_inputs.clearTempData(){
-                        gotoDashboard()
+                        let parms = [  "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                       "activity": "VIEW_ASSIGNMENT",
+                                       "user_type": 1,
+                                       "menu_id": 2]
+                        paketApiCall(params:parms)
                     }
                     
                 }

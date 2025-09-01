@@ -360,9 +360,12 @@ class MenuRedirectHandler {
     
     func receiverCommunicationNavigate(from viewController: UIViewController) {
         
-        let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        if #available(iOS 15.0, *) {
+            let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
+            
+            vc.modalPresentationStyle = .fullScreen
+            viewController.present(vc, animated: true)
+        }
     }
     
     func receiverImgPdfNavigate(from viewController: UIViewController) {

@@ -11,6 +11,7 @@ import Kingfisher
 class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabView: UIView!
@@ -163,6 +164,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                 case .success(let successResponse):
                     self.allNotices = successResponse.data ?? []
                     self.searchData = self.allNotices
+                    self.noDataImg.isHidden = !self.searchData.isEmpty
                     self.updateCounts()
                     self.collectionView.reloadData()
                     
@@ -183,6 +185,8 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                 ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
             }
         }
+        noDataImg.isHidden = !searchData.isEmpty
+        noDataImg.image = UIImage(named: "noSearchData")
         updateCounts()
         collectionView.reloadData()
     }

@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="collectionView" destination="q0c-PN-s7s" id="rxc-ay-Flx"/>
                 <outlet property="nameLbl" destination="YUn-hI-OEG" id="JWO-Sz-DNf"/>
+                <outlet property="noDataImg" destination="9f2-SW-KoQ" id="Pq6-5w-pZX"/>
                 <outlet property="searchBar" destination="CM9-eI-e8Z" id="ntC-3N-gvp"/>
                 <outlet property="standerdLbl" destination="1SQ-Q1-J1f" id="ucI-rY-XN1"/>
                 <outlet property="tabView" destination="f18-FF-FgY" id="aKd-mi-TFu"/>
@@ -88,6 +89,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ScM-LK-Ail">
                     <rect key="frame" x="0.0" y="120" width="393" height="698"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noRecords" translatesAutoresizingMaskIntoConstraints="NO" id="9f2-SW-KoQ">
+                            <rect key="frame" x="30" y="199" width="333" height="300"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="300" id="X45-f9-kaI"/>
+                            </constraints>
+                        </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="39a-Hk-rBE">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="698"/>
                             <subviews>
@@ -189,6 +196,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="q0c-PN-s7s" firstAttribute="top" secondItem="1nY-Hk-wqA" secondAttribute="bottom" id="Y0h-xQ-ED5"/>
                             </constraints>
@@ -196,9 +204,12 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
+                        <constraint firstItem="9f2-SW-KoQ" firstAttribute="leading" secondItem="ScM-LK-Ail" secondAttribute="leading" constant="30" id="8oi-9c-aJD"/>
                         <constraint firstItem="39a-Hk-rBE" firstAttribute="top" secondItem="ScM-LK-Ail" secondAttribute="top" id="9kl-ay-bsz"/>
                         <constraint firstAttribute="trailing" secondItem="39a-Hk-rBE" secondAttribute="trailing" id="Dkh-q2-Can"/>
+                        <constraint firstAttribute="trailing" secondItem="9f2-SW-KoQ" secondAttribute="trailing" constant="30" id="Hcc-FB-oiI"/>
                         <constraint firstAttribute="bottom" secondItem="39a-Hk-rBE" secondAttribute="bottom" id="Unu-Q9-7tE"/>
+                        <constraint firstItem="9f2-SW-KoQ" firstAttribute="centerY" secondItem="ScM-LK-Ail" secondAttribute="centerY" id="aGO-0z-nKA"/>
                         <constraint firstItem="39a-Hk-rBE" firstAttribute="leading" secondItem="ScM-LK-Ail" secondAttribute="leading" id="gtK-eG-yEh"/>
                     </constraints>
                 </view>
@@ -224,6 +235,7 @@
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="noRecords" width="1000" height="1000"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

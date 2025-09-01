@@ -554,7 +554,7 @@ class HeaderWaveView: UIView {
                  frequency: 2.5,
                  amplitude: waveHeight * 0.8,
                  phase: 1.0,
-                 color: UIColor.white.withAlphaComponent(0.9),
+                 color: UIColor.systemBackground,
                  stepSize: 1.0)
     }
     

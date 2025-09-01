@@ -2034,11 +2034,11 @@ struct LSRWStudent: Codable {
 struct SkillResponse: Codable {
     let status: Bool
     let message: String
-    let data: [PerfomenceData]
+    let data: [PerformanceData]
 }
 
 // MARK: - Skill Data
-struct PerfomenceData: Codable {
+struct PerformanceData: Codable {
     let today_submitted: [SkillSubmission]?
     let listening: SkillCategory?
     let speaking: SkillCategory?
@@ -2060,6 +2060,7 @@ struct SkillSubmission: Codable {
     let description: String?
     let activity_type: String?
     let submitted_average: String?
+    let memberCount: Int?              // ✅ added
     let submission_date: String?
     let submitted_count: Int?
     let student_id: String?
