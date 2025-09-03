@@ -302,4 +302,7 @@ class PTMRequestStringFile{
     static let slots = "slots"
     static let subject_id = "subject_id"
     static let class_teacher_id = "class_teacher_id"
+    static let slot_ids = "slot_ids"
+    static let cancelled_reason = "cancelled_reason"
+    static let slot_id = "slot_id"
 }
