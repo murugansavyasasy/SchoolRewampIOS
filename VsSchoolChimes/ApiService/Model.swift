@@ -1347,23 +1347,26 @@ struct MessageSucResp: Codable {
 
 
 struct ManagemantMessageData: Codable {
-    let type: String?
-    let id: String?
-    let header_id: String?
-    let title: String?
-    let content: String?
-    let file_path: [FilePath]?
-    let file_size: String?
-    let iframe: String?
-    let description: String?
-    let date: String?
-    let time: String?
-    let sender_info: String?
+    var type: String?
+    var id: String?
+    var header_id: String?
+    var title: String?
+    var content: String?
+    var file_path: [FilePath]?
+    var file_size: String?
+    var iframe: String?
+    var description: String?
+    var date: String?
+    var time: String?
+    var sender_info: String?
     var is_unread: Bool?
-    let is_archive: Bool?
-    let order_date: String?
-    let duration: Int?
+    var is_archive: Bool?
+    var is_emergency: Bool?
+    var order_date: String?
+    var duration: Int?
     var isExpand:Bool?
+    
+   
 }
 //MARK: CLASS TIMETABLE
 struct TimetableResponse: Codable {
