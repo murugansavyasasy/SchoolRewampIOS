@@ -45,6 +45,7 @@ class SlotCV: UICollectionViewCell {
             isUserInteractionEnabled = true
             label.textColor = .white
             statusLbl.textColor = .white
+            statusLbl.text = "Available"
         } else if slot.is_booked ?? false {
             cellView.backgroundColor = .lightGray     // Disabled due to conflict
             isUserInteractionEnabled = false
@@ -52,13 +53,16 @@ class SlotCV: UICollectionViewCell {
             statusLbl.textColor = .red
             statusLbl.text = "Not Available"
         } else if slot.is_conflictDisabled ?? false{
-            cellView.backgroundColor = .lightGray
+            cellView.backgroundColor = .systemGray4
             isUserInteractionEnabled = false
+            statusLbl.textColor = .black
+            statusLbl.text = "Time conflicts"
         }else {
             cellView.backgroundColor = .white
             label.textColor = .black
             statusLbl.textColor = .systemGreen// Available
             isUserInteractionEnabled = true
+            statusLbl.text = "Available"
         }
     }
     

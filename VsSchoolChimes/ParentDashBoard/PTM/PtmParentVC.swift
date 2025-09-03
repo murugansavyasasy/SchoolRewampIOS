@@ -19,6 +19,11 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var BookSlotBtn: UIButton!
     @IBOutlet weak var subjectsView: UIView!
     @IBOutlet weak var subjectLbl: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var NodataLbl: UILabel!
+    @IBOutlet weak var noDataView: UIView!
+    
     
     var dateComponents: [(month: String, day: String, date: Date)] = []
     var selectedIndex: IndexPath?
@@ -29,8 +34,10 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var EventDate = ""
     var subjectId = "0"
     var classteacherId = "0"
-    
+    let alert = CustomAlert()
     let dropDown = DropDown()
+    var childVc : PtmHistoryVC?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +47,15 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         scheduleMeetingBtn.layer.cornerRadius = 12
         scheduleMeetingBtn.backgroundColor = .white
+        yourMeetingBtn.layer.cornerRadius = 12
+        
+        noDataView.isHidden = true
+        
+        NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
+        
+        CV.layer.cornerRadius = 12
+        CV.backgroundColor = .clear
+        
         
         subjectsView.layer.cornerRadius = 15
         subjectsView.layer.borderWidth = 0.5
@@ -91,18 +107,32 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     private func setupDropDown() {
         dropDown.anchorView = subjectsView
-        dropDown.dataSource = subjectList.compactMap{$0.name}
         
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+        // Add "All" as the first option
+        let subjectNames = ["All Subjects"] + subjectList.compactMap { $0.name }
+        dropDown.dataSource = subjectNames
+        
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return } // self is optional now
+            
             print("Selected item: \(item) at index: \(index)")
             subjectLbl.text = item
             
-            if index == 0 {
+            switch index {
+            case 0:
+                // "All" selected
                 subjectId = "0"
-                classteacherId = subjectList[index].id ?? ""
-            }else {
                 classteacherId = "0"
-                subjectId = subjectList[index].id ?? ""
+                
+            case 1:
+                // First real subject in your list
+                subjectId = "0"
+                classteacherId = subjectList[index - 1].id ?? ""
+                
+            default:
+                // Other subjects
+                classteacherId = "0"
+                subjectId = subjectList[index - 1].id ?? ""
             }
             
             getSlotsApi()
@@ -115,6 +145,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         dropDown.backgroundColor = .white
         dropDown.textColor = .black
     }
+
     
     
     
@@ -164,9 +195,12 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     if success.status == true {
                         self.events = success.data ?? []
                         self.tv.reloadData()
+                        self.noDataView.isHidden = true
+                        self.tv.isHidden = false
                     }else {
-                        self.events = success.data ?? []
-                        self.tv.reloadData()
+                        self.NodataLbl.text = success.message
+                        self.tv.isHidden = true
+                        self.noDataView.isHidden = false
                     }
                     
                 case .failure(let failure):
@@ -176,27 +210,96 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
     
+    func Book_Slots_Api(){
+        
+        let slots : [String] = selectedSlots.compactMap {$0.id}
+        let param : [String:Any] = [PTMRequestStringFile.slot_ids: slots]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_book_slots_for_student, parameters: param, type: ApitTypeSringFile.PUT, token: childDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
+                            
+                            self.getSlotsApi()
+                        }
+                    }else {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                    
+                case .failure(let failure):
+                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+        }
+    }
+    
     @IBAction func selectSubjectAct(){
         dropDown.show()
     }
+    
+    @IBAction func BookSlotsAct(_ sender: Any) {
+        
+        if selectedSlots.isEmpty{
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "minimum select one slot continue", on: self)
+        }else {
+            alert.showAlertCancel(title: AlertstringFile.Confirm, message: "Are you sure want to book selected Slots?", actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
+                self.Book_Slots_Api()
+            } onNo: {
+                
+            }
+        }
+    }
+    
     
     @IBAction func scheduleMeetingAct(_ sender: Any) {
         
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.backgroundColor = .clear
+        
+        removeChildVc()
     }
     
     @IBAction func yourMeetingAct(_ sender: Any) {
         scheduleMeetingBtn.backgroundColor = .clear
         yourMeetingBtn.backgroundColor = .white
+        
+        addChildVc()
     }
     @IBAction func backAct(_ sender: Any) {
         
         dismiss(animated: true)
     }
     
+    func addChildVc(){
+        removeChildVc()
+        let vc = PtmHistoryVC(nibName: nil, bundle: nil)
+        addChild(vc)
+        vc.view.frame = containerView.bounds
+        containerView.addSubview(vc.view)
+        vc.didMove(toParent: self)
+        self.childVc = vc
+    }
+    
+    func removeChildVc(){
+        
+        guard let vc = childVc else { return }
+        vc.willMove(toParent: nil)
+        vc.view.removeFromSuperview()
+        vc.removeFromParent()
+        childVc = nil
+    }
+    
     // MARK: - Time helpers
-        private lazy var timeFormatter: DateFormatter = {
+    private lazy var timeFormatter: DateFormatter = {
             let f = DateFormatter()
             f.dateFormat = "hh:mm a"
             f.locale = Locale(identifier: "en_US_POSIX")
@@ -216,42 +319,52 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             return max(s1, s2) < min(e1, e2)
         }
 
-        // MARK: - Conflict recomputation (ONLY across other rows)
-        private func recomputeConflicts() {
-            // 1) Build list of selected blocks from ALL rows:
-            //    include API my_booking and local userSelected
-            struct SelectedBlock { let slot: StudentSlot; let eventIndex: Int }
-            var selectedBlocks: [SelectedBlock] = []
+        // MARK: - Conflict recomputation
+    private func recomputeConflicts() {
+        struct SelectedBlock { let slot: StudentSlot; let eventIndex: Int }
+        var selectedBlocks: [SelectedBlock] = []
 
-            for (eIdx, ev) in events.enumerated() {
-                guard let slots = ev.slots else { continue }
-                for sl in slots {
-                    if (sl.my_booking ?? false) || (sl.userSelected ?? false) {
-                        selectedBlocks.append(.init(slot: sl, eventIndex: eIdx))
-                    }
+        for (eIdx, ev) in events.enumerated() {
+            guard let slots = ev.slots else { continue }
+            for sl in slots {
+                // ✅ include both API my_booking AND local userSelected
+                if (sl.my_booking ?? false) || (sl.userSelected ?? false) {
+                    selectedBlocks.append(.init(slot: sl, eventIndex: eIdx))
                 }
             }
+        }
 
-            // 2) For every row, disable ONLY if overlapping with selections from OTHER rows
-            for e in 0..<events.count {
-                guard var slots = events[e].slots else { continue }
+        for e in 0..<events.count {
+            guard var slots = events[e].slots else { continue }
 
-                for s in 0..<slots.count {
-                    var slot = slots[s]
+            for s in 0..<slots.count {
+                var slot = slots[s]
 
-                    // Server-locked states: never interact, never conflict-disable
-                    if (slot.my_booking ?? false) || (slot.is_booked ?? false) {
-                        slot.is_conflictDisabled = false
-                    } else {
-                        // conflict if overlaps with any selection from other rows
-                        let hasConflict = selectedBlocks.contains { block in
-                            block.eventIndex != e && isOverlapping(slot1: block.slot, slot2: slot)
-                        }
-                        slot.is_conflictDisabled = hasConflict
+                if (slot.my_booking ?? false) || (slot.is_booked ?? false) {
+                    // already locked → don't conflict-disable
+                    slot.is_conflictDisabled = false
+                } else {
+                    // disable if overlaps with any selected/my_booking in OTHER rows
+                    let hasConflict = selectedBlocks.contains { block in
+                        block.eventIndex != e && isOverlapping(slot1: block.slot, slot2: slot)
                     }
-                    slots[s] = slot
+                    slot.is_conflictDisabled = hasConflict
                 }
-                events[e].slots = slots
+
+                slots[s] = slot
+            }
+
+            events[e].slots = slots
+        }
+    }
+        // MARK: - Update selectedSlots storage
+        private func updateSelectedSlots() {
+            selectedSlots.removeAll()
+            for event in events {
+                if let slots = event.slots {
+                    let chosen = slots.filter { $0.userSelected ?? false }
+                    selectedSlots.append(contentsOf: chosen)
+                }
             }
         }
     
@@ -265,29 +378,42 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         let event = events[indexPath.row]
         
+        cell.TitleLbl.text = event.event_name
+        cell.StaffNameLbl.text = (event.staff_name ?? "") + " - " + (event.subject_name ?? "")
+        cell.MeetingTypeBtn.setTitle(event.slots?.first?.event_mode, for: .normal)
+        
         cell.slotSelected = { [weak self] selectedIndex in
                     guard let self = self else { return }
                     guard var rowSlots = self.events[indexPath.row].slots else { return }
 
                     var tapped = rowSlots[selectedIndex]
 
-                    // toggle selection in THIS row only
+                    // 🚫 If this event has a locked API booking, do nothing
+                    if rowSlots.contains(where: { $0.my_booking ?? false }) { return }
+                    // 🚫 If already booked by another user, do nothing
+                    if tapped.is_booked ?? false { return }
+
+                    // ✅ Toggle selection
                     if tapped.userSelected ?? false {
                         // Deselect
                         tapped.userSelected = false
                         rowSlots[selectedIndex] = tapped
                     } else {
-                        // Clear other user selections in this row, then select tapped
+                        // Only one slot per event → clear first
                         for i in 0..<rowSlots.count { rowSlots[i].userSelected = false }
                         tapped.userSelected = true
                         rowSlots[selectedIndex] = tapped
                     }
                     self.events[indexPath.row].slots = rowSlots
 
-                    // Recompute conflicts across OTHER rows only
+                    // Recompute conflicts across events
                     self.recomputeConflicts()
+                    // Refresh storage (only user selections, not my_booking)
+                    self.updateSelectedSlots()
 
-                  self.tv.reloadData()
+                    print("User selected slots: \(self.selectedSlots.map { ($0.slot_from ?? "") + "-" + ($0.slot_to ?? "") })")
+
+                    self.tv.reloadData()
                 }
 
         return cell
@@ -307,9 +433,11 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         if selectedIndex == indexPath{
             cell.cellView.backgroundColor = .systemBlue
             cell.monthLbl.textColor = .white
+            cell.dateBaseView.backgroundColor = .white
         }else {
-            cell.cellView.backgroundColor = .white
+            cell.cellView.backgroundColor = .clear
             cell.monthLbl.textColor = .black
+            cell.dateBaseView.backgroundColor = .clear
         }
         
         return cell

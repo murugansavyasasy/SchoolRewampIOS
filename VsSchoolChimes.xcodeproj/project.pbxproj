@@ -744,6 +744,10 @@
 		FAD4D7302E606449007A3FC0 /* PtmParentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */; };
 		FAD5DADB2E3B263F00A3CE97 /* NewAttendanceReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD5DADA2E3B263F00A3CE97 /* NewAttendanceReportVC.xib */; };
 		FAD5DADC2E3B263F00A3CE97 /* NewAttendanceReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5DAD92E3B263F00A3CE97 /* NewAttendanceReportVC.swift */; };
+		FAD8BDA42E66BE6C00C7CD53 /* PtmHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD8BDA22E66BE6C00C7CD53 /* PtmHistoryVC.swift */; };
+		FAD8BDA52E66BE6C00C7CD53 /* PtmHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD8BDA32E66BE6C00C7CD53 /* PtmHistoryVC.xib */; };
+		FAD8BDA82E66CDD100C7CD53 /* BookedSlotTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD8BDA72E66CDD100C7CD53 /* BookedSlotTV.xib */; };
+		FAD8BDA92E66CDD100C7CD53 /* BookedSlotTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD8BDA62E66CDD100C7CD53 /* BookedSlotTV.swift */; };
 		FAED58542E4B4E6E00497026 /* SlotListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAED58532E4B4E6E00497026 /* SlotListVC.xib */; };
 		FAED58552E4B4E6E00497026 /* SlotListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAED58522E4B4E6E00497026 /* SlotListVC.swift */; };
 		FAED58582E4B61B000497026 /* SlotListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAED58572E4B61B000497026 /* SlotListTV.xib */; };
@@ -1615,6 +1619,10 @@
 		FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmParentVC.xib; sourceTree = "<group>"; };
 		FAD5DAD92E3B263F00A3CE97 /* NewAttendanceReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttendanceReportVC.swift; sourceTree = "<group>"; };
 		FAD5DADA2E3B263F00A3CE97 /* NewAttendanceReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAttendanceReportVC.xib; sourceTree = "<group>"; };
+		FAD8BDA22E66BE6C00C7CD53 /* PtmHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtmHistoryVC.swift; sourceTree = "<group>"; };
+		FAD8BDA32E66BE6C00C7CD53 /* PtmHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmHistoryVC.xib; sourceTree = "<group>"; };
+		FAD8BDA62E66CDD100C7CD53 /* BookedSlotTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookedSlotTV.swift; sourceTree = "<group>"; };
+		FAD8BDA72E66CDD100C7CD53 /* BookedSlotTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookedSlotTV.xib; sourceTree = "<group>"; };
 		FAED58522E4B4E6E00497026 /* SlotListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotListVC.swift; sourceTree = "<group>"; };
 		FAED58532E4B4E6E00497026 /* SlotListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotListVC.xib; sourceTree = "<group>"; };
 		FAED58562E4B61B000497026 /* SlotListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotListTV.swift; sourceTree = "<group>"; };
@@ -3849,6 +3857,10 @@
 				FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */,
 				FA00B2632E640A8300260FEC /* DateCvCell.swift */,
 				FA00B2642E640A8300260FEC /* DateCvCell.xib */,
+				FAD8BDA22E66BE6C00C7CD53 /* PtmHistoryVC.swift */,
+				FAD8BDA32E66BE6C00C7CD53 /* PtmHistoryVC.xib */,
+				FAD8BDA62E66CDD100C7CD53 /* BookedSlotTV.swift */,
+				FAD8BDA72E66CDD100C7CD53 /* BookedSlotTV.xib */,
 			);
 			path = PTM;
 			sourceTree = "<group>";
@@ -4226,6 +4238,7 @@
 				845988412DD61382007CDB23 /* EventTVC.xib in Resources */,
 				18D718B42D0D477900E9EDA3 /* PreviousCvcell.xib in Resources */,
 				18D718B52D0D477900E9EDA3 /* CreateLocationViewController.xib in Resources */,
+				FAD8BDA52E66BE6C00C7CD53 /* PtmHistoryVC.xib in Resources */,
 				FA2A3FBB2DB0CABB0000AF55 /* SenderAttachmentVC.xib in Resources */,
 				18D718B62D0D477900E9EDA3 /* LocationTableViewCell.xib in Resources */,
 				18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */,
@@ -4309,6 +4322,7 @@
 				847F62B42E12ADAA00EE5180 /* LSRWActivitesVC.xib in Resources */,
 				18926C632D02DE81002BBB97 /* LSRWTakingSkillViewController.xib in Resources */,
 				187CF4DB2D11A176001422CE /* ClassTimeTableTableViewCell.xib in Resources */,
+				FAD8BDA82E66CDD100C7CD53 /* BookedSlotTV.xib in Resources */,
 				18926C642D02DE81002BBB97 /* TestTVC.xib in Resources */,
 				849AD0352D1A841C002DEC07 /* StrengthTvCell.xib in Resources */,
 				849AD0362D1A841C002DEC07 /* SchoolStrengthVC.xib in Resources */,
@@ -5006,6 +5020,7 @@
 				84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */,
 				849AD0102D1A83CA002DEC07 /* HomeworkreportTV.swift in Sources */,
 				849AD0112D1A83CA002DEC07 /* SenderSideHomeWorkViewController.swift in Sources */,
+				FAD8BDA42E66BE6C00C7CD53 /* PtmHistoryVC.swift in Sources */,
 				840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */,
 				FAB3C1D22E567B8400E361CA /* CreatedSlotsTv.swift in Sources */,
 				842FBABE2D0BEDBF007C0B51 /* ReportStudentTVC.swift in Sources */,
@@ -5020,6 +5035,7 @@
 				84EFFAE22CCF9EEA00C11C26 /* NotificationViewController.swift in Sources */,
 				8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */,
 				8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */,
+				FAD8BDA92E66CDD100C7CD53 /* BookedSlotTV.swift in Sources */,
 				848047712E02A7D90042BC5D /* AssignmentReport.swift in Sources */,
 				84EFF9E82CCCA7F000C11C26 /* AppBottomView.swift in Sources */,
 				18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */,

@@ -376,7 +376,8 @@ class MenuRedirectHandler {
     }
     
     func receiverPtmNavigate(from viewController: UIViewController) {
-        let vc = PTMViewController(nibName: nil, bundle: nil)
+       // let vc = PTMViewController(nibName: nil, bundle: nil)
+        let vc = PtmParentVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

@@ -160,7 +160,9 @@ struct ServiceUrl{
     static let ptm_api_ptm_schedule_create_slots = "ptm/api/ptm-schedule/create-slots"
     static let ptm_api_ptm_schedule_teacherwise_slots_availability_for_student = "ptm/api/ptm-schedule/teacherwise-slots-availability-for-student"
     static let ptm_api_ptm_schedule_subject_list_with_class_teacher = "ptm/api/ptm-schedule/subject-list-with-class-teacher"
-    
+    static let ptm_api_ptm_schedule_book_slots_for_student = "ptm/api/ptm-schedule/book-slots-for-student"
+    static let ptm_api_ptm_schedule_slot_history_for_student = "ptm/api/ptm-schedule/slot-history-for-student"
+    static let ptm_api_ptm_schedule_cancel_slot_by_student = "ptm/api/ptm-schedule/cancel-slot-by-student"
 }
 
 struct localData{

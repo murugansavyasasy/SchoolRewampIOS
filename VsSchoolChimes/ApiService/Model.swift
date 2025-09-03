@@ -1571,7 +1571,7 @@ struct SlotEventDetail: Codable {
     let meeting_duration: Int?
     let break_duration: Int?
     let profiles: [String]?
-    let slots: [SlotItem]?
+    var slots: [SlotItem]?
     let std_sec_details: [ClassSectionDetail]?
 }
 
@@ -1580,13 +1580,13 @@ struct SlotItem: Codable {
     let from_time: String?
     let to_time: String?
     var is_cancelled: Bool?
-    let is_booked: Bool?
+    var is_booked: Bool?
     let booked_by: String?
     let my_class: String?
     let my_section: String?
     let profile_url: String?
     let mobile_no: String?
-    let status: String?
+    var status: String?
     let event_name: String?
     let event_mode: String?
     let meeting_duration: Int?
@@ -1676,7 +1676,6 @@ struct StudentSlot: Codable {
     var is_conflictDisabled: Bool? = false // disabled due to overlap
 }
 
-
 struct SubjectListResponse: Codable {
     var status: Bool?
     var message: String?
@@ -1688,6 +1687,33 @@ struct Subject: Codable {
     var name: String?
 }
 
+struct SlotDetailsResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [SlotCategory]?
+}
+
+struct SlotCategory: Codable {
+    var today: [BookedSlotItem]?
+    var upcoming: [BookedSlotItem]?
+    var completed: [BookedSlotItem]?
+}
+
+struct BookedSlotItem: Codable {
+    var id: String?
+    var date: String?
+    var time: String?
+    var status: String?
+    var purpose: String?
+    var mode: String?
+    var event_link: String?
+    var staff_id: String?
+    var staff_name: String?
+    var subject_name: String?
+}
+
+
+//-----------------------------------------------
 struct LSRWReportResponse: Codable {
     let status: Bool?
     let message: String?
