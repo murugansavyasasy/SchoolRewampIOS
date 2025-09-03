@@ -10,7 +10,7 @@ import UIKit
 class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SelectedId{
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
-            
+            Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
         }else{
             
         }
@@ -36,10 +36,10 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     //MARK: API call functions
     
-    func Cancel_and_Reopen_Slot_api(indexpath:IndexPath){
+    func Cancel_and_Reopen_Slot_api(SlotId:String){
         
-        var slot = slotData?.slots?[indexpath.row]
-        let param : [String:Any] = ["slot_id":slot?.slot_id ?? ""]
+        //var slot = slotData?.slots?[indexpath.row]
+        let param : [String:Any] = ["slot_id":SlotId]
         
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
             
@@ -50,8 +50,14 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 switch result {
                 case .success(let success):
                     if success.status == true {
-                        slot?.is_cancelled_by_staff = true
-                        self.tv.reloadRows(at: [indexpath], with: .automatic)
+                        if let index = self.slotData?.slots?.firstIndex(where: { $0.slot_id == SlotId }) {
+                            self.slotData?.slots?[index].is_booked = false
+                            // self.slotData?.slots?[index].is_booked = false
+                            self.tv.reloadData()
+                        }
+
+//                        slot?.is_cancelled_by_staff = true
+//                        self.tv.reloadRows(at: [indexpath], with: .automatic)
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                     }

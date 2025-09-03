@@ -99,7 +99,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         switch selectedItem.name {
         case "View Profile":
-            delegate?.meunu(viewController: ProfileViewController())
+            delegate?.meunu(viewController: UpdateProfileVC())
             
         case "Settings":
             delegate?.meunu(viewController: SettingsViewController())

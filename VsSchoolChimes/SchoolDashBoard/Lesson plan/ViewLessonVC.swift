@@ -29,9 +29,6 @@ class ViewLessonVC: UIViewController, SelectedId {
             }
         }
     }
-    
-    
-    
     @IBOutlet weak var BAckBtn: UIButton!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var NoDataImg: UIImageView!
@@ -236,7 +233,21 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.blue.withAlphaComponent(0.6) : .systemGray5
         cell.FilterLbl.textColor = indexPath == selectedIndex ? UIColor.white : .black
-        cell.CheckboxImg.isHidden = true
+        cell.CheckboxImg.isHidden = false
+        
+        switch Filters[indexPath.item]{
+        case LessonplanStringFile.yetToStart:
+            cell.CheckboxImg.image = UIImage.pending
+            cell.CheckboxImg.tintColor = indexPath == selectedIndex ? UIColor.white : .systemOrange
+        case LessonplanStringFile.inProgress:
+            cell.CheckboxImg.image = UIImage(systemName: "arrow.2.circlepath.circle.fill")
+            cell.CheckboxImg.tintColor = indexPath == selectedIndex ? UIColor.white : .systemBlue
+        case CommonStringFile.completed:
+            cell.CheckboxImg.image = UIImage(systemName: "checkmark.arrow.trianglehead.counterclockwise")
+            cell.CheckboxImg.tintColor = indexPath == selectedIndex ? UIColor.white : .systemGreen
+        default:
+            cell.CheckboxImg.isHidden = true
+        }
         
         return cell
     }

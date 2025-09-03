@@ -56,7 +56,7 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     
     @IBAction func optionBtnAct(_ sender: UIButton) {
         
-        let popoverContentVC = PopupVC(edit: false, delete: false, selectedId: selectedId)
+        let popoverContentVC = PopupVC(edit: edit ?? false, delete: delete ?? false, selectedId: selectedId)
         popoverContentVC.delegate = self
         popoverContentVC.ptm = true
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: 60)

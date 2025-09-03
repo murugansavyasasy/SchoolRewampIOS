@@ -22,17 +22,30 @@ class PopupVC: UIViewController {
     var selectedId:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        editStack.isHidden = ptm
-        deleteStack.isHidden = ptm
-        cancelStack.isHidden = !ptm
-        reopenStack.isHidden = !ptm
-        if let delete = delete{
-            deleteStack.isHidden = !delete
-        }
-        if let edit = edit{
-            editStack.isHidden = !edit
-        }
-        
+//        if ptm{
+//            editStack.isHidden = true
+//            deleteStack.isHidden = true
+//            if let delete = delete{
+//                cancelStack.isHidden = !delete
+//            }
+//            if let edit = edit{
+//                reopenStack.isHidden = !edit
+//            }
+//        }else{
+//            cancelStack.isHidden = true
+//            reopenStack.isHidden = true
+//            if let delete = delete{
+//                deleteStack.isHidden = !delete
+//            }
+//            if let edit = edit{
+//                editStack.isHidden = !edit
+//            }
+//        }
+        editStack.isHidden   = ptm ? true             : !(edit ?? false)
+        deleteStack.isHidden = ptm ? true             : !(delete ?? false)
+        cancelStack.isHidden = ptm ? !(delete ?? false) : true
+        reopenStack.isHidden = ptm ? !(edit ?? false)   : true
+
     }
     init(edit: Bool = false, delete: Bool = false, selectedId: String?) {
         self.edit = edit
