@@ -9,65 +9,30 @@ import UIKit
 import DropDown
 import Kingfisher
 
-class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITableViewDelegate,UITableViewDataSource {
-
+class CountryListVC: UIViewController, UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var newBottomview: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var newNextBtn: UIButton!
-    
-    @IBOutlet weak var viewTermsAndCondition: UILabel!
-    @IBOutlet weak var nextBtn: UIButton!
-    @IBOutlet weak var dropDownBtn: UIButton!
-    @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var checkBoxBtn: UIButton!
-    @IBOutlet weak var flagImg: UIImageView!
-    @IBOutlet weak var countryNameLbl: UILabel!
-    @IBOutlet weak var CountryList: UIView!
-    @IBOutlet weak var countryCV: UICollectionView!
     let dropDown = DropDown()
     var CountryCheck = 0
     var images = [String]()
     var dropDownList = [String]()
     var CountryListRespons : [CountryData]?
+    var Filter_CountryList : [CountryData]?
     var country_data : CountryData?
     var timer: Timer?
-    var currentIndex = 0
-    var selectedIndex = 0
+    var selectedName = "INDIA"
+    var selectedIndex:Int?
+    var alert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         get_CountryListApi()
         confingNew()
-        BottomView.layer.cornerRadius = 30
-        BottomView.backgroundColor = Colornames.auth_screen_color
-        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        countryCV.register(UINib(nibName: "CountryListCVC", bundle: nil), forCellWithReuseIdentifier: "CountryListCVC")
-        if flagImg.image == nil {
-            flagImg.isHidden = true
-            }
-        nextBtn.layer.cornerRadius = 15
-        CountryList.layer.cornerRadius = 8
-        CountryList.layer.masksToBounds = false
-        CountryList.layer.shadowColor = UIColor.black.cgColor
-        CountryList.layer.shadowOffset = CGSize(width: 0, height: 5)
-        CountryList.layer.shadowOpacity = 0.3
-        CountryList.layer.shadowRadius = 6
-        nextBtn.layer.masksToBounds = false
-        nextBtn.layer.shadowColor = UIColor.black.cgColor
-        nextBtn.layer.shadowOffset = CGSize(width: 0, height: 5)
-        nextBtn.layer.shadowOpacity = 0.3
-        nextBtn.layer.shadowRadius = 6
-        nextBtn.applyRightButton()
-        startAutoScroll()
-        // Underline text
-        let attributes: [NSAttributedString.Key: Any] = [
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .foregroundColor: UIColor.blue
-        ]
-        let attributedString = NSAttributedString(string: "View Terms and Conditions", attributes: attributes)
-        viewTermsAndCondition.attributedText = attributedString
+        searchBar.searchTextField.backgroundColor = .clear
     }
     
     func confingNew(){
@@ -80,20 +45,22 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         searchBar.placeholder = "Find your country"
         searchBar.searchBarStyle = .minimal
         searchBar.barTintColor = .white
-        searchBar.backgroundColor = .white
-        searchBar.layer.cornerRadius = 10
-        searchBar.clipsToBounds = true
-
-//        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-//                textField.backgroundColor = .white
-//                textField.layer.cornerRadius = 10
-//                textField.clipsToBounds = true
-//            }
-//            
-//            // Remove default background
-//            searchBar.backgroundImage = UIImage()
-//            searchBar.barTintColor = .white
-//            searchBar.backgroundColor = .white
+//        searchBar.backgroundColor = .white
+//        searchBar.layer.cornerRadius = 10
+//        searchBar.clipsToBounds = true
+        searchBar.searchTextField.addDoneButton()
+        searchBar.delegate = self
+        
+        //        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
+        //                textField.backgroundColor = .white
+        //                textField.layer.cornerRadius = 10
+        //                textField.clipsToBounds = true
+        //            }
+        //
+        //            // Remove default background
+        //            searchBar.backgroundImage = UIImage()
+        //            searchBar.barTintColor = .white
+        //            searchBar.backgroundColor = .white
         newNextBtn.layer.cornerRadius = 10
         newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
         
@@ -102,111 +69,49 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         tv.dataSource = self
     }
     
-    func startAutoScroll() {
-            timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
-        }
-
-        @objc func autoScroll() {
-            let totalItems = countryCV.numberOfItems(inSection: 0)
-            if totalItems == 0 { return }
-            
-            currentIndex += 1
-            if currentIndex >= totalItems {
-                currentIndex = 0 // Reset to the first item
-            }
-            
-            let indexPath = IndexPath(item: currentIndex, section: 0)
-            countryCV.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
+    @available(iOS 14.0, *)
+    @IBAction func nextAct(_ sender: Any) {
         
-        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let centerX = scrollView.contentOffset.x + (scrollView.frame.size.width / 2)
+        if let CountryDetails = country_data {
             
-            for cell in countryCV.visibleCells {
-                guard let indexPath = countryCV.indexPath(for: cell) else { continue }
-                
-                let cellFrame = countryCV.layoutAttributesForItem(at: indexPath)?.frame ?? .zero
-                let cellCenterX = cellFrame.midX
-                let distance = abs(cellCenterX - centerX)
-                
-                // Scale effect (center cell is bigger, side cells shrink)
-                let scale = max(0.85, 1 - (distance / scrollView.frame.size.width) * 0.3)
-                
-                // Apply scale transformation
-                cell.transform = CGAffineTransform(scaleX: scale, y: scale)
-                
-                // Adjust opacity for smooth effect
-                let alpha = max(0.5, 1 - (distance / scrollView.frame.size.width))
-                cell.alpha = alpha
-            }
-        }
-        
-        override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            timer?.invalidate() // Stop timer when leaving screen
-        }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CountryListRespons?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = countryCV.dequeueReusableCell(withReuseIdentifier: "CountryListCVC", for: indexPath) as! CountryListCVC
-        cell.countryName.text = CountryListRespons?[indexPath.item].name
-        cell.countryImg.kf.setImage(with:URL(string: CountryListRespons?[indexPath.item].flag_url ?? ""))
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 20)/2.3
-        return CGSize(width: width, height: collectionView.frame.height)
-    }
-
-    @IBAction func togel(_ sender: UIButton) {
-        checkBoxBtn.isSelected.toggle()
-        let image = checkBoxBtn.isSelected ? UIImage(named: "checkedSquare"):UIImage(named: "uncheckedSquare")
-        checkBoxBtn.setImage(image, for: .normal)
-    }
-    @IBAction func openTermsCondition(_ sender: UIButton) {
-        let vc = TermsAndCondVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-    @IBAction func selectCountry(_ sender: UIButton) {
-    
-        dropDown.anchorView = CountryList
-        dropDown.show()
-        dropDown.direction = .bottom
-        dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
-        dropDownBtn.setImage( UIImage(systemName: "chevron.up"), for: .normal)
-        
-        dropDown.selectionAction = { [self] (index: Int, item: String) in
-            flagImg.isHidden = false
-            flagImg.kf.setImage(with: URL(string: images[index]))
-            countryNameLbl.text = item
-            dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            country_data = CountryListRespons?[index]
-            
-        }
-        dropDown.cancelAction = { [weak self] in
-            self?.dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        }
-    }
-    @IBAction func Next(_ sender: UIButton) {
-        if checkBoxBtn.isSelected{
-           
             UserDefaultFileManager
                 .saveCountryDetails(
-                    data: (country_data)!)
+                    data: (CountryDetails))
             
             ServiceUrl.baseurl = country_data?.base_url ?? ""
             ServiceUrl.report_url = country_data?.reporting_url ?? ""
-            if #available(iOS 14.0, *) {
-                let vc = MobileNumberVc(nibName: nil, bundle: nil)
-                vc.country_data = country_data
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
+            let vc = MobileNumberVc(nibName: nil, bundle: nil)
+            vc.country_data = country_data
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+            
+        }else {
+            
+            alert.showAlert(title: "", message: AlertstringFile.Please_Select_Your_Country, on: self)
+            
+        }
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+
+        if query.isEmpty {
+            Filter_CountryList = CountryListRespons
+        } else {
+            Filter_CountryList = CountryListRespons?.filter { item in
+                let values = [
+                    item.name?.lowercased()
+                ]
+
+                return values.contains { $0?.contains(query) == true }
             }
         }
+        
+        tv.reloadData()
+
     }
+    
     func get_CountryListApi() {
         
         APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
@@ -218,25 +123,8 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
                     DispatchQueue.main.async { [self] in
                         CountryListRespons?.removeAll()
                         CountryListRespons = successMessage.data
-                        dropDownList.removeAll()
-                        images.removeAll()
-                        for i in 0..<(CountryListRespons?.count ?? 0) {
-                            if let countryName = CountryListRespons?[i].name,
-                               let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
-                                images.append(flagURL)
-                                dropDownList.append(countryName)  // Ensuring the order is maintained
-
-                            }
-                        }
-                        dropDown.dataSource = dropDownList
-                        dropDown.imageURLs = images
-                            for j in 0..<images.count {
-                                if let cell = dropDown.tableView.cellForRow(at: IndexPath(row: j, section: 0)) as? DropDownCell {
-                                    dropDown.configureCell(cell, at: j)
-                                }
-                            }
-                        CountryList.isUserInteractionEnabled = true
-                        countryCV.reloadData()
+                        Filter_CountryList = CountryListRespons
+                        country_data = CountryListRespons?.first
                         tv.reloadData()
                     }
                 }
@@ -250,23 +138,24 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CountryListRespons?.count ?? 0
+        return Filter_CountryList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tv.dequeueReusableCell(withIdentifier: "CountryTvcell", for: indexPath) as! CountryTvcell
-        let country = CountryListRespons?[indexPath.row]
+        let country = Filter_CountryList?[indexPath.row]
         cell.nameLbl.text = country?.name
         if let urlstr = country?.flag_url, let url = URL(string: urlstr) {
             cell.FlagImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
         }
         
-        if indexPath.row == selectedIndex {
+        
+        if country?.name?.uppercased() == selectedName{
             cell.checkImage.isHidden = false
             cell.cellView.backgroundColor = .white
             cell.cellView.layer.borderColor = UIColor.systemBlue.cgColor
-        }else {
+        }else{
             cell.checkImage.isHidden = true
             cell.cellView.backgroundColor = .systemGray5
             cell.cellView.layer.borderColor = UIColor.clear.cgColor
@@ -278,6 +167,8 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedIndex = indexPath.row
+        selectedName = Filter_CountryList?[selectedIndex ?? 0].name?.uppercased() ?? ""
+        country_data = Filter_CountryList?[selectedIndex ?? 0]
         tv.reloadData()
     }
     
@@ -286,10 +177,3 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
     }
     
 }
-
-//@available(iOS 14.0, *)
-//extension CountryVc: UITableViewDelegate, UITableViewDataSource {
-//
-//    
-//    
-//}
