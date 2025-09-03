@@ -12,7 +12,25 @@ protocol ReadUpadesManagemant{
 import UIKit
 
 @available(iOS 14.0, *)
-class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, viewAttachments {
+    func viewAttachment(sender: UIButton) {
+        
+        let vc = MsgViewVC()
+        // 2. Presentation style → over current screen (so blur is visible)
+        vc.modalPresentationStyle = .formSheet
+//        vc.modalTransitionStyle = .crossDissolve
+        if let data = SearchData?[sender.tag]{
+            vc.MsgFromManagmentData = data
+        }
+        
+        vc.file_path = SearchData?[sender.tag].file_path
+        // 3. Add blur to parent
+//        addBlurEffect()
+
+        // 4. Present
+        present(vc, animated: true, completion: nil)
+    }
+
     
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -45,7 +63,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         NoDataImage.isHidden = true
         
         Cell_Registration()
-        setupTableFooter()
+       
         
         tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
         tv.dataSource = self
@@ -63,13 +81,14 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     }
     
     func Cell_Registration() {
-        tv.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
-        
-        tv.register(UINib(nibName: CellConfingName.HistoryTC, bundle: nil), forCellReuseIdentifier: CellConfingName.HistoryTC)
-        
-        tv.register(UINib(nibName: CellConfingName.TAttacmentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.TAttacmentTVC)
-        
-        tv.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
+//        tv.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
+//        
+//        tv.register(UINib(nibName: CellConfingName.HistoryTC, bundle: nil), forCellReuseIdentifier: CellConfingName.HistoryTC)
+//        
+//        tv.register(UINib(nibName: CellConfingName.TAttacmentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.TAttacmentTVC)
+//        
+//        tv.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
+        tv.register(UINib(nibName: "MsgTvCell", bundle: nil), forCellReuseIdentifier: "MsgTvCell")
     }
     
     //MARK: Get Message Data Api call
@@ -231,184 +250,194 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        let Message = SearchData?[indexPath.row]
-        
-        switch Message?.type {
-            
-        case "ATTACHMENT":
-            
-            if Message?.file_path?.first?.type == "VIDEO"{
-                
-                let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-                
-                cell.titleLbl.text = Message?.title
-                cell.descriptContent.onExpandableTap = {
-                    cell.descriptContent.isExpanded.toggle()
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
-               // cell.delegate = self
-                let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
-                cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
-                cell.confic(Message?.file_path?.first?.url ?? "")
-                cell.newImg.isHidden = !(Message?.is_unread ?? false)
-                
-                return cell
-            }else{
-                let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
-                
-                cell.ManagementData = Message
-                cell.titleLbl.text = Message?.title
-                cell.ManagementDelegate = self
-                cell.descriptionLbl.setupExpandable(text: Message?.description ?? "")
-                cell.descriptionLbl.onExpandableTap = {
-                    cell.descriptionLbl.isExpanded.toggle()
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
-                let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
-                cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
-                cell.confic(Message?.file_path ?? [])
-                cell.readImg.isHidden = !(Message?.is_unread ?? false)
-                return cell
-            }
-            
-        case "TEXT":
-            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            
-            cell.sendBtnheight.constant = 0
-            cell.sendBtnWidth.constant = 0
-            cell.DateLabel.textAlignment = .right
-            cell.sendBtn.isHidden = true
-            
-            cell.MessageTitle.text = Message?.title
-            cell.ExpandDelegate = self
-           
-            cell.configure(with: Message?.content ?? "",
-                               expanded: Message?.isExpand ?? false,
-                               isUnread: Message?.is_unread ?? false)
-            
-            let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
-            
-            cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
-            
-            cell.configureShimmer()
-            
-            return cell
-            
-            
-        case "VOICE":
-            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
-            cell.sendbtn.isHidden = true
-            cell.sentBtnHeight.constant = 0
-            cell.sentBtnWidth.constant = 0
-            cell.contentlbl.text = Message?.description
-            cell.audioPlayUrl = Message?.content ?? ""
-            
-            let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
-            
-            cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
-            
-            cell.configureShimmer()
-            
-            let isPlaying = (playIndex == indexPath.row)
-            let voiceData = Message
-            
-            cell.sendbtn.isHidden = true
-            cell.sentBtnHeight.constant = 0
-            cell.sentBtnWidth.constant = 0
-            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.content)
-            cell.playBtn.tag = indexPath.row
-            cell.sendbtn.tag = indexPath.row
-            cell.delegate = self
-            cell.NewImageView.isHidden = true
-            
-            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-            
-            let duration = voiceData?.duration ?? 0
-            print("duration1",duration)
-            let formatted = formatDuration(duration)
-            print("duration",formatted)
-            cell.totaltime.text = "00:00 / \(formatted)"
-            
-            if !isPlaying {
-                cell.playerView.progress = 0.0
-                cell.playerView.updateWithLevel(0.0)
-                cell.playerView.setNeedsDisplay()
-            }else{
-                
-                cell.NewImageView.isHidden = true
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                cell.configureShimmer()
-            }
-            
-            cell.NewImageView.isHidden = !(Message?.is_unread ?? false)
-            
-           
-            return cell
-            
-        default:
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MsgTvCell") as? MsgTvCell else {
             return UITableViewCell()
         }
+        
+        let displayText = formattedDateStatus(
+            from: SearchData?[indexPath.row].date ?? ""
+        )
+        cell.timeAndDateLbl.text = (displayText) + ("  " + (SearchData?[indexPath.row].time ?? ""))
+        cell.viewBtn.tag = indexPath.row
+        cell.titleLbl.text = SearchData?[indexPath.row].title
+        cell.descrptionLb.isHidden = SearchData?[indexPath.row].description == "" ? true : false
+        cell.menuTypeLbl.text = SearchData?[indexPath.row].type
+        if SearchData?[indexPath.row].type == "ATTACHMENT" {
+            
+            
+        }else if SearchData?[indexPath.row].type == "TEXT"{
+            
+            cell.menutypeImage.image  = UIImage(named: "capital-text")
+        }else{
+            
+            if SearchData?[indexPath.row].is_emergency ?? false{
+                
+            }else{
+                
+            }
+        }
+        cell.descrptionLb.text = SearchData?[indexPath.row].description
+       
+        cell.delegate = self
+        
+        return cell
+        
     }
     
+    
+//    func tableView(
+//        _ tableView: UITableView,
+//        didSelectRowAt indexPath: IndexPath
+//    ) {
+//
+//        
+//    }
+    
+    
+    func addBlurEffect() {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = view.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.tag = 999
+        view.addSubview(blurView)
+    }
+    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        
+//        
+//        let Message = SearchData?[indexPath.row]
+//        
+//        switch Message?.type {
+//            
+//        case "ATTACHMENT":
+//            
+//            if Message?.file_path?.first?.type == "VIDEO"{
+//                
+//                let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+//                
+//                cell.titleLbl.text = Message?.title
+//                cell.descriptContent.onExpandableTap = {
+//                    cell.descriptContent.isExpanded.toggle()
+//                    tableView.beginUpdates()
+//                    tableView.endUpdates()
+//                }
+//               // cell.delegate = self
+//                let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
+//                cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
+//                cell.confic(Message?.file_path?.first?.url ?? "")
+//                cell.newImg.isHidden = !(Message?.is_unread ?? false)
+//                
+//                return cell
+//            }else{
+//                let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
+//                
+//                cell.ManagementData = Message
+//                cell.titleLbl.text = Message?.title
+//                cell.ManagementDelegate = self
+//                cell.descriptionLbl.setupExpandable(text: Message?.description ?? "")
+//                cell.descriptionLbl.onExpandableTap = {
+//                    cell.descriptionLbl.isExpanded.toggle()
+//                    tableView.beginUpdates()
+//                    tableView.endUpdates()
+//                }
+//                let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
+//                cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
+//                cell.confic(Message?.file_path ?? [])
+//                cell.readImg.isHidden = !(Message?.is_unread ?? false)
+//                return cell
+//            }
+//            
+//        case "TEXT":
+//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
+//            
+//            cell.sendBtnheight.constant = 0
+//            cell.sendBtnWidth.constant = 0
+//            cell.DateLabel.textAlignment = .right
+//            cell.sendBtn.isHidden = true
+//            
+//            cell.MessageTitle.text = Message?.title
+//            cell.ExpandDelegate = self
+//           
+//            cell.configure(with: Message?.content ?? "",
+//                               expanded: Message?.isExpand ?? false,
+//                               isUnread: Message?.is_unread ?? false)
+//            
+//            let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
+//            
+//            cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
+//            
+//            cell.configureShimmer()
+//            
+//            return cell
+//            
+//            
+//        case "VOICE":
+//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+//            cell.sendbtn.isHidden = true
+//            cell.sentBtnHeight.constant = 0
+//            cell.sentBtnWidth.constant = 0
+//            cell.contentlbl.text = Message?.description
+//            cell.audioPlayUrl = Message?.content ?? ""
+//            
+//            let formattedDateString = dateFormatter.convertDate(Message?.date ?? "") ?? ""
+//            
+//            cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: Message?.time)
+//            
+//            cell.configureShimmer()
+//            
+//            let isPlaying = (playIndex == indexPath.row)
+//            let voiceData = Message
+//            
+//            cell.sendbtn.isHidden = true
+//            cell.sentBtnHeight.constant = 0
+//            cell.sentBtnWidth.constant = 0
+//            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.content)
+//            cell.playBtn.tag = indexPath.row
+//            cell.sendbtn.tag = indexPath.row
+//            cell.delegate = self
+//            cell.NewImageView.isHidden = true
+//            
+//            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+//            
+//            let duration = voiceData?.duration ?? 0
+//            print("duration1",duration)
+//            let formatted = formatDuration(duration)
+//            print("duration",formatted)
+//            cell.totaltime.text = "00:00 / \(formatted)"
+//            
+//            if !isPlaying {
+//                cell.playerView.progress = 0.0
+//                cell.playerView.updateWithLevel(0.0)
+//                cell.playerView.setNeedsDisplay()
+//            }else{
+//                
+//                cell.NewImageView.isHidden = true
+//            }
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                cell.configureShimmer()
+//            }
+//            
+//            cell.NewImageView.isHidden = !(Message?.is_unread ?? false)
+//            
+//           
+//            return cell
+//            
+//        default:
+//            return UITableViewCell()
+//        }
+//    }
+//    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }
     
-    func setupTableFooter() {
-        if shouldShowFooter {
-            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                // Adjust the frame based on your needs.
-                footer.frame = CGRect(x: 0, y: 0, width: tv.frame.width, height: 200)
-               
-                let buttonTitle = "See More"
-                let attributedString = NSMutableAttributedString(string: buttonTitle)
-
-                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
-                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
-                
-                // Apply underline style
-                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
-
-                // Set attributed title to UIButton
-                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
-
-                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-                footer.SeeMoreBtn.isUserInteractionEnabled = true
-                
-                // Set the footer view.
-                tv.tableFooterView = footer
-            }
-        } else {
-            tv.tableFooterView = nil
-        }
-    }
+   
     
-    @objc func seeMoreAction() {
-        print("Footer button tapped. Hiding the footer.")
-        
-        if let footer = tv.tableFooterView {
-            UIView.animate(withDuration: 0.3, animations: {
-                footer.alpha = 0
-            }, completion: {[self] _ in
-                
-                get_messages_archive()
-                
-                tv.tableFooterView = nil
-                shouldShowFooter = false
-            })
-        } else {
-            
-            shouldShowFooter = false
-        }
-    }
+    
 }
 
 @available(iOS 14.0, *)

@@ -61,7 +61,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     private func setupUI() {
-        let displayText = formattedDateStatus(from: selectedDate ?? "")
+        let displayText = selectedDate?.convertToTargetDateFormat() ?? ""
         dateLbl.text = "Posted On : " + displayText
         titleLbl.text = titleString
         discreption.text = descriptionString

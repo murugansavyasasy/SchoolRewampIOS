@@ -493,7 +493,7 @@ func formattedDateStatus(from selectedDateString: String) -> String {
         return "Yesterday"
     } else {
         let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "dd MMMM, yyyy"
+        outputFormatter.dateFormat = "dd MMM yyyy"
         return outputFormatter.string(from: date)
     }
 }
