@@ -8,8 +8,10 @@
 import UIKit
 
 
+@available(iOS 15.0, *)
 class LessonPlanVC: UIViewController {
     
+    @IBOutlet weak var searchIconBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
@@ -77,14 +79,6 @@ class LessonPlanVC: UIViewController {
         tableview.reloadData()
     }
     
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-    
     func UIupdate(){
         
         NodataImage.isHidden = true
@@ -94,11 +88,7 @@ class LessonPlanVC: UIViewController {
     
     //MARK: Lesson plan Api call
     func lesson_plan_staff_report_Api(){
-        
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
-        
+        showLottieProgressLoader(animationName: "loader (2)")
         let param: [String: Any] = [LessonPlanStringFile.request_type: ReqestType]
         
         APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanStaffReportResponse,Error>) in
@@ -106,15 +96,12 @@ class LessonPlanVC: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 
                 guard let self = self else {return}
-                
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
+                self.hideLottieProgressLoader()
                 
                 switch result{
                     
                 case .success(let success):
-                   
+                    
                     self.LessonPlanData = success.data
                     self.SearchData = LessonPlanData
                     self.NodataLbl.text = success.status ? CommonStringFile.No_data_found : success.message
@@ -129,7 +116,7 @@ class LessonPlanVC: UIViewController {
                     self.NodataImage.isHidden = false
                     self.NodataLbl.isHidden = false
                     self.NodataLbl.text = error.localizedDescription
-                        
+                    
                     print("Error: ",error.localizedDescription)
                 }
             }
@@ -142,7 +129,7 @@ class LessonPlanVC: UIViewController {
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
             button.tintColor = .black
         }
-
+        
         // Add underline to the selected button
         selectedButton.tintColor = .systemBlue
         let underline = UIView()
@@ -150,7 +137,7 @@ class LessonPlanVC: UIViewController {
         underline.backgroundColor = .systemBlue
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
-
+        
         NSLayoutConstraint.activate([
             underline.heightAnchor.constraint(equalToConstant: 2),
             underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
@@ -158,7 +145,7 @@ class LessonPlanVC: UIViewController {
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
     }
-
+    
     
     
     @IBAction func SegmentAct(_ sender: Any) {
@@ -184,15 +171,15 @@ class LessonPlanVC: UIViewController {
         lesson_plan_staff_report_Api()
     }
     
-    @IBAction func SearchButtonAct(_ sender: Any) {
-        
-        searchBar.isHidden.toggle()
+    @IBAction func SearchButtonAct(_ sender: UIButton) {
+        searchBar.becomeFirstResponder()
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchIconBtn.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar.isHidden = !sender.isSelected
     }
-    
-    
     @IBAction func BackBtnAct(_ sender: Any) {
-        
-            dismiss(animated: true)
+        dismiss(animated: true)
     }
 }
 
@@ -262,11 +249,12 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-            return UITableView.automaticDimension
+        return UITableView.automaticDimension
     }
     
 }
 
+@available(iOS 15.0, *)
 extension LessonPlanVC: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -282,7 +270,7 @@ extension LessonPlanVC: UISearchBarDelegate{
             let search = searchText.lowercased()
             SearchData = LessonPlanData?.filter{ Lesson in
                 let combined = "\(Lesson.class_name) - \(Lesson.section_name)".lowercased()
-                            
+                
                 return combined.contains(search) ||
                 (Lesson.class_name.lowercased().contains(search)) ||
                 (Lesson.section_name.lowercased().contains(search)) ||
