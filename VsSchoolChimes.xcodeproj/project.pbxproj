@@ -681,6 +681,8 @@
 		84FC4DCB2DBCAE6700BBEDD7 /* ParentCommunicationVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC4DC72DBCAE6700BBEDD7 /* ParentCommunicationVc.swift */; };
 		84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC82DBCAE6700BBEDD7 /* ParentCommunicationVc.xib */; };
 		84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC4DC62DBCAE6700BBEDD7 /* FiltersCvCell.xib */; };
+		FA00B2652E640A8300260FEC /* DateCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA00B2642E640A8300260FEC /* DateCvCell.xib */; };
+		FA00B2662E640A8300260FEC /* DateCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00B2632E640A8300260FEC /* DateCvCell.swift */; };
 		FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */; };
 		FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0EDF122E4A1752008EC30D /* NewPtmVC.xib */; };
 		FA0EDF142E4A1752008EC30D /* NewPtmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0EDF112E4A1752008EC30D /* NewPtmVC.swift */; };
@@ -1554,6 +1556,8 @@
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
+		FA00B2632E640A8300260FEC /* DateCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCvCell.swift; sourceTree = "<group>"; };
+		FA00B2642E640A8300260FEC /* DateCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateCvCell.xib; sourceTree = "<group>"; };
 		FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
 		FA0EDF112E4A1752008EC30D /* NewPtmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPtmVC.swift; sourceTree = "<group>"; };
 		FA0EDF122E4A1752008EC30D /* NewPtmVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewPtmVC.xib; sourceTree = "<group>"; };
@@ -3855,6 +3859,8 @@
 			children = (
 				FAD4D72D2E606449007A3FC0 /* PtmParentVC.swift */,
 				FAD4D72E2E606449007A3FC0 /* PtmParentVC.xib */,
+				FA00B2632E640A8300260FEC /* DateCvCell.swift */,
+				FA00B2642E640A8300260FEC /* DateCvCell.xib */,
 			);
 			path = PTM;
 			sourceTree = "<group>";
@@ -4532,6 +4538,7 @@
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
 				84EAE7832DB20B250083AD9E /* ReciverAttachmentrVC.xib in Resources */,
 				846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */,
+				FA00B2652E640A8300260FEC /* DateCvCell.xib in Resources */,
 				840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */,
 				FAB3C1D12E567B8400E361CA /* CreatedSlotsTv.xib in Resources */,
 				845F21762E45C0DD0078AF69 /* AssignmentPriview.xib in Resources */,
@@ -5091,6 +5098,7 @@
 				8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */,
 				84EFF9D42CCC7CD000C11C26 /* SchoolDashboardVc.swift in Sources */,
 				849970CD2CF8752400800B07 /* TextHistoryTVCell.swift in Sources */,
+				FA00B2662E640A8300260FEC /* DateCvCell.swift in Sources */,
 				849970CE2CF8752400800B07 /* DateCVC.swift in Sources */,
 				849970CF2CF8752400800B07 /* WaveView .swift in Sources */,
 				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,

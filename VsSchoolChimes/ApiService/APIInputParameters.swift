@@ -300,4 +300,6 @@ class PTMRequestStringFile{
     static let section_id = "section_id"
     static let class_id = "class_id"
     static let slots = "slots"
+    static let subject_id = "subject_id"
+    static let class_teacher_id = "class_teacher_id"
 }
