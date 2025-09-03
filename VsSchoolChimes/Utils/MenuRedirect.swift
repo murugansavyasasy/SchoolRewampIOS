@@ -226,9 +226,11 @@ class MenuRedirectHandler {
     }
     
     func senderLessonplanNavigate(from viewController: UIViewController) {
-        let vc = LessonPlanVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        if #available(iOS 15.0, *) {
+            let vc = LessonPlanVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            viewController.present(vc, animated: true)
+        }
     }
 
     func senderStudentreportNavigate(from viewController: UIViewController) {

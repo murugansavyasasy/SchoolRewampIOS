@@ -77,11 +77,37 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
                 pillItems.append(detail)
             }
         }
+
         
         let pillsStack = createSubCategoriesStack(with: pillItems)
         subTitlleStack.addArrangedSubview(pillsStack)
     }
-    
+    /// Try to parse a string into Date
+    func convertToDate(from string: String) -> Date? {
+        let formats = [
+            "yyyy-MM-dd'T'HH:mm:ssZ", // ISO format
+            "yyyy-MM-dd",
+            "dd/MM/yyyy"
+        ]
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        for format in formats {
+            formatter.dateFormat = format
+            if let date = formatter.date(from: string) {
+                return date
+            }
+        }
+        return nil
+    }
+
+    /// Convert Date into desired output format
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"  // 👈 unga required format
+        return formatter.string(from: date)
+    }
+
     // MARK: - Create Vertical Stack of Pills
     func createSubCategoriesStack(with tags: [LessonDetailItem]) -> UIStackView {
         let containerStack = UIStackView()
@@ -131,6 +157,12 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func createPill(for item: LessonDetailItem) -> UIView? {
         guard let name = item.name, let value = item.value else { return nil }
         
+        // 🔹 Format value if it's a date
+        var finalValue = value
+        if let date = convertToDate(from: value) {
+            finalValue = formatDate(date)   // e.g. "02 Sep 2025"
+        }
+        
         let pillView = UIView()
         pillView.backgroundColor = UIColor.systemGray6
         pillView.layer.cornerRadius = 8
@@ -141,7 +173,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         iconView.tintColor = .systemBlue
 
         let label = UILabel()
-        label.text = "\(name): \(value)"
+        label.text = "\(name): \(finalValue)"
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = .darkGray
         label.numberOfLines = 1
