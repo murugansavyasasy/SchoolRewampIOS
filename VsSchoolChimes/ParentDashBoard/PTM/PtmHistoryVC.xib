@@ -15,7 +15,9 @@
                 <outlet property="PopupContainerview" destination="OEj-48-fQw" id="Ynh-fV-Pkm"/>
                 <outlet property="PopupView" destination="dak-rD-0Je" id="ZkE-kZ-mCr"/>
                 <outlet property="Popuptopview" destination="vBo-iO-iTY" id="FOs-jp-pHh"/>
+                <outlet property="cancelMeetingDefLbl" destination="rEE-qb-blW" id="n1F-Ds-SbD"/>
                 <outlet property="continueBtn" destination="1XX-ZG-Kbp" id="LT4-dm-Ko4"/>
+                <outlet property="reasonDefLbl" destination="iwu-Tm-viq" id="2i5-8r-U4C"/>
                 <outlet property="reasonTextfield" destination="Bkn-px-jgn" id="ici-1V-1gb"/>
                 <outlet property="tv" destination="YHx-Pb-F7D" id="tji-Fy-vlb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,9 +33,10 @@
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YHx-Pb-F7D">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
-                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            <color key="backgroundColor" systemColor="systemGray6Color"/>
                         </tableView>
                     </subviews>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstItem="YHx-Pb-F7D" firstAttribute="top" secondItem="lUh-mc-fq3" secondAttribute="top" id="2at-VR-GtZ"/>
                         <constraint firstAttribute="trailing" secondItem="YHx-Pb-F7D" secondAttribute="trailing" id="2co-tz-C0m"/>
@@ -93,7 +96,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter reason" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bkn-px-jgn" customClass="PaddedTextField" customModule="Gradit" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter reason" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bkn-px-jgn" customClass="PaddedTextField" customModule="School_Chimes" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="25.333333333333343" width="313" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="xKy-SM-4fz"/>
@@ -107,20 +110,20 @@
                                     <rect key="frame" x="10" y="155" width="318" height="30"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27b-hl-Ldv">
-                                            <rect key="frame" x="0.0" y="0.0" width="226" height="30"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="176" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1XX-ZG-Kbp">
-                                            <rect key="frame" x="238" y="0.0" width="80" height="30"/>
+                                            <rect key="frame" x="188" y="0.0" width="130" height="30"/>
                                             <color key="backgroundColor" systemColor="systemBlueColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="NgD-ha-BIk"/>
+                                                <constraint firstAttribute="width" constant="130" id="NgD-ha-BIk"/>
                                                 <constraint firstAttribute="height" constant="30" id="o7S-HQ-YOE"/>
                                             </constraints>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Continue">
+                                            <state key="normal" title="Cancel Meeting">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <connections>
@@ -149,7 +152,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstItem="dak-rD-0Je" firstAttribute="leading" secondItem="OEj-48-fQw" secondAttribute="leading" constant="25" id="RRt-6m-Thj"/>
                         <constraint firstAttribute="trailing" secondItem="dak-rD-0Je" secondAttribute="trailing" constant="25" id="TMq-Wx-QMj"/>
@@ -174,14 +177,8 @@
     </objects>
     <resources>
         <image name="xmark" catalog="system" width="128" height="113"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

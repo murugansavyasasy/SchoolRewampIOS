@@ -15,8 +15,6 @@ class ExameMarVC: UIViewController {
         super.viewDidLoad()
         
         CellRegister()
-        
-
         cv.dataSource = self
         cv.delegate = self
         examListApi()
@@ -71,6 +69,63 @@ class ExameMarVC: UIViewController {
         present(vc, animated: false)
        
     }
+    
+    func View_Marks_Action(index:Int){
+        
+        guard let examID = exameList?[index].id else { return }
+        let vc = MarkListVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.ExamTitle = exameList?[index].name
+        vc.examId = examID
+        present(vc, animated: false)
+    }
+    
+    func View_progress_Act(index:Int){
+        
+        guard let examID = exameList?[index].id else { return }
+        let vc = ViewProgressVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.examId = examID
+        vc.backBtnTitle = exameList?[index].name ?? ""
+        present(vc, animated: false)
+    }
+    
+    func markListApi(exam_id: String) {
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_api_get_progress_card,
+            parameters: ["exam_id": exam_id],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true {
+                        self.view_ProgressCard(url: success.data?.first ?? "")
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print("API Error:", error)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                }
+            }
+        }
+    }
+    
+    func view_ProgressCard(url:String){
+        let vc = ImageShowVc(nibName: nil, bundle: nil)
+        vc.pdfUrl = url
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     @objc func ViewProgress(_ sender: UITapGestureRecognizer) {
         guard let view = sender.view else { return }
         let index = view.tag
@@ -96,17 +151,19 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = cv.dequeueReusableCell(withReuseIdentifier: CellConfingName.ExamMarkCV, for: indexPath) as! ExamMarkCV
-        cell.ExamLbl.text = exameList?[indexPath.row].name
+        
+        let exam = exameList?[indexPath.row]
+        
+        cell.ExamLbl.text = exam?.name
+        
+        cell.onViewMark = { [weak self] in
+            self?.View_Marks_Action(index: indexPath.row)
+        }
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewMarks(_:)))
-        cell.ViewMarkBtnview.tag = indexPath.row
-        cell.ViewMarkBtnview.addGestureRecognizer(tap)
-        cell.ViewMarkBtnview.isUserInteractionEnabled = true
-        let tap1 = UITapGestureRecognizer(target: self, action: #selector(ViewProgress(_:)))
-        cell.ViewProgress.tag = indexPath.row
-        cell.ViewProgress.addGestureRecognizer(tap1)
-        cell.ViewProgress.isUserInteractionEnabled = true
-
+        cell.OnViewProgress = { [weak self] in
+            self?.markListApi(exam_id: exam?.id ?? "")
+        }
+        
         return cell
     }
 

@@ -22,6 +22,8 @@ class BookedSlotTV: UITableViewCell {
     @IBOutlet weak var cancelBtn: UIButton!
     @IBOutlet weak var callBtn: UIButton!
     @IBOutlet weak var statusBtn: UIButton!
+    @IBOutlet weak var cancelStackHeight: NSLayoutConstraint!
+    @IBOutlet weak var cancelStackTop: NSLayoutConstraint!
     
     var onCancel : (() -> Void)?
     
@@ -35,9 +37,9 @@ class BookedSlotTV: UITableViewCell {
         subjectBGview.backgroundColor = .systemIndigo.withAlphaComponent(1)
         
         subjectBGview.layer.cornerRadius = 12
-        statusBtn.layer.cornerRadius = 10
-        cancelBtn.layer.cornerRadius = 10
-        callBtn.layer.cornerRadius = 10
+        statusBtn.layer.cornerRadius = 8
+        cancelBtn.layer.cornerRadius = cancelBtn.frame.height / 2
+        callBtn.layer.cornerRadius = callBtn.frame.height / 2
         
         MeetingNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         staffNameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -47,6 +49,8 @@ class BookedSlotTV: UITableViewCell {
         ModeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         DurationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         statusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        cancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        callBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

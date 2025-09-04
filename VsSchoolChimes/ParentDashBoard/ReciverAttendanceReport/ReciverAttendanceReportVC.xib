@@ -285,7 +285,7 @@
                                                                 </view>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AskLeave" translatesAutoresizingMaskIntoConstraints="NO" id="BuU-kn-Gxz">
                                                                     <rect key="frame" x="37.333333333333329" y="20" width="30" height="30"/>
-                                                                    <color key="tintColor" name="BackGroundClr"/>
+                                                                    <color key="tintColor" red="0.043137254901960784" green="0.20000000000000001" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="R7P-kc-frG"/>
                                                                         <constraint firstAttribute="width" constant="30" id="RQL-HE-68A"/>
@@ -323,7 +323,7 @@
                                                                 </view>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LeaveHistory" translatesAutoresizingMaskIntoConstraints="NO" id="iLv-DZ-g53">
                                                                     <rect key="frame" x="37.333333333333314" y="20" width="30" height="30"/>
-                                                                    <color key="tintColor" name="BackGroundClr"/>
+                                                                    <color key="tintColor" red="0.043137254899999998" green="0.20000000000000001" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="5Bp-15-N0Y"/>
                                                                         <constraint firstAttribute="width" constant="30" id="6uM-c9-hel"/>
@@ -354,13 +354,13 @@
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AbsentReport" translatesAutoresizingMaskIntoConstraints="NO" id="QnR-RO-Fcv">
                                                                     <rect key="frame" x="37.333333333333343" y="20" width="30" height="30"/>
-                                                                    <color key="tintColor" name="BackGroundClr"/>
+                                                                    <color key="tintColor" red="0.043137254899999998" green="0.20000000000000001" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="30" id="Voi-4J-DqY"/>
                                                                         <constraint firstAttribute="height" constant="30" id="pdn-7g-3dE"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance Report" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8PN-Y6-mo7">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave History" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8PN-Y6-mo7">
                                                                     <rect key="frame" x="5" y="55" width="94.333333333333329" height="35"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <nil key="textColor"/>
@@ -404,7 +404,7 @@
                                                                 </view>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Holiday" translatesAutoresizingMaskIntoConstraints="NO" id="j36-0d-mX5">
                                                                     <rect key="frame" x="37.333333333333329" y="20" width="30" height="30"/>
-                                                                    <color key="tintColor" name="BackGroundClr"/>
+                                                                    <color key="tintColor" red="0.043137254899999998" green="0.20000000000000001" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="30" id="VSP-fK-5IO"/>
                                                                         <constraint firstAttribute="height" constant="30" id="vwX-Vr-46l"/>
@@ -525,9 +525,6 @@
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="info.circle.fill" catalog="system" width="128" height="123"/>
-        <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
@@ -538,7 +535,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

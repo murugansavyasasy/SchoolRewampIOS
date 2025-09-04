@@ -69,6 +69,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             }
         }
     }
+    
+    
+    
 
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)

@@ -17,8 +17,8 @@ class DateCVC: UICollectionViewCell {
         dateView.layer.cornerRadius = 8
         dateView.layer.shadowColor = UIColor.black.cgColor
         dateView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        dateView.layer.shadowRadius = 5
-        dateView.layer.shadowOpacity = 0.3
+        dateView.layer.shadowRadius = 2
+        dateView.layer.shadowOpacity = 0.2
         
         dateLbl.setFont(style: .title, size: FontSize.TitleSize)
     }

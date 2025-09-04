@@ -1629,6 +1629,8 @@ struct ValidatedSlotData: Codable {
 struct Slot: Codable {
     var slot_from: String?
     var slot_to: String?
+    var slot_availablity: String?
+    var type: Int?
 }
 
 struct StdSecDetail: Codable {

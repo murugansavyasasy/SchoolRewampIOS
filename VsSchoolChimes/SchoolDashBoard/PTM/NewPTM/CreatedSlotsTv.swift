@@ -75,8 +75,19 @@ class CreatedSlotsTv: UITableViewCell,
             for: indexPath
         ) as! SlotCV
         let slot = slots[indexPath.item]
-        cell.cellView.backgroundColor = .systemGray6
+       
         cell.label.text = "\(slot.slot_from ?? "") - \(slot.slot_to ?? "")"
+        
+        if slot.slot_availablity == "Available"{
+            cell.cellView.backgroundColor = .white
+            cell.statusLbl.textColor = .systemGreen
+            cell.closeBtn.isHidden = false
+        }else {
+            cell.cellView.backgroundColor = .systemGray6
+            cell.statusLbl.textColor = .systemRed
+            cell.closeBtn.isHidden = true
+        }
+        cell.statusLbl.text = slot.slot_availablity
         
         cell.onRemove = { [weak self, weak cell] in
             guard let self = self,
@@ -106,7 +117,7 @@ class CreatedSlotsTv: UITableViewCell,
         let spacing: CGFloat = 0
         let totalSpacing = spacing
         let cellWidth = (collectionView.frame.width - totalSpacing) / 2
-        let cellHeight: CGFloat = 50
+        let cellHeight: CGFloat = 60
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }

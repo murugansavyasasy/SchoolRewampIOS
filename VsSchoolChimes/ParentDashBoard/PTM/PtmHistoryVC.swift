@@ -7,7 +7,7 @@
 
 struct SlotSection {
     let title: String
-    let slots: [BookedSlotItem]
+    var slots: [BookedSlotItem]
 }
 
 import UIKit
@@ -20,6 +20,8 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var reasonTextfield: PaddedTextField!
     @IBOutlet weak var Popuptopview: UIView!
+    @IBOutlet weak var cancelMeetingDefLbl: UILabel!
+    @IBOutlet weak var reasonDefLbl: UILabel!
     
     let childDetails = UserDefaultFileManager.get_child_Details()
     var slotData: [SlotCategory]?
@@ -31,6 +33,10 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
         PopupContainerview.isHidden = true
         PopupContainerview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
+        cancelMeetingDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        reasonDefLbl.setFont(style: .body, size: FontSize.TitleSize)
+        continueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         continueBtn.layer.cornerRadius = 8
     
@@ -101,7 +107,9 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 switch result {
                 case .success(let success):
                     if success.status == true{
-                        
+                        //self.get_meetings_api()
+                        self.removeCancelledSlotFromUI(slotId: self.cancelId ?? "")
+                        self.hidePopup()
                     }else{
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                     }
@@ -113,6 +121,24 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    private func removeCancelledSlotFromUI(slotId: String) {
+        
+        if let sectionIndex = sections?.firstIndex(where: { $0.slots.contains(where: { $0.id == slotId }) }),
+           let rowIndex = sections?[sectionIndex].slots.firstIndex(where: { $0.id == slotId }) {
+            
+            sections?[sectionIndex].slots.remove(at: rowIndex)
+            
+            if sections?[sectionIndex].slots.isEmpty == true {
+                sections?.remove(at: sectionIndex)
+                tv.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            } else {
+                tv.deleteRows(at: [IndexPath(row: rowIndex, section: sectionIndex)], with: .fade)
+            }
+        }
+
+    }
+
+    
     
     @IBAction func ClosePopupAct(_ sender: Any) {
         
@@ -120,9 +146,13 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func ContinueCalncelationAct(_ sender: Any) {
-        
-        Cancel_meeting_Api()
+        if reasonTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true{
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Please enter reson for cancelation", on: self)
+        }else {
+            Cancel_meeting_Api()
+        }
     }
+    
     func showPopup() {
         PopupContainerview.alpha = 0
         PopupContainerview.isHidden = false
@@ -177,12 +207,22 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.TimeBtn.setTitle(slot?.time, for: .normal)
         cell.DurationBtn.setTitle("15 min", for: .normal)
         cell.ModeBtn.setTitle(slot?.mode, for: .normal)
-        cell.callBtn.isHidden = indexPath.row % 2 == 0
+        cell.callBtn.isHidden = slot?.mode != "Phone Call"
         cell.cancelBtn.isHidden = slot?.status == "Completed"
         cell.statusBtn.setTitle(slot?.status, for: .normal)
-        cell.statusBtn.backgroundColor = slot?.status == "Completed" ? .systemGreen.withAlphaComponent(0.5) : .systemBlue.withAlphaComponent(0.5)
-        if slot?.status == "Canceld"{
-            cell.statusBtn.backgroundColor = .systemRed.withAlphaComponent(0.5)
+        
+        if slot?.status == "Upcoming"{
+            cell.cancelStackTop.constant = 20
+            cell.cancelStackHeight.constant = 35
+            cell.statusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.7)
+            cell.statusBtn.setTitleColor(.white, for: .normal)
+        }else{
+            cell.cancelStackTop.constant = 0
+            cell.cancelStackHeight.constant = 0
+            cell.callBtn.isHidden = true
+            cell.cancelBtn.isHidden = true
+            cell.statusBtn.backgroundColor = .systemGreen.withAlphaComponent(0.7)
+            cell.statusBtn.setTitleColor(.white, for: .normal)
         }
         
         cell.onCancel = { [weak self] in

@@ -9,13 +9,16 @@ import UIKit
 
 class ExamMarkCV: UICollectionViewCell {
 
-    @IBOutlet weak var viewprogessLbl: UILabel!
-    @IBOutlet weak var ViewProgress: UIView!
-    @IBOutlet weak var viewMarksLbl: UILabel!
-    @IBOutlet weak var ViewMarkBtnview: UIView!
+    
+    @IBOutlet weak var viewMarksBtn: UIButton!
+    @IBOutlet weak var viewProgressBtn: UIButton!
     @IBOutlet weak var ExamLbl: UILabel!
     @IBOutlet weak var bgImgview: UIImageView!
     @IBOutlet weak var cellView: UIView!
+    
+    var onViewMark : ( () -> Void)?
+    var OnViewProgress : ( () -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,15 +27,25 @@ class ExamMarkCV: UICollectionViewCell {
         cellView.layer.borderWidth = 1
         cellView.layer.borderColor = UIColor.gray.cgColor
         
-        ViewMarkBtnview.layer.cornerRadius = 10
-        ViewProgress.layer.cornerRadius = 10
+        viewMarksBtn.layer.cornerRadius = 10
+        viewProgressBtn.layer.cornerRadius = 10
         
-        viewMarksLbl.text = ExamStringFile.viewMarks
-        viewprogessLbl.text = ExamStringFile.viewProgress
+        viewMarksBtn.setTitle(ExamStringFile.viewMarks, for: .normal)
+        viewProgressBtn.setTitle(ExamStringFile.viewProgress, for: .normal)
         
         ExamLbl.setFont(style: .title, size: FontSize.TitleSize)
-        viewMarksLbl.setFont(style: .title, size: FontSize.TitleSize)
-        viewprogessLbl.setFont(style: .title, size: FontSize.TitleSize)
+        viewMarksBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        viewProgressBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
     }
-
+    
+    
+    @IBAction func viewMarksAct(_ sender: Any) {
+        
+        onViewMark?()
+    }
+    @IBAction func viewProgressAct(_ sender: Any) {
+        
+        OnViewProgress?()
+    }
+    
 }

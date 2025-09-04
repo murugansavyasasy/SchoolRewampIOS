@@ -44,7 +44,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var fromTimeLbl: UILabel!
     @IBOutlet weak var toTimeView: UIView!
     @IBOutlet weak var toTimeLbl: UILabel!
-    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var stepper: LabeledStepper!
     @IBOutlet weak var breakDurationCV: UICollectionView!
     @IBOutlet weak var SelectClassBaseView: UIView!
     @IBOutlet weak var selectDateTimeBaseView: UIView!
@@ -70,8 +70,11 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var chooseAcademicyeardefLbl: UILabel!
     @IBOutlet weak var academicYearLabel: UILabel!
     @IBOutlet weak var academicyearView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var needBreakDefLbl: UILabel!
+    @IBOutlet weak var breakAfterLbl: UILabel!
+    @IBOutlet weak var afterSlotsDefLbl: UILabel!
     
-    @IBOutlet weak var BreakAfterCountLbl: UILabel!
     var breakDuration = ["5 Min", "10 Min", "15 Min", "30 Min"]
     var SelectedClasses = Set<IndexPath>()
     var SelectedDuration: IndexPath = IndexPath(item: 0, section: 0)
@@ -93,6 +96,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     var BreakBetweenSlot = 1
     var durationValue: Int? // store the duration you'll send in API
     var breakDurationValue = 0
+    private var activeTextField: UITextField?
 
     
     override func viewDidLoad() {
@@ -101,7 +105,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: "PTM", secondLine: "savyasasy School", colour: .white)
+        backBtn.configureAsBackButton(firstLine: "PTM", secondLine: staffDetails?.school_name ?? "", colour: .white)
         
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         purposeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -114,6 +118,16 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         dateLbl.setFont(style: .body, size: FontSize.BodySize)
         fromTimeLbl.setFont(style: .body, size: FontSize.BodySize)
         toTimeLbl.setFont(style: .body, size: FontSize.BodySize)
+        academicYearLabel.setFont(style: .body, size: FontSize.BodySize)
+        chooseAcademicyeardefLbl.setFont(style: .body, size: FontSize.BodySize)
+        needBreakDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        breakAfterLbl.setFont(style: .body, size: FontSize.BodySize)
+        afterSlotsDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        BreakDurationDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        inpersonBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        phonecallBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        onlineBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         [firstView, SelectClassBaseView, selectDateTimeBaseView, DurationBaseView]
           .compactMap { $0 }
@@ -131,6 +145,16 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         mobileStack.isHidden = true
         linkStack.isHidden = true
+        
+        purposeTextfield.addDoneButton()
+        mobileTextfield.addDoneButton()
+        durationTextfield.addDoneButton()
+        
+        meetingLinkTextfield.delegate = self
+        meetingLinkTextfield.inputView = UIView()
+        
+        stepper.minimumValue = 1
+        stepper.value = 1
         
         dateSelectionView.layer.cornerRadius = 10
         FromTimeView.layer.cornerRadius = 10
@@ -209,7 +233,27 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         breakDurationCV.dataSource = self
         selectedDatesCv.delegate = self
         selectedDatesCv.dataSource = self
+        
+        NotificationCenter.default.addObserver(self,
+                                                      selector: #selector(keyboardWillShow),
+                                                      name: UIResponder.keyboardWillShowNotification,
+                                                      object: nil)
+
+               NotificationCenter.default.addObserver(self,
+                                                      selector: #selector(keyboardWillHide),
+                                                      name: UIResponder.keyboardWillHideNotification,
+                                                      object: nil)
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
+
     
     func getAcadmicYear() {
         academicYears = localData.accidamic_year_data?.data?.compactMap { $0.year } ?? []
@@ -269,6 +313,26 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         mobileStack.isHidden = true
         linkStack.isHidden = false
     }
+    
+    func textField(_ textField: UITextField,
+                       shouldChangeCharactersIn range: NSRange,
+                       replacementString string: String) -> Bool {
+        if textField == self.meetingLinkTextfield {
+                return false  // block typing
+            }
+            return true  // allow other text fields normally
+        }
+
+        // Allow only paste for THIS text field
+        override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+            if meetingLinkTextfield.isFirstResponder {
+                if action == #selector(UIResponderStandardEditActions.paste(_:)) {
+                    return true
+                }
+                return false
+            }
+            return super.canPerformAction(action, withSender: sender)
+        }
     
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         return monthPosition == .current
@@ -414,13 +478,15 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     }
     @IBAction func DateDoneAct(_ sender: Any) {
         
-        let selectedDates = calendar.selectedDates
+        let PickedDates = calendar.selectedDates
         
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
-        let dateStrings = selectedDates.map { formatter.string(from: $0)}
+        let dateStrings = PickedDates.map { formatter.string(from: $0)}
         self.SelectedDates = dateStrings
-        DatesCvHeight.constant = SelectedDates.count == 0 ? 0 : 50
+        let rows = ceil(Double(SelectedDates.count) / 3.0)
+        let height = rows * 50
+        DatesCvHeight.constant = height
         selectedDatesCv.reloadData()
         hideCalendar()
     }
@@ -429,11 +495,22 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     }
     
     func deleteDelegate(index: Int) {
+        let dateString = SelectedDates[index]
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        if let dateToRemove = formatter.date(from: dateString) {
+            calendar.deselect(dateToRemove) // removes highlight
+        }
         
         SelectedDates.remove(at: index)
-        DatesCvHeight.constant = SelectedDates.count == 0 ? 0 : 50
+        
+        let rows = ceil(Double(SelectedDates.count) / 3.0)
+        DatesCvHeight.constant = rows * 50
+        
         selectedDatesCv.reloadData()
     }
+
     
     @IBAction func selectDuration(){
         
@@ -488,39 +565,142 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         }
     }
     
-    @IBAction func StepperAct(_ sender: UIStepper) {
+    func validateInputs() -> Bool {
+        // Trimmed text helpers
+        let purpose = purposeTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let mobile = mobileTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let meetingLink = meetingLinkTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let fromTime = fromTimeLbl.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let toTime = toTimeLbl.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
-        BreakAfterCountLbl.text = String(sender.value)
-        BreakBetweenSlot = Int(sender.value)
+        // 1. Purpose validation
+        guard !purpose.isEmpty else {
+            CustomAlert.showAlertWithOkAction(
+                title: "Missing Information",
+                message: "Please enter the purpose of the meeting",
+                on: self
+            )
+            return false
+        }
+        
+        // 2. Meeting mode-specific validations
+        if meetingMode == "Phone Call" {
+            guard !mobile.isEmpty else {
+                CustomAlert.showAlertWithOkAction(
+                    title: "Missing Information",
+                    message: "Please enter the mobile number",
+                    on: self
+                )
+                return false
+            }
+        } else if meetingMode == "Online" {
+            guard !meetingLink.isEmpty else {
+                CustomAlert.showAlertWithOkAction(
+                    title: "Missing Information",
+                    message: "Please enter the meeting link",
+                    on: self
+                )
+                return false
+            }
+        }
+        
+        // 3. Time validation
+        if fromTime == "Start with" {
+            CustomAlert.showAlertWithOkAction(
+                title: "Missing Information",
+                message: "Please select the start time",
+                on: self
+            )
+            return false
+        }
+        
+        if toTime == "End with" {
+            CustomAlert.showAlertWithOkAction(
+                title: "Missing Information",
+                message: "Please select the end time",
+                on: self
+            )
+            return false
+        }
+        
+        // 4. Classes validation
+        guard !selectedClasses.isEmpty else {
+            CustomAlert.showAlertWithOkAction(
+                title: "Missing Information",
+                message: "Please select at least one class",
+                on: self
+            )
+            return false
+        }
+        
+        // 5. Dates validation
+        guard !SelectedDates.isEmpty else {
+            CustomAlert.showAlertWithOkAction(
+                title: "Missing Information",
+                message: "Please select the dates for the meeting",
+                on: self
+            )
+            return false
+        }
+        
+        // 6. Duration validation
+            var finalValue: Int?
+            
+            if customDurationView.isHidden {
+                // Dropdown duration
+                finalValue = durationValue
+            } else {
+                // Textfield duration
+                if let text = durationTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                   let typedValue = Int(text), typedValue > 0 {
+                    finalValue = typedValue
+                } else {
+                    finalValue = nil
+                }
+            }
+            
+            guard let duration = finalValue, duration > 0 else {
+                CustomAlert.showAlertWithOkAction(
+                    title: "Missing Information",
+                    message: "Please select or enter a valid duration for the meeting",
+                    on: self
+                )
+                return false
+            }
+        
+        // ✅ Passed all validations
+        return true
     }
+
     
     @available(iOS 15.0, *)
     @IBAction func checkSlotAct(_ sender: Any) {
         
-        if purposeTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true{
-            
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the purpose of meeting", on: self)
+//        if purposeTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true{
+//            
+//            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the purpose of meeting", on: self)
+//        }
+//        
+//        if meetingMode == "Phone Call" && mobileTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+//            
+//            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the mobile number", on: self)
+//        }
+//        
+//        if meetingMode == "Online" && meetingLinkTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+//            
+//            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the mobile number", on: self)
+//        }
+//        
+//        if selectedClasses.isEmpty {
+//            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Plese Select the class", on: self)
+//        }
+//        
+//        if SelectedDates.isEmpty {
+//            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Plese Select the Dates for the meeting", on: self)
+//        }
+        if validateInputs(){
+            Check_Slots_Api_call()
         }
-        
-        if meetingMode == "Phone Call" && mobileTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
-            
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the mobile number", on: self)
-        }
-        
-        if meetingMode == "Online" && meetingLinkTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
-            
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "please enter the mobile number", on: self)
-        }
-        
-        if selectedClasses.isEmpty {
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Plese Select the class", on: self)
-        }
-        
-        if SelectedDates.isEmpty {
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Plese Select the Dates for the meeting", on: self)
-        }
-        
-        Check_Slots_Api_call()
     }
 
     func generateSlots(
@@ -623,7 +803,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                finalValue = Int(durationTextfield.text ?? "")
            }
         
-        let slots = generateSlots(from: fromTimeLbl.text ?? "", to: toTimeLbl.text ?? "", slotDuration: finalValue ?? 0,breakDuration: breakDurationValue,breakAfterSlots: BreakBetweenSlot)
+        let slots = generateSlots(from: fromTimeLbl.text ?? "", to: toTimeLbl.text ?? "", slotDuration: finalValue ?? 0,breakDuration: breakDurationValue,breakAfterSlots: stepper.value)
 
         let param: [String: Any] = [
             PTMRequestStringFile.event_name: purposeTextfield.text ?? "",
@@ -787,7 +967,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             let availableWidth = collectionView.bounds.width - totalSpacing
             let width = floor(availableWidth / columns)
             
-            return CGSize(width: width, height: 60)
+            return CGSize(width: width, height: 50)
             
         }
         
@@ -826,6 +1006,51 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
     
 }
 
+// MARK: - Keyboard handling
+@available(iOS 14.0, *)
+extension CreateMeetingVc: UITextFieldDelegate{
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+            activeTextField = textField
+        }
+
+        func textFieldDidEndEditing(_ textField: UITextField) {
+            if activeTextField == textField {
+                activeTextField = nil
+            }
+        }
+    
+    
+        @objc func keyboardWillShow(notification: NSNotification) {
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                let keyboardHeight = keyboardFrame.height
+
+                var contentInset = scrollView.contentInset
+                contentInset.bottom = keyboardHeight + 20
+                scrollView.contentInset = contentInset
+                scrollView.scrollIndicatorInsets = contentInset
+
+                // ✅ Scroll active text field into view
+                if let activeTextField = activeTextField {
+                    let visibleRect = view.frame.inset(by: UIEdgeInsets(top: 0,
+                                                                        left: 0,
+                                                                        bottom: keyboardHeight,
+                                                                        right: 0))
+                    if !visibleRect.contains(activeTextField.frame.origin) {
+                        scrollView.scrollRectToVisible(activeTextField.frame, animated: true)
+                    }
+                }
+            }
+        }
+
+        @objc func keyboardWillHide(notification: NSNotification) {
+            var contentInset = scrollView.contentInset
+            contentInset.bottom = 0
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+        }
+}
+
 
 extension UIView {
     func applyCardStyle(
@@ -843,5 +1068,90 @@ extension UIView {
         self.layer.shadowRadius = shadowRadius
         self.layer.masksToBounds = false
         self.backgroundColor = backgroundColor
+    }
+}
+
+
+import UIKit
+
+class LabeledStepper: UIControl {
+
+    private let decreaseButton = UIButton(type: .system)
+    private let increaseButton = UIButton(type: .system)
+    private let countLabel = UILabel()
+
+    var minimumValue: Int = 1
+    var value: Int = 1 {
+        didSet {
+            countLabel.text = "\(value)"
+            updateButtonStates()
+            sendActions(for: .valueChanged)
+        }
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    private func setup() {
+        // Style container
+        backgroundColor = UIColor.systemGray6
+        layer.cornerRadius = 10
+        layer.masksToBounds = true
+
+        // Configure buttons
+        decreaseButton.setTitle("–", for: .normal)
+        increaseButton.setTitle("+", for: .normal)
+        decreaseButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        increaseButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
+
+        // Configure label
+        countLabel.text = "\(value)"
+        countLabel.textAlignment = .center
+        countLabel.font = .systemFont(ofSize: 16, weight: .medium)
+
+        // Add subviews
+        addSubview(decreaseButton)
+        addSubview(countLabel)
+        addSubview(increaseButton)
+
+        // Actions
+        decreaseButton.addTarget(self, action: #selector(decreaseTapped), for: .touchUpInside)
+        increaseButton.addTarget(self, action: #selector(increaseTapped), for: .touchUpInside)
+
+        updateButtonStates()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let buttonWidth: CGFloat = 40
+        let labelWidth = bounds.width - (buttonWidth * 2)
+
+        decreaseButton.frame = CGRect(x: 0, y: 0, width: buttonWidth, height: bounds.height)
+        countLabel.frame = CGRect(x: buttonWidth, y: 0, width: labelWidth, height: bounds.height)
+        increaseButton.frame = CGRect(x: buttonWidth + labelWidth, y: 0, width: buttonWidth, height: bounds.height)
+    }
+
+    @objc private func decreaseTapped() {
+        if value > minimumValue {
+            value -= 1
+        }
+    }
+
+    @objc private func increaseTapped() {
+        value += 1   // ✅ no maximum limit
+    }
+
+    private func updateButtonStates() {
+        // Disable – only at minimum
+        decreaseButton.isEnabled = value > minimumValue
+        decreaseButton.alpha = decreaseButton.isEnabled ? 1.0 : 0.5
     }
 }
