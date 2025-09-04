@@ -13,7 +13,7 @@
             <connections>
                 <outlet property="newBottomview" destination="Lx3-fE-Mec" id="OOO-cp-3uW"/>
                 <outlet property="newNextBtn" destination="gG8-Dm-wsW" id="eud-bY-hQw"/>
-                <outlet property="searchBar" destination="I7c-2p-CIl" id="4ox-vn-zEL"/>
+                <outlet property="searchBar" destination="JoL-sb-hcI" id="x9Z-s7-lCF"/>
                 <outlet property="tv" destination="hMN-y5-Wh5" id="Y4A-yG-VIx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -49,14 +49,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lx3-fE-Mec">
-                            <rect key="frame" x="0.0" y="228" width="393" height="624"/>
+                            <rect key="frame" x="0.0" y="222" width="393" height="630"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hMN-y5-Wh5">
-                                    <rect key="frame" x="0.0" y="20" width="393" height="480"/>
+                                    <rect key="frame" x="0.0" y="20" width="393" height="486"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gG8-Dm-wsW">
-                                    <rect key="frame" x="16" y="520" width="361" height="40"/>
+                                    <rect key="frame" x="16" y="526" width="361" height="40"/>
                                     <color key="backgroundColor" red="0.4180320501" green="0.70926976200000003" blue="0.92551809549999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="6Sd-5u-89L"/>
@@ -80,13 +80,14 @@
                                 <constraint firstItem="hMN-y5-Wh5" firstAttribute="top" secondItem="Lx3-fE-Mec" secondAttribute="top" constant="20" id="uWI-NA-wN6"/>
                             </constraints>
                         </view>
-                        <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="I7c-2p-CIl">
-                            <rect key="frame" x="16" y="152" width="361" height="56"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JoL-sb-hcI">
+                            <rect key="frame" x="15" y="152" width="363" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="Kri-9j-Fza"/>
+                            </constraints>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
-                                <outlet property="delegate" destination="-1" id="eV1-mm-BDN"/>
+                                <outlet property="delegate" destination="-1" id="4tL-Uz-jo3"/>
                             </connections>
                         </searchBar>
                     </subviews>
@@ -94,17 +95,17 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="KqG-kT-auN" secondAttribute="trailing" constant="16" id="02E-bZ-XPm"/>
                         <constraint firstAttribute="trailing" secondItem="Lx3-fE-Mec" secondAttribute="trailing" id="Cyb-3F-J1j"/>
-                        <constraint firstItem="Lx3-fE-Mec" firstAttribute="top" secondItem="I7c-2p-CIl" secondAttribute="bottom" constant="20" id="GPo-A1-qEt"/>
-                        <constraint firstAttribute="trailing" secondItem="I7c-2p-CIl" secondAttribute="trailing" constant="16" id="HtM-96-2uB"/>
                         <constraint firstItem="KqG-kT-auN" firstAttribute="top" secondItem="ndn-1s-p9F" secondAttribute="bottom" constant="10" id="JRD-t2-KwS"/>
+                        <constraint firstItem="JoL-sb-hcI" firstAttribute="top" secondItem="KqG-kT-auN" secondAttribute="bottom" constant="20" id="Sn4-O5-vUe"/>
                         <constraint firstItem="Lx3-fE-Mec" firstAttribute="leading" secondItem="Hmd-r5-snF" secondAttribute="leading" id="St8-pb-H96"/>
                         <constraint firstItem="fjg-g3-zoD" firstAttribute="leading" secondItem="Hmd-r5-snF" secondAttribute="leading" constant="10" id="TcJ-7q-MbA"/>
                         <constraint firstItem="KqG-kT-auN" firstAttribute="leading" secondItem="fjg-g3-zoD" secondAttribute="trailing" constant="20" id="Wrs-Qu-KBl"/>
-                        <constraint firstItem="I7c-2p-CIl" firstAttribute="leading" secondItem="Hmd-r5-snF" secondAttribute="leading" constant="16" id="Ydy-E8-1yE"/>
                         <constraint firstAttribute="trailing" secondItem="ndn-1s-p9F" secondAttribute="trailing" constant="16" id="fwF-Z8-17h"/>
-                        <constraint firstItem="I7c-2p-CIl" firstAttribute="top" secondItem="KqG-kT-auN" secondAttribute="bottom" constant="20" id="oRY-wo-fjB"/>
+                        <constraint firstAttribute="trailing" secondItem="JoL-sb-hcI" secondAttribute="trailing" constant="15" id="kWe-Bs-cjl"/>
                         <constraint firstItem="ndn-1s-p9F" firstAttribute="leading" secondItem="fjg-g3-zoD" secondAttribute="trailing" constant="20" id="p5l-xK-JDq"/>
+                        <constraint firstItem="JoL-sb-hcI" firstAttribute="leading" secondItem="Hmd-r5-snF" secondAttribute="leading" constant="15" id="pT0-2A-8Fo"/>
                         <constraint firstAttribute="bottom" secondItem="Lx3-fE-Mec" secondAttribute="bottom" id="st0-te-0Nu"/>
+                        <constraint firstItem="Lx3-fE-Mec" firstAttribute="top" secondItem="JoL-sb-hcI" secondAttribute="bottom" constant="10" id="v1x-qs-gYx"/>
                     </constraints>
                 </view>
             </subviews>

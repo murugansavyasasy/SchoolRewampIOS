@@ -308,6 +308,20 @@ struct MenuResponse: Codable {
     let message: String?
     let data: [MenuData]?
 }
+struct MenuCountResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MenuCount]?
+}
+struct MenuCount: Codable {
+    let contact_details: ContactDetails?
+    let menu_details: [MenuCountDetail]?
+}
+struct MenuCountDetail: Codable {
+    let id:Int?
+    let name:String?
+    let unread_count:Int?
+}
 
 struct MenuData: Codable {
     let contact_details: ContactDetails?

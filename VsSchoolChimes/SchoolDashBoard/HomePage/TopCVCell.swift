@@ -29,6 +29,7 @@ class TopCVCell: UICollectionViewCell {
                 let img = UIImage(named: filteredItems.first?.name ?? "")
                 iconBtn.setImage(img, for: .normal)
                 nameLbl.text = item.name
+                readVieaw.isHidden = item.unread_count == 0
             }
         }
     }

@@ -9,7 +9,7 @@ class AttachmentCVCell: UICollectionViewCell {
         // Initialization code
         outerView.layer.cornerRadius = 10
         outerView.clipsToBounds = true // Ensures the content respects the corner radius
-        outerView.backgroundColor = .blue.withAlphaComponent(0.2)
+//        outerView.backgroundColor = .blue.withAlphaComponent(0.2)
     }
 
  }

@@ -28,6 +28,7 @@ struct ServiceUrl{
     static let  auth_device_token        = "app/api/auth/device-token"
 //    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
     static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
+    static let  dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
     static let recipient_get_group_list  = "comm/api/recipient/get-group-list"
     static let recipient_get_standards   = "comm/api/recipient/get-standards"
     static let recipient_get_student_list  = "comm/api/recipient/get-student-list"

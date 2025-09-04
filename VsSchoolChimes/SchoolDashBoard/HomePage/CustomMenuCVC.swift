@@ -8,7 +8,7 @@
 import UIKit
 
 class CustomMenuCVC: UICollectionViewCell {
-    
+    @IBOutlet weak var readVieaw: UIView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var imenuName: UILabel!
@@ -24,6 +24,7 @@ class CustomMenuCVC: UICollectionViewCell {
         outerView.layer.shadowRadius = 4
         outerView.layer.borderWidth = 0.3
         outerView.layer.borderColor = UIColor.systemGray5.cgColor
+        readVieaw.layer.cornerRadius = readVieaw.frame.width/2
     }
     
 }

@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -63,14 +64,24 @@
                             <constraint firstItem="XVT-6f-0Pz" firstAttribute="leading" secondItem="jHx-1c-b4S" secondAttribute="leading" constant="10" id="rCd-ZD-W4i"/>
                         </constraints>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5K-Nr-bTc">
+                        <rect key="frame" x="211" y="8" width="7" height="7"/>
+                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="ZEt-Cl-br1"/>
+                            <constraint firstAttribute="height" constant="7" id="d6C-9v-jYG"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="jHx-1c-b4S" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="I8a-se-VsC"/>
                 <constraint firstAttribute="bottom" secondItem="jHx-1c-b4S" secondAttribute="bottom" constant="3" id="Nk4-2l-43v"/>
+                <constraint firstItem="U5K-Nr-bTc" firstAttribute="top" secondItem="jHx-1c-b4S" secondAttribute="top" constant="5" id="Z2q-OA-FoM"/>
                 <constraint firstAttribute="trailing" secondItem="jHx-1c-b4S" secondAttribute="trailing" constant="3" id="fPh-RS-b5W"/>
                 <constraint firstItem="jHx-1c-b4S" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="gYW-O7-7GY"/>
+                <constraint firstItem="U5K-Nr-bTc" firstAttribute="trailing" secondItem="jHx-1c-b4S" secondAttribute="trailing" constant="-5" id="h6f-yJ-c3A"/>
             </constraints>
             <size key="customSize" width="226" height="189"/>
             <connections>
@@ -78,6 +89,7 @@
                 <outlet property="imenuName" destination="0hu-1d-EV4" id="un9-be-RwV"/>
                 <outlet property="menuCondent" destination="a23-U0-b4a" id="KKP-pU-XkS"/>
                 <outlet property="outerView" destination="jHx-1c-b4S" id="5xv-0U-FF2"/>
+                <outlet property="readVieaw" destination="U5K-Nr-bTc" id="caL-Ud-dI6"/>
             </connections>
             <point key="canvasLocation" x="161.83206106870227" y="68.661971830985919"/>
         </collectionViewCell>
@@ -12525,5 +12537,8 @@ oQALT6MAC2FDAAthSAALYVUAC2FYAAthZQALYWoAC2FyAAthdQALYXoAC2GCAAAAAAAABAEAAAAAAAAA
 VgAAAAAAAAAAAAAAAAALYYU
 </mutableData>
         </image>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
