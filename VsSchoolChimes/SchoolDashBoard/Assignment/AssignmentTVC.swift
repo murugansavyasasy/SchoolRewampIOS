@@ -160,6 +160,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             let generatedStack = createSubCategoriesStack(with: categories)
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
+        assignmentProgressLbl.text = "Submitted Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)
     }
@@ -260,7 +261,6 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         progressView.progressTintColor = .systemGreen
         progressView.layer.cornerRadius = 4
         progressView.clipsToBounds = true
-        assignmentProgressLbl.text = "Assignment Progress"
         switch value {
         case 0.0..<0.3:
             progressView.progressTintColor = UIColor.systemRed

@@ -63,6 +63,22 @@
                             <constraint firstAttribute="bottom" secondItem="lms-8A-mmQ" secondAttribute="bottom" constant="10" id="sVh-v8-l2e"/>
                         </constraints>
                     </view>
+                    <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQZ-Fa-w4w">
+                        <rect key="frame" x="271" y="3" width="15" height="15"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="ERH-T0-K8m"/>
+                            <constraint firstAttribute="height" constant="15" id="LwN-eI-xFn"/>
+                        </constraints>
+                        <color key="tintColor" systemColor="systemRedColor"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="delete (1)">
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                        </state>
+                        <connections>
+                            <action selector="deleteImg:" destination="gTV-IL-0wX" eventType="touchUpInside" id="9xk-MU-cLh"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -71,9 +87,12 @@
                 <constraint firstItem="cAk-e3-8CR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="YOe-eU-Bsj"/>
                 <constraint firstItem="cAk-e3-8CR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="dmh-2c-cof"/>
                 <constraint firstAttribute="trailing" secondItem="cAk-e3-8CR" secondAttribute="trailing" constant="2" id="m9w-BM-3dR"/>
+                <constraint firstItem="DQZ-Fa-w4w" firstAttribute="trailing" secondItem="cAk-e3-8CR" secondAttribute="trailing" constant="2" id="obm-ZR-UIr"/>
+                <constraint firstItem="DQZ-Fa-w4w" firstAttribute="top" secondItem="cAk-e3-8CR" secondAttribute="top" constant="-2" id="yvm-xI-MUV"/>
             </constraints>
             <size key="customSize" width="286" height="151"/>
             <connections>
+                <outlet property="deleteBtn" destination="DQZ-Fa-w4w" id="bwW-bl-5R3"/>
                 <outlet property="imageNameLbl" destination="7LP-L6-4h0" id="lpT-Vd-yhh"/>
                 <outlet property="imageTypeSizeLbl" destination="6eH-oW-Acl" id="XLA-tT-Gjk"/>
                 <outlet property="imgIconBtn" destination="yZ9-R6-LI7" id="dtc-kL-R7d"/>
@@ -83,8 +102,12 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="delete (1)" width="16" height="16"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

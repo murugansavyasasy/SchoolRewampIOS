@@ -42,6 +42,7 @@ class SenderAssignmentTextViewController: UIViewController,
     @IBOutlet weak var categoryDropDownLbl: UILabel!
     @IBOutlet weak var assignTitleTxtFld: UITextField!
     @IBOutlet weak var chooseRecipientsBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
     @IBOutlet weak var categoryLbl: UILabel!
     @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var contentTextView: UITextView!
@@ -130,7 +131,7 @@ class SenderAssignmentTextViewController: UIViewController,
         // CollectionView
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
-        
+        cancelBtn.isHidden = true
         imageSelection()
         updateCollectionHeight()
     }
@@ -200,8 +201,10 @@ class SenderAssignmentTextViewController: UIViewController,
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.gray.cgColor
         
-        chooseRecipientsBtn.backgroundColor = .button
+        chooseRecipientsBtn.backgroundColor = .link
+        cancelBtn.backgroundColor = .red
         chooseRecipientsBtn.layer.cornerRadius = 10
+        cancelBtn.layer.cornerRadius = 10
         
         collectionViewHeght.constant = 0
         addphotosheight.constant = 0
@@ -216,6 +219,7 @@ class SenderAssignmentTextViewController: UIViewController,
         
         // Fonts
         chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        cancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         AddphotosLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -277,6 +281,7 @@ class SenderAssignmentTextViewController: UIViewController,
             updateTextViewHeight(contentTextView)
             editId = notice.id
             chooseRecipientsBtn.setTitle("Update", for: .normal)
+            cancelBtn.isHidden = false
         } else {
             assignTitleTxtFld.text = ""
             contentTextView.text = CommonStringFile.Description.translated()
@@ -448,6 +453,19 @@ class SenderAssignmentTextViewController: UIViewController,
         present(vc, animated: false)
     }
     
+    @IBAction func cancel(_ sender: UIButton) {
+        assignTitleTxtFld.text = ""
+        contentTextView.text = ""
+        placeholderLabel.isHidden = !contentTextView.text.isEmpty
+        attachments.removeAll()
+        selectImgPdfview.imageCollectionview.reloadData()
+        editId = nil
+        
+        chooseRecipientsBtn.setTitle("Next", for: .normal)
+        cancelBtn.isHidden = true
+        updateTextViewHeight(contentTextView)
+        delegate?.editDta(edit: nil)
+    }
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
         // Title + Description validation
         let title = assignTitleTxtFld.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -501,6 +519,7 @@ class SenderAssignmentTextViewController: UIViewController,
                         editId = nil
                         
                         chooseRecipientsBtn.setTitle("Next", for: .normal)
+                        cancelBtn.isHidden = true
                         updateTextViewHeight(contentTextView)
                         delegate?.editDta(edit: nil)
                     }

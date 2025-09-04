@@ -2,47 +2,67 @@
 //  LocationTableViewCell.swift
 //  VoicesnapSchoolApp
 //
-//  Created by admin on 29/08/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
+//  Created by chandhru on 04/09/25.
 //
 
 import UIKit
 
 class LocationTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var presentStatus: UIView!
-    @IBOutlet weak var opsentStus: UIView!
-    @IBOutlet weak var prestType: UILabel!
-    @IBOutlet weak var opsentType: UILabel!
-    @IBOutlet weak var opsentLbl: UILabel!
-    @IBOutlet weak var calanderView: UIView!
     @IBOutlet weak var fullView: UIView!
-    @IBOutlet weak var historyTimImage: UIImageView!
-    @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var statusView: UIViewX!
-    @IBOutlet weak var StatusLbl: UILabel!
-    @IBOutlet weak var workingHrsLbl: UILabel!
-    @IBOutlet weak var attendanceTypeLbl: UILabel!
     @IBOutlet weak var dayLbl: UILabel!
-    @IBOutlet weak var datelbl: UILabel!
-    @IBOutlet weak var mnthLbl: UILabel!
-    @IBOutlet weak var firstInLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var checkinLbl: UILabel!
+    @IBOutlet weak var checkoutLbl: UILabel!
+    @IBOutlet weak var hoursLbl: UILabel!
+    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var rollLable: UILabel!
+    @IBOutlet weak var statusBtn: UIButton!
     @IBOutlet weak var namelbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
-        opsentStus.layer.cornerRadius = 8
-        presentStatus.layer.cornerRadius = 8
-        opsentStus.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
-        presentStatus.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
+        // Date circle view (purple gradient or solid color with rounded edges)
+        dateView.layer.cornerRadius = dateView.frame.height / 2
+        dateView.clipsToBounds = true
+        dateView.backgroundColor = UIColor.systemPurple
         
+        dayLbl.textColor = .white
+        dateLbl.textColor = .white
+        
+        // Name label
+        namelbl.font = UIFont.boldSystemFont(ofSize: 16)
+        namelbl.textColor = .black
+        
+        // Role label
+        rollLable.font = UIFont.systemFont(ofSize: 14)
+        rollLable.textColor = .darkGray
+        
+        // Status button (Absent → Red background)
+        statusBtn.layer.cornerRadius = 8
+        statusBtn.clipsToBounds = true
+        statusBtn.setTitleColor(.systemRed, for: .normal)
+        statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+        statusBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        
+        // Check-in & Check-out labels
+        checkinLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        checkoutLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        checkinLbl.textColor = UIColor.systemBlue
+        checkoutLbl.textColor = UIColor.systemGreen
+        
+        // Hours label
+        hoursLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        hoursLbl.textColor = UIColor.systemGreen
+        
+        // Card style
+        contentView.layer.cornerRadius = 16
+        contentView.layer.masksToBounds = false
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOpacity = 0.1
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowRadius = 6
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    }
-    
 }

@@ -24,8 +24,7 @@ class UpdateProfileVC: UIViewController {
         detailTable.register(UINib(nibName: "UserDetailsTVC", bundle: nil), forCellReuseIdentifier: "UserDetailsTVC")
         detailTable.dataSource = self
         detailTable.delegate = self
-        
-        setupUserDetails(isStudent: true) // set false for staff
+        setupUserDetails(isStudent: true)
     }
     
     private func setupUserDetails(isStudent: Bool) {
@@ -33,24 +32,55 @@ class UpdateProfileVC: UIViewController {
             userDetails = [
                 UserDetailItem(placeholder: "Name", value: "Arun Kumar", isEditable: true, type: .text, options: nil),
                 UserDetailItem(placeholder: "Address", value: "Chennai", isEditable: true, type: .address, options: nil),
-                UserDetailItem(placeholder: "Mobile Number", value: "9876543210", isEditable: true, type: .mobile, options: nil),
+                UserDetailItem(
+                    placeholder: "Mobile Number",
+                    value: "9876543210",
+                    isEditable: true,
+                    type: .mobile,
+                    options: ["+91", "+1", "+44", "+61", "+81", "+971", "+974", "+65", "+49", "+33"]
+                ),
+                UserDetailItem(placeholder: "Email", value: "arun.kumar@gmail.com", isEditable: true, type: .text, options: ["arun.kumar@gmail.com", "arun123@yahoo.com"]),
                 UserDetailItem(placeholder: "Date of Birth", value: "02/09/2005", isEditable: true, type: .date, options: nil),
                 UserDetailItem(placeholder: "Gender", value: "Male", isEditable: true, type: .gender, options: ["Male", "Female", "Other"]),
                 UserDetailItem(placeholder: "Standard", value: "10th", isEditable: true, type: .dropdown, options: ["9th", "10th", "11th", "12th"]),
                 UserDetailItem(placeholder: "Section", value: "A", isEditable: true, type: .dropdown, options: ["A", "B", "C"]),
                 UserDetailItem(placeholder: "Blood Group", value: "O+", isEditable: true, type: .dropdown, options: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
-                UserDetailItem(placeholder: "Nationality", value: "Indian", isEditable: true, type: .dropdown, options: ["Indian", "American", "British", "Canadian"])
+                UserDetailItem(placeholder: "Nationality", value: "Indian", isEditable: true, type: .dropdown, options: ["Indian", "American", "British", "Canadian"]),
+                UserDetailItem(
+                    placeholder: "Student Documents",
+                    value: nil,
+                    isEditable: true,
+                    type: .doc,
+                    options: nil,
+                    file_Path: [
+                        FilePath(url: "https://school.com/docs/report1.pdf", type: "pdf"),
+                        FilePath(url: "https://school.com/docs/result.xls", type: "xls"),
+                        FilePath(url: "https://school.com/docs/profile.txt", type: "txt")
+                    ]
+                )
             ]
         } else {
             userDetails = [
                 UserDetailItem(placeholder: "Name", value: "Karthik", isEditable: true, type: .text, options: nil),
                 UserDetailItem(placeholder: "Address", value: "Coimbatore", isEditable: true, type: .address, options: nil),
                 UserDetailItem(placeholder: "Mobile Number", value: "9876512345", isEditable: true, type: .mobile, options: nil),
+                UserDetailItem(placeholder: "Email", value: "karthik.teacher@gmail.com", isEditable: true, type: .text, options: ["karthik.teacher@gmail.com"]),
                 UserDetailItem(placeholder: "Date of Birth", value: "15/03/1988", isEditable: true, type: .date, options: nil),
                 UserDetailItem(placeholder: "Gender", value: "Female", isEditable: true, type: .gender, options: ["Male", "Female", "Other"]),
                 UserDetailItem(placeholder: "Degree", value: "M.Sc", isEditable: true, type: .dropdown, options: ["B.Sc", "M.Sc", "PhD", "M.Ed", "B.Ed"]),
                 UserDetailItem(placeholder: "Blood Group", value: "B+", isEditable: true, type: .dropdown, options: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
-                UserDetailItem(placeholder: "Department", value: "Mathematics", isEditable: true, type: .dropdown, options: ["Maths", "Physics", "Chemistry", "Biology", "Computer Science"])
+                UserDetailItem(placeholder: "Department", value: "Mathematics", isEditable: true, type: .dropdown, options: ["Maths", "Physics", "Chemistry", "Biology", "Computer Science"]),
+                UserDetailItem(
+                    placeholder: "Teacher Certificates",
+                    value: nil,
+                    isEditable: true,
+                    type: .doc,
+                    options: nil,
+                    file_Path: [
+                        FilePath(url: "https://school.com/docs/degree.pdf", type: "pdf"),
+                        FilePath(url: "https://school.com/docs/idcard.txt", type: "txt")
+                    ]
+                )
             ]
         }
         

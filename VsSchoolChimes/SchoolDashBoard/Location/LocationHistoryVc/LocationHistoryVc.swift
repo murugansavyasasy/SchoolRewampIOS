@@ -282,69 +282,72 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let attendanceData = SearchResults?[indexPath.row]
+        guard let attendanceData = SearchResults?[indexPath.row] else {
+            return UITableViewCell()
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
-        LocationTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.LocationTableViewCell,
+            for: indexPath
+        ) as! LocationTableViewCell
+        
         cell.selectionStyle = .none
-        cell.fullView.layer.cornerRadius = 20
-        cell.calanderView.layer.cornerRadius = 10
-        cell.calanderView.layer.masksToBounds = true
-        cell.fullView.layer.masksToBounds = true
-        cell.fullView.layer.shadowColor = UIColor.black.cgColor
-        cell.fullView.layer.shadowOpacity = 0.5
-        cell.fullView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cell.fullView.layer.shadowRadius = 5
-        cell.fullView.layer.masksToBounds = false
-        cell.firstInLbl.isHidden = false
-        cell.workingHrsLbl.isHidden = false
-        cell.toDateLbl.isHidden = false
-        cell.StatusLbl.layer.cornerRadius = 5
-        cell.StatusLbl.layer.masksToBounds = true
-        if let role = attendanceData?.designation,!role.isEmpty{
-            cell.attendanceTypeLbl.text = role
-        }else{
-            cell.attendanceTypeLbl.text =  attendanceData?.role ?? "Not Mention"
-        }
-        cell.namelbl.text = attendanceData?.name
-        
-        if let attendanceDict = attendanceData?.attendance_type {
-            let keys = Array(attendanceDict.keys)
-            let values = Array(attendanceDict.values)
-            if keys.count > 1 {
-                updateStatus(label: cell.StatusLbl, typeLabel: cell.prestType, statusView: cell.presentStatus, key: keys[0], value: values[0])
-                updateStatus(label: cell.opsentLbl, typeLabel: cell.opsentType, statusView: cell.opsentStus, key: keys[1], value: values[1])
-            } else if let first = attendanceDict.first {
-                updateStatus(label: cell.StatusLbl, typeLabel: cell.prestType, statusView: cell.presentStatus, key: first.key, value: first.value)
-                cell.opsentStus.isHidden = true
-            }
+        cell.namelbl.text = attendanceData.name
+        if let role = attendanceData.designation, !role.isEmpty {
+            cell.rollLable.text = role
+        } else {
+            cell.rollLable.text = attendanceData.role ?? "Not Mentioned"
         }
         
-            cell.firstInLbl.isHidden = false
-            cell.firstInLbl.text = "Checkin - " + (
-                attendanceData?.in_time ?? "0"
-            )
-
-            cell.toDateLbl.isHidden = false
-            cell.toDateLbl.text = "Checkout - " + (
-                attendanceData?.out_time ?? "0"
-            )
-
-            cell.workingHrsLbl.isHidden = false
-            cell.workingHrsLbl.text = "Working Hours - " +  (
-                attendanceData?.working_hours ?? "0"
-            )
-        
-        cell.historyTimImage.isHidden = attendanceData?.in_time == ""
-        
-        if let components = convertDateComponents(from: attendanceData?.date ?? "") {
+        if let attendanceDict = attendanceData.attendance_type,
+           let first = attendanceDict.first {
             
-            cell.datelbl.text = components.day
-            cell.mnthLbl.text = components.month
-            cell.dayLbl.text = components.weekday
+            let key = first.key  // FD / HD
+            let value = first.value
+            var statusText = ""
+            if key.uppercased() == "FD" {
+                statusText = "Full Day \(value)"
+            } else if key.uppercased() == "HD" {
+                statusText = "Half Day \(value)"
+            } else {
+                statusText = value
+            }
+            
+            cell.statusBtn.setTitle(statusText, for: .normal)
+            
+            // Color based on Present / Absent
+            if value.lowercased() == "absent" {
+                cell.statusBtn.setTitleColor(.systemRed, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+            } else {
+                cell.statusBtn.setTitleColor(.systemGreen, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+            }
+            
+        } else {
+            cell.statusBtn.setTitle("N/A", for: .normal)
+            cell.statusBtn.setTitleColor(.systemGray, for: .normal)
+            cell.statusBtn.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
         }
+        
+        // Check-in / Checkout / Hours
+        cell.checkinLbl.text = "\(attendanceData.in_time ?? "-")"
+        cell.checkoutLbl.text = "\(attendanceData.out_time ?? "-")"
+        cell.hoursLbl.text = "\(attendanceData.working_hours ?? "-")"
+        
+        // Date Components (dd-MM-yyyy → day / weekday)
+        if let components = convertDateComponents(from: attendanceData.date ?? "") {
+            cell.dateLbl.text = components.day       // e.g. "03"
+            cell.dayLbl.text = components.weekday    // e.g. "Wed"
+        } else {
+            cell.dateLbl.text = "-"
+            cell.dayLbl.text = "-"
+        }
+        
         return cell
     }
+
+
     
     func updateStatus(label: UILabel, typeLabel: UILabel, statusView: UIView, key: String, value: String) {
         typeLabel.text = key
@@ -395,24 +398,25 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX") // safe
         
         guard let date = inputFormatter.date(from: dateString) else { return nil }
         
-        let dayFormatter = DateFormatter()
-        dayFormatter.dateFormat = "dd"
+        let outputFormatter = DateFormatter()
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let monthFormatter = DateFormatter()
-        monthFormatter.dateFormat = "MMM"
+        outputFormatter.dateFormat = "dd"
+        let day = outputFormatter.string(from: date)
         
-        let weekdayFormatter = DateFormatter()
-        weekdayFormatter.dateFormat = "EEEE"
+        outputFormatter.dateFormat = "MMM"
+        let month = outputFormatter.string(from: date)
         
-        let day = dayFormatter.string(from: date)
-        let month = monthFormatter.string(from: date)
-        let weekday = weekdayFormatter.string(from: date)
+        outputFormatter.dateFormat = "EEE"
+        let weekday = outputFormatter.string(from: date)
         
         return (day, month, weekday)
     }
+
     
     func geometric_principal_attendance_report() {
         var param: [String: Any]

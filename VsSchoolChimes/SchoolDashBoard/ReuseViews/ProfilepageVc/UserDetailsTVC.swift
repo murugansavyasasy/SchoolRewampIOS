@@ -26,11 +26,16 @@ struct UserDetailItem {
     var isEditable: Bool
     var type: UserDetailFieldType
     var options: [String]?
+    var file_Path: [FilePath]?
 }
 
 // MARK: - Cell
 @available(iOS 14.0, *)
-class UserDetailsTVC: UITableViewCell, Datepicker {
+class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge {
+    func deleteImage(index: Int) {
+        attachments.remove(at: index)
+        reloadCollectionAndUpdateHeight()
+    }
     
     // MARK: - Outlets
     @IBOutlet weak var attachmentView: UIView!
@@ -61,9 +66,6 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
     private var genderButtons: [UIButton] = []
     var selectedGender: String?
     
-    var onDropDownTapped: (() -> Void)?
-    var onDateTapped: (() -> Void)?
-    
     var attachments: [AttachmentItem] = []
     var sectionList: [String] = []
     
@@ -73,9 +75,11 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
         resetViews()
         setupGenderButtons()
         addTapToDropDown()
+        countryDropDown()
         addTapToDateButton()
         applyBorders()
-        
+        attachmentCollectionView.register(UINib(nibName: "AttachmentCVC", bundle: nil), forCellWithReuseIdentifier: "AttachmentCVC")
+        addAttachmentBtn.layer.cornerRadius = 4
         attachmentCollectionView.dataSource = self
         attachmentCollectionView.delegate = self
     }
@@ -111,7 +115,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
             self.attachments.append(
                 AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf)
             )
-            self.attachmentCollectionView.reloadData()
+            self.reloadCollectionAndUpdateHeight()
         }
         
         PhotoPickerManager.shared.onVideoPicked = { [weak self] data in
@@ -194,7 +198,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
             txtField.text = item.value
             txtField.isEnabled = item.isEditable
             contryCode.text = "+91"
-            
+            sectionList = item.options ?? []
         case .date:
             dateView.isHidden = false
             dateLbl.text = item.value ?? "Select \(item.placeholder)"
@@ -212,13 +216,24 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
             
         case .doc:
             attachmentView.isHidden = false
-            addAttachmentBtn.isHidden = false
-            if let value = item.value, !value.isEmpty {
-                let files = value.components(separatedBy: ",")
-//                attachments = files.map {
-//                    AttachmentItem(imageURL: $0, fileType: CommonStringFile.)
-//                }
+            addAttachmentBtn.isHidden = !item.isEditable   // hide add button if not editable
+
+            attachments.removeAll()
+            if let files = item.file_Path {
+                attachments = files.map { file in
+                    let url = file.url ?? ""
+                    let type = file.type?.lowercased() ?? "unknown"
+
+                    if type == "image" {
+                        return AttachmentItem(image: nil,imageURL: url,fileType: "image",VideoURl: nil,VimeoVideoURL: nil)
+                    } else if type == "video" {
+                        return AttachmentItem(image: UIImage(systemName: "video"),imageURL: url, fileType: "video",VideoURl: URL(string: url),VimeoVideoURL: nil)
+                    } else {
+                        return AttachmentItem(image:nil,imageURL: url,fileType: type,VideoURl: nil,VimeoVideoURL: nil)
+                    }
+                }
             }
+
             reloadCollectionAndUpdateHeight()
         }
     }
@@ -304,7 +319,22 @@ extension UserDetailsTVC {
         dropDownView.addGestureRecognizer(tap)
         dropDownView.isUserInteractionEnabled = true
     }
-    
+    private func countryDropDown() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(countrydropDownTapped))
+        contryDropDownView.addGestureRecognizer(tap)
+        contryDropDownView.isUserInteractionEnabled = true
+    }
+    @objc private func countrydropDownTapped() {
+        SectionDropdown.anchorView = contryDropDownView
+        SectionDropdown.dataSource = sectionList
+        SectionDropdown.bottomOffset = CGPoint(x: 0, y: contryDropDownView.bounds.height)
+        SectionDropdown.show()
+        
+        SectionDropdown.selectionAction = { [weak self] _, item in
+            guard let self = self else { return }
+            self.contryCode.text = item
+        }
+    }
     @objc private func dropDownTapped() {
         SectionDropdown.anchorView = dropDownView
         SectionDropdown.dataSource = sectionList
@@ -314,7 +344,6 @@ extension UserDetailsTVC {
         SectionDropdown.selectionAction = { [weak self] _, item in
             guard let self = self else { return }
             self.dropDownLbl.text = item
-            self.onDropDownTapped?()
         }
     }
 }
@@ -352,7 +381,7 @@ extension UserDetailsTVC {
 extension UserDetailsTVC {
     private func applyBorders() {
         let allViews: [UIView] = [
-            txtField, txtView, contryDropDownView, dateView, dropDownView, attachmentView
+            txtField, txtView, contryDropDownView, dateView, dropDownView
         ]
         
         allViews.forEach { view in
@@ -409,7 +438,8 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         }
         
         let file = attachments[indexPath.item]
-        
+        cell.deleteBtn.isHidden = false
+        cell.delegate = self
         switch file.fileType.uppercased() {
         case CommonStringFile.IMAGE:
             cell.imgIconBtn.setTitle("IMG", for: .normal)
