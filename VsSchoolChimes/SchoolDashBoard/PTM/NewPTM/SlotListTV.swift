@@ -22,6 +22,9 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var BookedStatusView: UIView!
     @IBOutlet weak var WaitingLbl: UILabel!
     @IBOutlet weak var bookedByNameLbl: UILabel!
+    
+    @IBOutlet weak var bookedByDefLbl: UILabel!
+    
     var showpopup:ShowPopupDelegate?
     var edit:Bool?
     var delete:Bool?
@@ -47,6 +50,7 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         WaitingLbl.isHidden = true
         
     }
+    
     func edit(edit:Bool,delete:Bool,selectedId:String){
         self.selectedId = selectedId
         self.delete = delete

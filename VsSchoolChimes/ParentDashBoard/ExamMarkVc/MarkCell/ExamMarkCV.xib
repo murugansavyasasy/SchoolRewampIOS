@@ -19,22 +19,22 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jgb-rt-QwP">
-                        <rect key="frame" x="2" y="2" width="139" height="144"/>
+                        <rect key="frame" x="8" y="8" width="127" height="132"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exammarkBgImg" translatesAutoresizingMaskIntoConstraints="NO" id="P7T-V0-kkH">
-                                <rect key="frame" x="0.0" y="0.0" width="139" height="144"/>
+                                <rect key="frame" x="0.0" y="0.0" width="127" height="132"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DuO-t0-oq6">
-                                <rect key="frame" x="0.0" y="0.0" width="139" height="144"/>
+                                <rect key="frame" x="0.0" y="0.0" width="127" height="132"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Half Yearly Exam" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgQ-Pb-dLV">
-                                        <rect key="frame" x="10" y="10" width="119" height="44"/>
+                                        <rect key="frame" x="10" y="10" width="107" height="32"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDv-T6-QZU">
-                                        <rect key="frame" x="20" y="64" width="99" height="30"/>
+                                        <rect key="frame" x="12" y="52" width="103" height="30"/>
                                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="VKE-j2-kvx"/>
@@ -49,7 +49,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z3F-cJ-hcd">
-                                        <rect key="frame" x="20" y="104" width="99" height="30"/>
+                                        <rect key="frame" x="12" y="92" width="103" height="30"/>
                                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="nTz-eo-eoR"/>
@@ -67,14 +67,14 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="lgQ-Pb-dLV" firstAttribute="leading" secondItem="DuO-t0-oq6" secondAttribute="leading" constant="10" id="B0b-8P-AWJ"/>
-                                    <constraint firstItem="wDv-T6-QZU" firstAttribute="leading" secondItem="DuO-t0-oq6" secondAttribute="leading" constant="20" id="Eja-PM-EfL"/>
-                                    <constraint firstItem="z3F-cJ-hcd" firstAttribute="leading" secondItem="DuO-t0-oq6" secondAttribute="leading" constant="20" id="Fem-9v-b0O"/>
+                                    <constraint firstItem="wDv-T6-QZU" firstAttribute="leading" secondItem="DuO-t0-oq6" secondAttribute="leading" constant="12" id="Eja-PM-EfL"/>
+                                    <constraint firstItem="z3F-cJ-hcd" firstAttribute="leading" secondItem="DuO-t0-oq6" secondAttribute="leading" constant="12" id="Fem-9v-b0O"/>
                                     <constraint firstItem="z3F-cJ-hcd" firstAttribute="top" secondItem="wDv-T6-QZU" secondAttribute="bottom" constant="10" id="NrP-zL-bt3"/>
                                     <constraint firstAttribute="trailing" secondItem="lgQ-Pb-dLV" secondAttribute="trailing" constant="10" id="cGa-dm-ucD"/>
-                                    <constraint firstAttribute="trailing" secondItem="z3F-cJ-hcd" secondAttribute="trailing" constant="20" id="eCn-Ti-Mfg"/>
+                                    <constraint firstAttribute="trailing" secondItem="z3F-cJ-hcd" secondAttribute="trailing" constant="12" id="eCn-Ti-Mfg"/>
                                     <constraint firstAttribute="bottom" secondItem="z3F-cJ-hcd" secondAttribute="bottom" constant="10" id="ht5-4x-nHd"/>
                                     <constraint firstItem="wDv-T6-QZU" firstAttribute="top" secondItem="lgQ-Pb-dLV" secondAttribute="bottom" constant="10" id="kSK-ag-PY9"/>
-                                    <constraint firstAttribute="trailing" secondItem="wDv-T6-QZU" secondAttribute="trailing" constant="20" id="uFJ-T4-9aZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="wDv-T6-QZU" secondAttribute="trailing" constant="12" id="uFJ-T4-9aZ"/>
                                     <constraint firstItem="lgQ-Pb-dLV" firstAttribute="top" secondItem="DuO-t0-oq6" secondAttribute="top" constant="10" id="wKy-u1-zYn"/>
                                 </constraints>
                             </view>
@@ -95,10 +95,10 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="Jgb-rt-QwP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="Q33-wC-Qoe"/>
-                <constraint firstAttribute="bottom" secondItem="Jgb-rt-QwP" secondAttribute="bottom" constant="2" id="d3R-eD-QdK"/>
-                <constraint firstAttribute="trailing" secondItem="Jgb-rt-QwP" secondAttribute="trailing" constant="2" id="se6-t4-Ttt"/>
-                <constraint firstItem="Jgb-rt-QwP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="vmW-bf-UIw"/>
+                <constraint firstItem="Jgb-rt-QwP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Q33-wC-Qoe"/>
+                <constraint firstAttribute="bottom" secondItem="Jgb-rt-QwP" secondAttribute="bottom" constant="8" id="d3R-eD-QdK"/>
+                <constraint firstAttribute="trailing" secondItem="Jgb-rt-QwP" secondAttribute="trailing" constant="8" id="se6-t4-Ttt"/>
+                <constraint firstItem="Jgb-rt-QwP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="vmW-bf-UIw"/>
             </constraints>
             <size key="customSize" width="143" height="148"/>
             <connections>
@@ -117,7 +117,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

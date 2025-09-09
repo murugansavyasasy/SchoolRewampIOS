@@ -295,7 +295,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         onlineBtn.backgroundColor = .systemGray5
         onlineBtn.setTitleColor(.black, for: .normal)
         
-        mobileStack.isHidden = false
+        mobileStack.isHidden = true
         linkStack.isHidden = true
     }
     
@@ -584,16 +584,18 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         }
         
         // 2. Meeting mode-specific validations
-        if meetingMode == "Phone Call" {
-            guard !mobile.isEmpty else {
-                CustomAlert.showAlertWithOkAction(
-                    title: "Missing Information",
-                    message: "Please enter the mobile number",
-                    on: self
-                )
-                return false
-            }
-        } else if meetingMode == "Online" {
+//        if meetingMode == "Phone Call" {
+//            guard !mobile.isEmpty else {
+//                CustomAlert.showAlertWithOkAction(
+//                    title: "Missing Information",
+//                    message: "Please enter the mobile number",
+//                    on: self
+//                )
+//                return false
+//            }
+//        } else
+        
+        if meetingMode == "Online" {
             guard !meetingLink.isEmpty else {
                 CustomAlert.showAlertWithOkAction(
                     title: "Missing Information",

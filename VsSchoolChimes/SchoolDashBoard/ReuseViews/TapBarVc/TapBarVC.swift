@@ -336,19 +336,19 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     }
     
     private func configureTabBarAppearance() {
-        tabBar.tintColor = UIColor.white // Selected item color
+        tabBar.tintColor = UIColor.backGroundClr // Selected item color
 
         if #available(iOS 13.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
+            appearance.backgroundColor = .white//UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
 
             // Set unselected and selected item appearance
-            appearance.stackedLayoutAppearance.normal.iconColor = UIColor.black
-            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.black]
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor.lightGray
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.lightGray]
 
-            appearance.stackedLayoutAppearance.selected.iconColor = UIColor.white
-            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+            appearance.stackedLayoutAppearance.selected.iconColor = UIColor.backGroundClr
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.backGroundClr]
 
             tabBar.standardAppearance = appearance
 
@@ -357,8 +357,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             }
         } else {
             // iOS 12 and below
-            tabBar.barTintColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
-            tabBar.unselectedItemTintColor = UIColor.black
+            tabBar.barTintColor = .white//UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
+            tabBar.unselectedItemTintColor = UIColor.lightGray
         }
 
         // Font (applies to both selected and unselected)

@@ -1731,6 +1731,17 @@ struct BookedSlotItem: Codable {
     var subject_name: String?
 }
 
+struct AvailableSlotsResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [AvailableSlot]?
+}
+
+struct AvailableSlot: Codable {
+    var event_date: String?
+    var count: String?
+}
+
 
 //-----------------------------------------------
 struct LSRWReportResponse: Codable {

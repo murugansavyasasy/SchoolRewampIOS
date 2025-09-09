@@ -23,6 +23,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var noDataView: UIView!
+    @IBOutlet weak var searchBtn: UIButton!
     
     
     var dateComponents: [(month: String, day: String, date: Date)] = []
@@ -37,6 +38,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     let alert = CustomAlert()
     let dropDown = DropDown()
     var childVc : PtmHistoryVC?
+    var availableSlots : [AvailableSlot] = []
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -54,6 +56,12 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
         
+        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting, for: .normal)
+        yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
+        BookSlotBtn.setTitle(PTMString.bookSlot, for: .normal)
+        
+        subjectLbl.text = PTMString.allSubjects
+        
         scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         yourMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         
@@ -63,6 +71,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         noDataView.isHidden = true
         NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
+        searchBtn.isHidden = true
         
         CV.layer.cornerRadius = 12
         CV.backgroundColor = .clear
@@ -107,7 +116,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - DropDown
     private func setupDropDown() {
         dropDown.anchorView = subjectsView
-        dropDown.dataSource = ["All Subjects"] + subjectList.compactMap { $0.name }
+        dropDown.dataSource = [PTMString.allSubjects] + subjectList.compactMap { $0.name }
         
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
@@ -223,6 +232,26 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed,
                                                       message: failure.localizedDescription,
                                                       on: self)
+                }
+            }
+        }
+    }
+    
+    func Get_Available_slot_count(){
+        
+        APIService.shared.makeApi(url:ServiceUrl.ptm_api_ptm_schedule_available_slots_count_for_student, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self]  (result:Result<AvailableSlotsResponse , Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    self.availableSlots = success.data ?? []
+                    
+                case .failure(let failure):
+                    
+                    print("Error: ", failure.localizedDescription)
                 }
             }
         }
@@ -369,9 +398,18 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         dismiss(animated: true)
     }
     
+    @IBAction func searchBtnAct(_ sender: Any) {
+        
+        if let Child = childVc{
+            Child.searchBar.isHidden.toggle()
+        }
+    }
+    
+    
     // MARK: - Child VC
     func addChildVc(){
         removeChildVc()
+        searchBtn.isHidden = false
         let vc = PtmHistoryVC(nibName: nil, bundle: nil)
         addChild(vc)
         vc.view.frame = containerView.bounds
@@ -385,6 +423,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         vc.view.removeFromSuperview()
         vc.removeFromParent()
         childVc = nil
+        searchBtn.isHidden = true
     }
     
     // MARK: - TableView

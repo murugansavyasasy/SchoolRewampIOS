@@ -207,7 +207,6 @@
 "RollNo ASC" = "Roll No เรียงจากน้อยไปมาก";
 "Name ASC" = "ชื่อ เรียงจากน้อยไปมาก";
 "Name DESC" = "ชื่อ เรียงจากมากไปน้อย";
-"Apsent" = "ขาด";
 "Present" = "มา";
 "Filter" = "กรอง";
 "Section" = "ส่วน '10th C'";
@@ -269,14 +268,16 @@
 "Completed" = "เสร็จสิ้น";
 "Edit" = "แก้ไข";
 
-"View Marks" = "ดูคะแนน";
-"View Progress" = "ดูความก้าวหน้า";
+//MARK: Exam mark
+"View Marks" = "คะแนน";
+"View Progress" = "ความก้าวหน้า";
 "Overall Grade" = "เกรดรวม";
 "Subject & Marks" = "วิชาและคะแนน";
 "Other Activities" = "กิจกรรมอื่นๆ";
 "Exam Timetable" = "ตารางสอบ";
 "Exam Marks" = "คะแนนสอบ";
 
+//MARK: Reciver Attendance
 "Attendance" = "การเข้าเรียน";
 "This week status" = "สถานะสัปดาห์นี้";
 "Leave Taken" = "การลาหยุด";
@@ -304,3 +305,26 @@
 "Absent" = "ขาดเรียน";
 "No Holidays for" = "ไม่มีวันหยุดสำหรับ";
 "Holidays for" = "วันหยุดสำหรับ";
+"Leave History" = "ประวัติการลา";
+"Not Taken" = "ไม่ได้รับ";
+"Holiday" = "วันหยุด";
+"Day Application" = "การสมัครวัน";
+"Done" = "เสร็จสิ้น";
+"Edit Leave Request" = "แก้ไขคำขอลาหยุด";
+"Update for" = "อัปเดตสำหรับ";
+"Days Leave" = "วันลาหยุด";
+
+//MARK: PTM
+"PTM" = "การประชุมผู้ปกครอง-ครู";
+"Schedule Meeting" = "กำหนดการประชุม";
+"Your Meetings" = "การประชุมของคุณ";
+"Book Slot" = "จองช่วงเวลา";
+"All Subjects" = "ทุกวิชา";
+"Completed Meetings" = "การประชุมที่เสร็จสิ้น";
+"Upcoming Meetings" = "การประชุมที่กำลังจะเกิดขึ้น";
+"Today Meetings" = "การประชุมวันนี้";
+"Date" = "วันที่";
+"Time" = "เวลา";
+"Call" = "โทร";
+"Cancel" = "ยกเลิก";
+"With" = "กับ";

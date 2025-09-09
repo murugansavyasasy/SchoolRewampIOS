@@ -206,8 +206,6 @@
 "RollNo ASC" = "Roll No बढ़ता क्रम";
 "Name ASC" = "नाम बढ़ता क्रम";
 "Name DESC" = "नाम घटता क्रम";
-"Apsent" = "अनुपस्थित";
-"Present" = "उपस्थित";
 "Filter" = "फ़िल्टर";
 "Present" = "उपस्थित";
 "Absent" = "अनुपस्थित";
@@ -267,14 +265,16 @@
 "Completed" = "पूर्ण";
 "Edit" = "संपादित करें";
 
-"View Marks" = "अंक देखें";
-"View Progress" = "प्रगति देखें";
+//MARK: Exam mark
+"View Marks" = "अंक";
+"View Progress" = "प्रगति";
 "Overall Grade" = "कुल ग्रेड";
 "Subject & Marks" = "विषय और अंक";
 "Other Activities" = "अन्य गतिविधियाँ";
 "Exam Timetable" = "परीक्षा समय सारिणी";
 "Exam Marks" = "परीक्षा अंक";
 
+//MARK: Reciver Attendance
 "Attendance" = "उपस्थिति";
 "This week status" = "इस सप्ताह की स्थिति";
 "Leave Taken" = "अवकाश लिया गया";
@@ -302,3 +302,27 @@
 "Absent" = "अनुपस्थित";
 "No Holidays for" = "कोई छुट्टी नहीं";
 "Holidays for" = "छुट्टियाँ हैं";
+"Leave History" = "अवकाश इतिहास";
+"Not Taken" = "नहीं लिया गया";
+"Holiday" = "छुट्टी";
+"Day Application" = "दिवस आवेदन";
+"Done" = "हो गया";
+"Edit Leave Request" = "अवकाश अनुरोध संपादित करें";
+"Update for" = "के लिए अपडेट";
+"Days Leave" = "दिनों की छुट्टी";
+
+//MARK: PTM
+"PTM" = "अभिभावक-शिक्षक बैठक";
+"Schedule Meeting" = "बैठक निर्धारित करें";
+"Your Meetings" = "आपकी बैठकें";
+"Book Slot" = "स्लॉट बुक करें";
+"All Subjects" = "सभी विषय";
+"Completed Meetings" = "पूर्ण बैठकें";
+"Upcoming Meetings" = "आगामी बैठकें";
+"Today Meetings" = "आज की बैठकें";
+"Date" = "तारीख़";
+"Time" = "समय";
+"Call" = "कॉल";
+"Cancel" = "रद्द करें";
+"With" = "साथ";
+

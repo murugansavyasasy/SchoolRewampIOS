@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewAttendanceReportVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="NoDataImage" destination="Bsy-Sc-gur" id="ec8-N7-fbB"/>
+                <outlet property="NoDataLbl" destination="1mZ-7N-GDE" id="lGN-Fa-4Ng"/>
                 <outlet property="TitleLbl" destination="ud9-Wx-jlO" id="CVe-S8-Nvs"/>
                 <outlet property="TopView" destination="2fy-0D-nOV" id="rwM-dj-sAM"/>
                 <outlet property="backBtn" destination="T2V-oH-1rT" id="qIK-Mp-JEn"/>
@@ -25,10 +27,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fy-0D-nOV">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="114"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="123.66666666666667"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T2V-oH-1rT">
-                            <rect key="frame" x="10" y="69" width="373" height="15"/>
+                            <rect key="frame" x="10" y="69" width="373" height="24.666666666666671"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -49,19 +51,39 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance Report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ud9-Wx-jlO">
-                    <rect key="frame" x="30" y="129" width="353" height="0.0"/>
+                    <rect key="frame" x="30" y="138.66666666666666" width="353" height="24"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-cg-By1">
-                    <rect key="frame" x="0.0" y="149" width="393" height="669"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-cg-By1">
+                    <rect key="frame" x="0.0" y="182.66666666666669" width="393" height="635.33333333333326"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Bsy-Sc-gur">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="280"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="280" id="bjW-j7-bDe"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mZ-7N-GDE">
+                            <rect key="frame" x="50" y="280" width="293" height="24"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YY8-wu-xnp">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="669"/>
+                            <rect key="frame" x="0.0" y="304" width="393" height="331.33333333333326"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="YY8-wu-xnp" firstAttribute="leading" secondItem="pzN-cg-By1" secondAttribute="leading" id="7cS-1Y-wFv"/>
+                        <constraint firstItem="Bsy-Sc-gur" firstAttribute="leading" secondItem="pzN-cg-By1" secondAttribute="leading" id="JdV-mO-ls0"/>
+                        <constraint firstAttribute="trailing" secondItem="Bsy-Sc-gur" secondAttribute="trailing" id="KbZ-q7-hrz"/>
+                        <constraint firstAttribute="trailing" secondItem="1mZ-7N-GDE" secondAttribute="trailing" constant="50" id="Ozh-kf-oDK"/>
+                        <constraint firstAttribute="trailing" secondItem="YY8-wu-xnp" secondAttribute="trailing" id="i9Q-Xp-Z8K"/>
+                        <constraint firstItem="1mZ-7N-GDE" firstAttribute="leading" secondItem="pzN-cg-By1" secondAttribute="leading" constant="50" id="t8Q-76-fiH"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -83,6 +105,7 @@
         </view>
     </objects>
     <resources>
+        <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

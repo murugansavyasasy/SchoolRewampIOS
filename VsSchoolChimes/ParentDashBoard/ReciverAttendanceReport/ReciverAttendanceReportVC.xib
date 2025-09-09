@@ -30,14 +30,12 @@
                 <outlet property="OngoingDaysView" destination="qA8-Ap-mtB" id="iMT-9r-thP"/>
                 <outlet property="OngoingdaysDefLbl" destination="WIW-h4-ReL" id="fJO-Rd-QCx"/>
                 <outlet property="Stackview" destination="P8w-Zv-cBF" id="bjv-0r-vn5"/>
-                <outlet property="TV" destination="3lf-vv-7Re" id="i6y-IM-ymP"/>
                 <outlet property="Topview" destination="lvu-Qf-qIH" id="w01-In-sLT"/>
                 <outlet property="WeekStatusDefBtn" destination="XN0-Ca-EOM" id="QUV-dm-H85"/>
                 <outlet property="WeeklyView" destination="tP1-Fq-Xno" id="9jG-6b-TR8"/>
                 <outlet property="askLeavesDefLbl" destination="wtO-gP-Eug" id="5IH-R6-eil"/>
                 <outlet property="attendanceReportDefLbl" destination="8PN-Y6-mo7" id="cON-su-xrg"/>
                 <outlet property="holidaysDefLbl" destination="0r5-JP-vnm" id="sdi-ee-e9H"/>
-                <outlet property="noRecordLbl" destination="HZT-0w-U1a" id="vtl-bH-XdZ"/>
                 <outlet property="noResordStack" destination="n7d-EO-BNb" id="K3q-5t-W1U"/>
                 <outlet property="percentagesBaseView" destination="voa-cS-Hrw" id="JJm-cZ-PHH"/>
                 <outlet property="requestHistoryDefLbl" destination="bG9-eQ-WAu" id="oNh-e4-gRw"/>
@@ -458,38 +456,16 @@
                                     <rect key="frame" x="0.0" y="550.66666666666663" width="393" height="107.33333333333337"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
-                                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3lf-vv-7Re">
-                                    <rect key="frame" x="10" y="658" width="373" height="0.0"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </tableView>
-                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Y9i-bO-rgW">
-                                    <rect key="frame" x="0.0" y="658" width="393" height="280"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="280" id="IfD-Ye-gkf"/>
-                                    </constraints>
-                                </imageView>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZT-0w-U1a">
-                                    <rect key="frame" x="50" y="658" width="293" height="0.0"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="voa-cS-Hrw" secondAttribute="trailing" constant="35" id="7wy-zT-r5C"/>
-                                <constraint firstItem="HZT-0w-U1a" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" constant="50" id="EHm-vQ-odm"/>
                                 <constraint firstItem="tP1-Fq-Xno" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" constant="35" id="EZz-Qw-13J"/>
                                 <constraint firstAttribute="trailing" secondItem="ctj-9F-0V4" secondAttribute="trailing" id="Jx4-BA-izG"/>
-                                <constraint firstAttribute="trailing" secondItem="HZT-0w-U1a" secondAttribute="trailing" constant="50" id="NKi-5w-dxN"/>
                                 <constraint firstAttribute="trailing" secondItem="oj1-fw-LY0" secondAttribute="trailing" constant="35" id="W6n-6J-y64"/>
-                                <constraint firstAttribute="trailing" secondItem="3lf-vv-7Re" secondAttribute="trailing" constant="10" id="bxs-Bn-B8k"/>
-                                <constraint firstItem="3lf-vv-7Re" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" constant="10" id="erC-k5-m1w"/>
                                 <constraint firstAttribute="trailing" secondItem="tP1-Fq-Xno" secondAttribute="trailing" constant="35" id="nm8-vy-pF9"/>
                                 <constraint firstItem="ctj-9F-0V4" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" id="rs5-4U-Tzi"/>
                                 <constraint firstItem="oj1-fw-LY0" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" constant="35" id="th9-1d-dk7"/>
                                 <constraint firstItem="voa-cS-Hrw" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" constant="35" id="uIu-bQ-eqn"/>
-                                <constraint firstAttribute="trailing" secondItem="Y9i-bO-rgW" secondAttribute="trailing" id="wNe-dp-cyc"/>
-                                <constraint firstItem="Y9i-bO-rgW" firstAttribute="leading" secondItem="n7d-EO-BNb" secondAttribute="leading" id="zFR-iv-jUK"/>
                             </constraints>
                         </stackView>
                     </subviews>
@@ -522,7 +498,6 @@
         <image name="AskLeave" width="1707" height="1707"/>
         <image name="Holiday" width="70" height="70"/>
         <image name="LeaveHistory" width="66" height="66"/>
-        <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="info.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="ParentClr">
@@ -535,7 +510,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

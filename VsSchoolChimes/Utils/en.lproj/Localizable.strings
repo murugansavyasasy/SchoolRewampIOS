@@ -196,8 +196,6 @@
 "Absent" = "Absent";
 "Present" = "Present";
 "Filter" = "Filter";
-"Present" = "Present";
-"Absent" = "Absent";
 "Roll Number Ascending" = "Roll Number Ascending";
 "Roll Number Descending" = "Roll Number Descending";
 "Name Ascending" = "Name Ascending";
@@ -258,6 +256,7 @@
 "Completed" = "Completed";
 "Edit" = "Edit";
 
+//MARK: Exam Mark
 "View Marks" = "View Marks";
 "View Progress" = "View Progress";
 "Overall Grade" = "Overall Grade";
@@ -266,6 +265,7 @@
 "Exam Timetable" = "Exam Timetable";
 "Exam Marks" = "Exam Marks";
 
+//MARK: Reciver Attendance
 "Attendance" = "Attendance";
 "This week status" = "This week status";
 "Leave Taken" = "Leave Taken";
@@ -293,8 +293,28 @@
 "Absent" = "Absent";
 "No Holidays for" = "No Holidays for";
 "Holidays for" = "Holidays for";
+"Leave History" = "Leave History";
+"Not Taken" = "Not Taken";
+"Holiday" = "Holiday";
+"Day Application" = "Day Application";
+"Done" = "Done";
+"Edit Leave Request" = "Edit Leave Request";
+"Update for" = "Update for";
+"Days Leave" = "Days Leave";
 
-
-
+//MARK: PTM
+"PTM" = "PTM";
+"Schedule Meeting" = "Schedule Meeting";
+"Your Meetings" = "Your Meetings";
+"Book Slot" = "Book Slot";
+"All Subjects" = "All Subjects";
+"Completed Meetings" = "Completed Meetings";
+"Upcoming Meetings" = "Upcoming Meetings";
+"Today Meetings" = "Today Meetings";
+"Date" = "Date";
+"Time" = "Time";
+"Call" = "Call";
+"Cancel" = "Cancel";
+"With" = "With";
 
 

@@ -176,7 +176,6 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="BUF-je-kyS" firstAttribute="leading" secondItem="Yvj-UA-WN7" secondAttribute="trailing" constant="5" id="Axe-EM-bzp"/>
                                                     <constraint firstAttribute="bottom" secondItem="Yvj-UA-WN7" secondAttribute="bottom" constant="5" id="Byc-5U-2zo"/>
@@ -214,7 +213,6 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="2TI-D3-2bk" firstAttribute="top" secondItem="LuG-81-ZhB" secondAttribute="top" constant="5" id="AiL-nf-bME"/>
                                                     <constraint firstItem="2TI-D3-2bk" firstAttribute="leading" secondItem="cj3-a2-BeL" secondAttribute="trailing" constant="5" id="FkH-zP-6uM"/>
@@ -309,6 +307,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="DateDefLbl" destination="TH4-Qr-6ob" id="fEh-eD-Qdq"/>
                 <outlet property="DurationBtn" destination="FKz-Um-f0p" id="2Vx-w1-Ylb"/>
                 <outlet property="MeetingNameLbl" destination="sQV-iN-wSf" id="rEx-U1-1R4"/>
                 <outlet property="ModeBtn" destination="qmq-mc-2w9" id="Zse-Va-dVn"/>
@@ -323,6 +322,7 @@
                 <outlet property="statusBtn" destination="72O-w4-DWd" id="1ec-K3-cf7"/>
                 <outlet property="subjectBGview" destination="eEA-Of-eWr" id="hcP-Je-kje"/>
                 <outlet property="subjectLbl" destination="dyz-8B-5a5" id="2i7-jS-NyY"/>
+                <outlet property="timeDefLbl" destination="2TI-D3-2bk" id="O9j-qY-xVJ"/>
             </connections>
             <point key="canvasLocation" x="246.56488549618319" y="92.253521126760575"/>
         </tableViewCell>
@@ -337,17 +337,14 @@
         <image name="phone.circle.fill" catalog="system" width="128" height="123"/>
         <image name="stopwatch.fill" catalog="system" width="121" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -59,18 +59,12 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     var tapCount = 0
     let dateFormatter = DateFormatter()
     var placeholderLabel: UILabel!
-    var dateSelection = false
-    let photoPickManager = PhotoPickerManager.shared
-    var selectedImages: [UIImage] = []
-    var url : URL?
-    var dateFormat1 = DateFormatString.DayStandardFormat
-    var isKeyboardVisible = false
     var childDetails = UserDefaultFileManager.get_child_Details()
     let alert = CustomAlert()
     var editLeaveData:editLeave?
     let dropDown = DropDown()
     let dropDown2 = DropDown()
-    let options = ["First Half", "Second Half"]
+    let options = [AttendanceString.firstHalf, AttendanceString.secondHalf]
     var leaveTypes : [String] = []
     
     override func viewDidLoad() {
@@ -125,6 +119,12 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         LeaveTypeBtn.setTitleFont(style: .body, size: 14)
         
+        LeaveTypeBtn.semanticContentAttribute = .forceRightToLeft
+        NewFromDateLbl.semanticContentAttribute = .forceRightToLeft
+        NewToDateLbl.semanticContentAttribute = .forceRightToLeft
+        FromSessionBtn.semanticContentAttribute = .forceRightToLeft
+        ToSessionBtn.semanticContentAttribute = .forceRightToLeft
+        
         NewFromDateLbl.setTitleFont(style: .secondary, size: 14)
         NewToDateLbl.setTitleFont(style: .secondary, size: 14)
         FromSessionBtn.setTitleFont(style: .secondary, size: 12)
@@ -132,6 +132,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         NewFromDateLbl.titleLabel?.numberOfLines = 0
         NewToDateLbl.titleLabel?.numberOfLines = 0
+        ToSessionBtn.titleLabel?.numberOfLines = 0
+        FromSessionBtn.titleLabel?.numberOfLines = 0
         
         CauseTextView.font = UIFont(name: "Poppins-Medium", size: 14)
         
@@ -142,6 +144,9 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         FromDoneBtn.layer.cornerRadius = 8
         ToDoneBtn.layer.cornerRadius = 8
+        
+        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
         
         ApplyLeaveBtn.layer.cornerRadius = 10
         
@@ -167,10 +172,11 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
                     self?.calculateDays()
                 }
         
-        setInitialDate()
         CauseTextView.delegate = self
        
         setupPlaceholder()
+        
+        ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
         
         if let leave = editLeaveData{
            
@@ -185,8 +191,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             FromDatePickerView.isHidden = true
             FromSessionBtn.setTitle(leave.fromSession, for: .normal)
             ToSessionBtn.setTitle(leave.Tosession, for: .normal)
-            NewLeaveDefLbl.text = "Edit Leave Request"
-            let daysText = "Update for \(leave.NoOfDays) Days Leave"
+            NewLeaveDefLbl.text = AttendanceString.editLeaveRequest
+            let daysText = "\(AttendanceString.updateFor) \(leave.NoOfDays) \(AttendanceString.daysLeave)"
             ApplyLeaveBtn.setTitle(daysText, for: .normal)
         }
     }
@@ -235,33 +241,41 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
 
     @IBAction func SubmitAct(_ sender: Any) {
         
-        if errorLbl.isHidden == false {
-            alert.showAlert(title: "In correct", message: errorLbl.text ?? "", on: self)
-            return
+        if validateInputs(){
+            ApplyLeave()
+        }else {
+            alert.showAlert(title: "Missing Information", message: AlertstringFile.Fill_All_Required_Fields, on: self)
         }
-       
-        guard let fromDate = NewFromDateLbl.title(for: .normal), !fromDate.isEmpty, fromDate != "Select From Date",
-              let toDate = NewToDateLbl.title(for: .normal), !toDate.isEmpty, toDate != "Select To Date" else {
-            alert.showAlert(title: "Missing Information", message: "Please select both From and To dates.", on: self)
-            return
-        }
-        
-        if LeaveTypeBtn.title(for: .normal) == "Select Leave Type" {
-            alert.showAlert(title: "Missing Information", message: "Please select Leave Type.", on: self)
-            return
-        }
-        
-        if !CauseTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            if let leave = editLeaveData {
-                updateLeave()
-            } else {
-                ApplyLeave()
-            }
-        } else {
-            alert.showAlert(title: "Missing Information", message: AlertstringFile.Enter_reason, on: self)
-        }
-
     }
+    
+    func validateInputs() -> Bool {
+        
+        if LeaveTypeBtn.title(for: .normal) == AttendanceString.selectLeaveType {
+            showError("Please select a Leave Type.")
+            return false
+        }
+        
+        if CauseTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            showError("Cause should not be empty.")
+            return false
+        }
+        
+        if let fromDate = NewFromDateLbl.title(for: .normal),
+           fromDate.isEmpty || fromDate == "Select From Date" {
+            showError("Please select a From Date.")
+            return false
+        }
+        
+        if let toDate = NewToDateLbl.title(for: .normal),
+           toDate.isEmpty || toDate == "Select To Date" {
+            showError("Please select a To Date.")
+            return false
+        }
+        
+        // ✅ No errors → proceed
+        return true
+    }
+
     
     
     //MARK: Leave Request API call
@@ -417,18 +431,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         }
         )
     }
-    
-   
-    
-    //MARK: BUTTON TITLE CURRENT TIME
-    func setInitialDate() {
-        
-        let currentDate = Date() // Current date and time
-        
-        dateFormatter.dateFormat = dateFormat1
-        let date = dateFormatter.string(from: currentDate)
-        
-    }
    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
@@ -524,6 +526,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
                      return
                  }
              }
+         
+         ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
 
             let totalDays = calculateDays(from: fromDate, fromSession: fromSession, to: toDate, toSession: toSession)
             
@@ -691,63 +695,6 @@ extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDele
             }
         }
 }
-
-//@available(iOS 14.0, *)
-//extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
-//    
-//    @objc func keyboardWillShow(_ notification: Notification) {
-//        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
-//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-//            isKeyboardVisible = true
-//            UIView.animate(withDuration: 0.3) {
-//                // Move outerView 20 points from the top
-//                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
-//            }
-//        }
-//    }
-//    
-//    @objc func keyboardWillHide(_ notification: Notification) {
-//        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
-//        isKeyboardVisible = false
-//        UIView.animate(withDuration: 0.3) {
-//            self.outerView.transform = .identity // Reset position
-//        }
-//    }
-//    
-//    func textViewDidChange(_ textView: UITextView) {
-//        adjustTextViewHeightWithConstraint(textView)
-//    }
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        // Calculate the new length of the text
-//        let currentText = textView.text ?? ""
-//        guard let stringRange = Range(range, in: currentText) else { return false }
-//        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-//        if updatedText.count <= 500 {
-//            placeholderLabel.isHidden = updatedText.count == 0 ? false : true
-//            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
-//            return true // Allow the change
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            //            contentTxtView.isEditable = false // Optionally disable editing
-//            return false // Reject the change
-//        }
-//    }
-//    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
-//        // Calculate the size needed for the text
-//        if textView.text.isEmpty {
-//            // Set default height to 60
-//            textViewHeightConstraint.constant = 100
-//        } else {
-//            // Calculate the size needed for the text
-//            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-//            if sizeThatFits.height > 80{
-//                textViewHeightConstraint.constant = sizeThatFits.height
-//            }
-//        }
-//        textView.layoutIfNeeded() // Refresh the layout
-//    }
-//}
 
 extension UILabel {
     func setFormattedDate(from date: Date) {

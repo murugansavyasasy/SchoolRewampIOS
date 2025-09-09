@@ -164,6 +164,7 @@ struct ServiceUrl{
     static let ptm_api_ptm_schedule_book_slots_for_student = "ptm/api/ptm-schedule/book-slots-for-student"
     static let ptm_api_ptm_schedule_slot_history_for_student = "ptm/api/ptm-schedule/slot-history-for-student"
     static let ptm_api_ptm_schedule_cancel_slot_by_student = "ptm/api/ptm-schedule/cancel-slot-by-student"
+    static let ptm_api_ptm_schedule_available_slots_count_for_student = "ptm/api/ptm-schedule/available-slots-count-for-student"
 }
 
 struct localData{

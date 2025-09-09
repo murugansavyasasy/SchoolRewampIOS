@@ -12,9 +12,8 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         if edit ?? false{
             Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
         }else{
-            
+            cancel_and_close_slot_Api(SlotId: id ?? "")
         }
-        print(id)
     }
     
 
@@ -52,6 +51,8 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                     if success.status == true {
                         if let index = self.slotData?.slots?.firstIndex(where: { $0.slot_id == SlotId }) {
                             self.slotData?.slots?[index].is_booked = false
+                            self.slotData?.slots?[index].is_cancelled = false
+                            self.slotData?.slots?[index].is_cancelled_by_staff = false
                             // self.slotData?.slots?[index].is_booked = false
                             self.tv.reloadData()
                         }
@@ -70,7 +71,41 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         }
     }
     
-    
+    func cancel_and_close_slot_Api(SlotId:String){
+        
+        let param : [String:Any] = ["slot_id":SlotId]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        if let index = self.slotData?.slots?.firstIndex(where: { $0.slot_id == SlotId }) {
+                            self.slotData?.slots?[index].is_booked = false
+                            self.slotData?.slots?[index].is_cancelled_by_staff = true
+                            self.slotData?.slots?[index].is_cancelled = true
+                            // self.slotData?.slots?[index].is_booked = false
+                            self.tv.reloadData()
+                        }
+
+//                        slot?.is_cancelled_by_staff = true
+//                        self.tv.reloadRows(at: [indexpath], with: .automatic)
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                case .failure(let failure):
+                    print("Error: ",failure.localizedDescription)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+                
+            }
+            
+        }
+    }
     
 
     @IBAction func BackAct(_ sender: Any) {
@@ -127,7 +162,19 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             cell.TimeLbl.text = (slot?.from_time ?? "") + " - " + (slot?.to_time ?? "")
             cell.DurationLbl.text = "Duration - " + String(slot?.meeting_duration ?? 0) + " minutes"
             cell.bookedByNameLbl.text = slot?.booked_by
-            cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
+            
+            if slot?.is_booked ?? false{
+                cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
+            }else {
+                cell.edit(edit:false,delete:true,selectedId:slot?.slot_id ?? "")
+            }
+            
+            if slot?.is_cancelled ?? false{
+                cell.edit(edit:true,delete:false,selectedId:slot?.slot_id ?? "")
+            }
+            
+            
+            //cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
             cell.delegate = self
             if slot?.is_booked == true {
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
@@ -155,9 +202,15 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.StatusBtn.setTitle("Cancelled", for: .normal)
                 cell.StatusBtn.setTitleColor(.red, for: .normal)
                 cell.StatusBtn.tintColor = .red
-                cell.BookedStatusView.isHidden = false
-                cell.WaitingLbl.isHidden = true
-                cell.BookingBaseview.backgroundColor = .systemGray6.withAlphaComponent(0.8)
+//                cell.BookedStatusView.isHidden = false
+//                cell.WaitingLbl.isHidden = true
+//                cell.BookingBaseview.backgroundColor = .systemGray6.withAlphaComponent(0.8)
+//                cell.bookedByDefLbl.text = "Cancelled by:"
+                cell.BookedStatusView.isHidden = true
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .systemRed
+                cell.BookingBaseview.backgroundColor = .systemRed.withAlphaComponent(0.1)
+                cell.WaitingLbl.text = "Slot Cancelled"
             }
                 return cell
         }

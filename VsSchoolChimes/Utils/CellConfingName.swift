@@ -123,5 +123,7 @@ class CellConfingName {
     static let  PaymentHeaderView = "PaymentHeaderView"
     static let  FeePendingTVC = "FeePendingTVC"
     static let  PaymentTypeTVC = "PaymentTypeTVC"
+    static let  LeaveHistoryTV = "LeaveHistoryTV"
+    static let  BookedSlotTV = "BookedSlotTV"
     
 }

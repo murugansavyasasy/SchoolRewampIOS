@@ -220,10 +220,8 @@
 "Name ASC" = "பெயர் அதிகரிக்கும்";
 "Name DESC" = "பெயர் குறையுமாறு";
 "Apsent" = "விலக்கப்பட்டது";
-"Present" = "இருக்கின்றனர்";
 "Filter" = "ஃபில்டர்";
 "Present" = "உள்ளனர்";
-"Absent" = "இல்லை";
 "RollNo_ASC" = "ரோல் எண்ணு ஏறுவரிசை";
 "RollNo_DESC" = "ரோல் எண்ணு இறங்குவரிசை";
 "Name_ASC" = "பெயர் ஏறுவரிசை";
@@ -281,15 +279,17 @@
 "Completed" = "முடிந்தது";
 "Edit" = "திருத்து";
 
-"View Marks" = "மதிப்பெண்களை காண்க";
-"View Progress" = "முன்னேற்றத்தை காண்க";
+//MARK: Exam MArk
+"View Marks" = "மதிப்பெண்கள்";
+"View Progress" = "முன்னேற்றம்";
 "Overall Grade" = "மொத்த தரம்";
 "Subject & Marks" = "பாடம் & மதிப்பெண்கள்";
 "Other Activities" = "பிற செயல்பாடுகள்";
 "Exam Timetable" = "தேர்வு அட்டவணை";
 "Exam Marks" = "தேர்வு மதிப்பெண்கள்";
 
-"Attendance" = "வருகை";
+//MARK: Reciver Attendance
+"Attendance" = "வருகை பதிவேடு";
 "This week status" = "இந்த வார நிலை";
 "Leave Taken" = "விடுப்பு எடுத்தது";
 "Ongoing Days" = "நடந்து வரும் நாட்கள்";
@@ -310,9 +310,34 @@
 "Apply Leave" = "விடுப்பு விண்ணப்பிக்கவும்";
 "Approved" = "அனுமதிக்கப்பட்டது";
 "Rejected" = "நிராகரிக்கப்பட்டது";
-"Waiting" = "காத்திருக்கிறது";
+"Waiting" = "நிலுவையில் உள்ளது";
 "Awaiting" = "நிலுவையில் உள்ளது";
 "Generate Outpass" = "வெளியேறும் பாஸ் உருவாக்கு";
 "Absent" = "வரவில்லை";
 "No Holidays for" = "விடுமுறை இல்லை";
 "Holidays for" = "விடுமுறை உள்ளது";
+"Leave History" = "விடுப்பு வரலாறு";
+"Not Taken" = "எடுக்கப்படவில்லை";
+"Holiday" = "விடுமுறை";
+"Day Application" = "நாள் விண்ணப்பம்";
+"Done" = "முடிந்தது";
+"Edit Leave Request" = "விடுப்பு கோரிக்கையை திருத்து";
+"Update for" = "புதுப்பிப்பு -";
+"Days Leave" = "நாட்கள் விடுப்பு";
+
+//MARK: PTM
+"PTM" = "பெற்றோர்-ஆசிரியர் கூட்டம்";
+"Schedule Meeting" = "கூட்டத்தை திட்டமிடு";
+"Your Meetings" = "உங்கள் கூட்டங்கள்";
+"Book Slot" = "ஸ்லாட் பதிவு செய்க";
+"All Subjects" = "அனைத்து பாடங்கள்";
+"Completed Meetings" = "முடிந்த கூட்டங்கள்";
+"Upcoming Meetings" = "வரவிருக்கும் கூட்டங்கள்";
+"Today Meetings" = "இன்றைய கூட்டங்கள்";
+"Date" = "தேதி";
+"Time" = "நேரம்";
+"Call" = "அழைக்க";
+"Cancel" = "ரத்துசெய்";
+"With" = "உடன்";
+
+

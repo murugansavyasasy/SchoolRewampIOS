@@ -20,6 +20,7 @@
                 <outlet property="noDataImage" destination="Jyn-jl-4VP" id="ZvU-Ab-ctn"/>
                 <outlet property="noDataView" destination="kWS-gy-ATA" id="pps-zh-CIo"/>
                 <outlet property="scheduleMeetingBtn" destination="Zjl-nG-5vF" id="ZpR-ia-PD9"/>
+                <outlet property="searchBtn" destination="DlE-Pf-7Vp" id="QYK-Qa-sAu"/>
                 <outlet property="subjectLbl" destination="XNm-Zm-j1N" id="LgH-vk-l5b"/>
                 <outlet property="subjectsView" destination="0DH-ks-0xN" id="AFD-M2-7Xg"/>
                 <outlet property="topView" destination="5KY-gh-Vtc" id="QWH-g1-KaD"/>
@@ -40,7 +41,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="161"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lD3-QJ-gIq">
-                                    <rect key="frame" x="10" y="69" width="373" height="22"/>
+                                    <rect key="frame" x="10" y="69" width="323" height="22"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="PTM" image="chevron.left" catalog="system"/>
@@ -74,15 +75,31 @@
                                         <constraint firstAttribute="height" constant="35" id="C1k-Lp-UWL"/>
                                     </constraints>
                                 </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DlE-Pf-7Vp">
+                                    <rect key="frame" x="343" y="69" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="XIS-5v-8TA"/>
+                                        <constraint firstAttribute="width" constant="35" id="oMw-bh-1R8"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="magnifyingglass" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="Bhk-10-0rp"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" name="BackGroundClr"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="kzL-Vc-wmY" secondAttribute="trailing" constant="15" id="5eH-IC-TMF"/>
+                                <constraint firstItem="DlE-Pf-7Vp" firstAttribute="leading" secondItem="lD3-QJ-gIq" secondAttribute="trailing" constant="10" id="GXm-EV-dw6"/>
                                 <constraint firstItem="lD3-QJ-gIq" firstAttribute="leading" secondItem="5KY-gh-Vtc" secondAttribute="leading" constant="10" id="Ghp-wR-P6S"/>
                                 <constraint firstItem="kzL-Vc-wmY" firstAttribute="leading" secondItem="5KY-gh-Vtc" secondAttribute="leading" constant="15" id="Luc-x6-PW5"/>
                                 <constraint firstAttribute="bottom" secondItem="kzL-Vc-wmY" secondAttribute="bottom" constant="15" id="QUK-eA-eHJ"/>
                                 <constraint firstItem="kzL-Vc-wmY" firstAttribute="top" secondItem="lD3-QJ-gIq" secondAttribute="bottom" constant="20" id="SaV-q5-ijd"/>
-                                <constraint firstAttribute="trailing" secondItem="lD3-QJ-gIq" secondAttribute="trailing" constant="10" id="eXo-Ih-cqj"/>
+                                <constraint firstAttribute="trailing" secondItem="DlE-Pf-7Vp" secondAttribute="trailing" constant="15" id="ryC-dh-mKP"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeH-be-May">
@@ -155,7 +172,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="zfx-0S-Lpe">
-                                            <rect key="frame" x="333" y="15.333333333333321" width="20" height="10.000000000000021"/>
+                                            <rect key="frame" x="333" y="15.33333333333333" width="20" height="10.000000000000002"/>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="jW0-BW-tCi"/>
@@ -215,6 +232,7 @@
                 <constraint firstItem="n5m-gf-JVi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KNF-i1-WQy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="n5m-gf-JVi" secondAttribute="bottom" id="YbV-XO-UxG"/>
                 <constraint firstItem="n5m-gf-JVi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Zpe-yb-5rk"/>
+                <constraint firstItem="DlE-Pf-7Vp" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="bJI-Mg-BWj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="n5m-gf-JVi" secondAttribute="trailing" id="gt4-h5-Dw7"/>
             </constraints>
             <point key="canvasLocation" x="138.1679389312977" y="20.422535211267608"/>
@@ -233,6 +251,7 @@
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -240,10 +259,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

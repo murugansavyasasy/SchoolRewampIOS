@@ -10,20 +10,28 @@ import UIKit
 class ExameMarVC: UIViewController {
 
     @IBOutlet weak var cv: UICollectionView!
-    var exameList: [ExamItem]?
+    @IBOutlet weak var NoDataImage: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var examList: [ExamItem]?
+    var FilteredExamList: [ExamItem]?
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CellRegister()
+        NoDataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        searchBar.isHidden = true
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        NoDataLbl.setFont(style: .title, size: FontSize.TitleSize)
+        cv.register(UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil),forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
         cv.dataSource = self
         cv.delegate = self
         examListApi()
     }
-
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5), endPoint: CGPoint(x: 0, y: 0.5))
-    }
-
+    
     func examListApi() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
@@ -38,56 +46,23 @@ class ExameMarVC: UIViewController {
                 if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
                 switch result {
                 case .success(let response):
-//                    if response.status{
-                        self?.exameList = response.data
-                        self?.cv.reloadData()
-//                    }else{
-//                        not
-//                    }
-                   
+                    
+                    self?.examList = response.data
+                    self?.FilteredExamList = response.data
+                    self?.cv.reloadData()
+                    self?.NoDataImage.isHidden = response.status ?? false
+                    self?.NoDataLbl.isHidden = response.status ?? false
+                    self?.NoDataLbl.text = response.message
+                    
                 case .failure(let error):
                     print("API Error:", error)
+                    
+                    self?.NoDataImage.isHidden = false
+                    self?.NoDataLbl.isHidden = false
+                    self?.NoDataLbl.text = error.localizedDescription
                 }
             }
         }
-    }
-
-
-    func CellRegister() {
-        cv.register(UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
-    }
-
-    @objc func ViewMarks(_ sender: UITapGestureRecognizer) {
-        guard let view = sender.view else { return }
-        let index = view.tag
-
-        guard let examID = exameList?[index].id else { return }
-        let vc = MarkListVC()
-        vc.modalPresentationStyle = .fullScreen
-        vc.ExamTitle = exameList?[index].name
-        vc.examId = examID
-        present(vc, animated: false)
-       
-    }
-    
-    func View_Marks_Action(index:Int){
-        
-        guard let examID = exameList?[index].id else { return }
-        let vc = MarkListVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        vc.ExamTitle = exameList?[index].name
-        vc.examId = examID
-        present(vc, animated: false)
-    }
-    
-    func View_progress_Act(index:Int){
-        
-        guard let examID = exameList?[index].id else { return }
-        let vc = ViewProgressVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        vc.examId = examID
-        vc.backBtnTitle = exameList?[index].name ?? ""
-        present(vc, animated: false)
     }
     
     func markListApi(exam_id: String) {
@@ -119,25 +94,30 @@ class ExameMarVC: UIViewController {
         }
     }
     
-    func view_ProgressCard(url:String){
+    func View_Marks_Action(index:Int){
+        
+        guard let examID = FilteredExamList?[index].id else { return }
+        let vc = MarkListVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.ExamTitle = FilteredExamList?[index].name
+        vc.examId = examID
+        present(vc, animated: false)
+    }
+    
+    func view_ProgressCard(url: String) {
         let vc = ImageShowVc(nibName: nil, bundle: nil)
-        vc.pdfUrl = url
+        
+        if let fileURL = URL(string: url) {
+            let fileType = fileURL.pathExtension.lowercased() // e.g. "pdf", "jpg", "png"
+            vc.fileURL = [FilePath(url: url, type: fileType)]
+        } else {
+            vc.fileURL = [FilePath(url: url, type: "pdf")]
+        }
+        
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
-    @objc func ViewProgress(_ sender: UITapGestureRecognizer) {
-        guard let view = sender.view else { return }
-        let index = view.tag
 
-        guard let examID = exameList?[index].id else { return }
-        let vc = ViewProgressVC()
-        vc.modalPresentationStyle = .fullScreen
-        vc.examId = examID
-        vc.backBtnTitle = exameList?[index].name ?? ""
-        present(vc, animated: false)
-       
-    }
 
 }
 
@@ -146,13 +126,14 @@ class ExameMarVC: UIViewController {
 extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return exameList?.count ?? 0
+        
+        return FilteredExamList?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = cv.dequeueReusableCell(withReuseIdentifier: CellConfingName.ExamMarkCV, for: indexPath) as! ExamMarkCV
         
-        let exam = exameList?[indexPath.row]
+        let exam = FilteredExamList?[indexPath.row]
         
         cell.ExamLbl.text = exam?.name
         
@@ -168,8 +149,29 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = cv.frame.width / 2.2
+        let width = cv.frame.width / 2
         return CGSize(width: width, height: 160)
     }
 }
+
+extension ExameMarVC: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let query = searchText.lowercased()
+        
+        if query.isEmpty {
+            FilteredExamList = examList
+        } else {
+            FilteredExamList = examList?.filter { examItem in
+                examItem.name?.lowercased().contains(query) ?? false
+            }
+        }
+        
+        NoDataLbl.text = CommonStringFile.No_data_found
+        NoDataLbl.isHidden = !(FilteredExamList?.isEmpty ?? false)
+        NoDataImage.isHidden = !(FilteredExamList?.isEmpty ?? false)
+        cv.reloadData()
+    }
+}
+
 

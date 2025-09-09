@@ -22,15 +22,29 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var Popuptopview: UIView!
     @IBOutlet weak var cancelMeetingDefLbl: UILabel!
     @IBOutlet weak var reasonDefLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var NoDataImage: UIImageView!
+    
+    
     
     let childDetails = UserDefaultFileManager.get_child_Details()
     var slotData: [SlotCategory]?
-    var sections : [SlotSection]?
+    var AllSections : [SlotSection]?
+    var FilteredSection : [SlotSection]?
     var cancelId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NoDataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        searchBar.isHidden = true
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        NoDataLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
         PopupContainerview.isHidden = true
         PopupContainerview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
@@ -40,7 +54,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         continueBtn.layer.cornerRadius = 8
     
-        tv.register(UINib(nibName: "BookedSlotTV", bundle: nil), forCellReuseIdentifier: "BookedSlotTV")
+        tv.register(UINib(nibName: CellConfingName.BookedSlotTV, bundle: nil), forCellReuseIdentifier: CellConfingName.BookedSlotTV)
         tv.delegate = self
         tv.dataSource = self
         
@@ -67,27 +81,37 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 case .success(let success):
                     
                     self.slotData = success.data
-                    self.sections = []
+                    self.AllSections = []
+                    self.FilteredSection = []
                     
-                    guard let data = success.data?.first else { return }
+                    guard let data = success.data?.first else {
+                        
+                        self.NoDataLbl.text = success.message
+                        self.NoDataLbl.isHidden = false
+                        self.NoDataImage.isHidden = false
+                        return
+                    }
                     
                     if let today = data.today, !today.isEmpty {
-                        self.sections?.append(SlotSection(title: "Today", slots: today))
+                        self.AllSections?.append(SlotSection(title: PTMString.todayMeetings, slots: today))
                     }
                     
                     if let upcoming = data.upcoming, !upcoming.isEmpty {
-                        self.sections?.append(SlotSection(title: "Upcoming", slots: upcoming))
+                        self.AllSections?.append(SlotSection(title: PTMString.upcomingMeetings, slots: upcoming))
                     }
                     
                     if let completed = data.completed, !completed.isEmpty {
-                        self.sections?.append(SlotSection(title: "Completed", slots: completed))
+                        self.AllSections?.append(SlotSection(title: PTMString.completedMeetings, slots: completed))
                     }
                     
+                    self.FilteredSection = self.AllSections
                     self.tv.reloadData()
                     
                 case .failure(let failure):
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
-                        self.dismiss(animated: true)
+                        self.NoDataLbl.isHidden = false
+                        self.NoDataImage.isHidden = false
+                        self.NoDataLbl.text = failure.localizedDescription
                     }
                 }
             }
@@ -123,13 +147,13 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     private func removeCancelledSlotFromUI(slotId: String) {
         
-        if let sectionIndex = sections?.firstIndex(where: { $0.slots.contains(where: { $0.id == slotId }) }),
-           let rowIndex = sections?[sectionIndex].slots.firstIndex(where: { $0.id == slotId }) {
+        if let sectionIndex = FilteredSection?.firstIndex(where: { $0.slots.contains(where: { $0.id == slotId }) }),
+           let rowIndex = FilteredSection?[sectionIndex].slots.firstIndex(where: { $0.id == slotId }) {
             
-            sections?[sectionIndex].slots.remove(at: rowIndex)
+            FilteredSection?[sectionIndex].slots.remove(at: rowIndex)
             
-            if sections?[sectionIndex].slots.isEmpty == true {
-                sections?.remove(at: sectionIndex)
+            if FilteredSection?[sectionIndex].slots.isEmpty == true {
+                FilteredSection?.remove(at: sectionIndex)
                 tv.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
             } else {
                 tv.deleteRows(at: [IndexPath(row: rowIndex, section: sectionIndex)], with: .fade)
@@ -171,7 +195,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        sections?.count ?? 0
+        FilteredSection?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -183,7 +207,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setFont(style: .title, size: FontSize.TitleSize)
         label.textColor = .darkGray
-        label.text = sections?[section].title
+        label.text = FilteredSection?[section].title
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])
@@ -192,13 +216,13 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections?[section].slots.count ?? 0
+        FilteredSection?[section].slots.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tv.dequeueReusableCell(withIdentifier: "BookedSlotTV", for: indexPath) as! BookedSlotTV
-        let slot = sections?[indexPath.section].slots[indexPath.row]
+        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.BookedSlotTV, for: indexPath) as! BookedSlotTV
+        let slot = FilteredSection?[indexPath.section].slots[indexPath.row]
         
         cell.MeetingNameLbl.text = slot?.purpose
         cell.staffNameLbl.text = "with "  + (slot?.staff_name ?? "")
@@ -242,4 +266,32 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         return UITableView.automaticDimension
     }
 
+}
+
+
+extension PtmHistoryVC: UISearchBarDelegate{
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
+                FilteredSection = AllSections
+                tv.reloadData()
+                return
+            }
+            
+            let query = searchText.lowercased().trimmingCharacters(in: .whitespaces)
+            
+        FilteredSection = AllSections?.compactMap { section in
+                let filteredSlots = section.slots.filter { slot in
+                    (slot.purpose?.lowercased().contains(query) ?? false) ||
+                    (slot.staff_name?.lowercased().contains(query) ?? false) ||
+                    (slot.subject_name?.lowercased().contains(query) ?? false) ||
+                    (slot.status?.lowercased().contains(query) ?? false) ||
+                    (slot.date?.convertToTargetDateFormat()?.lowercased().contains(query) ?? false) ||
+                    (slot.time?.lowercased().contains(query) ?? false)
+                }
+                return filteredSlots.isEmpty ? nil : SlotSection(title: section.title, slots: filteredSlots)
+            }
+            
+            tv.reloadData()
+        }
 }
