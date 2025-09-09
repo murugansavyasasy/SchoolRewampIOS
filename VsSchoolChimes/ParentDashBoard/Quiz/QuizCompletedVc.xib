@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuizCompletedVc" customModule="School_Chimes" customModuleProvider="target">
+            <connections>
+                <outlet property="tv" destination="4dE-UC-deJ" id="kM8-fR-rlX"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="liD-nD-xsn">
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APk-4G-OXM">
+                            <rect key="frame" x="10" y="10" width="373" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="RBC-yH-n4S"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="6" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Certificate" image="chevron.left" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                            </state>
+                            <connections>
+                                <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="9fP-Bs-tbB"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tZ9-Rm-Tli">
+                            <rect key="frame" x="0.0" y="55" width="393" height="601"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4dE-UC-deJ">
+                                    <rect key="frame" x="10" y="10" width="373" height="581"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </tableView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="4dE-UC-deJ" secondAttribute="bottom" constant="10" id="Fuj-PR-0ZE"/>
+                                <constraint firstAttribute="trailing" secondItem="4dE-UC-deJ" secondAttribute="trailing" constant="10" id="Yh2-sa-2hC"/>
+                                <constraint firstItem="4dE-UC-deJ" firstAttribute="leading" secondItem="tZ9-Rm-Tli" secondAttribute="leading" constant="10" id="dcx-yt-zVX"/>
+                                <constraint firstItem="4dE-UC-deJ" firstAttribute="top" secondItem="tZ9-Rm-Tli" secondAttribute="top" constant="10" id="gK4-Jv-gdp"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="tZ9-Rm-Tli" firstAttribute="top" secondItem="APk-4G-OXM" secondAttribute="bottom" constant="10" id="MYt-jR-VjK"/>
+                        <constraint firstItem="APk-4G-OXM" firstAttribute="leading" secondItem="liD-nD-xsn" secondAttribute="leading" constant="10" id="OZ8-Ss-ggG"/>
+                        <constraint firstAttribute="bottom" secondItem="tZ9-Rm-Tli" secondAttribute="bottom" constant="10" id="mPY-PH-xe7"/>
+                        <constraint firstAttribute="trailing" secondItem="tZ9-Rm-Tli" secondAttribute="trailing" id="mcZ-XC-Zj4"/>
+                        <constraint firstItem="tZ9-Rm-Tli" firstAttribute="leading" secondItem="liD-nD-xsn" secondAttribute="leading" id="ptY-Af-nPu"/>
+                        <constraint firstAttribute="trailing" secondItem="APk-4G-OXM" secondAttribute="trailing" constant="10" id="vI9-uW-lWd"/>
+                        <constraint firstItem="APk-4G-OXM" firstAttribute="top" secondItem="liD-nD-xsn" secondAttribute="top" constant="10" id="yoz-fd-diI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="PrimeryColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="liD-nD-xsn" secondAttribute="trailing" id="Pbd-D1-nlf"/>
+                <constraint firstItem="liD-nD-xsn" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="cXg-H8-Vs6"/>
+                <constraint firstItem="liD-nD-xsn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fk0-aT-NxU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="liD-nD-xsn" secondAttribute="bottom" id="oTl-Lk-8Ed"/>
+            </constraints>
+            <point key="canvasLocation" x="138" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

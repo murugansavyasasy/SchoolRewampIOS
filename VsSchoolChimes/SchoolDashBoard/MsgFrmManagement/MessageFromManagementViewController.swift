@@ -72,13 +72,13 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         Get_messages()
     }
     
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
+//    override func viewDidLayoutSubviews() {
+//        view.applyGradient(
+//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+//    }
     
     func Cell_Registration() {
 //        tv.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
@@ -259,40 +259,35 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         )
         cell.timeAndDateLbl.text = (displayText) + ("  " + (SearchData?[indexPath.row].time ?? ""))
         cell.viewBtn.tag = indexPath.row
-        cell.titleLbl.text = SearchData?[indexPath.row].title
+        cell.titleLbl.text = SearchData?[indexPath.row].title?.capitalized
         cell.descrptionLb.isHidden = SearchData?[indexPath.row].description == "" ? true : false
-        cell.menuTypeLbl.text = SearchData?[indexPath.row].type
-        if SearchData?[indexPath.row].type == "ATTACHMENT" {
-            
-            
-        }else if SearchData?[indexPath.row].type == "TEXT"{
-            
-            cell.menutypeImage.image  = UIImage(named: "capital-text")
-        }else{
-            
-            if SearchData?[indexPath.row].is_emergency ?? false{
-                
-            }else{
-                
-            }
-        }
-        cell.descrptionLb.text = SearchData?[indexPath.row].description
-       
+        cell.descrptionLb.text = SearchData?[indexPath.row].description?.capitalized
         cell.delegate = self
-        
+        cell.alphbetLbl.text = shortName(
+            from: SearchData?[indexPath.row].sent_by ?? ""
+        )
+        cell.senderNamelbl.text = SearchData?[indexPath.row].sent_by?.capitalized
+        cell.rollBtn
+            .setTitle(
+                SearchData?[indexPath.row].role?.capitalized,
+                for: .normal
+            )
         return cell
         
     }
     
     
-//    func tableView(
-//        _ tableView: UITableView,
-//        didSelectRowAt indexPath: IndexPath
-//    ) {
-//
-//        
-//    }
-    
+    func shortName(from name: String) -> String {
+        // remove spaces
+        let trimmed = name.replacingOccurrences(of: " ", with: "")
+        
+        guard let first = trimmed.first, let last = trimmed.last else {
+            return ""
+        }
+        
+        return "\(first)\(last)".uppercased()
+    }
+
     
     func addBlurEffect() {
         let blurEffect = UIBlurEffect(style: .dark)
