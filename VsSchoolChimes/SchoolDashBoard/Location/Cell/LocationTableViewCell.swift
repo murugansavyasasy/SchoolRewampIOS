@@ -2,47 +2,31 @@
 //  LocationTableViewCell.swift
 //  VoicesnapSchoolApp
 //
-//  Created by admin on 29/08/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
+//  Created by chandhru on 04/09/25.
 //
 
 import UIKit
 
 class LocationTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var presentStatus: UIView!
-    @IBOutlet weak var opsentStus: UIView!
-    @IBOutlet weak var prestType: UILabel!
-    @IBOutlet weak var opsentType: UILabel!
-    @IBOutlet weak var opsentLbl: UILabel!
-    @IBOutlet weak var calanderView: UIView!
     @IBOutlet weak var fullView: UIView!
-    @IBOutlet weak var historyTimImage: UIImageView!
-    @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var statusView: UIViewX!
-    @IBOutlet weak var StatusLbl: UILabel!
-    @IBOutlet weak var workingHrsLbl: UILabel!
-    @IBOutlet weak var attendanceTypeLbl: UILabel!
     @IBOutlet weak var dayLbl: UILabel!
-    @IBOutlet weak var datelbl: UILabel!
-    @IBOutlet weak var mnthLbl: UILabel!
-    @IBOutlet weak var firstInLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var checkinLbl: UILabel!
+    @IBOutlet weak var checkoutLbl: UILabel!
+    @IBOutlet weak var hoursLbl: UILabel!
+    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var rollLable: UILabel!
+    @IBOutlet weak var statusBtn: UIButton!
     @IBOutlet weak var namelbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
-        opsentStus.layer.cornerRadius = 8
-        presentStatus.layer.cornerRadius = 8
-        opsentStus.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
-        presentStatus.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
+        dateView.setShadow(cornerRadius: dateView.frame.width/2)
         
+        statusBtn.layer.cornerRadius = 8
+        statusBtn.clipsToBounds = true
+
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    }
-    
 }

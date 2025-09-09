@@ -9,6 +9,8 @@ import UIKit
 
 class SchoolListTVC: UITableViewCell {
 
+    @IBOutlet weak var schoolIconBtn: UIButton!
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var arrowWidth: NSLayoutConstraint!
     @IBOutlet weak var selectBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var rightArrow: UIButton!
@@ -20,6 +22,8 @@ class SchoolListTVC: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         showPopUpEffect()
+        outerView.setShadow(cornerRadius: 20)
+        schoolIconBtn.setShadow(cornerRadius: schoolIconBtn.frame.width/2)
     }
  
     func showPopUpEffect() {

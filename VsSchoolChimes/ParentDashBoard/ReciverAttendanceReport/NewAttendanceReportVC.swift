@@ -13,6 +13,8 @@ class NewAttendanceReportVC: UIViewController {
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var NoDataImage: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
@@ -31,37 +33,38 @@ class NewAttendanceReportVC: UIViewController {
         TitleLbl.text = AttendanceString.attendanceReport
         TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
+        NoDataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        
         tv.register(UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil), forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
-        Get_attendaceReport()
         tv.delegate = self
         tv.dataSource = self
+        Get_attendaceReport()
         
     }
 
     func Get_attendaceReport() {
         
-        APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[self] (result: Result<StudentAttendanceResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<StudentAttendanceResponse,Error>) in
             
-            switch result {
-                
-            case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                switch result {
                     
-                    DispatchQueue.main.async { [self] in
-                        attendanceReportData = SuccessMessage.data ?? []
-                        tv.reloadData()
-                    }
-                }else {
+                case .success(let SuccessMessage):
                     
-                    DispatchQueue.main.async { [self] in
-                        
-                       
-                    }
+                    self.attendanceReportData = SuccessMessage.data ?? []
+                    self.tv.reloadData()
+                    self.NoDataImage.isHidden = SuccessMessage.status ?? false
+                    self.NoDataLbl.isHidden = SuccessMessage.status ?? false
+                    self.NoDataLbl.text = SuccessMessage.message
+                case .failure(let error):
+                    self.NoDataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = error.localizedDescription
+                    print("Error: \(error.localizedDescription)")
                 }
-                
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
             }
         }
     }

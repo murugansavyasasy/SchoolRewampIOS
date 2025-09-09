@@ -53,11 +53,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         setupGestureRecognizers()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        applyGradientBackground()
-    }
-    
     // MARK: - UI Setup
     func setupUI() {
         
@@ -76,13 +71,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         staffDefaultsLbl.isHidden = true
     }
     
-    func applyGradientBackground() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
     
     func setupSearchBar() {
         searchbar.searchTextField.addDoneButton()
@@ -123,21 +111,21 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                         for yearData in self.AcadimicYearDatas {
                             // Append all first years
                             if let year = yearData.year,
-                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                    self.years.append(firstYear)
-                                }
+                               let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                self.years.append(firstYear)
+                            }
                             if yearData.current_academic_year == true {
                                 if let year = yearData.year,
-                                       let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                        currentAcademicYear = firstYear
-                                    }
+                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                    currentAcademicYear = firstYear
+                                }
                             }
                         }
-
+                        
                         // Once data is loaded
                         if let year = currentAcademicYear {
                             self.yearLbl.text = year
-
+                            
                             if let firstYear = year.components(separatedBy: " - ").first {
                                 if !self.years.isEmpty {
                                     self.Months = self.getMonthNames(for: firstYear)
@@ -145,11 +133,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                                     self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
                                 }
                             }
-
+                            
                             self.geometric_principal_attendance_report()
                             self.setupTableView()
                         }
-
+                        
                         print("First Years: \(self.years)")
                     }
                 }
@@ -158,7 +146,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
+    
     
     func setupTableView() {
         let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
@@ -267,84 +255,104 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
-//    @IBAction func ShowHistory(ges: ShowPunchHistiryClick) {
-//        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-//        vc.date = ges.date
-//        vc.instituteId = instituteId
-//        vc.staffId = ges.staffId
-//        vc.modalPresentationStyle = .formSheet
-//        present(vc, animated: true)
-//    }
+    //    @IBAction func ShowHistory(ges: ShowPunchHistiryClick) {
+    //        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+    //        vc.date = ges.date
+    //        vc.instituteId = instituteId
+    //        vc.staffId = ges.staffId
+    //        vc.modalPresentationStyle = .formSheet
+    //        present(vc, animated: true)
+    //    }
     
     // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SearchResults?.count ?? 0
     }
     
+    // MARK: - TableView cellForRow
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let attendanceData = SearchResults?[indexPath.row]
+        guard let attendanceData = SearchResults?[indexPath.row] else {
+            return UITableViewCell()
+        }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
-        LocationTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.LocationTableViewCell,
+            for: indexPath
+        ) as! LocationTableViewCell
+        
+        cell.fullView.setShadow()
         cell.selectionStyle = .none
-        cell.fullView.layer.cornerRadius = 20
-        cell.calanderView.layer.cornerRadius = 10
-        cell.calanderView.layer.masksToBounds = true
-        cell.fullView.layer.masksToBounds = true
-        cell.fullView.layer.shadowColor = UIColor.black.cgColor
-        cell.fullView.layer.shadowOpacity = 0.5
-        cell.fullView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cell.fullView.layer.shadowRadius = 5
-        cell.fullView.layer.masksToBounds = false
-        cell.firstInLbl.isHidden = false
-        cell.workingHrsLbl.isHidden = false
-        cell.toDateLbl.isHidden = false
-        cell.StatusLbl.layer.cornerRadius = 5
-        cell.StatusLbl.layer.masksToBounds = true
-        if let role = attendanceData?.designation,!role.isEmpty{
-            cell.attendanceTypeLbl.text = role
-        }else{
-            cell.attendanceTypeLbl.text =  attendanceData?.role ?? "Not Mention"
-        }
-        cell.namelbl.text = attendanceData?.name
         
-        if let attendanceDict = attendanceData?.attendance_type {
-            let keys = Array(attendanceDict.keys)
-            let values = Array(attendanceDict.values)
-            if keys.count > 1 {
-                updateStatus(label: cell.StatusLbl, typeLabel: cell.prestType, statusView: cell.presentStatus, key: keys[0], value: values[0])
-                updateStatus(label: cell.opsentLbl, typeLabel: cell.opsentType, statusView: cell.opsentStus, key: keys[1], value: values[1])
-            } else if let first = attendanceDict.first {
-                updateStatus(label: cell.StatusLbl, typeLabel: cell.prestType, statusView: cell.presentStatus, key: first.key, value: first.value)
-                cell.opsentStus.isHidden = true
-            }
+        // Name
+        cell.namelbl.text = attendanceData.name
+        
+        // Role
+        if let role = attendanceData.designation, !role.isEmpty {
+            cell.rollLable.text = role
+        } else {
+            cell.rollLable.text = attendanceData.role ?? "Not Mentioned"
         }
         
-            cell.firstInLbl.isHidden = false
-            cell.firstInLbl.text = "Checkin - " + (
-                attendanceData?.in_time ?? "0"
-            )
-
-            cell.toDateLbl.isHidden = false
-            cell.toDateLbl.text = "Checkout - " + (
-                attendanceData?.out_time ?? "0"
-            )
-
-            cell.workingHrsLbl.isHidden = false
-            cell.workingHrsLbl.text = "Working Hours - " +  (
-                attendanceData?.working_hours ?? "0"
-            )
-        
-        cell.historyTimImage.isHidden = attendanceData?.in_time == ""
-        
-        if let components = convertDateComponents(from: attendanceData?.date ?? "") {
+        // Status Button
+        if let attendanceDict = attendanceData.attendance_type,
+           let first = attendanceDict.first {
             
-            cell.datelbl.text = components.day
-            cell.mnthLbl.text = components.month
-            cell.dayLbl.text = components.weekday
+            let key = first.key  // FD / HD
+            let value = first.value
+            var statusText = ""
+            statusText = "\(key.uppercased()) |\(value)"
+            cell.statusBtn.setTitle(statusText, for: .normal)
+            
+            if value.lowercased() == "absent" {
+                cell.statusBtn.setTitleColor(.systemRed, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+            } else {
+                cell.statusBtn.setTitleColor(.systemGreen, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+            }
+        } else {
+            cell.statusBtn.setTitle("N/A", for: .normal)
+            cell.statusBtn.setTitleColor(.systemGray, for: .normal)
+            cell.statusBtn.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
         }
+        
+        if let out = attendanceData.out_time{
+            cell.checkoutLbl.text = out !=  "" ? out : "-"
+        }
+        if let chekin = attendanceData.in_time{
+            cell.checkinLbl.text = chekin !=  "" ? chekin : "-"
+        }
+        if let workingHours = attendanceData.working_hours,
+           let totalMinutes = Int(workingHours) {
+            
+            if totalMinutes < 60 {
+                cell.hoursLbl.text = "\(totalMinutes) min"
+            } else {
+                let hours = totalMinutes / 60
+                let minutes = totalMinutes % 60
+                if minutes == 0 {
+                    cell.hoursLbl.text = "\(hours) hr"
+                } else {
+                    cell.hoursLbl.text = "\(hours) hr \(minutes) min"
+                }
+            }
+        } else {
+            cell.hoursLbl.text = "-"
+        }
+        
+        // Date + Weekday
+        if let components = convertDateComponents(from: attendanceData.date ?? "") {
+            cell.dateLbl.text = components.day       // e.g. "03"
+            cell.dayLbl.text = components.weekday    // e.g. "Thu"
+        } else {
+            cell.dateLbl.text = "-"
+            cell.dayLbl.text = "-"
+        }
+        
         return cell
     }
+    
+    
     
     func updateStatus(label: UILabel, typeLabel: UILabel, statusView: UIView, key: String, value: String) {
         typeLabel.text = key
@@ -353,7 +361,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         statusView.backgroundColor = isPresent ? .systemGreen : .systemRed
         statusView.isHidden = false
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if SearchResults?[indexPath.row].in_time != ""{
             let selectedDate = SearchResults?[indexPath.row].date
@@ -395,24 +403,25 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX") // safe
         
         guard let date = inputFormatter.date(from: dateString) else { return nil }
         
-        let dayFormatter = DateFormatter()
-        dayFormatter.dateFormat = "dd"
+        let outputFormatter = DateFormatter()
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let monthFormatter = DateFormatter()
-        monthFormatter.dateFormat = "MMM"
+        outputFormatter.dateFormat = "dd"
+        let day = outputFormatter.string(from: date)
         
-        let weekdayFormatter = DateFormatter()
-        weekdayFormatter.dateFormat = "EEEE"
+        outputFormatter.dateFormat = "MMM"
+        let month = outputFormatter.string(from: date)
         
-        let day = dayFormatter.string(from: date)
-        let month = monthFormatter.string(from: date)
-        let weekday = weekdayFormatter.string(from: date)
+        outputFormatter.dateFormat = "EEE"
+        let weekday = outputFormatter.string(from: date)
         
         return (day, month, weekday)
     }
+    
     
     func geometric_principal_attendance_report() {
         var param: [String: Any]
@@ -504,7 +513,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 (attendance.name?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.date?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.leave_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
-//                /*(attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false)*/ ||
+                //                /*(attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false)*/ ||
                 (attendance.in_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.out_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.working_hours?.localizedCaseInsensitiveContains(keyword) ?? false)
@@ -516,10 +525,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 noRecordLbl.isHidden = false
                 noRecordLbl.text = "No search result"
             }
-            
-            
         }
-        
         tv.reloadData()
     }
 }

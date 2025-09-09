@@ -36,6 +36,7 @@ class NewPtmVC: UIViewController, Datepicker {
     var sections: [SectionData] = []
     var tvHidden:Bool?
     var MeetingDate = "ALL"
+    var selectedDate = ""
     //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
@@ -83,8 +84,19 @@ class NewPtmVC: UIViewController, Datepicker {
 //                    layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 //                }
         
-        Get_Meetings_Api(EventDate: "ALL")
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        if selectedDate == ""{
+            Get_Meetings_Api(EventDate: "ALL")
+        }else {
+            Get_Meetings_Api(EventDate: selectedDate)
+        }
     }
 
     func Get_Meetings_Api(EventDate: String) {
@@ -125,6 +137,8 @@ class NewPtmVC: UIViewController, Datepicker {
                             let events = completedGroups.compactMap { $0.details }.flatMap { $0 }
                             self.sections.append(SectionData(title: "Completed Meetings", events: events))
                         }
+                       
+                        self.MeetingCountLbl.text = "You have " + String(slotData.today?.count ?? 0) + " Meetings Today"
                         
                         self.tv.reloadData()
                         self.cv.reloadData() // if you’re also showing in collection view
@@ -158,6 +172,7 @@ class NewPtmVC: UIViewController, Datepicker {
         
         selectDateBtn.setTitle("All", for: .normal)
         removeDateBtn.isHidden = true
+        selectedDate = ""
         Get_Meetings_Api(EventDate: "ALL")
     }
     
@@ -176,6 +191,7 @@ class NewPtmVC: UIViewController, Datepicker {
     func date(date: String) {
         selectDateBtn.setTitle(date, for: .normal)
         removeDateBtn.isHidden = false
+        selectedDate = convertDate(date) ?? ""
         Get_Meetings_Api(EventDate: convertDate(date) ?? "")
     }
     
@@ -323,7 +339,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
-        cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
+        //cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
         let event = sections[indexPath.section].events[indexPath.row]
         cell.MeetingNameLbl.text = event.event_name
         cell.dateBtn.setTitle(event.date?.convertToTargetDateFormat(), for: .normal)

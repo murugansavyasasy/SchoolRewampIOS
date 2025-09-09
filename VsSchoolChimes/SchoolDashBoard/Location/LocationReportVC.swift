@@ -224,118 +224,107 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         
     }
     
+    // MARK: - TableView cellForRow
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let attendanceData = AttendanceDetails?[indexPath.row] else {
+            return UITableViewCell()
+        }
         
-        let cell = Tv.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as! LocationTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.LocationTableViewCell,
+            for: indexPath
+        ) as! LocationTableViewCell
         
+        cell.fullView.setShadow()
         cell.selectionStyle = .none
-        cell.fullView.layer.cornerRadius = 20
-        cell.calanderView.layer.cornerRadius = 10
-        cell.calanderView.layer.masksToBounds = true
-        cell.fullView.layer.masksToBounds = true
-        cell.fullView.layer.shadowColor = UIColor.black.cgColor
-        cell.fullView.layer.shadowOpacity = 0.5
-        cell.fullView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cell.fullView.layer.shadowRadius = 5
-        cell.fullView.layer.masksToBounds = false
-        cell.firstInLbl.isHidden = false
-        cell.workingHrsLbl.isHidden = false
-        cell.toDateLbl.isHidden = false
-        cell.StatusLbl.layer.cornerRadius = 5
-        cell.StatusLbl.layer.masksToBounds = true
-        if let role = AttendanceDetails?[indexPath.row].designation,!role.isEmpty{
-            cell.attendanceTypeLbl.text = role
-        }else{
-            cell.attendanceTypeLbl.text =  AttendanceDetails?[indexPath.row].role ?? "Not Mention"
+        
+        // Name
+        cell.namelbl.text = attendanceData.name
+        
+        // Role
+        if let role = attendanceData.designation, !role.isEmpty {
+            cell.rollLable.text = role
+        } else {
+            cell.rollLable.text = attendanceData.role ?? "Not Mentioned"
         }
-        cell.namelbl.text = AttendanceDetails?[indexPath.row].name
-        if let attendanceDict = AttendanceDetails?[indexPath.row].attendance_type{
+        
+        // Status Button
+        if let attendanceDict = attendanceData.attendance_type,
+           let first = attendanceDict.first {
             
-            if attendanceDict.count != 1 {
-                let keys = Array(attendanceDict.keys)
-                let values = Array(attendanceDict.values)
-                if keys.indices.contains(0), values.indices.contains(0) {
-                    cell.prestType.text = keys[0]
-                    let status = values[0] == "P" ? "Present":"Absent"
-                    cell.StatusLbl.text = status
-                    let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
-                    cell.presentStatus.backgroundColor = statusclr
-                }
-                if keys.indices.contains(1), values.indices.contains(1) {
-                    cell.opsentType.text = keys[1]
-                    let status = values[1] == "P" ? "Present":"Absent"
-                    cell.opsentLbl.text = status
-                    let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
-                    cell.opsentStus.backgroundColor = statusclr
-                }
-                cell.presentStatus.isHidden = false
-                cell.opsentStus.isHidden = false
-                
-            }else if let firstItem = attendanceDict.first {
-                let key = firstItem.key
-                let value = firstItem.value == "P" ? "Present":"Absent"
-                cell.prestType.text = key
-                cell.StatusLbl.text = value
-                cell.presentStatus.isHidden = false
-                let statusclr = value == "Present" ? UIColor.systemGreen : UIColor.systemRed
-                cell.presentStatus.backgroundColor = statusclr
-                cell.opsentStus.isHidden = true
+            let key = first.key  // FD / HD
+            let value = first.value
+            var statusText = ""
+            statusText = "\(key.uppercased()) |\(value)"
+            cell.statusBtn.setTitle(statusText, for: .normal)
+            
+            if value.lowercased() == "absent" {
+                cell.statusBtn.setTitleColor(.systemRed, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+            } else {
+                cell.statusBtn.setTitleColor(.systemGreen, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
             }
+        } else {
+            cell.statusBtn.setTitle("N/A", for: .normal)
+            cell.statusBtn.setTitleColor(.systemGray, for: .normal)
+            cell.statusBtn.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
         }
         
-        if  AttendanceDetails?[indexPath.row].in_time  != ""{
-            cell.firstInLbl.isHidden = false
-            cell.firstInLbl.text = "Checkin - " + (
-                AttendanceDetails?[indexPath.row].in_time ?? ""
-            )
-        }else{
+        if let out = attendanceData.out_time{
+            cell.checkoutLbl.text = out !=  "" ? out : "-"
+        }
+        if let chekin = attendanceData.in_time{
+            cell.checkinLbl.text = chekin !=  "" ? chekin : "-"
+        }
+        // ✅ Working Hours (minutes < 60 -> show in min)
+        if let workingHours = attendanceData.working_hours,
+           let totalMinutes = Int(workingHours) {
             
-            cell.firstInLbl.isHidden = true
+            if totalMinutes < 60 {
+                cell.hoursLbl.text = "\(totalMinutes) min"
+            } else {
+                let hours = totalMinutes / 60
+                let minutes = totalMinutes % 60
+                if minutes == 0 {
+                    cell.hoursLbl.text = "\(hours) hr"
+                } else {
+                    cell.hoursLbl.text = "\(hours) hr \(minutes) min"
+                }
+            }
+        } else {
+            cell.hoursLbl.text = "-"
         }
         
-        if AttendanceDetails?[indexPath.row].out_time   != ""{
-            cell.toDateLbl.isHidden = false
-            cell.toDateLbl.text = "Checkout - " + (
-                AttendanceDetails?[indexPath.row].out_time ?? ""
-            )
-        }else{
-            
-            cell.toDateLbl.isHidden = true
-        }
-        
-        if  AttendanceDetails?[indexPath.row].working_hours  != ""{
-            cell.workingHrsLbl.isHidden = false
-            cell.workingHrsLbl.text = "Working Hours - " +  (
-                AttendanceDetails?[indexPath.row].working_hours ?? ""
-            )
-        }else{
-            cell.workingHrsLbl.isHidden = true
-        }
-        
-        cell.historyTimImage.isHidden = AttendanceDetails?[indexPath.row].in_time == ""
-        
-        if let components = convertDateComponents(from: AttendanceDetails?[indexPath.row].date ?? "") {
-            
-            cell.datelbl.text = components.day
-            cell.mnthLbl.text = components.month
-            cell.dayLbl.text = components.weekday
+        // Date + Weekday
+        if let components = convertDateComponents(from: attendanceData.date ?? "") {
+            cell.dateLbl.text = components.day       // e.g. "03"
+            cell.dayLbl.text = components.weekday    // e.g. "Thu"
+        } else {
+            cell.dateLbl.text = "-"
+            cell.dayLbl.text = "-"
         }
         
         return cell
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let attendanceData = AttendanceDetails?[indexPath.row],
+              let attendanceDict = attendanceData.attendance_type,
+              let first = attendanceDict.first else { return }
         
-        if AttendanceDetails?[indexPath.row].in_time != ""{
-            let selectedDate = AttendanceDetails?[indexPath.row].date
+        let key = first.key.uppercased()  // FD / HD
+        let value = first.value
+        let statusText = "\(key) | \(value)"
+        
+        if value.lowercased() != "absent", let inTime = attendanceData.in_time, !inTime.isEmpty {
             let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-            vc.selectedDate = selectedDate ?? ""
-            vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
-            vc.date = AttendanceDetails?[indexPath.row].date ?? ""
-            vc.roll = AttendanceDetails?[indexPath.row].role ?? ""
-            vc.user = AttendanceDetails?[indexPath.row].name
-            //        vc.roll = AttendanceDetails?[indexPath.row].
+            vc.selectedDate = attendanceData.date ?? ""
+            vc.selected_staff_id = attendanceData.staff_id ?? ""
+            vc.date = attendanceData.date ?? ""
+            vc.roll = attendanceData.role ?? ""
+            vc.user = attendanceData.name
+            
             present(vc, animated: true)
         }
     }
@@ -361,7 +350,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         monthFormatter.dateFormat = "MMM" // Short month format: Jan, Feb, Mar...
         
         let weekdayFormatter = DateFormatter()
-        weekdayFormatter.dateFormat = "EEEE" // Full day name: Monday, Tuesday...
+        weekdayFormatter.dateFormat = "EEE" // Full day name: Monday, Tuesday...
         
         let day = dayFormatter.string(from: date)
         let month = monthFormatter.string(from: date)

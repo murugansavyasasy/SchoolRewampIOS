@@ -10,6 +10,8 @@ import DropDown
 @available(iOS 14.0, *)
 class LessonEditTV: UITableViewCell, Datepicker {
     
+    @IBOutlet weak var dateBtn: UIButton!
+    @IBOutlet weak var dropDownBtn: UIButton!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var TextField: UITextView!
@@ -31,25 +33,25 @@ class LessonEditTV: UITableViewCell, Datepicker {
         override func awakeFromNib() {
             super.awakeFromNib()
 
-            NameLbl.setFont(style: .title, size: FontSize.TitleSize)
+//            NameLbl.setFont(style: .title, size: FontSize.TitleSize)
             DropdownField.font = UIFont(name: "Poppins-Medium", size: 13)
             TextField.font = UIFont(name: "Poppins-Medium", size: 13)
             DropdownLbl.font = UIFont(name: "Poppins-Medium", size: 13)
             TextField.layer.cornerRadius = 10
-            TextField.layer.borderWidth = 1.5
+            TextField.layer.borderWidth = 0.5
             TextField.layer.borderColor = UIColor.systemGray.cgColor
             TextField.addDoneButton()
             TextField.delegate = self
             TextField.isScrollEnabled = false
-
-            DropDownView.layer.cornerRadius = 10
-            DropDownView.layer.shadowColor = UIColor.black.cgColor
-            DropDownView.layer.shadowOffset = CGSize(width: 2, height: 2)
-            DropDownView.layer.shadowOpacity = 0.3
-            DropDownView.layer.shadowRadius = 2
-            DropDownView.backgroundColor = .white
-            DropDownView.layer.borderWidth = 0.3
-            DropDownView.layer.borderColor = UIColor.lightGray.cgColor
+            dateBtn.layer.cornerRadius = 6
+//            DropDownView.layer.cornerRadius = 10
+//            DropDownView.layer.shadowColor = UIColor.black.cgColor
+//            DropDownView.layer.shadowOffset = CGSize(width: 2, height: 2)
+//            DropDownView.layer.shadowOpacity = 0.3
+//            DropDownView.layer.shadowRadius = 2
+//            DropDownView.backgroundColor = .white
+//            DropDownView.layer.borderWidth = 0.3
+//            DropDownView.layer.borderColor = UIColor.lightGray.cgColor
             
             setupDropdownGesture()
         }
@@ -78,9 +80,15 @@ class LessonEditTV: UITableViewCell, Datepicker {
 
             switch edit.field_type {
             case "dropdown":
+                DropDownView.layer.borderWidth = 0
+                DropDownView.layer.borderColor = UIColor.clear.cgColor
+                DropDownView.layer.cornerRadius = 0
+                DropDownView.setShadow()
                 TextField.isHidden = true
                 DropdownField.isHidden = true
                 DropDownView.isHidden = false
+                dateBtn.isHidden = true
+                dropDownBtn.isHidden = false
                 DropdownField.text = edit.value
                 DropdownLbl.text = edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
@@ -127,9 +135,15 @@ class LessonEditTV: UITableViewCell, Datepicker {
 
 
             case "datepicker":
+                DropDownView.clearShadow()
+                DropDownView.layer.borderWidth = 0.6
+                DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
+                DropDownView.layer.cornerRadius = 8
                 TextField.isHidden = true
                 DropdownField.isHidden = true
                 DropDownView.isHidden = false
+                dateBtn.isHidden = false
+                dropDownBtn.isHidden = true
                 DropdownField.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
                 DropdownLbl.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)

@@ -358,7 +358,13 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             selected_student = studentsDetails?
                 .filter { $0.isAbsent == false}
                 .compactMap { $0.id } ?? []
-            markAttendaceApi()
+            alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
+                self.markAttendaceApi()
+            } onNo: {
+                
+            }
+
+            
         }else{
             selected_student = studentsDetails?
                 .filter { $0.isSelect == true }

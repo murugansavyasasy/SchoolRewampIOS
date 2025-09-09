@@ -52,12 +52,6 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func addTopBorderAndShadow(to view: UIView) {
-        // 1. Add Top Border
-        //        let border = CALayer()
-        //        border.backgroundColor = UIColor.lightGray.cgColor
-        //        border.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 0.3) // 1pt height
-        //        view.layer.addSublayer(border)
-        
         // 2. Add Top Shadow
         let shadowPath = UIBezierPath()
         shadowPath.move(to: CGPoint(x: 0, y: 0))
@@ -75,12 +69,6 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     
     override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-        
         addTopBorderAndShadow(to: BottomView)
     }
     

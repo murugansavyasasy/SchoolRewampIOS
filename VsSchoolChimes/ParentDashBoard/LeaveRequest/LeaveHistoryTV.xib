@@ -178,13 +178,14 @@
                 <outlet property="DaysCountLbl" destination="F3Q-YF-EDT" id="Ce7-sd-O4j"/>
                 <outlet property="DeleteBtn" destination="eOw-Zu-1qz" id="HlB-AT-YBm"/>
                 <outlet property="EditBtn" destination="Kor-hb-zyt" id="sV9-BM-EPA"/>
-                <outlet property="GetOutpassBtn" destination="bFq-vr-jcD" id="7VU-6V-nI8"/>
+                <outlet property="GetOutpassBtn" destination="bFq-vr-jcD" id="Nml-r1-57F"/>
                 <outlet property="OptionsBtn" destination="aQs-cY-T18" id="Drc-dW-WP5"/>
                 <outlet property="ReasonLbl" destination="9Ec-yT-64y" id="UpL-vC-jF8"/>
                 <outlet property="StatusBtn" destination="JYr-FP-LIZ" id="NSH-nG-g3b"/>
                 <outlet property="TypeLbl" destination="Qw3-80-0XT" id="9QM-po-OdY"/>
                 <outlet property="cellView" destination="fGi-FT-UIN" id="bwi-z5-UgV"/>
                 <outlet property="popupView" destination="Hmk-m3-p2L" id="3ut-cN-XN6"/>
+                <outlet property="statusBtnWidth" destination="kVT-wH-JSV" id="xvj-Km-exH"/>
             </connections>
             <point key="canvasLocation" x="141.98473282442748" y="40.492957746478872"/>
         </tableViewCell>
@@ -194,13 +195,13 @@
         <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -39,9 +39,13 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.deleteTV, for: indexPath) as!
         deleteTV
-        cell.logidudeLbl.text = "\(locationHistory?[indexPath.row].latitude ?? "") - \(locationHistory?[indexPath.row].longitude ?? "")"
-        cell.locationLbl.text = locationHistory?[indexPath.row].location
-        cell.distanceLbl.text = "\(locationHistory?[indexPath.row].distance ?? "") Meter"
+        if let locationData = locationHistory?[indexPath.row]{
+            cell.configure(with:locationData, at: indexPath)
+        }
+        
+//        cell.coordinatesLbl.text = "\(locationHistory?[indexPath.row].latitude ?? "") - \(locationHistory?[indexPath.row].longitude ?? "")"
+//        cell.locationLbl.text = locationHistory?[indexPath.row].location
+//        cell.distanceLbl.text = "\(locationHistory?[indexPath.row].distance ?? "") Meter"
         cell.deleteBtn.addTarget(self, action: #selector(DeletTapped(_:)), for: .touchUpInside)
         cell.editBtn.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         cell.deleteBtn.tag = indexPath.row

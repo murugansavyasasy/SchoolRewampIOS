@@ -30,41 +30,40 @@ class SlotCV: UICollectionViewCell {
     }
     
     func configure(slot: StudentSlot) {
-        let from = slot.slot_from ?? ""
-        let to = slot.slot_to ?? ""
-        label.text = "\(from) - \(to)"
-        
-        if slot.my_booking ?? false {
-            cellView.backgroundColor = .systemGreen   // API confirmed booking
-            isUserInteractionEnabled = false
-            label.textColor = .white
-            statusLbl.textColor = .white
-            statusLbl.text = "Already Booked"
-        } else if slot.userSelected ?? false {
-            cellView.backgroundColor = .systemBlue    // User temporary selection
-            isUserInteractionEnabled = true
-            label.textColor = .white
-            statusLbl.textColor = .white
-            statusLbl.text = "Available"
-        } else if slot.is_booked ?? false {
-            cellView.backgroundColor = .lightGray     // Disabled due to conflict
-            isUserInteractionEnabled = false
-            label.textColor = .black
-            statusLbl.textColor = .red
-            statusLbl.text = "Not Available"
-        } else if slot.is_conflictDisabled ?? false{
-            cellView.backgroundColor = .systemGray4
-            isUserInteractionEnabled = false
-            statusLbl.textColor = .black
-            statusLbl.text = "Time conflicts"
-        }else {
-            cellView.backgroundColor = .white
-            label.textColor = .black
-            statusLbl.textColor = .systemGreen// Available
-            isUserInteractionEnabled = true
-            statusLbl.text = "Available"
+            label.text = "\(slot.slot_from ?? "") - \(slot.slot_to ?? "")"
+
+            if slot.my_booking ?? false {
+                cellView.backgroundColor = .systemGreen
+                label.textColor = .white
+                statusLbl.textColor = .white
+                statusLbl.text = "Booked"
+                isUserInteractionEnabled = false
+            } else if slot.userSelected ?? false {
+                cellView.backgroundColor = .systemBlue
+                label.textColor = .white
+                statusLbl.textColor = .white
+                statusLbl.text = "Selected"
+                isUserInteractionEnabled = true
+            } else if slot.is_booked ?? false {
+                cellView.backgroundColor = .systemGray5
+                label.textColor = .black
+                statusLbl.text = "Not Available"
+                statusLbl.textColor = .systemRed
+                isUserInteractionEnabled = false
+            } else if slot.is_conflictDisabled ?? false {
+                cellView.backgroundColor = .systemGray6
+                label.textColor = .black
+                statusLbl.textColor = .black
+                statusLbl.text = "Time Conflict"
+                isUserInteractionEnabled = false
+            } else {
+                cellView.backgroundColor = .white
+                label.textColor = .black
+                statusLbl.text = "Available"
+                statusLbl.textColor = .systemGreen
+                isUserInteractionEnabled = true
+            }
         }
-    }
     
     @IBAction func removeAct(_ sender: UIButton) {
         onRemove?()

@@ -111,7 +111,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         var newReportData: [ReportData] = []
 
         // ✅ Weekly Reports
-        let totalWeeks = weeksInCurrentMonth()
+        let totalWeeks = weeksInMonth(month: monthId)
         var weeklyReports: [PerformanceReport] = []
         for week in 1...totalWeeks {
             if let detail = data.reading?.details?[safe: week - 1] {
@@ -209,18 +209,32 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
 
     
     // MARK: - Weeks in Current Month
-    func weeksInCurrentMonth() -> Int {
+    func weeksInMonth(month: Int) -> Int {
         let calendar = Calendar.current
         let date = Date()
-        guard let monthRange = calendar.range(of: .day, in: .month, for: date) else { return 4 }
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
+        let currentYear = calendar.component(.year, from: date)
+        
+        // Create the start date of the given month and current year
+        var components = DateComponents()
+        components.year = currentYear
+        components.month = month
+        components.day = 1
+        
+        guard let startOfMonth = calendar.date(from: components),
+              let monthRange = calendar.range(of: .day, in: .month, for: startOfMonth) else {
+            return 0
+        }
+        
+        // Calculate the end date of the month
         let endOfMonth = calendar.date(byAdding: .day, value: monthRange.count - 1, to: startOfMonth)!
         
+        // Get the week numbers
         let startWeek = calendar.component(.weekOfMonth, from: startOfMonth)
         let endWeek = calendar.component(.weekOfMonth, from: endOfMonth)
         
         return endWeek - startWeek + 1
     }
+
     
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)

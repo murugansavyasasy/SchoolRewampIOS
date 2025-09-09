@@ -28,6 +28,7 @@ struct ServiceUrl{
     static let  auth_device_token        = "app/api/auth/device-token"
 //    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
     static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
+    static let  dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
     static let recipient_get_group_list  = "comm/api/recipient/get-group-list"
     static let recipient_get_standards   = "comm/api/recipient/get-standards"
     static let recipient_get_student_list  = "comm/api/recipient/get-student-list"
@@ -165,6 +166,9 @@ struct ServiceUrl{
     static let ptm_api_ptm_schedule_book_slots_for_student = "ptm/api/ptm-schedule/book-slots-for-student"
     static let ptm_api_ptm_schedule_slot_history_for_student = "ptm/api/ptm-schedule/slot-history-for-student"
     static let ptm_api_ptm_schedule_cancel_slot_by_student = "ptm/api/ptm-schedule/cancel-slot-by-student"
+    static let ptm_api_ptm_schedule_available_slots_count_for_student = "ptm/api/ptm-schedule/available-slots-count-for-student"
+    static let admin_api_student_profile_list = "admin/api/student-profile/list"
+    static let admin_api_staff_profile_list = "admin/api/staff-profile/list"
 }
 
 struct localData{
@@ -200,7 +204,7 @@ struct Menu_id{
     static var homeWorkMenuId = 15
     static let isAssaignment = 2
     static let AttachmentMenuId = 39
-    static let lsrw = 30
+    static let lsrw = 20
     static let staffGeoAttendaceReport = 33
     static let geoMatricAttendace = 21
     static let noticeboardMenuId = 23

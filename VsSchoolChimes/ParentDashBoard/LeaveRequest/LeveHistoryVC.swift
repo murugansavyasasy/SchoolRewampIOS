@@ -36,9 +36,6 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
     @IBOutlet weak var approveBtn: UIButton!
     @IBOutlet weak var rejectBtn: UIButton!
     @IBOutlet weak var waitingBtn: UIButton!
-    @IBOutlet weak var headerTitle: UILabel!
-    @IBOutlet weak var monthWish: UIView!
-    @IBOutlet weak var monthBtn: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var NodataImage: UIImageView!
@@ -63,9 +60,23 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         Backbtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
         
         LeaveRequestsLbl.setFont(style: .header, size: 20)
+        LeaveRequestsLbl.text = AttendanceString.leaveRequests
+        
+        allBtn.setTitle(CommonStringFile.all, for: .normal)
+        rejectBtn.setTitle(AttendanceString.rejected, for: .normal)
+        approveBtn.setTitle(AttendanceString.approved, for: .normal)
+        waitingBtn.setTitle(AttendanceString.waiting, for: .normal)
+        
+        allBtn.titleLabel?.numberOfLines = 0
+        allBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        rejectBtn.titleLabel?.numberOfLines = 0
+        rejectBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        approveBtn.titleLabel?.numberOfLines = 0
+        approveBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        waitingBtn.titleLabel?.numberOfLines = 0
+        waitingBtn.titleLabel?.lineBreakMode = .byWordWrapping
         
         addUnderline(to: allBtn, unSelectedBtn: [rejectBtn, approveBtn, waitingBtn])
-        headerTitle.setFont(style: .body, size: FontSize.BodySize)
         NodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         NodataLbl.text = CommonStringFile.No_data_found
 
@@ -73,8 +84,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         NodataImage.isHidden = true
         NodataLbl.isHidden = true
 
-        historyTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
-        historyTable.register(UINib(nibName: "LeaveHistoryTV", bundle: nil), forCellReuseIdentifier: "LeaveHistoryTV")
+        historyTable.register(UINib(nibName: CellConfingName.LeaveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeaveHistoryTV)
         historyTable.delegate = self
         historyTable.dataSource = self
 
@@ -218,6 +228,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
                     self.leaveHistoryData = response.data ?? []
                     self.filteredLeaveData = self.leaveHistoryData
                     let isEmpty = self.leaveHistoryData.isEmpty
+                    self.NodataLbl.text = response.message
                     self.NodataImage.isHidden = !isEmpty
                     self.NodataLbl.isHidden = !isEmpty
                     self.TopInfoView.isHidden = isEmpty
@@ -332,11 +343,11 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = historyTable.dequeueReusableCell(withIdentifier: "LeaveHistoryTV", for: indexPath) as! LeaveHistoryTV
+        let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.LeaveHistoryTV, for: indexPath) as! LeaveHistoryTV
         
         let data = filteredLeaveData[indexPath.section].details?[indexPath.row]//filteredLeaveData[indexPath.row]
         
-        cell.DaysCountLbl.text = (data?.no_of_days ?? "") + " Day Application"
+        cell.DaysCountLbl.text = (data?.no_of_days ?? "") + " " + AttendanceString.dayApplication
         cell.DateLbl.text = "\(data?.leave_from?.convertToTargetDateFormat() ?? "") - \(data?.leave_to?.convertToTargetDateFormat() ?? "")"
         cell.TypeLbl.text = data?.leave_type
         cell.ReasonLbl.text = data?.reason
@@ -346,22 +357,30 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
         case.approved:
             cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
             cell.StatusBtn.setTitleColor(.systemGreen, for: .normal)
-            cell.StatusBtn.setTitle(data?.status, for: .normal)
+            cell.StatusBtn.setTitle(AttendanceString.approved, for: .normal)
             cell.OptionsBtn.isHidden = true
             cell.GetOutpassBtn.isHidden = false
         case.rejected:
             cell.StatusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
             cell.StatusBtn.setTitleColor(.red, for: .normal)
-            cell.StatusBtn.setTitle(data?.status, for: .normal)
+            cell.StatusBtn.setTitle(AttendanceString.rejected, for: .normal)
             cell.OptionsBtn.isHidden = true
             cell.GetOutpassBtn.isHidden = true
         case.waiting:
             cell.StatusBtn.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.3)
             cell.StatusBtn.setTitleColor(.brown, for: .normal)
-            cell.StatusBtn.setTitle("Awaiting", for: .normal)
+            cell.StatusBtn.setTitle(AttendanceString.awaiting, for: .normal)
             cell.OptionsBtn.isHidden = false
             cell.GetOutpassBtn.isHidden = true
         }
+        
+        if let title = cell.StatusBtn.title(for: .normal),
+           let font = cell.StatusBtn.titleLabel?.font {
+            
+            let textWidth = (title as NSString).size(withAttributes: [.font: font]).width
+            cell.statusBtnWidth.constant = textWidth + 20
+        }
+        
         let isPopupOpen = openedPopupIndex == indexPath
         cell.popupView.isHidden = !isPopupOpen
         cell.OptionsBtn.isSelected = isPopupOpen

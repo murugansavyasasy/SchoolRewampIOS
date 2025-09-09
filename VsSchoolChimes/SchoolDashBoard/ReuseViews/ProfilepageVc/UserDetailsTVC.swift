@@ -8,35 +8,14 @@
 import UIKit
 import DropDown
 
-// MARK: - Field Types
-enum UserDetailFieldType {
-    case text
-    case address
-    case mobile
-    case date
-    case gender
-    case dropdown
-    case doc   // ✅ Added
-}
-
-// MARK: - Model
-struct UserDetailItem {
-    var placeholder: String
-    var value: String?
-    var isEditable: Bool
-    var type: UserDetailFieldType
-    var options: [String]?
-}
-
-// MARK: - Cell
+// MARK: - UserDetailsTVC Class
 @available(iOS 14.0, *)
-class UserDetailsTVC: UITableViewCell, Datepicker {
+class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge {
     
     // MARK: - Outlets
     @IBOutlet weak var attachmentView: UIView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var attachmentCollectionView: UICollectionView!
-    
     @IBOutlet weak var addAttachmentBtn: UIButton!
     @IBOutlet weak var contryDropDownView: UIView!
     @IBOutlet weak var txtViewHeight: NSLayoutConstraint!
@@ -44,14 +23,12 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
     @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var contryCode: UILabel!
     @IBOutlet weak var contriFlag: UIImageView!
-    
     @IBOutlet weak var genderStack: UIStackView!
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var dropDownLbl: UILabel!
     @IBOutlet weak var dropDownView: UIView!
-    
     @IBOutlet weak var updateBtn: UIButton!
     @IBOutlet weak var updateview: UIView!
     @IBOutlet weak var titleLable: UILabel!
@@ -60,10 +37,6 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
     let SectionDropdown = DropDown()
     private var genderButtons: [UIButton] = []
     var selectedGender: String?
-    
-    var onDropDownTapped: (() -> Void)?
-    var onDateTapped: (() -> Void)?
-    
     var attachments: [AttachmentItem] = []
     var sectionList: [String] = []
     
@@ -71,11 +44,15 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
     override func awakeFromNib() {
         super.awakeFromNib()
         resetViews()
+        txtField.addDoneButton()
+        txtView.addDoneButton()
         setupGenderButtons()
         addTapToDropDown()
+        countryDropDown()
         addTapToDateButton()
         applyBorders()
-        
+        attachmentCollectionView.register(UINib(nibName: "AttachmentCVC", bundle: nil), forCellWithReuseIdentifier: "AttachmentCVC")
+        addAttachmentBtn.layer.cornerRadius = 4
         attachmentCollectionView.dataSource = self
         attachmentCollectionView.delegate = self
     }
@@ -83,6 +60,12 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
     override func prepareForReuse() {
         super.prepareForReuse()
         resetViews()
+    }
+    
+    // MARK: - Delete Image Delegate
+    func deleteImage(index: Int) {
+        attachments.remove(at: index)
+        reloadCollectionAndUpdateHeight()
     }
     
     // MARK: - Picker Setup
@@ -111,7 +94,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
             self.attachments.append(
                 AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf)
             )
-            self.attachmentCollectionView.reloadData()
+            self.reloadCollectionAndUpdateHeight()
         }
         
         PhotoPickerManager.shared.onVideoPicked = { [weak self] data in
@@ -133,9 +116,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
         } else {
             let alert = CustomAlert()
             if let topVC = getCurrentViewController() {
-                alert.showAlert(title: "",
-                                message: AlertstringFile.Already_Reach_Your_Limit,
-                                on: topVC)
+                alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: topVC)
             }
         }
     }
@@ -160,7 +141,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
         selectedGender = nil
         attachments.removeAll()
     }
-
+    
     // MARK: - Configure Cell
     func configure(with item: UserDetailItem?) {
         resetViews()
@@ -171,55 +152,73 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
             return
         }
         
-        titleLable.text = item.placeholder
+        titleLable.text = item.title
         titleLable.isHidden = false
         
         switch item.type {
         case .text:
             txtField.isHidden = false
-            txtField.placeholder = item.placeholder
+            txtField.placeholder = item.title
             txtField.text = item.value
-            txtField.isEnabled = item.isEditable
+            txtField.isEnabled = item.is_editable ?? false
             
         case .address:
             txtView.isHidden = false
             txtViewHeight.constant = 100
             txtView.text = item.value ?? ""
-            txtView.isEditable = item.isEditable
+            txtView.isEditable = item.is_editable ?? false
             
         case .mobile:
             txtField.isHidden = false
             contryDropDownView.isHidden = false
-            txtField.placeholder = item.placeholder
+            txtField.placeholder = item.title
             txtField.text = item.value
-            txtField.isEnabled = item.isEditable
+            txtField.isEnabled = item.is_editable ?? false
             contryCode.text = "+91"
+            let countries = getCountryListWithDialingCodes()
+            sectionList = countries.map { $0.code }
             
-        case .date:
+        case .calendar:
             dateView.isHidden = false
-            dateLbl.text = item.value ?? "Select \(item.placeholder)"
-            dateBtn.isEnabled = item.isEditable
+            dateLbl.text = item.value ?? "Select \(item.title)"
+            dateBtn.isEnabled = item.is_editable ?? false
             
         case .gender:
             genderStack.isHidden = false
             updateGenderSelection(selected: item.value)
-            enableGenderButtons(item.isEditable)
+            enableGenderButtons(item.is_editable ?? false)
             
         case .dropdown:
             dropDownView.isHidden = false
-            dropDownLbl.text = item.value ?? "Select \(item.placeholder)"
+            dropDownLbl.text = item.value ?? "Select \(item.title)"
             sectionList = item.options ?? []
             
         case .doc:
             attachmentView.isHidden = false
-            addAttachmentBtn.isHidden = false
-            if let value = item.value, !value.isEmpty {
-                let files = value.components(separatedBy: ",")
-//                attachments = files.map {
-//                    AttachmentItem(imageURL: $0, fileType: CommonStringFile.)
-//                }
+            addAttachmentBtn.isHidden = !(item.is_editable ?? false)
+            attachments.removeAll()
+            if let files = item.file_Path {
+                attachments = files.map { file in
+                    let url = file.url ?? ""
+                    let type = file.type?.lowercased() ?? "unknown"
+                    if type == "image" {
+                        return AttachmentItem(image: nil, imageURL: url, fileType: "image")
+                    } else if type == "video" {
+                        return AttachmentItem(image: UIImage(systemName: "video"), imageURL: url, fileType: "video", VideoURl: URL(string: url))
+                    } else {
+                        return AttachmentItem(image: nil, imageURL: url, fileType: type)
+                    }
+                }
             }
             reloadCollectionAndUpdateHeight()
+        case .number:
+            print("")
+        case .radioButton:
+            print("")
+        case .image:
+            print("")
+        case .document:
+            print("")
         }
     }
     
@@ -228,6 +227,23 @@ class UserDetailsTVC: UITableViewCell, Datepicker {
         dateLbl.text = date
     }
     
+    // MARK: - Country List
+    func getCountryListWithDialingCodes() -> [(name: String, code: String)] {
+        let locale = Locale.current
+        let countryCodes = Locale.isoRegionCodes
+        var result = [(name: String, code: String)]()
+        
+        for countryCode in countryCodes {
+            if let countryName = locale.localizedString(forRegionCode: countryCode),
+               let dialingCode = CountryCodes.dialingCodes[countryCode] {
+                result.append((name: countryName, code: dialingCode))
+            }
+        }
+        
+        return result.sorted { $0.name < $1.name }
+    }
+    
+    // MARK: - Reload Collection View
     private func reloadCollectionAndUpdateHeight() {
         attachmentCollectionView.reloadData()
         attachmentCollectionView.layoutIfNeeded()
@@ -244,27 +260,23 @@ extension UserDetailsTVC {
         genderButtons.forEach { $0.removeFromSuperview() }
         genderButtons = []
         
-        genders.forEach { gender in
+        for gender in genders {
             let button = UIButton(type: .system)
             button.setTitle(gender, for: .normal)
-            
             let font = UIFont.systemFont(ofSize: 16, weight: .regular)
             button.titleLabel?.font = font
             let config = UIImage.SymbolConfiguration(pointSize: font.pointSize, weight: .regular)
             button.setImage(UIImage(systemName: "circle", withConfiguration: config), for: .normal)
             button.tintColor = .systemBlue
-            
             button.contentHorizontalAlignment = .leading
             button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
             button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-            
             button.addTarget(self, action: #selector(genderSelected(_:)), for: .touchUpInside)
-            
             genderStack.addArrangedSubview(button)
             genderButtons.append(button)
         }
     }
-
+    
     @objc private func genderSelected(_ sender: UIButton) {
         let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular)
         genderButtons.forEach { btn in
@@ -305,6 +317,24 @@ extension UserDetailsTVC {
         dropDownView.isUserInteractionEnabled = true
     }
     
+    private func countryDropDown() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(countrydropDownTapped))
+        contryDropDownView.addGestureRecognizer(tap)
+        contryDropDownView.isUserInteractionEnabled = true
+    }
+    
+    @objc private func countrydropDownTapped() {
+        SectionDropdown.anchorView = contryDropDownView
+        SectionDropdown.dataSource = sectionList
+        SectionDropdown.bottomOffset = CGPoint(x: 0, y: contryDropDownView.bounds.height)
+        SectionDropdown.show()
+        
+        SectionDropdown.selectionAction = { [weak self] _, item in
+            guard let self = self else { return }
+            self.contryCode.text = item
+        }
+    }
+    
     @objc private func dropDownTapped() {
         SectionDropdown.anchorView = dropDownView
         SectionDropdown.dataSource = sectionList
@@ -314,7 +344,6 @@ extension UserDetailsTVC {
         SectionDropdown.selectionAction = { [weak self] _, item in
             guard let self = self else { return }
             self.dropDownLbl.text = item
-            self.onDropDownTapped?()
         }
     }
 }
@@ -351,15 +380,13 @@ extension UserDetailsTVC {
 @available(iOS 14.0, *)
 extension UserDetailsTVC {
     private func applyBorders() {
-        let allViews: [UIView] = [
-            txtField, txtView, contryDropDownView, dateView, dropDownView, attachmentView
-        ]
+        let allViews = [txtField, txtView, contryDropDownView, dateView, dropDownView]
         
         allViews.forEach { view in
-            view.layer.cornerRadius = 8
-            view.layer.borderWidth = 1
-            view.layer.borderColor = UIColor.systemGray5.cgColor
-            view.clipsToBounds = true
+            view?.layer.cornerRadius = 8
+            view?.layer.borderWidth = 1
+            view?.layer.borderColor = UIColor.systemGray5.cgColor
+            view?.clipsToBounds = true
         }
         
         genderButtons.forEach { btn in
@@ -394,7 +421,7 @@ extension UserDetailsTVC {
     }
 }
 
-// MARK: - UICollectionView
+// MARK: - UICollectionView Handling
 @available(iOS 14.0, *)
 extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -409,6 +436,8 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         }
         
         let file = attachments[indexPath.item]
+        cell.deleteBtn.isHidden = false
+        cell.delegate = self
         
         switch file.fileType.uppercased() {
         case CommonStringFile.IMAGE:
@@ -464,7 +493,7 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Handle attachment tap
+        // Handle attachment tap if needed
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -488,3 +517,20 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         return 0
     }
 }
+
+// MARK: - Country Codes
+struct CountryCodes {
+    static let dialingCodes: [String: String] = [
+        "US": "+1",
+        "IN": "+91",
+        "GB": "+44",
+        "CA": "+1",
+        "AU": "+61",
+        "DE": "+49",
+        "FR": "+33",
+        "JP": "+81",
+        "CN": "+86"
+        // Add more as needed
+    ]
+}
+

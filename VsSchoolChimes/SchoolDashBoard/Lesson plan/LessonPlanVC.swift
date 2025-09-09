@@ -23,6 +23,7 @@ class LessonPlanVC: UIViewController {
     @IBOutlet weak var MyClassBtn: UIButton!
     
     
+    //let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
     let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
     let colours1 = ["AttendenceColor","Clr","Color","lesson1","lesson3"]
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -43,7 +44,7 @@ class LessonPlanVC: UIViewController {
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
         searchBar.isHidden = true
         MyClassBtn.setTitle(LessonplanStringFile.myClasses, for: .normal)
-        MyClassBtn.setTitle(LessonplanStringFile.allClasses, for: .normal)
+        AllClassBtn.setTitle(LessonplanStringFile.allClasses, for: .normal)
         MyClassBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         AllClassBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         
@@ -198,11 +199,13 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         
         let Lesson =  SearchData?[indexPath.row]
         
-        if (indexPath.row % 2) == 0 {
-            cell.Cellview.backgroundColor = UIColor(hex: "#F4E5E7")
-        }else {
-            cell.Cellview.backgroundColor = UIColor(hex: "#FCF1CE")
-        }
+//        if (indexPath.row % 2) == 0 {
+            cell.Cellview.backgroundColor = UIColor(hex: "#F2F8FD")
+            cell.SideColourView.backgroundColor = UIColor(hex: "#F2F8FD")
+//        }else {
+//            cell.Cellview.backgroundColor = UIColor(hex: "#F0EAFD")
+//            cell.SideColourView.backgroundColor = UIColor(hex: "#F0EAFD")
+//        }
         
         cell.SubjectLbl.text = Lesson?.subject_name
         cell.StandardLbl.text = (Lesson?.class_name ?? "") + " - " + (Lesson?.section_name ?? "")

@@ -85,8 +85,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         totalCollectionView.layer.shadowRadius = 8
         
     }
-    
-    
+
     
     @IBAction func segmentActBtn(_ sender: Any) {
         
@@ -166,6 +165,10 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                         dailyCollectionData = successMessage.data?.first?.collections ?? []
                         totalAmountLbl.text = successMessage.data?.first?.total_collection
                         totalCollectionLblTitle.isHidden = successMessage.data?.count == 0
+//                        if let fromDate = parseDate(from: fromdate),
+//                           let toDate = parseDate(from: todate) {
+//                            totalCollectionLblTitle.text = "Total Collection \(getDateRangeLabel(from: fromDate, to: toDate))"
+//                        }
                         titleStack.isHidden = successMessage.data?.count == 0
                         tv.isHidden = successMessage.data?.count == 0
                         tv.reloadData()

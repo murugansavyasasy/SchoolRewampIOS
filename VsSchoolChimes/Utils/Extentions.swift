@@ -190,73 +190,78 @@ func setAttributedText(for label: UILabel, with text: String, firstString: Strin
 extension UIViewController {
     
     func showLottieProgressLoader(animationName: String = "loader") {
-        hideLottieProgressLoader()
+        DispatchQueue.main.async {
+            self.hideLottieProgressLoader()
 
-        // Create full-screen background layer that blocks interactions
-        let backgroundView = UIView(frame: view.bounds)
-        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.3) // semi-transparent
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.isUserInteractionEnabled = true // block interactions
-        view.addSubview(backgroundView)
-        
-        NSLayoutConstraint.activate([
-            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        let containerSize: CGFloat = 100
-        let container = UIView(frame: CGRect(x: 0, y: 0, width: containerSize, height: containerSize))
-        container.backgroundColor = .white
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.layer.cornerRadius = 16
-        container.layer.masksToBounds = true
-        backgroundView.addSubview(container)
-        
-        NSLayoutConstraint.activate([
-            container.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            container.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-            container.widthAnchor.constraint(equalToConstant: containerSize),
-            container.heightAnchor.constraint(equalToConstant: containerSize)
-        ])
+            // Create full-screen background layer that blocks interactions
+            let backgroundView = UIView(frame: self.view.bounds)
+            backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.3) // semi-transparent
+            backgroundView.translatesAutoresizingMaskIntoConstraints = false
+            backgroundView.isUserInteractionEnabled = true // block interactions
+            self.view.addSubview(backgroundView)
+            
+            NSLayoutConstraint.activate([
+                backgroundView.topAnchor.constraint(equalTo: self.view.topAnchor),
+                backgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                backgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                backgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            ])
+            
+            let containerSize: CGFloat = 100
+            let container = UIView()
+            container.backgroundColor = .white
+            container.translatesAutoresizingMaskIntoConstraints = false
+            container.layer.cornerRadius = 16
+            container.layer.masksToBounds = true
+            backgroundView.addSubview(container)
+            
+            NSLayoutConstraint.activate([
+                container.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+                container.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+                container.widthAnchor.constraint(equalToConstant: containerSize),
+                container.heightAnchor.constraint(equalToConstant: containerSize)
+            ])
 
-        // Load Lottie animation
-        let animationView = LottieAnimationView(name: animationName)
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        animationView.contentMode = .scaleAspectFit
-        animationView.loopMode = .loop
-        animationView.play()
+            // Load Lottie animation
+            let animationView = LottieAnimationView(name: animationName)
+            animationView.translatesAutoresizingMaskIntoConstraints = false
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .loop
+            animationView.play()
 
-        container.addSubview(animationView)
-        
-        NSLayoutConstraint.activate([
-            animationView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            animationView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            animationView.topAnchor.constraint(equalTo: container.topAnchor),
-            animationView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
+            container.addSubview(animationView)
+            
+            NSLayoutConstraint.activate([
+                animationView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+                animationView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+                animationView.topAnchor.constraint(equalTo: container.topAnchor),
+                animationView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            ])
 
-        loaderContainerView = container
-        loaderAnimationView = animationView
-        loaderBackgroundView = backgroundView
+            loaderContainerView = container
+            loaderAnimationView = animationView
+            loaderBackgroundView = backgroundView
+        }
     }
 
     func updateLottieProgress(to percent: Double) {
-        let percentageText = "\(Int(percent))%"
         DispatchQueue.main.async {
+            let percentageText = "\(Int(percent))%"
             loaderAnimationView?.textProvider = DictionaryTextProvider(["percentage": percentageText])
         }
     }
 
     func hideLottieProgressLoader() {
-        loaderAnimationView?.stop()
-        loaderBackgroundView?.removeFromSuperview()
-        loaderContainerView = nil
-        loaderAnimationView = nil
-        loaderBackgroundView = nil
+        DispatchQueue.main.async {
+            loaderAnimationView?.stop()
+            loaderBackgroundView?.removeFromSuperview()
+            loaderContainerView = nil
+            loaderAnimationView = nil
+            loaderBackgroundView = nil
+        }
     }
 }
+
 
 enum LoaderStyle {
     case circle
@@ -614,6 +619,47 @@ extension String {
             }
             return nil
         }
+    }
+}
+func parseDate(from dateString: String, format: String = "dd-MM-yyyy") -> Date? {
+    let formatter = DateFormatter()
+    formatter.dateFormat = format
+    formatter.timeZone = .current
+    return formatter.date(from: dateString)
+}
+
+func getDateRangeLabel(from fromDate: Date, to toDate: Date) -> String {
+    let calendar = Calendar.current
+    let today = Date()
+    
+    let fromDay = calendar.startOfDay(for: fromDate)
+    let toDay = calendar.startOfDay(for: toDate)
+    let todayDay = calendar.startOfDay(for: today)
+    
+    // Ensure range ends today
+    guard toDay == todayDay else {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return "\(formatter.string(from: fromDate)) - \(formatter.string(from: toDate))"
+    }
+    
+    // Get difference in components
+    let days = calendar.dateComponents([.day], from: fromDay, to: todayDay).day ?? 0
+    let weeks = calendar.dateComponents([.weekOfYear], from: fromDay, to: todayDay).weekOfYear ?? 0
+    let months = calendar.dateComponents([.month], from: fromDay, to: todayDay).month ?? 0
+    let years = calendar.dateComponents([.year], from: fromDay, to: todayDay).year ?? 0
+    
+    // Logic
+    if days == 0 {
+        return "Today"
+    } else if days < 7 {
+        return "Last \(days + 1) Days"
+    } else if weeks < 4 {
+        return "Last \(weeks) Week" + (weeks > 1 ? "s" : "")
+    } else if months < 12 {
+        return "Last \(months) Month" + (months > 1 ? "s" : "")
+    } else {
+        return "Last \(years) Year" + (years > 1 ? "s" : "")
     }
 }
 

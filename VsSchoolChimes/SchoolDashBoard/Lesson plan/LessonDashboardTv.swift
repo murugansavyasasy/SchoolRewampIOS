@@ -33,8 +33,8 @@ class LessonDashboardTv: UITableViewCell {
         // Shadow to make it look "popped up"
         Cellview.layer.shadowColor = UIColor.black.cgColor
         Cellview.layer.shadowOpacity = 0.2
-        Cellview.layer.shadowOffset = CGSize(width: 0, height: 4)
-        Cellview.layer.shadowRadius = 6
+        Cellview.layer.shadowOffset = CGSize(width: 0, height: 1)
+        Cellview.layer.shadowRadius = 2
         Cellview.layer.borderColor = UIColor.lightGray.cgColor
         Cellview.layer.borderWidth = 0.5
         Cellview.backgroundColor = .white
@@ -75,7 +75,7 @@ class LessonDashboardTv: UITableViewCell {
            let emptyEntry = PieChartDataEntry(value: 100 - percentage, label: nil)
            
            let progressColor = colorForPercentage(percentage) //UIColor.systemYellow.withAlphaComponent(0.8)
-           SideColourView.backgroundColor = progressColor.withAlphaComponent(0.6)
+           //SideColourView.backgroundColor = progressColor.withAlphaComponent(0.6)
 
            let progressDataSet = PieChartDataSet(entries: [progressEntry, emptyEntry], label: "Hello")
            progressDataSet.colors = [progressColor, UIColor.lightGray]

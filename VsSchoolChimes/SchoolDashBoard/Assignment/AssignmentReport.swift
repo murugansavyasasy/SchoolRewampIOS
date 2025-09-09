@@ -22,7 +22,7 @@ class AssignmentReport: UIViewController, SelectedId {
         }
     }
     
-
+    
     // MARK: - IBOutlets
     @IBOutlet weak var noDataStack: UIStackView!
     @IBOutlet weak var academicView: UIView!
@@ -32,7 +32,7 @@ class AssignmentReport: UIViewController, SelectedId {
     @IBOutlet weak var reportTable: UITableView!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var noRecordImage: UIImageView!
-
+    
     // MARK: - Properties
     var data: [Report] = []
     var filteredData: [Report] = []
@@ -120,35 +120,35 @@ class AssignmentReport: UIViewController, SelectedId {
         ) { [weak self] (result: Result<AssignmentReportResponse, Error>) in
             switch result {
             case .success(let response):
-                    DispatchQueue.main.async {
-                        self?.data = response.data ?? []
-                        self?.filteredData = self?.data ?? []
-                        let isEmpty = self?.data.isEmpty ?? true
-                        self?.noDataLabel.isHidden = !isEmpty
-                        self?.noDataLabel.text = isEmpty ? response.message : ""
-                        self?.noRecordImage.isHidden = !isEmpty
-                        self?.reportTable.isHidden = isEmpty
-                        self?.reportTable.reloadData()
-
+                DispatchQueue.main.async {
+                    self?.data = response.data ?? []
+                    self?.filteredData = self?.data ?? []
+                    let isEmpty = self?.data.isEmpty ?? true
+                    self?.noDataLabel.isHidden = !isEmpty
+                    self?.noDataLabel.text = isEmpty ? response.message : ""
+                    self?.noRecordImage.isHidden = !isEmpty
+                    self?.reportTable.isHidden = isEmpty
+                    self?.reportTable.reloadData()
+                    
                 }
             case .failure(let error):
                 print("API Error: \(error.localizedDescription)")
             }
         }
     }
-
+    
     // MARK: - UI Setup
     func setupUI() {
         reportTable.register(UINib(nibName: "AssignmentTVC", bundle: nil), forCellReuseIdentifier: "AssignmentTVC")
         reportTable.delegate = self
         reportTable.dataSource = self
-
+        
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.layer.borderWidth = 0
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.addDoneButton()
-
+        
         applyShadowAndCornerRadius(to: academicView)
         academicView.layer.borderColor = UIColor.lightGray.cgColor
         academicView.layer.borderWidth = 0.5
@@ -163,7 +163,7 @@ class AssignmentReport: UIViewController, SelectedId {
     }
     @objc func deletedTapped(_ sender: UIButton) {
         let index = sender.tag
-
+        
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
@@ -174,7 +174,7 @@ class AssignmentReport: UIViewController, SelectedId {
             onOk: { [weak self] in
                 guard let self = self,
                       let idToRemove = self.filteredData[index].id else { return }
-
+                
                 APIService.shared.makeApi(
                     url: ServiceUrl.comm_api_assignment_delete,
                     parameters: ["id": idToRemove],
@@ -201,37 +201,37 @@ class AssignmentReport: UIViewController, SelectedId {
     }
     // MARK: - File Handling
     
-
+    
     // MARK: - Actions
     @IBAction func selectAcademicYear(_ sender: UIButton) {
         academicDropDown.anchorView = academicDropView
         academicDropDown.dataSource = academicYears
         academicDropDown.bottomOffset = CGPoint(x: 0, y: academicDropView.bounds.height)
         academicDropDown.show()
-
+        
         academicDropDown.selectionAction = { [weak self] index, item in
             self?.academicYearLabel.text = item
             self?.academicId = self?.academicYearDataList[index].id
             self?.getAssigment()
         }
     }
-
- 
+    
+    
 }
 
 // MARK: - TableView Delegate/DataSource
 extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filteredData.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTVC", for: indexPath) as? AssignmentTVC else {
             return UITableViewCell()
         }
-
+        
         let report = filteredData[indexPath.row]
         cell.configure(with: report)
         cell.loadFiles(into: cell, files: report.file_path ?? [])
@@ -259,7 +259,7 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
         
         present(detailVC, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
@@ -267,10 +267,10 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - SearchBar
 extension AssignmentReport: UISearchBarDelegate {
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-
+        
         if query.isEmpty {
             filteredData = data
         } else {
@@ -282,19 +282,19 @@ extension AssignmentReport: UISearchBarDelegate {
                     item.category?.lowercased(),
                     "\(item.submitted_count ?? 0)"
                 ]
-
+                
                 return values.contains { $0?.contains(query) == true }
             }
         }
-
+        
         let noResults = filteredData.isEmpty
         noDataLabel.text = noResults ? "No Records Found" : ""
         noDataLabel.isHidden = !noResults
         noRecordImage.isHidden = !noResults
-
+        
         reportTable.reloadData()
     }
-
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.becomeFirstResponder()
     }

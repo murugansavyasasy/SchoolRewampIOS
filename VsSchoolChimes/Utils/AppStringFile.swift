@@ -184,7 +184,8 @@ class AlertstringFile{
     static let Failed = "Failed".translated()
     static let Are_you_sure_you_want_to_update_Lesson = "Are you sure you want to Update this Lesson Plan?".translated()
     static let Are_you_sure_you_want_to_Delete_Lesson = "Are you sure you want to Delete this Lesson Plan?".translated()
-    
+    static let submitAttendanceConfirmation = "Are you sure you want to submit the attendance?".translated()
+
     
 }
 
@@ -562,5 +563,31 @@ class AttendanceString{
     static let absent = "Absent".translated()
     static let noHolidaysFor = "No Holidays for".translated()
     static let holidaysFor = "Holidays for".translated()
+    static let LeaveHistory = "Leave History".translated()
+    static let notTaken = "Not Taken".translated()
+    static let present = "Present".translated()
+    static let holiday = "Holiday".translated()
+    static let dayApplication = "Day Application".translated()
+    static let editLeaveRequest = "Edit Leave Request".translated()
+    static let updateFor = "Update for".translated()
+    static let daysLeave = "Days Leave".translated()
 
+}
+
+
+class PTMString{
+    
+    static let ptm = "PTM".translated()
+    static let scheduleMeeting = "Schedule Meeting".translated()
+    static let yourMeetings = "Your Meetings".translated()
+    static let bookSlot = "Book Slot".translated()
+    static let allSubjects = "All Subjects".translated()
+    static let completedMeetings = "Completed Meetings".translated()
+    static let upcomingMeetings = "Upcoming Meetings".translated()
+    static let todayMeetings = "Today Meetings".translated()
+    static let date = "Date".translated()
+    static let time = "Time".translated()
+    static let call = "Call".translated()
+    static let cancel = "Cancel".translated()
+    static let with = "With".translated()
 }

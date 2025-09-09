@@ -2,18 +2,20 @@
 //  PendingFeeReportViewController.swift
 //  VoicesnapSchoolApp
 //
-//  Created by chandhru on 22/04/24.
+//  Created by chandhru on 22/04/25.
 
 import UIKit
 import DropDown
 
 @available(iOS 15.0, *)
 class PendingFeeReportViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
     @IBOutlet weak var pendingStack: UIStackView!
     @IBOutlet weak var titleStack: UIStackView!
     @IBOutlet weak var totalfeeLbl: UILabel!
-    @IBOutlet weak var switchReport: UISegmentedControl!
+    @IBOutlet weak var createBtn: UIButton!
+    @IBOutlet weak var reportsBtn: UIButton!
+    @IBOutlet weak var reportsLb: UILabel!
+    @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordsView: UIImageView!
@@ -40,7 +42,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
     var PendingReports: [PendingDetail]?
     var classWiseReport: [PendingDetail]?
     var feeSections: [PendingDetail] = []
-
+    var selectedIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -151,18 +153,26 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
             acodomicYearLbl.text = item
             academicId = AcadimicYearDatas[index].id
-            switchReport.selectedSegmentIndex == 0 ?
-                getPendingReportAPI(academicId ?? 0) :
-                classPendingReportAPI(academicId ?? 0)
+            selectedIndex == 0 ?
+                getPendingReportAPI(academicId ?? 0) :classPendingReportAPI(academicId ?? 0)
         }
     }
-
-    @IBAction func switchTab(_ sender: UISegmentedControl) {
-        switchReport.selectedSegmentIndex == 0 ?
+    @IBAction func switchController(_ sender: UIButton) {
+        selectedIndex = sender.tag
+        updateTabUI(for: selectedIndex)
+        selectedIndex == 0 ?
             getPendingReportAPI(academicId ?? 0) :
             classPendingReportAPI(academicId ?? 0)
     }
 
+    func updateTabUI(for index: Int) {
+        UIView.animate(withDuration: 0.25) {
+            self.createLbl.backgroundColor = index == 0 ? UIColor.parentClr : .clear
+            self.reportsLb.backgroundColor = index == 0 ? .clear : UIColor.parentClr
+            self.reportsBtn.tintColor = index == 0 ? .black : UIColor.parentClr
+            self.createBtn.tintColor = index == 1 ? .black : UIColor.parentClr
+        }
+    }
     @IBAction func backAct() {
         dismiss(animated: true)
     }
