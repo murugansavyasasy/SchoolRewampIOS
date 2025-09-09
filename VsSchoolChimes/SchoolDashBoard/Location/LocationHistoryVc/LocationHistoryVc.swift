@@ -53,11 +53,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         setupGestureRecognizers()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        applyGradientBackground()
-    }
-    
     // MARK: - UI Setup
     func setupUI() {
         
@@ -76,13 +71,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         staffDefaultsLbl.isHidden = true
     }
     
-    func applyGradientBackground() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
     
     func setupSearchBar() {
         searchbar.searchTextField.addDoneButton()
@@ -123,21 +111,21 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                         for yearData in self.AcadimicYearDatas {
                             // Append all first years
                             if let year = yearData.year,
-                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                    self.years.append(firstYear)
-                                }
+                               let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                self.years.append(firstYear)
+                            }
                             if yearData.current_academic_year == true {
                                 if let year = yearData.year,
-                                       let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                        currentAcademicYear = firstYear
-                                    }
+                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                    currentAcademicYear = firstYear
+                                }
                             }
                         }
-
+                        
                         // Once data is loaded
                         if let year = currentAcademicYear {
                             self.yearLbl.text = year
-
+                            
                             if let firstYear = year.components(separatedBy: " - ").first {
                                 if !self.years.isEmpty {
                                     self.Months = self.getMonthNames(for: firstYear)
@@ -145,11 +133,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                                     self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
                                 }
                             }
-
+                            
                             self.geometric_principal_attendance_report()
                             self.setupTableView()
                         }
-
+                        
                         print("First Years: \(self.years)")
                     }
                 }
@@ -158,7 +146,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
+    
     
     func setupTableView() {
         let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
@@ -267,20 +255,21 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
-//    @IBAction func ShowHistory(ges: ShowPunchHistiryClick) {
-//        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-//        vc.date = ges.date
-//        vc.instituteId = instituteId
-//        vc.staffId = ges.staffId
-//        vc.modalPresentationStyle = .formSheet
-//        present(vc, animated: true)
-//    }
+    //    @IBAction func ShowHistory(ges: ShowPunchHistiryClick) {
+    //        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+    //        vc.date = ges.date
+    //        vc.instituteId = instituteId
+    //        vc.staffId = ges.staffId
+    //        vc.modalPresentationStyle = .formSheet
+    //        present(vc, animated: true)
+    //    }
     
     // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SearchResults?.count ?? 0
     }
     
+    // MARK: - TableView cellForRow
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let attendanceData = SearchResults?[indexPath.row] else {
             return UITableViewCell()
@@ -291,31 +280,29 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             for: indexPath
         ) as! LocationTableViewCell
         
+        cell.fullView.setShadow()
         cell.selectionStyle = .none
+        
+        // Name
         cell.namelbl.text = attendanceData.name
+        
+        // Role
         if let role = attendanceData.designation, !role.isEmpty {
             cell.rollLable.text = role
         } else {
             cell.rollLable.text = attendanceData.role ?? "Not Mentioned"
         }
         
+        // Status Button
         if let attendanceDict = attendanceData.attendance_type,
            let first = attendanceDict.first {
             
             let key = first.key  // FD / HD
             let value = first.value
             var statusText = ""
-            if key.uppercased() == "FD" {
-                statusText = "Full Day \(value)"
-            } else if key.uppercased() == "HD" {
-                statusText = "Half Day \(value)"
-            } else {
-                statusText = value
-            }
-            
+            statusText = "\(key.uppercased()) |\(value)"
             cell.statusBtn.setTitle(statusText, for: .normal)
             
-            // Color based on Present / Absent
             if value.lowercased() == "absent" {
                 cell.statusBtn.setTitleColor(.systemRed, for: .normal)
                 cell.statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
@@ -323,22 +310,40 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 cell.statusBtn.setTitleColor(.systemGreen, for: .normal)
                 cell.statusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
             }
-            
         } else {
             cell.statusBtn.setTitle("N/A", for: .normal)
             cell.statusBtn.setTitleColor(.systemGray, for: .normal)
             cell.statusBtn.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
         }
         
-        // Check-in / Checkout / Hours
-        cell.checkinLbl.text = "\(attendanceData.in_time ?? "-")"
-        cell.checkoutLbl.text = "\(attendanceData.out_time ?? "-")"
-        cell.hoursLbl.text = "\(attendanceData.working_hours ?? "-")"
+        if let out = attendanceData.out_time{
+            cell.checkoutLbl.text = out !=  "" ? out : "-"
+        }
+        if let chekin = attendanceData.in_time{
+            cell.checkinLbl.text = chekin !=  "" ? chekin : "-"
+        }
+        if let workingHours = attendanceData.working_hours,
+           let totalMinutes = Int(workingHours) {
+            
+            if totalMinutes < 60 {
+                cell.hoursLbl.text = "\(totalMinutes) min"
+            } else {
+                let hours = totalMinutes / 60
+                let minutes = totalMinutes % 60
+                if minutes == 0 {
+                    cell.hoursLbl.text = "\(hours) hr"
+                } else {
+                    cell.hoursLbl.text = "\(hours) hr \(minutes) min"
+                }
+            }
+        } else {
+            cell.hoursLbl.text = "-"
+        }
         
-        // Date Components (dd-MM-yyyy → day / weekday)
+        // Date + Weekday
         if let components = convertDateComponents(from: attendanceData.date ?? "") {
             cell.dateLbl.text = components.day       // e.g. "03"
-            cell.dayLbl.text = components.weekday    // e.g. "Wed"
+            cell.dayLbl.text = components.weekday    // e.g. "Thu"
         } else {
             cell.dateLbl.text = "-"
             cell.dayLbl.text = "-"
@@ -346,8 +351,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         return cell
     }
-
-
+    
+    
     
     func updateStatus(label: UILabel, typeLabel: UILabel, statusView: UIView, key: String, value: String) {
         typeLabel.text = key
@@ -356,7 +361,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         statusView.backgroundColor = isPresent ? .systemGreen : .systemRed
         statusView.isHidden = false
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if SearchResults?[indexPath.row].in_time != ""{
             let selectedDate = SearchResults?[indexPath.row].date
@@ -416,7 +421,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         return (day, month, weekday)
     }
-
+    
     
     func geometric_principal_attendance_report() {
         var param: [String: Any]
@@ -508,7 +513,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 (attendance.name?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.date?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.leave_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
-//                /*(attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false)*/ ||
+                //                /*(attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false)*/ ||
                 (attendance.in_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.out_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.working_hours?.localizedCaseInsensitiveContains(keyword) ?? false)
@@ -520,10 +525,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 noRecordLbl.isHidden = false
                 noRecordLbl.text = "No search result"
             }
-            
-            
         }
-        
         tv.reloadData()
     }
 }

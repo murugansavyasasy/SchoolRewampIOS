@@ -97,15 +97,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         button.contentHorizontalAlignment = .left
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0 , bottom: 0, right: 15)
     }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-    
+
     @IBAction func radioButtonTapped(_ sender: UIButton) {
         // Deselect all
         [allbtnName, staffBtnName,
@@ -246,6 +238,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                  MenuRedirect.Senderchat(from: self)
             case Menu_id.ptm :
                 MenuRedirect.senderPtmNavigate(from: self)
+            case Menu_id.lsrw :
+                MenuRedirect.SenderLSRWVCNavigate(from: self)
             case Menu_id.quiz :
                 MenuRedirect.senderQuiz(from: self)
             default:

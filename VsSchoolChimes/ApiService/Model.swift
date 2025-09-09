@@ -299,7 +299,7 @@ struct ContactDetails: Codable {
 struct MenuDetail: Codable {
     let id: Int?
     let name: String?
-    let unread_count: Int?
+    var unread_count: Int?
     let description: String?
 }
 
@@ -559,6 +559,8 @@ struct GeometricLocation:Codable{
     let longitude:String?
     let location:String?
     let distance:String?
+    let time:String?
+    let visitedCount:String?
 }
 
 struct DailyCollectionResponse: Codable {
@@ -2125,4 +2127,67 @@ struct SkillSubmission: Codable {
     let std_sec: String?
     let student_submited_on: String?
     let is_submitted: Bool?
+}
+// MARK: EDIT PROFILE
+struct UserProfileResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [UserDetailsSection]?
+}
+
+// MARK: - Grouped Sections
+struct UserDetailsSection: Codable {
+    var General: [UserDetailItem]?
+    var FatherDetails: [UserDetailItem]?
+    var MotherDetails: [UserDetailItem]?
+    var Communication: [UserDetailItem]?
+    var Address: [UserDetailItem]?
+    var Physical: [UserDetailItem]?
+    var Identifiers: [UserDetailItem]?
+    var Community: [UserDetailItem]?
+    var BankDetails: [UserDetailItem]?
+    var Documents: [UserDetailItem]?
+    var TransportDetails: [UserDetailItem]?
+
+    enum CodingKeys: String, CodingKey {
+        case General
+        case FatherDetails = "Father Details"
+        case MotherDetails = "Mother Details"
+        case Communication
+        case Address
+        case Physical
+        case Identifiers
+        case Community
+        case BankDetails = "Bank Details"
+        case Documents
+        case TransportDetails = "Transport Details"
+    }
+}
+
+// MARK: - Field Types
+enum UserDetailFieldType: String, Codable {
+    case text
+    case address
+    case mobile
+    case calendar
+    case gender
+    case dropdown
+    case doc
+    case number
+    case radioButton
+    case image
+    case document
+}
+
+// MARK: - Model
+struct UserDetailItem: Codable {
+    var title: String
+    var value: String?
+    var type: UserDetailFieldType
+    var options: [String]?
+    var is_editable: Bool?
+    var optional: Bool?
+    var node: String?
+    var file_Path: [FilePath]?
+
 }

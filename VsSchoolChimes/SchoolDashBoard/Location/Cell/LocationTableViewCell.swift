@@ -21,47 +21,11 @@ class LocationTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Date circle view (purple gradient or solid color with rounded edges)
-        dateView.layer.cornerRadius = dateView.frame.height / 2
-        dateView.clipsToBounds = true
-        dateView.backgroundColor = UIColor.systemPurple
+        dateView.setShadow(cornerRadius: dateView.frame.width/2)
         
-        dayLbl.textColor = .white
-        dateLbl.textColor = .white
-        
-        // Name label
-        namelbl.font = UIFont.boldSystemFont(ofSize: 16)
-        namelbl.textColor = .black
-        
-        // Role label
-        rollLable.font = UIFont.systemFont(ofSize: 14)
-        rollLable.textColor = .darkGray
-        
-        // Status button (Absent → Red background)
         statusBtn.layer.cornerRadius = 8
         statusBtn.clipsToBounds = true
-        statusBtn.setTitleColor(.systemRed, for: .normal)
-        statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
-        statusBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        
-        // Check-in & Check-out labels
-        checkinLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        checkoutLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        
-        checkinLbl.textColor = UIColor.systemBlue
-        checkoutLbl.textColor = UIColor.systemGreen
-        
-        // Hours label
-        hoursLbl.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        hoursLbl.textColor = UIColor.systemGreen
-        
-        // Card style
-        contentView.layer.cornerRadius = 16
-        contentView.layer.masksToBounds = false
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.1
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        contentView.layer.shadowRadius = 6
+
     }
 
 

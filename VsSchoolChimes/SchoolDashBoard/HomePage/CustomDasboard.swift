@@ -107,7 +107,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.isEmpty ?? true
-                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 1
+                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         
@@ -136,13 +136,29 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
+            
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
-                    if response.status == true, let details = response.data?.first, let newDetails = details.menu_details {
-                        self.updateMenuCounts(with: newDetails)
-                        self.recentActiveMenuCollection.reloadData()
-                        self.MenuCollection.reloadData()
+                    if response.status == true,
+                       let details = response.data?.first,
+                       let newDetails = details.menu_details {
+                        
+                        let changedIndexPaths = self.updateMenuCounts(with: newDetails)
+                        
+                        // ✅ Reload only changed cells safely
+                        let safeIndexPaths = changedIndexPaths.filter { $0.item < (self.menu_details?.count ?? 0) }
+                        if !safeIndexPaths.isEmpty {
+                            self.MenuCollection.reloadItems(at: safeIndexPaths)
+                        }
+                        
+                        // ✅ Also update visible cells directly (no flicker)
+                        for indexPath in safeIndexPaths {
+                            if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC,
+                               let item = self.menu_details?[indexPath.item] {
+                                cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
+                            }
+                        }
                     }
                 }
             case .failure(let error):
@@ -152,32 +168,27 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
     }
-    
-    func updateMenuCounts(with newDetails: [MenuCountDetail]) {
-        guard var menu_details = menu_details else { return }
+
+    func updateMenuCounts(with newDetails: [MenuCountDetail]) -> [IndexPath] {
+        guard let currentDetails = menu_details else { return [] }
+        var updatedDetails = currentDetails
+        var changedIndexPaths: [IndexPath] = []
+        
         for newItem in newDetails {
-            if let newId = newItem.id {
-                if let index = menu_details.firstIndex(where: { $0.id == newId }) {
-                    menu_details[index] = MenuDetail(
-                        id: menu_details[index].id,
-                        name: menu_details[index].name,
-                        unread_count: newItem.unread_count,
-                        description: menu_details[index].description
-                    )
-                } else {
-                    menu_details.append(
-                        MenuDetail(
-                            id: newItem.id,
-                            name: newItem.name,
-                            unread_count: newItem.unread_count,
-                            description: nil
-                        )
-                    )
-                }
+            guard let newId = newItem.id,
+                  let index = updatedDetails.firstIndex(where: { $0.id == newId }) else { continue }
+            
+            if updatedDetails[index].unread_count != newItem.unread_count {
+                updatedDetails[index].unread_count = newItem.unread_count
+                changedIndexPaths.append(IndexPath(item: index, section: 0))
             }
         }
-        self.menu_details = menu_details
+        
+        self.menu_details = updatedDetails
+        return changedIndexPaths
     }
+
+
     
     func getacadmicYr(onComplete: @escaping () -> Void) {
         APIService.shared.makeApi(
@@ -363,6 +374,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 17: navigateOrSchoolList { MenuRedirect.Senderchat(from: self) }
         case 18: MenuRedirect.senderLeaveRequestNavigate(from: self)
         case 19: navigateOrSchoolList { MenuRedirect.senderLessonplanNavigate(from: self) }
+        case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
         case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
         case 22: navigateOrSchoolList { MenuRedirect.senderMgmt(from: self) }
         case 23: MenuRedirect.senderNoticeboardNavigate(from: self)
@@ -376,7 +388,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 33: navigateOrSchoolList { MenuRedirect.StaffWiseAttendance(from: self) }
         case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
-        case 38: MenuRedirect.SenderLSRWVCNavigate(from: self)
+        case 38: break
         case 39: MenuRedirect.senderAttachment(from: self)
         default: print("Unknown menuId:", item.id ?? 0)
         }

@@ -14,6 +14,7 @@ protocol backNavigation {
 @available(iOS 14.0, *)
 class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate {
     
+    // MARK: - SideMenuDelegate
     func meunu(viewController: UIViewController?) {
         hideSideMenu()
         guard let vc = viewController else {
@@ -21,7 +22,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             return
         }
         if vc is SettingsViewController || vc is ProfileViewController || vc is HelpVc {
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         } else {
             delegate?.back()
         }
@@ -38,7 +39,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
-    var menu_details: [MenuDetail] = []   // ✅ Default empty array
+    var menu_details: [MenuDetail] = []
     
     var childDetailscount = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var childDetails = UserDefaultFileManager.get_child_Details()
@@ -70,12 +71,12 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     // MARK: - API Calls
@@ -93,37 +94,32 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         ) { [weak self] (result: Result<MenuResponse, Error>) in
             guard let self = self else { return }
             
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
+                }
+                switch result {
+                case .success(let response):
                     if response.status == true, let details = response.data?.first {
-                        self.get_MenuCount()
                         self.menu_details = details.menus ?? []
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = (details.frequently_used?.isEmpty ?? true)
-                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 1
+                        self.pagecontroller.isHidden = (details.frequently_used?.count ?? 0) < 2
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
+                        self.get_MenuCount() // 🔹 after menus loaded
                     } else {
                         self.MenuCollection.reloadData()
                     }
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
-                }
-                
-            case .failure(let error):
-                DispatchQueue.main.async {
+                    
+                case .failure(let error):
                     print("API Error:", error.localizedDescription)
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
                 }
             }
         }
     }
-    
+
     func get_MenuCount() {
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
@@ -132,53 +128,41 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             token: childDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
-            
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
-                    if response.status == true, let details = response.data?.first, let newDetails = details.menu_details {
-                        self.updateMenuCounts(with: newDetails)
-                        self.recentActiveMenuCollection.reloadData()
-                        self.MenuCollection.reloadData()
-                    } else {
-                        self.MenuCollection.reloadData()
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    if response.status == true,
+                       let details = response.data?.first,
+                       let newDetails = details.menu_details {
+                        
+                        let changedIndexPaths = self.updateMenuCounts(with: newDetails)
+                        if !changedIndexPaths.isEmpty {
+                            self.MenuCollection.reloadItems(at: changedIndexPaths)
+                        }
                     }
-                }
-                
-            case .failure(let error):
-                DispatchQueue.main.async {
+                case .failure(let error):
                     print("API Error:", error.localizedDescription)
                 }
             }
         }
     }
-    
-    func updateMenuCounts(with newDetails: [MenuCountDetail]) {
+
+    func updateMenuCounts(with newDetails: [MenuCountDetail]) -> [IndexPath] {
+        var changedIndexPaths: [IndexPath] = []
+        
         for newItem in newDetails {
-            if let newId = newItem.id {
-                if let index = menu_details.firstIndex(where: { $0.id == newId }) {
-                    // ✅ Update unread_count only
-                    menu_details[index] = MenuDetail(
-                        id: menu_details[index].id,
-                        name: menu_details[index].name,
-                        unread_count: newItem.unread_count,
-                        description: menu_details[index].description
-                    )
-                } else {
-                    // Add new item if not already exists
-                    menu_details.append(
-                        MenuDetail(
-                            id: newItem.id,
-                            name: newItem.name,
-                            unread_count: newItem.unread_count,
-                            description: nil
-                        )
-                    )
+            if let newId = newItem.id,
+               let index = menu_details.firstIndex(where: { $0.id == newId }) {
+                
+                if menu_details[index].unread_count != newItem.unread_count {
+                    menu_details[index].unread_count = newItem.unread_count
+                    changedIndexPaths.append(IndexPath(item: index, section: 0))
                 }
             }
         }
+        return changedIndexPaths
     }
-    
+
     // MARK: - Setup UI
     private func setupHeaderView() {
         headerView.setNeedsDisplay()
@@ -275,11 +259,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     
     // MARK: - CollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == recentActiveMenuCollection {
-            return recentMenuItems?.count ?? 0
-        } else {
-            return menu_details.count
-        }
+        return collectionView == recentActiveMenuCollection ? (recentMenuItems?.count ?? 0) : menu_details.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -293,14 +273,12 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMenuCVC", for: indexPath) as! CustomMenuCVC
             let item = menu_details[indexPath.item]
             if let id = item.id {
-                if #available(iOS 14.0, *) {
-                    let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == id }
-                    let img = UIImage(named: filteredItems.first?.name ?? "")
-                    cell.iconBtn.setImage(img, for: .normal)
-                    cell.imenuName.text = item.name
-                    cell.menuCondent.text = "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet."
-                    cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
-                }
+                let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == id }
+                let img = UIImage(named: filteredItems.first?.name ?? "")
+                cell.iconBtn.setImage(img, for: .normal)
+                cell.imenuName.text = item.name
+                cell.menuCondent.text = item.description ?? ""
+                cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
             }
             return cell
         }
@@ -310,7 +288,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         var menuItem: Int?
         var menuName: String = ""
 
-        if collectionView != recentActiveMenuCollection {
+        if collectionView == MenuCollection {
             menuItem = menu_details[indexPath.row].id
             menuName = menu_details[indexPath.row].name ?? ""
         } else {
@@ -330,7 +308,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 9:  MenuRedirect.receiverEvent(from: self)
         case 10: MenuRedirect.resiverExamMark(from: self)
         case 12: MenuRedirect.receiverFeeDetails(from: self)
-        case 13: break
         case 15: MenuRedirect.receiverHomework(from: self)
         case 16: MenuRedirect.receiverchat(from: self)
         case 20: MenuRedirect.receiverLsrwNavigate(from: self)
