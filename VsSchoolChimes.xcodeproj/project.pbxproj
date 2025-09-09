@@ -404,6 +404,8 @@
 		848126D92D91820500BE6979 /* CountryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126D62D91820500BE6979 /* CountryListVC.swift */; };
 		848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126DB2D9182E100BE6979 /* CountryListCVC.xib */; };
 		848126DD2D9182E100BE6979 /* CountryListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126DA2D9182E100BE6979 /* CountryListCVC.swift */; };
+		8483F6402E6AF89100E2C886 /* PunchUserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8483F63F2E6AF89100E2C886 /* PunchUserDetailsTVC.xib */; };
+		8483F6412E6AF89100E2C886 /* PunchUserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483F63E2E6AF89100E2C886 /* PunchUserDetailsTVC.swift */; };
 		8488061B2DF6A963004806BF /* SubmissionTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848806192DF6A963004806BF /* SubmissionTVC.swift */; };
 		8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8488061A2DF6A963004806BF /* SubmissionTVC.xib */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
@@ -1280,6 +1282,8 @@
 		848126D72D91820500BE6979 /* CountryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListVC.xib; sourceTree = "<group>"; };
 		848126DA2D9182E100BE6979 /* CountryListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListCVC.swift; sourceTree = "<group>"; };
 		848126DB2D9182E100BE6979 /* CountryListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListCVC.xib; sourceTree = "<group>"; };
+		8483F63E2E6AF89100E2C886 /* PunchUserDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchUserDetailsTVC.swift; sourceTree = "<group>"; };
+		8483F63F2E6AF89100E2C886 /* PunchUserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchUserDetailsTVC.xib; sourceTree = "<group>"; };
 		848806192DF6A963004806BF /* SubmissionTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionTVC.swift; sourceTree = "<group>"; };
 		8488061A2DF6A963004806BF /* SubmissionTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmissionTVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
@@ -2206,6 +2210,8 @@
 			children = (
 				18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */,
 				18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */,
+				8483F63E2E6AF89100E2C886 /* PunchUserDetailsTVC.swift */,
+				8483F63F2E6AF89100E2C886 /* PunchUserDetailsTVC.xib */,
 			);
 			path = LocationHistoryVc;
 			sourceTree = "<group>";
@@ -4582,6 +4588,7 @@
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
 				848CC17A2D8A997200CD0255 /* MobileNumberVc.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
+				8483F6402E6AF89100E2C886 /* PunchUserDetailsTVC.xib in Resources */,
 				84127AE92E03C8F00092159D /* AddSuccessTVC.xib in Resources */,
 				84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */,
 				84127AEB2E03C8F00092159D /* Gilroy-Regular.ttf in Resources */,
@@ -4939,6 +4946,7 @@
 				84127AE42E03C8F00092159D /* ReedimHistoryCell.swift in Sources */,
 				84127AE52E03C8F00092159D /* TicketView.swift in Sources */,
 				84127AE62E03C8F00092159D /* ClaimCouponVc.swift in Sources */,
+				8483F6412E6AF89100E2C886 /* PunchUserDetailsTVC.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,

@@ -193,8 +193,13 @@ class MenuRedirectHandler {
     }
     func SenderLSRWVCNavigate(from viewController: UIViewController){
        // let vc = ExamCreatVC(nibName: nil, bundle: nil)
+//        if #available(iOS 15.0, *) {
+//            let vc = SenderLSRWVC(nibName: nil, bundle: nil)
+//            vc.modalPresentationStyle = .fullScreen
+//            viewController.present(vc, animated: true)
+//        }
         if #available(iOS 15.0, *) {
-            let vc = SenderLSRWVC(nibName: nil, bundle: nil)
+            let vc = LSRWVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             viewController.present(vc, animated: true)
         }
@@ -316,14 +321,10 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func senderSchoolNeedsNavigate(from viewController: UIViewController) {
-//        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
-//        vc.Header = "School Needs"
-        if #available(iOS 15.0, *) {
-//            let vc = LSRWPagenationVC(nibName: nil, bundle: nil)
-            let vc = LSRWVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            viewController.present(vc, animated: true)
-        }
+        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
+        vc.Header = "School Needs"
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
         
     }
     func senderAttachment(from viewController: UIViewController) {

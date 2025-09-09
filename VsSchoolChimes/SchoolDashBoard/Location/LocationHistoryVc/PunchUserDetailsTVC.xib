@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="337" id="KGk-i7-Jjw" customClass="PunchUserDetailsTVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="408" height="337"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="408" height="337"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAz-f4-HTc">
+                        <rect key="frame" x="10" y="10" width="388" height="319"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="headerView">
+                                <rect key="frame" x="0.0" y="8" width="388" height="60"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="headerStackView">
+                                        <rect key="frame" x="10" y="10" width="368" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Staff Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="titleLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="368" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal and institutional details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="subtitleLabel">
+                                                <rect key="frame" x="0.0" y="24.333333333333339" width="368" height="15.666666666666668"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="headerStackView" firstAttribute="bottom" secondItem="headerView" secondAttribute="bottom" constant="-10" id="header-bottom"/>
+                                    <constraint firstItem="headerStackView" firstAttribute="leading" secondItem="headerView" secondAttribute="leading" constant="10" id="header-leading"/>
+                                    <constraint firstItem="headerStackView" firstAttribute="top" secondItem="headerView" secondAttribute="top" constant="10" id="header-top"/>
+                                    <constraint firstItem="headerStackView" firstAttribute="trailing" secondItem="headerView" secondAttribute="trailing" constant="-10" id="header-trailing"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="separatorLine">
+                                <rect key="frame" x="0.0" y="76" width="388" height="1"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="separator-height"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="contentStackView">
+                                <rect key="frame" x="0.0" y="77" width="388" height="242"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="institutionView">
+                                        <rect key="frame" x="0.0" y="0.0" width="388" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="institutionIcon">
+                                                <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                                <color key="backgroundColor" red="0.94899999999999995" green="0.94899999999999995" blue="0.96899999999999997" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="institution-icon-height"/>
+                                                    <constraint firstAttribute="width" constant="30" id="institution-icon-width"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.55700000000000005" green="0.55700000000000005" blue="0.57599999999999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="star.fill" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Institution" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="institutionLabel">
+                                                <rect key="frame" x="50" y="17.333333333333329" width="100" height="15.666666666666664"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="institution-label-width"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3803921569" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="APP Revamp Testing School" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="institutionValueLabel">
+                                                <rect key="frame" x="166" y="15" width="212" height="20"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" name="PrimeryColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="institutionValueLabel" secondAttribute="bottom" constant="15" id="Pvg-IL-KoV"/>
+                                            <constraint firstItem="institutionIcon" firstAttribute="centerY" secondItem="institutionView" secondAttribute="centerY" id="institution-icon-centerY"/>
+                                            <constraint firstItem="institutionIcon" firstAttribute="leading" secondItem="institutionView" secondAttribute="leading" constant="10" id="institution-icon-leading"/>
+                                            <constraint firstItem="institutionLabel" firstAttribute="centerY" secondItem="institutionView" secondAttribute="centerY" id="institution-label-centerY"/>
+                                            <constraint firstItem="institutionLabel" firstAttribute="leading" secondItem="institutionIcon" secondAttribute="trailing" constant="10" id="institution-label-leading"/>
+                                            <constraint firstItem="institutionValueLabel" firstAttribute="centerY" secondItem="institutionView" secondAttribute="centerY" id="institution-value-centerY"/>
+                                            <constraint firstItem="institutionValueLabel" firstAttribute="leading" secondItem="institutionLabel" secondAttribute="trailing" constant="16" id="institution-value-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="institutionValueLabel" secondAttribute="trailing" constant="10" id="institution-value-trailing"/>
+                                            <constraint firstItem="institutionValueLabel" firstAttribute="top" secondItem="institutionView" secondAttribute="top" constant="15" id="uJm-av-iTg"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="separator1">
+                                        <rect key="frame" x="0.0" y="50" width="388" height="0.6666666666666643"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.59999999999999998" id="separator1-height"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="staffNameView">
+                                        <rect key="frame" x="0.0" y="50.666666666666657" width="388" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="staffNameIcon">
+                                                <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                                <color key="backgroundColor" red="0.94899999999999995" green="0.94899999999999995" blue="0.96899999999999997" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="staff-icon-height"/>
+                                                    <constraint firstAttribute="width" constant="30" id="staff-icon-width"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.55700000000000005" green="0.55700000000000005" blue="0.57599999999999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="person.fill" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Staff Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="staffNameLabel">
+                                                <rect key="frame" x="50" y="17" width="100" height="15.666666666666664"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="staff-label-width"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3803921569" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sathishkumar G" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="staffNameValueLabel">
+                                                <rect key="frame" x="166" y="15" width="206" height="20"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="staffNameValueLabel" firstAttribute="top" secondItem="staffNameView" secondAttribute="top" constant="15" id="Xiz-sR-WzF"/>
+                                            <constraint firstItem="staffNameIcon" firstAttribute="centerY" secondItem="staffNameView" secondAttribute="centerY" id="staff-icon-centerY"/>
+                                            <constraint firstItem="staffNameIcon" firstAttribute="leading" secondItem="staffNameView" secondAttribute="leading" constant="10" id="staff-icon-leading"/>
+                                            <constraint firstItem="staffNameLabel" firstAttribute="centerY" secondItem="staffNameView" secondAttribute="centerY" id="staff-label-centerY"/>
+                                            <constraint firstItem="staffNameLabel" firstAttribute="leading" secondItem="staffNameIcon" secondAttribute="trailing" constant="10" id="staff-label-leading"/>
+                                            <constraint firstItem="staffNameValueLabel" firstAttribute="centerY" secondItem="staffNameView" secondAttribute="centerY" id="staff-value-centerY"/>
+                                            <constraint firstItem="staffNameValueLabel" firstAttribute="leading" secondItem="staffNameLabel" secondAttribute="trailing" constant="16" id="staff-value-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="staffNameValueLabel" secondAttribute="trailing" constant="16" id="staff-value-trailing"/>
+                                            <constraint firstAttribute="bottom" secondItem="staffNameValueLabel" secondAttribute="bottom" constant="15" id="xYK-pr-eoM"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="separator2">
+                                        <rect key="frame" x="0.0" y="100.66666666666666" width="388" height="0.3333333333333286"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="separator2-height"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="designationView">
+                                        <rect key="frame" x="0.0" y="101" width="388" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="designationIcon">
+                                                <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                                <color key="backgroundColor" red="0.94899999999999995" green="0.94899999999999995" blue="0.96899999999999997" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="designation-icon-height"/>
+                                                    <constraint firstAttribute="width" constant="30" id="designation-icon-width"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.55700000000000005" green="0.55700000000000005" blue="0.57599999999999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="checkmark.circle.fill" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Designation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="designationLabel">
+                                                <rect key="frame" x="50" y="17.333333333333343" width="100" height="15.666666666666664"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="designation-label-width"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3803921569" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRINCIPAL" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="designationValueLabel">
+                                                <rect key="frame" x="166" y="15" width="206" height="20"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" name="PrimeryColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="designationValueLabel" firstAttribute="top" secondItem="designationView" secondAttribute="top" constant="15" id="2FE-HC-cYY"/>
+                                            <constraint firstAttribute="bottom" secondItem="designationValueLabel" secondAttribute="bottom" constant="15" id="ZRt-wa-TeM"/>
+                                            <constraint firstItem="designationIcon" firstAttribute="centerY" secondItem="designationView" secondAttribute="centerY" id="designation-icon-centerY"/>
+                                            <constraint firstItem="designationIcon" firstAttribute="leading" secondItem="designationView" secondAttribute="leading" constant="10" id="designation-icon-leading"/>
+                                            <constraint firstItem="designationLabel" firstAttribute="centerY" secondItem="designationView" secondAttribute="centerY" id="designation-label-centerY"/>
+                                            <constraint firstItem="designationLabel" firstAttribute="leading" secondItem="designationIcon" secondAttribute="trailing" constant="10" id="designation-label-leading"/>
+                                            <constraint firstItem="designationValueLabel" firstAttribute="centerY" secondItem="designationView" secondAttribute="centerY" id="designation-value-centerY"/>
+                                            <constraint firstItem="designationValueLabel" firstAttribute="leading" secondItem="designationLabel" secondAttribute="trailing" constant="16" id="designation-value-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="designationValueLabel" secondAttribute="trailing" constant="16" id="designation-value-trailing"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="separator3">
+                                        <rect key="frame" x="0.0" y="151" width="388" height="0.66666666666665719"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="separator3-height"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dateView">
+                                        <rect key="frame" x="0.0" y="151.66666666666666" width="388" height="90.333333333333343"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dateIcon">
+                                                <rect key="frame" x="10" y="30.000000000000028" width="30" height="30"/>
+                                                <color key="backgroundColor" red="0.94899999999999995" green="0.94899999999999995" blue="0.96899999999999997" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="date-icon-height"/>
+                                                    <constraint firstAttribute="width" constant="30" id="date-icon-width"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.55700000000000005" green="0.55700000000000005" blue="0.57599999999999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="calendar" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dateLabel">
+                                                <rect key="frame" x="50" y="37.333333333333343" width="100" height="15.666666666666664"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="date-label-width"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3803921569" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05 September 2025" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dateValueLabel">
+                                                <rect key="frame" x="166" y="15.000000000000004" width="206" height="60.333333333333343"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" name="PrimeryColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="dateIcon" firstAttribute="centerY" secondItem="dateView" secondAttribute="centerY" id="date-icon-centerY"/>
+                                            <constraint firstItem="dateIcon" firstAttribute="leading" secondItem="dateView" secondAttribute="leading" constant="10" id="date-icon-leading"/>
+                                            <constraint firstItem="dateLabel" firstAttribute="centerY" secondItem="dateView" secondAttribute="centerY" id="date-label-centerY"/>
+                                            <constraint firstItem="dateLabel" firstAttribute="leading" secondItem="dateIcon" secondAttribute="trailing" constant="10" id="date-label-leading"/>
+                                            <constraint firstItem="dateValueLabel" firstAttribute="centerY" secondItem="dateView" secondAttribute="centerY" id="date-value-centerY"/>
+                                            <constraint firstItem="dateValueLabel" firstAttribute="leading" secondItem="dateLabel" secondAttribute="trailing" constant="16" id="date-value-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="dateValueLabel" secondAttribute="trailing" constant="16" id="date-value-trailing"/>
+                                            <constraint firstItem="dateValueLabel" firstAttribute="top" secondItem="dateView" secondAttribute="top" constant="15" id="j9L-lp-Fvf"/>
+                                            <constraint firstAttribute="bottom" secondItem="dateValueLabel" secondAttribute="bottom" constant="15" id="w4J-Wr-7Iu"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="contentStackView" secondAttribute="bottom" id="content-stack-bottom"/>
+                            <constraint firstItem="contentStackView" firstAttribute="leading" secondItem="wAz-f4-HTc" secondAttribute="leading" id="content-stack-leading"/>
+                            <constraint firstItem="contentStackView" firstAttribute="top" secondItem="separatorLine" secondAttribute="bottom" id="content-stack-top"/>
+                            <constraint firstItem="contentStackView" firstAttribute="trailing" secondItem="wAz-f4-HTc" secondAttribute="trailing" id="content-stack-trailing"/>
+                            <constraint firstItem="headerView" firstAttribute="leading" secondItem="wAz-f4-HTc" secondAttribute="leading" id="header-view-leading"/>
+                            <constraint firstItem="headerView" firstAttribute="top" secondItem="wAz-f4-HTc" secondAttribute="top" constant="8" id="header-view-top"/>
+                            <constraint firstItem="headerView" firstAttribute="trailing" secondItem="wAz-f4-HTc" secondAttribute="trailing" id="header-view-trailing"/>
+                            <constraint firstItem="separatorLine" firstAttribute="leading" secondItem="headerView" secondAttribute="leading" id="separator-line-leading"/>
+                            <constraint firstItem="separatorLine" firstAttribute="top" secondItem="headerView" secondAttribute="bottom" constant="8" id="separator-line-top"/>
+                            <constraint firstItem="separatorLine" firstAttribute="trailing" secondItem="headerView" secondAttribute="trailing" id="separator-line-trailing"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="wAz-f4-HTc" secondAttribute="bottom" constant="8" id="main-view-bottom"/>
+                    <constraint firstItem="wAz-f4-HTc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="main-view-leading"/>
+                    <constraint firstItem="wAz-f4-HTc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="main-view-top"/>
+                    <constraint firstAttribute="trailing" secondItem="wAz-f4-HTc" secondAttribute="trailing" constant="10" id="main-view-trailing"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="containerView" destination="H2p-sc-9uM" id="8M8-NL-HPA"/>
+                <outlet property="contentStackView" destination="contentStackView" id="AuU-Px-4tH"/>
+                <outlet property="dateIcon" destination="dateIcon" id="SU6-CO-HAR"/>
+                <outlet property="dateLabel" destination="dateLabel" id="uFt-Kb-GpX"/>
+                <outlet property="dateValueLabel" destination="dateValueLabel" id="ocT-hn-UBj"/>
+                <outlet property="designationIcon" destination="designationIcon" id="Ily-2z-RyI"/>
+                <outlet property="designationLabel" destination="designationLabel" id="6uH-Ta-QgN"/>
+                <outlet property="designationValueLabel" destination="designationValueLabel" id="PBl-s7-Tfo"/>
+                <outlet property="headerView" destination="wAz-f4-HTc" id="eza-oH-0eR"/>
+                <outlet property="institutionIcon" destination="institutionIcon" id="w2d-iD-UqG"/>
+                <outlet property="institutionLabel" destination="institutionLabel" id="mrD-sP-y87"/>
+                <outlet property="institutionValueLabel" destination="institutionValueLabel" id="bhQ-l5-5GJ"/>
+                <outlet property="staffNameIcon" destination="staffNameIcon" id="N8h-c6-L5G"/>
+                <outlet property="staffNameLabel" destination="staffNameLabel" id="eyU-FP-opx"/>
+                <outlet property="staffNameValueLabel" destination="staffNameValueLabel" id="8mR-gw-PbB"/>
+                <outlet property="subtitleLabel" destination="subtitleLabel" id="zkl-XP-LNf"/>
+                <outlet property="titleLabel" destination="titleLabel" id="way-TB-4Ik"/>
+            </connections>
+            <point key="canvasLocation" x="94.656488549618317" y="122.88732394366198"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="calendar" catalog="system" width="128" height="107"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
