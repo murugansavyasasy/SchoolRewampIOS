@@ -25,10 +25,15 @@ class DatePickerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+        
+        datepicker.locale = locale
+        
         if let date = minimumDate {
             datepicker.minimumDate = date
         }
-        
         
         if let date = maximumDate {
             
@@ -37,7 +42,7 @@ class DatePickerVC: UIViewController {
         
         bgView.layer.cornerRadius = 10
         outerView.layer.cornerRadius = 10
-        datepicker.locale = .current
+       // datepicker.locale = .current
         
         // Set picker mode and style
         if dateSelection == 2 {
@@ -73,8 +78,12 @@ class DatePickerVC: UIViewController {
             "hh:mm a"
         ]
         
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+    
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = locale//Locale(identifier: "en_US_POSIX")
         
         for format in formats {
             formatter.dateFormat = format
@@ -90,8 +99,13 @@ class DatePickerVC: UIViewController {
     }
     
     func updateFormattedDate() {
+        
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+        
         let formatter = DateFormatter()
-        formatter.locale = .current
+        formatter.locale = locale
         
         if dateSelection == 2 {
             formatter.dateFormat = "dd MMM yyy"
@@ -101,6 +115,7 @@ class DatePickerVC: UIViewController {
         
         date = formatter.string(from: datepicker.date)
     }
+    
     @IBAction func done(_ sender: UIButton) {
         delegate?.date(date: self.date ?? "")
         dismiss(animated: false)
@@ -109,5 +124,20 @@ class DatePickerVC: UIViewController {
         dismiss(animated: false)
     }
     
+    func normalizedLocaleIdentifier(for code: String) -> String {
+        // First, try as-is (e.g., "ta-IN")
+        if Locale.availableIdentifiers.contains(code) {
+            return code
+        }
+        
+        // Otherwise, fallback to just the language part (e.g., "ta")
+        if let langCode = code.split(separator: "-").first,
+           Locale.availableIdentifiers.contains(String(langCode)) {
+            return String(langCode)
+        }
+        
+        // Default to English if nothing matches
+        return "en"
+    }
 }
 
