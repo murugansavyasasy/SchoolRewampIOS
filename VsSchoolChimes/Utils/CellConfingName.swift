@@ -105,7 +105,7 @@ class CellConfingName {
     static let  TimetableTv = "TimetableTv"
     static let  QuizTVcell = "QuizTVcell"
     static let  CompletedTVcell = "CompletedTVcell"
-    static let  QuizListTvCell = "QuizListTvCell"
+    static let  QuizListTvCell = "quizCellTv"
     static let  TakeReadingSkillTableViewCell = "TakeReadingSkillTableViewCell"
     static let  LessonDashboardTv = "LessonDashboardTv"
     static let  LessonProgressCell = "LessonProgressCell"

@@ -1366,6 +1366,8 @@ struct ManagemantMessageData: Codable {
     var type: String?
     var id: String?
     var header_id: String?
+    var sent_by: String?
+    var role: String?
     var title: String?
     var content: String?
     var file_path: [FilePath]?
@@ -1922,20 +1924,8 @@ struct QuizListData : Codable{
     let no_of_levels : String?
     
 }
-
-
-            
-          
-           
-           
-            
-            
-            
-           
-           
-           
-           
-            
+    
+        
             
 struct senderQuizListData : Codable{
     
@@ -1950,7 +1940,6 @@ struct senderQuizListData : Codable{
     var subject : String?
     var sent_by : String?
     var submission_date : String?
-//    var mark : String?
     var type_name : String?
     var no_of_questions : Int?
     var submitted_count : Int?
@@ -1977,6 +1966,7 @@ struct QuizQuestionDataDetails : Codable{
     let mark : Int?
     let correctOptionIndex : Int?
     let options : [String]?
+    var file_path: [FilePath]?
 }
 
 struct QuizaddQuestionSuc : Codable{
@@ -1986,25 +1976,36 @@ struct QuizaddQuestionSuc : Codable{
     let data : [QuizQuestiondata]?
 }
 
-//"id": "22764",
-//           "quiz_id": "1287",
-//           "question": "How many sides does a triangle have?",
-//           "chapter": "Chapter-1",
-//           "answer": "3",
-//           "a_option": "2",
-//           "b_option": "4",
-//           "c_option": "3",
-//           "d_option": "6",
-//           "mark": 2,
-//           "option_a_counts": 0,
-//           "option_b_counts": 1,
-//           "option_c_counts": 0,
-//           "option_d_counts": 0,
-//           "correct_answer_counts": 0,
-//           "incorrect_answer_counts": 1,
-//           "correct_answer": "3",
-//           "file_path": []
 
+
+struct MyQuizSuc: Codable {
+    var status : Bool?
+    var message : String?
+    var data : [myQuizDetails]?
+}
+
+struct myQuizDetails : Codable  {
+    var student_id : String?
+    var right_answer : String?
+    var wrong_answer : String?
+    var un_answer : String?
+    var quiz_details : [MyQuizDetails]?
+            
+}
+struct MyQuizDetails : Codable  {
+    var id : String?
+    var quiz_id : String?
+    var question : String?
+    var a_option : String?
+    var b_option : String?
+    var c_cption : String?
+    var d_option : String?
+    var mark : Int?
+    var student_answer : String?
+    var correct_answer : String?
+    var file_path : [FilePath]?
+    
+}
 struct QuizQuestiondata: Codable {
     var id: String?         // for Quizdata from API
     var quizId: String?     // for API

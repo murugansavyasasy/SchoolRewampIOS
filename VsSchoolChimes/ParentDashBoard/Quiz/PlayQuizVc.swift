@@ -9,6 +9,8 @@ import UIKit
 
 class PlayQuizVc: UIViewController {
     
+    @IBOutlet weak var pageControls: UIPageControl!
+    @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var PreviousBtn: UIButton!
     @IBOutlet weak var sectionLbl: UILabel!
@@ -38,20 +40,7 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
     @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
     @IBOutlet weak var CompTotalmarkLbl: UILabel!
-//    
-//    var questions: [Question] = [
-//        Question(text: "What is the capital of Germany?", options: ["Berlin", "Munich", "Frankfurt", "Hamburg"], correctOptionIndex: 0),
-//        Question(text: "What is the square root of 64?", options: ["6", "7", "8", "9"], correctOptionIndex: 2),
-//        Question(text: "Which planet is the largest in the Solar System?", options: ["Earth", "Mars", "Jupiter", "Saturn"], correctOptionIndex: 2),
-//        Question(text: "Who wrote 'Romeo and Juliet'?", options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "Jane Austen"], correctOptionIndex: 2),
-//        Question(text: "Which is the smallest prime number?", options: ["0", "1", "2", "3"], correctOptionIndex: 2),
-//        Question(text: "What is the chemical symbol for water?", options: ["H2O", "CO2", "NaCl", "O2"], correctOptionIndex: 0),
-//        Question(text: "Which country is known as the Land of the Rising Sun?", options: ["India", "China", "Japan", "Thailand"], correctOptionIndex: 2),
-//        Question(text: "What is the fastest land animal?", options: ["Cheetah", "Lion", "Horse", "Leopard"], correctOptionIndex: 0),
-//        Question(text: "Which ocean is the largest by area?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correctOptionIndex: 3),
-//        Question(text: "Who discovered penicillin?", options: ["Marie Curie", "Alexander Fleming", "Isaac Newton", "Louis Pasteur"], correctOptionIndex: 1)
-//    ]
-    
+    var answeredOptions: [String: Int] = [:]
     var currentQuestionIndex = 0
     var buttons: [UIButton] = []
     var selectedOptionIndex: Int? = nil
@@ -61,8 +50,10 @@ class PlayQuizVc: UIViewController {
     var correctAnswers = ""
     var getQuestiondataDetails : [QuizQuestionDataDetails] = []
     var getQuestiondata : [QuizQuestionData] = []
+    var filePath: [FilePath]?
     var childDetails = UserDefaultFileManager.get_child_Details()
     var selectedQuizId : String?
+    var alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         Get_QuizQuestion()
@@ -70,13 +61,15 @@ class PlayQuizVc: UIViewController {
         fullView.layer.cornerRadius = 10
         buttons = [Button1,Button2,Button3,Button4]
         
+        cv.register(UINib(nibName: "MsgVoiceCvCell", bundle: nil), forCellWithReuseIdentifier: "MsgVoiceCvCell")
       
-        
         applyCustomFontToButtons()
-        selectedOptions = Array(repeating: nil, count: getQuestiondataDetails.count)
-        if getQuestiondataDetails.count != 0 {
-            loadQuestion()
-        }
+       
+//        if getQuestiondataDetails.count != 0 {
+//            loadQuestion()
+//        }
+//        
+        
         
         StyleAndTranslate()
     }
@@ -122,10 +115,18 @@ class PlayQuizVc: UIViewController {
                 
                 switch result {
                 case .success(let successResponse):
-                   
-                    self.getQuestiondata = successResponse.data ?? []
-                    
-                    self.getQuestiondataDetails = successResponse.data?.first?.question_details ?? []
+                    if successResponse.status == true{
+                        self.getQuestiondata = successResponse.data ?? []
+                        
+                        self.getQuestiondataDetails = successResponse.data?.first?.question_details ?? []
+                        self.selectedOptions = Array(
+                            repeating: nil,
+                            count: self.getQuestiondataDetails.count
+                        )
+                        self.loadQuestion()
+                    }else{
+                        
+                    }
                     
                     
                 case .failure(let error):
@@ -157,7 +158,7 @@ class PlayQuizVc: UIViewController {
         NameLbl.setFont(style: .title, size: FontSize.TitleSize)
         sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
         QuestionLbl.setFont(style: .title, size: FontSize.TitleSize)
-        QuestionCountLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        QuestionCountLbl.setFont(style: .title, size: FontSize.TitleSize)
         NextBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         PreviousBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         CompletedLbl.setFont(style: .header, size: FontSize.HeaderSize)
@@ -174,7 +175,25 @@ class PlayQuizVc: UIViewController {
     
     func loadQuestion() {
         let currentQuestion = getQuestiondataDetails[currentQuestionIndex]
+        
         QuestionLbl.text = currentQuestion.question
+        filePath = currentQuestion.file_path
+        cv.isHidden = currentQuestion.file_path?.count == 0
+        pageControls.isHidden = currentQuestion.file_path?.count == 1 || currentQuestion.file_path?.count == 0
+        pageControls.numberOfPages = currentQuestion.file_path?.count ?? 0
+        pageControls.currentPage = 0
+        
+        cv.delegate = self
+        cv.dataSource = self
+        cv.reloadData()
+        
+       
+            let questionId = currentQuestion.id ?? ""
+
+            // If no answer saved yet, save default (0)
+            if answeredOptions[questionId] == nil {
+                answeredOptions[questionId] = 0
+            }
         
         for (index, button) in buttons.enumerated() {
             button.setTitle(currentQuestion.options?[index], for: .normal)
@@ -194,11 +213,31 @@ class PlayQuizVc: UIViewController {
         
         // Update progress bar and question count
         progressBar.progress = Float(currentQuestionIndex + 1) / Float(getQuestiondataDetails.count)
-        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(getQuestiondata.first?.total_questions)"
+//        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(getQuestiondata.first?.total_questions ?? 0)"
+        
+        
+        let current = "\(currentQuestionIndex + 1)"
+        let total = "\(getQuestiondata.first?.total_questions ?? 0)"
+        let fullText = "\(current) / \(total)"
+
+        let attributedString = NSMutableAttributedString(string: fullText)
+
+        // current number range
+        if let range = fullText.range(of: current) {
+            let nsRange = NSRange(range, in: fullText)
+            attributedString
+                .addAttribute(
+                    .foregroundColor,
+                    value: UIColor.primery,
+                    range: nsRange)}
+
+        QuestionCountLbl.attributedText = attributedString
+
     }
     
     @IBAction func NextAct(_ sender: Any) {
         
+//        print("NextActNextAct",answeredOptions)
         if currentQuestionIndex < getQuestiondataDetails.count - 1 {
             currentQuestionIndex += 1
             loadQuestion()
@@ -210,20 +249,71 @@ class PlayQuizVc: UIViewController {
             
         } else if currentQuestionIndex == getQuestiondataDetails.count - 1 {
             
-            // Calculate the score and show the result after the last question
-            var score = 0
             
-            for (index, question) in getQuestiondataDetails.enumerated() {
-                if selectedOptions[index] == question.correctOptionIndex {
-                    score += 1 // Increment score for correct answers
-                }
+            print("answeredOptionsansweredOptions",answeredOptions)
+          
+            
+            let zeroCount = answeredOptions.values.filter { $0 == 0 }.count
+            
+           
+            if zeroCount > 0 {
+                print("Number of zeros: \(zeroCount)")
+                showAlert(message: "Are you sure want to submit ?")
+                
+            } else {
+                print("No zeros found")
+                
+                showAlert(message: " Are you sure you want to submit the quiz? because you not answered \(zeroCount) questions!")
             }
             
-            CompCorrectAnsCountLbl.text = String (score)
-            CompInccorectCountLbl.text = String (getQuestiondataDetails.count - score)
-            CompTotalmarkLbl.text = " \(score) out of \(getQuestiondataDetails.count)"
-            CompletedView.isHidden = false
-            correctAnswers = String (score)
+            
+
+        }
+    }
+    
+    
+    func showAlert(message: String) {
+        alert.showAlertCancel(
+            title:  AlertstringFile.Alert_title,
+            message:  message ,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [weak self] in
+                
+            self?.submitQuiz()
+            },
+            onNo: {
+                print("User canceled.")
+            }
+        )
+    }
+    
+    
+    func submitQuiz() {
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.quiz_submit, parameters: ["id" : selectedQuizId ?? "","answers" : answeredOptions ], type: ApitTypeSringFile.POST, token: childDetails?.access_token ?? "") { [weak self] (
+                result: Result<CommonApiSuc,
+                Error>
+            ) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let successResponse):
+                   
+                    if successResponse.status == true {
+                        
+                    }else{
+                        
+                        
+                    }
+                    
+                case .failure(let error):
+                    print("Error fetching notices: \(error.localizedDescription)")
+                }
+            }
         }
     }
     
@@ -245,10 +335,16 @@ class PlayQuizVc: UIViewController {
         
         // Update selected option for the current question
         selectedOptions[currentQuestionIndex] = sender.tag
-        print("sender.tag", sender.tag)
-        for i in selectedOptions {
-            print("SelectedOptions", i)
-        }
+//        print("sender.tag", sender.tag)
+//        for i in selectedOptions {
+//        print("SelectedOptions", i)
+//        }
+        
+        let currentQuestion = getQuestiondataDetails[currentQuestionIndex]
+           let questionId = currentQuestion.id ?? ""
+
+           // Save the selected option index (button.tag)
+           answeredOptions[questionId] = sender.tag + 1
         
         // Reset all button styles
         for button in buttons {
@@ -398,6 +494,71 @@ class PlayQuizVc: UIViewController {
     //    ]
     
     
+}
+
+
+extension PlayQuizVc : UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UICollectionViewDelegate,UIScrollViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filePath?.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MsgVoiceCvCell", for: indexPath) as? MsgVoiceCvCell else {
+            return UICollectionViewCell()
+        }
+        if let url = URL(string: filePath?[indexPath.row].url ?? "") {
+                    let request = URLRequest(url: url)
+            cell.webView.load(request)
+                }
+      
+        
+        
+        let urlString = filePath?[indexPath.row].url ?? ""
+        if let url = URL(string: urlString) {
+            let ext = url.pathExtension.lowercased()
+            if ["png", "jpg", "jpeg", "webp"].contains(ext) {
+               
+                let imageUrl = urlString
+
+                let htmlString = """
+                <html>
+                <head>
+                <style>
+                body { margin:0; padding:0; background:#000; }
+                img { max-width:100%; height:auto; display:block; margin:auto; }
+                </style>
+                </head>
+                <body>
+                <img src="\(imageUrl)">
+                </body>
+                </html>
+                """
+                cell.webView.isUserInteractionEnabled = false
+                cell.webView.loadHTMLString(htmlString, baseURL: nil)
+            } else {
+                cell.webView.isUserInteractionEnabled = true
+                cell.webView
+                    .load(
+                        URLRequest(
+                            url: URL(string:filePath?[indexPath.row].url ?? "")!
+                        )
+                    )
+            }
+        }
+        
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: collectionView.layer.frame.width, height: 180)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+           let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
+        pageControls.currentPage = Int(pageIndex)
+       }
 }
 
 struct Question {

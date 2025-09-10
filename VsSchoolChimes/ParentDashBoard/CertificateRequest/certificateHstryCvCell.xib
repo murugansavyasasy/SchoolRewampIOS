@@ -5,23 +5,24 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="certificateHstryCvCell" customModule="School_Chimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="221" height="140"/>
+            <rect key="frame" x="0.0" y="0.0" width="221" height="130"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="221" height="140"/>
+                <rect key="frame" x="0.0" y="0.0" width="221" height="130"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mie-PW-6Nz" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
-                        <rect key="frame" x="10" y="10" width="201" height="120"/>
+                        <rect key="frame" x="10" y="10" width="201" height="110"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vXC-GR-weW">
-                                <rect key="frame" x="10" y="15.666666666666666" width="25" height="23.666666666666671"/>
+                                <rect key="frame" x="10" y="15.666666666666664" width="25" height="23.666666666666671"/>
                                 <color key="tintColor" red="0.1999511719" green="0.4392089844" blue="0.1215820312" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="ONQ-cI-MaB"/>
@@ -35,7 +36,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7om-lm-X9u">
-                                <rect key="frame" x="8" y="55" width="153" height="41.333333333333343"/>
+                                <rect key="frame" x="8" y="55.000000000000007" width="153" height="19.333333333333336"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Study Certificate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yvj-xy-t6o">
                                         <rect key="frame" x="0.0" y="0.0" width="153" height="19.333333333333332"/>
@@ -43,8 +44,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason :  i want to chage " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mLf-aM-nlJ">
-                                        <rect key="frame" x="0.0" y="23.333333333333329" width="153" height="18"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason :  i want to chage " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mLf-aM-nlJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="153" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -52,7 +53,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.forward.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wSN-RR-ouA">
-                                <rect key="frame" x="166" y="78.333333333333343" width="25" height="23.666666666666671"/>
+                                <rect key="frame" x="166" y="73.333333333333343" width="25" height="23.666666666666671"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="NqZ-Uq-Clf"/>
@@ -60,7 +61,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.8076171875" green="0.9134671982520548" blue="0.82787082619863017" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vXC-GR-weW" firstAttribute="leading" secondItem="Mie-PW-6Nz" secondAttribute="leading" constant="10" id="2Jt-du-9rW"/>
                             <constraint firstItem="vXC-GR-weW" firstAttribute="top" secondItem="Mie-PW-6Nz" secondAttribute="top" constant="15" id="NKW-3S-Cqe"/>
@@ -97,17 +98,20 @@
                 <constraint firstItem="Mie-PW-6Nz" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="hHR-t0-VOg"/>
                 <constraint firstAttribute="bottom" secondItem="Mie-PW-6Nz" secondAttribute="bottom" constant="10" id="ydl-6a-v5S"/>
             </constraints>
-            <size key="customSize" width="221" height="140"/>
+            <size key="customSize" width="221" height="130"/>
             <connections>
                 <outlet property="dateLbl" destination="XdM-qq-Aen" id="iaa-tx-DSd"/>
                 <outlet property="reasonLbl" destination="mLf-aM-nlJ" id="qes-Wn-DYv"/>
                 <outlet property="typeLbl" destination="Yvj-xy-t6o" id="Xfc-jc-tb6"/>
             </connections>
-            <point key="canvasLocation" x="266.41221374045801" y="16.901408450704228"/>
+            <point key="canvasLocation" x="266.41221374045801" y="13.380281690140846"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="arrow.forward.circle" catalog="system" width="128" height="123"/>
         <image name="calendar.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
