@@ -42,7 +42,7 @@ class DatePickerVC: UIViewController {
         
         bgView.layer.cornerRadius = 10
         outerView.layer.cornerRadius = 10
-        datepicker.locale = .current
+       // datepicker.locale = .current
         
         // Set picker mode and style
         if dateSelection == 2 {
@@ -99,8 +99,13 @@ class DatePickerVC: UIViewController {
     }
     
     func updateFormattedDate() {
+        
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+        
         let formatter = DateFormatter()
-        formatter.locale = .current
+        formatter.locale = locale
         
         if dateSelection == 2 {
             formatter.dateFormat = "dd MMM yyy"
@@ -110,6 +115,7 @@ class DatePickerVC: UIViewController {
         
         date = formatter.string(from: datepicker.date)
     }
+    
     @IBAction func done(_ sender: UIButton) {
         delegate?.date(date: self.date ?? "")
         dismiss(animated: false)
@@ -133,7 +139,5 @@ class DatePickerVC: UIViewController {
         // Default to English if nothing matches
         return "en"
     }
-
-    
 }
 

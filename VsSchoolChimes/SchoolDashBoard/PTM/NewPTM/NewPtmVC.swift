@@ -52,7 +52,7 @@ class NewPtmVC: UIViewController, Datepicker {
         backBtn.configureAsBackButton(firstLine: "PTM", secondLine: staffDetails?.school_name ?? "",colour: .white)
         
         selectDateBtn.setTitle(CommonStringFile.all, for: .normal)
-        
+        selectDateBtn.semanticContentAttribute = .forceRightToLeft
         selectDateBtn.layer.cornerRadius = 10
         selectDateBtn.layer.borderWidth = 1
         selectDateBtn.layer.borderColor = UIColor.white.cgColor
@@ -70,12 +70,12 @@ class NewPtmVC: UIViewController, Datepicker {
         
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
         
-        cv.register(UINib(nibName: "PtmCV", bundle: nil), forCellWithReuseIdentifier: "PtmCV")
+        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
         cv.delegate = self
         cv.dataSource = self
         
-        tv.register(UINib(nibName: "MeetingDetailTV", bundle: nil), forCellReuseIdentifier: "MeetingDetailTV")
-        tv.register(UINib(nibName: "SlotListTV", bundle: nil), forCellReuseIdentifier: "SlotListTV")
+        tv.register(UINib(nibName: CellConfingName.MeetingDetailTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDetailTV)
+        tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self
         tv.dataSource = self
         
