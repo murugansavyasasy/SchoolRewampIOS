@@ -152,7 +152,7 @@ class LSRWVC: UIViewController, FilterDelegate {
         
         lsrwTable.reloadData()
     }
-
+    
     // MARK: - Helper (replace only matching section)
     private func updateSection(_ newSection: LsrwDisplaySection) {
         filterTask = filterTask.map { section in
@@ -272,12 +272,10 @@ extension LSRWVC {
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = .clear
-        
+        headerView.backgroundColor = .white
         let titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.textColor = .label
-        
         switch filterTask[section] {
         case .overview: titleLabel.text = "Dashboard Overview"
         case .filterArray: titleLabel.text = ""
