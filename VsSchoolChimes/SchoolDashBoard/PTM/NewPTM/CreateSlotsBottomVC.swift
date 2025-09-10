@@ -21,6 +21,8 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         view.layer.cornerRadius = 30
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
+        createMeetingBtn.layer.cornerRadius = 10
+        
         tableView.register(UINib(nibName: "CreatedSlotsTv", bundle: nil), forCellReuseIdentifier: "CreatedSlotsTv")
         tableView.delegate = self
         tableView.dataSource = self

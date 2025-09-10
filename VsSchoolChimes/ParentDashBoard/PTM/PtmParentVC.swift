@@ -23,6 +23,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var noDataView: UIView!
+    @IBOutlet weak var searchBtn: UIButton!
     
     
     var dateComponents: [(month: String, day: String, date: Date)] = []
@@ -37,6 +38,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     let alert = CustomAlert()
     let dropDown = DropDown()
     var childVc : PtmHistoryVC?
+    var availableSlots : [AvailableSlot] = []
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -50,12 +52,26 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
+        let name = childDetails?.name ?? ""
+        let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        
+        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting, for: .normal)
+        yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
+        BookSlotBtn.setTitle(PTMString.bookSlot, for: .normal)
+        
+        subjectLbl.text = PTMString.allSubjects
+        
+        scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
+        yourMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
+        
         scheduleMeetingBtn.layer.cornerRadius = 12
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.layer.cornerRadius = 12
         
         noDataView.isHidden = true
         NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
+        searchBtn.isHidden = true
         
         CV.layer.cornerRadius = 12
         CV.backgroundColor = .clear
@@ -100,7 +116,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - DropDown
     private func setupDropDown() {
         dropDown.anchorView = subjectsView
-        dropDown.dataSource = ["All Subjects"] + subjectList.compactMap { $0.name }
+        dropDown.dataSource = [PTMString.allSubjects] + subjectList.compactMap { $0.name }
         
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
@@ -221,6 +237,26 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
     
+    func Get_Available_slot_count(){
+        
+        APIService.shared.makeApi(url:ServiceUrl.ptm_api_ptm_schedule_available_slots_count_for_student, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self]  (result:Result<AvailableSlotsResponse , Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    self.availableSlots = success.data ?? []
+                    
+                case .failure(let failure):
+                    
+                    print("Error: ", failure.localizedDescription)
+                }
+            }
+        }
+    }
+    
     // MARK: - Time helpers
     private lazy var timeFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -243,41 +279,36 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     // MARK: - Conflict recomputation (locks my_booking rows; ignores them in cross-row conflicts)
     private func recomputeConflicts() {
-        struct SelectedBlock { let slot: StudentSlot; let eventIndex: Int }
-        var selectedBlocks: [SelectedBlock] = []
+        struct Selection { let slot: StudentSlot; let eventIndex: Int }
+        var blockingSelections: [Selection] = []
 
-        // Build selected blocks from userSelected only (ignore API my_booking rows here,
-        // since you said locked rows shouldn't participate in conflict checks)
+        // Collect blocking slots = user selections + my_booking slots
         for (eIdx, ev) in events.enumerated() {
             guard let slots = ev.slots else { continue }
-            // skip locked rows from producing conflicts
-            if slots.contains(where: { $0.my_booking ?? false }) { continue }
-            for sl in slots where (sl.userSelected ?? false) {
-                selectedBlocks.append(.init(slot: sl, eventIndex: eIdx))
+            for sl in slots {
+                if (sl.userSelected ?? false) || (sl.my_booking ?? false) {
+                    blockingSelections.append(.init(slot: sl, eventIndex: eIdx))
+                }
             }
         }
 
-        // Now compute for each row — only compare against selectedBlocks from OTHER rows
         for e in 0..<events.count {
             guard var slots = events[e].slots else { continue }
-
-            let rowLocked = slots.contains(where: { $0.my_booking ?? false })
+            let rowHasMyBooking = slots.contains { $0.my_booking ?? false }
 
             for s in 0..<slots.count {
                 var slot = slots[s]
 
-                // If row is locked by API -> make non-booked slots disabled, keep my_booking slot active
-                if rowLocked {
-                    slot.is_conflictDisabled = !(slot.my_booking ?? false)
-                }
-                else if slot.is_booked ?? false {
-                    // slot is already booked by someone else - keep as server state (not "conflict")
+                if rowHasMyBooking {
+                    // Row has a booked slot → only keep that booked slot enabled
+                    slot.is_conflictDisabled = false//!(slot.my_booking ?? false)
+                } else if slot.is_booked ?? false {
+                    // Already booked by someone else
                     slot.is_conflictDisabled = false
-                }
-                else {
-                    // check only against selectedBlocks from OTHER rows
-                    let hasConflict = selectedBlocks.contains { block in
-                        block.eventIndex != e && isOverlapping(slot1: block.slot, slot2: slot)
+                } else {
+                    // Normal row → check conflicts with other rows
+                    let hasConflict = blockingSelections.contains { sel in
+                        sel.eventIndex != e && isOverlapping(slot1: sel.slot, slot2: slot)
                     }
                     slot.is_conflictDisabled = hasConflict
                 }
@@ -288,6 +319,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
 
+
+
     
     private func updateSelectedSlots() {
         selectedSlots.removeAll()
@@ -297,6 +330,35 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         }
     }
+
+    
+    private func handleSlotSelection(eventIndex: Int, slotIndex: Int) {
+        var event = events[eventIndex]
+        guard var slots = event.slots else { return }
+        var tapped = slots[slotIndex]
+
+        // Toggle selection
+        if tapped.userSelected ?? false {
+            tapped.userSelected = false
+            slots[slotIndex] = tapped
+            events[eventIndex].slots = slots
+            updateSelectedSlots()      // ✅ keep array updated
+            recomputeConflicts()
+            tv.reloadData()
+            return
+        }
+
+        // Only one slot can be selected in this event
+        for i in 0..<slots.count {
+            slots[i].userSelected = (i == slotIndex)
+        }
+        events[eventIndex].slots = slots
+
+        updateSelectedSlots()          // ✅ keep array updated
+        recomputeConflicts()
+        tv.reloadData()
+    }
+
 
     
     // MARK: - Actions
@@ -325,6 +387,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.backgroundColor = .clear
         removeChildVc()
+        getSlotsApi()
     }
     @IBAction func yourMeetingAct(_ sender: Any) {
         scheduleMeetingBtn.backgroundColor = .clear
@@ -335,9 +398,18 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         dismiss(animated: true)
     }
     
+    @IBAction func searchBtnAct(_ sender: Any) {
+        
+        if let Child = childVc{
+            Child.searchBar.isHidden.toggle()
+        }
+    }
+    
+    
     // MARK: - Child VC
     func addChildVc(){
         removeChildVc()
+        searchBtn.isHidden = false
         let vc = PtmHistoryVC(nibName: nil, bundle: nil)
         addChild(vc)
         vc.view.frame = containerView.bounds
@@ -351,6 +423,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         vc.view.removeFromSuperview()
         vc.removeFromParent()
         childVc = nil
+        searchBtn.isHidden = true
     }
     
     // MARK: - TableView
@@ -365,57 +438,19 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let event = events[indexPath.row]
         cell.configure(with: event.slots ?? [], parentTableView: tv)
         cell.TitleLbl.text = event.event_name
-        cell.StaffNameLbl.text = (event.staff_name ?? "") + " - " + (event.subject_name ?? "")
+        cell.StaffNameLbl.text = event.staff_name
+        cell.subjectLbl.text = event.subject_name
         cell.MeetingTypeBtn.setTitle(event.slots?.first?.event_mode, for: .normal)
+        if let name = event.staff_name, let firstChar = name.first {
+            cell.initialBtn.setTitle(String(firstChar), for: .normal)
+        }
+
         
         cell.slotSelected = { [weak self] selectedIndex in
             guard let self = self else { return }
-            guard var rowSlots = self.events[indexPath.row].slots else { return }
-
-            // If this row is locked by API booking -> ignore taps
-            if rowSlots.contains(where: { $0.my_booking ?? false }) { return }
-
-            var tapped = rowSlots[selectedIndex]
-            if tapped.is_booked ?? false { return }                 // already booked by others
-            if tapped.is_conflictDisabled ?? false { return }       // disabled by conflicts
-
-            // Toggle selection (only one per row)
-            if tapped.userSelected ?? false {
-                // deselect
-                tapped.userSelected = false
-            } else {
-                // select -> clear other selections in this row and set this one
-                for i in 0..<rowSlots.count { rowSlots[i].userSelected = false }
-                tapped.userSelected = true
-            }
-            rowSlots[selectedIndex] = tapped
-
-            // IMPORTANT: ensure other slots in the SAME ROW are never marked as conflict
-            // (we only consider conflicts across other rows)
-            for i in 0..<rowSlots.count {
-                // keep server states intact (my_booking/is_booked)
-                if rowSlots[i].my_booking ?? false || rowSlots[i].is_booked ?? false {
-                    // leave as-is
-                } else {
-                    rowSlots[i].is_conflictDisabled = false
-                }
-            }
-
-            // write back the row
-            self.events[indexPath.row].slots = rowSlots
-
-            // update selectedSlots (only user selections)
-            self.updateSelectedSlots()
-
-            // recompute conflicts for other rows
-            self.recomputeConflicts()
-
-            // debug — remove later
-            print("SelectedSlots after toggle:", self.selectedSlots.map { ($0.slot_from ?? "") + "-" + ($0.slot_to ?? "") })
-
-            self.tv.reloadData()
+            self.handleSlotSelection(eventIndex: indexPath.row, slotIndex: selectedIndex)
+            
         }
-
         return cell
     }
     

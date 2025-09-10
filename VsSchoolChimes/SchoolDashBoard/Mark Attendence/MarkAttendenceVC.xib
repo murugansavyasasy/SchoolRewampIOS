@@ -119,7 +119,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="vTa-9P-Ivw">
-                                    <rect key="frame" x="15" y="60" width="363" height="499"/>
+                                    <rect key="frame" x="15" y="60" width="363" height="359"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Tg-72-ZpC">
                                             <rect key="frame" x="0.0" y="0.0" width="363" height="70"/>
@@ -444,10 +444,10 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-Wt-plI">
-                                            <rect key="frame" x="0.0" y="359" width="363" height="140"/>
+                                            <rect key="frame" x="0.0" y="359" width="363" height="0.0"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oi8-YK-MCo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="363" height="40"/>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oi8-YK-MCo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="167" height="40"/>
                                                     <color key="backgroundColor" systemColor="systemGreenColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="MJh-oZ-SMz"/>
@@ -460,32 +460,18 @@
                                                         <action selector="AllPresentAct:" destination="-1" eventType="touchUpInside" id="1Xv-Xx-zxr"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNb-lr-F6i">
-                                                    <rect key="frame" x="0.0" y="50" width="363" height="40"/>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNb-lr-F6i">
+                                                    <rect key="frame" x="0.0" y="0.0" width="167" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFq-GR-2GO">
-                                                    <rect key="frame" x="0.0" y="100" width="363" height="40"/>
-                                                    <color key="backgroundColor" systemColor="systemRedColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="yQt-o3-EFv"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Mark Absentees"/>
-                                                    <connections>
-                                                        <action selector="MarkAbsentAct:" destination="-1" eventType="touchUpInside" id="JAV-xv-pwG"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                 </stackView>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="No2-8Q-dst">
-                                    <rect key="frame" x="15" y="574" width="363" height="40"/>
+                                    <rect key="frame" x="15" y="434.00000000000006" width="363" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="CAk-0i-VTb"/>
                                     </constraints>
@@ -495,12 +481,27 @@
                                     </connections>
                                 </searchBar>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NZG-wr-4Ha">
-                                    <rect key="frame" x="15" y="629" width="363" height="119.66666666666663"/>
+                                    <rect key="frame" x="15" y="489" width="363" height="259.66666666666674"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFq-GR-2GO">
+                                    <rect key="frame" x="30" y="632.66666666666663" width="333" height="40"/>
+                                    <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="yQt-o3-EFv"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Mark Attendance"/>
+                                    <connections>
+                                        <action selector="MarkAbsentAct:" destination="-1" eventType="touchUpInside" id="JAV-xv-pwG"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstItem="rFq-GR-2GO" firstAttribute="leading" secondItem="Qr2-WV-eh7" secondAttribute="leading" constant="30" id="5Hw-13-4c8"/>
                                 <constraint firstItem="vTa-9P-Ivw" firstAttribute="top" secondItem="G4B-zr-nQF" secondAttribute="bottom" constant="15" id="7Tq-3L-d7H"/>
                                 <constraint firstItem="NZG-wr-4Ha" firstAttribute="leading" secondItem="Qr2-WV-eh7" secondAttribute="leading" constant="15" id="9zS-Cd-muW"/>
                                 <constraint firstAttribute="bottom" secondItem="NZG-wr-4Ha" secondAttribute="bottom" constant="8" id="FiE-tR-Ver"/>
@@ -509,6 +510,7 @@
                                 <constraint firstItem="G4B-zr-nQF" firstAttribute="top" secondItem="Qr2-WV-eh7" secondAttribute="top" constant="15" id="ZkA-en-geo"/>
                                 <constraint firstItem="vTa-9P-Ivw" firstAttribute="leading" secondItem="Qr2-WV-eh7" secondAttribute="leading" constant="15" id="dVY-nJ-zVF"/>
                                 <constraint firstItem="No2-8Q-dst" firstAttribute="top" secondItem="vTa-9P-Ivw" secondAttribute="bottom" constant="15" id="daB-qV-M7V"/>
+                                <constraint firstAttribute="trailing" secondItem="rFq-GR-2GO" secondAttribute="trailing" constant="30" id="eQj-JL-za9"/>
                                 <constraint firstAttribute="trailing" secondItem="G4B-zr-nQF" secondAttribute="trailing" constant="10" id="emQ-u7-mWJ"/>
                                 <constraint firstAttribute="trailing" secondItem="No2-8Q-dst" secondAttribute="trailing" constant="15" id="lZu-YK-BR7"/>
                                 <constraint firstItem="NZG-wr-4Ha" firstAttribute="top" secondItem="No2-8Q-dst" secondAttribute="bottom" constant="15" id="ok8-JH-g8R"/>
@@ -536,6 +538,7 @@
                 <constraint firstItem="w4I-So-epU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="bZg-Kj-oZl"/>
                 <constraint firstItem="Brs-cj-K2p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="ezS-oj-pnx"/>
                 <constraint firstItem="w4I-So-epU" firstAttribute="top" secondItem="Brs-cj-K2p" secondAttribute="bottom" constant="8" id="f87-xu-Yuh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rFq-GR-2GO" secondAttribute="bottom" constant="50" id="kNL-7e-JV8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Brs-cj-K2p" secondAttribute="trailing" constant="50" id="lw5-e4-cMs"/>
             </constraints>
             <point key="canvasLocation" x="129.00763358778624" y="20.422535211267608"/>
@@ -564,14 +567,14 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

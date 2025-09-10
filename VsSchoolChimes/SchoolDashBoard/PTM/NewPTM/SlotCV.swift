@@ -35,27 +35,32 @@ class SlotCV: UICollectionViewCell {
             if slot.my_booking ?? false {
                 cellView.backgroundColor = .systemGreen
                 label.textColor = .white
-                statusLbl.text = "Already Booked"
+                statusLbl.textColor = .white
+                statusLbl.text = "Booked"
                 isUserInteractionEnabled = false
             } else if slot.userSelected ?? false {
                 cellView.backgroundColor = .systemBlue
                 label.textColor = .white
+                statusLbl.textColor = .white
                 statusLbl.text = "Selected"
                 isUserInteractionEnabled = true
             } else if slot.is_booked ?? false {
-                cellView.backgroundColor = .darkGray
-                label.textColor = .white
+                cellView.backgroundColor = .systemGray5
+                label.textColor = .black
                 statusLbl.text = "Not Available"
+                statusLbl.textColor = .systemRed
                 isUserInteractionEnabled = false
             } else if slot.is_conflictDisabled ?? false {
-                cellView.backgroundColor = .lightGray
+                cellView.backgroundColor = .systemGray6
                 label.textColor = .black
+                statusLbl.textColor = .black
                 statusLbl.text = "Time Conflict"
                 isUserInteractionEnabled = false
             } else {
                 cellView.backgroundColor = .white
                 label.textColor = .black
                 statusLbl.text = "Available"
+                statusLbl.textColor = .systemGreen
                 isUserInteractionEnabled = true
             }
         }

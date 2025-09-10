@@ -8,60 +8,36 @@
 import UIKit
 import EventKit
 
-class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate,Searchable {
+class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     
-    func updateSearchResults(for query: String) {
-        
-    }
-    
-
-    // MARK: - IBOutlets
-    @IBOutlet weak var examCVC: UICollectionView!
     @IBOutlet weak var tv: UITableView!
-
-    // MARK: - Properties
-    var selectedIndex: IndexPath?
+    @IBOutlet weak var NoDataImage: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var examDetails: [DetailedExamItem]?
+    var FilteredExamDetails: [DetailedExamItem]?
     var subject_details: [SubjectDetail]?
     let eventStore = EKEventStore()
 
-    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tv.register(UINib(nibName: "ExamListTV", bundle: nil), forCellReuseIdentifier: "ExamListTV")
-        setupCollectionView()
+        
+        NoDataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        searchBar.isHidden = true
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        NoDataLbl.setFont(style: .title, size: FontSize.TitleSize)
         setupTableView()
-        selectedIndex = IndexPath(row: 0, section: 0)
         examDetailApi()
     }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.applyGradient(
-            colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-    }
-
-    // MARK: - Setup Methods
-    private func setupCollectionView() {
-        let nib = UINib(nibName: "ExamCatogoryCVC", bundle: nil)
-        examCVC.register(nib, forCellWithReuseIdentifier: "ExamCatogoryCVC")
-        examCVC.delegate = self
-        examCVC.dataSource = self
-    }
-
+    
     private func setupTableView() {
-        let nib = UINib(nibName: CellConfingName.Tvcell, bundle: nil)
-        tv.register(nib, forCellReuseIdentifier: CellConfingName.Tvcell)
+        tv.register(UINib(nibName: "ExamListTV", bundle: nil), forCellReuseIdentifier: "ExamListTV")
         tv.delegate = self
         tv.dataSource = self
-    }
-
-    // MARK: - Actions
-    @IBAction func backBtn(_ sender: Any) {
-        dismiss(animated: true)
     }
 
     // MARK: - API Call
@@ -81,12 +57,18 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate,Searchab
                 switch result {
                 case .success(let response):
                     self?.examDetails = response.data
+                    self?.FilteredExamDetails = self?.examDetails
                     self?.subject_details = response.data?.first?.exam_subject_details
-                    self?.selectedIndex = IndexPath(row: 0, section: 0)
-                    self?.examCVC.reloadData()
                     self?.tv.reloadData()
+                    self?.NoDataLbl.isHidden = response.status ?? false
+                    self?.NoDataLbl.text = response.message ?? ""
+                    self?.NoDataImage.isHidden = response.status ?? false
+                    
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)
+                    self?.NoDataLbl.text = error.localizedDescription
+                    self?.NoDataLbl.isHidden = false
+                    self?.NoDataImage.isHidden = false
                 }
             }
         }
@@ -97,7 +79,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate,Searchab
 extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return examDetails?.count ?? 0
+        return FilteredExamDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -109,7 +91,7 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
         label.setFont(style: .title, size: 20)
-        label.text = examDetails?[section].name
+        label.text = FilteredExamDetails?[section].name
         
         headerview.addSubview(label)
         
@@ -120,20 +102,18 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return examDetails?[section].exam_subject_details?.count ?? 0//subject_details?.count ?? 0
+        return FilteredExamDetails?[section].exam_subject_details?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
         if (indexPath.row % 2) == 0 {
-           // cell.cellView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.15)
             cell.cellView.backgroundColor = UIColor(hex: "#DEECFD")
         }else {
-            //cell.cellView.backgroundColor = UIColor.systemPink.withAlphaComponent(0.12)
             cell.cellView.backgroundColor = UIColor(hex: "#F1EBFC")
         }
-        let data = examDetails?[indexPath.section].exam_subject_details?[indexPath.row]
+        let data = FilteredExamDetails?[indexPath.section].exam_subject_details?[indexPath.row]
         cell.SubjectLbl.text = data?.subject_name
         cell.syllabusLbl.text = data?.syllabus
         cell.DateBtn.setTitle(data?.exam_date?.convertToTargetDateFormat(), for: .normal)
@@ -143,20 +123,6 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         cell.delegate = self
         return cell
     }
-
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(
-//            withIdentifier: CellConfingName.Tvcell, for: indexPath
-//        ) as? Tvcell else {
-//            return UITableViewCell()
-//        }
-//        let subject = subject_details?[indexPath.row]
-//        cell.subjectTitleLbl.text = subject?.subject_name ?? "-"
-//        cell.dateLbl.text = subject?.exam_date?.convertToTargetDateFormat() ?? "-"
-//        cell.syllabusLbl.text = subject?.syllabus ?? "-"
-//        cell.markBtn.setTitle("Max Mark \(subject?.max_mark ?? "-")", for: .normal)
-//        return cell
-//    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -242,63 +208,46 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
-extension ExamTmTblVCViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return examDetails?.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = examCVC.dequeueReusableCell(withReuseIdentifier: "ExamCatogoryCVC", for: indexPath) as? ExamCatogoryCVC else {
-            return UICollectionViewCell()
-        }
-
-        if let examName = examDetails?[indexPath.row].name {
-            cell.examNameLbl.text = examName
-        } else {
-            cell.examNameLbl.text = "-"
-        }
-
-        // Style the outer view
-        cell.outerView.layer.borderWidth = 1
-        cell.outerView.layer.borderColor = UIColor.lightGray.cgColor
-        cell.outerView.layer.cornerRadius = 12
-        cell.outerView.clipsToBounds = true
-
-        // Optional: highlight selected item
-        if selectedIndex == indexPath {
-            cell.outerView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.7)
-            cell.examNameLbl.textColor = .white
-        } else {
-            cell.outerView.backgroundColor = .white
-            cell.examNameLbl.textColor = .black
-        }
-
-        return cell
-    }
-
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath
-        subject_details = examDetails?[indexPath.row].exam_subject_details
-        examCVC.reloadData()
-        tv.reloadData()
-    }
+extension ExamTmTblVCViewController: UISearchBarDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, layout
-        collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        guard let text = examDetails?[indexPath.row].name else {
-            return CGSize(width: 100, height: collectionView.frame.height) // default width
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let query = searchText.lowercased()
+        
+        if query.isEmpty {
+            FilteredExamDetails = examDetails
+        } else {
+            FilteredExamDetails = examDetails?.compactMap { exam in
+                
+                // 🔹 Exam name check
+                let examMatches = exam.name?.lowercased().contains(query) ?? false
+                
+                // 🔹 Subject-level filtering
+                let matchedSubjects = exam.exam_subject_details?.filter {
+                    let subjectMatch = $0.subject_name?.lowercased().contains(query) ?? false
+                    let syllabusMatch = $0.syllabus?.lowercased().contains(query) ?? false
+                    
+                    // 🔹 Date conversion and check
+                    let dateString = $0.exam_date?.convertToTargetDateFormat()?.lowercased() ?? ""
+                    let dateMatch = dateString.contains(query)
+                    
+                    return subjectMatch || syllabusMatch || dateMatch
+                }
+                
+                if examMatches {
+                    return exam
+                } else if let matchedSubjects, !matchedSubjects.isEmpty {
+                    var newExam = exam
+                    newExam.exam_subject_details = matchedSubjects
+                    return newExam
+                } else {
+                    return nil
+                }
+            }
         }
-
-        let font = UIFont.systemFont(ofSize: 14) // match your `examNameLbl` font
-        let padding: CGFloat = 30 // padding on both sides (adjust as per UI)
-        let textHeight = collectionView.frame.height // full height
-
-        let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
-
-        return CGSize(width: textWidth + padding + 20, height: textHeight)
+        
+        NoDataLbl.text = CommonStringFile.No_data_found
+        NoDataLbl.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
+        NoDataImage.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
+        tv.reloadData()
     }
 }

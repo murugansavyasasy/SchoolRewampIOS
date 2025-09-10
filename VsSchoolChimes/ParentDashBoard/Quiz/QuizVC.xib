@@ -93,20 +93,20 @@
                     <rect key="frame" x="0.0" y="193" width="393" height="591"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="EAc-hJ-RQi">
-                            <rect key="frame" x="20" y="120.66666666666671" width="353" height="470.33333333333326"/>
-                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            <rect key="frame" x="10" y="70" width="373" height="521"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ODu-0j-n3c">
-                            <rect key="frame" x="40" y="62" width="313" height="50.666666666666657"/>
+                            <rect key="frame" x="40" y="62" width="313" height="0.0"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct Answer  :  0/1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHg-GS-1Qp">
-                                    <rect key="frame" x="0.0" y="0.0" width="313" height="20.333333333333332"/>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct Answer  :  0/1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHg-GS-1Qp">
+                                    <rect key="frame" x="0.0" y="0.0" width="163" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorect Answer : 1/1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcP-iw-maX">
-                                    <rect key="frame" x="0.0" y="30.333333333333314" width="313" height="20.333333333333329"/>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorect Answer : 1/1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcP-iw-maX">
+                                    <rect key="frame" x="0.0" y="0.0" width="163" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -176,11 +176,11 @@
                         <constraint firstAttribute="bottom" secondItem="EAc-hJ-RQi" secondAttribute="bottom" id="GHH-qP-VTM"/>
                         <constraint firstAttribute="trailing" secondItem="ODu-0j-n3c" secondAttribute="trailing" constant="40" id="JG6-VI-LAr"/>
                         <constraint firstItem="EAc-hJ-RQi" firstAttribute="top" secondItem="ODu-0j-n3c" secondAttribute="bottom" constant="8" id="KgI-kc-PTN"/>
-                        <constraint firstItem="EAc-hJ-RQi" firstAttribute="leading" secondItem="3h6-L0-Y7S" secondAttribute="leading" constant="20" id="LFm-oj-gUX"/>
+                        <constraint firstItem="EAc-hJ-RQi" firstAttribute="leading" secondItem="3h6-L0-Y7S" secondAttribute="leading" constant="10" id="LFm-oj-gUX"/>
                         <constraint firstItem="ODu-0j-n3c" firstAttribute="leading" secondItem="3h6-L0-Y7S" secondAttribute="leading" constant="40" id="jHD-3c-8pp"/>
                         <constraint firstAttribute="trailing" secondItem="Viq-7i-Wxq" secondAttribute="trailing" constant="30" id="mlj-0j-12G"/>
                         <constraint firstItem="ODu-0j-n3c" firstAttribute="top" secondItem="Viq-7i-Wxq" secondAttribute="bottom" constant="15" id="sEG-68-G2A"/>
-                        <constraint firstAttribute="trailing" secondItem="EAc-hJ-RQi" secondAttribute="trailing" constant="20" id="uNl-Xg-aC4"/>
+                        <constraint firstAttribute="trailing" secondItem="EAc-hJ-RQi" secondAttribute="trailing" constant="10" id="uNl-Xg-aC4"/>
                         <constraint firstItem="Viq-7i-Wxq" firstAttribute="leading" secondItem="3h6-L0-Y7S" secondAttribute="leading" constant="30" id="wgt-49-11u"/>
                     </constraints>
                 </view>

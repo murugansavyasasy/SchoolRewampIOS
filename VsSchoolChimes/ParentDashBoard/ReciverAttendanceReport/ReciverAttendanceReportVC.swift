@@ -10,10 +10,8 @@ import Charts
 
 class ReciverAttendanceReportVC: UIViewController {
     
-    @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var noResordStack: UIStackView!
     @IBOutlet weak var BackBtn: UIButton!
-    @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var Topview: UIView!
     @IBOutlet weak var WeeklyView: UIView!
     @IBOutlet weak var percentagesBaseView: UIView!
@@ -26,14 +24,10 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var Stackview: UIStackView!
     @IBOutlet weak var MenusView: UIView!
     @IBOutlet weak var MenusStack: UIStackView!
-    
     @IBOutlet weak var AskLeaveView: UIView!
-    
     @IBOutlet weak var LeaveHistoryView: UIView!
-    
     @IBOutlet weak var AttendanceReportView: UIView!
     @IBOutlet weak var HolidaysView: UIView!
-    
     @IBOutlet weak var AttendanceDefLbl: UILabel!
     @IBOutlet weak var LeaveTakenDefLbl: UILabel!
     @IBOutlet weak var OngoingdaysDefLbl: UILabel!
@@ -52,9 +46,8 @@ class ReciverAttendanceReportVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        get_student_stats()
-        BackBtn.applyBackButton()
         
+        BackBtn.applyBackButton()
         
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
@@ -64,16 +57,10 @@ class ReciverAttendanceReportVC: UIViewController {
         Topview.layer.cornerRadius = 25
         Topview.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         StyleAndTranslate()
-        CellRigister()
-        TV.delegate = self
-        TV.dataSource = self
-       
-        Get_attendaceReport()
+        
+        get_student_stats()
     }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientgreen,Colornames.gradientBlue], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
+
     
     //MARK: UI Changes
     func StyleAndTranslate(){
@@ -103,7 +90,7 @@ class ReciverAttendanceReportVC: UIViewController {
         OngoingdaysDefLbl.text = AttendanceString.ongoingDays
         askLeavesDefLbl.text = AttendanceString.askLeave
         requestHistoryDefLbl.text = AttendanceString.leaveRequests
-        attendanceReportDefLbl.text = AttendanceString.attendanceReport
+        attendanceReportDefLbl.text = AttendanceString.LeaveHistory
         holidaysDefLbl.text = AttendanceString.holidays
         
         AttendanceDefLbl.setFont(style: .body, size: 10)
@@ -202,6 +189,12 @@ class ReciverAttendanceReportVC: UIViewController {
                     self.studentStats = success.data
                     setupDayButtons()
                     Set_Piechart_data()
+                    
+                    if success.status == false {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                    
                 case .failure(let error):
                     
                     CustomAlert.showAlertWithOkAction(title: "Error", message: error.localizedDescription, on: self, okAction: {
@@ -479,15 +472,6 @@ class ReciverAttendanceReportVC: UIViewController {
     }
 
     
-    //MARK: Cell Registeration
-    func CellRigister(){
-        let nib = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
-        TV.register(nib, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
-        
-        TV.register(UINib(nibName: "WeeklyReportTV", bundle: nil), forCellReuseIdentifier: "WeeklyReportTV")
-    }
-    
-    
     @IBAction func AskLeaveAct(){
         
         if #available(iOS 14.0, *) {
@@ -525,147 +509,6 @@ class ReciverAttendanceReportVC: UIViewController {
     }
     
 }
-
-//MARK: Tableview Functions
-extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        2
-    }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        if section == 0 {
-//            let headerview = UIView()
-//            headerview.backgroundColor = .clear
-//            
-//            let label = UILabel()
-//            label.translatesAutoresizingMaskIntoConstraints = false
-//            label.textColor = .label
-//            label.setFont(style: .title, size: 20)
-//            label.text = " My Attendance"
-//            
-//            headerview.addSubview(label)
-//            
-//            NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)])
-//            
-//            return headerview
-//        }else{
-//            return nil
-//        }
-//    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        switch section{
-            
-        case 0:
-            return 0
-            
-        case 1:
-            return attendanceReportData?.count ?? 0
-            
-        default:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.section == 0{
-            
-            let cell = TV.dequeueReusableCell(withIdentifier: "WeeklyReportTV", for: indexPath) as! WeeklyReportTV
-            
-            return cell
-            
-            
-        }else {
-            
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! attendanceRepTv
-            
-            let dateStr = attendanceReportData?[indexPath.row].date ?? ""
-            let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "dd-MM-yyyy"
-            
-            if let date = inputFormatter.date(from: dateStr) {
-                let outputFormatter = DateFormatter()
-                
-                // Get full month name
-                outputFormatter.dateFormat = "MMMM"
-                let monthName = outputFormatter.string(from: date)
-                
-                
-                // Get day only
-                let calendar = Calendar.current
-                let day = calendar.component(.day, from: date)
-                //            cell.dayLbl.text = "\(day)"
-                cell.datelbl.text = "\(monthName) \n \(day)"
-            }
-            
-            let formattedDateString = dateFormatter.convertDate(
-                attendanceReportData?[indexPath.row].date ?? ""
-            ) ?? ""
-            cell.dateYrLbl.text = formattedDateString
-            cell.dayLbl.text = attendanceReportData?[indexPath.row].day
-            //        cell.statusLbl.textColor = .white
-            //
-            //        if attendanceReportData?[indexPath.row].type == "present" {
-            //            cell.statusLbl.text = CommonStringFile.Present.translated()
-            //            cell.StatusView.backgroundColor = .systemGreen
-            //        }else{
-            //            cell.statusLbl.text = CommonStringFile.Absent.translated()
-            //            cell.StatusView.backgroundColor = .systemRed
-            //            cell.MonthView.backgroundColor =  UIColor.red1
-            //            cell.DateView.backgroundColor =  .white
-            //            cell.DateView.layer.borderWidth = 0.5
-            //        }
-            
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 40 : 0.001
-    }
-    
-    
-    func Get_attendaceReport() {
-        
-        APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[self] (result: Result<StudentAttendanceResponse,Error>) in
-            
-            switch result {
-                
-            case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
-                    
-                    DispatchQueue.main.async { [self] in
-                        //noResordStack.isHidden = true
-                        attendanceReportData = SuccessMessage.data ?? []
-                        TV.reloadData()
-                    }
-                }else {
-                    
-                    DispatchQueue.main.async { [self] in
-                        
-                       // noResordStack.isHidden = false
-                        noRecordLbl.text = SuccessMessage.message ?? ""
-                    }
-                }
-                
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
-        }
-    }
-}
-
-
-
 
 import UIKit
 
@@ -714,12 +557,12 @@ class PopoverView: UIView {
         ])
 
         let buttonData: [(symbol: String, title: String, color: UIColor)] = [
-            ("circle", "Not Taken", .red),
-            ("checkmark.circle.fill", "Present", .backGroundClr),
-            ("circle.lefthalf.filled", "First Half", .backGroundClr),
-            ("circle.righthalf.filled", "Second Half", .backGroundClr),
-            ("a.circle.fill", "Absent", .systemRed),
-            ("h.circle.fill", "Holiday", .systemPink)
+            ("circle", AttendanceString.notTaken, .red),
+            ("checkmark.circle.fill", AttendanceString.present, .backGroundClr),
+            ("circle.lefthalf.filled", AttendanceString.firstHalf, .backGroundClr),
+            ("circle.righthalf.filled", AttendanceString.secondHalf, .backGroundClr),
+            ("a.circle.fill", AttendanceString.absent, .systemRed),
+            ("h.circle.fill", AttendanceString.holiday, .systemPink)
         ]
 
         for (symbol, title, color) in buttonData {

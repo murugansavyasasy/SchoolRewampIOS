@@ -53,6 +53,30 @@ class MeetingDetailTV: UITableViewCell {
         img3.layer.cornerRadius = img1.frame.width / 2
         countBtn.layer.cornerRadius = img1.frame.width / 2
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        cellView.applyVerticalGradient(
+            topColor: UIColor(
+                red: 184/255,
+                green: 201/255,
+                blue: 234/255,
+                alpha: 1
+            ),
+            bottomColor: UIColor(
+                red: 211/255,
+                green: 224/255,
+                blue: 245/255,
+                alpha: 1
+            ) // darker bottom
+        )
+        
+//        cellView.applyVerticalGradient(
+//            topColor: UIColor(red: 244/255, green: 227/255, blue: 202/255, alpha: 1), // #F4E3CA
+//            bottomColor: UIColor(red: 250/255, green: 237/255, blue: 224/255, alpha: 1) // lighter
+//        )
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -61,3 +85,23 @@ class MeetingDetailTV: UITableViewCell {
     }
     
 }
+
+
+import UIKit
+
+extension UIView {
+    func applyVerticalGradient(topColor: UIColor, bottomColor: UIColor) {
+        // Remove any existing gradient layer
+        layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // top
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)   // bottom
+        gradientLayer.frame = bounds
+        gradientLayer.cornerRadius = layer.cornerRadius
+        
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+}
+

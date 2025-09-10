@@ -20,6 +20,7 @@ class LeaveHistoryTV: UITableViewCell {
     @IBOutlet weak var EditBtn: UIButton!
     @IBOutlet weak var OptionsBtn: UIButton!
     @IBOutlet weak var GetOutpassBtn: UIButton!
+    @IBOutlet weak var statusBtnWidth: NSLayoutConstraint!
     
     var indexPath: IndexPath?
     weak var delegate: EditDeleteDelegate?
@@ -39,6 +40,12 @@ class LeaveHistoryTV: UITableViewCell {
         TypeLbl.setFont(style: .body, size: FontSize.BodySize)
         ReasonLbl.setFont(style: .body, size: FontSize.BodySize)
         StatusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        DeleteBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        DeleteBtn.setTitle(AlertstringFile.delete, for: .normal)
+        EditBtn.setTitle(CommonStringFile.edit, for: .normal)
+        GetOutpassBtn.setTitle(AttendanceString.generateOutpass, for: .normal)
         OptionsBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
         popupView.setShadow()
         popupView.isHidden = true

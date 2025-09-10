@@ -192,7 +192,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             SearchBar.isHidden = true
             
             MarkAbsentiesBtn.isHidden = false
-            markAllPresentBtn.isHidden = false
+           // markAllPresentBtn.isHidden = false
             stackview.isHidden = false
             AttendancetypeStack.isHidden = false
             AttendTypeStackView.isHidden = false
@@ -226,7 +226,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         SearchBar.isHidden = true
         
         MarkAbsentiesBtn.isHidden = false
-        markAllPresentBtn.isHidden = false
+       // markAllPresentBtn.isHidden = false
         stackview.isHidden = false
         AttendancetypeStack.isHidden = false
         AttendTypeStackView.isHidden = false
@@ -288,7 +288,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         HalfdayImgview.image = UIImage(named: "CheckCircle")
         SessionStack.isHidden = true
         markAllPresentBtn.backgroundColor = .systemGreen
-        MarkAbsentiesBtn.backgroundColor = .systemRed
+        MarkAbsentiesBtn.backgroundColor = .systemBlue
         markAllPresentBtn.isUserInteractionEnabled = true
         MarkAbsentiesBtn.isUserInteractionEnabled = true
     }
@@ -316,7 +316,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         FirsthalfCheckImg.image = UIImage(named: "RadioCheck")
         secondHalfCheckImg.image = UIImage(named: "CheckCircle")
         markAllPresentBtn.backgroundColor = .systemGreen
-        MarkAbsentiesBtn.backgroundColor = .systemRed
+        MarkAbsentiesBtn.backgroundColor = .systemBlue
         markAllPresentBtn.isUserInteractionEnabled = true
         MarkAbsentiesBtn.isUserInteractionEnabled = true
     }
@@ -327,7 +327,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         secondHalfCheckImg.image = UIImage(named: "RadioCheck")
         FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
         markAllPresentBtn.backgroundColor = .systemGreen
-        MarkAbsentiesBtn.backgroundColor = .systemRed
+        MarkAbsentiesBtn.backgroundColor = .systemBlue
         markAllPresentBtn.isUserInteractionEnabled = true
         MarkAbsentiesBtn.isUserInteractionEnabled = true
         

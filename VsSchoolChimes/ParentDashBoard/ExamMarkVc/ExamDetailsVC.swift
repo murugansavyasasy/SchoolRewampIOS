@@ -20,7 +20,6 @@ class ExamDetailsVC: UIViewController {
     @IBOutlet weak var TimeTableBtn: UIButton!
     @IBOutlet weak var MarksBtn: UISegmentedControl!
     @IBOutlet weak var ExamMarksBtn: UIButton!
-    @IBOutlet weak var Searchbar: UISearchBar!
     
     let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
     let secondChildVC = ExameMarVC()
@@ -29,10 +28,6 @@ class ExamDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Searchbar.isHidden = true
-        Searchbar.placeholder = CommonStringFile.Search
-        Searchbar.delegate = self
-        //BackBtn.setTitle("Exam/Test", for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
@@ -51,7 +46,7 @@ class ExamDetailsVC: UIViewController {
         add(asChildViewController: firstChildVC)
         
     }
-
+    
     
     func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
         // Remove underline from both buttons
@@ -59,7 +54,7 @@ class ExamDetailsVC: UIViewController {
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
             button.tintColor = .black
         }
-
+        
         // Add underline to the selected button
         selectedButton.tintColor = .systemBlue
         let underline = UIView()
@@ -67,7 +62,7 @@ class ExamDetailsVC: UIViewController {
         underline.backgroundColor = .systemBlue
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
-
+        
         NSLayoutConstraint.activate([
             underline.heightAnchor.constraint(equalToConstant: 2),
             underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
@@ -75,10 +70,15 @@ class ExamDetailsVC: UIViewController {
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
     }
-
+    
     @IBAction func SearchIconAct(_ sender: Any) {
         
-        Searchbar.isHidden.toggle()
+        if let childA = currentChildVC as? ExamTmTblVCViewController {
+            childA.searchBar.isHidden.toggle()
+        }
+        else if let childB = currentChildVC as? ExameMarVC {
+            childB.searchBar.isHidden.toggle()
+        }
     }
     
     
@@ -122,9 +122,9 @@ class ExamDetailsVC: UIViewController {
     
     @IBAction func BackAct(_ sender: Any) {
         
-       
-                dismiss(animated: true)
-     
+        
+        dismiss(animated: true)
+        
     }
     
     @IBAction func TimetableBtnAct(_ sender: Any) {

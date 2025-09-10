@@ -8,15 +8,20 @@
 import UIKit
 import AVFoundation
 
-class MsgViewVC: UIViewController {
+class MsgViewVC: UIViewController,UIScrollViewDelegate {
+    @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var postedOn: UILabel!
     @IBOutlet weak var postedByLbl: UILabel!
+    @IBOutlet weak var pageControls: UIPageControl!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var reminingLbl: UILabel!
     @IBOutlet weak var totalduraionLbl: UILabel!
     @IBOutlet weak var AudioFullView: UIView!
     @IBOutlet weak var scrlView: UIScrollView!
     
+    @IBOutlet weak var reasonImgView: UIImageView!
+    @IBOutlet weak var reasonDfltLbl: UILabel!
+    @IBOutlet weak var voiceTitle: UILabel!
     @IBOutlet weak var reasonLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     var player: AVPlayer?
@@ -35,7 +40,10 @@ class MsgViewVC: UIViewController {
         
         cv.isHidden = file_path?.count == 0
         AudioFullView.isHidden = file_path?.count != 0
+        pageControls.isHidden = file_path?.count == 1 || file_path?.count == 0
         
+        pageControls.numberOfPages = file_path?.count ?? 0
+        pageControls.currentPage = 0
         scrlView.layer.cornerRadius = 15
         cv.register(
                 UINib(nibName: "MsgVoiceCvCell", bundle: nil),
@@ -49,13 +57,26 @@ class MsgViewVC: UIViewController {
             
             setupAudio()
         }
-        
-        postedByLbl.text = MsgFromManagmentData.sender_info
-        titleLbl.text = MsgFromManagmentData.title
-        reasonLbl.text = MsgFromManagmentData.description
-        
+        reasonLbl.isHidden = MsgFromManagmentData.description?.isEmpty ?? true
+        reasonDfltLbl.isHidden = reasonLbl.isHidden
+        reasonImgView.isHidden = reasonLbl.isHidden
+        postedByLbl.text = ("Posted By:") + (MsgFromManagmentData.sent_by ?? "")
+        titleLbl.text = MsgFromManagmentData.title?.capitalized
+        reasonLbl.text = MsgFromManagmentData.description?.capitalized
+        voiceTitle.text = MsgFromManagmentData.title
+        postedOn.text = formattedDateStatus(from: MsgFromManagmentData.date ?? "" ) + " " +  (
+            MsgFromManagmentData.time ?? "" )
+        if MsgFromManagmentData.is_emergency ?? false{
+            typeLbl.text = "Emergency Voice"
+        }else{
+            typeLbl.text = "Voice"
+        }
     }
 
+    @IBAction func backBtnAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
     func setupAudio() {
         guard let url = URL(string: MsgFromManagmentData.content ?? "") else {
             return
@@ -191,10 +212,10 @@ extension MsgViewVC :  UICollectionViewDelegate, UICollectionViewDataSource,UICo
                 </body>
                 </html>
                 """
-
+                cell.webView.isUserInteractionEnabled = false
                 cell.webView.loadHTMLString(htmlString, baseURL: nil)
             } else {
-               
+                cell.webView.isUserInteractionEnabled = true
                 cell.webView
                     .load(
                         URLRequest(url: URL(string:file_path?[indexPath.row].url ?? "")!)
@@ -205,8 +226,31 @@ extension MsgViewVC :  UICollectionViewDelegate, UICollectionViewDataSource,UICo
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let file = file_path?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
+       
+        
+       
+           
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.fileURL = file_path ?? []
+//            imageVC.subjectName = backBtn.title(for: .normal) ?? ""
+            imageVC.pdfUrl = urlString
+            imageVC.scrollIndex = indexPath
+            imageVC.index = indexPath.row
+//            imageVC.type = isImage ? 2 : 0
+            imageVC.modalPresentationStyle = .fullScreen
+            present(imageVC, animated: true)
+        }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: collectionView.layer.frame.width, height: 180)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+           let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
+        pageControls.currentPage = Int(pageIndex)
+       }
 }

@@ -66,9 +66,15 @@ class QuizVC: UIViewController {
                 switch result {
                 case .success(let successResponse):
                    
-                    self.get_QuizDetails = successResponse.data ?? []
+                    if successResponse.status == true{
+                        
+                        self.get_QuizDetails = successResponse.data ?? []
+                        self.tv.reloadData()
+                    }else{
+                        
+                        
+                    }
                     
-                    self.tv.reloadData()
                     
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
@@ -144,22 +150,17 @@ class QuizVC: UIViewController {
        
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
-        id = 0
         stausType = "1"
-        tv.dataSource = self
-        tv.reloadData()
+        Get_Quiz()
+        
     }
     
     
     @IBAction func CompletedAct(_ sender: Any) {
         
-        //gradientcolours(button: CompletedBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
-       
         
-        IncorrectAnswerLbl.isHidden = false
-        CorrectAnswerLbl.isHidden = false
-        id = 1
         stausType = "2"
+        Get_Quiz()
         
     }
     
@@ -214,20 +215,20 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
 //
 //        }else{
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? QuizListTvCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? quizCellTv else {
                 return UITableViewCell()
             }
             let quiz = get_QuizDetails[indexPath.row]
                let imageName = images[indexPath.row % images.count]
-            cell.DeafultimageView.image = UIImage(named: imageName)
+//            cell.DeafultimageView.image = UIImage(named: imageName)
             
-            cell.titleLbl.text = get_QuizDetails[indexPath.row].title
-            cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description
-            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
+        cell.titleLbl.text = get_QuizDetails[indexPath.row].title?.capitalized
+        cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description?.capitalized
+//            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
             cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
-            cell.postedByLbl.text = ("Posted By:") + (
-                get_QuizDetails[indexPath.row].SentBy ?? ""
-            )
+//            cell.postedByLbl.text = ("Posted By:") + (
+//                get_QuizDetails[indexPath.row].SentBy ?? ""
+//            )
             return cell
 //        }
     }
@@ -238,10 +239,17 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         didSelectRowAt indexPath: IndexPath
     ) {
         
-        if id != 1{
+        if stausType == "1"{
             
             let vc = PlayQuizVc(nibName: nil, bundle: nil)
             vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }else{
+            
+            let vc = QuizCompletedVc(nibName: nil, bundle: nil)
+//            vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
+            vc.selected_QuizId = self.get_QuizDetails[indexPath.row].quiz_id
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

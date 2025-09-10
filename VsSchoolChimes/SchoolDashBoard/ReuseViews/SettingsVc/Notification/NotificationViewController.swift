@@ -95,7 +95,7 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
 
      func tableView(_ tableView: UITableView,
                     heightForHeaderInSection section: Int) -> CGFloat {
-         return 60
+         return 45
      }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tvheadernotidata[section].details?.count ?? 0
