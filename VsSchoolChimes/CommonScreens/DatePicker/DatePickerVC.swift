@@ -25,10 +25,15 @@ class DatePickerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+        
+        datepicker.locale = locale
+        
         if let date = minimumDate {
             datepicker.minimumDate = date
         }
-        
         
         if let date = maximumDate {
             
@@ -73,8 +78,12 @@ class DatePickerVC: UIViewController {
             "hh:mm a"
         ]
         
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+    
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = locale//Locale(identifier: "en_US_POSIX")
         
         for format in formats {
             formatter.dateFormat = format
@@ -108,6 +117,23 @@ class DatePickerVC: UIViewController {
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: false)
     }
+    
+    func normalizedLocaleIdentifier(for code: String) -> String {
+        // First, try as-is (e.g., "ta-IN")
+        if Locale.availableIdentifiers.contains(code) {
+            return code
+        }
+        
+        // Otherwise, fallback to just the language part (e.g., "ta")
+        if let langCode = code.split(separator: "-").first,
+           Locale.availableIdentifiers.contains(String(langCode)) {
+            return String(langCode)
+        }
+        
+        // Default to English if nothing matches
+        return "en"
+    }
+
     
 }
 

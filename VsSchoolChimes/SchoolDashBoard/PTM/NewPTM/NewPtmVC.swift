@@ -51,6 +51,8 @@ class NewPtmVC: UIViewController, Datepicker {
         
         backBtn.configureAsBackButton(firstLine: "PTM", secondLine: staffDetails?.school_name ?? "",colour: .white)
         
+        selectDateBtn.setTitle(CommonStringFile.all, for: .normal)
+        
         selectDateBtn.layer.cornerRadius = 10
         selectDateBtn.layer.borderWidth = 1
         selectDateBtn.layer.borderColor = UIColor.white.cgColor
