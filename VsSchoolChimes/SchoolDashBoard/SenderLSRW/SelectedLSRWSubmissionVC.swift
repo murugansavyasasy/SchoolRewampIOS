@@ -110,29 +110,44 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         self.currentData = data
         var newReportData: [ReportData] = []
 
-        // ✅ Weekly Reports
+        // ✅ Weekly Reports — comparing across all categories
         let totalWeeks = weeksInMonth(month: monthId)
         var weeklyReports: [PerformanceReport] = []
+print("totalWeeks ==>",totalWeeks)
         for week in 1...totalWeeks {
-            if let detail = data.reading?.details?[safe: week - 1] {
-                let submitted = detail.submitted_count ?? 0
-                let total = detail.memberCount ?? 0
-                let percentage = total > 0 ? Int((Double(submitted) / Double(total)) * 100) : 0
-                weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
-            } else {
-                weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: 0))
-            }
+            // Reading
+            let readingDetail = data.reading?.details?[safe: week - 1]
+            let readingSubmitted = readingDetail?.submitted_count ?? 0
+            let readingTotal = readingDetail?.member_count ?? 0
+
+            // Listening
+            let listeningDetail = data.listening?.details?[safe: week - 1]
+            let listeningSubmitted = listeningDetail?.submitted_count ?? 0
+            let listeningTotal = listeningDetail?.member_count ?? 0
+
+            // Speaking
+            let speakingDetail = data.speaking?.details?[safe: week - 1]
+            let speakingSubmitted = speakingDetail?.submitted_count ?? 0
+            let speakingTotal = speakingDetail?.member_count ?? 0
+
+            // Writing
+            let writingDetail = data.writing?.details?[safe: week - 1]
+            let writingSubmitted = writingDetail?.submitted_count ?? 0
+            let writingTotal = writingDetail?.member_count ?? 0
+
+            let totalSubmitted = readingSubmitted + listeningSubmitted + speakingSubmitted + writingSubmitted
+            let totalMembers = readingTotal + listeningTotal + speakingTotal + writingTotal
+
+            let percentage = totalMembers > 0 ? Int((Double(totalSubmitted) / Double(totalMembers)) * 100) : 0
+            weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
         }
 
-        // ✅ Top Performers (all categories combined)
         let topPerformers = getTopPerformers(from: data)
 
         let monthlyReport = MonthlyReport(
             weeklyReport: weeklyReports,
             topPerformance: topPerformers
         )
-
-        // ✅ Today Submitted → Student List
         let studentList = data.today_submitted ?? []
 
         // ✅ Map Categories → Overview
@@ -161,6 +176,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         self.reportData = newReportData
         self.tableView.reloadData()
     }
+
     func getTopPerformers(from data: PerformanceData) -> [TopReport] {
         let readingDetails = data.reading?.details ?? []
         let writingDetails = data.writing?.details ?? []
@@ -295,7 +311,7 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
         switch reportData[indexPath.section] {
         case .filterList(let filters):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
-            cell.configure(with: filters, selectedIndex: 0)
+            cell.configure(with: filters, selectedIndex: 0,selection: true)
             cell.delegate = self
             return cell
             
