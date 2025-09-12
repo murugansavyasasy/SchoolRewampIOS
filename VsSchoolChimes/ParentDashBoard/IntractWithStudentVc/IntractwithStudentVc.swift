@@ -56,7 +56,9 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             datas?.section_name ?? "")
         cell.subjectNameLbl.text = datas?.subject_name ?? ""
         cell.profileImage.image = UIImage(systemName: "person.3.sequence.fill")
-        
+        print("datas?.unread_countdatas?.unread_count",datas?.unread_count)
+        cell.countBtnName.isHidden = datas?.unread_count == "0"
+        cell.countBtnName.setTitle(datas?.unread_count ?? "0", for: .normal)
         return cell
         
     }

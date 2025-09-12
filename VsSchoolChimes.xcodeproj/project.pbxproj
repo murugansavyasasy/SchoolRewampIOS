@@ -224,6 +224,8 @@
 		84174DF42E70061C00AC7092 /* QuizCompletedVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84174DF12E70061C00AC7092 /* QuizCompletedVc.swift */; };
 		84174DF72E7006E300AC7092 /* QuizCompletedFirstTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DF62E7006E300AC7092 /* QuizCompletedFirstTv.xib */; };
 		84174DF82E7006E300AC7092 /* QuizCompletedFirstTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84174DF52E7006E300AC7092 /* QuizCompletedFirstTv.swift */; };
+		84174EA92E717FA100AC7092 /* QuizSubmissionVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174EA82E717FA100AC7092 /* QuizSubmissionVc.xib */; };
+		84174EAA2E717FA100AC7092 /* QuizSubmissionVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84174EA72E717FA100AC7092 /* QuizSubmissionVc.swift */; };
 		841ACC8F2DA5076800326D52 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 841ACC9B2DA50C7A00326D52 /* Lottie */; };
 		8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8420316C2D390CED003C4076 /* TimetableVC.xib */; };
@@ -1101,6 +1103,8 @@
 		84174DF22E70061C00AC7092 /* QuizCompletedVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizCompletedVc.xib; sourceTree = "<group>"; };
 		84174DF52E7006E300AC7092 /* QuizCompletedFirstTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCompletedFirstTv.swift; sourceTree = "<group>"; };
 		84174DF62E7006E300AC7092 /* QuizCompletedFirstTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizCompletedFirstTv.xib; sourceTree = "<group>"; };
+		84174EA72E717FA100AC7092 /* QuizSubmissionVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSubmissionVc.swift; sourceTree = "<group>"; };
+		84174EA82E717FA100AC7092 /* QuizSubmissionVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizSubmissionVc.xib; sourceTree = "<group>"; };
 		841ACC8E2DA5076800326D52 /* loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
 		8420316B2D390CED003C4076 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
@@ -3611,6 +3615,8 @@
 				844DF0082E5AD28F0016A347 /* QuistionPagenationVc.xib */,
 				844DF0862E5ADBDE0016A347 /* ReportsQuizVc.swift */,
 				844DF0872E5ADBDE0016A347 /* ReportsQuizVc.xib */,
+				84174EA72E717FA100AC7092 /* QuizSubmissionVc.swift */,
+				84174EA82E717FA100AC7092 /* QuizSubmissionVc.xib */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -4476,6 +4482,7 @@
 				84017F792E447559006CB477 /* certificateReqTVCell.xib in Resources */,
 				FAFF9E082D6C7B7A00498368 /* CheckAviableViewController.xib in Resources */,
 				FAFF9E092D6C7B7A00498368 /* SlotHeader.xib in Resources */,
+				84174EA92E717FA100AC7092 /* QuizSubmissionVc.xib in Resources */,
 				8420317A2D390FF3003C4076 /* TimetableTv.xib in Resources */,
 				84235A0E2E1E27F4002F2E1D /* RecorderTVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
@@ -4999,6 +5006,7 @@
 				18D7189F2D0D477900E9EDA3 /* LocationViewController.swift in Sources */,
 				18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */,
 				18D718A12D0D477900E9EDA3 /* PunchReq.swift in Sources */,
+				84174EAA2E717FA100AC7092 /* QuizSubmissionVc.swift in Sources */,
 				18D718A22D0D477900E9EDA3 /* PunchHistoryListVC.swift in Sources */,
 				846CF73B2E2F5654000361CE /* ReciverEventTVC.swift in Sources */,
 				18D718A32D0D477900E9EDA3 /* CreateLocationViewController.swift in Sources */,

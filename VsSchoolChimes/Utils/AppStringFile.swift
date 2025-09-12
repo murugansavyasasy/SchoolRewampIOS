@@ -212,13 +212,9 @@ class MenuTapbar{
     static let Assignment = "Assignment".translated()
     static let Noticeboard = "Noticeboard".translated()
     static let Help = "Help".translated()
-    
-    
-    
 }
 
 class SettingStringFile{
-    
      let general = "GENERAL"
      let notifications = "Notifications"
      let faq = "FAQ"
@@ -230,8 +226,6 @@ class SettingStringFile{
      let sendFeedback = "Send Feedback"
      let logout = "Logout"
     let faceID  = "Face ID/Touch ID"
-    
-    
 }
 
 
@@ -434,14 +428,11 @@ class textFieldStringFile{
 struct StringsName {
    
     var appname  = ""
- 
     static var Home = "Home"
     static var Help = "Help"
     static var Settings = "Settings"
     static  var Profile = "Profile"
-   
-  
-    
+ 
 }
 
 

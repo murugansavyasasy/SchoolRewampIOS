@@ -1895,6 +1895,9 @@ struct senderQuizListSuc : Codable{
 
 }
 
+           
+
+           
 struct QuizListData : Codable{
     let id : String?
     let standard : String?
@@ -1928,7 +1931,6 @@ struct QuizListData : Codable{
         
             
 struct senderQuizListData : Codable{
-    
     var id : String?
     var sent_time : String?
     var title : String?
@@ -1943,6 +1945,7 @@ struct senderQuizListData : Codable{
     var type_name : String?
     var no_of_questions : Int?
     var submitted_count : Int?
+    var mark : String?
     
 }
 
@@ -2006,23 +2009,34 @@ struct MyQuizDetails : Codable  {
     var file_path : [FilePath]?
     
 }
+
+
 struct QuizQuestiondata: Codable {
+    var ques_no: String?
     var id: String?         // for Quizdata from API
-    var quizId: String?     // for API
+    var quiz_id: String?     // for API
     var chapter: String
     var question: String
     var answer: String?
-    var optionA: String
-    var optionB: String
-    var optionC: String
-    var optionD: String
-    var marks:String?
-    var correctAnswer: String?
-    var filePath: [FilePath]?
+    var a_option: String
+    var b_option: String
+    var c_option: String
+    var d_option: String
+    var mark:Int?
+    var option_a_count:Int?
+    var option_b_count:Int?
+    var option_c_count:Int?
+    var option_d_count:Int?
+    var correct_answer_count:Int?
+    var incorrect_answer_count:Int?
+    var correct_answer_text:String?
+    var correct_answer: String?
+    var file_path: [FilePath]?
     
     // Local init for empty question (when adding manually)
     init(
         id: String? = nil,
+        ques_no: String? = nil,
         quizId: String? = nil,
         chapter: String = "",
         question: String = "",
@@ -2031,22 +2045,25 @@ struct QuizQuestiondata: Codable {
         optionB: String = "",
         optionC: String = "",
         optionD: String = "",
-        marks: String = "",
+        marks: Int = 0,
         correctAnswer: String? = nil,
-        filePath: [FilePath]? = nil
+        filePath: [FilePath]? = nil,
+        filePaths: [FilePaths]? = nil
     ) {
         self.id = id
-        self.quizId = quizId
+        self.quiz_id = quizId
         self.chapter = chapter
         self.question = question
         self.answer = answer
-        self.optionA = optionA
-        self.optionB = optionB
-        self.optionC = optionC
-        self.optionD = optionD
-        self.marks = marks
-        self.correctAnswer = correctAnswer
-        self.filePath = filePath
+        self.a_option = optionA
+        self.b_option = optionB
+        self.c_option = optionC
+        self.d_option = optionD
+        self.mark = marks
+        self.ques_no = ques_no
+        self.correct_answer = correctAnswer
+        self.file_path = filePath
+    
     }
 }
 

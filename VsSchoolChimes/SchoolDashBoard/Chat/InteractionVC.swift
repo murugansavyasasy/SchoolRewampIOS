@@ -71,7 +71,9 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
         let datas = staffMembersData?[indexPath.row]
         cell.teacherNameLbl.text = datas?.name ?? ""
         cell.subjectNameLbl.text = datas?.subject_name ?? ""
-        
+        cell.countBtnName.isHidden = datas?.unread_count == "0"
+        cell.timeLabl.isHidden = cell.countBtnName.isHidden
+        cell.countBtnName.setTitle(datas?.unread_count ?? "0", for: .normal)
         return cell
         
     }
