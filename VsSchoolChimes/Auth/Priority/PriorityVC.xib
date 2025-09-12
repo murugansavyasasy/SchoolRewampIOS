@@ -163,26 +163,39 @@
                                 <constraint firstItem="vDi-Yd-4hE" firstAttribute="top" secondItem="86y-aT-C5X" secondAttribute="bottom" constant="5" id="tc1-q7-lcM"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
-                            <rect key="frame" x="96.666666666666686" y="708" width="200" height="35"/>
-                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0J-yG-lGj">
+                            <rect key="frame" x="0.0" y="704" width="393" height="55"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
+                                    <rect key="frame" x="96.666666666666686" y="10" width="200" height="35"/>
+                                    <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="200" id="tL0-H6-lBn"/>
+                                        <constraint firstAttribute="height" constant="35" id="ucc-ta-K5J"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title=" Proceed"/>
+                                    <connections>
+                                        <action selector="NextAction:" destination="-1" eventType="touchUpInside" id="y9u-oZ-LfX"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="200" id="tL0-H6-lBn"/>
-                                <constraint firstAttribute="height" constant="35" id="ucc-ta-K5J"/>
+                                <constraint firstItem="GGr-hG-jio" firstAttribute="centerX" secondItem="X0J-yG-lGj" secondAttribute="centerX" id="Cmo-BJ-xks"/>
+                                <constraint firstItem="GGr-hG-jio" firstAttribute="top" secondItem="X0J-yG-lGj" secondAttribute="top" constant="10" id="ZUb-i9-UiC"/>
+                                <constraint firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="10" id="fM4-6a-9mv"/>
                             </constraints>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title=" Proceed"/>
-                            <connections>
-                                <action selector="NextAction:" destination="-1" eventType="touchUpInside" id="y9u-oZ-LfX"/>
-                            </connections>
-                        </button>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstItem="m8F-aZ-FCz" firstAttribute="leading" secondItem="3K3-Dc-cua" secondAttribute="leading" id="19C-rr-dcZ"/>
                         <constraint firstAttribute="trailing" secondItem="m8F-aZ-FCz" secondAttribute="trailing" id="28v-gT-GLV"/>
+                        <constraint firstAttribute="trailing" secondItem="X0J-yG-lGj" secondAttribute="trailing" id="Iry-hZ-IDA"/>
                         <constraint firstAttribute="bottom" secondItem="m8F-aZ-FCz" secondAttribute="bottom" id="RAP-od-W9N"/>
                         <constraint firstItem="m8F-aZ-FCz" firstAttribute="width" secondItem="3K3-Dc-cua" secondAttribute="width" id="Rec-un-MyP"/>
+                        <constraint firstItem="X0J-yG-lGj" firstAttribute="leading" secondItem="3K3-Dc-cua" secondAttribute="leading" id="nbZ-8p-wAe"/>
                         <constraint firstItem="m8F-aZ-FCz" firstAttribute="top" secondItem="3K3-Dc-cua" secondAttribute="top" id="wiU-bO-YrM"/>
                     </constraints>
                 </scrollView>
@@ -191,8 +204,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ijd-xa-h8g"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="16" id="Qg3-Au-fdT"/>
-                <constraint firstItem="GGr-hG-jio" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="We3-1y-403"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="X0J-yG-lGj" secondAttribute="bottom" id="fxK-ca-bIo"/>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="seJ-aq-QNW"/>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ydT-HV-YYf"/>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ynn-XP-Jdk"/>
@@ -211,7 +223,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

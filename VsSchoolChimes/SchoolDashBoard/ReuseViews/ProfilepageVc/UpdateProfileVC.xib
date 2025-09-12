@@ -26,10 +26,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhX-g6-ymP">
-                    <rect key="frame" x="0.0" y="109" width="393" height="743"/>
+                    <rect key="frame" x="0.0" y="114" width="393" height="738"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eAD-67-dvU">
-                            <rect key="frame" x="0.0" y="60" width="393" height="683"/>
+                            <rect key="frame" x="0.0" y="60" width="393" height="678"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
@@ -41,7 +41,7 @@
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloads" translatesAutoresizingMaskIntoConstraints="NO" id="51s-wa-DSt">
-                    <rect key="frame" x="156.66666666666666" y="79" width="80" height="80"/>
+                    <rect key="frame" x="156.66666666666666" y="84" width="80" height="80"/>
                     <color key="backgroundColor" name="ParentClr"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -50,7 +50,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HH4-d5-LtO">
-                    <rect key="frame" x="214.66666666666666" y="137" width="25" height="25"/>
+                    <rect key="frame" x="214.66666666666666" y="142" width="25" height="25"/>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="sQ8-Mw-sil"/>
@@ -66,17 +66,35 @@
                         <action selector="changeProfile:" destination="-1" eventType="touchUpInside" id="6Ns-vL-grP"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8t-ki-Q1U">
+                    <rect key="frame" x="10" y="49" width="120" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="5Zu-aV-8Ex"/>
+                        <constraint firstAttribute="height" constant="35" id="lUK-fL-KvK"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Profile" image="chevron.left" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="moK-ju-nJj"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="eAD-67-dvU" firstAttribute="top" secondItem="51s-wa-DSt" secondAttribute="bottom" constant="10" id="5w6-sl-jXh"/>
+                <constraint firstItem="yhX-g6-ymP" firstAttribute="top" secondItem="r8t-ki-Q1U" secondAttribute="bottom" constant="30" id="9Cy-3H-csS"/>
                 <constraint firstItem="51s-wa-DSt" firstAttribute="centerX" secondItem="yhX-g6-ymP" secondAttribute="centerX" id="EkP-5i-o3Y"/>
                 <constraint firstItem="HH4-d5-LtO" firstAttribute="trailing" secondItem="51s-wa-DSt" secondAttribute="trailing" constant="3" id="F2P-ix-I13"/>
+                <constraint firstItem="r8t-ki-Q1U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="MdP-yE-RFB"/>
                 <constraint firstItem="51s-wa-DSt" firstAttribute="top" secondItem="yhX-g6-ymP" secondAttribute="top" constant="-30" id="SlG-36-9d0"/>
                 <constraint firstAttribute="bottom" secondItem="yhX-g6-ymP" secondAttribute="bottom" id="bjP-Dv-eZh"/>
-                <constraint firstItem="yhX-g6-ymP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="gGZ-NR-WNd"/>
                 <constraint firstItem="HH4-d5-LtO" firstAttribute="bottom" secondItem="51s-wa-DSt" secondAttribute="bottom" constant="3" id="qVj-76-9Xa"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="r8t-ki-Q1U" secondAttribute="top" constant="10" id="syu-eU-cHG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yhX-g6-ymP" secondAttribute="trailing" id="szi-fO-8lc"/>
                 <constraint firstItem="yhX-g6-ymP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="w9G-8E-Zbx"/>
             </constraints>
@@ -85,6 +103,7 @@
     </objects>
     <resources>
         <image name="camera" catalog="system" width="128" height="93"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="downloads" width="100" height="100"/>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

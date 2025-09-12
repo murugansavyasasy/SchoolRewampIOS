@@ -25,11 +25,11 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7Y-zn-tHs">
                     <rect key="frame" x="10" y="64" width="353" height="23.333333333333329"/>
-                    <color key="tintColor" systemColor="darkTextColor"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Absentees Report" image="chevron.left" catalog="system">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -53,7 +53,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="dNL-bt-krt" secondAttribute="trailing" id="Dys-Mg-tb9"/>
                                 <constraint firstAttribute="bottom" secondItem="dNL-bt-krt" secondAttribute="bottom" id="Fth-PP-0HY"/>
@@ -67,10 +67,10 @@
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MTa-Uu-S5R">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="577.66666666666663"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="MTa-Uu-S5R" secondAttribute="trailing" id="9Sr-dk-b5q"/>
                                 <constraint firstAttribute="bottom" secondItem="MTa-Uu-S5R" secondAttribute="bottom" id="SzY-JY-Jij"/>
@@ -79,7 +79,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstItem="PWE-7b-ei0" firstAttribute="top" secondItem="qvu-cS-XOi" secondAttribute="bottom" constant="8" id="0QG-fN-Ud9"/>
                         <constraint firstItem="qvu-cS-XOi" firstAttribute="leading" secondItem="X85-a3-lGt" secondAttribute="leading" id="Cpy-n4-U6N"/>
@@ -92,7 +92,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="topBackgroundCLr"/>
+            <color key="backgroundColor" name="PrimeryColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="X85-a3-lGt" secondAttribute="bottom" id="4BX-YM-niG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="X85-a3-lGt" secondAttribute="trailing" id="HnH-04-afA"/>
@@ -107,14 +107,14 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="topBackgroundCLr">
-            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

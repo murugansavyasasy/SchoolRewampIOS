@@ -799,33 +799,34 @@ struct StudentAttendance: Codable {
     let is_Archive : Bool?
 }
 
-//MARK: Absentsm Report
+// MARK: - Absentees Report
 struct AbsenteesResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [AbsenteeDate]
+    let status: Bool?
+    let message: String?
+    let data: [AbsenteeDate]?
 }
 
 struct AbsenteeDate: Codable {
-    let date: String
-    let day: String
-    let absent_date_only: String
-    let total_absentees: String
-    let class_wise: [ClassWise]
+    let date: String?
+    let day: String?
+    let absent_date_only: String?
+    let total_absentees: String?
+    let class_wise: [ClassWise]?
 }
 
 struct ClassWise: Codable {
-    let id: String
-    let name: String
-    let total_absentees: String
-    let section_wise: [SectionWise]
+    let class_id: String?
+    let class_name: String?
+    let total_absentees: String?
+    let section_wise: [SectionWise]?
 }
 
 struct SectionWise: Codable {
-    let id: String
-    let name: String
-    let total_absentees: String
+    let section_id: String?
+    let section_name: String?
+    let total_absentees: String?
 }
+
 
 
 //MARK: Absentis Report Student Report
@@ -2136,7 +2137,7 @@ struct SkillSubmission: Codable {
     let description: String?
     let activity_type: String?
     let submitted_average: String?
-    let memberCount: Int?              // ✅ added
+    let member_count: Int?
     let submission_date: String?
     let submitted_count: Int?
     let student_id: String?
@@ -2150,38 +2151,8 @@ struct SkillSubmission: Codable {
 struct UserProfileResponse: Codable {
     var status: Bool?
     var message: String?
-    var data: [UserDetailsSection]?
+    var data:[[String: [UserDetailItem]]]?
 }
-
-// MARK: - Grouped Sections
-struct UserDetailsSection: Codable {
-    var General: [UserDetailItem]?
-    var FatherDetails: [UserDetailItem]?
-    var MotherDetails: [UserDetailItem]?
-    var Communication: [UserDetailItem]?
-    var Address: [UserDetailItem]?
-    var Physical: [UserDetailItem]?
-    var Identifiers: [UserDetailItem]?
-    var Community: [UserDetailItem]?
-    var BankDetails: [UserDetailItem]?
-    var Documents: [UserDetailItem]?
-    var TransportDetails: [UserDetailItem]?
-
-    enum CodingKeys: String, CodingKey {
-        case General
-        case FatherDetails = "Father Details"
-        case MotherDetails = "Mother Details"
-        case Communication
-        case Address
-        case Physical
-        case Identifiers
-        case Community
-        case BankDetails = "Bank Details"
-        case Documents
-        case TransportDetails = "Transport Details"
-    }
-}
-
 // MARK: - Field Types
 enum UserDetailFieldType: String, Codable {
     case text
@@ -2190,9 +2161,7 @@ enum UserDetailFieldType: String, Codable {
     case calendar
     case gender
     case dropdown
-    case doc
     case number
-    case radioButton
     case image
     case document
 }
@@ -2206,6 +2175,4 @@ struct UserDetailItem: Codable {
     var is_editable: Bool?
     var optional: Bool?
     var node: String?
-    var file_Path: [FilePath]?
-
 }
