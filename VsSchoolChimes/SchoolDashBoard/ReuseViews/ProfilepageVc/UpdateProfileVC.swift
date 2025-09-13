@@ -10,22 +10,35 @@ import PhotosUI
 
 @available(iOS 14.0, *)
 class UpdateProfileVC: UIViewController {
-
+    
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var detailTable: UITableView!
-
-    var userDetails: [ProfileList] = []
+    
+    var userDetails: [String: [UserDetailItem]]?
     var attachments: [AttachmentItem] = []
-
+    var changedParams: [String: Any] = [:]
+    var attachmentNode: String?
+    var changeProfileImg: UIImage?
+    var profileNode: String = "profileImage" // Set default value
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
         setupUserDetails(isStudent: true)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     private func setupUI() {
         profileImg.layer.cornerRadius = profileImg.frame.width / 2
         profileImg.clipsToBounds = true
@@ -33,64 +46,77 @@ class UpdateProfileVC: UIViewController {
         profileImg.layer.borderColor = UIColor.white.cgColor
         editBtn.layer.cornerRadius = editBtn.frame.width / 2
         editBtn.clipsToBounds = true
-
+        
         detailTable.register(UINib(nibName: "UserDetailsTVC", bundle: nil), forCellReuseIdentifier: "UserDetailsTVC")
         detailTable.dataSource = self
         detailTable.delegate = self
         detailTable.tableFooterView = UIView()
     }
-
+    
+    @IBAction func back(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
     private func setupUserDetails(isStudent: Bool) {
         let url = isStudent ? ServiceUrl.admin_api_student_profile_list : ServiceUrl.admin_api_staff_profile_list
-        let token = isStudent ? UserDefaultFileManager.get_child_Details()?.access_token ?? "" : UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-
+        let token = isStudent
+            ? UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            : UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        
         APIService.shared.makeApi(
             url: url,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: token
         ) { [weak self] (result: Result<UserProfileResponse, Error>) in
-            switch result {
-            case .success(let response):
-                if response.status ?? false {
-                    DispatchQueue.main.async {
-                        // Process the response data here
-                        // self?.userDetails = response.data // Assuming response contains data
-                        self?.detailTable.reloadData()
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    if response.status == true, let data = response.data {
+                        
+                        guard var profileDict = data.first else { return }
+                        let profile = profileDict
+                        profileDict.removeValue(forKey: "photoPath")
+                        self.userDetails = profileDict
+                        self.detailTable.reloadData()
+                        if let photoPath = profile["photoPath"] as? String,
+                           let imageUrl = URL(string: photoPath) {
+                            self.profileImg.kf.setImage(with: imageUrl)
+                            self.profileNode = "photoPath" // save node for update later
+                        }
+                    } else {
+                        self.showAlert(message: response.message ?? "Failed to load user details")
                     }
-                } else {
-                    DispatchQueue.main.async {
-                        self?.loadDummyData()
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
+                case .failure(let error):
                     print("API Error:", error.localizedDescription)
-                    self?.loadDummyData()
+                    self.showAlert(message: "Failed to load user details")
                 }
             }
         }
     }
 
+    
     @IBAction func changeProfile(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select", message: "Choose an option", preferredStyle: .actionSheet)
-          alert.addAction(UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
-              self?.openCameraForProfile()
-          })
-          alert.addAction(UIAlertAction(title: "Gallery", style: .default) { [weak self] _ in
-              self?.openGalleryForProfile()
-          })
-          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-          // iPad support
-          if let popover = alert.popoverPresentationController {
-              popover.sourceView = view
-              popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
-              popover.permittedArrowDirections = []
-          }
-
-          present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
+            self?.openCameraForProfile()
+        })
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default) { [weak self] _ in
+            self?.openGalleryForProfile()
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // iPad support
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = view
+            popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
+        
+        present(alert, animated: true)
     }
+    
     func openGalleryForProfile() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             showAlert(message: "Photo Library not available")
@@ -99,10 +125,11 @@ class UpdateProfileVC: UIViewController {
         
         let picker = UIImagePickerController()
         picker.delegate = self
-        picker.sourceType = .photoLibrary  // <-- important
-        picker.allowsEditing = true        // allow cropping if needed
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = true
         present(picker, animated: true)
     }
+    
     func openCameraForProfile() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
             showAlert(message: "Camera not available")
@@ -115,182 +142,10 @@ class UpdateProfileVC: UIViewController {
         picker.allowsEditing = true
         present(picker, animated: true)
     }
-
-    // Fixed: Removed duplicate method declaration and corrected implementation
-    func loadDummyData() {
-        let section = UserDetailsSection(
-            General: [
-                UserDetailItem(title: "Student Name", value: "M BHARATH", type: .text, options: [], is_editable: true, optional: false, node: "studentName", file_Path: nil),
-                UserDetailItem(title: "Admission No", value: "SS-18", type: .text, options: [], is_editable: false, optional: false, node: "admissionNo", file_Path: nil),
-                UserDetailItem(title: "Roll No", value: "343434", type: .number, options: [], is_editable: false, optional: false, node: "rollNo", file_Path: nil),
-                UserDetailItem(title: "Class", value: "VI", type: .text, options: [], is_editable: false, optional: false, node: "class", file_Path: nil),
-                UserDetailItem(title: "Section", value: "B", type: .text, options: [], is_editable: false, optional: false, node: "section", file_Path: nil),
-                UserDetailItem(title: "Date of Birth", value: "05-12-2002", type: .calendar, options: [], is_editable: true, optional: false, node: "dob", file_Path: nil),
-                UserDetailItem(title: "Date of Joining", value: "09-06-2021", type: .calendar, options: [], is_editable: false, optional: true, node: "doj", file_Path: nil),
-                UserDetailItem(title: "Gender", value: "male", type: .radioButton, options: ["male", "female", "others"], is_editable: true, optional: false, node: "gender", file_Path: nil),
-                UserDetailItem(title: "Hobbies", value: "", type: .address, options: [], is_editable: true, optional: true, node: "hobbies", file_Path: nil)
-            ],
-            FatherDetails: [
-                UserDetailItem(title: "Father Name", value: "Mayan M", type: .text, options: [], is_editable: true, optional: true, node: "fatherName", file_Path: nil),
-                UserDetailItem(title: "Father Qualification", value: "", type: .text, options: [], is_editable: true, optional: true, node: "fatherQualification", file_Path: nil),
-                UserDetailItem(title: "Father Occupation", value: "Farming", type: .text, options: [], is_editable: true, optional: true, node: "fatherOccupation", file_Path: nil),
-                UserDetailItem(title: "Father Annual Income", value: "--", type: .text, options: [], is_editable: true, optional: true, node: "fatherAnnualIncome", file_Path: nil),
-                UserDetailItem(title: "Father Email", value: "", type: .text, options: [], is_editable: true, optional: true, node: "fatherEmailAddress", file_Path: nil),
-                UserDetailItem(title: "Father Office Address", value: "", type: .text, options: [], is_editable: true, optional: true, node: "fatherOfficeAddress", file_Path: nil)
-            ],
-            MotherDetails: [
-                UserDetailItem(title: "Mother Name", value: "Malarkodi M", type: .text, options: [], is_editable: true, optional: true, node: "motherName", file_Path: nil),
-                UserDetailItem(title: "Mother Qualification", value: "8 std", type: .text, options: [], is_editable: true, optional: true, node: "motherQualification", file_Path: nil),
-                UserDetailItem(title: "Mother Occupation", value: "Farming", type: .text, options: [], is_editable: true, optional: true, node: "motherOccupation", file_Path: nil),
-                UserDetailItem(title: "Mother Annual Income", value: "", type: .text, options: [], is_editable: true, optional: true, node: "motherAnnualIncome", file_Path: nil),
-                UserDetailItem(title: "Mother Email", value: "", type: .text, options: [], is_editable: true, optional: true, node: "motherEmailAddress", file_Path: nil),
-                UserDetailItem(title: "Mother Office Address", value: "", type: .text, options: [], is_editable: true, optional: true, node: "motherOfficeAddress", file_Path: nil)
-            ],
-            Communication: [
-                UserDetailItem(title: "Primary Mobile", value: "9345443519", type: .text, options: [], is_editable: true, optional: false, node: "primaryMobile", file_Path: nil),
-                UserDetailItem(title: "Secondary Mobile", value: "1111111111", type: .text, options: [], is_editable: true, optional: true, node: "secondaryMobile", file_Path: nil),
-                UserDetailItem(title: "Whatsapp Number", value: "1111111111", type: .text, options: [], is_editable: true, optional: true, node: "whatsappNumber", file_Path: nil),
-                UserDetailItem(title: "Email", value: "bharath@savyasasy.com", type: .text, options: [], is_editable: true, optional: true, node: "email", file_Path: nil),
-                UserDetailItem(title: "Father Mobile", value: "1111111111", type: .text, options: [], is_editable: true, optional: true, node: "fatherMobile", file_Path: nil),
-                UserDetailItem(title: "Mother Mobile", value: "1111111111", type: .text, options: [], is_editable: true, optional: true, node: "motherMobile", file_Path: nil)
-            ],
-            Address: [
-                UserDetailItem(title: "Residential Address", value: "t.nagar,\nchennai", type: .address, options: [], is_editable: true, optional: true, node: "residentalAddress", file_Path: nil),
-                UserDetailItem(title: "Residential City", value: "chennai", type: .text, options: [], is_editable: true, optional: true, node: "residentalCity", file_Path: nil),
-                UserDetailItem(title: "Residential State", value: "tamilnadu", type: .text, options: [], is_editable: true, optional: true, node: "residentalState", file_Path: nil),
-                UserDetailItem(title: "Residential Country", value: "india", type: .text, options: [], is_editable: true, optional: true, node: "residentalCountry", file_Path: nil),
-                UserDetailItem(title: "Residential Pincode", value: "600017", type: .number, options: [], is_editable: true, optional: true, node: "residentalPincode", file_Path: nil),
-                UserDetailItem(title: "Permanent Address", value: "t.nagar,\nchennai", type: .address, options: [], is_editable: true, optional: true, node: "permanentAddress", file_Path: nil),
-                UserDetailItem(title: "Permanent City", value: "chennai", type: .text, options: [], is_editable: true, optional: true, node: "permanentCity", file_Path: nil),
-                UserDetailItem(title: "Permanent State", value: "tamilnadu", type: .text, options: [], is_editable: true, optional: true, node: "permanentState", file_Path: nil),
-                UserDetailItem(title: "Permanent Country", value: "india", type: .text, options: [], is_editable: true, optional: true, node: "permanentCountry", file_Path: nil),
-                UserDetailItem(title: "Permanent Pincode", value: "600017", type: .number, options: [], is_editable: true, optional: true, node: "permanentPincode", file_Path: nil)
-            ],
-            Physical: [
-                UserDetailItem(title: "Height", value: "", type: .text, options: [], is_editable: true, optional: true, node: "height", file_Path: nil),
-                UserDetailItem(title: "Weight", value: "", type: .text, options: [], is_editable: true, optional: true, node: "weight", file_Path: nil),
-                UserDetailItem(title: "Blood Group", value: "B -ve", type: .dropdown, options: ["A +ve","A -ve","A1 +ve","A1 -ve","A2 +ve","A2 -ve","B +ve","B -ve","O +ve","O -ve","AB +ve","AB -ve","A1B +ve","A1B -ve"], is_editable: true, optional: true, node: "bloodGroup", file_Path: nil)
-            ],
-            Identifiers: [
-                UserDetailItem(title: "Student Aadhaar Number", value: "344444444444", type: .text, options: [], is_editable: false, optional: true, node: "studentAdhaarNumber", file_Path: nil)
-            ],
-            Community: [
-                UserDetailItem(title: "Community", value: "", type: .dropdown, options: ["OC","BC","MBC","DNC","SC","ST","REFUGEE","OTHERS","OBC","MOBC","BCM"], is_editable: true, optional: true, node: "community", file_Path: nil),
-                UserDetailItem(title: "Caste", value: "test caste", type: .text, options: [], is_editable: true, optional: true, node: "caste", file_Path: nil),
-                UserDetailItem(title: "Sub Caste", value: "", type: .text, options: [], is_editable: true, optional: true, node: "subCaste", file_Path: nil),
-                UserDetailItem(title: "Religion", value: "", type: .text, options: [], is_editable: true, optional: true, node: "religion", file_Path: nil)
-            ],
-            BankDetails: [
-                UserDetailItem(title: "Bank Name", value: "Indian Bank", type: .text, options: [], is_editable: false, optional: true, node: "bankName", file_Path: nil),
-                UserDetailItem(title: "Bank Account Number", value: "53435433242342423", type: .text, options: [], is_editable: false, optional: true, node: "bankAccountNumber", file_Path: nil),
-                UserDetailItem(title: "IFSC Code", value: "", type: .text, options: [], is_editable: false, optional: true, node: "ifscCode", file_Path: nil)
-            ],
-            Documents: [
-                UserDetailItem(title: "Documents", value: "", type: .doc, options: [], is_editable: false, optional: true, node: "documents", file_Path: [
-                    FilePath(url: "uploads/studentDocument/Doc_1756901782207.pdf", type: "pdf"),
-                    FilePath(url: "uploads/studentDocument/Doc_1756901963773.png", type: "image")
-                ])
-            ],
-            TransportDetails: [
-                UserDetailItem(title: "Route", value: "Kodampakkam", type: .text, options: [], is_editable: false, optional: true, node: "routeMasterDetails", file_Path: nil),
-                UserDetailItem(title: "Stopping Point", value: "T.nagar", type: .text, options: [], is_editable: false, optional: true, node: "busStopsDetails", file_Path: nil)
-            ]
-        )
-
-        // Initialize attachments from document files
-        let documentSection = section.Documents ?? []
-        for item in documentSection {
-            if let files = item.file_Path {
-                let newAttachments = files.map { file in
-                    let url = file.url ?? ""
-                    let type = file.type?.lowercased() ?? "unknown"
-                    if type == "image" {
-                        return AttachmentItem(image: nil, imageURL: url, fileType: "image")
-                    } else if type == "video" {
-                        return AttachmentItem(image: UIImage(systemName: "video"), imageURL: url, fileType: "video", VideoURl: URL(string: url))
-                    } else {
-                        return AttachmentItem(image: nil, imageURL: url, fileType: type)
-                    }
-                }
-                attachments.append(contentsOf: newAttachments)
-            }
-        }
-
-        let dummyData: [ProfileList] = [
-            ProfileList(title: "General", value: section.General ?? []),
-            ProfileList(title: "Father Details", value: section.FatherDetails ?? []),
-            ProfileList(title: "Mother Details", value: section.MotherDetails ?? []),
-            ProfileList(title: "Communication", value: section.Communication ?? []),
-            ProfileList(title: "Address", value: section.Address ?? []),
-            ProfileList(title: "Physical", value: section.Physical ?? []),
-            ProfileList(title: "Identifiers", value: section.Identifiers ?? []),
-            ProfileList(title: "Community", value: section.Community ?? []),
-            ProfileList(title: "Bank Details", value: section.BankDetails ?? []),
-            ProfileList(title: "Documents", value: section.Documents ?? []),
-            ProfileList(title: "Transport Details", value: section.TransportDetails ?? [])
-        ]
-
-        self.userDetails = dummyData
-        self.detailTable.reloadData()
-    }
-
-    private func generateDummyProfileList() -> [ProfileList] {
-        // Since UserDetailsSection.sample() doesn't exist, we'll use the same data structure as loadDummyData()
-        let section = UserDetailsSection(
-            General: [
-                UserDetailItem(title: "Student Name", value: "M BHARATH", type: .text, options: [], is_editable: true, optional: false, node: "studentName", file_Path: nil),
-                UserDetailItem(title: "Admission No", value: "SS-18", type: .text, options: [], is_editable: false, optional: false, node: "admissionNo", file_Path: nil),
-                UserDetailItem(title: "Roll No", value: "343434", type: .number, options: [], is_editable: false, optional: false, node: "rollNo", file_Path: nil),
-                UserDetailItem(title: "Class", value: "VI", type: .text, options: [], is_editable: false, optional: false, node: "class", file_Path: nil),
-                UserDetailItem(title: "Section", value: "B", type: .text, options: [], is_editable: false, optional: false, node: "section", file_Path: nil),
-                UserDetailItem(title: "Date of Birth", value: "05-12-2002", type: .calendar, options: [], is_editable: true, optional: false, node: "dob", file_Path: nil),
-                UserDetailItem(title: "Gender", value: "male", type: .radioButton, options: ["male", "female", "others"], is_editable: true, optional: false, node: "gender", file_Path: nil)
-            ],
-            FatherDetails: [
-                UserDetailItem(title: "Father Name", value: "Sample Father", type: .text, options: [], is_editable: true, optional: true, node: "fatherName", file_Path: nil)
-            ],
-            MotherDetails: [
-                UserDetailItem(title: "Mother Name", value: "Sample Mother", type: .text, options: [], is_editable: true, optional: true, node: "motherName", file_Path: nil)
-            ],
-            Communication: [
-                UserDetailItem(title: "Primary Mobile", value: "9345443519", type: .text, options: [], is_editable: true, optional: false, node: "primaryMobile", file_Path: nil)
-            ],
-            Address: [
-                UserDetailItem(title: "Residential Address", value: "Sample Address", type: .address, options: [], is_editable: true, optional: true, node: "residentalAddress", file_Path: nil)
-            ],
-            Physical: [
-                UserDetailItem(title: "Blood Group", value: "B -ve", type: .dropdown, options: ["A +ve","A -ve","B +ve","B -ve","O +ve","O -ve"], is_editable: true, optional: true, node: "bloodGroup", file_Path: nil)
-            ],
-            Identifiers: [
-                UserDetailItem(title: "Student Aadhaar Number", value: "344444444444", type: .text, options: [], is_editable: false, optional: true, node: "studentAdhaarNumber", file_Path: nil)
-            ],
-            Community: [
-                UserDetailItem(title: "Community", value: "", type: .dropdown, options: ["OC","BC","MBC","SC","ST"], is_editable: true, optional: true, node: "community", file_Path: nil)
-            ],
-            BankDetails: [
-                UserDetailItem(title: "Bank Name", value: "Sample Bank", type: .text, options: [], is_editable: false, optional: true, node: "bankName", file_Path: nil)
-            ],
-            Documents: [
-                UserDetailItem(title: "Documents", value: "", type: .document, options: [], is_editable: false, optional: true, node: "documents", file_Path: nil)
-            ],
-            TransportDetails: [
-                UserDetailItem(title: "Route", value: "Sample Route", type: .text, options: [], is_editable: false, optional: true, node: "routeMasterDetails", file_Path: nil)
-            ]
-        )
-        
-        return [
-            ProfileList(title: "General", value: section.General ?? []),
-            ProfileList(title: "Father Details", value: section.FatherDetails ?? []),
-            ProfileList(title: "Mother Details", value: section.MotherDetails ?? []),
-            ProfileList(title: "Communication", value: section.Communication ?? []),
-            ProfileList(title: "Address", value: section.Address ?? []),
-            ProfileList(title: "Physical", value: section.Physical ?? []),
-            ProfileList(title: "Identifiers", value: section.Identifiers ?? []),
-            ProfileList(title: "Community", value: section.Community ?? []),
-            ProfileList(title: "Bank Details", value: section.BankDetails ?? []),
-            ProfileList(title: "Documents", value: section.Documents ?? []),
-            ProfileList(title: "Transport Details", value: section.TransportDetails ?? [])
-        ]
+    
+    private func showAlert(message: String) {
+        let alert = CustomAlert()
+        alert.showAlert(title: "", message: message, on: self)
     }
 }
 
@@ -298,101 +153,265 @@ class UpdateProfileVC: UIViewController {
 
 @available(iOS 14.0, *)
 extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
-
+    
+    // MARK: Section Count
     func numberOfSections(in tableView: UITableView) -> Int {
-        return userDetails.count
+        return userDetails?.keys.count ?? 0
     }
-
+    
+    // MARK: Rows per Section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let userDetails = userDetails else { return 0 }
+        
+        let keys = Array(userDetails.keys)
+        let key = keys[section]
+        let items = userDetails[key] ?? []
+        
         if section == userDetails.count - 1 {
-            return userDetails[section].value.count + 1
+            return items.count + 1 // last section has update button
         }
-        return userDetails[section].value.count
+        return items.count
     }
-
+    
+    // MARK: Cell for Row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserDetailsTVC", for: indexPath) as? UserDetailsTVC else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserDetailsTVC", for: indexPath) as? UserDetailsTVC,
+              let userDetails = userDetails else {
             return UITableViewCell()
         }
-
-        let section = userDetails[indexPath.section]
+        
+        let keys = Array(userDetails.keys)
+        let key = keys[indexPath.section]
+        let items = userDetails[key] ?? []
+        
         let isLastSection = indexPath.section == userDetails.count - 1
-        let isLastRow = indexPath.row == section.value.count
-
+        let isLastRow = indexPath.row == items.count
+        
         if isLastSection && isLastRow {
+            // Update button cell
             cell.configure(with: nil)
             cell.updateBtn.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
         } else {
-            let item = section.value[indexPath.row]
+            // Normal user detail cell
+            let item = items[indexPath.row]
             cell.configure(with: item)
+            cell.onValueChanged = { [weak self] changedKey, value in
+                guard let self = self else { return }
+                if let value = value {
+                    if item.node != "document" {
+                        if "\(value)" != "\(item.value ?? "")" {
+                            self.changedParams[changedKey] = value
+                        }
+                    } else {
+                        if let attachment = value as? [AttachmentItem] {
+                            self.attachmentNode = changedKey
+                            self.attachments = attachment
+                        }
+                    }
+                }
+            }
         }
-
         return cell
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-
+    
+    // MARK: Section Header
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let userDetails = userDetails else { return nil }
+        
+        let keys = Array(userDetails.keys)
+        let key = keys[section]
+        
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGroupedBackground
-
+        
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = UIColor.label
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = UIColor.primery
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = key
         headerView.addSubview(label)
-
-        label.text = userDetails[section].title
-
+        
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
         return headerView
     }
-    private func showAlert(message: String) {
-        let alert = CustomAlert()
-        alert.showAlert(title: "", message: message, on: self)
-    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44
     }
-
-    // MARK: - Update Button Action
-
+    
     @objc func updateButtonTapped(_ sender: UIButton) {
-        var params: [String: Any] = [:]
-
-        for sectionIndex in 0..<userDetails.count {
-            let section = userDetails[sectionIndex]
-
-            for rowIndex in 0..<section.value.count {
-                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-
-                if let cell = detailTable.cellForRow(at: indexPath) as? UserDetailsTVC,
-                   let updatedValue = cell.getUpdatedValue(),
-                   let node = section.value[rowIndex].node {
-                    params[node] = updatedValue
+        // Handle profile image upload if changed
+        if let profileImage = changeProfileImg {
+            uploadProfileImage(profileImage) { [weak self] uploadedURL in
+                guard let self = self else { return }
+                if let url = uploadedURL {
+                    self.changedParams[self.profileNode] = url
+                }
+                self.processAttachmentsAndUpdate()
+            }
+        } else {
+            processAttachmentsAndUpdate()
+        }
+    }
+    
+    private func uploadProfileImage(_ image: UIImage, completion: @escaping (String?) -> Void) {
+        AWSUploadManager.shared.uploadFileToAWS(
+            file: image,
+            bucketPath: "uploads/images/",
+            bucketName: "schoolchimes-communication",
+            progressHandler: nil
+        ) { url in
+            completion(url)
+        }
+    }
+    
+    private func processAttachmentsAndUpdate() {
+        if !attachments.isEmpty {
+            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
+                guard let self = self else { return }
+                let uploadedFiles: [[String: String]] = urls.compactMap { urlString in
+                    guard let url = URL(string: urlString) else { return nil }
+                    
+                    let fileType = url.pathExtension.lowercased()
+                    let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+                    
+                    return [
+                        CommonStringFile.url: urlString,
+                        CommonStringFile.type: type
+                    ]
+                }
+                
+                if let attachmentNode = self.attachmentNode {
+                    self.changedParams[attachmentNode] = uploadedFiles
+                }
+                
+                self.updateProfile(with: self.changedParams)
+            }
+        } else {
+            updateProfile(with: changedParams)
+        }
+    }
+    
+    func updateProfile(with parameters: [String: Any]) {
+        guard !parameters.isEmpty else {
+            showAlert(message: "No changes to update")
+            return
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            APIService.shared.makeApi(
+                url: ServiceUrl.admin_api_student_profile_pre_submission,
+                parameters: parameters,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    DispatchQueue.main.async {
+                        CustomAlert.showAlertWithOkAction(
+                            title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: response.message,
+                            on: self
+                        ) {
+                            if response.status {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("❌ API error: \(error.localizedDescription)")
+                        self.showAlert(message: "Failed to update profile. Please try again.")
+                    }
                 }
             }
         }
-
-        print("Final Params to update:", params)
-        // Implement your API call here using the params
-        callUpdateAPI(with: params)
     }
     
-    private func callUpdateAPI(with params: [String: Any]) {
-        // Add your API implementation here
-        // Example:
-        // APIService.shared.updateProfile(parameters: params) { result in
-        //     // Handle result
-        // }
+    // MARK: - Upload Media (Images + Video)
+    private func uploadMedia(
+        file: Any,
+        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
+    ) {
+        var uploadedURLs: [String] = []
+        var completed = 0
+        
+        func updateAndCheckCompletion(total: Int, iframe: String? = nil, size: Int? = nil, embed: String? = nil) {
+            let progress = (Double(completed) / Double(total)) * 100
+            CircularProgressLoader.shared.updateProgress(to: progress)
+            if completed == total {
+                CircularProgressLoader.shared.hide()
+                completion(uploadedURLs, iframe, size, embed)
+            }
+        }
+        
+        switch file {
+        case let attachments as [AttachmentItem]:
+            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
+            let total = uploadableItems.count
+            guard total > 0 else {
+                completion([], nil, nil, nil)
+                return
+            }
+            
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            
+            for item in uploadableItems {
+                if let image = item.image {
+                    // Upload local image to AWS
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: image,
+                        bucketPath: "uploads/images/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: nil
+                    ) { url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                        }
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    }
+                } else if let fileURLStr = item.imageURL {
+                    if fileURLStr.lowercased().hasPrefix("http") {
+                        // Already an uploaded file (skip upload)
+                        uploadedURLs.append(fileURLStr)
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    } else if let fileURL = URL(string: fileURLStr) {
+                        let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
+                        AWSUploadManager.shared.uploadFileToAWS(
+                            file: fileURL,
+                            bucketPath: path,
+                            bucketName: "schoolchimes-communication",
+                            progressHandler: nil
+                        ) { url in
+                            if let uploadedURL = url {
+                                uploadedURLs.append(uploadedURL)
+                            }
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        }
+                    } else {
+                        print("❌ Invalid fileURL: \(fileURLStr)")
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    }
+                }
+            }
+            
+        default:
+            print("❌ Unsupported file type")
+            completion([], nil, nil, nil)
+        }
     }
 }
+
 // MARK: - UIImagePickerController Delegate
 @available(iOS 14.0, *)
 extension UpdateProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -400,9 +419,10 @@ extension UpdateProfileVC: UIImagePickerControllerDelegate, UINavigationControll
         picker.dismiss(animated: true)
         if let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             profileImg.image = image
+            changeProfileImg = image // Store the changed image
         }
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }

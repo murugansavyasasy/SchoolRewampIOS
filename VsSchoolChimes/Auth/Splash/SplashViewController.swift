@@ -44,29 +44,29 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         
         if let animatedImage = loadGif(name: "Splach") {
             imgview.image = animatedImage
-
-                   // Vibrate when GIF starts
+            
+            // Vibrate when GIF starts
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                 vibrateDevice()
             }
-                  
-               }
+            
+        }
     }
     
     
     func vibrateDevice() {
-            // Basic vibration
+        // Basic vibration
         AudioServicesPlaySystemSound(1004)
-
+        
         // Play vibration only (works on real device only)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-//            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-            
-            // Or haptic feedback (for newer devices)
-//        let generator = UIImpactFeedbackGenerator(style: .soft)
-//        generator.prepare()
-        }
+        //            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
+        // Or haptic feedback (for newer devices)
+        //        let generator = UIImpactFeedbackGenerator(style: .soft)
+        //        generator.prepare()
+    }
     func checkBiometricStatus() {
         if BiometricAuthentication.shared.isBiometricEnabledInApp(){
             if BiometricAuthentication.shared.isBiometricAvailable() {
@@ -406,7 +406,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             if self.countryId != nil {
                 checkBiometricStatus()
             } else {
-               // let vc = CountryVc(nibName: nil, bundle: nil)
+                // let vc = CountryVc(nibName: nil, bundle: nil)
                 let vc = CountryListVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
@@ -492,33 +492,33 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     
     
     func loadGif(name: String) -> UIImage? {
-            guard let path = Bundle.main.path(forResource: name, ofType: "gif"),
-                  let data = NSData(contentsOfFile: path),
-                  let source = CGImageSourceCreateWithData(data, nil) else {
-                return nil
-            }
-
-            var images: [UIImage] = []
-            var duration: Double = 0
-
-            let count = CGImageSourceGetCount(source)
-
-            for i in 0..<count {
-                if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
-                    images.append(UIImage(cgImage: cgImage))
-
-                    // Get frame duration
-                    let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as Dictionary?
-                    let gifInfo = properties?[kCGImagePropertyGIFDictionary as String as NSObject] as? [String: Any]
-                    let frameDuration = gifInfo?[kCGImagePropertyGIFDelayTime as String] as? Double ?? 0.1
-                    duration += frameDuration
-                }
-            }
-
-            return UIImage.animatedImage(with: images, duration: duration)
+        guard let path = Bundle.main.path(forResource: name, ofType: "gif"),
+              let data = NSData(contentsOfFile: path),
+              let source = CGImageSourceCreateWithData(data, nil) else {
+            return nil
         }
-
-       
+        
+        var images: [UIImage] = []
+        var duration: Double = 0
+        
+        let count = CGImageSourceGetCount(source)
+        
+        for i in 0..<count {
+            if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                images.append(UIImage(cgImage: cgImage))
+                
+                // Get frame duration
+                let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as Dictionary?
+                let gifInfo = properties?[kCGImagePropertyGIFDictionary as String as NSObject] as? [String: Any]
+                let frameDuration = gifInfo?[kCGImagePropertyGIFDelayTime as String] as? Double ?? 0.1
+                duration += frameDuration
+            }
+        }
+        
+        return UIImage.animatedImage(with: images, duration: duration)
+    }
+    
+    
     
 }
 

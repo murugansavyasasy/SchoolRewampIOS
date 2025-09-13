@@ -39,17 +39,9 @@ class SectionViewController: UIViewController, sectionCellDelegate {
         tv.delegate = self
         tv.dataSource = self
         
-        if let sectionId = section_wiseData?.first?.id, let date = SelectedDate {
+        if let sectionId = section_wiseData?.first?.section_id, let date = SelectedDate {
             AbsentStudent(sectionId:sectionId,date:date)
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
     }
     
     @IBAction func BackAct(){
@@ -115,7 +107,7 @@ extension SectionViewController: UICollectionViewDelegate,UICollectionViewDataSo
             return UICollectionViewCell()
         }
         
-        cell.sectionNameLbl.text = section_wiseData?[indexPath.item].name
+        cell.sectionNameLbl.text = section_wiseData?[indexPath.item].section_name
         cell.absentcountLbl.text = section_wiseData?[indexPath.item].total_absentees
         
         if ClickID == indexPath.item {
@@ -134,7 +126,7 @@ extension SectionViewController: UICollectionViewDelegate,UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         ClickID = indexPath.row
        
-        if let sectionId = section_wiseData?[indexPath.item].id, let date = SelectedDate {
+        if let sectionId = section_wiseData?[indexPath.item].section_id, let date = SelectedDate {
             AbsentStudent(sectionId:sectionId,date:date)
         }
         

@@ -85,7 +85,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         formatter.dateFormat = "dd MMM yyyy"
         let dateBtntitle = formatter.string(from: Date())
         dateSelect(dateBtntitle)
-        
         SessionStack.isHidden = true
         SearchBar.isHidden = true
         

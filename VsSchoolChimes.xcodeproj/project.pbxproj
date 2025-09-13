@@ -249,6 +249,8 @@
 		842FBAC02D0BEDBF007C0B51 /* StudentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAB82D0BEDBF007C0B51 /* StudentReportVC.swift */; };
 		842FBAC22D0BEDDC007C0B51 /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */; };
 		842FDC202D854AD800DCE4FF /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
+		843014B92E72841000E97D11 /* AbsentStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843014B82E72841000E97D11 /* AbsentStudentListVC.xib */; };
+		843014BA2E72841000E97D11 /* AbsentStudentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014B72E72841000E97D11 /* AbsentStudentListVC.swift */; };
 		8435EA172DE9C6B200F02CB9 /* videoPickAndPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8435EA162DE9C6B200F02CB9 /* videoPickAndPlay.swift */; };
 		843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843739022E3CDE690063E84D /* CustomParentDashboardVC.xib */; };
 		843739042E3CDE690063E84D /* CustomParentDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843739012E3CDE690063E84D /* CustomParentDashboardVC.swift */; };
@@ -382,6 +384,8 @@
 		8476882B2D88316C00EAB9DB /* userDefaultFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */; };
 		8476882D2D892D7D00EAB9DB /* DeviceUUIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */; };
 		8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882E2D892DBB00EAB9DB /* SecureidFile.swift */; };
+		84769D262E7285BD008F521E /* AbsentStudentCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84769D242E7285BD008F521E /* AbsentStudentCVC.swift */; };
+		84769D272E7285BD008F521E /* AbsentStudentCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84769D252E7285BD008F521E /* AbsentStudentCVC.xib */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
 		847D1CA62DBB68B200A274D2 /* locationAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 847D1CA52DBB68B200A274D2 /* locationAnimation.json */; };
@@ -1124,6 +1128,8 @@
 		842FBAB92D0BEDBF007C0B51 /* StudentReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentReportVC.xib; sourceTree = "<group>"; };
 		842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
 		842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOTCODE_COMMON_API.swift; sourceTree = "<group>"; };
+		843014B72E72841000E97D11 /* AbsentStudentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbsentStudentListVC.swift; sourceTree = "<group>"; };
+		843014B82E72841000E97D11 /* AbsentStudentListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AbsentStudentListVC.xib; sourceTree = "<group>"; };
 		8435EA162DE9C6B200F02CB9 /* videoPickAndPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoPickAndPlay.swift; sourceTree = "<group>"; };
 		843739012E3CDE690063E84D /* CustomParentDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomParentDashboardVC.swift; sourceTree = "<group>"; };
 		843739022E3CDE690063E84D /* CustomParentDashboardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomParentDashboardVC.xib; sourceTree = "<group>"; };
@@ -1265,6 +1271,8 @@
 		8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultFileManager.swift; sourceTree = "<group>"; };
 		8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUUIDManager.swift; sourceTree = "<group>"; };
 		8476882E2D892DBB00EAB9DB /* SecureidFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureidFile.swift; sourceTree = "<group>"; };
+		84769D242E7285BD008F521E /* AbsentStudentCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbsentStudentCVC.swift; sourceTree = "<group>"; };
+		84769D252E7285BD008F521E /* AbsentStudentCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AbsentStudentCVC.xib; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
 		847D1CA52DBB68B200A274D2 /* locationAnimation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = locationAnimation.json; sourceTree = "<group>"; };
@@ -2264,6 +2272,10 @@
 				18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */,
 				18D718CB2D0D479B00E9EDA3 /* NewAbsenteesViewController.xib */,
 				18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */,
+				843014B72E72841000E97D11 /* AbsentStudentListVC.swift */,
+				843014B82E72841000E97D11 /* AbsentStudentListVC.xib */,
+				84769D242E7285BD008F521E /* AbsentStudentCVC.swift */,
+				84769D252E7285BD008F521E /* AbsentStudentCVC.xib */,
 			);
 			path = NewAbsenteesReport;
 			sourceTree = "<group>";
@@ -4576,6 +4588,7 @@
 				18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */,
 				18D718642D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib in Resources */,
 				18D718652D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib in Resources */,
+				843014B92E72841000E97D11 /* AbsentStudentListVC.xib in Resources */,
 				18D718662D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib in Resources */,
 				18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */,
 				18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */,
@@ -4638,6 +4651,7 @@
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
+				84769D272E7285BD008F521E /* AbsentStudentCVC.xib in Resources */,
 				84DE949C2E53252E008E1BF4 /* SenderQuizVc.xib in Resources */,
 				843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
@@ -4964,6 +4978,7 @@
 				84127AE42E03C8F00092159D /* ReedimHistoryCell.swift in Sources */,
 				84127AE52E03C8F00092159D /* TicketView.swift in Sources */,
 				84127AE62E03C8F00092159D /* ClaimCouponVc.swift in Sources */,
+				84769D262E7285BD008F521E /* AbsentStudentCVC.swift in Sources */,
 				8483F6412E6AF89100E2C886 /* PunchUserDetailsTVC.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
@@ -5005,6 +5020,7 @@
 				18D718A42D0D477900E9EDA3 /* EditLocResp.swift in Sources */,
 				84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */,
 				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
+				843014BA2E72841000E97D11 /* AbsentStudentListVC.swift in Sources */,
 				FAED58552E4B4E6E00497026 /* SlotListVC.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* AddLocationHistory.swift in Sources */,
