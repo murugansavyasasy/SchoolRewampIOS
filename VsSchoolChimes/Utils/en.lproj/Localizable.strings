@@ -316,5 +316,31 @@
 "Call" = "Call";
 "Cancel" = "Cancel";
 "With" = "With";
+"You have %d Meetings Today" = "You have %d Meetings Today";
+"Minutes" = "Minutes";
+"Virtual" = "Virtual";
+"Duration" = "Duration";
+"Create Meeting" = "Create Meeting";
+"Purpose of Meeting" = "Purpose of Meeting";
+"Select Meeting Mode" = "Select Meeting Mode";
+"In person" = "In person";
+"Phone call" = "Phone call";
+"Paste meeting Link" = "Paste meeting Link";
+"Select Your Classes" = "Select Your Classes";
+"Choose academic year :" = "Choose academic year :";
+"Select Date & Time" = "Select Date & Time";
+"Select Dates" = "Select Dates";
+"Start with" = "Start with";
+"End with" = "End with";
+"Duration & Break" = "Duration & Break";
+"Need Break between slots?" = "Need Break between slots?";
+"Break After" = "Break After";
+"Slot" = "Slot";
+"Break Duration" = "Break Duration";
+"Check Slot Availability" = "Check Slot Availability";
+"%d Minutes" = "%d Minutes";
+"Custom" = "Custom";
+"%d Min" = "%d Min";
 
 
+//MARK: Assignment

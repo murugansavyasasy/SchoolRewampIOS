@@ -13,27 +13,26 @@ protocol BaktoHome{
 class LanguageVc: UIViewController {
     
     @IBOutlet weak var SelectLangLabel: UILabel!
-    
     @IBOutlet weak var ConfirmBtn: UIButton!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
-    var languageCode = "en"
-    var delegate:BaktoHome?
     @IBOutlet weak var baseview: UIView!
-    var selectedLanguage: String?
     
     var Items = [
-        language(language: "Tamil", selected: false),
-        language(language: "English", selected: false),
-        language(language: "Hindi", selected: false),
-        language(language: "Thai", selected: false),
-        language(language: "Arabic", selected: false)]
-
+        language(language: "Tamil", languageCode: "ta-IN", selected: false),
+        language(language: "English", languageCode: "en", selected: false),
+        language(language: "Hindi", languageCode: "hi", selected: false),
+        language(language: "Thai", languageCode: "th", selected: false),
+        language(language: "Arabic", languageCode: "ar", selected: false)]
     
     var Language = ["தமிழ்", "English","हिंदी", "ไทย", "العربية"]
     var Buttontext = ["உறுதிப்படுத்தவும்","Confirm","पुष्टि करें", "ยืนยัน", "تأكيد"]
     var index:Int?
+    var languageCode = "en"
+    var delegate:BaktoHome?
+    var selectedLanguage: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,15 +41,19 @@ class LanguageVc: UIViewController {
         
         SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
         
-        index = UserDefaults.standard.integer(forKey: "index")
+         if UserDefaults.standard.object(forKey: "index") != nil {
+             index = UserDefaults.standard.integer(forKey: "index")
+         }else {
+             index = 1
+         }
+        
         Items[index ?? 1].selected = true
         baseview.layer.cornerRadius = Colornames.CORadius15
         
         ConfirmBtn.layer.cornerRadius = Colornames.CORadius10
         ConfirmBtn.backgroundColor = .lightGray
         
-        
-        ConfirmBtn.setTitle(Buttontext[index ?? 0], for: .normal) // Use setTitle(_:for:) here
+        ConfirmBtn.setTitle(Buttontext[index ?? 1], for: .normal) // Use setTitle(_:for:) here
         ConfirmBtn.titleLabel?.textAlignment = .center
         ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         ConfirmBtn.setTitleFont(style: .body, size: 14)
@@ -74,6 +77,7 @@ class LanguageVc: UIViewController {
     }
     
     @IBAction func ConfirmClick(_ sender: Any) {
+        
         if ConfirmBtn.backgroundColor == .button{
             UserDefaults.standard.set(index, forKey: "index")
             let userDefault = UserDefaults.standard
@@ -84,21 +88,27 @@ class LanguageVc: UIViewController {
             
             // Apply the language immediately
             userDefault.synchronize()
-            let value = UserDefaults.standard.integer(forKey: "passvalue")
             
             LanguageManager.shared.setLanguage(languageCode)
-                       guard let window = UIApplication.shared.keyWindow else { return }
-                       let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
-                       let initialViewController = storyboard.instantiateInitialViewController()
-                       window.rootViewController = initialViewController
-                       window.makeKeyAndVisible()
 
-                       // Optional: Add a transition animation
-                       UIView.transition(with: window,
-                                         duration: 0.3,
-                                         options: .transitionCrossDissolve,
-                                         animations: nil,
-                                         completion: nil)
+            guard let windowScene = UIApplication.shared.connectedScenes
+                    .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+                  let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
+                return
+            }
+            MenuTapbar.shared = MenuTapbar()
+            let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
+            let initialViewController = storyboard.instantiateInitialViewController()
+            window.rootViewController = initialViewController
+            window.makeKeyAndVisible()
+
+            // Optional: Add a transition animation
+            UIView.transition(with: window,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: nil,
+                              completion: nil)
+
         }
     }
     
@@ -130,7 +140,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LangTvCellTableViewCell , for: indexPath) as! LangTvCellTableViewCell
         
         if index == indexPath.row{
-            ConfirmBtn.setTitle(Buttontext[index ?? 0], for: .normal)
+            ConfirmBtn.setTitle(Buttontext[index ?? 1], for: .normal)
             ConfirmBtn.titleLabel?.textAlignment = .center
             ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
             cell.RadioImage.image = ImageName.checkedTick
@@ -175,9 +185,6 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         // Change Confirm Button color
         ConfirmBtn.backgroundColor = UIColor.button
 
-        // Save language code
-        let userDefault = UserDefaults.standard
-
         switch selectedLanguage {
             case "Tamil":
                 languageCode = "ta-IN"
@@ -209,6 +216,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
 
 struct language{
     let language:String
+    let languageCode:String
     var selected:Bool
 }
 

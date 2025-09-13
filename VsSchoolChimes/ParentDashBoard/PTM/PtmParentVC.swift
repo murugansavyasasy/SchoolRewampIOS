@@ -26,7 +26,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var searchBtn: UIButton!
     
     
-    var dateComponents: [(month: String, day: String, date: Date)] = []
+    var dateComponents: [(month: String, day: String, date: Date, count: String?)] = []
     var selectedIndex: IndexPath?
     var childDetails = UserDefaultFileManager.get_child_Details()
     var subjectList : [Subject] = []
@@ -46,6 +46,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         setupUI()
         generateDates()
         getsubjects()
+        Get_Available_slot_count()
     }
     
     private func setupUI() {
@@ -105,7 +106,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             if let nextDate = Calendar.current.date(byAdding: .day, value: i, to: today) {
                 dateComponents.append((month: monthFormatter.string(from: nextDate),
                                        day: dayFormatter.string(from: nextDate),
-                                       date: nextDate))
+                                       date: nextDate,
+                                       count: nil))
                 if Calendar.current.isDate(nextDate, inSameDayAs: today) {
                     selectedIndex = IndexPath(item: i, section: 0)
                 }
@@ -238,19 +240,32 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func Get_Available_slot_count(){
-        
-        APIService.shared.makeApi(url:ServiceUrl.ptm_api_ptm_schedule_available_slots_count_for_student, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self]  (result:Result<AvailableSlotsResponse , Error>) in
-            
+        APIService.shared.makeApi(url:ServiceUrl.ptm_api_ptm_schedule_available_slots_count_for_student,
+                                  parameters: [:],
+                                  type: ApitTypeSringFile.GET,
+                                  token: childDetails?.access_token ?? "") { [weak self] (result:Result<AvailableSlotsResponse , Error>) in
             guard let self = self else {return}
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
                     self.availableSlots = success.data ?? []
                     
-                case .failure(let failure):
                     
+                    // Map counts into dateComponents
+                    let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+                    for i in 0..<self.dateComponents.count {
+                        let compDate = self.dateComponents[i].date
+                        let compDateStr = formatter.string(from: compDate)
+                        if let match = self.availableSlots.first(where: { $0.event_date == compDateStr }) {
+                            self.dateComponents[i].count = match.count
+                        } else {
+                            self.dateComponents[i].count = nil
+                        }
+                    }
+                    self.CV.reloadData()
+                    
+                    
+                case .failure(let failure):
                     print("Error: ", failure.localizedDescription)
                 }
             }
@@ -459,11 +474,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         dateComponents.count
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+   func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = CV.dequeueReusableCell(withReuseIdentifier: "DateCvCell", for: indexPath) as! DateCvCell
-        cell.monthLbl.text = dateComponents[indexPath.item].month
-        cell.dateLbl.text = dateComponents[indexPath.item].day
+        let comp = dateComponents[indexPath.item]
+        cell.monthLbl.text = comp.month
+        cell.dateLbl.text = comp.day
+        
+        // Configure selection UI
         if selectedIndex == indexPath {
             cell.cellView.backgroundColor = .systemBlue
             cell.monthLbl.textColor = .white
@@ -473,6 +491,15 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             cell.monthLbl.textColor = .black
             cell.dateBaseView.backgroundColor = .clear
         }
+        
+        // Show count if available
+        if let count = comp.count {
+            cell.countBtn.setTitle("Avl: "+count, for: .normal)
+            cell.countBtn.isHidden = false
+        } else {
+            cell.countBtn.isHidden = true
+        }
+        
         return cell
     }
     
@@ -488,6 +515,6 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 65, height: 105)
+        CGSize(width: 65, height: 120)
     }
 }

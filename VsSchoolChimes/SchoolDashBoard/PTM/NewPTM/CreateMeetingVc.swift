@@ -75,7 +75,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var breakAfterLbl: UILabel!
     @IBOutlet weak var afterSlotsDefLbl: UILabel!
     
-    var breakDuration = ["5 Min", "10 Min", "15 Min", "30 Min"]
+    var breakDuration: [String] = []
     var SelectedClasses = Set<IndexPath>()
     var SelectedDuration: IndexPath = IndexPath(item: 0, section: 0)
     var SelectedDates: [String] = []
@@ -105,7 +105,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: "PTM", secondLine: staffDetails?.school_name ?? "", colour: .white)
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "", colour: .white)
         
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         purposeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -132,6 +132,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         [firstView, SelectClassBaseView, selectDateTimeBaseView, DurationBaseView]
           .compactMap { $0 }
           .forEach { $0.applyCardStyle() }
+        
+        Translate()
         
         customDurationView.isHidden = true
         
@@ -212,6 +214,13 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         CheckSlotBtn.layer.cornerRadius = 12
         CheckSlotBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        let five = String(format: PTMString.minShort, 5)   // "5 Min"
+        let ten = String(format: PTMString.minShort, 10)   // "10 Min"
+        let fifteen = String(format: PTMString.minShort, 15) // "15 Min"
+        let thirty = String(format: PTMString.minShort, 30) // "30 Min"
+
+        breakDuration = [five,ten,fifteen,thirty]
+        
         //breakDurationCV.allowsMultipleSelection = false
         classCv.allowsMultipleSelection = true
         
@@ -252,6 +261,33 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         NotificationCenter.default.removeObserver(self,
                                                   name: UIResponder.keyboardWillHideNotification,
                                                   object: nil)
+    }
+    
+    
+    func Translate(){
+        
+        titleLbl.text = PTMString.createMeeting
+        purposeDefLbl.text = PTMString.purposeOfMeeting
+        ModeDefLbl.text = PTMString.selectMeetingMode
+        meetingLinkDefLbl.text = PTMString.pasteMeetingLink
+        selectClassDefLbl.text = PTMString.selectYourClasses
+        chooseAcademicyeardefLbl.text = PTMString.chooseAcademicYear
+        selectDateTimeDefLbl.text = PTMString.selectDateTime
+        dateLbl.text = PTMString.selectDates
+        fromTimeLbl.text = PTMString.startWith
+        toTimeLbl.text = PTMString.endWith
+        DurationAndBreakDefLbl.text = PTMString.durationAndBreak
+        durationLbl.text = PTMString.duration
+        minutesDefLbl.text = PTMString.minutes
+        needBreakDefLbl.text = PTMString.needBreakBetweenSlots
+        breakAfterLbl.text = PTMString.breakAfter
+        afterSlotsDefLbl.text = PTMString.slot
+        BreakDurationDefLbl.text = PTMString.breakDuration
+        inpersonBtn.setTitle(PTMString.inPerson, for: .normal)
+        phonecallBtn.setTitle(PTMString.phoneCall, for: .normal)
+        onlineBtn.setTitle(PTMString.virtual, for: .normal)
+        CheckSlotBtn.setTitle(PTMString.checkSlotAvailability, for: .normal)
+        calendarDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
     }
 
     
@@ -519,7 +555,13 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     private func setupDropDown() {
         dropDown.anchorView = selectDurationView
-        dropDown.dataSource = ["10 Minutes", "15 Minutes", "20 Minutes", "30 Minutes", "Custom"]
+        
+        let duration10 = String(format: PTMString.min, 10)
+        let duration15 = String(format: PTMString.min, 15)
+        let duration20 = String(format: PTMString.min, 20)
+        let duration30 = String(format: PTMString.min, 30)
+
+        dropDown.dataSource = [duration10, duration15, duration20, duration30, PTMString.custom]
 
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
@@ -568,7 +610,6 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     func validateInputs() -> Bool {
         // Trimmed text helpers
         let purpose = purposeTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let mobile = mobileTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let meetingLink = meetingLinkTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let fromTime = fromTimeLbl.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let toTime = toTimeLbl.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -776,7 +817,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                         
                         classCv.reloadData()
                         classCv.layoutIfNeeded()
-                        classCVHeight.constant = classCv.collectionViewLayout.collectionViewContentSize.height
+                        classCVHeight.constant =
+                        classCv.collectionViewLayout.collectionViewContentSize.height
                         view.layoutIfNeeded()
                         
                     }else {

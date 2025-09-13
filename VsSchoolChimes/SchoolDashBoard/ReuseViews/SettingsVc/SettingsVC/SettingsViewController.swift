@@ -45,7 +45,7 @@ class SettingsViewController: UIViewController, BaktoHome {
         super.viewDidLoad()
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         section = sections
-        SettingspageHeading.text = MenuTapbar.Settings.translated()
+        SettingspageHeading.text = MenuTapbar.shared.Settings
         SettingspageHeading.setFont(style: .header, size: 20)
         // Do any additional setup after loading the view.
         

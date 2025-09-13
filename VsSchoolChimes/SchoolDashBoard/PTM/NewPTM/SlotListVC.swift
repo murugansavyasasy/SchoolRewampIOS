@@ -26,9 +26,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backBtn.configureAsBackButton(firstLine: "PTM", secondLine: staffDetails?.school_name ?? "",colour: .black)
-        tv.register(UINib(nibName: "MeetingDataTV", bundle: nil), forCellReuseIdentifier: "MeetingDataTV")
-        tv.register(UINib(nibName: "SlotListTV", bundle: nil), forCellReuseIdentifier: "SlotListTV")
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .black)
+        tv.register(UINib(nibName: CellConfingName.MeetingDataTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDataTV)
+        tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self
         tv.dataSource = self
     }
@@ -144,23 +144,23 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0{
-            let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDataTV", for: indexPath) as! MeetingDataTV
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDataTV, for: indexPath) as! MeetingDataTV
             
             cell.dateLbl.text = slotData?.date
             cell.meetingNameLbl.text = slotData?.event_name
-            cell.durationLbl.text = String(slotData?.meeting_duration ?? 0) + " minutes"
+            cell.durationLbl.text = String(slotData?.meeting_duration ?? 0) + " " + PTMString.minutes
             cell.modeLbl.text = slotData?.event_mode
             cell.JoinBtn.isHidden = slotData?.event_mode == "Virtual" ? false : true
             cell.TimeLbl.text = (slotData?.start_time ?? "") + " - " + (slotData?.end_time ?? "")
             
             return cell
         }else {
-                let cell = tv.dequeueReusableCell(withIdentifier: "SlotListTV", for: indexPath) as! SlotListTV
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
             
             let slot = slotData?.slots?[indexPath.row]
             
             cell.TimeLbl.text = (slot?.from_time ?? "") + " - " + (slot?.to_time ?? "")
-            cell.DurationLbl.text = "Duration - " + String(slot?.meeting_duration ?? 0) + " minutes"
+            cell.DurationLbl.text = PTMString.duration + " - " + String(slot?.meeting_duration ?? 0) +  " " + PTMString.minutes
             cell.bookedByNameLbl.text = slot?.booked_by
             
             if slot?.is_booked ?? false{

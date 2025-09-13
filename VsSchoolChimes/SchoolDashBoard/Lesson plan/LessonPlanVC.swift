@@ -41,7 +41,8 @@ class LessonPlanVC: UIViewController {
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.LessonPlan, secondLine: staffDetails?.school_name ?? "")
+        let menuName = MenuStringFile.LessonPlan
+        BackBtn.configureAsBackButton(firstLine: menuName, secondLine: staffDetails?.school_name ?? "")
         searchBar.isHidden = true
         MyClassBtn.setTitle(LessonplanStringFile.myClasses, for: .normal)
         AllClassBtn.setTitle(LessonplanStringFile.allClasses, for: .normal)
