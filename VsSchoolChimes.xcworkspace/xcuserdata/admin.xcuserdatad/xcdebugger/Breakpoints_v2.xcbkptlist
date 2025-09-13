@@ -468,6 +468,36 @@
             endingLineNumber = "62"
             landmarkName = "Absentees_Response()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "23065A3E-B766-4CA6-ABE4-37ED199EEFAC - d4a1ee76914441dd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.AbsenteesResponse, Swift.Error&gt;) -&gt; () in School_Chimes.NewAbsenteesViewController.Absentees_Response() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%206/VsSchoolChimes/SchoolDashBoard/AbsenteesReport/NewAbsenteesReport/NewAbsenteesViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62">
+               </Location>
+               <Location
+                  uuid = "23065A3E-B766-4CA6-ABE4-37ED199EEFAC - bff0a92bcae9eb6c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.AbsenteesResponse, Swift.Error&gt;) -&gt; () in School_Chimes.NewAbsenteesViewController.Absentees_Response() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%206/VsSchoolChimes/SchoolDashBoard/AbsenteesReport/NewAbsenteesReport/NewAbsenteesViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

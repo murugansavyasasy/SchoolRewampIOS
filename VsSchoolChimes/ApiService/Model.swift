@@ -1287,7 +1287,8 @@ struct StaffMember: Codable {
     let subject_name: String?
     let is_assigned: Bool?
     let is_class_teacher: Bool?
-    let unread_count: String?
+    let unread_count: Int?
+    let last_msg_time: String?
     let section_id: String?
     let section_name: String?
     init() {
@@ -1300,6 +1301,7 @@ struct StaffMember: Codable {
         self.unread_count = nil
         self.section_id = nil
         self.section_name = nil
+        self.last_msg_time = nil
     }
     
 }
