@@ -233,8 +233,6 @@ class SettingStringFile{
      let sendFeedback = "Send Feedback"
      let logout = "Logout"
     let faceID  = "Face ID/Touch ID"
-    
-    
 }
 
 
@@ -437,14 +435,11 @@ struct textFieldStringFile{
 struct StringsName {
    
     var appname  = ""
- 
     static var Home = "Home"
     static var Help = "Help"
     static var Settings = "Settings"
     static  var Profile = "Profile"
-   
-  
-    
+ 
 }
 
 

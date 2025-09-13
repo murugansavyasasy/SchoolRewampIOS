@@ -107,11 +107,12 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="ClasTeacherLbl" destination="dP7-52-MKd" id="vUt-Q8-5SC"/>
+                <outlet property="TimeAndcountLabl" destination="HXI-NS-Pli" id="d1K-ku-o9H"/>
                 <outlet property="countBtnName" destination="7gr-VX-Dsx" id="WVh-z6-SNu"/>
                 <outlet property="profileImage" destination="tqv-hh-VTE" id="Hqw-Bi-Yns"/>
                 <outlet property="subjectNameLbl" destination="xGo-gF-z3Q" id="Ix8-vk-Egk"/>
                 <outlet property="teacherNameLbl" destination="xm9-6u-1jm" id="Z8A-rj-4VL"/>
-                <outlet property="timeLabl" destination="2mp-bm-IDV" id="NbD-FS-7xW"/>
+                <outlet property="timeLablandCountStk" destination="Pwa-zH-7Ss" id="Y7N-19-Kkh"/>
             </connections>
             <point key="canvasLocation" x="236.64122137404578" y="33.450704225352112"/>
         </tableViewCell>
@@ -119,7 +120,7 @@
     <resources>
         <image name="downloads" width="100" height="100"/>
         <namedColor name="gradientgreen1">
-            <color red="0.49399998784065247" green="0.85100001096725464" blue="0.34099999070167542" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

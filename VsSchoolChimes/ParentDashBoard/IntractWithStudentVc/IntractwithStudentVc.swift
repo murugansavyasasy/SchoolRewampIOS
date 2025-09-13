@@ -9,20 +9,16 @@ import UIKit
 
 class IntractwithStudentVc: UIViewController {
 
+    @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var noDataFoundLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var getStandardDetails:[StaffMember]?
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let name = StaffDetails?.name ?? ""
-//        let standard = (StaffDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-//        backBtn.configureAsBackButton(
-//                firstLine: "",
-//                secondLine: StaffDetails?.school_name,
-//                colour: .white
-//            )
-//        
+    
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
@@ -50,13 +46,20 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             return UITableViewCell()
         }
         
+        cell.selectionStyle = .none
         
         let datas = getStandardDetails?[indexPath.row]
         cell.teacherNameLbl.text = (datas?.name ?? "")  + "   -  " + (
             datas?.section_name ?? "")
         cell.subjectNameLbl.text = datas?.subject_name ?? ""
         cell.profileImage.image = UIImage(systemName: "person.3.sequence.fill")
-        
+       
+        cell.countBtnName.isHidden = datas?.unread_count == 0 ? true : false
+        cell.timeLablandCountStk.isHidden = cell.countBtnName.isHidden
+        cell.TimeAndcountLabl.text = formattedDateStatus(
+            from: datas?.last_msg_time ?? ""
+        )
+        cell.countBtnName.setTitle(String(datas?.unread_count ?? 0), for: .normal)
         return cell
         
     }
@@ -90,15 +93,26 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             getStandardDetails = successMessage.data ?? []
-                            
+                            searchBar.isHidden = (successMessage.status ?? true)
+                            noDataFoundLbl.isHidden = searchBar.isHidden
+                            imgView.isHidden = noDataFoundLbl.isHidden
                             tv.reloadData()
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
-                            
-                        }
+                            searchBar.isHidden = (successMessage.status ?? false)
+                            noDataFoundLbl.isHidden = searchBar.isHidden
+                            imgView.isHidden = noDataFoundLbl.isHidden
+                            noDataFoundLbl.text = successMessage.message ?? ""
+                }
                     }
                 case .failure(let error):
+                    DispatchQueue.main.async { [self] in
+                        searchBar.isHidden = true
+                        noDataFoundLbl.isHidden = false
+                        noDataFoundLbl.text = error.localizedDescription
+                        imgView.isHidden = noDataFoundLbl.isHidden
+            }
                     print(error.localizedDescription)
                 }
             }

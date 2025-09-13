@@ -119,6 +119,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         }
             pages = CV
     }
+    
 
     func SelectedVC(index: Int) {
         guard index >= 0 && index < pages.count else {

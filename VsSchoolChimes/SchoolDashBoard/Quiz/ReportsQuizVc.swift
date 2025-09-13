@@ -11,6 +11,7 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
     func addQuestionAndSubmitedList(index: Int) {
         
         let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
+        vc.noOfQuestion = get_QuizDetails[index].no_of_questions ?? 0 
         vc.id = get_QuizDetails[index].id
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -39,8 +40,8 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
     
     func CellRegister(){
     
-        let nib3 = UINib(nibName: CellConfingName.QuizListTvCell, bundle: nil)
-        tv.register(nib3, forCellReuseIdentifier: CellConfingName.QuizListTvCell)
+        let nib3 = UINib(nibName: CellConfingName.SenderQuizListTvCell, bundle: nil)
+        tv.register(nib3, forCellReuseIdentifier: CellConfingName.SenderQuizListTvCell)
         tv.dataSource = self
         tv.delegate = self
         Get_Quiz()
@@ -77,46 +78,15 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
 
 extension ReportsQuizVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      
+        print("get_QuizDetailsget_QuizDetails",get_QuizDetails.count)
             return get_QuizDetails.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        if id == 1 {
-//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
-//
-//            // Set the question text
-//            cell.QuestionLbl.text = String(indexPath.row+1) + ". " + questions[indexPath.row].text
-//
-//            // Reset button colors to a default state (e.g., .clear or another default color)
-//            for button in cell.buttons {
-//                button.backgroundColor = .clear
-//                button.setTitleColor(.systemBlue, for: .normal)
-//                button.layer.borderWidth = 1
-//                button.layer.borderColor = UIColor.systemBlue.cgColor
-//            }
-//
-//            // Configure the button titles
-//            for (i, button) in cell.buttons.enumerated() {
-//                button.setTitle(questions[indexPath.row].options[i], for: .normal)
-//            }
-//
-//            // Highlight the selected and correct options
-//            if selectedOption[indexPath.row] != questions[indexPath.row].correctOptionIndex {
-//                cell.buttons[selectedOption[indexPath.row]].backgroundColor = .systemRed // Incorrect selection
-//                cell.buttons[selectedOption[indexPath.row]].setTitleColor(.white, for: .normal)
-//                cell.buttons[selectedOption[indexPath.row]].layer.borderColor = UIColor.systemRed.cgColor
-//            }
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].backgroundColor = .systemGreen // Correct answer
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].setTitleColor(.white, for: .normal)
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].layer.borderColor = UIColor.systemGreen.cgColor
-//            return cell
-//
-//        }else{
-            
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? QuizListTvCell else {
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SenderQuizListTvCell, for: indexPath) as? QuizListTvCell else {
                 return UITableViewCell()
             }
             let quiz = get_QuizDetails[indexPath.row]
@@ -127,7 +97,8 @@ extension ReportsQuizVc : UITableViewDelegate,UITableViewDataSource {
             cell.PlayBtn.isHidden = true
             cell.titleLbl.text = get_QuizDetails[indexPath.row].title
             cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description
-            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
+        cell.exameDateLbl.text = formattedDateStatus(
+            from: get_QuizDetails[indexPath.row].sent_time ?? "")
             cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
             cell.postedByLbl.text = ("Posted By:") + (
                 get_QuizDetails[indexPath.row].sent_by ?? ""

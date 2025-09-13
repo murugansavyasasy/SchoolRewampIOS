@@ -169,6 +169,8 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
 //
 //        }
         
+        
+        
         if message?.ques_file_path?.count == 0 {
             if message?.question != ""{
                 cell.imageStack.isHidden = true
@@ -176,7 +178,10 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                 cell.timeStampLbl.isHidden = false
                 cell
                     .configure(
-                        with: message?.question ?? "", timeStamp: message?.asked_on ?? "",
+                        with: message?.question ?? "",
+                        timeStamp: formattedDateStatus(
+                            from: message?.asked_on ?? ""
+                        ) ,
                         isSender: message?.my_question ?? false
                     )
             }
