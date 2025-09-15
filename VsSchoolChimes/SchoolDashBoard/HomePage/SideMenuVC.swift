@@ -18,6 +18,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var menuTable: UITableView!
     weak var delegate: SideMenuDelegate?
     var isSwitchRoleExpanded = false
+    var isStudent = false
     // MARK: - Data
     var menuArray: [MenuItem] = [
         MenuItem(name: "View Profile", icon: "person.circle"),
@@ -38,7 +39,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         // Exit is always last
-        menuArray.append(MenuItem(name: "Exit", icon: "iphone.and.arrow.forward"))
+        menuArray.append(MenuItem(name: "Logout", icon: "iphone.and.arrow.forward"))
         
         menuTable.delegate = self
         menuTable.dataSource = self
@@ -78,7 +79,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        if item.name == "Exit" {
+        if item.name == "Logout" {
             cell.ExameLbl.textColor = .red
             cell.iconBtn.tintColor = .red
         }else{
@@ -99,48 +100,49 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         switch selectedItem.name {
         case "View Profile":
-            delegate?.meunu(viewController: UpdateProfileVC())
+            delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent))
             
         case "Settings":
             delegate?.meunu(viewController: SettingsViewController())
             
         case "Switch Role":
-            if isSwitchRoleExpanded {
-                // collapse → remove inserted schools
-                menuArray.removeAll { item in
-                    staffDetailsCount?.contains(where: { $0.school_name == item.name }) ?? false
-                }
-                isSwitchRoleExpanded = false
-            } else {
-                // expand → insert schools before Exit
-                for i in 0..<(staffDetailsCount?.count ?? 0) {
-                    let schoolName = staffDetailsCount?[i].school_name ?? "Unknown"
-                    menuArray.insert(MenuItem(name: schoolName, icon: "building.columns"),
-                                     at: menuArray.count - 1)
-                }
-                isSwitchRoleExpanded = true
-            }
-            tableView.reloadData()
+//            if isSwitchRoleExpanded {
+//                // collapse → remove inserted schools
+//                menuArray.removeAll { item in
+//                    staffDetailsCount?.contains(where: { $0.school_name == item.name }) ?? false
+//                }
+//                isSwitchRoleExpanded = false
+//            } else {
+//                // expand → insert schools before Exit
+//                for i in 0..<(staffDetailsCount?.count ?? 0) {
+//                    let schoolName = staffDetailsCount?[i].school_name ?? "Unknown"
+//                    menuArray.insert(MenuItem(name: schoolName, icon: "building.columns"),
+//                                     at: menuArray.count - 1)
+//                }
+//                isSwitchRoleExpanded = true
+//            }
+//            tableView.reloadData()
+            delegate?.meunu(viewController: UIViewController())
             
         case "Help":
             delegate?.meunu(viewController: HelpVc())
             
-        case "Exit":
-            // TODO: handle logout / dismiss
-            delegate?.meunu(viewController: UIViewController())
+        case "Logout":
+            delegate?.meunu(viewController: LogoutViewController())
             
         default:
-            if let school = staffDetailsCount?.first(where: { $0.school_name == selectedItem.name }) {
-                print("Switched to school: \(school.school_name ?? "")")
-                UserDefaultFileManager.saveStaffDetails(data: school)
-                // Collapse menu after selection
-                menuArray.removeAll { item in
-                    staffDetailsCount?.contains(where: { $0.school_name == item.name }) ?? false
-                }
-                isSwitchRoleExpanded = false
-                tableView.reloadData()
-                delegate?.meunu(viewController: nil)
-            }
+//            if let school = staffDetailsCount?.first(where: { $0.school_name == selectedItem.name }) {
+//                print("Switched to school: \(school.school_name ?? "")")
+//                UserDefaultFileManager.saveStaffDetails(data: school)
+//                // Collapse menu after selection
+//                menuArray.removeAll { item in
+//                    staffDetailsCount?.contains(where: { $0.school_name == item.name }) ?? false
+//                }
+//                isSwitchRoleExpanded = false
+//                tableView.reloadData()
+//                delegate?.meunu(viewController: nil)
+//            }
+            delegate?.meunu(viewController: UIViewController())
         }
     }
 }

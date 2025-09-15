@@ -228,19 +228,38 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     }
     
     
-    func back() {
-        // Check if we can pop from navigation stack
-        if let navController = self.navigationController,
-           navController.viewControllers.count > 1 {
-            navController.popViewController(animated: true)
+    func back(logout: Bool) {
+        if logout {
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(true, forKey: "Logout")
+            
+            let logoutVC = LogoutViewController(nibName: nil, bundle: nil)
+            logoutVC.modalPresentationStyle = .overFullScreen
+            
+            // Present from the root view controller safely
+            if let window = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .first?.windows.first(where: { $0.isKeyWindow }),
+               let rootVC = window.rootViewController {
+                rootVC.present(logoutVC, animated: true)
+            } else {
+                print("❌ Could not find root view controller to present LogoutViewController")
+            }
         } else {
-            if self.presentingViewController != nil {
+            // Check if we can pop from navigation stack
+            if let navController = self.navigationController,
+               navController.viewControllers.count > 1 {
+                navController.popViewController(animated: true)
+            } else if let presentingVC = self.presentingViewController {
+                // If this controller was presented modally, dismiss it
                 self.dismiss(animated: true, completion: nil)
             } else {
+                // If neither, pop to root
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
+
     
     func switchProfile() {
         selectViewController(fourthVCNav)

@@ -16,19 +16,25 @@ class UpdateProfileVC: UIViewController {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var detailTable: UITableView!
     
-    var userDetails: [String: [UserDetailItem]]?
+    var profileSections: [ProfileSection] = []
     var attachments: [AttachmentItem] = []
     var changedParams: [String: Any] = [:]
     var attachmentNode: String?
     var changeProfileImg: UIImage?
-    var profileNode: String = "profileImage" // Set default value
-    
+    var profileNode: String = "photoPath" // Corrected default value based on JSON
+    var isStudent = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupUserDetails(isStudent: true)
+        setupUserDetails(isStudent: isStudent)
     }
-    
+    init(isStudent: Bool = false) {
+        self.isStudent = isStudent
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -56,6 +62,7 @@ class UpdateProfileVC: UIViewController {
     @IBAction func back(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
+    
     private func setupUserDetails(isStudent: Bool) {
         let url = isStudent ? ServiceUrl.admin_api_student_profile_list : ServiceUrl.admin_api_staff_profile_list
         let token = isStudent
@@ -73,18 +80,22 @@ class UpdateProfileVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    if response.status == true, let data = response.data {
+                    if response.status == true,
+                       let data = response.data,
+                       let firstProfileData = data.first {
                         
-                        guard var profileDict = data.first else { return }
-                        let profile = profileDict
-                        profileDict.removeValue(forKey: "photoPath")
-                        self.userDetails = profileDict
-                        self.detailTable.reloadData()
-                        if let photoPath = profile["photoPath"] as? String,
+                        // Get all sections excluding photoPath for table display
+                        self.profileSections = firstProfileData.getAllSections().filter { $0.title != "Photo" }
+                        if let photoPathItems = firstProfileData.photoPath,
+                           let photoItem = photoPathItems.first,
+                           let photoPath = photoItem.value,
+                           !photoPath.isEmpty,
                            let imageUrl = URL(string: photoPath) {
                             self.profileImg.kf.setImage(with: imageUrl)
-                            self.profileNode = "photoPath" // save node for update later
+                            self.profileNode = photoItem.node ?? "photoPath"
                         }
+                        
+                        self.detailTable.reloadData()
                     } else {
                         self.showAlert(message: response.message ?? "Failed to load user details")
                     }
@@ -156,49 +167,40 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Section Count
     func numberOfSections(in tableView: UITableView) -> Int {
-        return userDetails?.keys.count ?? 0
+        return profileSections.count
     }
     
-    // MARK: Rows per Section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let userDetails = userDetails else { return 0 }
-        
-        let keys = Array(userDetails.keys)
-        let key = keys[section]
-        let items = userDetails[key] ?? []
-        
-        if section == userDetails.count - 1 {
-            return items.count + 1 // last section has update button
+        let items = profileSections[section].items
+        if section == profileSections.count - 1 && isStudent {
+            return items.count + 1
         }
         return items.count
     }
+
     
-    // MARK: Cell for Row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserDetailsTVC", for: indexPath) as? UserDetailsTVC,
-              let userDetails = userDetails else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserDetailsTVC", for: indexPath) as? UserDetailsTVC else {
             return UITableViewCell()
         }
         
-        let keys = Array(userDetails.keys)
-        let key = keys[indexPath.section]
-        let items = userDetails[key] ?? []
+        let section = profileSections[indexPath.section]
+        let items = section.items
         
-        let isLastSection = indexPath.section == userDetails.count - 1
+        let isLastSection = indexPath.section == profileSections.count - 1
         let isLastRow = indexPath.row == items.count
         
-        if isLastSection && isLastRow {
-            // Update button cell
+        // Show update button only if it's the last section, last row, and isStudent is true
+        if isLastSection && isLastRow && isStudent {
             cell.configure(with: nil)
             cell.updateBtn.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
         } else {
-            // Normal user detail cell
             let item = items[indexPath.row]
             cell.configure(with: item)
             cell.onValueChanged = { [weak self] changedKey, value in
                 guard let self = self else { return }
                 if let value = value {
-                    if item.node != "document" {
+                    if item.node != "documents" { // Corrected from "document" to "documents"
                         if "\(value)" != "\(item.value ?? "")" {
                             self.changedParams[changedKey] = value
                         }
@@ -213,13 +215,10 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
+
     // MARK: Section Header
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let userDetails = userDetails else { return nil }
-        
-        let keys = Array(userDetails.keys)
-        let key = keys[section]
+        let sectionData = profileSections[section]
         
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGroupedBackground
@@ -228,7 +227,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = UIColor.primery
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = key
+        label.text = sectionData.title
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([
@@ -428,9 +427,3 @@ extension UpdateProfileVC: UIImagePickerControllerDelegate, UINavigationControll
     }
 }
 
-// MARK: - Supporting Models
-
-struct ProfileList {
-    let title: String
-    let value: [UserDetailItem]
-}

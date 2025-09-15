@@ -73,16 +73,18 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let vc = viewController {
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
                 self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                delegate?.back()
+            } else if vc is LogoutViewController {
+                delegate?.back(logout: true)
+            }else{
+                delegate?.back(logout: false)
             }
         } else {
             getacadmicYr {
                 self.get_dashboard_details()
             }
+            setupLabels()
+            setupProfileImage()
         }
-        setupLabels()
-        setupProfileImage()
     }
     
     // MARK: - API Calls
@@ -286,6 +288,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
+        menuVC.isStudent = false
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
         swipeGesture.direction = .left
         menuVC.view.addGestureRecognizer(swipeGesture)

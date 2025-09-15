@@ -8,7 +8,7 @@
 import UIKit
 
 protocol backNavigation {
-    func back()
+    func back(logout:Bool)
 }
 
 @available(iOS 14.0, *)
@@ -21,10 +21,12 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             dismiss(animated: true)
             return
         }
-        if vc is SettingsViewController || vc is ProfileViewController || vc is HelpVc {
+        if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
             navigationController?.pushViewController(vc, animated: true)
-        } else {
-            delegate?.back()
+        } else if vc is LogoutViewController {
+            delegate?.back(logout: true)
+        }else{
+            delegate?.back(logout: false)
         }
     }
     
@@ -212,7 +214,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
-        
+        menuVC.isStudent = true
         // Swipe gesture
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
         swipeGesture.direction = .left
