@@ -14,7 +14,7 @@ class HelpVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        HelppageHeader.text = MenuTapbar.Help.translated()
+        HelppageHeader.text = MenuTapbar.shared.Help
         HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize+3)
     }
     override func viewDidLayoutSubviews() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MenuStringFile{
+struct MenuStringFile{
     
 //    static let Communication = TranslationManager.shared.translate(key:"Communication");
 //    static let ImagePdf = TranslationManager.shared.translate(key:"Image/Pdf");
@@ -99,7 +99,7 @@ struct ReceiverMenuItems {
     
 }
 
-class AlertstringFile{
+struct AlertstringFile{
     
     static let title = "Confirm Action".translated()
     static let voice_or_title_is_required = "Voice and title is required".translated()
@@ -174,10 +174,10 @@ class AlertstringFile{
     static let Open_Settings = "Open Settings".translated()
     static let Distance_Should = "Distance Should be  above 10 Meter(s)".translated()
     static let Please_Select_Your_Country = "Please Select Your Country".translated()
-    static let Please_Add_Attachment = "Please Add Any Attachment"
-    static let Please_Select_a_Video = "Please Select a Video"
-    static let Please_Select_a_Image = "Please Select a Image"
-    static let Please_Select_a_Document = "Please Select a Document"
+    static let Please_Add_Attachment = "Please Add Any Attachment".translated()
+    static let Please_Select_a_Video = "Please Select a Video".translated()
+    static let Please_Select_a_Image = "Please Select a Image".translated()
+    static let Please_Select_a_Document = "Please Select a Document".translated()
     static let Enter_location_name = "Enter your location name".translated()
     static let Are_you_sure_you_want_to_submit_leave_request = "Are you sure you want to submit this leave request?".translated()
     static let Enter_reason = "Please Enter the reason".translated()
@@ -201,20 +201,27 @@ struct classTimeTableStrings {
 }
 
 class MenuTapbar{
-    static let FAQ = "FAQ".translated()
-    static let Rate_Us = "Rate Us".translated()
-    static let Report_a_bug = "Report a bug".translated()
-    static let Settings = "Settings"
-    static let Contact_Us = "Contact Us".translated()
-    static let Notifications = "Notifications".translated()
-    static let ComposeNotifications = "Compose NoticeBoard".translated()
-    static let Video = "Video"//.translated()
-    static let Assignment = "Assignment".translated()
-    static let Noticeboard = "Noticeboard".translated()
-    static let Help = "Help".translated()
+    static var shared = MenuTapbar()
+    
+     let FAQ = "FAQ".translated()
+     let Rate_Us = "Rate Us".translated()
+    let Report_a_bug = "Report a bug".translated()
+     let Settings = "Settings"
+     let Contact_Us = "Contact Us".translated()
+    let Notifications = "Notifications".translated()
+    let ComposeNotifications = "Compose NoticeBoard".translated()
+     let Video = "Video"//.translated()
+     let Assignment = "Assignment".translated()
+     let Noticeboard = "Noticeboard".translated()
+     let Help = "Help".translated()
+    
+    let setting = SettingStringFile()
 }
 
 class SettingStringFile{
+    
+    static var shared = SettingStringFile()
+    
      let general = "GENERAL"
      let notifications = "Notifications"
      let faq = "FAQ"
@@ -240,8 +247,8 @@ class QuizListStringFile{
     static let Mark = "Mark"
 }
 
-class CommonStringFile{
-    
+struct CommonStringFile{
+    //MARK:
     static let Search = "Search".translated()
     static let You_can_only_select_up_to2_video_files = "You can only select up to 2 video files.".translated()
     static let Cancel = "Cancel".translated()
@@ -375,7 +382,7 @@ class CommonStringFile{
 }
 
 
-class ChangePasswordStringFile{
+struct ChangePasswordStringFile{
     
     static let Enter_the_new_password = "Enter the new password".translated()
     static let Enter_the_old_password = "Enter the old password".translated()
@@ -384,11 +391,11 @@ class ChangePasswordStringFile{
     static let change_password = "Change password".translated()
     static let Reset_password = "Reset password".translated()
 }
-class OTPScreenStringFile{
+struct OTPScreenStringFile{
     
     static let Resend = "Resend"
 }
-class RatingCellStringFile{
+struct RatingCellStringFile{
     
     static let Bad =  "Bad".translated()
     static let Not_bad =  "Not bad".translated()
@@ -399,7 +406,7 @@ class RatingCellStringFile{
     static let Good =  "Good".translated()
     
 }
-class PiechartCvcellStringFile{
+struct PiechartCvcellStringFile{
     
     static let SchoolStrength = "School Strength".translated()
     static let TotalStrength = "Total Strength".translated()
@@ -407,7 +414,7 @@ class PiechartCvcellStringFile{
     static let boy  = "Boy's count".translated()
     static let  girls = "Girl's count".translated()
 }
-class TexviewStringFile{
+struct TexviewStringFile{
     
     static let Enter_video_Description = "Enter Video Description".translated()
     static let Enter_Chat_Description = "Type your message here...".translated()
@@ -416,7 +423,7 @@ class TexviewStringFile{
     static let Enter_Homework_Description = "Enter Homework Description".translated()
     static let Enter_Assignment_Description = "Enter Assignment Description".translated()
 }
-class textFieldStringFile{
+struct textFieldStringFile{
     
     static let Upload_Video = "Upload Video".translated()
     static let Click_To_Choose_video = "Click To Choose Video From File".translated()
@@ -488,7 +495,7 @@ struct AttachmentTypeString {
     static var DOCUMENT = "DOCUMENT"
 }
 
-class FilterString {
+struct FilterString {
     
     static var All = "All"
     static var Text = "Text"
@@ -496,7 +503,7 @@ class FilterString {
     static var Document = "Document"
 }
 
-class DateFormatString {
+struct DateFormatString {
     
     static var Day_and_date = "EEE dd"
     static var Date_Day_month_year = "d EEE, MMM yyyy" 
@@ -514,18 +521,18 @@ class LessonplanStringFile {
     static let inProgress = "In Progress".translated()
 }
 
-class ExamStringFile{
+struct ExamStringFile{
     
-    static let viewMarks = "View Marks".translated()
-    static let viewProgress = "View Progress".translated()
-    static let overallGrade = "Overall Grade".translated()
-    static let subjectAndMarks = "Subject & Marks".translated()
-    static let otherActivities = "Other Activities".translated()
-    static let examTimetable = "Exam Timetable".translated()
-    static let examMarks = "Exam Marks".translated()
+    static var viewMarks = "View Marks".translated()
+    static var viewProgress = "View Progress".translated()
+    static var overallGrade = "Overall Grade".translated()
+    static var subjectAndMarks = "Subject & Marks".translated()
+    static var otherActivities = "Other Activities".translated()
+    static var examTimetable = "Exam Timetable".translated()
+    static var examMarks = "Exam Marks".translated()
 }
 
-class AttendanceString{
+struct AttendanceString{
     
     static let attendance = "Attendance".translated()
     static let thisWeekStatus = "This week status".translated()
@@ -566,7 +573,7 @@ class AttendanceString{
 }
 
 
-class PTMString{
+struct PTMString{
     
     static let ptm = "PTM".translated()
     static let scheduleMeeting = "Schedule Meeting".translated()
@@ -581,4 +588,30 @@ class PTMString{
     static let call = "Call".translated()
     static let cancel = "Cancel".translated()
     static let with = "With".translated()
+    static let create = "Create".translated()
+    static let meetingsToday = "You have %d Meetings Today".translated()
+    static let minutes = "Minutes".translated()
+    static let virtual = "Virtual".translated()
+    static let duration = "Duration".translated()
+    static let createMeeting = "Create Meeting".translated()
+    static let purposeOfMeeting = "Purpose of Meeting".translated()
+    static let selectMeetingMode = "Select Meeting Mode".translated()
+    static let inPerson = "In person".translated()
+    static let phoneCall = "Phone call".translated()
+    static let pasteMeetingLink = "Paste meeting Link".translated()
+    static let selectYourClasses = "Select Your Classes".translated()
+    static let chooseAcademicYear = "Choose academic year :".translated()
+    static let selectDateTime = "Select Date & Time".translated()
+    static let selectDates = "Select Dates".translated()
+    static let startWith = "Start with".translated()
+    static let endWith = "End with".translated()
+    static let durationAndBreak = "Duration & Break".translated()
+    static let needBreakBetweenSlots = "Need Break between slots?".translated()
+    static let breakAfter = "Break After".translated()
+    static let slot = "Slot".translated()
+    static let breakDuration = "Break Duration".translated()
+    static let checkSlotAvailability = "Check Slot Availability".translated()
+    static let min = "%d Minutes".translated()
+    static let custom = "Custom".translated()
+    static let minShort = "%d Min".translated()
 }

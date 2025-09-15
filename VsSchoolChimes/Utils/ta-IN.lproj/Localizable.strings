@@ -339,5 +339,30 @@
 "Call" = "அழைக்க";
 "Cancel" = "ரத்துசெய்";
 "With" = "உடன்";
+"You have %d Meetings Today" = "இன்று உங்களுக்கு %d கூட்டங்கள் உள்ளன";
+"Minutes" = "நிமிடங்கள்";
+"Virtual" = "மெய்நிகர்";
+"Duration" = "கால அளவு";
+"Create Meeting" = "கூட்டத்தை உருவாக்கு";
+"Purpose of Meeting" = "கூட்டத்தின் நோக்கம்";
+"Select Meeting Mode" = "கூட்டத்தின் முறையைத் தேர்வு செய்க";
+"In person" = "நேரில்";
+"Phone call" = "தொலைபேசி அழைப்பு";
+"Paste meeting Link" = "கூட்ட இணைப்பை ஒட்டு";
+"Select Your Classes" = "உங்கள் வகுப்புகளைத் தேர்வு செய்க";
+"Choose academic year :" = "கல்வியாண்டைத் தேர்வு செய்க :";
+"Select Date & Time" = "தேதி மற்றும் நேரத்தைத் தேர்வு செய்க";
+"Select Dates" = "தேதிகளைத் தேர்வு செய்க";
+"Start with" = "தொடங்கு";
+"End with" = "முடி";
+"Duration & Break" = "கால அளவு & இடைவேளை";
+"Need Break between slots?" = "ஸ்லாட் இடையே இடைவேளை தேவைப்படுகிறதா?";
+"Break After" = "பிறகு இடைவேளை";
+"Slot" = "ஸ்லாட்";
+"Break Duration" = "இடைவேளை கால அளவு";
+"Check Slot Availability" = "ஸ்லாட் கிடைப்பதைக் சரிபார்க்கவும்";
+"%d Minutes" = "%d நிமிடங்கள்";
+"Custom" = "விருப்பத்தேர்வு";
+"%d Min" = "%d நிமி";
 
 

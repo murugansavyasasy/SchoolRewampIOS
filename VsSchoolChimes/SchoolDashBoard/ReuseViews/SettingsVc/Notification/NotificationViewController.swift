@@ -29,7 +29,7 @@ class NotificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.setTitle(MenuTapbar.Notifications.translated(), for: .normal)
+        BackBtn.setTitle(MenuTapbar.shared.Notifications, for: .normal)
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left

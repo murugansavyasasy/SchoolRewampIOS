@@ -39,6 +39,8 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         //            self.showCustomPopup()
         //        }
         
+       // re-init strings
+
         
         if let animatedImage = loadGif(name: "Splach") {
             imgview.image = animatedImage
