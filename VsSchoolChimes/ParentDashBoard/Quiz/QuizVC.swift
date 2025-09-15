@@ -183,38 +183,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        if id == 1 {
-//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
-//
-//            // Set the question text
-//            cell.QuestionLbl.text = String(indexPath.row+1) + ". " + questions[indexPath.row].text
-//
-//            // Reset button colors to a default state (e.g., .clear or another default color)
-//            for button in cell.buttons {
-//                button.backgroundColor = .clear
-//                button.setTitleColor(.systemBlue, for: .normal)
-//                button.layer.borderWidth = 1
-//                button.layer.borderColor = UIColor.systemBlue.cgColor
-//            }
-//
-//            // Configure the button titles
-//            for (i, button) in cell.buttons.enumerated() {
-//                button.setTitle(questions[indexPath.row].options[i], for: .normal)
-//            }
-//
-//            // Highlight the selected and correct options
-//            if selectedOption[indexPath.row] != questions[indexPath.row].correctOptionIndex {
-//                cell.buttons[selectedOption[indexPath.row]].backgroundColor = .systemRed // Incorrect selection
-//                cell.buttons[selectedOption[indexPath.row]].setTitleColor(.white, for: .normal)
-//                cell.buttons[selectedOption[indexPath.row]].layer.borderColor = UIColor.systemRed.cgColor
-//            }
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].backgroundColor = .systemGreen // Correct answer
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].setTitleColor(.white, for: .normal)
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].layer.borderColor = UIColor.systemGreen.cgColor
-//            return cell
-//
-//        }else{
-            
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? quizCellTv else {
                 return UITableViewCell()
             }

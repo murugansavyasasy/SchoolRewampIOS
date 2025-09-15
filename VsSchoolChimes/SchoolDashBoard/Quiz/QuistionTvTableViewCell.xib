@@ -128,7 +128,7 @@
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleFootnote"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="addAttachAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="XV8-1e-7hK"/>
+                                    <action selector="addAttachAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FFM-xw-6GG"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="WS8-Ci-NST">

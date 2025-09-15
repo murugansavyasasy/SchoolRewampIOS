@@ -56,7 +56,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         let params: [String: Any] = [
             "title": titleText.text ?? "",
             "description": discriptionsTextFild.text ?? "",
-            "no_of_question" : 1,
+            "no_of_question" : Int(numberOfQuestionText.text ?? "0") ?? 0,
             "level": 1,
             "level_flag" : false
         ]

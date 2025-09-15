@@ -11,6 +11,7 @@ protocol QuestionCellDelegate: AnyObject {
     func addAnotherCell(at indexPath: IndexPath)
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata)
     func removeCell(at indexPath: IndexPath)
+    func addAttachment(at indexPath: IndexPath, file: FilePaths)   // ✅ New
 }
 
 
@@ -163,29 +164,57 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 }
             }
         }
-    func configureCell(with model: QuizQuestiondata, isLast: Bool) {
-            // Fill values if API data available
-            ChapterTxtFld.text = model.chapter
-            markTxtFild.text   = model.marks
-            opATxtView.text    = model.optionA.isEmpty ? "Enter Option A" : model.optionA
-            opBTxtView.text    = model.optionB.isEmpty ? "Enter Option B" : model.optionB
-            opCTxtView.text    = model.optionC.isEmpty ? "Enter Option C" : model.optionC
-            opDTxtView.text    = model.optionD.isEmpty ? "Enter Option D" : model.optionD
-            questionTxtView.text = model.question.isEmpty ? "Enter Question" : model.question
-            correctAnsLbl.text = model.correctAnswer ?? "Select"
-            
-            // Placeholder color handle
-            [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
-                if tv?.text?.hasPrefix("Enter") == true {
-                    tv?.textColor = .lightGray
-                } else {
-                    tv?.textColor = .label
-                }
-            }
-            
-            // Show "Add Another" only if last cell and it's new question (id == nil)
-            addAnotherName.isHidden = !(isLast && model.id == nil)
+    func configureCell(
+        with model: QuizQuestiondata,
+        isLast: Bool,
+        numberofQuestion:Int,
+        totalQuestion:Int
+    ) {
+        ChapterTxtFld.text = model.chapter
+        markTxtFild.text   = model.mark == nil ? "" : "\(model.mark ?? 0)"
+        opATxtView.text    = model.a_option.isEmpty ? "Enter Option A" : model.a_option
+        opBTxtView.text    = model.b_option.isEmpty ? "Enter Option B" : model.b_option
+        opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C" : model.c_option
+        opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D" : model.d_option
+        questionTxtView.text = model.question.isEmpty ? "Enter Question" : model.question
+        correctAnsLbl.text = model.correct_answer ?? "Select"
+        
+        print("numberofQuestionnumberofQuestionnumberofQuestion",numberofQuestion)
+        // 🔹 Handle attachment button
+        if let attachments = model.file_path, !attachments.isEmpty {
+            // already has attachments → show count
+            attachmentBtnName.setTitle("Attachment (\(attachments.count))", for: .normal)
+            attachmentBtnName.backgroundColor = .black
+            attachmentBtnName.isEnabled = false   // disable click
+            attachmentBtnName.alpha = 0.6
+        } else {
+            // no attachments → allow adding new one
+            attachmentBtnName.setTitle("Add Attachment", for: .normal)
+            attachmentBtnName.backgroundColor = .black
+            attachmentBtnName.isEnabled = true
+            attachmentBtnName.alpha = 1.0
         }
+        
+        // "Add Another" logic
+        if totalQuestion == numberofQuestion {
+            addAnotherName.isHidden = true
+        }else {
+            
+            addAnotherName.isHidden = !(isLast)
+        }
+       
+        
+        print("addAnotherNameaddAnotherName",addAnotherName.isHidden)
+        // Placeholder color setup
+        [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
+            if tv?.text?.hasPrefix("Enter") == true {
+                tv?.textColor = .lightGray
+            } else {
+                tv?.textColor = .label
+            }
+        }
+    }
+
         
         func captureModel() -> QuizQuestiondata {
             return QuizQuestiondata(
@@ -195,7 +224,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 optionB: opBTxtView.text ?? "",
                 optionC: opCTxtView.text ?? "",
                 optionD: opDTxtView.text ?? "",
-                marks: markTxtFild.text ?? "",
+                marks: 3,
                 correctAnswer: correctAnsLbl.text
             )
         }
@@ -230,7 +259,30 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
     }
     
-    @IBAction func addAttachAct(_ sender: Any) {
+    @IBAction func addAttachAct(_ sender: UIButton) {
+        
+        guard let index = indexPath else { return }
+            
+            let actionSheet = UIAlertController(title: "Add Attachment",
+                                                message: "Choose file type",
+                                                preferredStyle: .actionSheet)
+            
+            actionSheet.addAction(UIAlertAction(title: "Image", style: .default, handler: { _ in
+                self.openPicker(type: .image)
+            }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Video", style: .default, handler: { _ in
+                self.openPicker(type: .video)
+            }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Document", style: .default, handler: { _ in
+                self.openDocumentPicker()
+            }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+            parentViewController?.present(actionSheet, animated: true)
+        
     }
     
     @IBAction func DeleteBtnAct(_ sender: UIButton) {
@@ -239,4 +291,85 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             }
     }
     
+}
+
+extension QuistionTvTableViewCell: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate {
+    
+    enum PickerType { case image, video }
+    
+    func openPicker(type: PickerType) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.mediaTypes = type == .image ? ["public.image"] : ["public.movie"]
+        parentViewControllers?.present(picker, animated: true)
+    }
+    
+    func openDocumentPicker() {
+        let docTypes = ["public.data", "public.content", "com.adobe.pdf", "public.text"]
+        let picker = UIDocumentPickerViewController(documentTypes: docTypes, in: .import)
+        picker.delegate = self
+        parentViewControllers?.present(picker, animated: true)
+    }
+    
+    // MARK: - Image/Video Picker Delegate
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        var file: FilePaths?
+        
+        if let url = info[.mediaURL] as? URL {
+            // Video
+            file = FilePaths(fileName: url.lastPathComponent, fileURL: url, fileType: .video)
+        } else if let image = info[.originalImage] as? UIImage {
+            // Save image temporarily
+            if let data = image.jpegData(compressionQuality: 0.8) {
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".jpg")
+                try? data.write(to: tempURL)
+                file = FilePaths(fileName: tempURL.lastPathComponent, fileURL: tempURL, fileType: .image)
+            }
+        }
+        
+        if let file = file, let index = indexPath {
+            delegate?.addAttachment(at: index, file: file)
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    
+    // MARK: - Document Picker Delegate
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else { return }
+        let file = FilePaths(
+            fileName: url.lastPathComponent,
+            fileURL: url,
+            fileType: .document
+        )
+        
+        if let index = indexPath {
+            delegate?.addAttachment(at: index, file: file)
+        }
+    }
+}
+
+struct FilePaths: Codable {
+    var fileName: String
+    var fileURL: URL
+    var fileType: FileType
+}
+
+enum FileType: String, Codable {
+    case image
+    case video
+    case document
+}
+
+extension UIView {
+    var parentViewControllers: UIViewController? {
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let vc = responder as? UIViewController { return vc }
+            responder = responder?.next
+        }
+        return nil
+    }
 }

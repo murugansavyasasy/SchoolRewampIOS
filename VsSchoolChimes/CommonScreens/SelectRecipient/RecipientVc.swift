@@ -10,6 +10,7 @@ import DropDown
 
 class RecipientVc: UIViewController{
     
+    @IBOutlet weak var addLevel: UIView!
     @IBOutlet weak var chooseDefaultLbl: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var stackView: UIStackView!
@@ -110,6 +111,7 @@ class RecipientVc: UIViewController{
         selectStandardDropDown.addGestureRecognizer(tap2)
         selectSubject.addGestureRecognizer(tap3)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+        addLevel
         tv.delegate = self
         tv.dataSource = self
         configureRecipientTabs()
@@ -601,6 +603,33 @@ class RecipientVc: UIViewController{
         setupSubjectDropdown ()
     }
     
+    func selectLevelDropdown(){
+        StdDropdown.anchorView = addLevel
+        StdDropdown.dataSource = dropDownArray
+        StdDropdown.bottomOffset = CGPoint(x: 0, y: addLevel.bounds.height)
+        StdDropdown.direction = .bottom
+        StdDropdown.show()
+        StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+//            array_selectedId.removeAll()
+//            selectSubject.isHidden = true
+            subjectId = ""
+            self.sectionsDetails = self.standardDetails?.first(where: { $0.name == item })?.sections
+            if let label = self.addLevel.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.text = item
+            }
+//            classID = self.standardDetails?[index].id
+//            speficBtnName.isHidden = true
+//            self.tv.isHidden = false
+//            self.tv.reloadData()
+//            DispatchQueue.main.async {
+//                self.tableHeight.constant = self.tv.contentSize.height
+//                self.view.layoutIfNeeded()
+//            }
+        }
+        
+        
+    }
     func setupStdDropdown() {
         
         StdDropdown.anchorView = selectStandardDropDown

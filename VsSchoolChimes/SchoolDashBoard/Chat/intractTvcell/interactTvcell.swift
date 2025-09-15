@@ -10,7 +10,8 @@ import UIKit
 class interactTvcell: UITableViewCell {
 
     @IBOutlet weak var countBtnName: UIButton!
-    @IBOutlet weak var timeLabl: UIStackView!
+    @IBOutlet weak var TimeAndcountLabl: UILabel!
+    @IBOutlet weak var timeLablandCountStk: UIStackView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var ClasTeacherLbl: UILabel!
     @IBOutlet weak var subjectNameLbl: UILabel!

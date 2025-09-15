@@ -57,14 +57,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
         getChat()
     }
  
- override func viewDidLayoutSubviews() {
-         view.applyGradient(
-             colors: [Colornames.stafGradient, Colornames.stafGradient1],
-             startPoint: CGPoint(x: 1, y: 0.5),
-             endPoint: CGPoint(x: 0, y: 0.5)
-         )
-     
- }
+
  
  override func viewWillAppear(_ animated: Bool) {
      super.viewWillAppear(animated)

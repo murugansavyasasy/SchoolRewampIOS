@@ -29,23 +29,7 @@ class QuizListTvCell: UITableViewCell {
         super.awakeFromNib()
         CellView.layer.cornerRadius = 10
         DeafultimageView.layer.cornerRadius = 10
-//        CellView.layer.shadowColor = UIColor.black.cgColor
-//        CellView.layer.shadowOpacity = 0.5
-//        CellView.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        CellView.layer.shadowRadius = 3
-//        CellView.layer.masksToBounds = false
-//        CellView.layer.borderWidth = 1
-//        CellView.layer.borderColor = UIColor.gray.cgColor
-//        
-//        LevelView.layer.cornerRadius = 10
-//        LevelView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
-//       
-//        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-//        SubjectLbl.setFont(style: .body, size: FontSize.BodySize)
-//        LevelLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        PlayBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
-//        PlayBtn.applyRightButton()
+
     }
 
     @IBAction func addQestBtn(_ sender: UIButton) {
@@ -54,6 +38,7 @@ class QuizListTvCell: UITableViewCell {
     }
     
     @IBAction func submitedList(_ sender: UIButton) {
+        
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
