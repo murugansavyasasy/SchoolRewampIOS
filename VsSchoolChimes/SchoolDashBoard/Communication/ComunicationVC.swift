@@ -166,6 +166,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         enableVoiceHistoryLabel.isHidden = true
         voiceTitleeTxt.delegate = self
         TxtTitle.delegate = self
+        textCountLbl.isHidden = true
+        textMsgVoiceCountLbl.isHidden = true
         updateEmergencyCallVisibility( staff_role)
         applyShadowAndCornerRadius(to:acidamicYrDropView)
         sendbtn.isEnabled = true
@@ -561,20 +563,20 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty
     }
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Calculate the new length of the text
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
-            textCountLbl.text = "\(updatedText.count) / 500"
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            return false // Reject the change
-        }
-    }
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        // Calculate the new length of the text
+//        let currentText = textView.text ?? ""
+//        guard let stringRange = Range(range, in: currentText) else { return false }
+//        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+//        if updatedText.count <= 500 {
+//            textCountLbl.text = "\(updatedText.count) / 500"
+//            return true // Allow the change
+//        } else {
+//            let alert = CustomAlert()
+//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+//            return false // Reject the change
+//        }
+//    }
     
     
     
@@ -693,21 +695,21 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func hideCalendarHeader() {
         DateSelection.headerHeight = 0
     }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Get the current text
-        let currentText = textField.text ?? ""
-        
-        // Apply the change
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-        
-        // ✅ Update character count label
-        voiceTileTextFldCount.text = "\(updatedText.count)/50"
-        textMsgVoiceCountLbl.text = "\(updatedText.count)/50"
-        
-        // ✅ Limit to 50 characters
-        return updatedText.count <= 49
-    }
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        // Get the current text
+//        let currentText = textField.text ?? ""
+//        
+//        // Apply the change
+//        guard let stringRange = Range(range, in: currentText) else { return false }
+//        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+//        
+//        // ✅ Update character count label
+//        voiceTileTextFldCount.text = "\(updatedText.count)/50"
+//        textMsgVoiceCountLbl.text = "\(updatedText.count)/50"
+//        
+//        // ✅ Limit to 50 characters
+//        return updatedText.count <= 49
+//    }
     
     
     //MARK: CELL REGISTRATION
@@ -1133,6 +1135,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             dltbtn.isHidden = voiceTiming.text == "00:00" ? true:false
             sendbtn.isEnabled = voiceTiming.text == "00:00" ? false:true
             addfile.isHidden = voiceTiming.text == "00:00" ? false:true
+            voiceTileTextFldCount.isHidden = true
             playerItem = AVPlayerItem(url: urls)
             player = AVPlayer(playerItem: playerItem!)
         }

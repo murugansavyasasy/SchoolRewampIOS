@@ -129,6 +129,13 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         phonecallBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         onlineBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        inpersonBtn.titleLabel?.numberOfLines = 0
+        inpersonBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        phonecallBtn.titleLabel?.numberOfLines = 0
+        phonecallBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        onlineBtn.titleLabel?.numberOfLines = 0
+        onlineBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        
         [firstView, SelectClassBaseView, selectDateTimeBaseView, DurationBaseView]
           .compactMap { $0 }
           .forEach { $0.applyCardStyle() }

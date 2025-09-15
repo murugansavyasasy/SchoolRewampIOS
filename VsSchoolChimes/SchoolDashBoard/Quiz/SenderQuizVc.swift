@@ -61,10 +61,10 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             "level_flag" : false
         ]
         
-        
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        vc.ScreenType = Menu_id.event
-        vc.Common_request_params = params
+        let vc = QuizSubmissionVc(nibName: nil, bundle: nil)
+//        let vc = RecipientVc(nibName: nil, bundle: nil)
+//        vc.ScreenType = Menu_id.event
+//        vc.Common_request_params = params
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         

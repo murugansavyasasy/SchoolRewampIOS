@@ -18,6 +18,7 @@
                 <outlet property="BugsTextview" destination="jM9-T9-Jfa" id="NXb-sI-ssP"/>
                 <outlet property="ModuleDropDown" destination="PKA-7M-iug" id="wbB-3Q-CAL"/>
                 <outlet property="collectionView" destination="7bI-aj-cEW" id="pJM-dE-ZQc"/>
+                <outlet property="collectionViewHeight" destination="bxV-SK-p1G" id="1h6-Ui-VNh"/>
                 <outlet property="outerView" destination="saK-iD-kGY" id="e1t-Vr-siP"/>
                 <outlet property="selectModuleLbl" destination="gce-HM-DUe" id="kxV-bD-prq"/>
                 <outlet property="sendBtn" destination="l7M-L4-UsU" id="qVf-2B-VJN"/>
@@ -290,7 +291,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

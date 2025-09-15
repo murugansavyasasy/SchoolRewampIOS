@@ -176,6 +176,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             
             //cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
             cell.delegate = self
+            
             if slot?.is_booked == true {
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
@@ -196,7 +197,26 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.BookingBaseview.backgroundColor = .systemBlue.withAlphaComponent(0.1)
             }
             
-            if slot?.is_cancelled == true {
+            if slot?.status == "Expired" {
+                
+                cell.optionsBtn.isHidden = true
+                cell.StatusBtn.backgroundColor = .systemGray5.withAlphaComponent(1)
+                cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Expired", for: .normal)
+                cell.StatusBtn.setTitleColor(.black, for: .normal)
+                cell.StatusBtn.tintColor = .black
+//                cell.BookedStatusView.isHidden = false
+//                cell.WaitingLbl.isHidden = true
+//                cell.BookingBaseview.backgroundColor = .systemGray6.withAlphaComponent(0.8)
+//                cell.bookedByDefLbl.text = "Cancelled by:"
+                cell.BookedStatusView.isHidden = true
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .black
+                cell.BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(1)
+                cell.WaitingLbl.text = "Slot Expired"
+            }
+            
+            if slot?.is_cancelled_by_staff == true {
                 cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
                 cell.StatusBtn.setTitle("Cancelled", for: .normal)
