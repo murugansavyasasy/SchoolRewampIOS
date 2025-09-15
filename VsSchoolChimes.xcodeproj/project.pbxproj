@@ -540,6 +540,8 @@
 		84A5BEBF2C198DE200E32496 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BEBE2C198DE200E32496 /* SplashViewController.swift */; };
 		84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BEC02C198DF600E32496 /* SplashStoryboard.storyboard */; };
 		84A82F662D225A2000ACF7A1 /* RibbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A82F652D225A2000ACF7A1 /* RibbonView.swift */; };
+		84AB0F692E76F5ED001160AD /* StudentAttendanceVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AB0F682E76F5ED001160AD /* StudentAttendanceVc.xib */; };
+		84AB0F6A2E76F5ED001160AD /* StudentAttendanceVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB0F672E76F5ED001160AD /* StudentAttendanceVc.swift */; };
 		84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */; };
 		84AC7F102E3C8EED0022BD63 /* SideMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */; };
 		84B2C54F2E2224C900A69A1B /* ExamCatogoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C54D2E2224C900A69A1B /* ExamCatogoryCVC.swift */; };
@@ -1433,6 +1435,8 @@
 		84A5BEBE2C198DE200E32496 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		84A5BEC02C198DF600E32496 /* SplashStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashStoryboard.storyboard; sourceTree = "<group>"; };
 		84A82F652D225A2000ACF7A1 /* RibbonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonView.swift; sourceTree = "<group>"; };
+		84AB0F672E76F5ED001160AD /* StudentAttendanceVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAttendanceVc.swift; sourceTree = "<group>"; };
+		84AB0F682E76F5ED001160AD /* StudentAttendanceVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentAttendanceVc.xib; sourceTree = "<group>"; };
 		84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
 		84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuVC.xib; sourceTree = "<group>"; };
 		84B2C54D2E2224C900A69A1B /* ExamCatogoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCatogoryCVC.swift; sourceTree = "<group>"; };
@@ -3068,6 +3072,8 @@
 				849AD03A2D1A845E002DEC07 /* MarkAttendenceVC.xib */,
 				FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */,
 				FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */,
+				84AB0F672E76F5ED001160AD /* StudentAttendanceVc.swift */,
+				84AB0F682E76F5ED001160AD /* StudentAttendanceVc.xib */,
 			);
 			path = "Mark Attendence";
 			sourceTree = "<group>";
@@ -4302,6 +4308,7 @@
 			files = (
 				842214272DAFACAD00D38D16 /* CommonPageVC.xib in Resources */,
 				844DEDE52E549A0B0016A347 /* CreateQuizQutionVc.xib in Resources */,
+				84AB0F692E76F5ED001160AD /* StudentAttendanceVc.xib in Resources */,
 				84174DEF2E6B5F6A00AC7092 /* quizCellTv.xib in Resources */,
 				84D1FF1D2D4CE00A003ACC04 /* ParentDashboardVc.xib in Resources */,
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
@@ -5275,6 +5282,7 @@
 				848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */,
 				FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */,
 				847F62B52E12ADAA00EE5180 /* LSRWActivitesVC.swift in Sources */,
+				84AB0F6A2E76F5ED001160AD /* StudentAttendanceVc.swift in Sources */,
 				8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */,
 				84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */,
 			);

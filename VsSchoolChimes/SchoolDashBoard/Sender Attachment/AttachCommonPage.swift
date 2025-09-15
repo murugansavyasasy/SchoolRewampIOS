@@ -86,6 +86,19 @@ class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageVie
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
     }
 
+    @IBAction func createbtnAct(_ sender: Any) {
+        let index = 1
+        guard index >= 0 && index < pages.count else {
+            print("Index out of bounds")
+            return
+        }
+        updateTabUI(for: index)
+        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
+
+        pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
+        
+    }
     private func setupPageViewController() {
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         pageViewController.delegate = self
@@ -159,12 +172,14 @@ class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageVie
     }
     func loadPages(_ CV: [UIViewController]) {
         // Always assign first
+        
         pages = CV
         if #available(iOS 14.0, *) {
-            if let historyVC = pages[safe: 0] as? SenderAttachmentVC {
+            
+            if let historyVC = pages[safe: 0] as? AttachHistroyVC {
                 historyVC.selectNotice = self
             }
-            if let page2 = pages[safe: 1] as? AttachHistroyVC {
+            if let page2 = pages[safe: 1] as? SenderAttachmentVC {
                 page2.selectNotice = self
             }
         }
