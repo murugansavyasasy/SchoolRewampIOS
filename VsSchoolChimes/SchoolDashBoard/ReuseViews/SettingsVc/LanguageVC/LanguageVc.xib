@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageVc" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="ConfirmBtn" destination="lEy-qr-DHi" id="Hm7-Bx-zoE"/>
                 <outlet property="SelectLangLabel" destination="8br-8g-MOR" id="mO1-S8-fqB"/>
@@ -26,16 +26,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pk-HW-cgA">
-                    <rect key="frame" x="21.666666666666657" y="257" width="350" height="338"/>
+                    <rect key="frame" x="21.666666666666657" y="255.66666666666663" width="350" height="341"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8td-JG-MjQ">
-                            <rect key="frame" x="5" y="45" width="340" height="240"/>
+                            <rect key="frame" x="5" y="45.000000000000028" width="340" height="239.99999999999997"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="240" id="mTW-Fl-RGq"/>
                             </constraints>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9c-Ss-ydT">
-                            <rect key="frame" x="5" y="8" width="46" height="35"/>
+                            <rect key="frame" x="5" y="8.0000000000000284" width="46" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="46" id="Y0Z-AF-Xtq"/>
                                 <constraint firstAttribute="height" constant="35" id="zfU-RU-MJe"/>
@@ -48,22 +48,22 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Your Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8br-8g-MOR">
-                            <rect key="frame" x="42" y="15.333333333333313" width="265" height="20.333333333333329"/>
+                            <rect key="frame" x="42" y="15.333333333333341" width="265" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lEy-qr-DHi">
-                            <rect key="frame" x="94" y="293" width="162" height="37"/>
+                            <rect key="frame" x="94" y="293" width="162" height="40"/>
                             <color key="backgroundColor" systemColor="systemOrangeColor"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="162" id="9tM-6E-3UD"/>
+                                <constraint firstAttribute="height" constant="40" id="aPu-ww-Fvt"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Confirm">
-                                <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="19"/>
-                            </buttonConfiguration>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Confirm"/>
                             <connections>
                                 <action selector="ConfirmClick:" destination="-1" eventType="touchUpInside" id="TcF-au-dec"/>
                             </connections>

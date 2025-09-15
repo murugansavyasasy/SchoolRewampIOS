@@ -49,7 +49,7 @@ class NewPtmVC: UIViewController, Datepicker {
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: "PTM", secondLine: staffDetails?.school_name ?? "",colour: .white)
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .white)
         
         selectDateBtn.setTitle(CommonStringFile.all, for: .normal)
         selectDateBtn.semanticContentAttribute = .forceRightToLeft
@@ -67,6 +67,9 @@ class NewPtmVC: UIViewController, Datepicker {
         
         sheduledBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         AttendedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        plusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        plusBtn.setTitle(PTMString.create, for: .normal)
         
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
         
@@ -125,22 +128,24 @@ class NewPtmVC: UIViewController, Datepicker {
                         // Today
                         if let todayGroups = slotData.today, !todayGroups.isEmpty {
                             let events = todayGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: "Today Meetings", events: events))
+                            self.sections.append(SectionData(title: PTMString.todayMeetings, events: events))
                         }
                         
                         // Upcoming
                         if let upcomingGroups = slotData.upcoming, !upcomingGroups.isEmpty {
                             let events = upcomingGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: "Upcoming Meetings", events: events))
+                            self.sections.append(SectionData(title: PTMString.upcomingMeetings, events: events))
                         }
                         
                         // Completed
                         if let completedGroups = slotData.completed, !completedGroups.isEmpty {
                             let events = completedGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: "Completed Meetings", events: events))
+                            self.sections.append(SectionData(title: PTMString.completedMeetings, events: events))
                         }
                        
-                        self.MeetingCountLbl.text = "You have " + String(slotData.today?.count ?? 0) + " Meetings Today"
+                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
+                        self.MeetingCountLbl.text = message
+                        //"You have " + String(slotData.today?.count ?? 0) + " Meetings Today"
                         
                         self.tv.reloadData()
                         self.cv.reloadData() // if you’re also showing in collection view
@@ -340,7 +345,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tv.dequeueReusableCell(withIdentifier: "MeetingDetailTV", for: indexPath) as! MeetingDetailTV
+        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDetailTV, for: indexPath) as! MeetingDetailTV
         //cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
         let event = sections[indexPath.section].events[indexPath.row]
         cell.MeetingNameLbl.text = event.event_name
@@ -356,7 +361,6 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             cell.joinBtn.isHidden = true
             loadImages(into: cell, urls: event.profiles ?? [])
         }
-       
        
         return cell
     }

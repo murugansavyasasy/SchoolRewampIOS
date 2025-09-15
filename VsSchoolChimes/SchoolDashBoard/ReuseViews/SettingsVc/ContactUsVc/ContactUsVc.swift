@@ -21,7 +21,7 @@ class ContactUsVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        BackBtn.setTitle(MenuTapbar.Contact_Us.translated(), for: .normal)
+        BackBtn.setTitle(MenuTapbar.shared.Contact_Us, for: .normal)
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left

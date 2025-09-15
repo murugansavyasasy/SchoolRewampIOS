@@ -33,7 +33,7 @@ class FAQViewController: UIViewController {
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
         BackBtn.imageView?.applyRTLFlip(Language == "ar")
-        
+        BackBtn.setTitle(MenuTapbar.shared.FAQ, for: .normal)
         BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
        
         let nib = UINib(nibName: CellConfingName.FAQTableViewCell, bundle: nil)

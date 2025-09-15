@@ -129,5 +129,6 @@ class CellConfingName {
     static let  PtmCV = "PtmCV"
     static let  MeetingDetailTV = "MeetingDetailTV"
     static let  SlotListTV = "SlotListTV"
+    static let  MeetingDataTV = "MeetingDataTV"
     
 }

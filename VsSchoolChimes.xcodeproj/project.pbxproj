@@ -731,6 +731,8 @@
 		FA3E28D32E4DDE48008885A3 /* CreateMeetingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */; };
 		FA4709532E39FF1000764E28 /* WeeklyReportTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */; };
 		FA4709542E39FF1000764E28 /* WeeklyReportTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */; };
+		FA48A6982E754AA7004E10C7 /* QuizSubmisionTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */; };
+		FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */; };
 		FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */; };
 		FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */; };
@@ -1631,6 +1633,8 @@
 		FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateMeetingVc.xib; sourceTree = "<group>"; };
 		FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportTV.swift; sourceTree = "<group>"; };
 		FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyReportTV.xib; sourceTree = "<group>"; };
+		FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSubmisionTvCell.swift; sourceTree = "<group>"; };
+		FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizSubmisionTvCell.xib; sourceTree = "<group>"; };
 		FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTvCell.swift; sourceTree = "<group>"; };
 		FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTvCell.xib; sourceTree = "<group>"; };
 		FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceReportVc.swift; sourceTree = "<group>"; };
@@ -3635,6 +3639,8 @@
 				844DF0872E5ADBDE0016A347 /* ReportsQuizVc.xib */,
 				84174EA72E717FA100AC7092 /* QuizSubmissionVc.swift */,
 				84174EA82E717FA100AC7092 /* QuizSubmissionVc.xib */,
+				FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */,
+				FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -4442,6 +4448,7 @@
 				849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */,
 				84017F752E446DB4006CB477 /* certificateReqVc.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
+				FA48A6982E754AA7004E10C7 /* QuizSubmisionTvCell.xib in Resources */,
 				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
 				846CF7422E2F5AC7000361CE /* CatogoryCVC.xib in Resources */,
@@ -4904,6 +4911,7 @@
 				845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */,
 				FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */,
 				FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */,
+				FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */,
 				FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */,
 				FAFF9DE32D6C7B7A00498368 /* SlotHistoryForParentResponse.swift in Sources */,
 				FAFF9DE42D6C7B7A00498368 /* SubjectListForStudentRequest.swift in Sources */,

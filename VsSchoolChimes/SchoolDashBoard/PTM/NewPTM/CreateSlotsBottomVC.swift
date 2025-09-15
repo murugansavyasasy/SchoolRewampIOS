@@ -143,6 +143,15 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
 
             self.slotData[currentIndexPath.row].slots?.remove(at: removedIndex)
 
+            if let slots = self.slotData[currentIndexPath.row].slots, slots.isEmpty {
+                    // If no slots left, remove the entire row
+                    self.slotData.remove(at: currentIndexPath.row)
+                    self.tableView.deleteRows(at: [currentIndexPath], with: .automatic)
+                } else {
+                    // Otherwise, just reload that row
+                    self.tableView.reloadRows(at: [currentIndexPath], with: .automatic)
+                }
+            
             // Reload just that row to reflect height change
             self.tableView.reloadRows(at: [currentIndexPath], with: .automatic)
         }
