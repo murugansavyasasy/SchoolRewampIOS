@@ -1764,6 +1764,7 @@
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
 		8491FFCF2D818A080060C22B /* ApiService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApiService; sourceTree = "<group>"; };
 		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
+		84AB0FFC2E78E094001160AD /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
 		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
 		84E0FBF72D8E73D800CACCFE /* SchoolList */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SchoolList; sourceTree = "<group>"; };
@@ -2272,6 +2273,7 @@
 		18D718D42D0D479B00E9EDA3 /* NewAbsenteesReport */ = {
 			isa = PBXGroup;
 			children = (
+				84AB0FFC2E78E094001160AD /* CvCell */,
 				18D718BF2D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift */,
 				18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */,
 				18D718C12D0D479B00E9EDA3 /* SectionTvTableViewCell.xib */,
@@ -4177,6 +4179,7 @@
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				8491FFCF2D818A080060C22B /* ApiService */,
 				849DD1612D9668B00027910D /* Biometric */,
+				84AB0FFC2E78E094001160AD /* CvCell */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
