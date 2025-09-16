@@ -152,6 +152,7 @@ struct ServiceUrl{
     static let lms_api_lsrw_skills_report = "lms/api/lsrw/skills-report"
     static let quiz_questions_report = "lms/api/quiz/questions-report"
     static let quiz_submit = "lms/api/quiz/submit"
+    static let quiz_submission_list = "lms/api/quiz/submission-list"
 
     static let lms_api_lsrw_remark = "lms/api/lsrw/remark"
     static let lms_api_lsrw_submission_list = "lms/api/lsrw/submission-list"

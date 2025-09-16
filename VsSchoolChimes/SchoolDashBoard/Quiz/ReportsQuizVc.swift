@@ -8,6 +8,14 @@
 import UIKit
 
 class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDelegate {
+    func submitedList(index: Int) {
+        
+        let vc = QuizSubmissionVc(nibName: nil, bundle: nil)
+        vc.senderQuizlist = get_QuizDetails[index]
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+
     func addQuestionAndSubmitedList(index: Int) {
         
         let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
@@ -92,8 +100,12 @@ extension ReportsQuizVc : UITableViewDelegate,UITableViewDataSource {
             let quiz = get_QuizDetails[indexPath.row]
                let imageName = images[indexPath.row % images.count]
             cell.DeafultimageView.image = UIImage(named: imageName)
+        
+        cell.submittedListBtnName.isHidden = get_QuizDetails[indexPath.row].submitted_count == 0 ? true : false
+        
         cell.delegate = self
         cell.addQuestionBtnName.tag = indexPath.row
+        cell.submittedListBtnName.tag = indexPath.row
             cell.PlayBtn.isHidden = true
             cell.titleLbl.text = get_QuizDetails[indexPath.row].title
             cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description
@@ -103,6 +115,8 @@ extension ReportsQuizVc : UITableViewDelegate,UITableViewDataSource {
             cell.postedByLbl.text = ("Posted By:") + (
                 get_QuizDetails[indexPath.row].sent_by ?? ""
             )
+        
+        
             return cell
 //        }
     }

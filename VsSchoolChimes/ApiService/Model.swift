@@ -816,6 +816,7 @@ struct AbsenteeDate: Codable {
 
 struct ClassWise: Codable {
     let class_id: String?
+    let student_counts: String?
     let class_name: String?
     let total_absentees: String?
     let section_wise: [SectionWise]?
@@ -839,7 +840,7 @@ struct AbsentisReportStudentResponse: Codable {
 }
 
 struct AbsentisReportStudent: Codable {
-    let student_id: Int?
+    let student_id: String?
     let student_name: String?
     let roll_no: String?
     let admission_no: String?
@@ -1931,6 +1932,26 @@ struct QuizListData : Codable{
     
 }
     
+
+struct QuizStudentReportSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [QuizStudentReportData]?
+}
+struct QuizStudentReportData : Codable{
+    var id : String?
+    var standard : String?
+    var section : String?
+    var student_name : String?
+    var mobile_no : String?
+    var is_submitted : String?
+    var is_submit : Bool?
+    var submitted_on : String?
+    var gender : String?
+    var is_unread : Bool?
+
+}
         
             
 struct senderQuizListData : Codable{
