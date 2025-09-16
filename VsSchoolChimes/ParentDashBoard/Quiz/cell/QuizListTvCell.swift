@@ -9,6 +9,7 @@ import UIKit
 protocol addQuestionAndSubmitedListDelegate {
     
     func addQuestionAndSubmitedList(index : Int)
+    func submitedList(index : Int)
 }
 class QuizListTvCell: UITableViewCell {
     
@@ -39,6 +40,7 @@ class QuizListTvCell: UITableViewCell {
     
     @IBAction func submitedList(_ sender: UIButton) {
         
+        delegate?.submitedList(index: sender.tag)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
