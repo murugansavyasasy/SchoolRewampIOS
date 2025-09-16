@@ -45,7 +45,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         recentActiveMenuCollection.dataSource = self
         MenuCollection.delegate = self
         MenuCollection.dataSource = self
-        
+        setupEdgeGesture()
         DeviceTokenAPIcall()
         setupHeaderView()
         setupLabels()
@@ -270,7 +270,17 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
     }
-    
+    private func setupEdgeGesture() {
+        let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgeSwipe(_:)))
+        edgeSwipe.edges = .left
+        view.addGestureRecognizer(edgeSwipe)
+    }
+
+    @objc private func handleEdgeSwipe(_ gesture: UIScreenEdgePanGestureRecognizer) {
+        if gesture.state == .began {
+            showSideMenu()
+        }
+    }
     // MARK: - Side Menu
     @IBAction func SideMenu(_ sender: UIButton) {
         showSideMenu()
@@ -303,7 +313,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             menuVC.view.frame.origin.x = 0
         }
     }
-    
+
     @objc func hideSideMenu() {
         guard let menuVC = sideMenu else { return }
         UIView.animate(withDuration: 0.3, animations: {

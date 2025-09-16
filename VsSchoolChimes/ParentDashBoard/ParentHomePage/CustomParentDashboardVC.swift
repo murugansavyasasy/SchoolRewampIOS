@@ -58,7 +58,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-        
+        setupEdgeGesture()
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
         recentActiveMenuCollection.dataSource = self
@@ -186,7 +186,17 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
     }
-    
+    private func setupEdgeGesture() {
+        let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgeSwipe(_:)))
+        edgeSwipe.edges = .left
+        view.addGestureRecognizer(edgeSwipe)
+    }
+
+    @objc private func handleEdgeSwipe(_ gesture: UIScreenEdgePanGestureRecognizer) {
+        if gesture.state == .began {
+            showSideMenu()
+        }
+    }
     // MARK: - Actions
     @IBAction func SideMenu(_ sender: UIButton) {
         showSideMenu()
@@ -198,11 +208,8 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         present(vc, animated: true)
     }
     
-    // MARK: - Side Menu
     func showSideMenu() {
         guard let window = UIApplication.shared.windows.first else { return }
-        
-        // Dimmed Background
         let dimView = UIView(frame: window.bounds)
         dimView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSideMenu))
@@ -210,12 +217,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         window.addSubview(dimView)
         self.dimmedView = dimView
         
-        // Side Menu Setup
         let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
         menuVC.isStudent = true
-        // Swipe gesture
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
         swipeGesture.direction = .left
         menuVC.view.addGestureRecognizer(swipeGesture)
@@ -230,7 +235,20 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             menuVC.view.frame.origin.x = 0
         }
     }
-    
+
+    @objc func hideSideMenu() {
+        guard let menuVC = sideMenu else { return }
+        UIView.animate(withDuration: 0.3, animations: {
+            menuVC.view.frame.origin.x = -300
+            self.dimmedView?.alpha = 0
+        }) { _ in
+            menuVC.view.removeFromSuperview()
+            menuVC.removeFromParent()
+            self.dimmedView?.removeFromSuperview()
+            self.sideMenu = nil
+            self.dimmedView = nil
+        }
+    }
     func applyGradientBackground(to view: UIView) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -242,21 +260,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         view.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
         view.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    @objc func hideSideMenu() {
-        guard let menuVC = sideMenu else { return }
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            menuVC.view.frame.origin.x = -300
-            self.dimmedView?.alpha = 0
-        }) { _ in
-            menuVC.view.removeFromSuperview()
-            menuVC.removeFromParent()
-            self.dimmedView?.removeFromSuperview()
-            self.sideMenu = nil
-            self.dimmedView = nil
-        }
     }
     
     // MARK: - CollectionView DataSource

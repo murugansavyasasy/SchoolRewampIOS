@@ -91,7 +91,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                     url: ServiceUrl.comm_api_assignment_delete_submission,
                     parameters: ["id": targetID],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }
