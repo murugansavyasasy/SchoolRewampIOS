@@ -2178,3 +2178,21 @@ struct UserDetailItem: Codable {
     var optional: Bool?
     var node: String?
 }
+
+
+//MARK: Student Fee reciept Inovoice
+
+struct InvoiceDetailsResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [InvoiceItem]?
+}
+
+struct InvoiceItem: Codable {
+    var id: String?
+    var invoice_no: String?
+    var invoice_date: String?
+    var Invoice_time: String?
+    var invoice_amount: String?
+    var invoice_Url: String?
+}

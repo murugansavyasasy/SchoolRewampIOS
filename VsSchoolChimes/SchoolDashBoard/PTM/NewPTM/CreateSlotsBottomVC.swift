@@ -47,12 +47,18 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
                 ]
             }
 
-            let slotsArray: [[String: Any]] = (data.slots ?? []).map { slot in
-                [
-                    PTMRequestStringFile.from_time: slot.slot_from ?? "",
-                    PTMRequestStringFile.to_time: slot.slot_to ?? ""
-                ]
+            let slotsArray: [[String: Any]] = (data.slots ?? []).compactMap { slot in
+                if slot.slot_availablity == "Available" {
+                    return [
+                        PTMRequestStringFile.from_time: slot.slot_from ?? "",
+                        PTMRequestStringFile.to_time: slot.slot_to ?? ""
+                    ]
+                }
+                return nil
             }
+
+            // Skip if slotsArray is empty
+                guard !slotsArray.isEmpty else { continue }
 
             // Build the main dictionary
             let dict: [String: Any] = [
@@ -71,30 +77,33 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
             param.append(dict)
         }
 
-        
-        APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: param, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+        if param.isEmpty{
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: "There is no available slots", on: self)
+        }else {
             
-            guard let self = self else{return}
-            
-            DispatchQueue.main.async {
+            APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: param, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
                 
-                switch result {
-                case .success(let success):
-                    if success.status == true {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self,okAction: {
-                            self.presentingViewController?.presentingViewController?.dismiss(animated: true)
-                        })
-                    }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                guard let self = self else{return}
+                
+                DispatchQueue.main.async {
+                    
+                    switch result {
+                    case .success(let success):
+                        if success.status == true {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self,okAction: {
+                                self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+                            })
+                        }else {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        }
+                    case .failure(let failure):
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
                     }
-                case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
                 }
+                
             }
             
         }
-        
-        
         
 //        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: [:], type: ApitTypeSringFile.POST, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc , Error>) in
 //            

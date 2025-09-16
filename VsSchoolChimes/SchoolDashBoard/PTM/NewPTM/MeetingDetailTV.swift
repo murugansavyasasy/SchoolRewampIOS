@@ -7,7 +7,10 @@
 
 import UIKit
 
-class MeetingDetailTV: UITableViewCell {
+class MeetingDetailTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
+    func selectId(id: String?, edit: Bool?) {
+        delegate?.selectId(id: id, edit: edit)
+    }
 
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var dateBtn: UIButton!
@@ -24,6 +27,11 @@ class MeetingDetailTV: UITableViewCell {
     @IBOutlet weak var timebaseView: UIView!
     @IBOutlet weak var imageStack: UIStackView!
     
+    var showpopup:ShowPopupDelegate?
+    var edit:Bool?
+    var delete:Bool?
+    var delegate:SelectedId?
+    var selectedId:String?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,6 +60,9 @@ class MeetingDetailTV: UITableViewCell {
         img2.layer.cornerRadius = img1.frame.width / 2
         img3.layer.cornerRadius = img1.frame.width / 2
         countBtn.layer.cornerRadius = img1.frame.width / 2
+        
+        edit = true
+        delete = true
     }
     
     override func layoutSubviews() {
@@ -84,6 +95,43 @@ class MeetingDetailTV: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func optionBtnAct(_ sender: UIButton) {
+        
+        let popoverContentVC = PopupVC(edit: edit ?? false, delete: delete ?? false, selectedId: selectedId)
+        popoverContentVC.delegate = self
+        popoverContentVC.ptm = true
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 60)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .up
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
+    }
+    
+    private func getCurrentViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController?
+            .topMostViewController()
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
+    }
 }
 
 

@@ -170,6 +170,7 @@ struct ServiceUrl{
     static let admin_api_student_profile_list = "admin/api/student-profile/list"
     static let admin_api_staff_profile_list = "admin/api/staff-profile/list"
     static let admin_api_student_profile_pre_submission = "admin/api/student-profile/pre-submission"
+    static let fee_api_fee_details_student_invoice = "fee/api/fee-details/student-invoice"
 }
 
 struct localData{
