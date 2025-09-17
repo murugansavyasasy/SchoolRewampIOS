@@ -23,6 +23,7 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var sendbtnName: UIButton!
     @IBOutlet weak var selectStandardDropDown: UIView!
     @IBOutlet weak var selectSubject: UIView!
+    @IBOutlet weak var selectLevel: UIView!
     
     @IBOutlet weak var heightSegment: NSLayoutConstraint!
     @IBOutlet weak var nodataFound: UIImageView!
@@ -99,19 +100,22 @@ class RecipientVc: UIViewController{
         getSubject.layer.cornerRadius = 10
         applyShadowAndCornerRadius(to: selectStandardDropDown)
         applyShadowAndCornerRadius(to: selectSubject)
+        applyShadowAndCornerRadius(to: selectLevel)
         applyShadowAndCornerRadius(to: getSubject)
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
+        selectLevel.isHidden = true
         spaceView.isHidden = false
         getSubject.isHidden = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
+        let tap4 = UITapGestureRecognizer(target: self, action: #selector(selectedLevel))
         let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
                                                         #selector(academicYearDrop_action))
         selectStandardDropDown.addGestureRecognizer(tap2)
         selectSubject.addGestureRecognizer(tap3)
+        selectLevel.addGestureRecognizer(tap4)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-        addLevel
         tv.delegate = self
         tv.dataSource = self
         configureRecipientTabs()
@@ -458,6 +462,7 @@ class RecipientVc: UIViewController{
         selectSubject.isHidden = !(selectedSections.count >= 1)
         getSubject.isHidden = true
         selectSubject.isHidden = false
+        selectLevel.isHidden = Menu_id.staffSelectedMenuId == Menu_id.quiz ? false : true
         spaceView.isHidden = true
     }
     
@@ -599,36 +604,26 @@ class RecipientVc: UIViewController{
     @IBAction func selectStd(){
         setupStdDropdown ()
     }
+    @IBAction func selectedLevel(){
+        selectLevelDropdown()
+    }
+    
     @IBAction func selectedSubject(){
         setupSubjectDropdown ()
     }
     
     func selectLevelDropdown(){
-        StdDropdown.anchorView = addLevel
+        StdDropdown.anchorView = selectLevel
         StdDropdown.dataSource = dropDownArray
-        StdDropdown.bottomOffset = CGPoint(x: 0, y: addLevel.bounds.height)
+        StdDropdown.bottomOffset = CGPoint(x: 0, y: selectLevel.bounds.height)
         StdDropdown.direction = .bottom
         StdDropdown.show()
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-//            array_selectedId.removeAll()
-//            selectSubject.isHidden = true
-            subjectId = ""
-            self.sectionsDetails = self.standardDetails?.first(where: { $0.name == item })?.sections
-            if let label = self.addLevel.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
+            if let label = self.selectLevel.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.text = "Level \(item)"
             }
-//            classID = self.standardDetails?[index].id
-//            speficBtnName.isHidden = true
-//            self.tv.isHidden = false
-//            self.tv.reloadData()
-//            DispatchQueue.main.async {
-//                self.tableHeight.constant = self.tv.contentSize.height
-//                self.view.layoutIfNeeded()
-//            }
         }
-        
-        
     }
     func setupStdDropdown() {
         

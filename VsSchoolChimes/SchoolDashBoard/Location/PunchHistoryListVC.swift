@@ -152,41 +152,48 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
         
         // Title
         let titleLabel = UILabel()
-        titleLabel.text = "Today's Attendance"
+        titleLabel.text = "History"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
         
-        // Date
         let dateLabel = UILabel()
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, dd MMM yyyy"
-        dateLabel.text = formatter.string(from: Date())
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+
+        if let date = inputFormatter.date(from: selectedDate) {
+            dateLabel.text = formatter.string(from: date)
+        } else {
+            dateLabel.text = formatter.string(from: Date())
+        }
+
         dateLabel.font = UIFont.systemFont(ofSize: 14)
         dateLabel.textColor = .darkGray
         
-        // Status
-        let statusView = UIView()
-        statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
-        statusView.layer.cornerRadius = 8
+//        // Status
+//        let statusView = UIView()
+//        statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+//        statusView.layer.cornerRadius = 8
+//        
+//        let dot = UIView()
+//        dot.backgroundColor = .systemGreen
+//        dot.layer.cornerRadius = 4
         
-        let dot = UIView()
-        dot.backgroundColor = .systemGreen
-        dot.layer.cornerRadius = 4
-        
-        let statusLabel = UILabel()
-        statusLabel.text = "Active"
-        statusLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        statusLabel.textColor = .systemGreen
+//        let statusLabel = UILabel()
+//        statusLabel.text = "Active"
+//        statusLabel.font = UIFont.boldSystemFont(ofSize: 14)
+//        statusLabel.textColor = .systemGreen
         
         // Add subviews
         headerView.addSubview(titleLabel)
         headerView.addSubview(dateLabel)
-        headerView.addSubview(statusView)
-        statusView.addSubview(dot)
-        statusView.addSubview(statusLabel)
+//        headerView.addSubview(statusView)
+//        statusView.addSubview(dot)
+//        statusView.addSubview(statusLabel)
         
         // Constraints
-        [titleLabel, dateLabel, statusView, dot, statusLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [titleLabel, dateLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
@@ -196,19 +203,19 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
             dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             dateLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8),
             
-            statusView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            statusView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-            statusView.heightAnchor.constraint(equalToConstant: 30),
-            statusView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
-            
-            dot.leadingAnchor.constraint(equalTo: statusView.leadingAnchor, constant: 8),
-            dot.centerYAnchor.constraint(equalTo: statusView.centerYAnchor),
-            dot.widthAnchor.constraint(equalToConstant: 8),
-            dot.heightAnchor.constraint(equalToConstant: 8),
-            
-            statusLabel.leadingAnchor.constraint(equalTo: dot.trailingAnchor, constant: 6),
-            statusLabel.centerYAnchor.constraint(equalTo: dot.centerYAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: statusView.trailingAnchor, constant: -8),
+//            statusView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+//            statusView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+//            statusView.heightAnchor.constraint(equalToConstant: 30),
+//            statusView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
+//            
+//            dot.leadingAnchor.constraint(equalTo: statusView.leadingAnchor, constant: 8),
+//            dot.centerYAnchor.constraint(equalTo: statusView.centerYAnchor),
+//            dot.widthAnchor.constraint(equalToConstant: 8),
+//            dot.heightAnchor.constraint(equalToConstant: 8),
+//            
+//            statusLabel.leadingAnchor.constraint(equalTo: dot.trailingAnchor, constant: 6),
+//            statusLabel.centerYAnchor.constraint(equalTo: dot.centerYAnchor),
+//            statusLabel.trailingAnchor.constraint(equalTo: statusView.trailingAnchor, constant: -8),
         ])
         
         return headerView

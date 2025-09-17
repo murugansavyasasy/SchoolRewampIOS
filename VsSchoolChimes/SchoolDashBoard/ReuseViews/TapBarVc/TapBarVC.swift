@@ -269,18 +269,16 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
 
     private let tabBar = UITabBar()
     private var containerView = UIView()
-
+    var languages: String!
+    var login_astype: Int?
+    var languageCode: String!
+    var profile: Bool = false
     // MARK: - Navigation Wrapped Controllers
     private lazy var firstVCNav = UINavigationController(rootViewController: CustomDasboard())
     private lazy var parentVCNav = UINavigationController(rootViewController: CustomParentDashboardVC())
     private lazy var secondVCNav = UINavigationController(rootViewController: HelpVc())
     private lazy var thirdVCNav = UINavigationController(rootViewController: SettingsViewController())
-    private lazy var fourthVCNav = UINavigationController(rootViewController: ProfileViewController())
-
-    var languages: String!
-    var login_astype: Int?
-    var languageCode: String!
-    var profile: Bool = false
+    private lazy var fourthVCNav = UINavigationController(rootViewController: UpdateProfileVC(isStudent: login_astype == 2))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -439,8 +437,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             dashboardVC.delegate = self
         } else if let helpVC = topVC as? HelpVc {
             helpVC.passVale = login_astype ?? 0
-        } else if let schoolVC = topVC as? SchoolDashboardVc {
-            schoolVC.profileSwith = self
+        } else if let schoolVC = topVC as? UpdateProfileVC {
+            schoolVC.hideBack = true
         }
     }
     

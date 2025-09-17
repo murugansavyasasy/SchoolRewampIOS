@@ -416,8 +416,8 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/ReuseViews/ProfilepageVc/UpdateProfileVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "561"
-            endingLineNumber = "561"
+            startingLineNumber = "563"
+            endingLineNumber = "563"
             landmarkName = "uploadMedia(file:completion:)"
             landmarkType = "7">
          </BreakpointContent>

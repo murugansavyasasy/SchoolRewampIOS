@@ -47,11 +47,26 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-xi-caa">
-                            <rect key="frame" x="60" y="105.33333333333333" width="203" height="20.333333333333329"/>
+                            <rect key="frame" x="60" y="105.33333333333333" width="173" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6q-ZO-PGs">
+                            <rect key="frame" x="233" y="100.66666666666667" width="30" height="30.000000000000014"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="HwH-2w-EIc"/>
+                                <constraint firstAttribute="height" constant="30" id="K2E-34-PnQ"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="chevron.down" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="regular"/>
+                            </state>
+                            <connections>
+                                <action selector="switchRoll:" destination="-1" eventType="touchUpInside" id="Wrs-ah-kSU"/>
+                            </connections>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xm8-ou-byW">
                             <rect key="frame" x="60" y="75" width="203" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -60,6 +75,7 @@
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SBz-sf-EYc">
                             <rect key="frame" x="323" y="69.666666666666671" width="60" height="58.666666666666671"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="PpR-te-LeB"/>
@@ -83,7 +99,9 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="SBz-sf-EYc" firstAttribute="leading" secondItem="yII-3C-CKd" secondAttribute="trailing" constant="20" id="0ig-em-nvS"/>
-                        <constraint firstItem="2aN-xi-caa" firstAttribute="trailing" secondItem="xm8-ou-byW" secondAttribute="trailing" id="5vi-oK-jLd"/>
+                        <constraint firstItem="2aN-xi-caa" firstAttribute="trailing" secondItem="xm8-ou-byW" secondAttribute="trailing" constant="-30" id="5vi-oK-jLd"/>
+                        <constraint firstItem="j6q-ZO-PGs" firstAttribute="centerY" secondItem="2aN-xi-caa" secondAttribute="centerY" id="FGk-ZC-Pc7"/>
+                        <constraint firstItem="j6q-ZO-PGs" firstAttribute="leading" secondItem="2aN-xi-caa" secondAttribute="trailing" id="HAZ-y5-CsG"/>
                         <constraint firstItem="2aN-xi-caa" firstAttribute="top" secondItem="xm8-ou-byW" secondAttribute="bottom" constant="10" id="LcW-Zg-YjT"/>
                         <constraint firstItem="2aN-xi-caa" firstAttribute="leading" secondItem="xm8-ou-byW" secondAttribute="leading" id="bWu-qu-T3G"/>
                         <constraint firstItem="Nfh-Ne-KxY" firstAttribute="centerY" secondItem="xm8-ou-byW" secondAttribute="centerY" id="qJT-yh-RK8"/>
@@ -171,6 +189,7 @@
     </objects>
     <resources>
         <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="65"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">

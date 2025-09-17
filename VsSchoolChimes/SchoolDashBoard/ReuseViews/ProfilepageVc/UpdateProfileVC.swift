@@ -11,6 +11,7 @@ import PhotosUI
 @available(iOS 14.0, *)
 class UpdateProfileVC: UIViewController {
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var outerView: UIView!
@@ -25,10 +26,11 @@ class UpdateProfileVC: UIViewController {
     var changeProfileUrl: URL?
     var profileNode: String = "photoPath"
     var isStudent = false
+    var hideBack = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        backBtn.isHidden = hideBack
         profileImg.isUserInteractionEnabled = true
-
         // 2️⃣ Add tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         profileImg.addGestureRecognizer(tapGesture)

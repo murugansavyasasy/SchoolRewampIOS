@@ -119,6 +119,7 @@ class CellConfingName {
     static let  TAttacmentTVC = "TAttacmentTVC"
     static let  MarkAtendenceTV = "MarkAtendenceTV"
     static let  StudentTVCell = "StudentTVCell"
+    static let  SwitchRollTVC = "SwitchRollTVC"
     static let  LessonViewTvCell = "LessonViewTvCell"
    
     static let  PaymentHeaderView = "PaymentHeaderView"

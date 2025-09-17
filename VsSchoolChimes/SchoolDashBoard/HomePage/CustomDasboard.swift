@@ -7,7 +7,13 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate {
+class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate, SwitchRollDelegate {
+    func switchRoll(userToken: String) {
+        self.get_dashboard_details(token: userToken)
+        setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
+            setupProfileImage()
+    }
+    
     
     // MARK: - Outlets
     @IBOutlet weak var headerView: HeaderWaveView!
@@ -31,7 +37,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     var sideMenu: SideMenuVC?
     var dimmedView: UIView?
     var delegate: backNavigation?
-    
+    let transitionDelegate = TransitioningDelegate()
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +45,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-        
+        // Example label
+        welcomeLabel.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        welcomeLabel.addGestureRecognizer(tapGesture)
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
         recentActiveMenuCollection.dataSource = self
@@ -48,11 +57,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupEdgeGesture()
         DeviceTokenAPIcall()
         setupHeaderView()
-        setupLabels()
+        setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         setupProfileImage()
         
         getacadmicYr {
-            self.get_dashboard_details()
+            self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
         }
     }
     
@@ -78,17 +87,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             }else{
                 delegate?.back(logout: false)
             }
-        } else {
-            getacadmicYr {
-                self.get_dashboard_details()
-            }
-            setupLabels()
-            setupProfileImage()
         }
     }
     
     // MARK: - API Calls
-    func get_dashboard_details() {
+    func get_dashboard_details(token:String) {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
@@ -97,7 +100,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             url: ServiceUrl.get_dashboard_details,
             parameters: ["member_type": "staff", "mobile_number": mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token:token
         ) { [weak self] (result: Result<MenuResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -254,21 +257,40 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         headerView.setNeedsDisplay()
     }
     
-    private func setupLabels() {
-        welcomeLabel.text = staffDetails?.school_name
+    private func setupLabels(name:String?,school:String?) {
+        welcomeLabel.text = school
         welcomeLabel.textColor = UIColor.white.withAlphaComponent(0.9)
         welcomeLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         
-        nameLabel.text = staffDetails?.name
+        nameLabel.text = name
         nameLabel.textColor = UIColor.white
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     }
     
     private func setupProfileImage() {
+        profileImageView.kf.setImage(with: URL(string: staffDetails?.school_logo ?? ""),placeholder:UIImage(named: "School Needs"))
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+        profileImageView.isUserInteractionEnabled = true
+        // 2️⃣ Add tap gesture recognizer
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        profileImageView.addGestureRecognizer(tapGesture)
+        
+    }
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+        guard let tappedImageView = sender.view as? UIImageView else { return }
+        let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
+        
+        let vc = PreviewImageVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = transitionDelegate
+        transitionDelegate.originFrame = cellFrameInSuperview
+        vc.type = "IMAGE"
+            vc.selectedFileURL = URL(string: staffDetails?.school_logo ?? "")
+        
+        present(vc, animated: true)
     }
     private func setupEdgeGesture() {
         let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgeSwipe(_:)))
@@ -280,6 +302,34 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         if gesture.state == .began {
             showSideMenu()
         }
+    }
+    @IBAction func switchRoll(_ sender: UIButton) {
+        showRoll()
+    }
+    func showRoll(){
+        let bottomSheetVC = SwitchRollVC()
+        bottomSheetVC.modalPresentationStyle = .pageSheet
+        bottomSheetVC.delegate = self
+        if #available(iOS 16.0, *) {
+            if let sheet = bottomSheetVC.sheetPresentationController {
+                sheet.detents = [
+                    .custom { context in
+                        return 250
+                    },
+                    .medium(),
+                    .large()
+                ]
+//                context.maximumDetentValue * 0.3
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                sheet.largestUndimmedDetentIdentifier = .large
+            }
+
+        }
+        present(bottomSheetVC, animated: true, completion: nil)
+    }
+    @objc func labelTapped() {
+        showRoll()
     }
     // MARK: - Side Menu
     @IBAction func SideMenu(_ sender: UIButton) {
