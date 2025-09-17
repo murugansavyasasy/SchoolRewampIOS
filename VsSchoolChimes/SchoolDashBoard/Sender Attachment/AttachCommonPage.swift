@@ -176,10 +176,10 @@ class AttachCommonPage: UIViewController,UIPageViewControllerDelegate, UIPageVie
         pages = CV
         if #available(iOS 14.0, *) {
             
-            if let historyVC = pages[safe: 0] as? AttachHistroyVC {
+            if let historyVC = pages[safe: 0] as? SenderAttachmentVC {
                 historyVC.selectNotice = self
             }
-            if let page2 = pages[safe: 1] as? SenderAttachmentVC {
+            if let page2 = pages[safe: 1] as? AttachHistroyVC {
                 page2.selectNotice = self
             }
         }

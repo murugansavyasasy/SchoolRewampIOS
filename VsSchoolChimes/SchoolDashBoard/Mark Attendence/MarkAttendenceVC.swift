@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+import FSCalendar
 
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController, Datepicker {
@@ -15,29 +16,29 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         dateSelect(date)
     }
     
-    @IBOutlet weak var calanderBtn: UIButton!
-    @IBOutlet weak var customView: UIView!
     @IBOutlet weak var AcademicYearLbl: UILabel!
+    @IBOutlet weak var BottomView: UIView!
+    @IBOutlet weak var mnthLbl: UILabel!
+    @IBOutlet weak var calanderFulView: UIView!
+    @IBOutlet weak var calanderBtn: UIButton!
     @IBOutlet weak var AcademicYearView: UIView!
-    @IBOutlet weak var SegmentController: UISegmentedControl!
     @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var AttendancetypeStack: UIStackView!
     @IBOutlet weak var SessionStack: UIStackView!
-    @IBOutlet weak var secondHalfCheckImg: UIImageView!
-    @IBOutlet weak var FirsthalfCheckImg: UIImageView!
-    @IBOutlet weak var SecondHalfView: UIView!
-    @IBOutlet weak var FirstHalfView: UIView!
+   
+   
+    @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var monthView: UIView!
+    @IBOutlet weak var HalfDayBtn: UIButton!
+   
+    @IBOutlet weak var FulldayBtn: UIButton!
     @IBOutlet weak var SelectSessionDefaultLbl: UILabel!
     @IBOutlet weak var SelectAttendanceTypeLbl: UILabel!
     @IBOutlet weak var selectStandardandSectionDefaultLbl: UILabel!
     @IBOutlet weak var CustomDateLbl: UILabel!
     @IBOutlet weak var dayLbl: UILabel!
-    @IBOutlet weak var HalfdayImgview: UIImageView!
-    @IBOutlet weak var FulldayImgview: UIImageView!
-    @IBOutlet weak var HalfdayView: UIView!
-    @IBOutlet weak var FulldayView: UIView!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var standardLbl: UILabel!
     @IBOutlet weak var stackview: UIStackView!
@@ -70,14 +71,15 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     var StandardId = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        SectionView.setShadow()
-        standardView.setShadow()
-        AcademicYearView.setShadow(cornerRadius: 4)
-        customView.setShadow()
-        customView.layer.borderWidth = 1
-        customView.layer.borderColor = UIColor.lightGray.cgColor
+//        SectionView.setShadow()
+//        standardView.setShadow()
+//        AcademicYearView.setShadow(cornerRadius: 4)
+        
+        BottomView.layer.cornerRadius = 8
+       
         calanderBtn.layer.cornerRadius = 4
         UIupdate()
+        get_Academic_year()
         SearchBar.searchTextField.addDoneButton()
         BackBtn.applyBackButton()
         customdate.dateFormat = "EEE d"
@@ -98,26 +100,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
         
-        let fulltap = UITapGestureRecognizer(target: self, action: #selector(fulldayAction))
-        FulldayView.addGestureRecognizer(fulltap)
-        
-        let halftap = UITapGestureRecognizer(target: self, action: #selector(HalfdayAction))
-        HalfdayView.addGestureRecognizer(halftap)
-        HalfdayView.isUserInteractionEnabled = true
-        
-        let firstTap = UITapGestureRecognizer(target: self, action: #selector(FirsthalfAct))
-        FirstHalfView.addGestureRecognizer(firstTap)
-        
-        let SecondTap = UITapGestureRecognizer(target: self, action: #selector(SecondhalfAct))
-        SecondHalfView.addGestureRecognizer(SecondTap)
-        
-        let nib = UINib(nibName: CellConfingName.AttendenceReportTVCell, bundle: nil)
-        TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
-        
-        get_Academic_year()
-        TV.delegate = self
-        TV.dataSource = self
-        SearchBar.delegate = self
+
     }
     
     func UIupdate() {
@@ -132,11 +115,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         applyDesign(element: standardView)
         applyDesign(element: SectionView)
-        applyDesign(element: FulldayView)
-        applyDesign(element: HalfdayView)
-        applyDesign(element: FirstHalfView)
-        applyDesign(element: SecondHalfView)
-        
+       
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
         MarkAbsentiesBtn.layer.cornerRadius = 10
@@ -151,8 +130,34 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         selectStandardandSectionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
         SelectSessionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
         SelectAttendanceTypeLbl.setFont(style: .title, size: FontSize.TitleSize)
-        standardLbl.setFont(style: .title, size: FontSize.TitleSize)
-        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        standardLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        
+        standardView.layer.cornerRadius =  5
+        standardView.layer.borderWidth = 1
+        standardView.layer.borderColor =  UIColor.primery.cgColor
+        
+        SectionView.layer.cornerRadius = 5
+        SectionView.layer.borderWidth =  1
+        SectionView.layer.borderColor =  UIColor.primery.cgColor
+        FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        FulldayBtn.layer.cornerRadius = 15
+        
+        HalfDayBtn.backgroundColor = .systemGray4
+        HalfDayBtn.layer.cornerRadius = 15
+        calanderFulView.layer.cornerRadius = 10
+        monthView.layer.cornerRadius = 10
+//        myScrollView.delegate = self
+        calendar.delegate = self
+        calendar.dataSource = self
+//        calendar.swipeToChooseGesture.isEnabled = true
+        calendar.appearance.headerTitleColor = .systemBlue
+        calendar.appearance.weekdayTextColor = .darkGray
+        calendar.appearance.selectionColor = .systemRed
+        calendar.placeholderType = .none
+        calendar.headerHeight = 0
+        calendar.allowsMultipleSelection = false
+        
     }
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
@@ -183,40 +188,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         element.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    @IBAction func SegmentControllerAction(_ sender: Any) {
-        
-        if SegmentController.selectedSegmentIndex == 0 {
-            
-            TV.isHidden = true
-            SearchBar.isHidden = true
-            
-            MarkAbsentiesBtn.isHidden = false
-           // markAllPresentBtn.isHidden = false
-            stackview.isHidden = false
-            AttendancetypeStack.isHidden = false
-            AttendTypeStackView.isHidden = false
-            if HalfdayImgview.image == UIImage(named:"RadioCheck"){
-                SessionStack.isHidden = false
-            }
-        }else {
-            
-            student_attendance_report()
-            
-            SearchBar.isHidden = false
-            TV.isHidden = false
-            TV.delegate = self
-            TV.dataSource = self
-            TV.reloadData()
-            
-            MarkAbsentiesBtn.isHidden = true
-            markAllPresentBtn.isHidden = true
-            stackview.isHidden = true
-            SessionStack.isHidden = true
-            AttendancetypeStack.isHidden = true
-            AttendTypeStackView.isHidden = true
-            
-        }
-    }
+    
     
     
     @IBAction func MarkAttendanceAct(_ sender: Any) {
@@ -229,9 +201,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         stackview.isHidden = false
         AttendancetypeStack.isHidden = false
         AttendTypeStackView.isHidden = false
-        if HalfdayImgview.image == UIImage(named:"RadioCheck"){
-            SessionStack.isHidden = false
-        }
+//        if HalfdayImgview.image == UIImage(named:"RadioCheck"){
+//            SessionStack.isHidden = false
+//        }
         
     }
     
@@ -278,18 +250,30 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     }
     
     
+    @IBAction func fullDayBtnAct(_ sender: UIButton) {
+        
+        FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        HalfDayBtn.backgroundColor = .systemGray4
+        
+    }
+    
+    @IBAction func halfDayBtnAct(_ sender: UIButton) {
+        
+        FulldayBtn.backgroundColor = .systemGray4
+        HalfDayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+    }
+    
+    
+    @IBAction func segmentAct(_ sender: UISegmentedControl) {
+        
+        
+    }
     @objc func fulldayAction(){
         user_inputs.attendance_type = "F"
         user_inputs.session_type = ""
         user_inputs.all_present = "T"
         //FulldayImgview.image = UIImage(named: "checked_Tick")
-        FulldayImgview.image = UIImage(named: "RadioCheck")
-        HalfdayImgview.image = UIImage(named: "CheckCircle")
-        SessionStack.isHidden = true
-        markAllPresentBtn.backgroundColor = .systemGreen
-        MarkAbsentiesBtn.backgroundColor = .systemBlue
-        markAllPresentBtn.isUserInteractionEnabled = true
-        MarkAbsentiesBtn.isUserInteractionEnabled = true
+      
     }
     @objc func HalfdayAction(){
         
@@ -297,38 +281,19 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         user_inputs.session_type = ""
         user_inputs.all_present = "T"
         
-        //HalfdayImgview.image = UIImage(named: "checked_Tick")
-        HalfdayImgview.image = UIImage(named: "RadioCheck")
-        FulldayImgview.image = UIImage(named: "CheckCircle")
-        SessionStack.isHidden = false
-        markAllPresentBtn.backgroundColor = .systemGray3
-        MarkAbsentiesBtn.backgroundColor = .lightGray
-        FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
-        secondHalfCheckImg.image = UIImage(named: "CheckCircle")
-        markAllPresentBtn.isUserInteractionEnabled = false
-        MarkAbsentiesBtn.isUserInteractionEnabled = false
+        
     }
     @objc func FirsthalfAct(){
         user_inputs.attendance_type = "H"
         user_inputs.session_type = "FH"
         user_inputs.all_present = "T"
-        FirsthalfCheckImg.image = UIImage(named: "RadioCheck")
-        secondHalfCheckImg.image = UIImage(named: "CheckCircle")
-        markAllPresentBtn.backgroundColor = .systemGreen
-        MarkAbsentiesBtn.backgroundColor = .systemBlue
-        markAllPresentBtn.isUserInteractionEnabled = true
-        MarkAbsentiesBtn.isUserInteractionEnabled = true
+        
     }
     @objc func SecondhalfAct(){
         user_inputs.attendance_type = "H"
         user_inputs.session_type = "SH"
         user_inputs.all_present = "T"
-        secondHalfCheckImg.image = UIImage(named: "RadioCheck")
-        FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
-        markAllPresentBtn.backgroundColor = .systemGreen
-        MarkAbsentiesBtn.backgroundColor = .systemBlue
-        markAllPresentBtn.isUserInteractionEnabled = true
-        MarkAbsentiesBtn.isUserInteractionEnabled = true
+        
         
     }
     
@@ -507,7 +472,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                         
                         standardLbl.text = StandardData?.first?.name
                         sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
-                        student_attendance_report()
+//                        student_attendance_report()
                         
                     }else{
                         CustomAlert.showAlertWithOkAction(
@@ -659,4 +624,68 @@ extension MarkAttendenceVC: UISearchBarDelegate {
         }
         TV.reloadData()
     }
+}
+@available(iOS 14.0, *)
+extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
+    
+   
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+       
+        let filterFormatter = DateFormatter()
+        filterFormatter.dateFormat = "dd-MM-yyyy"
+        
+        let showFormatter = DateFormatter()
+        showFormatter.dateFormat = "MMMM dd, yyyy"
+        
+        let selectedDateForFilter = filterFormatter.string(from: date)
+        let selectedDateForLabel = showFormatter.string(from: date)
+        
+        print("Selected Date (Filter): \(selectedDateForFilter)")
+        print("Selected Date (Label): \(selectedDateForLabel)")
+        
+    }
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date(timeIntervalSince1970: 0) // very old date
+    }
+
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        return Date()
+    }
+    
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+            return date <= Date()
+        }
+    
+    
+   
+
+    @IBAction func nextMonthTapped(_ sender: UIButton) {
+        moveCurrentPage(isNext: true)
+    }
+
+    @IBAction func prevMonthTapped(_ sender: UIButton) {
+        moveCurrentPage(isNext: false)
+    }
+
+    func moveCurrentPage(isNext: Bool) {
+        let current = calendar.currentPage
+        var dateComponents = DateComponents()
+        dateComponents.month = isNext ? 1 : -1
+        
+        let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
+        calendar.setCurrentPage(newDate, animated: true)
+        
+        updateMonthLabel()
+    }
+    
+   
+    
+    func updateMonthLabel() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"   // Example: "September 2025"
+        mnthLbl.text = formatter.string(from: calendar.currentPage)
+    }
+
+
 }
