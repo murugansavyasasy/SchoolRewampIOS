@@ -281,8 +281,8 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.StudentTVCell, for: indexPath) as! StudentTVCell
             
-            cell.TopView.backgroundColor = colour1
-            cell.StudentImage.image = image
+//            cell.TopView.backgroundColor = colour1
+//            cell.StudentImage.image = image
             //cell.imgview.image = UIImage(named: childDetails?[indexPath.row].school_logo_url ?? "")
             cell.NameLbl.text = childDetails?[indexPath.row].name
             cell.RollNo.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
@@ -290,23 +290,24 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                       
             cell.ClassLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
             cell.SchoolNameLbl.text = childDetails?[indexPath.row].school_name
-           
-            if (childDetails?[indexPath.row].school_name_regional == ""){
-                cell.RegionalSchoolName.isHidden = true
-            }else {
-                cell.RegionalSchoolName.text = childDetails?[indexPath.row].school_name_regional
-                cell.RegionalSchoolName.isHidden = false
-            }
+            cell.bloodLbl.text = childDetails?[indexPath.row].blood_group
+            cell.StudentImage.kf.setImage(with: URL(string: childDetails?[indexPath.row].profile ?? ""),placeholder: UIImage(systemName: "person.fill"))
+//            if (childDetails?[indexPath.row].school_name_regional == ""){
+//                cell.RegionalSchoolName.isHidden = true
+//            }else {
+//                cell.RegionalSchoolName.text = childDetails?[indexPath.row].school_name_regional
+//                cell.RegionalSchoolName.isHidden = false
+//            }
            
             cell.SchoolAdressLbl.text = childDetails?[indexPath.row].school_city ?? ""
-           
-                       if indexPath.row == 8{
-                           cell.StudentImage.image = ImageName.person_circle
-                       }
-           
-                       if let color1 = colour1, let color2 = colour2 {
-                           cell.setGradientColors([color2.cgColor, color1.cgColor])
-                       }
+//           
+//                       if indexPath.row == 8{
+//                           cell.StudentImage.image = ImageName.person_circle
+//                       }
+//           
+//                       if let color1 = colour1, let color2 = colour2 {
+//                           cell.setGradientColors([color2.cgColor, color1.cgColor])
+//                       }
             DispatchQueue.main.async {
                 self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
                 self.view.layoutIfNeeded()

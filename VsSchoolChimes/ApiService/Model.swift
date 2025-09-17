@@ -2170,12 +2170,56 @@ struct SkillSubmission: Codable {
     let student_submited_on: String?
     let is_submitted: Bool?
 }
-// MARK: EDIT PROFILE
+// MARK: - Main Response Structure
 struct UserProfileResponse: Codable {
     var status: Bool?
     var message: String?
-    var data:[[String: [UserDetailItem]]]?
+    var data: [ProfileData]?
 }
+
+// MARK: - Profile Data Structure
+struct ProfileData: Codable {
+    var general: [UserDetailItem]?
+    var fatherDetails: [UserDetailItem]?
+    var motherDetails: [UserDetailItem]?
+    var communication: [UserDetailItem]?
+    var address: [UserDetailItem]?
+    var physical: [UserDetailItem]?
+    var identifiers: [UserDetailItem]?
+    var community: [UserDetailItem]?
+    var bankDetails: [UserDetailItem]?
+    var photoPath: [UserDetailItem]?
+    var documents: [UserDetailItem]?
+    var transportDetails: [UserDetailItem]?
+    
+    enum CodingKeys: String, CodingKey {
+        case general = "General"
+        case fatherDetails = "Father Details"
+        case motherDetails = "Mother Details"
+        case communication = "Communication"
+        case address = "Address"
+        case physical = "Physical"
+        case identifiers = "Identifiers"
+        case community = "Community"
+        case bankDetails = "Bank Details"
+        case photoPath = "PhotoPath"
+        case documents = "Documents"
+        case transportDetails = "Transport Details"
+    }
+}
+
+// MARK: - User Detail Item
+struct UserDetailItem: Codable {
+    var title: String
+    var type: UserDetailFieldType
+    var value: String?
+    var is_editable: Bool?
+    var optional: Bool?
+    var options: [String]?
+    var node: String?
+    
+}
+
 // MARK: - Field Types
 enum UserDetailFieldType: String, Codable {
     case text
@@ -2189,13 +2233,54 @@ enum UserDetailFieldType: String, Codable {
     case document
 }
 
-// MARK: - Model
-struct UserDetailItem: Codable {
-    var title: String
-    var value: String?
-    var type: UserDetailFieldType
-    var options: [String]?
-    var is_editable: Bool?
-    var optional: Bool?
-    var node: String?
+// MARK: - Helper Struct for UI Display (Optional)
+struct ProfileSection {
+    let title: String
+    let items: [UserDetailItem]
+}
+
+// MARK: - Extension for easier data access
+extension ProfileData {
+    func getAllSections() -> [ProfileSection] {
+        var sections: [ProfileSection] = []
+        
+        if let general = general, !general.isEmpty {
+            sections.append(ProfileSection(title: "General", items: general))
+        }
+        if let fatherDetails = fatherDetails, !fatherDetails.isEmpty {
+            sections.append(ProfileSection(title: "Father Details", items: fatherDetails))
+        }
+        if let motherDetails = motherDetails, !motherDetails.isEmpty {
+            sections.append(ProfileSection(title: "Mother Details", items: motherDetails))
+        }
+        if let communication = communication, !communication.isEmpty {
+            sections.append(ProfileSection(title: "Communication", items: communication))
+        }
+        if let address = address, !address.isEmpty {
+            sections.append(ProfileSection(title: "Address", items: address))
+        }
+        if let physical = physical, !physical.isEmpty {
+            sections.append(ProfileSection(title: "Physical", items: physical))
+        }
+        if let identifiers = identifiers, !identifiers.isEmpty {
+            sections.append(ProfileSection(title: "Identifiers", items: identifiers))
+        }
+        if let community = community, !community.isEmpty {
+            sections.append(ProfileSection(title: "Community", items: community))
+        }
+        if let bankDetails = bankDetails, !bankDetails.isEmpty {
+            sections.append(ProfileSection(title: "Bank Details", items: bankDetails))
+        }
+        if let photoPath = photoPath, !photoPath.isEmpty {
+            sections.append(ProfileSection(title: "Photo", items: photoPath))
+        }
+        if let documents = documents, !documents.isEmpty {
+            sections.append(ProfileSection(title: "Documents", items: documents))
+        }
+        if let transportDetails = transportDetails, !transportDetails.isEmpty {
+            sections.append(ProfileSection(title: "Transport Details", items: transportDetails))
+        }
+        
+        return sections
+    }
 }

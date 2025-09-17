@@ -8,7 +8,7 @@
 import UIKit
 
 class StudentTVCell: UITableViewCell {
-
+    
     @IBOutlet weak var Cellview: UIView!
     @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var SchoolLogo: UIImageView!
@@ -16,88 +16,104 @@ class StudentTVCell: UITableViewCell {
     @IBOutlet weak var ClassLbl: UILabel!
     @IBOutlet weak var RollNo: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var bloodLbl: UILabel!
     @IBOutlet weak var SchoolNameLbl: UILabel!
     @IBOutlet weak var SchoolAdressLbl: UILabel!
     @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var RegionalSchoolName: UILabel!
     @IBOutlet weak var AcademicYearLbl: UILabel!
     
-    private var gradientColors: [CGColor] = []
+    @IBOutlet weak var innerView: UIView!
+    
+    private var gradientLayer: CAGradientLayer?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        Cellview.layer.cornerRadius = Colornames.CORadius10
-        Cellview.layer.shadowColor = UIColor.black.cgColor
-        Cellview.layer.shadowOpacity = 0.3
-        Cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
-        Cellview.layer.shadowRadius = 2
-        Cellview.layer.borderWidth = 0.5
-        Cellview.layer.borderColor = UIColor.systemGray.cgColor
-        Cellview.layer.masksToBounds = false
-        
-        TopView.layer.cornerRadius = 10
-        TopView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        
-        BottomView.layer.cornerRadius = 10
-        BottomView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-        
-        
-        SchoolLogo.layer.cornerRadius = SchoolLogo.frame.width / 2
-        StudentImage.layer.cornerRadius = 5
-        
-        TopView.backgroundColor = .systemIndigo.withAlphaComponent(0.4)
-        BottomView.backgroundColor = .systemIndigo.withAlphaComponent(0.4)
-        
-        SchoolLogo.layer.borderWidth = 1
-        SchoolLogo.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        RollNo.setFont(style: .body, size: FontSize.BodySize)
-        ClassLbl.setFont(style: .body, size: FontSize.BodySize)
-        SchoolNameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        SchoolAdressLbl.setFont(style: .body, size: FontSize.BodySize)
-        RegionalSchoolName.setFont(style: .body, size: FontSize.BodySize)
-        AcademicYearLbl.setFont(style: .body, size: FontSize.BodySize)
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        setupUI()
+//        applyGradient()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        DispatchQueue.main.async {
-            self.applyGradientIfNeeded()
+        
+        // Gradient layer frame update to match the Cellview's bounds
+        gradientLayer?.frame = Cellview.bounds
+        TopView.applyCustomCorners(topLeft: 0, topRight: 10, bottomLeft: 20, bottomRight: 0)
+        BottomView.applyCustomCorners(topLeft: 0, topRight: 20, bottomLeft: 10, bottomRight: 0)
+    }
+    
+    private func setupUI() {
+        innerView.layer.cornerRadius = 20
+        innerView.layer.maskedCorners = [.layerMaxXMaxYCorner]
+        innerView.layer.masksToBounds = true
+        Cellview.setShadow()
+        
+        SchoolLogo.layer.cornerRadius = SchoolLogo.frame.width / 2
+        SchoolLogo.layer.borderWidth = 1
+        SchoolLogo.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        
+        StudentImage.layer.cornerRadius = 10
+        StudentImage.layer.borderWidth = 1
+        StudentImage.layer.borderColor = UIColor.systemIndigo.withAlphaComponent(0.5).cgColor
+    }
+    
+}
+extension UIView {
+    func applyCustomCorners(topLeft: CGFloat,
+                            topRight: CGFloat,
+                            bottomLeft: CGFloat,
+                            bottomRight: CGFloat) {
+        
+        let path = UIBezierPath()
+        let bounds = self.bounds
+        
+        // Start from top-left
+        path.move(to: CGPoint(x: bounds.minX + topLeft, y: bounds.minY))
+        
+        // Top edge
+        path.addLine(to: CGPoint(x: bounds.maxX - topRight, y: bounds.minY))
+        path.addArc(withCenter: CGPoint(x: bounds.maxX - topRight, y: bounds.minY + topRight),
+                    radius: topRight,
+                    startAngle: CGFloat(3 * Double.pi / 2),
+                    endAngle: 0,
+                    clockwise: true)
+        
+        // Right edge
+        path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY - bottomRight))
+        path.addArc(withCenter: CGPoint(x: bounds.maxX - bottomRight, y: bounds.maxY - bottomRight),
+                    radius: bottomRight,
+                    startAngle: 0,
+                    endAngle: CGFloat(Double.pi / 2),
+                    clockwise: true)
+        
+        // Bottom edge
+        path.addLine(to: CGPoint(x: bounds.minX + bottomLeft, y: bounds.maxY))
+        if bottomLeft > 0 {
+            path.addArc(withCenter: CGPoint(x: bounds.minX + bottomLeft, y: bounds.maxY - bottomLeft),
+                        radius: bottomLeft,
+                        startAngle: CGFloat(Double.pi / 2),
+                        endAngle: CGFloat(Double.pi),
+                        clockwise: true)
+        } else {
+            path.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
         }
         
-    }
-    
-    func setGradientColors(_ colors: [CGColor]) {
-        // Store the colors so we can use them in layoutSubviews
-        gradientColors = colors
-        applyGradientIfNeeded() // Ensure the gradient is applied immediately as well
-    }
-    
-    private func applyGradientIfNeeded() {
-        // Check if we already have the same gradient applied
-        guard gradientColors.isEmpty == false else { return }
+        // Left edge
+        path.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY + topLeft))
+        if topLeft > 0 {
+            path.addArc(withCenter: CGPoint(x: bounds.minX + topLeft, y: bounds.minY + topLeft),
+                        radius: topLeft,
+                        startAngle: CGFloat(Double.pi),
+                        endAngle: CGFloat(3 * Double.pi / 2),
+                        clockwise: true)
+        } else {
+            path.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY))
+        }
         
-        // Remove existing gradient layers if any
-        TopView.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+        path.close()
         
-        // Create and configure the gradient layer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = gradientColors
-        gradientLayer.startPoint = CGPoint(x: 0.2, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = TopView.bounds
-        gradientLayer.cornerRadius = TopView.layer.cornerRadius
-        
-        // Insert the gradient layer into the cell's view hierarchy
-        TopView.layer.insertSublayer(gradientLayer, at: 0)
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
     }
-    
 }

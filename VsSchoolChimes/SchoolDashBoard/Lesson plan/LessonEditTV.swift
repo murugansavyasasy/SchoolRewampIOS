@@ -37,22 +37,13 @@ class LessonEditTV: UITableViewCell, Datepicker {
             DropdownField.font = UIFont(name: "Poppins-Medium", size: 13)
             TextField.font = UIFont(name: "Poppins-Medium", size: 13)
             DropdownLbl.font = UIFont(name: "Poppins-Medium", size: 13)
-            TextField.layer.cornerRadius = 10
-            TextField.layer.borderWidth = 0.5
-            TextField.layer.borderColor = UIColor.systemGray.cgColor
+            TextField.layer.cornerRadius = 8
+            TextField.layer.borderWidth = 1
+            TextField.layer.borderColor = UIColor.systemGray5.cgColor
             TextField.addDoneButton()
             TextField.delegate = self
             TextField.isScrollEnabled = false
             dateBtn.layer.cornerRadius = 6
-//            DropDownView.layer.cornerRadius = 10
-//            DropDownView.layer.shadowColor = UIColor.black.cgColor
-//            DropDownView.layer.shadowOffset = CGSize(width: 2, height: 2)
-//            DropDownView.layer.shadowOpacity = 0.3
-//            DropDownView.layer.shadowRadius = 2
-//            DropDownView.backgroundColor = .white
-//            DropDownView.layer.borderWidth = 0.3
-//            DropDownView.layer.borderColor = UIColor.lightGray.cgColor
-            
             setupDropdownGesture()
         }
 
@@ -80,10 +71,9 @@ class LessonEditTV: UITableViewCell, Datepicker {
 
             switch edit.field_type {
             case "dropdown":
-                DropDownView.layer.borderWidth = 0
-                DropDownView.layer.borderColor = UIColor.clear.cgColor
-                DropDownView.layer.cornerRadius = 0
-                DropDownView.setShadow()
+                DropDownView.layer.borderWidth =  1
+                DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
+                DropDownView.layer.cornerRadius = 8
                 TextField.isHidden = true
                 DropdownField.isHidden = true
                 DropDownView.isHidden = false
@@ -92,16 +82,15 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropdownField.text = edit.value
                 DropdownLbl.text = edit.value
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
+                DropdownField.isEnabled = !(edit.is_disable ?? false)
                 DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 if edit.is_disable ?? false {
-                    DropdownField.backgroundColor = .systemGray5
-                    DropDownView.backgroundColor = .systemGray5
+                    DropdownField.backgroundColor = .systemGray6.withAlphaComponent(0.7)
+                    DropDownView.backgroundColor = .systemGray6.withAlphaComponent(0.7)
                 }else {
                     DropdownField.backgroundColor = .white
                     DropDownView.backgroundColor = .white
-                   // DropdownField.layer.borderColor = UIColor.systemGreen.cgColor
                 }
-
                 dropDown.dataSource = edit.field_data ?? []
                 dropDown.anchorView = DropdownField
                 dropDown.bottomOffset = CGPoint(x: 0, y: DropdownField.frame.height)
@@ -121,7 +110,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 TextField.text = edit.value
                 TextField.isEditable = !(edit.is_disable ?? false)
                 if edit.is_disable ?? false {
-                    TextField.backgroundColor = .systemGray5
+                    TextField.backgroundColor = .systemGray6.withAlphaComponent(0.7)
                     TextField.isUserInteractionEnabled = false
                 }else {
                     TextField.backgroundColor = .white
@@ -136,7 +125,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
 
             case "datepicker":
                 DropDownView.clearShadow()
-                DropDownView.layer.borderWidth = 0.6
+                DropDownView.layer.borderWidth = 1
                 DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
                 DropDownView.layer.cornerRadius = 8
                 TextField.isHidden = true
@@ -150,12 +139,11 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 DropdownField.addTarget(self, action: #selector(showDatePicker), for: .editingDidBegin)
                 if edit.is_disable ?? false {
-                    DropdownField.backgroundColor = .systemGray5
-                    DropDownView.backgroundColor = .systemGray5
+                    DropdownField.backgroundColor = .systemGray6.withAlphaComponent(0.7)
+                    DropDownView.backgroundColor = .systemGray6.withAlphaComponent(0.7)
                 }else {
                     DropdownField.backgroundColor = .white
                     DropDownView.backgroundColor = .white
-                   // DropdownField.layer.borderColor = UIColor.systemGreen.cgColor
                 }
 
             default:
