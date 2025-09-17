@@ -11,6 +11,8 @@ import FSCalendar
 
 class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var studentLbl: UILabel!
+    @IBOutlet weak var infoStack: UIStackView!
     @IBOutlet weak var calanderHeighnt: NSLayoutConstraint!
     @IBOutlet weak var totalLbl: UILabel!
     @IBOutlet weak var progres: UIProgressView!
@@ -47,17 +49,23 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let swipe = UIPanGestureRecognizer(target: calendar, action: #selector(calendar.handleScopeGesture(_:)))
-            swipe.delegate = self
-        scrollview.addGestureRecognizer(swipe)
-        
+
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
+        dateLbl.isHidden = true
+        cvIcon.isHidden = true
+        infoStack.isHidden = true
+        Tv.isHidden = true
+        fullview.backgroundColor = .clear
+        studentLbl.isHidden = true
+       
+        
         calanderFulView.layer.cornerRadius = 10
-//        myScrollView.delegate = self
+
         calendar.delegate = self
         calendar.dataSource = self
         scrollview.delegate = self
+        scrollview.alwaysBounceVertical = true
         calendar.appearance.todayColor = .clear
         calendar.appearance.titleTodayColor = .label
     calendar.allowsMultipleSelection = false
@@ -90,26 +98,57 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
                 DispatchQueue.main.async {
                     self.absentData = response.data
                     self.class_wiseData = self.absentData?.first?.class_wise ?? []
-                 
+                    
                     self.eventDates.removeAll()
-                           if let data = response.data {
-                               for item in data {
-                                   if let total = item.total_absentees,
-                                      let totalInt = Int(total),
-                                      totalInt > 0,
-                                      let dateStr = item.date,
-                                      let date = self.dateFormatter.date(from: dateStr) {
-                                       self.eventDates.append(date)
-                                   }
-                               }
-                           }
-                       
-                           self.calendar.reloadData()
+                    if let data = response.data {
+                        for item in data {
+                            if let total = item.total_absentees,
+                               let totalInt = Int(total),
+                               totalInt > 0,
+                               let dateStr = item.date,
+                               let date = self.dateFormatter.date(from: dateStr) {
+                                self.eventDates.append(date)
+                            }
+                        }
+                    }
+                    
+                    self.calendar.reloadData()
+                
                     
                     if let firstDate = self.absentData?.first?.date {
-                               self.filterData(for: firstDate)
-                           }
-
+                        self.filterData(for: firstDate)
+                    }
+                    
+                    
+                    let today = Date()
+                    let calendar = Calendar.current
+                    let hasEventToday = self.eventDates.contains { eventDate in
+                        calendar.isDate(eventDate, inSameDayAs: today)
+                    }
+                    
+                    if !hasEventToday {
+                        print("No absentee event today.")
+                        self.dateLbl.isHidden = !hasEventToday
+                        self.cvIcon.isHidden = !hasEventToday
+                        self.infoStack.isHidden = !hasEventToday
+                        self.Tv.isHidden = !hasEventToday
+                        self.fullview.backgroundColor = .clear
+                        self.studentLbl.text = "No Absentees found today"
+                        self.studentLbl.isHidden = false
+                        self.studentLbl.textAlignment = .center
+                    }else{
+                        
+                        self.dateLbl.isHidden = hasEventToday
+                        self.cvIcon.isHidden = hasEventToday
+                        self.infoStack.isHidden = hasEventToday
+                        self.Tv.isHidden = hasEventToday
+                        self.fullview.backgroundColor = .clear
+                        self.studentLbl.text = "👨🏻‍🎓 Absent  students list"
+                        self.studentLbl.textAlignment = .left
+                        self.studentLbl.isHidden = false
+                        
+                    }
+                    
                 }
                 
             case .failure(let error):
@@ -267,6 +306,7 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
         abesentCountLbl.text = "Absentees : \(data.total_absentees)"
         totalLbl.text = "Total students : \(data.student_counts)"
        
+        
 //        Tv.reloadData()
     }
     
@@ -383,6 +423,13 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         ClickID = 0
+        dateLbl.isHidden = false
+        cvIcon.isHidden = false
+     infoStack.isHidden = false
+        Tv.isHidden = false
+        fullview.backgroundColor = .white
+        studentLbl.text = "👨🏻‍🎓 Absent  students list"
+        studentLbl.textAlignment = .left
         let filterFormatter = DateFormatter()
         filterFormatter.dateFormat = "dd-MM-yyyy"
         
@@ -404,6 +451,30 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         let sectionIDs = getSectionID(for: selectedDate ?? "") ?? ""
         AbsentStudent(sectionId:sectionIDs , date: selectedDate ?? "" )
         
+        if let repost = getAbsenteeInfo(for: selectedDateForFilter) {
+            
+            print("repost.totalAbsentees",repost.totalAbsentees)
+            print("repost.studentCounts",repost.studentCounts)
+        }
+        
+        
+        if let info = getAbsenteeInfo(for: selectedDateForFilter) {
+            
+            updateProgress(
+                absentees: "\(info.totalAbsentees)",
+                total: "\(info.studentCounts)"
+                
+            )
+            
+        } else {
+            print("No data found for this date")
+        }
+        
+        
+       
+        
+        
+        
     }
     func minimumDate(for calendar: FSCalendar) -> Date {
         return Date(timeIntervalSince1970: 0) // very old date
@@ -416,10 +487,21 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         calanderHeighnt.constant = bounds.height
         self.view.layoutIfNeeded()
-        updateTableHeight()
     }
     
 
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                   withVelocity velocity: CGPoint,
+                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if velocity.y > 0 {
+            // Swipe up → collapse
+            calendar.setScope(.week, animated: true)
+        } else if velocity.y < 0 {
+            // Swipe down → expand
+            calendar.setScope(.month, animated: true)
+        }
+    }
    
     func getSectionID(for selectedDate: String) -> String? {
         guard let absentData = absentData else { return nil }
@@ -431,6 +513,26 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         }
         return nil
     }
+    
+    func getAbsenteeInfo(for selectedDate: String) -> (totalAbsentees: Int, studentCounts: Int)? {
+        guard let absentData = absentData else { return nil }
+        
+        if let matchedDate = absentData.first(where: { $0.date == selectedDate }),
+           let firstClass = matchedDate.class_wise?.first {
+            
+            let totalStu = Int(firstClass.student_counts ?? "0") ?? 0
+            let totalAbs = Int(firstClass.total_absentees ?? "0") ?? 0
+            
+            return (totalAbs, totalStu)
+        }
+        
+        
+        
+        return nil
+    }
+
+   
+
 
 }
 

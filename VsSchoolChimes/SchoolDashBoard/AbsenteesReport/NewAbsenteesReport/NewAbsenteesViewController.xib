@@ -23,9 +23,11 @@
                 <outlet property="cvIcon" destination="13Z-A7-OXA" id="Aex-fU-B3A"/>
                 <outlet property="dateLbl" destination="nGR-nA-Bwr" id="oLa-ma-wvB"/>
                 <outlet property="fullview" destination="0AS-Tm-D7R" id="95u-fO-osy"/>
+                <outlet property="infoStack" destination="Mcg-dA-tyT" id="N3M-5a-8he"/>
                 <outlet property="progres" destination="6go-AW-Kaa" id="x7f-C7-9JS"/>
                 <outlet property="scrollview" destination="34d-1M-YPb" id="nv9-t7-qbZ"/>
                 <outlet property="sectionLbl" destination="zGx-LK-mSh" id="vQD-YM-yVA"/>
+                <outlet property="studentLbl" destination="gUJ-gf-hey" id="7nP-oi-Hvn"/>
                 <outlet property="totalLbl" destination="Eux-jx-0Pd" id="Zq5-AQ-C2u"/>
                 <outlet property="tvHeight" destination="T8Y-Xi-gnJ" id="39h-Ac-5LW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -53,35 +55,16 @@
                     <rect key="frame" x="0.0" y="156.33333333333331" width="393" height="627.66666666666674"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKE-4I-cRM">
-                            <rect key="frame" x="5" y="10" width="383" height="607.66666666666663"/>
+                            <rect key="frame" x="5" y="300" width="383" height="317.66666666666674"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="34d-1M-YPb">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="607.66666666666663"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="317.66666666666669"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gQD-6N-1g8">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="719"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="476"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-97-CKP">
-                                                    <rect key="frame" x="10" y="10" width="363" height="280"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uW4-KI-fn4" customClass="FSCalendar">
-                                                            <rect key="frame" x="10" y="10" width="343" height="260"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="260" id="Fgm-Xo-AkD"/>
-                                                            </constraints>
-                                                        </view>
-                                                    </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="uW4-KI-fn4" secondAttribute="bottom" constant="10" id="L03-6V-ihj"/>
-                                                        <constraint firstAttribute="trailing" secondItem="uW4-KI-fn4" secondAttribute="trailing" constant="10" id="R9h-3I-AZ0"/>
-                                                        <constraint firstItem="uW4-KI-fn4" firstAttribute="leading" secondItem="PqT-97-CKP" secondAttribute="leading" constant="10" id="SZI-CR-Rcu"/>
-                                                        <constraint firstItem="uW4-KI-fn4" firstAttribute="top" secondItem="PqT-97-CKP" secondAttribute="top" constant="10" id="eEc-gk-567"/>
-                                                    </constraints>
-                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0AS-Tm-D7R">
-                                                    <rect key="frame" x="15" y="300" width="353" height="381"/>
+                                                    <rect key="frame" x="15" y="8" width="353" height="418"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ilf-pJ-koN">
                                                             <rect key="frame" x="5" y="39.333333333333371" width="343" height="120"/>
@@ -165,10 +148,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="POH-CJ-ffx">
-                                                            <rect key="frame" x="10" y="308.00000000000006" width="333" height="63"/>
+                                                            <rect key="frame" x="10" y="308.00000000000006" width="333" height="100"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="63" id="T8Y-Xi-gnJ"/>
+                                                                <constraint firstAttribute="height" constant="100" id="T8Y-Xi-gnJ"/>
                                                             </constraints>
                                                         </tableView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fjR-qT-cCp">
@@ -230,13 +213,10 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="0AS-Tm-D7R" secondAttribute="trailing" constant="15" id="EoJ-5L-V4P"/>
-                                                <constraint firstAttribute="bottom" secondItem="0AS-Tm-D7R" secondAttribute="bottom" constant="38" id="Kxz-NY-v3E"/>
-                                                <constraint firstItem="PqT-97-CKP" firstAttribute="leading" secondItem="gQD-6N-1g8" secondAttribute="leading" constant="10" id="Pc7-33-K8Z"/>
-                                                <constraint firstItem="0AS-Tm-D7R" firstAttribute="leading" secondItem="gQD-6N-1g8" secondAttribute="leading" constant="15" id="Vuk-bo-ZaV"/>
-                                                <constraint firstItem="0AS-Tm-D7R" firstAttribute="top" secondItem="PqT-97-CKP" secondAttribute="bottom" constant="10" id="cGx-F6-a12"/>
-                                                <constraint firstAttribute="trailing" secondItem="PqT-97-CKP" secondAttribute="trailing" constant="10" id="r1K-5M-SVX"/>
-                                                <constraint firstItem="PqT-97-CKP" firstAttribute="top" secondItem="gQD-6N-1g8" secondAttribute="top" constant="10" id="rFM-do-3iT"/>
+                                                <constraint firstItem="0AS-Tm-D7R" firstAttribute="top" secondItem="gQD-6N-1g8" secondAttribute="top" constant="8" id="G7i-De-qn8"/>
+                                                <constraint firstAttribute="bottom" secondItem="0AS-Tm-D7R" secondAttribute="bottom" constant="50" id="IYQ-pw-QVQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="0AS-Tm-D7R" secondAttribute="trailing" constant="15" id="mjp-lT-OEZ"/>
+                                                <constraint firstItem="0AS-Tm-D7R" firstAttribute="leading" secondItem="gQD-6N-1g8" secondAttribute="leading" constant="15" id="uoJ-tE-ccr"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -258,13 +238,35 @@
                                 <constraint firstAttribute="bottom" secondItem="34d-1M-YPb" secondAttribute="bottom" id="cQ0-np-Bfa"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-97-CKP">
+                            <rect key="frame" x="15" y="10" width="363" height="280"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uW4-KI-fn4" customClass="FSCalendar">
+                                    <rect key="frame" x="10" y="10" width="343" height="260"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="260" id="Fgm-Xo-AkD"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="uW4-KI-fn4" secondAttribute="bottom" constant="10" id="L03-6V-ihj"/>
+                                <constraint firstAttribute="trailing" secondItem="uW4-KI-fn4" secondAttribute="trailing" constant="10" id="R9h-3I-AZ0"/>
+                                <constraint firstItem="uW4-KI-fn4" firstAttribute="leading" secondItem="PqT-97-CKP" secondAttribute="leading" constant="10" id="SZI-CR-Rcu"/>
+                                <constraint firstItem="uW4-KI-fn4" firstAttribute="top" secondItem="PqT-97-CKP" secondAttribute="top" constant="10" id="eEc-gk-567"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                     <constraints>
+                        <constraint firstItem="PqT-97-CKP" firstAttribute="leading" secondItem="X85-a3-lGt" secondAttribute="leading" constant="15" id="9wF-re-Nm1"/>
                         <constraint firstAttribute="bottom" secondItem="xKE-4I-cRM" secondAttribute="bottom" constant="10" id="FPw-pR-gDe"/>
-                        <constraint firstItem="xKE-4I-cRM" firstAttribute="top" secondItem="X85-a3-lGt" secondAttribute="top" constant="10" id="JTm-cn-mF7"/>
+                        <constraint firstItem="PqT-97-CKP" firstAttribute="top" secondItem="X85-a3-lGt" secondAttribute="top" constant="10" id="TBm-rO-EcG"/>
                         <constraint firstItem="xKE-4I-cRM" firstAttribute="leading" secondItem="X85-a3-lGt" secondAttribute="leading" constant="5" id="a3w-E1-wmJ"/>
                         <constraint firstAttribute="trailing" secondItem="xKE-4I-cRM" secondAttribute="trailing" constant="5" id="e55-1q-o7E"/>
+                        <constraint firstAttribute="trailing" secondItem="PqT-97-CKP" secondAttribute="trailing" constant="15" id="lDc-wG-719"/>
+                        <constraint firstItem="xKE-4I-cRM" firstAttribute="top" secondItem="PqT-97-CKP" secondAttribute="bottom" constant="10" id="oVa-CC-3ZA"/>
                     </constraints>
                 </view>
             </subviews>
@@ -455,6 +457,13 @@
             </view>
             <point key="canvasLocation" x="857" y="20"/>
         </viewController>
+        <view contentMode="scaleToFill" id="5rk-Up-Vn9">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <viewLayoutGuide key="safeArea" id="c9L-v5-bAd"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <point key="canvasLocation" x="-627" y="284"/>
+        </view>
     </objects>
     <resources>
         <image name="NoMessage" width="650" height="512"/>

@@ -24,7 +24,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
             navigationController?.pushViewController(vc, animated: true)
         } else if vc is LogoutViewController {
-            delegate?.back(logout: true)
+            delegate?.back(logout: false)
         }else{
             delegate?.back(logout: false)
         }
