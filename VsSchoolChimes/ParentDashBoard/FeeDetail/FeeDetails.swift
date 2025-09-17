@@ -24,6 +24,7 @@ class FeeDetails: UIViewController {
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var feeDetailsList: [InvoiceItem] = []
     var isWebViewLoaded = false
+    var receipt_url: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +111,38 @@ class FeeDetails: UIViewController {
             }
         }
     }
+    
+    func Get_Invoice_Receipt_Api(invoiceId: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_invoice_details, parameters: ["invoice_id": invoiceId], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true{
+                        
+                        self.receipt_url = success.data ?? []
+                        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
+                        let fileURL = URL(fileURLWithPath: self.receipt_url.first ?? "")
+                        ViewPaymentVC.documentURL = fileURL
+                        ViewPaymentVC.modalPresentationStyle = .fullScreen
+                        self.present(ViewPaymentVC, animated: true)
+                    }else{
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                    
+                case .failure(let failure):
+                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+        }
+    }
 }
 
 extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
@@ -125,12 +158,9 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoice_no ?? "")"
         cell.invoceDate.text = "Invoice Date: \(feeDetail.invoice_date ?? "")"
         cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoice_amount ?? "")"
-        cell.timeLbl.text = feeDetail.Invoice_time
+        cell.timeLbl.text = ""
        // cell.sizeLbl.text = feeDetail.fileSize
-
-        let fileURL = URL(fileURLWithPath: feeDetail.invoice_Url ?? "")
-        let iconName = getFileIconName(for: fileURL)
-        let iconImage = UIImage(named: iconName)
+        let iconImage = UIImage(named: "pdf (1)")
         cell.document.image = iconImage
 
         return cell
@@ -141,12 +171,8 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let feeDetail = feeDetailsList[indexPath.row]
-        let fileURL = URL(fileURLWithPath: feeDetail.invoice_Url ?? "")
-        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
-        ViewPaymentVC.documentURL = fileURL
-        ViewPaymentVC.modalPresentationStyle = .fullScreen
-        present(ViewPaymentVC, animated: true)
+        let id = feeDetailsList[indexPath.row].id ?? ""
+        Get_Invoice_Receipt_Api(invoiceId: id)
     }
 }
 

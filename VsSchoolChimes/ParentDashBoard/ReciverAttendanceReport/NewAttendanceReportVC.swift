@@ -94,7 +94,7 @@ extension NewAttendanceReportVC : UITableViewDataSource, UITableViewDelegate {
             let outputFormatter = DateFormatter()
             
             // Get full month name
-            outputFormatter.dateFormat = "MMMM"
+            outputFormatter.dateFormat = "MMM"
             let monthName = outputFormatter.string(from: date)
             
             

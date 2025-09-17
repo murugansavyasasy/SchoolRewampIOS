@@ -12,6 +12,7 @@ protocol QuestionCellDelegate: AnyObject {
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata)
     func removeCell(at indexPath: IndexPath)
     func addAttachment(at indexPath: IndexPath, file: FilePaths)   // ✅ New
+    func checkboxAction(id : String, isSelected: Bool)
 }
 
 
@@ -35,14 +36,21 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     @IBOutlet weak var opBTxtView: UITextView!
     @IBOutlet weak var opATxtView: UITextView!
     @IBOutlet weak var questionTxtView: UITextView!
-    
     @IBOutlet weak var correctAnsLbl: UILabel!
     @IBOutlet weak var correctOptionView: UIView!
     @IBOutlet weak var addAnotherName: UIButton!
+    @IBOutlet weak var closeBtn: UIButton!
+    @IBOutlet weak var checkBoxBtn: UIButton!
+    @IBOutlet weak var addAnotherStack: UIStackView!
+    @IBOutlet weak var dropdownImage: UIImageView!
+    
     
     weak var delegate: QuestionCellDelegate?
     var indexPath: IndexPath?
     var dropdown = DropDown()
+    var questionId: String?
+    var isChecked = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -75,20 +83,26 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             correctAnsLbl.text = item
             
         }
-   
     }
+    
     func setupUI() {
+        
+        fullView.layer.cornerRadius = 10
+        fullView.layer.shadowColor = UIColor.black.cgColor
+        fullView.layer.shadowOpacity = 0.3
+        fullView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        fullView.layer.shadowRadius = 3
+        
         correctOptionView.layer.cornerRadius = 3
         correctOptionView.layer.masksToBounds = true
         correctOptionView.layer.borderWidth = 0.5
-        correctOptionView
-            .layer.borderColor = UIColor.lightGray.cgColor
+        correctOptionView.layer.borderColor = UIColor.lightGray.cgColor
         addAnotherName.setTitleFont(style: .body, size: FontSize.BodySize)
         attachmentBtnName.layer.cornerRadius = 10
         attachmentBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         chapterDltLbl.setRequiredText(QuizListStringFile.Chapter)
         QuestionDaultLbl.setRequiredText(QuizListStringFile.Question)
-         optADefaultLbl.setRequiredText(QuizListStringFile.Option_A)
+        optADefaultLbl.setRequiredText(QuizListStringFile.Option_A)
         optBDefaultLbl.setRequiredText(QuizListStringFile.Option_B)
         optCDefaultLbl.setRequiredText(QuizListStringFile.Option_C)
         optDDefaultLbl.setRequiredText(QuizListStringFile.Option_D)
@@ -110,7 +124,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opCTxtView.addDoneButton()
         opDTxtView.addDoneButton()
         questionTxtView.addDoneButton()
-        fullView.layer.cornerRadius = 5
         opDTxtView.layer.borderWidth = 0.5
         opCTxtView.layer.borderWidth = 0.5
         opBTxtView.layer.borderWidth = 0.5
@@ -177,7 +190,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C" : model.c_option
         opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D" : model.d_option
         questionTxtView.text = model.question.isEmpty ? "Enter Question" : model.question
-        correctAnsLbl.text = model.correct_answer ?? "Select"
+        correctAnsLbl.text = model.correct_answer_text ?? "Select"
         
         print("numberofQuestionnumberofQuestionnumberofQuestion",numberofQuestion)
         // 🔹 Handle attachment button
@@ -203,7 +216,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             addAnotherName.isHidden = !(isLast)
         }
        
-        
+        checkBoxBtn.isHidden = true
         print("addAnotherNameaddAnotherName",addAnotherName.isHidden)
         // Placeholder color setup
         [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
@@ -214,20 +227,60 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             }
         }
     }
+    
+    func configureQuestionBankCell(with model: QuestionItem, isChecked:Bool) {
+        ChapterTxtFld.text = model.chapter
+        markTxtFild.text   = model.mark == nil ? "" : "\(model.mark ?? 0)"
+        opATxtView.text    = model.a_option
+        opBTxtView.text    = model.b_option
+        opCTxtView.text    = model.c_option
+        opDTxtView.text    = model.d_option
+        questionTxtView.text = model.question
+        correctAnsLbl.text = model.correct_answer_text ?? "Select"
+        
+        ChapterTxtFld.backgroundColor = .systemGray6
+        markTxtFild.backgroundColor = .systemGray6
+        opATxtView.backgroundColor = .systemGray6
+        opBTxtView.backgroundColor = .systemGray6
+        opCTxtView.backgroundColor = .systemGray6
+        opDTxtView.backgroundColor = .systemGray6
+        questionTxtView.backgroundColor = .systemGray6
+        correctOptionView.backgroundColor = .systemGray6
+        
+        ChapterTxtFld.isUserInteractionEnabled = false
+        markTxtFild.isUserInteractionEnabled = false
+        opATxtView.isUserInteractionEnabled = false
+        opBTxtView.isUserInteractionEnabled = false
+        opCTxtView.isUserInteractionEnabled = false
+        opDTxtView.isUserInteractionEnabled = false
+        questionTxtView.isUserInteractionEnabled = false
+        correctOptionView.isUserInteractionEnabled = false
+          
+        addAnotherName.isHidden = true
+        addAnotherStack.isHidden = true
+        attachmentBtnName.isHidden = true
+        closeBtn.isHidden = true
+        dropdownImage.isHidden = true
+        self.isChecked = isChecked
+        let image = isChecked ? UIImage(systemName: "checkmark.square.fill") : UIImage(systemName: "square")
+        checkBoxBtn.setImage(image, for: .normal)
+    }
 
         
-        func captureModel() -> QuizQuestiondata {
-            return QuizQuestiondata(
-                chapter: ChapterTxtFld.text ?? "",
-                question: questionTxtView.text ?? "",
-                optionA: opATxtView.text ?? "",
-                optionB: opBTxtView.text ?? "",
-                optionC: opCTxtView.text ?? "",
-                optionD: opDTxtView.text ?? "",
-                marks: 3,
-                correctAnswer: correctAnsLbl.text
-            )
-        }
+    func captureModel() -> QuizQuestiondata {
+        return QuizQuestiondata(
+            chapter: ChapterTxtFld.text ?? "",
+            question: questionTxtView.text ?? "",
+            a_option: opATxtView.text ?? "",
+            b_option: opBTxtView.text ?? "",
+            c_option: opCTxtView.text ?? "",
+            d_option: opDTxtView.text ?? "",
+            mark: 3,
+            correct_answer_text: correctAnsLbl.text
+        )
+    }
+
+    
     func textViewDidChange(_ textView: UITextView) {
         
         if let index = indexPath {
@@ -289,6 +342,15 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         if let index = indexPath {
                 delegate?.removeCell(at: index)
             }
+    }
+    
+    @IBAction func CheckboxtBtnAct(_ sender: Any) {
+        
+        guard let id = questionId else { return }
+        isChecked.toggle()
+        let image = isChecked ? UIImage(systemName: "checkmark.square.fill") : UIImage(systemName: "square")
+        checkBoxBtn.setImage(image, for: .normal)
+        delegate?.checkboxAction(id: id, isSelected: isChecked)
     }
     
 }

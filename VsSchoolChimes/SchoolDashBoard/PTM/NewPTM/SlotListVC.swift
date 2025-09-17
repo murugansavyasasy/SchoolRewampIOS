@@ -26,7 +26,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .black)
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .white)
         tv.register(UINib(nibName: CellConfingName.MeetingDataTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDataTV)
         tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self

@@ -21,6 +21,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     var page1 = UIViewController()
     var page2 = UIViewController()
     var titleLbl = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
