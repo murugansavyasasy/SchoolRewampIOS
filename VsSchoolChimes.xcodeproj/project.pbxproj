@@ -641,6 +641,10 @@
 		84EAE7842DB20B250083AD9E /* ReciverAttachmentrVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EAE7812DB20B250083AD9E /* ReciverAttachmentrVC.swift */; };
 		84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */; };
 		84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */; };
+		84EF9D1E2E7A7B3600F57838 /* SwitchRollVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EF9D1D2E7A7B3600F57838 /* SwitchRollVC.xib */; };
+		84EF9D1F2E7A7B3600F57838 /* SwitchRollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF9D1C2E7A7B3600F57838 /* SwitchRollVC.swift */; };
+		84EF9D222E7A7B7E00F57838 /* SwitchRollTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EF9D212E7A7B7E00F57838 /* SwitchRollTVC.xib */; };
+		84EF9D232E7A7B7E00F57838 /* SwitchRollTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */; };
 		84EFF4962CE388B800E39BEA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */; };
 		84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFF4972CE38F6300E39BEA /* ProfileViewController.xib */; };
 		84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFF9952CCB5B0400C11C26 /* CountryVc.xib */; };
@@ -1538,6 +1542,10 @@
 		84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReciverAttachmentrVC.xib; sourceTree = "<group>"; };
 		84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiechartCVCell.swift; sourceTree = "<group>"; };
 		84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PiechartCVCell.xib; sourceTree = "<group>"; };
+		84EF9D1C2E7A7B3600F57838 /* SwitchRollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRollVC.swift; sourceTree = "<group>"; };
+		84EF9D1D2E7A7B3600F57838 /* SwitchRollVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitchRollVC.xib; sourceTree = "<group>"; };
+		84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRollTVC.swift; sourceTree = "<group>"; };
+		84EF9D212E7A7B7E00F57838 /* SwitchRollTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitchRollTVC.xib; sourceTree = "<group>"; };
 		84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		84EFF4972CE38F6300E39BEA /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		84EFF9942CCB5B0400C11C26 /* CountryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryVc.swift; sourceTree = "<group>"; };
@@ -3705,6 +3713,10 @@
 				84FBAA862E3BA05300A3FC31 /* CustomMenuCVC.xib */,
 				84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */,
 				84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */,
+				84EF9D1C2E7A7B3600F57838 /* SwitchRollVC.swift */,
+				84EF9D1D2E7A7B3600F57838 /* SwitchRollVC.xib */,
+				84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */,
+				84EF9D212E7A7B7E00F57838 /* SwitchRollTVC.xib */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -4468,6 +4480,7 @@
 				849970B52CF8750B00800B07 /* AssignmentListCTVC.xib in Resources */,
 				8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */,
 				840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */,
+				84EF9D222E7A7B7E00F57838 /* SwitchRollTVC.xib in Resources */,
 				849AD0092D1A837A002DEC07 /* ReciverHomeworkHeader.xib in Resources */,
 				849AD00A2D1A837A002DEC07 /* ReciverHomeworkVC.xib in Resources */,
 				849AD0122D1A83CA002DEC07 /* HomeworkreportTV.xib in Resources */,
@@ -4667,6 +4680,7 @@
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
 				845F21812E4601810078AF69 /* AssignmentsearchTVC.xib in Resources */,
 				840177DF2E3A224F006CB477 /* FooterCvCell.xib in Resources */,
+				84EF9D1E2E7A7B3600F57838 /* SwitchRollVC.xib in Resources */,
 				846CF73E2E2F5A98000361CE /* OngoingCVC.xib in Resources */,
 				8480A4132E31F4CB009A7DED /* NoticeCVC.xib in Resources */,
 				8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */,
@@ -4883,6 +4897,7 @@
 				18926C522D02DE81002BBB97 /* SubmitLsrwRequest.swift in Sources */,
 				84DE949D2E53252E008E1BF4 /* SenderQuizVc.swift in Sources */,
 				84017F762E446DB4006CB477 /* certificateReqVc.swift in Sources */,
+				84EF9D1F2E7A7B3600F57838 /* SwitchRollVC.swift in Sources */,
 				8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */,
 				840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */,
 				18926C532D02DE81002BBB97 /* LsrwListShowViewController.swift in Sources */,
@@ -4976,6 +4991,7 @@
 				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
 				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
+				84EF9D232E7A7B7E00F57838 /* SwitchRollTVC.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
 				FA6CD8A12E3DEEC500C146AB /* OutpassVC.swift in Sources */,

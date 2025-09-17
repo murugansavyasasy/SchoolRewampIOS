@@ -44,7 +44,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         
         if let animatedImage = loadGif(name: "Splach") {
             imgview.image = animatedImage
-            
             // Vibrate when GIF starts
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in

@@ -11,6 +11,7 @@ class QuizSubmisionTvCell: UITableViewCell {
 
     @IBOutlet weak var profileImage: UIImageView!
     
+    @IBOutlet weak var addmissionLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var classLbl: UILabel!
     @IBOutlet weak var SubmittedOnBtn: UIButton!
