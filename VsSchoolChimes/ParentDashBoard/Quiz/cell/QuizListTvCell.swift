@@ -30,7 +30,8 @@ class QuizListTvCell: UITableViewCell {
         super.awakeFromNib()
         CellView.layer.cornerRadius = 10
         DeafultimageView.layer.cornerRadius = 10
-
+        addQuestionBtnName.layer.cornerRadius = 10
+        submittedListBtnName.layer.cornerRadius = 10
     }
 
     @IBAction func addQestBtn(_ sender: UIButton) {

@@ -19,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7k3-bU-m7B">
-                        <rect key="frame" x="10" y="15" width="300" height="64"/>
+                        <rect key="frame" x="10" y="8" width="300" height="78"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8l-zr-MlM">
-                                <rect key="frame" x="10" y="24.666666666666664" width="15" height="15"/>
+                                <rect key="frame" x="10" y="31.666666666666664" width="15" height="15"/>
                                 <color key="backgroundColor" name="auth_screenClr"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="5Bl-gJ-xNZ"/>
@@ -31,7 +31,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Y2e-h6-VUf">
-                                <rect key="frame" x="35" y="10" width="255" height="44"/>
+                                <rect key="frame" x="35" y="10" width="255" height="58"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holiday" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BvB-XL-ZfN">
                                         <rect key="frame" x="0.0" y="0.0" width="255" height="20.333333333333332"/>
@@ -40,7 +40,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMT-XM-W7n">
-                                        <rect key="frame" x="0.0" y="23.666666666666664" width="255" height="20.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="37.666666666666664" width="255" height="20.333333333333336"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -61,9 +61,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="7k3-bU-m7B" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Ga3-Ct-8KO"/>
-                    <constraint firstAttribute="bottom" secondItem="7k3-bU-m7B" secondAttribute="bottom" constant="15" id="Jbh-is-rEc"/>
+                    <constraint firstAttribute="bottom" secondItem="7k3-bU-m7B" secondAttribute="bottom" constant="8" id="Jbh-is-rEc"/>
                     <constraint firstAttribute="trailing" secondItem="7k3-bU-m7B" secondAttribute="trailing" constant="10" id="p2T-rP-xNn"/>
-                    <constraint firstItem="7k3-bU-m7B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="sfc-FD-wbi"/>
+                    <constraint firstItem="7k3-bU-m7B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="sfc-FD-wbi"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

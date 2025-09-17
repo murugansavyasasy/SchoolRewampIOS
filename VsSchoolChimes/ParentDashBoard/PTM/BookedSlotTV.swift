@@ -26,8 +26,12 @@ class BookedSlotTV: UITableViewCell {
     @IBOutlet weak var cancelStackTop: NSLayoutConstraint!
     @IBOutlet weak var DateDefLbl: UILabel!
     @IBOutlet weak var timeDefLbl: UILabel!
+    @IBOutlet weak var DateLbl: UILabel!
+    @IBOutlet weak var TimeLbl: UILabel!
+    
     
     var onCancel : (() -> Void)?
+    var onCall : (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -90,4 +94,8 @@ class BookedSlotTV: UITableViewCell {
         onCancel?()
     }
     
+    @IBAction func CallBtn(_ sender: Any) {
+        
+        onCall?()
+    }
 }

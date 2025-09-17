@@ -12,7 +12,6 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         delegate?.selectId(id: id, edit: edit)
     }
     
-
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var StatusBtn: UIButton!
     @IBOutlet weak var optionsBtn: UIButton!
@@ -22,7 +21,6 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var BookedStatusView: UIView!
     @IBOutlet weak var WaitingLbl: UILabel!
     @IBOutlet weak var bookedByNameLbl: UILabel!
-    
     @IBOutlet weak var bookedByDefLbl: UILabel!
     
     var showpopup:ShowPopupDelegate?
@@ -30,6 +28,7 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     var delete:Bool?
     var delegate:SelectedId?
     var selectedId:String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -48,7 +47,6 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.5)
         
         WaitingLbl.isHidden = true
-        
     }
     
     func edit(edit:Bool,delete:Bool,selectedId:String){

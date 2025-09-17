@@ -137,6 +137,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         CauseTextView.font = UIFont(name: "Poppins-Medium", size: 14)
         
+        CauseTextView.addDoneButton()
+        
         TypeImage.layer.cornerRadius = 8
         CauseImage.layer.cornerRadius = 8
         FromImage.layer.cornerRadius = 8
@@ -212,15 +214,19 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         dropDown2.selectionAction = { [weak self] index, item in
             self?.LeaveTypeBtn.setTitleColor(.black, for: .normal)
             self?.LeaveTypeBtn.setTitle(item, for: .normal)
+            self?.calculateDays()
         }
     }
     
     
     @IBAction func ToDateDoneBtn(_ sender: Any) {
         
+        dateFormatter.dateFormat = "dd MMM yyyy"
        // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
         toDate = toDatePicker.date
-        NewToDateLbl.setTitle(dateFormatter.string(from: toDatePicker.date), for: .normal)
+        let formattedDate = dateFormatter.string(from: toDate!)
+        NewToDateLbl.setTitle(formattedDate, for: .normal)
+        //NewToDateLbl.setTitle(dateFormatter.string(from: toDatePicker.date), for: .normal)
         ToDatePickerView.isHidden = true
         calculateDays()
     }
@@ -228,8 +234,9 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     @IBAction func FromDateDoneBtn(_ sender: Any) {
         
         fromDate = FromDatePicker.date
-        NewFromDateLbl.titleLabel?.text = dateFormatter.string(from: FromDatePicker.date)
-        NewFromDateLbl.setTitle(dateFormatter.string(from: FromDatePicker.date), for: .normal)
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        let formattedDate = dateFormatter.string(from: fromDate!)
+        NewFromDateLbl.setTitle(formattedDate, for: .normal)
         FromDatePickerView.isHidden = true
         calculateDays()
     }
@@ -459,7 +466,10 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
     }
 
-    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        calculateDays()
+    }
     
 
 

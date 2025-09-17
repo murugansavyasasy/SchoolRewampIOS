@@ -1737,6 +1737,8 @@ struct BookedSlotItem: Codable {
     var staff_id: String?
     var staff_name: String?
     var subject_name: String?
+    var duration: Int?
+    var staff_mobile_no: String?
 }
 
 struct AvailableSlotsResponse: Codable {
@@ -2035,10 +2037,65 @@ struct MyQuizDetails : Codable  {
 }
 
 
+//struct QuizQuestiondata: Codable {
+//    var ques_no: String?
+//    var id: String?         // for Quizdata from API
+//    var quiz_id: String?     // for API
+//    var chapter: String
+//    var question: String
+//    var answer: String?
+//    var a_option: String
+//    var b_option: String
+//    var c_option: String
+//    var d_option: String
+//    var mark:Int?
+//    var option_a_count:Int?
+//    var option_b_count:Int?
+//    var option_c_count:Int?
+//    var option_d_count:Int?
+//    var correct_answer_count:Int?
+//    var incorrect_answer_count:Int?
+//    var correct_answer_text:String?
+//    var correct_answer: String?
+//    var file_path: [FilePath]?
+//    
+//    // Local init for empty question (when adding manually)
+//    init(
+//        id: String? = nil,
+//        ques_no: String? = nil,
+//        quizId: String? = nil,
+//        chapter: String = "",
+//        question: String = "",
+//        answer: String? = nil,
+//        optionA: String = "",
+//        optionB: String = "",
+//        optionC: String = "",
+//        optionD: String = "",
+//        marks: Int = 0,
+//        correctAnswer: String? = nil,
+//        filePath: [FilePath]? = nil,
+//        filePaths: [FilePaths]? = nil
+//    ) {
+//        self.id = id
+//        self.quiz_id = quizId
+//        self.chapter = chapter
+//        self.question = question
+//        self.answer = answer
+//        self.a_option = optionA
+//        self.b_option = optionB
+//        self.c_option = optionC
+//        self.d_option = optionD
+//        self.mark = marks
+//        self.ques_no = ques_no
+//        self.correct_answer = correctAnswer
+//        self.file_path = filePath
+//    
+//    }
+//}
+
 struct QuizQuestiondata: Codable {
-    var ques_no: String?
-    var id: String?         // for Quizdata from API
-    var quiz_id: String?     // for API
+    var id: String?
+    var quiz_id: String?
     var chapter: String
     var question: String
     var answer: String?
@@ -2046,50 +2103,82 @@ struct QuizQuestiondata: Codable {
     var b_option: String
     var c_option: String
     var d_option: String
-    var mark:Int?
-    var option_a_count:Int?
-    var option_b_count:Int?
-    var option_c_count:Int?
-    var option_d_count:Int?
-    var correct_answer_count:Int?
-    var incorrect_answer_count:Int?
-    var correct_answer_text:String?
-    var correct_answer: String?
+    var mark: Int?
+    var option_a_counts: Int?
+    var option_b_counts: Int?
+    var option_c_counts: Int?
+    var option_d_counts: Int?
+    var correct_answer_counts: Int?
+    var incorrect_answer_counts: Int?
+    var correct_answer_text: String?
     var file_path: [FilePath]?
-    
-    // Local init for empty question (when adding manually)
+
     init(
         id: String? = nil,
-        ques_no: String? = nil,
-        quizId: String? = nil,
+        quiz_id: String? = nil,
         chapter: String = "",
         question: String = "",
         answer: String? = nil,
-        optionA: String = "",
-        optionB: String = "",
-        optionC: String = "",
-        optionD: String = "",
-        marks: Int = 0,
-        correctAnswer: String? = nil,
-        filePath: [FilePath]? = nil,
-        filePaths: [FilePaths]? = nil
+        a_option: String = "",
+        b_option: String = "",
+        c_option: String = "",
+        d_option: String = "",
+        mark: Int? = nil,
+        option_a_counts: Int? = nil,
+        option_b_counts: Int? = nil,
+        option_c_counts: Int? = nil,
+        option_d_counts: Int? = nil,
+        correct_answer_counts: Int? = nil,
+        incorrect_answer_counts: Int? = nil,
+        correct_answer_text: String? = nil,
+        file_path: [FilePath]? = nil
     ) {
         self.id = id
-        self.quiz_id = quizId
+        self.quiz_id = quiz_id
         self.chapter = chapter
         self.question = question
         self.answer = answer
-        self.a_option = optionA
-        self.b_option = optionB
-        self.c_option = optionC
-        self.d_option = optionD
-        self.mark = marks
-        self.ques_no = ques_no
-        self.correct_answer = correctAnswer
-        self.file_path = filePath
-    
+        self.a_option = a_option
+        self.b_option = b_option
+        self.c_option = c_option
+        self.d_option = d_option
+        self.mark = mark
+        self.option_a_counts = option_a_counts
+        self.option_b_counts = option_b_counts
+        self.option_c_counts = option_c_counts
+        self.option_d_counts = option_d_counts
+        self.correct_answer_counts = correct_answer_counts
+        self.incorrect_answer_counts = incorrect_answer_counts
+        self.correct_answer_text = correct_answer_text
+        self.file_path = file_path
     }
 }
+
+
+struct QuestionsResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [QuestionItem]?
+}
+
+struct QuestionItem: Codable {
+    var id: String?
+    var topic: String?
+    var chapter: String?
+    var class_id: String?
+    var section_id: String?
+    var subject_id: String?
+    var level: Int?
+    var question: String?
+    var answer: String?
+    var a_option: String?
+    var b_option: String?
+    var c_option: String?
+    var d_option: String?
+    var correct_answer_text: String?
+    var mark: Int?
+}
+
 
 struct SubmittedActivitiesResponse: Codable {
     let status: Bool?
@@ -2283,4 +2372,20 @@ extension ProfileData {
         
         return sections
     }
+}
+
+
+//MARK: Student Fee reciept Inovoice
+
+struct InvoiceDetailsResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [InvoiceItem]?
+}
+
+struct InvoiceItem: Codable {
+    var id: String?
+    var invoice_no: String?
+    var invoice_date: String?
+    var invoice_amount: String?
 }

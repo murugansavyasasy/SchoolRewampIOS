@@ -21,6 +21,7 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
         let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
         vc.noOfQuestion = get_QuizDetails[index].no_of_questions ?? 0 
         vc.id = get_QuizDetails[index].id
+        vc.subject_Id = get_QuizDetails[index].subject_id
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -93,32 +94,31 @@ extension ReportsQuizVc : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SenderQuizListTvCell, for: indexPath) as? QuizListTvCell else {
-                return UITableViewCell()
-            }
-            let quiz = get_QuizDetails[indexPath.row]
-               let imageName = images[indexPath.row % images.count]
-            cell.DeafultimageView.image = UIImage(named: imageName)
         
-        cell.submittedListBtnName.isHidden = get_QuizDetails[indexPath.row].submitted_count == 0 ? true : false
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SenderQuizListTvCell, for: indexPath) as? QuizListTvCell else {
+            return UITableViewCell()
+        }
+        let quiz = get_QuizDetails[indexPath.row]
+        let imageName = images[indexPath.row % images.count]
+        cell.DeafultimageView.image = UIImage(named: imageName)
+        
+//        cell.submittedListBtnName.isHidden = get_QuizDetails[indexPath.row].submitted_count == 0 ? true : false
         
         cell.delegate = self
         cell.addQuestionBtnName.tag = indexPath.row
         cell.submittedListBtnName.tag = indexPath.row
-            cell.PlayBtn.isHidden = true
-            cell.titleLbl.text = get_QuizDetails[indexPath.row].title
-            cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description
-        cell.exameDateLbl.text = formattedDateStatus(
-            from: get_QuizDetails[indexPath.row].sent_time ?? "")
-            cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
-            cell.postedByLbl.text = ("Posted By:") + (
-                get_QuizDetails[indexPath.row].sent_by ?? ""
-            )
+        cell.PlayBtn.isHidden = true
+        cell.titleLbl.text = get_QuizDetails[indexPath.row].title
+        cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description
+        cell.exameDateLbl.text = formattedDateStatus(from: get_QuizDetails[indexPath.row].sent_time ?? "")
+        cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
+        cell.postedByLbl.text = ("Posted By:") + (
+            get_QuizDetails[indexPath.row].sent_by ?? ""
+        )
         
         
-            return cell
-//        }
+        return cell
+        //        }
     }
     
     

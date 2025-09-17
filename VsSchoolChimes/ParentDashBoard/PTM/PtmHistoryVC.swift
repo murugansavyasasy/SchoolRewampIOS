@@ -193,6 +193,15 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    func callButtonTapped(Mobile: String) {
+           if let url = URL(string: "tel://\(Mobile)"),
+              UIApplication.shared.canOpenURL(url) {
+               UIApplication.shared.open(url)
+           } else {
+               print("This device cannot make phone calls.")
+           }
+       }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         FilteredSection?.count ?? 0
@@ -229,11 +238,22 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.subjectLbl.text = slot?.subject_name
         cell.dateBtn.setTitle(slot?.date, for: .normal)
         cell.TimeBtn.setTitle(slot?.time, for: .normal)
-        cell.DurationBtn.setTitle("15 min", for: .normal)
+        let duration = String(slot?.duration ?? 0) + " min"
+        cell.DurationBtn.setTitle(duration, for: .normal)
         cell.ModeBtn.setTitle(slot?.mode, for: .normal)
         cell.callBtn.isHidden = slot?.mode != "Phone Call"
         cell.cancelBtn.isHidden = slot?.status == "Completed"
         cell.statusBtn.setTitle(slot?.status, for: .normal)
+        cell.DateLbl.text = slot?.date
+        cell.TimeLbl.text = slot?.time
+        
+        if slot?.mode == "In Person"{
+            cell.ModeBtn.setImage(UIImage(systemName: "person.2.fill"), for: .normal)
+        }else if slot?.mode == "Phone Call"{
+            cell.ModeBtn.setImage(UIImage(systemName: "phone"), for: .normal)
+        }else if slot?.mode == "Virtual" {
+            cell.ModeBtn.setImage(UIImage(systemName: "network"), for: .normal)
+        }
         
         if slot?.status == "Upcoming"{
             cell.cancelStackTop.constant = 20
@@ -255,6 +275,12 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             self?.showPopup()
             
         }
+        
+        cell.onCall = { [weak self] in
+            
+            self?.callButtonTapped(Mobile: slot?.staff_mobile_no ?? "")
+        }
+        
         return cell
     }
     

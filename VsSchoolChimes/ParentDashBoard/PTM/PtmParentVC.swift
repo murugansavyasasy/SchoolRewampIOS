@@ -460,6 +460,13 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             cell.initialBtn.setTitle(String(firstChar), for: .normal)
         }
 
+        if event.slots?.first?.event_mode == "In Person"{
+            cell.MeetingTypeBtn.setImage(UIImage(systemName: "person.2.fill"), for: .normal)
+        }else if event.slots?.first?.event_mode == "Phone Call"{
+            cell.MeetingTypeBtn.setImage(UIImage(systemName: "phone"), for: .normal)
+        }else if event.slots?.first?.event_mode == "Virtual" {
+            cell.MeetingTypeBtn.setImage(UIImage(systemName: "network"), for: .normal)
+        }
         
         cell.slotSelected = { [weak self] selectedIndex in
             guard let self = self else { return }

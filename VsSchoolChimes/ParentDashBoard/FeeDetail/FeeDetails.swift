@@ -18,13 +18,23 @@ class FeeDetails: UIViewController {
     @IBOutlet weak var feeDetailTableView: UITableView!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var NodataImage: UIImageView!
+    
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var feeDetailsList: [FeeDetailModel] = []
+    var feeDetailsList: [InvoiceItem] = []
     var isWebViewLoaded = false
+    var receipt_url: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        
         tableOuterView.isHidden = true
+        NodataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        
         if let pdfURL = URL(string: "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063") {
             let request = URLRequest(url: pdfURL)
             webView.load(request)
@@ -33,10 +43,11 @@ class FeeDetails: UIViewController {
         }
 
         // Register custom cell
-        feeDetailTableView.register(UINib(nibName: "FeedetailTVC", bundle: nil), forCellReuseIdentifier: "FeedetailTVC")
+        feeDetailTableView.register(UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeedetailTVC)
         feeDetailTableView.delegate = self
         feeDetailTableView.dataSource = self
-        loadDummyData()
+        
+        Get_Fee_Invoice_Api()
     }
 
     @IBAction func backBtn(_ sender: UIButton) {
@@ -73,16 +84,65 @@ class FeeDetails: UIViewController {
             self.createBtn.tintColor = index == 1 ? .black : UIColor.parentClr
         }
     }
-    func loadDummyData() {
-        feeDetailsList = [
-            FeeDetailModel(invoiceNumber: "INV001", invoiceDate: "01-05-2025", invoiceAmount: "₹1200", pdfURL: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", generatedTime: "10:45 AM", fileSize: "234 KB"),
-            FeeDetailModel(invoiceNumber: "INV002", invoiceDate: "02-05-2025", invoiceAmount: "₹1500", pdfURL: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", generatedTime: "11:00 AM", fileSize: "187 KB"),
-            FeeDetailModel(invoiceNumber: "INV003", invoiceDate: "03-05-2025", invoiceAmount: "₹1800", pdfURL: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", generatedTime: "09:20 AM", fileSize: "210 KB"),
-            FeeDetailModel(invoiceNumber: "INV004", invoiceDate: "04-05-2025", invoiceAmount: "₹2000", pdfURL: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", generatedTime: "08:30 AM", fileSize: "199 KB"),
-            FeeDetailModel(invoiceNumber: "INV005", invoiceDate: "05-05-2025", invoiceAmount: "₹1750", pdfURL: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", generatedTime: "12:10 PM", fileSize: "220 KB")
-        ]
+    
+    func Get_Fee_Invoice_Api(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_student_invoice, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<InvoiceDetailsResponse,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    self.feeDetailsList = success.data ?? []
+                    self.NodataImage.isHidden = success.status ?? true
+                    self.NoDataLbl.isHidden = success.status ?? true
+                    self.NoDataLbl.text = success.message ?? ""
+                    
+                case .failure(let failure):
+                    
+                    self.NodataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = failure.localizedDescription
+                    print("Error:", failure.localizedDescription)
+                }
+            }
+        }
     }
-
+    
+    func Get_Invoice_Receipt_Api(invoiceId: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_invoice_details, parameters: ["invoice_id": invoiceId], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true{
+                        
+                        self.receipt_url = success.data ?? []
+                        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
+                        let fileURL = URL(fileURLWithPath: self.receipt_url.first ?? "")
+                        ViewPaymentVC.documentURL = fileURL
+                        ViewPaymentVC.modalPresentationStyle = .fullScreen
+                        self.present(ViewPaymentVC, animated: true)
+                    }else{
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                    
+                case .failure(let failure):
+                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+        }
+    }
 }
 
 extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
@@ -95,31 +155,24 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: "FeedetailTVC", for: indexPath) as! FeedetailTVC
         let feeDetail = feeDetailsList[indexPath.row]
 
-        cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoiceNumber)"
-        cell.invoceDate.text = "Invoice Date: \(feeDetail.invoiceDate)"
-        cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoiceAmount)"
-        cell.timeLbl.text = feeDetail.generatedTime
-        cell.sizeLbl.text = feeDetail.fileSize
-
-        let fileURL = URL(fileURLWithPath: feeDetail.pdfURL)
-        let iconName = getFileIconName(for: fileURL)
-        let iconImage = UIImage(named: iconName)
+        cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoice_no ?? "")"
+        cell.invoceDate.text = "Invoice Date: \(feeDetail.invoice_date ?? "")"
+        cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoice_amount ?? "")"
+        cell.timeLbl.text = ""
+       // cell.sizeLbl.text = feeDetail.fileSize
+        let iconImage = UIImage(named: "pdf (1)")
         cell.document.image = iconImage
 
         return cell
     }
 
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let feeDetail = feeDetailsList[indexPath.row]
-        let fileURL = URL(fileURLWithPath: feeDetail.pdfURL)
-        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
-        ViewPaymentVC.documentURL = fileURL
-        ViewPaymentVC.modalPresentationStyle = .fullScreen
-        present(ViewPaymentVC, animated: true)
+        let id = feeDetailsList[indexPath.row].id ?? ""
+        Get_Invoice_Receipt_Api(invoiceId: id)
     }
 }
 
