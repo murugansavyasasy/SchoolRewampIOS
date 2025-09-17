@@ -24,7 +24,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var noDataView: UIView!
     @IBOutlet weak var searchBtn: UIButton!
-    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
     var dateComponents: [(month: String, day: String, date: Date, count: String?)] = []
     var selectedIndex: IndexPath?
@@ -47,6 +48,16 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         generateDates()
         getsubjects()
         Get_Available_slot_count()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateTableHeight()
+    }
+    
+    func updateTableHeight() {
+        tv.layoutIfNeeded()
+        tableViewHeight.constant = tv.contentSize.height
     }
     
     private func setupUI() {
@@ -200,8 +211,12 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         self.tv.isHidden = true
                         self.noDataView.isHidden = false
                     }
-                case .failure:
-                    print("Error")
+                case .failure(let failure):
+                    print("Error:", failure.localizedDescription)
+                    self.NodataLbl.text = failure.localizedDescription
+                    self.tv.isHidden = true
+                    self.tableViewHeight.constant = 0
+                    self.noDataView.isHidden = false
                 }
             }
         }
@@ -475,6 +490,16 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            DispatchQueue.main.async {
+                self.updateTableHeight()
+            }
+        }
     
     // MARK: - CollectionView (Dates)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
