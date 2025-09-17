@@ -45,7 +45,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         recentActiveMenuCollection.dataSource = self
         MenuCollection.delegate = self
         MenuCollection.dataSource = self
-        
+        setupEdgeGesture()
         DeviceTokenAPIcall()
         setupHeaderView()
         setupLabels()
@@ -73,16 +73,18 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let vc = viewController {
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
                 self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                delegate?.back()
+            } else if vc is LogoutViewController {
+                delegate?.back(logout: true)
+            }else{
+                delegate?.back(logout: false)
             }
         } else {
             getacadmicYr {
                 self.get_dashboard_details()
             }
+            setupLabels()
+            setupProfileImage()
         }
-        setupLabels()
-        setupProfileImage()
     }
     
     // MARK: - API Calls
@@ -268,7 +270,17 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
     }
-    
+    private func setupEdgeGesture() {
+        let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgeSwipe(_:)))
+        edgeSwipe.edges = .left
+        view.addGestureRecognizer(edgeSwipe)
+    }
+
+    @objc private func handleEdgeSwipe(_ gesture: UIScreenEdgePanGestureRecognizer) {
+        if gesture.state == .began {
+            showSideMenu()
+        }
+    }
     // MARK: - Side Menu
     @IBAction func SideMenu(_ sender: UIButton) {
         showSideMenu()
@@ -286,6 +298,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
+        menuVC.isStudent = false
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
         swipeGesture.direction = .left
         menuVC.view.addGestureRecognizer(swipeGesture)
@@ -300,7 +313,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             menuVC.view.frame.origin.x = 0
         }
     }
-    
+
     @objc func hideSideMenu() {
         guard let menuVC = sideMenu else { return }
         UIView.animate(withDuration: 0.3, animations: {

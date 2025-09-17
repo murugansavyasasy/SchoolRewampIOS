@@ -16,17 +16,71 @@ class UpdateProfileVC: UIViewController {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var detailTable: UITableView!
     
-    var userDetails: [String: [UserDetailItem]]?
+    var profileSections: [ProfileSection] = []
     var attachments: [AttachmentItem] = []
+    let transitionDelegate = TransitioningDelegate()
     var changedParams: [String: Any] = [:]
     var attachmentNode: String?
     var changeProfileImg: UIImage?
-    var profileNode: String = "profileImage" // Set default value
-    
+    var changeProfileUrl: URL?
+    var profileNode: String = "photoPath"
+    var isStudent = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileImg.isUserInteractionEnabled = true
+
+        // 2️⃣ Add tap gesture recognizer
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        profileImg.addGestureRecognizer(tapGesture)
         setupUI()
-        setupUserDetails(isStudent: true)
+        imageSelection()
+        setupUserDetails(isStudent: isStudent)
+    }
+    init(isStudent: Bool = false) {
+        self.isStudent = isStudent
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    // MARK: - Image Selection
+    private func imageSelection() {
+        PhotoPickerManager.shared.onCameraImagePicked = { [weak self] image in
+            guard let self = self else { return }
+            self.attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            self.attachmentNode = "documents"
+            reloadDocumentSection()
+        }
+        
+        PhotoPickerManager.shared.onImagesPicked = { [weak self] images in
+            guard let self = self else { return }
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
+            }
+            self.attachments.append(contentsOf: imageItems)
+            self.attachmentNode = "documents"
+            reloadDocumentSection()
+        }
+        
+        PhotoPickerManager.shared.onFilePicked = { [weak self] data in
+            guard let self = self else { return }
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            self.attachments.append(
+                AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf)
+            )
+            self.attachmentNode = "documents"
+            reloadDocumentSection()
+        }
+    }
+    private func reloadDocumentSection() {
+        
+        if let documentSectionIndex = profileSections.firstIndex(where: { section in
+            section.items.contains(where: { $0.node == "documents" })
+        }) {
+            detailTable.reloadSections(IndexSet(integer: documentSectionIndex), with: .automatic)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,11 +110,12 @@ class UpdateProfileVC: UIViewController {
     @IBAction func back(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
+    
     private func setupUserDetails(isStudent: Bool) {
         let url = isStudent ? ServiceUrl.admin_api_student_profile_list : ServiceUrl.admin_api_staff_profile_list
         let token = isStudent
-            ? UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-            : UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ? UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        : UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         
         APIService.shared.makeApi(
             url: url,
@@ -73,21 +128,57 @@ class UpdateProfileVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    if response.status == true, let data = response.data {
+                    if response.status == true,
+                       let data = response.data,
+                       let firstProfileData = data.first {
                         
-                        guard var profileDict = data.first else { return }
-                        let profile = profileDict
-                        profileDict.removeValue(forKey: "photoPath")
-                        self.userDetails = profileDict
-                        self.detailTable.reloadData()
-                        if let photoPath = profile["photoPath"] as? String,
+                        // Populate profileSections excluding photo section
+                        self.profileSections = firstProfileData.getAllSections().filter { $0.title != "Photo" }
+                        
+                        // Set profile image if available
+                        if let photoPathItems = firstProfileData.photoPath,
+                           let photoItem = photoPathItems.first,
+                           let photoPath = photoItem.value,
+                           !photoPath.isEmpty,
                            let imageUrl = URL(string: photoPath) {
                             self.profileImg.kf.setImage(with: imageUrl)
-                            self.profileNode = "photoPath" // save node for update later
+                            self.changeProfileUrl = imageUrl
+                            self.profileNode = photoItem.node ?? "photoPath"
                         }
+                        
+                        // Find document section and extract URLs into attachments
+                        if let documentSection = self.profileSections.first(where: { section in
+                            section.items.contains(where: { $0.node == "documents" })
+                        }), let documentItem = documentSection.items.first(where: { $0.node == "documents" }) {
+                            
+                            if let files = documentItem.options {
+                                self.attachments = files.map { urlString in
+                                    let url = urlString
+                                    let type = urlString.lowercased().hasSuffix(".jpg") || urlString.lowercased().hasSuffix(".png") ? "image" :
+                                    urlString.lowercased().hasSuffix(".mp4") || urlString.lowercased().hasSuffix(".mov") ? "video" :
+                                    urlString.lowercased().hasSuffix(".pdf") ? "pdf" :
+                                    "unknown"
+                                    
+                                    if type == "image" {
+                                        return AttachmentItem(image: nil, imageURL: url, fileType: "image")
+                                    } else if type == "video" {
+                                        return AttachmentItem(image: UIImage(systemName: "video"), imageURL: url, fileType: "video", VideoURl: URL(string: url))
+                                    } else if type == "pdf" {
+                                        return AttachmentItem(image: UIImage(systemName: "doc.richtext"), imageURL: url, fileType: "pdf")
+                                    } else {
+                                        return AttachmentItem(image: nil, imageURL: url, fileType: type)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Reload the table view
+                        self.detailTable.reloadData()
+                        
                     } else {
                         self.showAlert(message: response.message ?? "Failed to load user details")
                     }
+                    
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)
                     self.showAlert(message: "Failed to load user details")
@@ -95,8 +186,91 @@ class UpdateProfileVC: UIViewController {
             }
         }
     }
-
     
+    @objc func addDocs(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Select".translated(),
+                                                message: "Choose an option".translated(),
+                                                preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Camera".translated(), style: .default) { [weak self] _ in
+            self?.openCamera()
+        })
+        alertController.addAction(UIAlertAction(title: "Gallery".translated(), style: .default) { [weak self] _ in
+            self?.selectImages()
+        })
+        alertController.addAction(UIAlertAction(title: "Document".translated(), style: .default) { [weak self] _ in
+            self?.selectPDF()
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
+        
+        // iPad support
+        if let popover = alertController.popoverPresentationController {
+            popover.sourceView = view
+            popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
+        
+        present(alertController, animated: true)
+    }
+    // MARK: File Attachments Actions
+    func selectImages() {
+        //        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if attachments.count != 10{
+            PhotoPickerManager.shared
+                .presentPicker(
+                    ofType: .gallery(selectionLimit: 10 - attachments.count),
+                    from: self
+                )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+        
+    }
+    func openCamera(){
+        //        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if attachments.count != 10{
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+    }
+    func selectPDF() {
+        //        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+        if attachments.count != 10{
+            PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
+        }else{
+            
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+        
+    }
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+        guard let tappedImageView = sender.view as? UIImageView else { return }
+        let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
+        
+        let vc = PreviewImageVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = transitionDelegate
+        transitionDelegate.originFrame = cellFrameInSuperview
+        
+        vc.type = "IMAGE"
+        if let img = changeProfileImg {
+            vc.img = img
+        } else {
+            vc.selectedFileURL = changeProfileUrl
+        }
+        
+        present(vc, animated: true)
+    }
+
+
     @IBAction func changeProfile(_ sender: UIButton) {
         let alert = UIAlertController(title: "Select", message: "Choose an option", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
@@ -156,56 +330,44 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Section Count
     func numberOfSections(in tableView: UITableView) -> Int {
-        return userDetails?.keys.count ?? 0
+        return profileSections.count
     }
     
-    // MARK: Rows per Section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let userDetails = userDetails else { return 0 }
-        
-        let keys = Array(userDetails.keys)
-        let key = keys[section]
-        let items = userDetails[key] ?? []
-        
-        if section == userDetails.count - 1 {
-            return items.count + 1 // last section has update button
+        let items = profileSections[section].items
+        if section == profileSections.count - 1 && isStudent {
+            return items.count + 1
         }
         return items.count
     }
     
-    // MARK: Cell for Row
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserDetailsTVC", for: indexPath) as? UserDetailsTVC,
-              let userDetails = userDetails else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserDetailsTVC", for: indexPath) as? UserDetailsTVC else {
             return UITableViewCell()
         }
         
-        let keys = Array(userDetails.keys)
-        let key = keys[indexPath.section]
-        let items = userDetails[key] ?? []
+        let section = profileSections[indexPath.section]
+        let items = section.items
         
-        let isLastSection = indexPath.section == userDetails.count - 1
+        let isLastSection = indexPath.section == profileSections.count - 1
         let isLastRow = indexPath.row == items.count
-        
-        if isLastSection && isLastRow {
-            // Update button cell
-            cell.configure(with: nil)
+        cell.addAttachmentBtn.addTarget(self, action: #selector(addDocs(_:)), for: .touchUpInside)
+        // Show update button only if it's the last section, last row, and isStudent is true
+        if isLastSection && isLastRow && isStudent {
+            cell.configure(with: nil, attachments: nil)
             cell.updateBtn.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
         } else {
-            // Normal user detail cell
             let item = items[indexPath.row]
-            cell.configure(with: item)
+            cell.configure(with: item, attachments: attachments)
             cell.onValueChanged = { [weak self] changedKey, value in
                 guard let self = self else { return }
                 if let value = value {
-                    if item.node != "document" {
+                    print(changedKey)
+                    print(value)
+                    if item.node != "documents" { // Corrected from "document" to "documents"
                         if "\(value)" != "\(item.value ?? "")" {
                             self.changedParams[changedKey] = value
-                        }
-                    } else {
-                        if let attachment = value as? [AttachmentItem] {
-                            self.attachmentNode = changedKey
-                            self.attachments = attachment
                         }
                     }
                 }
@@ -216,10 +378,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Section Header
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let userDetails = userDetails else { return nil }
-        
-        let keys = Array(userDetails.keys)
-        let key = keys[section]
+        let sectionData = profileSections[section]
         
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGroupedBackground
@@ -228,7 +387,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = UIColor.primery
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = key
+        label.text = sectionData.title
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([
@@ -243,19 +402,43 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     @objc func updateButtonTapped(_ sender: UIButton) {
+        let group = DispatchGroup()
+        
         // Handle profile image upload if changed
         if let profileImage = changeProfileImg {
+            group.enter()
             uploadProfileImage(profileImage) { [weak self] uploadedURL in
-                guard let self = self else { return }
-                if let url = uploadedURL {
+                if let self = self, let url = uploadedURL {
                     self.changedParams[self.profileNode] = url
                 }
-                self.processAttachmentsAndUpdate()
+                group.leave()
             }
-        } else {
-            processAttachmentsAndUpdate()
+        }
+        
+        // Handle attachments upload if present
+        if !attachments.isEmpty {
+            group.enter()
+            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
+                if let self = self {
+                    let uploadedFiles: [String] = urls.compactMap { urlString in
+                        guard let url = URL(string: urlString) else { return nil }
+                        return urlString
+                    }
+                    if let attachmentNode = self.attachmentNode {
+                        self.changedParams[attachmentNode] = uploadedFiles
+                    }
+                }
+                group.leave()
+            }
+        }
+        
+        // Once all uploads complete, call updateProfile
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            self.updateProfile(with: self.changedParams)
         }
     }
+    
     
     private func uploadProfileImage(_ image: UIImage, completion: @escaping (String?) -> Void) {
         AWSUploadManager.shared.uploadFileToAWS(
@@ -422,15 +605,8 @@ extension UpdateProfileVC: UIImagePickerControllerDelegate, UINavigationControll
             changeProfileImg = image // Store the changed image
         }
     }
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
 }
 
-// MARK: - Supporting Models
-
-struct ProfileList {
-    let title: String
-    let value: [UserDetailItem]
-}

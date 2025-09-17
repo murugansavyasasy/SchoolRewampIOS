@@ -153,7 +153,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         return stack
     }
 
-    // MARK: - Create Pill View
+    // **MARK: - Create Pill View**
     func createPill(for item: LessonDetailItem) -> UIView? {
         guard let name = item.name, let value = item.value else { return nil }
         
@@ -167,33 +167,78 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         pillView.backgroundColor = UIColor.systemGray6
         pillView.layer.cornerRadius = 8
         pillView.layer.masksToBounds = true
-
+        
+        // Icon view setup
         let iconView = UIImageView()
         configureIcon(iconView, for: name)
         iconView.tintColor = .systemBlue
-
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Label setup
         let label = UILabel()
-        label.text = "\(name): \(finalValue)"
-        label.font = .systemFont(ofSize: 12, weight: .medium)
-        label.textColor = .darkGray
-        label.numberOfLines = 1
-
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Build attributed text
+        let fullText = "\(name): \(finalValue)"
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        // Configure paragraph style with zero spacing and padding
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 0
+        paragraphStyle.paragraphSpacing = 0
+        paragraphStyle.paragraphSpacingBefore = 0
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        paragraphStyle.firstLineHeadIndent = 0
+        paragraphStyle.headIndent = 0
+        paragraphStyle.tailIndent = 0
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        
+        // Style name part
+        if let nameRange = fullText.range(of: name) {
+            let nsRange = NSRange(nameRange, in: fullText)
+            attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 11, weight: .medium), range: nsRange)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+        }
+        
+        // Style value part
+        if let valueRange = fullText.range(of: finalValue) {
+            let nsRange = NSRange(valueRange, in: fullText)
+            attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 12, weight: .regular), range: nsRange)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.darkGray, range: nsRange)
+        }
+        
+        label.attributedText = attributedString
+        
+        // Horizontal stack setup
         let hStack = UIStackView(arrangedSubviews: [iconView, label])
         hStack.axis = .horizontal
         hStack.spacing = 4
-        hStack.alignment = .center
+        hStack.alignment = .top  // Keep this as .top for proper alignment
+        hStack.distribution = .fill
         hStack.translatesAutoresizingMaskIntoConstraints = false
-
+        
         pillView.addSubview(hStack)
+        
         NSLayoutConstraint.activate([
+            // Padding around the stack
             hStack.topAnchor.constraint(equalTo: pillView.topAnchor, constant: 6),
             hStack.bottomAnchor.constraint(equalTo: pillView.bottomAnchor, constant: -6),
             hStack.leadingAnchor.constraint(equalTo: pillView.leadingAnchor, constant: 8),
-            hStack.trailingAnchor.constraint(equalTo: pillView.trailingAnchor, constant: -8)
+            hStack.trailingAnchor.constraint(equalTo: pillView.trailingAnchor, constant: -8),
+            
+            // Fix icon size
+            iconView.widthAnchor.constraint(equalToConstant: 14),
+            iconView.heightAnchor.constraint(equalToConstant: 14),
+            
+            // Ensure label starts at the same vertical position as icon
+            label.topAnchor.constraint(equalTo: iconView.topAnchor,constant:-5)
         ])
-
+        
         return pillView
     }
+
 
     // MARK: - Configure Icon Based on Name
     func configureIcon(_ iconView: UIImageView, for name: String) {
@@ -208,11 +253,6 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         iconView.image = image
         iconView.contentMode = .scaleAspectFit
         iconView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            iconView.widthAnchor.constraint(equalToConstant: 14),
-            iconView.heightAnchor.constraint(equalToConstant: 14)
-        ])
     }
 
     // MARK: - Estimate Width of Pill
