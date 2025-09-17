@@ -26,7 +26,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .black)
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .white)
         tv.register(UINib(nibName: CellConfingName.MeetingDataTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDataTV)
         tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self
@@ -72,8 +72,8 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func cancel_and_close_slot_Api(SlotId:String){
-        
-        let param : [String:Any] = ["slot_id":SlotId]
+        let slot_id = [SlotId]
+        let param : [String:Any] = ["slot_ids":slot_id]
         
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
             
@@ -195,13 +195,14 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemBlue
                 cell.BookingBaseview.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+                cell.WaitingLbl.text = "Waiting for Booking"
             }
             
             if slot?.status == "Expired" {
                 
                 cell.optionsBtn.isHidden = true
                 cell.StatusBtn.backgroundColor = .systemGray5.withAlphaComponent(1)
-                cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
+                cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
                 cell.StatusBtn.setTitle("Expired", for: .normal)
                 cell.StatusBtn.setTitleColor(.black, for: .normal)
                 cell.StatusBtn.tintColor = .black

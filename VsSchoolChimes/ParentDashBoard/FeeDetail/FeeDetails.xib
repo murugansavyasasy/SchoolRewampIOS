@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeeDetails" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="NoDataLbl" destination="b3q-j8-95J" id="7Xt-55-l96"/>
+                <outlet property="NodataImage" destination="aMG-ha-mN8" id="p0d-Jo-5OV"/>
                 <outlet property="backBtn" destination="yjG-0c-3J8" id="NPp-MY-QvQ"/>
                 <outlet property="createBtn" destination="xmf-lm-fOx" id="ZL5-vk-Uzk"/>
                 <outlet property="createLbl" destination="ZWJ-07-Mhe" id="QBt-h3-Ryx"/>
@@ -137,21 +139,46 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKo-qb-aot">
                                     <rect key="frame" x="0.0" y="302.66666666666674" width="373" height="302.66666666666674"/>
                                     <subviews>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FKZ-uA-qtE">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TBX-Ap-Yip">
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="302.66666666666669"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            <connections>
-                                                <outlet property="dataSource" destination="-1" id="1rX-vB-sRU"/>
-                                                <outlet property="delegate" destination="-1" id="xRI-gU-u7U"/>
-                                            </connections>
-                                        </tableView>
+                                            <subviews>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="aMG-ha-mN8">
+                                                    <rect key="frame" x="0.0" y="-280" width="373" height="280"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="280" id="kN1-AL-T1y"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3q-j8-95J">
+                                                    <rect key="frame" x="30" y="0.0" width="313" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FKZ-uA-qtE">
+                                                    <rect key="frame" x="0.0" y="24" width="373" height="278.66666666666669"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="-1" id="1rX-vB-sRU"/>
+                                                        <outlet property="delegate" destination="-1" id="xRI-gU-u7U"/>
+                                                    </connections>
+                                                </tableView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="aMG-ha-mN8" secondAttribute="trailing" id="1zH-L4-xq8"/>
+                                                <constraint firstItem="b3q-j8-95J" firstAttribute="leading" secondItem="TBX-Ap-Yip" secondAttribute="leading" constant="30" id="7hz-rK-pNc"/>
+                                                <constraint firstItem="aMG-ha-mN8" firstAttribute="leading" secondItem="TBX-Ap-Yip" secondAttribute="leading" id="89J-cm-XCt"/>
+                                                <constraint firstAttribute="trailing" secondItem="FKZ-uA-qtE" secondAttribute="trailing" id="J8O-uH-DWa"/>
+                                                <constraint firstItem="FKZ-uA-qtE" firstAttribute="leading" secondItem="TBX-Ap-Yip" secondAttribute="leading" id="c3z-n1-MHM"/>
+                                                <constraint firstAttribute="trailing" secondItem="b3q-j8-95J" secondAttribute="trailing" constant="30" id="mEc-hF-EWF"/>
+                                            </constraints>
+                                        </stackView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstItem="FKZ-uA-qtE" firstAttribute="top" secondItem="hKo-qb-aot" secondAttribute="top" id="54d-1v-pyV"/>
-                                        <constraint firstAttribute="trailing" secondItem="FKZ-uA-qtE" secondAttribute="trailing" id="7jV-g0-oMD"/>
-                                        <constraint firstAttribute="bottom" secondItem="FKZ-uA-qtE" secondAttribute="bottom" id="GN5-ce-lVb"/>
-                                        <constraint firstItem="FKZ-uA-qtE" firstAttribute="leading" secondItem="hKo-qb-aot" secondAttribute="leading" id="Lqz-kC-ntX"/>
+                                        <constraint firstAttribute="trailing" secondItem="TBX-Ap-Yip" secondAttribute="trailing" id="8yG-z3-6mc"/>
+                                        <constraint firstItem="TBX-Ap-Yip" firstAttribute="top" secondItem="hKo-qb-aot" secondAttribute="top" id="J3O-oq-dMp"/>
+                                        <constraint firstItem="TBX-Ap-Yip" firstAttribute="leading" secondItem="hKo-qb-aot" secondAttribute="leading" id="Mgj-Sl-g8i"/>
+                                        <constraint firstAttribute="bottom" secondItem="TBX-Ap-Yip" secondAttribute="bottom" id="wtr-zS-qkZ"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -187,6 +214,7 @@
         </view>
     </objects>
     <resources>
+        <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

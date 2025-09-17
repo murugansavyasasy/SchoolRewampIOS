@@ -177,6 +177,7 @@ class APIService: NSObject, URLSessionDelegate {
                 do {
                     let result = try JSONDecoder().decode(T.self, from: data)
                     completionHandler(.success(result))
+                    print("response: ", result)
                 } catch {
                     completionHandler(.failure(error))
                 }

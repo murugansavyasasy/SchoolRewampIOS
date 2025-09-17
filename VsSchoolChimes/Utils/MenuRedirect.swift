@@ -330,9 +330,9 @@ class MenuRedirectHandler {
     func senderAttachment(from viewController: UIViewController) {
         
         let vc = AttachCommonPage(nibName: nil, bundle: nil)
-        vc.page1 = AttachHistroyVC(nibName: nil, bundle: nil)
-        vc.page2 =  SenderAttachmentVC(nibName: nil, bundle: nil)
-       
+        vc.page1 = SenderAttachmentVC (nibName: nil, bundle: nil)
+        vc.page2 =  AttachHistroyVC (nibName: nil, bundle: nil)
+        
 //        vc.titleLbl = CommonStringFile.CreateEvent.translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)

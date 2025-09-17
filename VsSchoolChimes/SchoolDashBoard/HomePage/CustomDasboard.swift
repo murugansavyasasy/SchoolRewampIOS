@@ -83,7 +83,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
                 self.navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
-                delegate?.back(logout: true)
+                delegate?.back(logout: false)
             }else{
                 delegate?.back(logout: false)
             }

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,50 +22,67 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zxz-Db-L4G">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mO0-f6-qMu">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="111"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-0t-tOf">
-                            <rect key="frame" x="0.0" y="52" width="393" height="707"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </tableView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5Z-qp-aBk">
-                            <rect key="frame" x="10" y="10" width="373" height="22"/>
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5Z-qp-aBk">
+                            <rect key="frame" x="20" y="69" width="353" height="22"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.backward" catalog="system"/>
+                            <state key="normal" image="chevron.backward" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="0Iq-1n-0KC"/>
                             </connections>
                         </button>
                     </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="V5Z-qp-aBk" secondAttribute="bottom" constant="20" id="e4J-5U-v2O"/>
+                        <constraint firstAttribute="trailing" secondItem="V5Z-qp-aBk" secondAttribute="trailing" constant="20" id="tF3-aY-mzQ"/>
+                        <constraint firstItem="V5Z-qp-aBk" firstAttribute="leading" secondItem="mO0-f6-qMu" secondAttribute="leading" constant="20" id="wGN-oS-2hD"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zxz-Db-L4G">
+                    <rect key="frame" x="0.0" y="111" width="393" height="707"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-0t-tOf">
+                            <rect key="frame" x="0.0" y="10" width="393" height="697"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="tTg-0t-tOf" secondAttribute="trailing" id="8Lj-0Q-shw"/>
-                        <constraint firstItem="tTg-0t-tOf" firstAttribute="top" secondItem="V5Z-qp-aBk" secondAttribute="bottom" constant="20" id="GAv-5B-nZ6"/>
-                        <constraint firstAttribute="trailing" secondItem="V5Z-qp-aBk" secondAttribute="trailing" constant="10" id="Hnt-SG-0dz"/>
                         <constraint firstItem="tTg-0t-tOf" firstAttribute="leading" secondItem="Zxz-Db-L4G" secondAttribute="leading" id="Kxg-4j-XnR"/>
                         <constraint firstAttribute="bottom" secondItem="tTg-0t-tOf" secondAttribute="bottom" id="Ndx-R4-yTY"/>
-                        <constraint firstItem="V5Z-qp-aBk" firstAttribute="leading" secondItem="Zxz-Db-L4G" secondAttribute="leading" constant="10" id="Wye-Zv-slL"/>
-                        <constraint firstItem="V5Z-qp-aBk" firstAttribute="top" secondItem="Zxz-Db-L4G" secondAttribute="top" constant="10" id="hB5-Ub-nRP"/>
+                        <constraint firstItem="tTg-0t-tOf" firstAttribute="top" secondItem="Zxz-Db-L4G" secondAttribute="top" constant="10" id="veb-cN-eCO"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
-                <constraint firstItem="Zxz-Db-L4G" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8pY-Qj-dRI"/>
+                <constraint firstItem="mO0-f6-qMu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6kr-1q-gdR"/>
+                <constraint firstItem="Zxz-Db-L4G" firstAttribute="top" secondItem="mO0-f6-qMu" secondAttribute="bottom" id="6tS-u8-HPg"/>
+                <constraint firstItem="V5Z-qp-aBk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="7HM-Vo-1ou"/>
+                <constraint firstItem="mO0-f6-qMu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="NVS-T8-0fP"/>
                 <constraint firstItem="Zxz-Db-L4G" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="apt-IM-dVg"/>
+                <constraint firstAttribute="trailing" secondItem="mO0-f6-qMu" secondAttribute="trailing" id="gQq-eI-UBg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Zxz-Db-L4G" secondAttribute="bottom" id="ijN-03-PLx"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zxz-Db-L4G" secondAttribute="trailing" id="uxZ-Rp-RVR"/>
             </constraints>
-            <point key="canvasLocation" x="140" y="20"/>
+            <point key="canvasLocation" x="139.69465648854961" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

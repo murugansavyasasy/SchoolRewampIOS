@@ -74,6 +74,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var needBreakDefLbl: UILabel!
     @IBOutlet weak var breakAfterLbl: UILabel!
     @IBOutlet weak var afterSlotsDefLbl: UILabel!
+    @IBOutlet weak var prevButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     
     var breakDuration: [String] = []
     var SelectedClasses = Set<IndexPath>()
@@ -97,7 +99,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     var durationValue: Int? // store the duration you'll send in API
     var breakDurationValue = 0
     private var activeTextField: UITextField?
-
+    var currentPage: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,6 +207,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = true
+        currentPage = calendar.currentPage
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        calendarMonthLbl.text = formatter.string(from: calendar.currentPage)
+        prevButton.isEnabled = !isCurrentMonth(calendar.currentPage)
+        prevButton.tintColor = isCurrentMonth(calendar.currentPage) ? .darkGray : .systemBlue
         
         calendarBaseview.layer.shadowColor = UIColor.black.cgColor   // shadow color
         calendarBaseview.layer.shadowOpacity = 0.2                   // transparency (0 = invisible, 1 = solid)
@@ -356,6 +364,53 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         mobileStack.isHidden = true
         linkStack.isHidden = false
     }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date() // User cannot select before today
+    }
+    
+    @IBAction func NextMonthBtnAct(_ sender: Any) {
+        
+        moveCurrentPage(isNext: true)
+    }
+    
+    @IBAction func previousMonthBtnAct(_ sender: Any) {
+        
+        moveCurrentPage(isNext: false)
+    }
+    
+    func moveCurrentPage(isNext: Bool) {
+        let calendarSystem = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.month = isNext ? 1 : -1
+        
+        if let currentPage = currentPage,
+           let newPage = calendarSystem.date(byAdding: dateComponents, to: currentPage) {
+            calendar.setCurrentPage(newPage, animated: true)
+            self.currentPage = newPage
+        }
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        calendarMonthLbl.text = formatter.string(from: calendar.currentPage)
+        
+        prevButton.isEnabled = !isCurrentMonth(calendar.currentPage)
+        prevButton.tintColor = isCurrentMonth(calendar.currentPage) ? .darkGray : .systemBlue
+    }
+    
+    func isCurrentMonth(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = Date()
+        
+        let todayComponents = calendar.dateComponents([.year, .month], from: today)
+        let dateComponents = calendar.dateComponents([.year, .month], from: date)
+        
+        return todayComponents.year == dateComponents.year &&
+               todayComponents.month == dateComponents.month
+    }
+
     
     func textField(_ textField: UITextField,
                        shouldChangeCharactersIn range: NSRange,
@@ -605,7 +660,10 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             breakSlotView.isHidden = false
             BreakDurationDefLbl.isHidden = false
             breakDurationCV.isHidden = false
-            breakDurationValue = 5
+            let components = breakDuration[SelectedDuration.item].components(separatedBy: " ")
+            if let firstPart = components.first, let intValue = Int(firstPart) {
+                breakDurationValue = intValue
+            }
         }else {
             breakSlotView.isHidden = true
             BreakDurationDefLbl.isHidden = true
@@ -900,8 +958,15 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                     } else {
                         // Fallback on earlier versions
                     }
-                    bottomSheetVC.slotData = validatedData
-                    present(bottomSheetVC, animated: true)
+                    
+                    if validatedData.first?.slots?.isEmpty == true {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: "No available sots Found in the selected date and time", on: self)
+                        
+                    }else{
+                        bottomSheetVC.slotData = validatedData
+                        present(bottomSheetVC, animated: true)
+                    }
                     
                 case .failure(let failure):
                     CustomAlert.showAlertWithOkAction(title: "Error", message: "Something went Wrong", on: self)
@@ -982,7 +1047,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             SelectedDuration = indexPath
             let components = breakDuration[indexPath.item].components(separatedBy: " ")
             if let firstPart = components.first, let intValue = Int(firstPart) {
-                durationValue = intValue
+                breakDurationValue = intValue
             }
             collectionView.reloadData()
         }

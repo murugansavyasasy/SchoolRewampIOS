@@ -88,9 +88,6 @@ class NewPtmVC: UIViewController, Datepicker {
 //                    layout.minimumLineSpacing = 8
 //                    layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 //                }
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -348,6 +345,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
         let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDetailTV, for: indexPath) as! MeetingDetailTV
         //cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
         let event = sections[indexPath.section].events[indexPath.row]
+    
         cell.MeetingNameLbl.text = event.event_name
         cell.dateBtn.setTitle(event.date?.convertToTargetDateFormat(), for: .normal)
         let time = (event.start_time ?? "") + " - " + (event.end_time ?? "")
