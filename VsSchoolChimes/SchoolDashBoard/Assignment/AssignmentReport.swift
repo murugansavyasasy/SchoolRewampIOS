@@ -13,7 +13,15 @@ class AssignmentReport: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedNotice = self.filteredData.first(where: { $0.id == id }) {
-                delegate?.editDta(edit: selectedNotice)
+//                delegate?.editDta(edit: selectedNotice)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    if #available(iOS 14.0, *) {
+                        let vc = SenderAssignmentTextViewController()
+                        vc.editReport = selectedNotice
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                }
             }
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -24,6 +32,10 @@ class AssignmentReport: UIViewController, SelectedId {
     
     
     // MARK: - IBOutlets
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var noDataStack: UIStackView!
     @IBOutlet weak var academicView: UIView!
     @IBOutlet weak var academicDropView: UIView!
@@ -110,6 +122,9 @@ class AssignmentReport: UIViewController, SelectedId {
             }
         )
     }
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
     
     func getAssigment() {
         APIService.shared.makeApi(
@@ -148,18 +163,40 @@ class AssignmentReport: UIViewController, SelectedId {
         searchBar.layer.borderWidth = 0
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.addDoneButton()
-        
+        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
+        backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
+        backBtn.imageView?.applyRTLFlip(language == "ar")
+
+        backBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName,
+                                      secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: academicView)
         academicView.layer.borderColor = UIColor.lightGray.cgColor
         academicView.layer.borderWidth = 0.5
+        createBtn.layer.cornerRadius = 6
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        academicDropView.layer.cornerRadius = 10
+        academicDropView.layer.borderWidth = 1
+        academicDropView.layer.borderColor = UIColor.white.cgColor
+        let tap = UITapGestureRecognizer(target: self, action: #selector(academicDropViewTapped))
+           academicDropView.isUserInteractionEnabled = true
+           academicDropView.addGestureRecognizer(tap)
     }
     func searchHide(hide: Bool) {
-        searchBar?.isHidden = !hide
-        if hide {
-            searchBar?.becomeFirstResponder()
-        } else {
-            searchBar?.resignFirstResponder()
-        }
+       
+    }
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+            searchBar?.isHidden = !sender.isSelected
+            if sender.isSelected {
+                searchBar?.becomeFirstResponder()
+            } else {
+                searchBar?.resignFirstResponder()
+            }
     }
     @objc func deletedTapped(_ sender: UIButton) {
         let index = sender.tag
@@ -201,9 +238,16 @@ class AssignmentReport: UIViewController, SelectedId {
     }
     // MARK: - File Handling
     
+    @IBAction func createAssignment(_ sender: UIButton) {
+        if #available(iOS 14.0, *) {
+            let vc = SenderAssignmentTextViewController()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+    }
     
     // MARK: - Actions
-    @IBAction func selectAcademicYear(_ sender: UIButton) {
+    @objc func academicDropViewTapped() {
         academicDropDown.anchorView = academicDropView
         academicDropDown.dataSource = academicYears
         academicDropDown.bottomOffset = CGPoint(x: 0, y: academicDropView.bounds.height)

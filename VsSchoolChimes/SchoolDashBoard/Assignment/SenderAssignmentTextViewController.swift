@@ -46,6 +46,7 @@ class SenderAssignmentTextViewController: UIViewController,
     @IBOutlet weak var categoryLbl: UILabel!
     @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
     
     // MARK: - Public/External Dependencies (kept as-is)
@@ -81,17 +82,22 @@ class SenderAssignmentTextViewController: UIViewController,
     var DocumentpreviewURL: URL?
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
-    var thumbnailURL: String?
     let thumbnailImageView = UIImageView()
-    var attachments: [AttachmentItem] = []           // <— unified attachments
+    var attachments: [AttachmentItem] = []
     var editId: String?
     var thumbnailImage: UIImage?
     var placeholderLabel: UILabel!
-    
+    var editReport : Report?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
+        backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
+        backBtn.imageView?.applyRTLFlip(language == "ar")
+
+        backBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName,
+                                      secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         StyleAndTranslater()
         setupPlaceholderIfNeeded()
         contentTextView.delegate = self
@@ -134,6 +140,9 @@ class SenderAssignmentTextViewController: UIViewController,
         cancelBtn.isHidden = true
         imageSelection()
         updateCollectionHeight()
+        if let edit = editReport{
+            fetchData(notice: edit)
+        }
     }
     
     deinit {
@@ -142,13 +151,11 @@ class SenderAssignmentTextViewController: UIViewController,
     
     // MARK: - Datepicker (protocol)
     func date(date: String) {
-        // Input expected: "dd MMM yy"  (e.g., "13 Aug 25")
         let inFmt = DateFormatter()
         inFmt.locale = Locale(identifier: "en_US_POSIX")
         inFmt.dateFormat = "dd MMM yy"
         
         guard let dayDate = inFmt.date(from: date) else {
-            // Fallback: just set button text if parse fails
             DateBtn.setTitle(date, for: .normal)
             setFormattedDate(date, label: CustomDateLbl)
             return
@@ -186,13 +193,6 @@ class SenderAssignmentTextViewController: UIViewController,
     func StyleAndTranslater() {
         self.selectImgPdfview.imageCollectionview.backgroundColor = .clear
         TextviewHeight.constant = initialHeight
-        
-//        // Container styling
-//        CreateView.layer.cornerRadius = 10
-//        CreateView.layer.shadowColor = UIColor.black.cgColor
-//        CreateView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        CreateView.layer.shadowRadius = 5
-//        CreateView.layer.shadowOpacity = 0.3
         
         categoryDropDownView.layer.cornerRadius = 10
         selectImgPdfview.layer.cornerRadius = 10
@@ -256,6 +256,9 @@ class SenderAssignmentTextViewController: UIViewController,
         placeholderLabel.isHidden = !(contentTextView.text?.isEmpty ?? true) &&
         contentTextView.textColor != .lightGray
     }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
     
     // MARK: - Fetch/Edit Data
     func fetchData(notice: Report?) {
@@ -292,7 +295,6 @@ class SenderAssignmentTextViewController: UIViewController,
             editId = nil
             chooseRecipientsBtn.setTitle("Next", for: .normal)
         }
-        
         selectImgPdfview.imageCollectionview.reloadData()
         updateCollectionHeight()
     }
