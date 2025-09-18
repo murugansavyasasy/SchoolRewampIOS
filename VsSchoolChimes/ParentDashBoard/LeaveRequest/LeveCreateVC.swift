@@ -11,6 +11,8 @@ import DropDown
 @available(iOS 14.0, *)
 class LeveCreateVC: UIViewController,UITextViewDelegate{
     
+    
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var OutlineView: UIView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -33,8 +35,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     @IBOutlet weak var SelectFromDateDefLbl: UILabel!
     @IBOutlet weak var SelectToDateDefLbl: UILabel!
     @IBOutlet weak var CauseTextView: UITextView!
-    @IBOutlet weak var NewFromDateLbl: UIButton!
-    @IBOutlet weak var NewToDateLbl: UIButton!
+    @IBOutlet weak var FromDateBtn: UIButton!
+    @IBOutlet weak var ToDateBtn: UIButton!
     @IBOutlet weak var ToDatePickerView: UIView!
     @IBOutlet weak var FromDatePickerView: UIView!
     @IBOutlet weak var ToSessionBtn: UIButton!
@@ -70,97 +72,14 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        uiConfic()
+        Setup_UI()
+        Set_FontStyle()
+        Translate_text()
         
         Get_Leave_Categories()
         
-        TopView.layer.cornerRadius = 20
-        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
-        let name = childDetails?.name ?? ""
-        let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
-        
-        OutlineView.layer.cornerRadius = 12
-        OutlineView.layer.borderWidth = 1
-        OutlineView.layer.borderColor = UIColor.systemGray4.cgColor
-        
-        NewLeaveDefLbl.text = AttendanceString.newLeave
-        TypeDefLbl.text = AttendanceString.type
-        LeaveTypeBtn.setTitle(AttendanceString.selectLeaveType, for: .normal)
-        CauseDefLbl.text = AttendanceString.cause
-        FromDefLbl.text = CommonStringFile.From
-        ToDefLbl.text = CommonStringFile.To
-        SessionDefLbl.text = AttendanceString.session
-        ToSessionDefLbl.text = AttendanceString.session
-        
-        NewFromDateLbl.setTitle(AttendanceString.selectFromDate, for: .normal)
-        NewToDateLbl.setTitle(AttendanceString.selectToDate, for: .normal)
-        FromSessionBtn.setTitle(AttendanceString.firstHalf, for: .normal)
-        ToSessionBtn.setTitle(AttendanceString.secondHalf, for: .normal)
-        
-        SelectFromDateDefLbl.text = AttendanceString.selectFromDate
-        SelectToDateDefLbl.text = AttendanceString.selectToDate
-        
-        ApplyLeaveBtn.setTitle(AttendanceString.applyLeave, for: .normal)
-        
-        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
-        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
-        
-        NewLeaveDefLbl.setFont(style: .header, size: 20)
-        TypeDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        CauseDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        FromDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        SessionDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        ToDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        ToSessionDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        errorLbl.setFont(style: .body, size: FontSize.BodySize)
-        ApplyLeaveBtn.setTitleFont(style: .secondary, size: FontSize.HeaderSize)
-        
-        LeaveTypeBtn.setTitleFont(style: .body, size: 14)
-        
-        LeaveTypeBtn.semanticContentAttribute = .forceRightToLeft
-        NewFromDateLbl.semanticContentAttribute = .forceRightToLeft
-        NewToDateLbl.semanticContentAttribute = .forceRightToLeft
-        FromSessionBtn.semanticContentAttribute = .forceRightToLeft
-        ToSessionBtn.semanticContentAttribute = .forceRightToLeft
-        
-        NewFromDateLbl.setTitleFont(style: .secondary, size: 14)
-        NewToDateLbl.setTitleFont(style: .secondary, size: 14)
-        FromSessionBtn.setTitleFont(style: .secondary, size: 12)
-        ToSessionBtn.setTitleFont(style: .secondary, size: 12)
-        
-        NewFromDateLbl.titleLabel?.numberOfLines = 0
-        NewToDateLbl.titleLabel?.numberOfLines = 0
-        ToSessionBtn.titleLabel?.numberOfLines = 0
-        FromSessionBtn.titleLabel?.numberOfLines = 0
-        
-        CauseTextView.font = UIFont(name: "Poppins-Medium", size: 14)
-        
-        CauseTextView.addDoneButton()
-        
-        TypeImage.layer.cornerRadius = 8
-        CauseImage.layer.cornerRadius = 8
-        FromImage.layer.cornerRadius = 8
-        ToImage.layer.cornerRadius = 8
-        
-        FromDoneBtn.layer.cornerRadius = 8
-        ToDoneBtn.layer.cornerRadius = 8
-        
-        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
-        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
-        
-        ApplyLeaveBtn.layer.cornerRadius = 10
-        
-        ToDatePickerView.isHidden = true
-        
-        NewFromDateLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowFromDate)))
-        NewToDateLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowToDate)))
-        
         LeaveTypeBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowTypeDropdown)))
         
-        NewToDateLbl.isUserInteractionEnabled = true
-        NewFromDateLbl.isUserInteractionEnabled = true
         LeaveTypeBtn.isUserInteractionEnabled = true
         
         setupDropDowns()
@@ -184,8 +103,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
            
             placeholderLabel.isHidden = !leave.reson.isEmpty
             LeaveTypeBtn.setTitle(leave.LeaveType, for: .normal)
-            NewFromDateLbl.setTitle(leave.fromDate, for: .normal)
-            NewToDateLbl.setTitle(leave.toDate, for: .normal)
+            FromDateBtn.setTitle(leave.fromDate, for: .normal)
+            ToDateBtn.setTitle(leave.toDate, for: .normal)
             CauseTextView.text = leave.reson
             let size = CGSize(width: CauseTextView.frame.width, height: .infinity)
             let estimatedSize = CauseTextView.sizeThatFits(size)
@@ -197,13 +116,114 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             let daysText = "\(AttendanceString.updateFor) \(leave.NoOfDays) \(AttendanceString.daysLeave)"
             ApplyLeaveBtn.setTitle(daysText, for: .normal)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    deinit {
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func uiConfic(){
+    func Setup_UI(){
+        
+        TopView.layer.cornerRadius = 20
+        TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        let name = childDetails?.name ?? ""
+        let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        
+        OutlineView.layer.cornerRadius = 12
+        OutlineView.layer.borderWidth = 1
+        OutlineView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        LeaveTypeBtn.semanticContentAttribute = .forceRightToLeft
+        FromDateBtn.semanticContentAttribute = .forceRightToLeft
+        ToDateBtn.semanticContentAttribute = .forceRightToLeft
+        FromSessionBtn.semanticContentAttribute = .forceRightToLeft
+        ToSessionBtn.semanticContentAttribute = .forceRightToLeft
+        
+        FromDateBtn.titleLabel?.numberOfLines = 0
+        ToDateBtn.titleLabel?.numberOfLines = 0
+        ToSessionBtn.titleLabel?.numberOfLines = 0
+        FromSessionBtn.titleLabel?.numberOfLines = 0
+        
+        CauseTextView.addDoneButton()
+        
+        TypeImage.layer.cornerRadius = 8
+        CauseImage.layer.cornerRadius = 8
+        FromImage.layer.cornerRadius = 8
+        ToImage.layer.cornerRadius = 8
+        
+        FromDoneBtn.layer.cornerRadius = 8
+        ToDoneBtn.layer.cornerRadius = 8
+        
+        ApplyLeaveBtn.layer.cornerRadius = 10
+        
+        if #available(iOS 16.0, *) {
+            TypeImage.image = UIImage(systemName: "window.ceiling.closed")
+            CauseImage.image = UIImage(systemName: "pencil.line")
+        } else {
+            TypeImage.image = UIImage(systemName: "rectangle.split.2x2")
+            CauseImage.image = UIImage(systemName: "pencil")
+        }
+        
+        ToDatePickerView.isHidden = true
+    }
+    
+    func Set_FontStyle(){
+        
+        NewLeaveDefLbl.setFont(style: .header, size: 20)
+        TypeDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        CauseDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        FromDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        SessionDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToSessionDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        errorLbl.setFont(style: .body, size: FontSize.BodySize)
+        ApplyLeaveBtn.setTitleFont(style: .secondary, size: FontSize.HeaderSize)
+        
+        LeaveTypeBtn.setTitleFont(style: .body, size: 14)
+        
+        FromDateBtn.setTitleFont(style: .secondary, size: 14)
+        ToDateBtn.setTitleFont(style: .secondary, size: 14)
+        FromSessionBtn.setTitleFont(style: .secondary, size: 12)
+        ToSessionBtn.setTitleFont(style: .secondary, size: 12)
+        
+        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        
+        CauseTextView.font = UIFont(name: "Poppins-Medium", size: 14)
+    }
+    
+    func Translate_text(){
+        
+        NewLeaveDefLbl.text = AttendanceString.newLeave
+        TypeDefLbl.text = AttendanceString.type
+        LeaveTypeBtn.setTitle(AttendanceString.selectLeaveType, for: .normal)
+        CauseDefLbl.text = AttendanceString.cause
+        FromDefLbl.text = CommonStringFile.From
+        ToDefLbl.text = CommonStringFile.To
+        SessionDefLbl.text = AttendanceString.session
+        ToSessionDefLbl.text = AttendanceString.session
+        
+        FromDateBtn.setTitle(AttendanceString.selectFromDate, for: .normal)
+        ToDateBtn.setTitle(AttendanceString.selectToDate, for: .normal)
+        FromSessionBtn.setTitle(AttendanceString.firstHalf, for: .normal)
+        ToSessionBtn.setTitle(AttendanceString.secondHalf, for: .normal)
+        
+        SelectFromDateDefLbl.text = AttendanceString.selectFromDate
+        SelectToDateDefLbl.text = AttendanceString.selectToDate
+        
+        ApplyLeaveBtn.setTitle(AttendanceString.applyLeave, for: .normal)
+        
+        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
     }
     
     func setupDropDowns() {
@@ -225,7 +245,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
        // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
         toDate = toDatePicker.date
         let formattedDate = dateFormatter.string(from: toDate!)
-        NewToDateLbl.setTitle(formattedDate, for: .normal)
+        ToDateBtn.setTitle(formattedDate, for: .normal)
         //NewToDateLbl.setTitle(dateFormatter.string(from: toDatePicker.date), for: .normal)
         ToDatePickerView.isHidden = true
         calculateDays()
@@ -236,7 +256,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         fromDate = FromDatePicker.date
         dateFormatter.dateFormat = "dd MMM yyyy"
         let formattedDate = dateFormatter.string(from: fromDate!)
-        NewFromDateLbl.setTitle(formattedDate, for: .normal)
+        FromDateBtn.setTitle(formattedDate, for: .normal)
         FromDatePickerView.isHidden = true
         calculateDays()
     }
@@ -267,13 +287,13 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             return false
         }
         
-        if let fromDate = NewFromDateLbl.title(for: .normal),
+        if let fromDate = FromDateBtn.title(for: .normal),
            fromDate.isEmpty || fromDate == "Select From Date" {
             showError("Please select a From Date.")
             return false
         }
         
-        if let toDate = NewToDateLbl.title(for: .normal),
+        if let toDate = ToDateBtn.title(for: .normal),
            toDate.isEmpty || toDate == "Select To Date" {
             showError("Please select a To Date.")
             return false
@@ -286,7 +306,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     
     
     //MARK: Leave Request API call
-    
     
     func Get_Leave_Categories(){
         
@@ -313,8 +332,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     
     func ApplyLeave(){
         
-        let LeaveFrom = ConvertDateStringSmart(NewFromDateLbl.titleLabel?.text)
-        let LeaveTo = ConvertDateStringSmart(NewToDateLbl.titleLabel?.text)
+        let LeaveFrom = ConvertDateStringSmart(FromDateBtn.titleLabel?.text)
+        let LeaveTo = ConvertDateStringSmart(ToDateBtn.titleLabel?.text)
         var fromSessionCode = ""
         var toSessionCode = ""
 
@@ -378,8 +397,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     
     func updateLeave(){
         
-        let LeaveFrom = ConvertDateStringSmart(NewFromDateLbl.titleLabel?.text)
-        let LeaveTo = ConvertDateStringSmart(NewToDateLbl.titleLabel?.text)
+        let LeaveFrom = ConvertDateStringSmart(FromDateBtn.titleLabel?.text)
+        let LeaveTo = ConvertDateStringSmart(ToDateBtn.titleLabel?.text)
         var fromSessionCode = ""
         var toSessionCode = ""
 
@@ -456,14 +475,12 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         ])
     }
 
-    
     func textViewDidChange(_ textView: UITextView) {
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = CauseTextView.sizeThatFits(size)
         CauseTextviewHeight.constant = estimatedSize.height
         placeholderLabel.isHidden = CauseTextView.text.count == 0 ? false : true
         CauseTextView.isScrollEnabled = false
-        
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -606,6 +623,44 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         }
 }
 
+
+@available(iOS 14.0, *)
+extension LeveCreateVC: UITextViewDelegate{
+    
+    @objc func keyboardWillShow(notification: NSNotification){
+        
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as?
+            CGRect {
+            
+            let keyboardHeight = keyboardFrame.height
+            
+            var contentInset = scrollView.contentInset
+            contentInset.bottom = keyboardHeight + 20
+            
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+            
+            if let textView = CauseTextView{
+                
+                let visibleRect = view.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0))
+                
+                if !visibleRect.contains(textView.frame.origin) {
+                    
+                    scrollView.scrollRectToVisible(textView.frame, animated: true)
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        
+        var contentInset = scrollView.contentInset
+        contentInset.bottom = 0
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+}
+
 @available(iOS 14.0, *)
 extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
     
@@ -693,15 +748,15 @@ extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDele
             formatter.dateFormat = "dd MMM yyyy"
 
             if let from = fromDate {
-                NewFromDateLbl.titleLabel?.text = "From: \(formatter.string(from: from))"
+                FromDateBtn.titleLabel?.text = "From: \(formatter.string(from: from))"
             } else {
-                NewFromDateLbl.titleLabel?.text = "From: -"
+                FromDateBtn.titleLabel?.text = "From: -"
             }
 
             if let to = toDate {
-                NewToDateLbl.titleLabel?.text = "To: \(formatter.string(from: to))"
+                ToDateBtn.titleLabel?.text = "To: \(formatter.string(from: to))"
             } else {
-                NewToDateLbl.titleLabel?.text = "To: -"
+                ToDateBtn.titleLabel?.text = "To: -"
             }
         }
 }

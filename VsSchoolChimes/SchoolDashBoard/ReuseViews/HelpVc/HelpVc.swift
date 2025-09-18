@@ -6,31 +6,53 @@
 //
 
 import UIKit
+import WebKit
 
-class HelpVc: UIViewController {
+class HelpVc: UIViewController, WKNavigationDelegate {
 
     @IBOutlet weak var HelppageHeader: UILabel!
+    @IBOutlet weak var webview: WKWebView!
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     var passVale = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        webview.navigationDelegate = self
         HelppageHeader.text = MenuTapbar.shared.Help
         HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize+3)
+        
+        webkitLoading()
     }
-    override func viewDidLayoutSubviews() {
-        if passVale == 2{
-            view.applyGradient(
-                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }else{
-            view.applyGradient(
-                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }
+    
+    func webkitLoading() {
+        var urlStr = "https://www.schoolchimes.com/vs_web/help_line/"
+        let url = URL (string: urlStr)
+               let requestObj = URLRequest(url: url!)
+        webview.load(requestObj)
     }
+    
+    // MARK: - WKNavigationDelegate Methods
+
+       // Show loading animation when page starts loading
+       func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+           
+           ActivityIndicator.startAnimating()
+       }
+
+       // Hide loading animation when page finishes loading
+       func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+           
+           ActivityIndicator.stopAnimating()
+           ActivityIndicator.isHidden = true
+       }
+
+       // Hide loading animation in case of an error
+       func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+           
+           ActivityIndicator.stopAnimating()
+           ActivityIndicator.isHidden = true
+           print("Error loading page: \(error.localizedDescription)")
+       }
 
 }

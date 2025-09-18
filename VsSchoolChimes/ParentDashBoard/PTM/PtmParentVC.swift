@@ -22,7 +22,6 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var NodataLbl: UILabel!
-    @IBOutlet weak var noDataView: UIView!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -81,7 +80,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.layer.cornerRadius = 12
         
-        noDataView.isHidden = true
+        noDataImage.isHidden = true
+        NodataLbl.isHidden = true
         NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
         searchBtn.isHidden = true
         
@@ -204,19 +204,28 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         }
                         self.recomputeConflicts() // lock rows with my_booking
                         self.tv.isHidden = false
-                        self.noDataView.isHidden = true
+                        self.noDataImage.isHidden = true
+                        self.NodataLbl.isHidden = true
+                        self.BookSlotBtn.isHidden = false
                         self.tv.reloadData()
+                        DispatchQueue.main.async {
+                            self.updateTableHeight()
+                        }
                     } else {
                         self.NodataLbl.text = success.message
                         self.tv.isHidden = true
-                        self.noDataView.isHidden = false
+                        self.noDataImage.isHidden = false
+                        self.NodataLbl.isHidden = false
+                        self.BookSlotBtn.isHidden = true
                     }
                 case .failure(let failure):
                     print("Error:", failure.localizedDescription)
                     self.NodataLbl.text = failure.localizedDescription
                     self.tv.isHidden = true
                     self.tableViewHeight.constant = 0
-                    self.noDataView.isHidden = false
+                    self.noDataImage.isHidden = false
+                    self.NodataLbl.isHidden = false
+                    self.BookSlotBtn.isHidden = true
                 }
             }
         }

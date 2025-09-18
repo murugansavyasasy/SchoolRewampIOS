@@ -18,6 +18,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var leaveListTable: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     
     // MARK: - Properties
     var eventHolidayData: [EventHolidayData]?
@@ -40,6 +41,17 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         titleLbl.text = AttendanceString.holidays
         setupViews()
         addSwipeGestures()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        updateTableviewHeight()
+    }
+    
+    func updateTableviewHeight(){
+        leaveListTable.layoutIfNeeded()
+        tableviewHeight.constant = leaveListTable.contentSize.height
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -354,6 +366,17 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         cell.DateLbl.text = holiday.date?.convertToTargetDateFormat()
         cell.colorBtn.backgroundColor = .backGroundClr//colorForHoliday(named: holiday.name ?? "")
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        DispatchQueue.main.async {
+            self.updateTableviewHeight()
+        }
     }
 
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -16,6 +16,7 @@
                 <outlet property="CancelBtn" destination="B47-fU-cfd" id="ySS-ZK-oTT"/>
                 <outlet property="ImportQuestionBtn" destination="vzB-0d-mwh" id="anA-zO-nGo"/>
                 <outlet property="QuestionBankTv" destination="7My-pO-Gbo" id="gZY-W9-Bdl"/>
+                <outlet property="QuestionNoLbl" destination="Zo7-Gg-6bF" id="4OR-Vu-pGS"/>
                 <outlet property="popupBGview" destination="em4-82-TTV" id="u1J-Rr-Tb0"/>
                 <outlet property="popupView" destination="TRZ-n3-0P2" id="TlF-b6-Lwm"/>
                 <outlet property="selectAllBtn" destination="7hx-Id-MFr" id="a1M-M6-HmV"/>
