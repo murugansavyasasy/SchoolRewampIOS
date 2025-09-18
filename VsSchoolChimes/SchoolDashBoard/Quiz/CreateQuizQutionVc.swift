@@ -17,9 +17,16 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         }
     
     func addAnotherCell(at indexPath: IndexPath) {
-            questions.insert(QuizQuestiondata(), at: indexPath.row + 1)
-            tv.reloadData()
+        
+        if let errorMessage = validateQuestions() {
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: errorMessage, on: self)
+            return
         }
+        
+        questions.insert(QuizQuestiondata(), at: indexPath.row + 1)
+        tv.reloadData()
+        self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
+    }
         
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata) {
         var existing = questions[indexPath.row]
@@ -56,6 +63,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
             guard questions.count > 1 else { return }
             questions.remove(at: indexPath.row)
             tv.reloadData()
+            self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
         }
     
     func addAttachment(at indexPath: IndexPath, file: FilePaths) {
@@ -79,6 +87,7 @@ class CreateQuizQutionVc: UIViewController {
     @IBOutlet weak var QuestionBankTv: UITableView!
     @IBOutlet weak var CancelBtn: UIButton!
     @IBOutlet weak var sendQuizBtn: UIButton!
+    @IBOutlet weak var QuestionNoLbl: UILabel!
     
     
     let staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -138,6 +147,11 @@ class CreateQuizQutionVc: UIViewController {
     
     @IBAction func btnAct(_ sender: UIButton) {
         
+        if let errorMessage = validateQuestions() {
+            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: errorMessage, on: self)
+            return
+        }
+        
         submitQuestions()
     }
     
@@ -158,6 +172,7 @@ class CreateQuizQutionVc: UIViewController {
                     } else {
                         self.questions = [QuizQuestiondata()] // fallback to one empty
                     }
+                    self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
                     self.tv.reloadData()
                 case .failure:
                     DispatchQueue.main.async {
@@ -301,6 +316,40 @@ class CreateQuizQutionVc: UIViewController {
         }
     }
 
+    func validateQuestions() -> String? {
+        for (i, q) in questions.enumerated() {
+            if q.chapter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return "Please fill the Chapter for Question \(i + 1)."
+            }
+            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return "Please fill the Question text for Question \(i + 1)."
+            }
+            if q.a_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return "Please provide Option A for Question \(i + 1)."
+            }
+            if q.b_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return "Please provide Option B for Question \(i + 1)."
+            }
+            if q.c_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return "Please provide Option C for Question \(i + 1)."
+            }
+            if q.d_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return "Please provide Option D for Question \(i + 1)."
+            }
+            if q.answer?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+                return "Please select the correct answer for Question \(i + 1)."
+            }
+            if q.correct_answer_text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+                return "Please select the correct answer text for Question \(i + 1)."
+            }
+            if q.mark == nil || q.mark == 0 {
+                return "Please assign marks for Question \(i + 1)."
+            }
+        }
+        return nil // ✅ all good
+    }
+
+    
     @IBAction func ImportquestionAct(_ sender: Any) {
         
         get_QuestionBank_Api()
@@ -312,6 +361,13 @@ class CreateQuizQutionVc: UIViewController {
     
     
     @IBAction func AddImportQuestionAct(_ sender: Any) {
+        
+        if questions.count + selectedQuestionIds.count > noOfQuestion{
+            
+                CustomAlert.showAlertWithOkAction(title: "Limit Reached", message: "You exceeds the maximum no of Questions", on: self)
+            
+                return
+        }
         
             // 1. Remove questions that are no longer selected
             questions.removeAll { quizQ in
@@ -346,6 +402,8 @@ class CreateQuizQutionVc: UIViewController {
             
             // 4. Dismiss popup
         popupBGview.isHidden = true
+        
+        self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
         }
 
     @IBAction func cancelAct(_ sender: Any) {

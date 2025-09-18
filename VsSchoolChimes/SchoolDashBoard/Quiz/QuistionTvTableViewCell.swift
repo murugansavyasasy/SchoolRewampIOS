@@ -50,6 +50,8 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     var dropdown = DropDown()
     var questionId: String?
     var isChecked = false
+    var options = [ "A", "B", "C", "D"]
+    var answerIndex: Int?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,7 +70,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     @IBAction func correctAnsDropDown(){
         
         dropdown.anchorView = correctOptionView
-        dropdown.dataSource = [ "A", "B", "C", "D"]
+        dropdown.dataSource = options
         
         
         dropdown.bottomOffset = CGPoint(x: 0, y:(dropdown.anchorView?.plainView.bounds.height)!)
@@ -81,7 +83,10 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         dropdown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             correctAnsLbl.text = item
-            
+            if let index = indexPath {
+                answerIndex = index.row
+                delegate?.updateQuestion(at: index, model: captureModel())
+            }
         }
     }
     
@@ -190,7 +195,15 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C" : model.c_option
         opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D" : model.d_option
         questionTxtView.text = model.question.isEmpty ? "Enter Question" : model.question
-        correctAnsLbl.text = model.correct_answer_text ?? "Select"
+        if let answerStr = model.answer,
+           let answerIndex = Int(answerStr),
+           answerIndex > 0,
+           answerIndex <= options.count {
+            correctAnsLbl.text = options[answerIndex - 1]
+        } else {
+            correctAnsLbl.text = "Select"
+        }
+
         
         print("numberofQuestionnumberofQuestionnumberofQuestion",numberofQuestion)
         // 🔹 Handle attachment button
@@ -236,7 +249,15 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opCTxtView.text    = model.c_option
         opDTxtView.text    = model.d_option
         questionTxtView.text = model.question
-        correctAnsLbl.text = model.correct_answer_text ?? "Select"
+        if let answerStr = model.answer,
+           let answerIndex = Int(answerStr),
+           answerIndex > 0,
+           answerIndex <= options.count {
+            correctAnsLbl.text = options[answerIndex - 1]
+        } else {
+            correctAnsLbl.text = "Select"
+        }
+
         
         ChapterTxtFld.backgroundColor = .systemGray6
         markTxtFild.backgroundColor = .systemGray6
@@ -268,18 +289,32 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
 
         
     func captureModel() -> QuizQuestiondata {
+        
+        let Answer = (answerIndex ?? 0) + 1
+
+        let correctAnswerText: String? = {
+            switch Answer {
+            case 1: return opATxtView.text
+            case 2: return opBTxtView.text
+            case 3: return opCTxtView.text
+            case 4: return opDTxtView.text
+            default: return nil
+            }
+        }()
+
         return QuizQuestiondata(
             chapter: ChapterTxtFld.text ?? "",
             question: questionTxtView.text ?? "",
+            answer: String(Answer),
             a_option: opATxtView.text ?? "",
             b_option: opBTxtView.text ?? "",
             c_option: opCTxtView.text ?? "",
             d_option: opDTxtView.text ?? "",
-            mark: 3,
-            correct_answer_text: correctAnsLbl.text
+            mark: Int(markTxtFild.text ?? ""),
+            correct_answer_text: correctAnswerText
         )
-    }
 
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         
@@ -294,6 +329,12 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 UIView.setAnimationsEnabled(true)
             }
         }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let index = indexPath {
+            delegate?.updateQuestion(at: index, model: captureModel())
+        }
+    }
     
     func configureCell(isLast: Bool) {
         addAnotherName.isHidden = !isLast
