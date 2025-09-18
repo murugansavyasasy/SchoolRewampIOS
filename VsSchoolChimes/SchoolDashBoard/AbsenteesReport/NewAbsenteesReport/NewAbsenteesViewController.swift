@@ -66,8 +66,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
         calendar.dataSource = self
         scrollview.delegate = self
         scrollview.alwaysBounceVertical = true
-        calendar.appearance.todayColor = .clear
-        calendar.appearance.titleTodayColor = .label
+//        calendar.appearance.todayColor = .clear
+//        calendar.appearance.titleTodayColor = .label
     calendar.allowsMultipleSelection = false
         fullview.layer.cornerRadius = 10
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
@@ -138,11 +138,11 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
                         self.studentLbl.textAlignment = .center
                     }else{
                         
-                        self.dateLbl.isHidden = hasEventToday
-                        self.cvIcon.isHidden = hasEventToday
-                        self.infoStack.isHidden = hasEventToday
-                        self.Tv.isHidden = hasEventToday
-                        self.fullview.backgroundColor = .clear
+                        self.dateLbl.isHidden = false
+                        self.cvIcon.isHidden = false
+                        self.infoStack.isHidden = false
+                        self.Tv.isHidden = false
+                        self.fullview.backgroundColor = .white
                         self.studentLbl.text = "👨🏻‍🎓 Absent  students list"
                         self.studentLbl.textAlignment = .left
                         self.studentLbl.isHidden = false

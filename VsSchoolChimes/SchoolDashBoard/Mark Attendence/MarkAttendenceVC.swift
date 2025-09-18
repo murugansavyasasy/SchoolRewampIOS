@@ -159,6 +159,7 @@ class MarkAttendenceVC: UIViewController {
         
         presentView.setShadow()
         absentView.setShadow()
+        AcademicYearView.setShadow()
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
         calendar.appearance.selectionColor = .systemRed
@@ -670,6 +671,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
         print("Selected Date (Filter): \(selectedDateForFilter)")
         print("Selected Date (Label): \(selectedDateForLabel)")
         dateDayLbl.text = selectedDateForLabel
+        print("mark attendance  \(MarkAttendanceBtn.isSelected)")
         if MarkAttendanceBtn.isSelected{
             student_attendance_report()
         }
