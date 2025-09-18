@@ -125,9 +125,9 @@ class MenuRedirectHandler {
 //        vc.modalPresentationStyle = .fullScreen
 //        viewController.present(vc, animated: true)
         
-        let vc = CommonPageVC(nibName: nil, bundle: nil)
-        vc.page1 = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-        vc.page2 = SenderHomeWorkVC(nibName: nil, bundle: nil)
+        let vc = SenderHomeWorkVC(nibName: nil, bundle: nil)
+//        vc.page1 = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+//        vc.page2 = SenderHomeWorkVC(nibName: nil, bundle: nil)
 //        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
