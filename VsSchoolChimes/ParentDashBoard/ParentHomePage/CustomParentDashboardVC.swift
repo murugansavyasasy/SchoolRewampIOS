@@ -13,20 +13,34 @@ protocol backNavigation {
 
 @available(iOS 14.0, *)
 class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate {
+    func didTapProfileImage(from imageView: UIImageView?) {
+        guard let tappedImageView = imageView else { return }
+        
+        let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
+        
+        let vc = PreviewImageVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = transitionDelegate
+        transitionDelegate.originFrame = cellFrameInSuperview
+        vc.type = "IMAGE"
+        vc.selectedFileURL = URL(string: childDetails?.profile ?? "")
+        
+        present(vc, animated: true)
+    }
+
+    
     
     // MARK: - SideMenuDelegate
     func meunu(viewController: UIViewController?) {
         hideSideMenu()
-        guard let vc = viewController else {
-            dismiss(animated: true)
-            return
-        }
-        if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
-            navigationController?.pushViewController(vc, animated: true)
-        } else if vc is LogoutViewController {
-            delegate?.back(logout: false)
-        }else{
-            delegate?.back(logout: false)
+        if let vc = viewController {
+            if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
+                navigationController?.pushViewController(vc, animated: true)
+            } else if vc is LogoutViewController {
+                delegate?.back(logout: false)
+            }else{
+                delegate?.back(logout: false)
+            }
         }
     }
     
@@ -38,7 +52,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var recentActiveMenuCollection: UICollectionView!
     @IBOutlet weak var MenuCollection: UICollectionView!
-    
+    let transitionDelegate = TransitioningDelegate()
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
     var menu_details: [MenuDetail] = []
@@ -181,10 +195,28 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
     
     private func setupProfileImage() {
+        profileImageView.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""),placeholder:UIImage(systemName: "School Needs"))
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+        profileImageView.isUserInteractionEnabled = true
+        // 2️⃣ Add tap gesture recognizer
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        profileImageView.addGestureRecognizer(tapGesture)
+    }
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+        guard let tappedImageView = sender.view as? UIImageView else { return }
+        let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
+        
+        let vc = PreviewImageVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = transitionDelegate
+        transitionDelegate.originFrame = cellFrameInSuperview
+        vc.type = "IMAGE"
+        vc.selectedFileURL = URL(string: childDetails?.school_logo_url ?? "")
+        
+        present(vc, animated: true)
     }
     private func setupEdgeGesture() {
         let edgeSwipe = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgeSwipe(_:)))

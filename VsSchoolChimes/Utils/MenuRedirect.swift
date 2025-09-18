@@ -149,10 +149,12 @@ class MenuRedirectHandler {
     }
     
     func senderNoticeboardNavigate(from viewController: UIViewController) {
-        let vc = EventPageVC(nibName: nil, bundle: nil)
-        vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-        vc.titleLbl = "Notice Board".translated()
+//        let vc = EventPageVC(nibName: nil, bundle: nil)
+        let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+//        vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+//        vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
+//
+//        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -177,10 +179,11 @@ class MenuRedirectHandler {
     }
     
     func senderEventNavigate(from viewController: UIViewController) {
-        let vc = EventPageVC(nibName: nil, bundle: nil)
-        vc.page1 = EventsVC(nibName: nil, bundle: nil)
-        vc.page2 = EventHistoryVC(nibName: nil, bundle: nil)
-        vc.titleLbl = CommonStringFile.CreateEvent.translated()
+        let vc = EventHistoryVC(nibName: nil, bundle: nil)
+//        let vc = EventPageVC(nibName: nil, bundle: nil)
+//        vc.page1 = EventsVC(nibName: nil, bundle: nil)
+//        vc.page2 = EventHistoryVC(nibName: nil, bundle: nil)
+//        vc.titleLbl = CommonStringFile.CreateEvent.translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

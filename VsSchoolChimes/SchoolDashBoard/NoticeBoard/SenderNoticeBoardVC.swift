@@ -48,6 +48,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     }
     
     
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var DisplayRangeLbl: UILabel!
     @IBOutlet weak var ToLbl: UILabel!
     @IBOutlet weak var FromLbl: UILabel!
@@ -92,6 +94,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var selectedVideoURL: URL?
     var editId: String?
     let standardDateFormat = DateFormatString.StandardFormat
+    var editReport:Notice?
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
@@ -101,7 +104,11 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         TodateTop.layer.cornerRadius = 8
         FromDateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
         TodateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
-        
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         DisplayRangeLbl.setRequiredText(CommonStringFile.Notice_Display_Date_Range)
         
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -152,6 +159,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        if let edit = editReport{
+            fetchData(notice: edit)
+        }
     }
     
     deinit {
@@ -241,6 +251,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         }
     }
     
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
     
     //MARK: Setting Current Date as initial Date
     func setInitialDate() {
