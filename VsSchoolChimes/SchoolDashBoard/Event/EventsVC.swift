@@ -141,6 +141,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        if let edit = editReport{
+            fetchData(eventList: edit)
+        }
     }
     
     deinit {
@@ -553,7 +556,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                             
                             nextBtn.setTitle("Next", for: .normal)
                             updateTextViewHeight(contentTxtView)
-                            delegate?.editDta(edit: nil)
+//                            delegate?.editDta(edit: nil)
+                            self.dismiss(animated: true)
                         }
                     }
                 }

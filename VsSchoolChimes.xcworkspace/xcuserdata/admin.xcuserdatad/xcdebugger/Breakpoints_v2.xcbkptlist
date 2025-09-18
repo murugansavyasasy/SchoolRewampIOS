@@ -406,5 +406,107 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/MarkAttendenceVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "MarkAttendenceVC"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4 - 5ace06688d8ecde0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MarkAttendenceVC.StandardData.getter : Swift.Optional&lt;Swift.Array&lt;School_Chimes.StandardDetail&gt;&gt;"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Mark%20Attendence/MarkAttendenceVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4 - f6a8a651290c0c96"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MarkAttendenceVC.StandardData.setter : Swift.Optional&lt;Swift.Array&lt;School_Chimes.StandardDetail&gt;&gt;"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Mark%20Attendence/MarkAttendenceVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66">
+               </Location>
+               <Location
+                  uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4 - 5721cd01eb433b67"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MarkAttendenceVC.StandardData.modify : Swift.Optional&lt;Swift.Array&lt;School_Chimes.StandardDetail&gt;&gt;"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Mark%20Attendence/MarkAttendenceVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66">
+               </Location>
+               <Location
+                  uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4 - bb2cdf7dd7102f43"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MarkAttendenceVC.StandardData.modify : Swift.Optional&lt;Swift.Array&lt;School_Chimes.StandardDetail&gt;&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4 - ea1edd922d629e2b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MarkAttendenceVC.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; School_Chimes.MarkAttendenceVC"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Mark%20Attendence/MarkAttendenceVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66">
+               </Location>
+               <Location
+                  uuid = "456DA006-7033-4C7A-8B1E-FB4361374FC4 - e4ae1084f2f0c624"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.MarkAttendenceVC.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;School_Chimes.MarkAttendenceVC&gt;"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Mark%20Attendence/MarkAttendenceVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

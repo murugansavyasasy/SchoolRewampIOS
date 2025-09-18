@@ -470,7 +470,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                     Attachmentview.imageCollectionview.reloadData()
                     editId = nil
                     NextBtn.setTitle("Next", for: .normal)
-                    delegate?.editDta(edit: nil)
+//                    delegate?.editDta(edit: nil)
+                    self.dismiss(animated: true)
                 }
             }
         }
