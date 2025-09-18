@@ -45,10 +45,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-        // Example label
-        welcomeLabel.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
-        welcomeLabel.addGestureRecognizer(tapGesture)
+//        // Example label
+//        welcomeLabel.isUserInteractionEnabled = true
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+//        welcomeLabel.addGestureRecognizer(tapGesture)
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
         recentActiveMenuCollection.dataSource = self
