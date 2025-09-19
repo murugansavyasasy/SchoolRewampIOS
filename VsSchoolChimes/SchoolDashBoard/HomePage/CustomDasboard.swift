@@ -105,6 +105,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
                 delegate?.back(logout: false)
+            }else if vc is CustomDasboard {
+                dismiss(animated: true)
             }else{
                 delegate?.back(logout: false)
             }
@@ -366,7 +368,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         window.addSubview(dimView)
         self.dimmedView = dimView
         
-        let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
+        let menuVC = SideMenuVC()
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
         menuVC.isStudent = false

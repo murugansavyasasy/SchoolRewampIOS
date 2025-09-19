@@ -12,6 +12,7 @@ import DropDown
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var chooseUrSchoolLbl: UILabel!
+    @IBOutlet weak var schoolBtn: UIButton!
     @IBOutlet weak var headerSchoolLbl: UILabel!
     @IBOutlet weak var radioBtnStack: UIStackView!
     @IBOutlet weak var studentBtnName: UIButton!
@@ -53,7 +54,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         setupRadioButton(button: allbtnName)
         setupRadioButton(button: studentBtnName)
         setupRadioButton(button: staffBtnName)
-      
+        schoolBtn.layer.cornerRadius = 8
         chooseUrSchoolLbl.setFont(style: .header, size: FontSize.HeaderSize)
         headerSchoolLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
@@ -176,7 +177,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.SchoolListTVC, for: indexPath) as! SchoolListTVC
         let schools_details  = school_details?[indexPath.row]
         cell.name.text = schools_details?.school_name
-        cell.address.text = schools_details?.school_address
+        cell.address.text = "📍 \(schools_details?.school_address ?? "")"
         cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
         
         if segmentName.selectedSegmentIndex == 1{
