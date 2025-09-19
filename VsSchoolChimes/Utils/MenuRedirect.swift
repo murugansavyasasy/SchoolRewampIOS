@@ -125,9 +125,9 @@ class MenuRedirectHandler {
 //        vc.modalPresentationStyle = .fullScreen
 //        viewController.present(vc, animated: true)
         
-        let vc = CommonPageVC(nibName: nil, bundle: nil)
-        vc.page1 = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-        vc.page2 = SenderHomeWorkVC(nibName: nil, bundle: nil)
+        let vc = SenderHomeWorkVC(nibName: nil, bundle: nil)
+//        vc.page1 = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+//        vc.page2 = SenderHomeWorkVC(nibName: nil, bundle: nil)
 //        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -302,9 +302,9 @@ class MenuRedirectHandler {
     }
     func senderQuiz(from viewController: UIViewController) {
         
-        let vc = QuistionPagenationVc(nibName: nil, bundle: nil)
-        vc.page1 = SenderQuizVc(nibName: nil, bundle: nil)
-        vc.page2 = ReportsQuizVc(nibName: nil, bundle: nil)
+        let vc = ReportsQuizVc(nibName: nil, bundle: nil)
+//        vc.page1 = SenderQuizVc(nibName: nil, bundle: nil)
+//        vc.page2 = ReportsQuizVc(nibName: nil, bundle: nil)
 //        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -333,11 +333,7 @@ class MenuRedirectHandler {
     }
     func senderAttachment(from viewController: UIViewController) {
         
-        let vc = AttachCommonPage(nibName: nil, bundle: nil)
-        vc.page1 = SenderAttachmentVC (nibName: nil, bundle: nil)
-        vc.page2 =  AttachHistroyVC (nibName: nil, bundle: nil)
-        
-//        vc.titleLbl = CommonStringFile.CreateEvent.translated()
+        let vc = AttachHistroyVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         
