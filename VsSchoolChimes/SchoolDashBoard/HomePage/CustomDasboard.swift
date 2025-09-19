@@ -279,7 +279,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     func Global_variabel() {
         APIService.shared.makeApi(
             url: ServiceUrl.global_global_variables,
-            parameters: [:],
+            parameters: ["key_names" : []],
             type: ApitTypeSringFile.POST,
             token: ServiceUrl.token
         ) { (result: Result<GlobalVariablesResponse, Error>) in
@@ -503,8 +503,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 38: break
-        case 39:
-            navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
+        case 39:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
         default: print("Unknown menuId:", item.id ?? 0)
         }
     }
