@@ -94,7 +94,7 @@
                                     <constraint firstAttribute="trailing" secondItem="PD3-2P-XTx" secondAttribute="trailing" constant="60" id="m58-0m-A7e"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwW-Ui-uNW">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwW-Ui-uNW">
                                 <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BtS-OX-fjT">
