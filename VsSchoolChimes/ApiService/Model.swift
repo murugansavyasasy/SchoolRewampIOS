@@ -480,21 +480,21 @@ struct AttachmentsResponse: Codable {
 }
 
 struct Attachment: Codable {
-    let id: String?
-    let type: String?
-    let title: String?
-    let description: String?
-    let date: String?
-    let time: String?
-    let sender_info: String?
-    let sent_by: String?
-    let header_id: String?
+    var id: String?
+    var type: String?
+    var title: String?
+    var description: String?
+    var date: String?
+    var time: String?
+    var sender_info: String?
+    var sent_by: String?
+    var header_id: String?
     var is_unread: Bool?
-    let is_archive: Bool?
-    let file_path: [FilePath]?
-    let iframe: String?
-    let can_edit: Bool?
-    let can_delete: Bool?
+    var is_archive: Bool?
+    var file_path: [FilePath]?
+    var iframe: String?
+    var can_edit: Bool?
+    var can_delete: Bool?
 }
 
 struct AttachmentFilePath: Codable {

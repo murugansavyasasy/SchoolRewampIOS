@@ -9,6 +9,8 @@ import UIKit
 
 class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var numberOfQuestionText: UITextField!
     @IBOutlet weak var discriptionsTextFild: UITextView!
@@ -16,6 +18,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectNotice: SelectNotice?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,13 +26,29 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         titleText.delegate = self
         discriptionsTextFild.delegate = self
         
+        backBtn
+            .configureAsBackButton(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? "",
+                colour: .white
+            )
         titleText.addDoneButton()
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
+        
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        
         // Do any additional setup after loading the view.
     }
     
     
+    @IBAction func backBtnAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
     func textViewDidChange(_ textView: UITextView) {
 //        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         

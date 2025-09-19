@@ -13,13 +13,14 @@ import QuickLook
 
 @available(iOS 14.0, *)
 class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge{
-    
+   
     func deleteImage(index: Int) {
         attachments.remove(at: index)
     
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var PopupView: UIView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -53,7 +54,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var selectedImgUrl: [FilePath] = []
     var VideoPath_URL : URL?
     var DocumentpreviewURL : URL?
-    var selectNotice: EditObjectDelegate?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
@@ -64,10 +64,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var selectedVideoURL: URL?
     var placeholderLabel: UILabel?
     var editId : String?
+    var Editattachment =  Attachment()
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
         BackBtn.applyBackButton()
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
        
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
@@ -101,6 +105,33 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         selectImgPdfview.imageCollectionview.dataSource = self
         selectImgPdfview.imageCollectionview.backgroundColor = .clear
         imageSelection()
+        
+        BackBtn
+            .configureAsBackButton(
+                firstLine: "Create new " + MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? "",
+                colour: .white
+            )
+        if editId != ""{
+            BackBtn
+                .configureAsBackButton(
+                    firstLine: "Update Existing " + MenuStringFile.selectedMenuName,
+                    secondLine: staffDetails?.school_name ?? "",
+                    colour: .white
+                )
+           setSelectedHomeWork(
+            title:  Editattachment.title ?? "",
+                content: Editattachment.description ?? "",
+                imageUrls: Editattachment.file_path ?? [],
+                editId: Editattachment.id ?? ""
+            )
+        }
+    }
+    
+    
+    @IBAction func backBtnAct(_ sender: Any) {
+        
+        dismiss(animated: true)
     }
     
     func setSelectedHomeWork(
@@ -350,8 +381,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                             attachments.removeAll()
                             assignTitleTxtFld.text = ""
                             contentTextView.text = ""
-                            selectNotice?.editDta(edit:nil)
-                            
+                            dismiss(animated: true)
                         }
                     }
                 }

@@ -37,15 +37,48 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
     }
     var selectNotice: SelectNotice?
     var get_QuizDetails : [senderQuizListData] = []
+    @IBOutlet weak var createQuizBtn: UIButton!
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+   
+   
+    @IBOutlet weak var headerView: UIView!
     let images = ["Quiz1", "Quiz2", "Quiz3"]
+    @IBOutlet weak var academicDropView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         CellRegister()
+        
+        backBtn
+            .configureAsBackButton(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? "",
+                colour: .white
+            )
+        createQuizBtn.layer.cornerRadius = createQuizBtn.frame.height / 2
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        academicDropView.layer.cornerRadius = 10
+        academicDropView.layer.borderWidth = 1
+        academicDropView.layer.borderColor = UIColor.white.cgColor
+        createQuizBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
     }
     
+    @IBAction func backBtnAct(_ sender: UIButton) {
+        
+        dismiss(animated: true)
+    }
+    @IBAction func createQuizBtnAct(_ sender: UIButton) {
+        
+        let vc = SenderQuizVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
     
     func CellRegister(){
     
