@@ -375,17 +375,17 @@ struct HomeworkResponse: Codable {
 }
 
 struct Homework: Codable {
-    let title: String?
-    let description: String?
-    let subject_name: String?
-    let sent_by: String?
-    let file_path: [FilePath]?
+    var title: String?
+    var description: String?
+    var subject_name: String?
+    var sent_by: String?
+    var file_path: [FilePath]?
     var is_completed : Bool?
-    let id : String?
+    var id : String?
     var is_unread : Bool?
-    let detail_id : String?
-    let can_edit : Bool?
-    let can_delete : Bool?
+    var detail_id : String?
+    var can_edit : Bool?
+    var can_delete : Bool?
     
 }
 
