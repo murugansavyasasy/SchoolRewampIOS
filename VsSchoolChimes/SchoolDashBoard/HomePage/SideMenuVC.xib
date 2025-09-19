@@ -12,6 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SideMenuVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="menuTable" destination="hNC-lQ-Kbk" id="Nf7-9u-PMe"/>
+                <outlet property="profileImgaView" destination="bV7-JT-gX9" id="KXy-lo-dig"/>
+                <outlet property="userName" destination="w6w-wS-B7n" id="6oQ-fb-Y61"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,8 +22,15 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bV7-JT-gX9">
+                    <rect key="frame" x="10" y="69" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="ZXO-dR-lRV"/>
+                        <constraint firstAttribute="width" constant="50" id="cWN-TH-XWq"/>
+                    </constraints>
+                </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UQl-ih-WNg">
-                    <rect key="frame" x="10" y="89" width="373" height="30"/>
+                    <rect key="frame" x="10" y="129" width="373" height="30"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DashBoard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6w-wS-B7n">
                             <rect key="frame" x="0.0" y="0.0" width="373" height="30"/>
@@ -47,7 +56,7 @@
                     </subviews>
                 </stackView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hNC-lQ-Kbk">
-                    <rect key="frame" x="0.0" y="129" width="393" height="723"/>
+                    <rect key="frame" x="0.0" y="169" width="393" height="683"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
@@ -55,8 +64,10 @@
             <color key="backgroundColor" systemColor="tintColor"/>
             <constraints>
                 <constraint firstItem="hNC-lQ-Kbk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Eew-C6-KXt"/>
-                <constraint firstItem="UQl-ih-WNg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="KYf-Ev-Ups"/>
                 <constraint firstItem="hNC-lQ-Kbk" firstAttribute="top" secondItem="UQl-ih-WNg" secondAttribute="bottom" constant="10" id="Pwl-Sz-MIE"/>
+                <constraint firstItem="bV7-JT-gX9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="XQr-04-L6r"/>
+                <constraint firstItem="UQl-ih-WNg" firstAttribute="top" secondItem="bV7-JT-gX9" secondAttribute="bottom" constant="10" id="Z8X-ji-z5a"/>
+                <constraint firstItem="bV7-JT-gX9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ff3-dG-7zw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hNC-lQ-Kbk" secondAttribute="trailing" id="fxf-Eq-xBR"/>
                 <constraint firstItem="UQl-ih-WNg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="mzH-Vx-vPh"/>
                 <constraint firstItem="UQl-ih-WNg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-10" id="qZo-Ls-pMx"/>

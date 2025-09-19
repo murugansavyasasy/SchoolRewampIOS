@@ -75,7 +75,6 @@ class MarkAttendenceVC: UIViewController {
     var alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         
         BottomView.layer.cornerRadius = 8
         let formatter = DateFormatter()
@@ -147,10 +146,10 @@ class MarkAttendenceVC: UIViewController {
         SectionView.layer.borderWidth =  1
         SectionView.layer.borderColor =  UIColor.primery.cgColor
         FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
-        FulldayBtn.layer.cornerRadius = 15
+        FulldayBtn.layer.cornerRadius = 8
         
         HalfDayBtn.backgroundColor = .systemGray4
-        HalfDayBtn.layer.cornerRadius = 15
+        HalfDayBtn.layer.cornerRadius = 8
         calanderFulView.layer.cornerRadius = 10
         monthView.layer.cornerRadius = 10
 //        myScrollView.delegate = self
@@ -308,10 +307,7 @@ class MarkAttendenceVC: UIViewController {
         
         // Handle the selection
         standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            guard let self = self else { return } // Safely unwrap self
-            
-            print("Selected item: \(item) at index: \(index)")
-            
+            guard let self = self else { return }
             // Update the label inside the standardView
             standardLbl.text =  item
             StandardId = StandardData?[index].id ?? ""
@@ -321,10 +317,9 @@ class MarkAttendenceVC: UIViewController {
                 SectionList.append(StandardData?[index].sections?[i].name ?? "")
             }
             
-            sectionLbl.text = "Section"
-            sectionId = ""
+            sectionLbl.text = StandardData?[index].sections?.first?.name ?? ""
+            sectionId = StandardData?[index].sections?.first?.id ?? ""
             SectionData = StandardData?[index].sections
-            
             student_attendance_report()
         }
     }

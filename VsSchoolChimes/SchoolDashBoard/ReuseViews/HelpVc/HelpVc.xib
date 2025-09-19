@@ -12,8 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="HelppageHeader" destination="XIo-ja-QIU" id="fdI-bU-Xwk"/>
+                <outlet property="ActivityIndicator" destination="Sya-wU-N8I" id="aty-5j-HOa"/>
+                <outlet property="HelppageHeader" destination="WGx-FA-3fY" id="thF-LD-z2v"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webview" destination="fP2-ZH-Rig" id="zIK-X1-o11"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -22,38 +24,52 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFc-iC-tUY">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="124.33333333333333"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Support" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIo-ja-QIU">
-                            <rect key="frame" x="15" y="74" width="363" height="25.333333333333329"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                            <nil key="textColor"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGx-FA-3fY">
+                            <rect key="frame" x="15" y="69" width="363" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" name="BackGroundClr"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="XIo-ja-QIU" secondAttribute="bottom" constant="25" id="Ueg-tR-nrX"/>
-                        <constraint firstItem="XIo-ja-QIU" firstAttribute="leading" secondItem="xFc-iC-tUY" secondAttribute="leading" constant="15" id="YeU-of-lkA"/>
-                        <constraint firstAttribute="trailing" secondItem="XIo-ja-QIU" secondAttribute="trailing" constant="15" id="oEf-Uh-Peu"/>
+                        <constraint firstItem="WGx-FA-3fY" firstAttribute="leading" secondItem="xFc-iC-tUY" secondAttribute="leading" constant="15" id="pqe-3u-gFX"/>
+                        <constraint firstAttribute="bottom" secondItem="WGx-FA-3fY" secondAttribute="bottom" constant="20" id="wdk-PO-YV0"/>
+                        <constraint firstAttribute="trailing" secondItem="WGx-FA-3fY" secondAttribute="trailing" constant="15" id="xr5-dX-fIT"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bWF-DA-HkT">
-                    <rect key="frame" x="0.0" y="134.33333333333331" width="393" height="683.66666666666674"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
+                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fP2-ZH-Rig">
+                    <rect key="frame" x="0.0" y="110" width="393" height="708"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Sya-wU-N8I">
+                    <rect key="frame" x="156.66666666666666" y="386" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="XYD-mU-WfT"/>
+                        <constraint firstAttribute="width" constant="80" id="Ztj-Hv-nb6"/>
+                    </constraints>
+                    <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fP2-ZH-Rig" secondAttribute="trailing" id="1v2-ST-I5u"/>
                 <constraint firstItem="xFc-iC-tUY" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="4aE-dR-G7k"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bWF-DA-HkT" secondAttribute="trailing" id="GwP-yB-Q63"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bWF-DA-HkT" secondAttribute="bottom" id="Itk-c9-4UH"/>
-                <constraint firstItem="XIo-ja-QIU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="15" id="N9C-4b-qSB"/>
+                <constraint firstItem="Sya-wU-N8I" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="H1B-By-oko"/>
+                <constraint firstItem="WGx-FA-3fY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="aoN-yf-Nef"/>
+                <constraint firstItem="fP2-ZH-Rig" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fHg-za-5qL"/>
                 <constraint firstItem="xFc-iC-tUY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fwd-FF-hSC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fP2-ZH-Rig" secondAttribute="bottom" id="gCU-bA-vmC"/>
+                <constraint firstItem="Sya-wU-N8I" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gfF-FQ-NkI"/>
                 <constraint firstItem="xFc-iC-tUY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tZM-TL-6k0"/>
-                <constraint firstItem="bWF-DA-HkT" firstAttribute="top" secondItem="xFc-iC-tUY" secondAttribute="bottom" constant="10" id="tso-3Z-OQU"/>
-                <constraint firstItem="bWF-DA-HkT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="yn9-l0-qH8"/>
+                <constraint firstItem="fP2-ZH-Rig" firstAttribute="top" secondItem="xFc-iC-tUY" secondAttribute="bottom" id="vNa-Oi-YuG"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>

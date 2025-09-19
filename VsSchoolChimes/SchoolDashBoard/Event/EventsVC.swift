@@ -66,7 +66,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var catagoryDropDownView: UIView!
     @IBOutlet weak var selectedCatagoryImg: UIImageView!
     @IBOutlet weak var selecctedCatagory: UILabel!
-    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
     var placeholderLabel: UILabel!
     var activeButton: UIButton?
     var timePicker: UIDatePicker!
@@ -92,8 +93,14 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var eventListRespons : [EventCategory]?
     var editId: String?
     let dropDown = DropDown()
+    var editReport:EventList?
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        backBtn.configureAsBackButton(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         get_CatagoryListApi()
         eventTxt.delegate = self
         contentTxtView.delegate = self
@@ -134,13 +141,15 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        if let edit = editReport{
+            fetchData(eventList: edit)
+        }
     }
     
     deinit {
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
-    
     func fetchData(eventList:EventList?){
         attachments.removeAll()
         if let eventList = eventList{
@@ -547,7 +556,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                             
                             nextBtn.setTitle("Next", for: .normal)
                             updateTextViewHeight(contentTxtView)
-                            delegate?.editDta(edit: nil)
+//                            delegate?.editDta(edit: nil)
+                            self.dismiss(animated: true)
                         }
                     }
                 }

@@ -523,7 +523,8 @@ class SenderAssignmentTextViewController: UIViewController,
                         chooseRecipientsBtn.setTitle("Next", for: .normal)
                         cancelBtn.isHidden = true
                         updateTextViewHeight(contentTextView)
-                        delegate?.editDta(edit: nil)
+//                        delegate?.editDta(edit: nil)
+                        self.dismiss(animated: true)
                     }
                 }
             }

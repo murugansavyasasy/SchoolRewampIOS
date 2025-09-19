@@ -8,6 +8,22 @@ import UIKit
 
 @available(iOS 14.0, *)
 class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate, SwitchRollDelegate {
+    func didTapProfileImage(from imageView: UIImageView?) {
+        guard let tappedImageView = imageView else { return }
+        
+        let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
+        
+        let vc = PreviewImageVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = transitionDelegate
+        transitionDelegate.originFrame = cellFrameInSuperview
+        vc.type = "IMAGE"
+        vc.selectedFileURL = URL(string: staffDetails?.staff_profile ?? "")
+        
+        present(vc, animated: true)
+    }
+
+    
     func switchRoll(userToken: String) {
         self.get_dashboard_details(token: userToken)
         setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
@@ -49,6 +65,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        welcomeLabel.isUserInteractionEnabled = true
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
 //        welcomeLabel.addGestureRecognizer(tapGesture)
+        if checkMutipleSchool() {
+            profileImageView.isHidden = true
+        } else {
+            profileImageView.isHidden = false
+        }
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
         recentActiveMenuCollection.dataSource = self
@@ -268,7 +289,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     private func setupProfileImage() {
-        profileImageView.kf.setImage(with: URL(string: staffDetails?.school_logo ?? ""),placeholder:UIImage(named: "School Needs"))
+        profileImageView.kf.setImage(with: URL(string: staffDetails?.school_logo ?? ""),placeholder:UIImage(systemName: "School Needs"))
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2

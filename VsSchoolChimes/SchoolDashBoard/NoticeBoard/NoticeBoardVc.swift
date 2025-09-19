@@ -15,7 +15,14 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedNotice = self.searchData.first(where: { $0.id == id }) {
-                delegate?.editDta(edit: selectedNotice)
+//                delegate?.editDta(edit: selectedNotice)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let vc = SenderNoticeBoardVC()
+                    
+                    vc.editReport = selectedNotice
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
             }
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -33,7 +40,10 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         print("dsafersd")
     }
     
-    
+    // MARK: - IBOutlets
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var schoolName: UILabel!
     @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
@@ -58,6 +68,9 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        Get_Notice()
+        backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
@@ -65,7 +78,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 let matchedSchoolName = school_details?
                     .first(where: { $0.access_token == staffToken })?
                     .school_name
-
+                
                 schoolName.text = matchedSchoolName ?? "School name not found"
             }
             
@@ -87,7 +100,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
             if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-          
+                
                 localData.editToken = selectedSchool.access_token
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     self.Get_Notice()
@@ -104,18 +117,42 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         setupCollectionView()
         setupRefreshControl()
         setupLoader()
+        createBtn.layer.cornerRadius = 6
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     func searchHide(hide: Bool) {
-        searchBar?.isHidden = !hide
-        if hide {
+        //        searchBar?.isHidden = !hide
+        //        if hide {
+        //            searchBar?.becomeFirstResponder()
+        //        } else {
+        //            searchBar?.resignFirstResponder()
+        //        }
+    }
+    
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar?.isHidden = !sender.isSelected
+        if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {
             searchBar?.resignFirstResponder()
         }
     }
+    @IBAction func createAssignment(_ sender: UIButton) {
+        let vc = SenderNoticeBoardVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     private func customizeSearchBar() {
-        searchBar.searchTextField.borderStyle = .none
+//        searchBar.searchTextField.borderStyle = .none
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.layer.cornerRadius = 8
         searchBar.layer.cornerRadius = 8
@@ -367,7 +404,6 @@ extension NoticeBoardVc {
             }
             
         }
-        
         // Handle extra files count
         if files.count > imageViews.count {
             let remaining = files.count - imageViews.count
