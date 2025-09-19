@@ -15,6 +15,7 @@ class AttachmentsVc: UIViewController {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var MenuNameLbl: UILabel!
     
     var attachmentHeaders: [AttachmentHeaderInfo] = []
     var attachmentFiles: [[FilePath]]?
@@ -29,6 +30,7 @@ class AttachmentsVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        MenuNameLbl.text = MenuStringFile.selectedMenuName
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
         searchBar.layer.cornerRadius = 5
@@ -39,9 +41,6 @@ class AttachmentsVc: UIViewController {
         tv.register(UINib(nibName: CellConfingName.ContentCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ContentCell)
         
         fetchAttachments()
-        
-        
-        
     }
     
     

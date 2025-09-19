@@ -19,6 +19,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
+    @IBOutlet weak var MenuNameLbl: UILabel!
     
     var didSelectDelegate : DidSelectDelegate?
     var data : [Report]?
@@ -35,6 +36,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         super.viewDidLoad()
         NameLbl.text = studentDetails?.name
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        MenuNameLbl.text = MenuStringFile.selectedMenuName
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         nodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
