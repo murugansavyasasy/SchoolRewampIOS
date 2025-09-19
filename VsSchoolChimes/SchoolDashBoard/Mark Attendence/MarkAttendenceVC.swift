@@ -12,6 +12,10 @@ import FSCalendar
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController {
     
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtnName: UIButton!
+    @IBOutlet weak var graphDownImg: UIImageView!
+    @IBOutlet weak var graphUpImg: UIImageView!
     @IBOutlet weak var dateDayLbl: UILabel!
    
     @IBOutlet weak var absentPersentage: UILabel!
@@ -29,7 +33,7 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var AcademicYearView: UIView!
     @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchBar: UISearchBar!
-    @IBOutlet weak var BackBtn: UIButton!
+    
    
    
     @IBOutlet weak var absentView: UIView!
@@ -87,7 +91,7 @@ class MarkAttendenceVC: UIViewController {
         UIupdate()
         get_Academic_year()
         SearchBar.searchTextField.addDoneButton()
-        BackBtn.applyBackButton()
+        backBtnName.applyBackButton()
        
         addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
         let AcademicTap = UITapGestureRecognizer(target: self, action: #selector(Select_Academic_Year))
@@ -105,6 +109,7 @@ class MarkAttendenceVC: UIViewController {
 
     }
     
+   
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateTableHeight()
@@ -119,7 +124,7 @@ class MarkAttendenceVC: UIViewController {
         
         TV.isHidden = true
         
-        BackBtn
+        backBtnName
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
                 secondLine: StaffDetails?.school_name ?? ""
@@ -127,7 +132,9 @@ class MarkAttendenceVC: UIViewController {
         AttendaceSectionStac.isHidden = true
         applyDesign(element: standardView)
         applyDesign(element: SectionView)
-       
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         reportFullView.layer.cornerRadius = 10
         MarkAbsentiesBtn.layer.cornerRadius = 10
         MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -571,6 +578,28 @@ class MarkAttendenceVC: UIViewController {
                         
                         presentPeretageLbl.text = "\(presentPercentage.rounded(.down))%"
                         absentPersentage.text = "\(absentPercentage.rounded(.down))%"
+                        
+                        if Int(presentPercentage.rounded(.down)) == 100 {
+                            presentPeretageLbl.text = "100%"
+                            absentPersentage.text = "" // or "nil" if you want to explicitly show
+                        } else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
+                            let value = Int(presentPercentage.rounded(.down))
+                            presentPeretageLbl.text = "\(value)%"
+                            absentPersentage.text = "\(value)%"
+                        } else if presentPercentage < absentPercentage {
+                            presentPeretageLbl.text = "\(Int(presentPercentage.rounded(.down)))%"
+                            absentPersentage.text = "\(Int(absentPercentage.rounded(.down)))%"
+                        } else if presentPercentage > absentPercentage {
+                            
+                            
+                        }else {
+                            // default case
+                            presentPeretageLbl.text = "\(Int(presentPercentage.rounded(.down)))%"
+                            absentPersentage.text = "\(Int(absentPercentage.rounded(.down)))%"
+                        }
+
+                        
+                        
                         // ✅ Table reload
                         TV.isHidden = false
                         reportFullView.isHidden = false
