@@ -12,6 +12,10 @@ import FSCalendar
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController {
     
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtnName: UIButton!
+    @IBOutlet weak var graphDownImg: UIImageView!
+    @IBOutlet weak var graphUpImg: UIImageView!
     @IBOutlet weak var dateDayLbl: UILabel!
    
     @IBOutlet weak var absentPersentage: UILabel!
@@ -29,7 +33,7 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var AcademicYearView: UIView!
     @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchBar: UISearchBar!
-    @IBOutlet weak var BackBtn: UIButton!
+    
    
    
     @IBOutlet weak var absentView: UIView!
@@ -73,6 +77,7 @@ class MarkAttendenceVC: UIViewController {
     var StandardId = ""
     var selectedDate = ""
     var alert = CustomAlert()
+    var IsMarkAttendaceSelected : Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,7 +91,7 @@ class MarkAttendenceVC: UIViewController {
         UIupdate()
         get_Academic_year()
         SearchBar.searchTextField.addDoneButton()
-        BackBtn.applyBackButton()
+        backBtnName.applyBackButton()
        
         addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
         let AcademicTap = UITapGestureRecognizer(target: self, action: #selector(Select_Academic_Year))
@@ -104,6 +109,7 @@ class MarkAttendenceVC: UIViewController {
 
     }
     
+   
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateTableHeight()
@@ -118,36 +124,29 @@ class MarkAttendenceVC: UIViewController {
         
         TV.isHidden = true
         
-        BackBtn
+        backBtnName
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
                 secondLine: StaffDetails?.school_name ?? ""
             )
-        
+        AttendaceSectionStac.isHidden = true
         applyDesign(element: standardView)
         applyDesign(element: SectionView)
-       
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         reportFullView.layer.cornerRadius = 10
-        MarkAbsentiesBtn.backgroundColor = .lightGray
         MarkAbsentiesBtn.layer.cornerRadius = 10
-      
-        MarkAbsentiesBtn.isUserInteractionEnabled = false
-        
-       
         MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-       
         selectStandardandSectionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
-    
         standardView.layer.cornerRadius =  5
         standardView.layer.borderWidth = 1
         standardView.layer.borderColor =  UIColor.primery.cgColor
-        
         SectionView.layer.cornerRadius = 5
         SectionView.layer.borderWidth =  1
         SectionView.layer.borderColor =  UIColor.primery.cgColor
         FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
         FulldayBtn.layer.cornerRadius = 8
-        
         HalfDayBtn.backgroundColor = .systemGray4
         HalfDayBtn.layer.cornerRadius = 8
         calanderFulView.layer.cornerRadius = 10
@@ -165,7 +164,7 @@ class MarkAttendenceVC: UIViewController {
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
-        
+        fulldayAction()
     }
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
@@ -206,6 +205,7 @@ class MarkAttendenceVC: UIViewController {
         attendancedefault.isHidden = false
         reportFullView.isHidden = true
         MarkAbsentiesBtn.isHidden = false
+        IsMarkAttendaceSelected = true
     }
     
     @IBAction func ReportsAct(_ sender: Any) {
@@ -220,6 +220,7 @@ class MarkAttendenceVC: UIViewController {
         presentView.setShadow()
         SearchBar.isHidden = true
         MarkAbsentiesBtn.isHidden = true
+        IsMarkAttendaceSelected = false
         
        
     }
@@ -252,6 +253,10 @@ class MarkAttendenceVC: UIViewController {
         
         FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
         HalfDayBtn.backgroundColor = .systemGray4
+        AttendaceSectionStac.isHidden = true
+        fulldayAction()
+        FirsthalfAct()
+    
         
     }
     
@@ -259,12 +264,18 @@ class MarkAttendenceVC: UIViewController {
         
         FulldayBtn.backgroundColor = .systemGray4
         HalfDayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        AttendaceSectionStac.isHidden = false
+        
     }
     
     
     @IBAction func segmentAct(_ sender: UISegmentedControl) {
         
-        
+        if sender.selectedSegmentIndex == 0 {
+            FirsthalfAct()
+        }else{
+            SecondhalfAct()
+        }
     }
     @objc func fulldayAction(){
         user_inputs.attendance_type = "F"
@@ -320,7 +331,14 @@ class MarkAttendenceVC: UIViewController {
             sectionLbl.text = StandardData?[index].sections?.first?.name ?? ""
             sectionId = StandardData?[index].sections?.first?.id ?? ""
             SectionData = StandardData?[index].sections
-            student_attendance_report()
+            
+//            if let year = AcademicYearId {
+//                Get_Standards(yearid: year)
+//            }
+            
+            if  IsMarkAttendaceSelected != true{
+                student_attendance_report()
+            }
         }
     }
     
@@ -362,7 +380,10 @@ class MarkAttendenceVC: UIViewController {
             // Update the label inside the UIView
             sectionLbl.text = item
             sectionId = SectionData?[index].id ?? ""
-            student_attendance_report()
+            if  IsMarkAttendaceSelected != true{
+                student_attendance_report()
+            }
+           
         }
     }
     
@@ -557,6 +578,28 @@ class MarkAttendenceVC: UIViewController {
                         
                         presentPeretageLbl.text = "\(presentPercentage.rounded(.down))%"
                         absentPersentage.text = "\(absentPercentage.rounded(.down))%"
+                        
+                        if Int(presentPercentage.rounded(.down)) == 100 {
+                            presentPeretageLbl.text = "100%"
+                            absentPersentage.text = "" // or "nil" if you want to explicitly show
+                        } else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
+                            let value = Int(presentPercentage.rounded(.down))
+                            presentPeretageLbl.text = "\(value)%"
+                            absentPersentage.text = "\(value)%"
+                        } else if presentPercentage < absentPercentage {
+                            presentPeretageLbl.text = "\(Int(presentPercentage.rounded(.down)))%"
+                            absentPersentage.text = "\(Int(absentPercentage.rounded(.down)))%"
+                        } else if presentPercentage > absentPercentage {
+                            
+                            
+                        }else {
+                            // default case
+                            presentPeretageLbl.text = "\(Int(presentPercentage.rounded(.down)))%"
+                            absentPersentage.text = "\(Int(absentPercentage.rounded(.down)))%"
+                        }
+
+                        
+                        
                         // ✅ Table reload
                         TV.isHidden = false
                         reportFullView.isHidden = false
@@ -667,7 +710,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
         print("Selected Date (Label): \(selectedDateForLabel)")
         dateDayLbl.text = selectedDateForLabel
         print("mark attendance  \(MarkAttendanceBtn.isSelected)")
-        if MarkAttendanceBtn.isSelected{
+        if IsMarkAttendaceSelected !=  true{
             student_attendance_report()
         }
         

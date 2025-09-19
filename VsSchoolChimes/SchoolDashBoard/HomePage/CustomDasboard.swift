@@ -61,10 +61,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-//        // Example label
-//        welcomeLabel.isUserInteractionEnabled = true
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
-//        welcomeLabel.addGestureRecognizer(tapGesture)
+
         if checkMutipleSchool() {
             profileImageView.isHidden = true
         } else {
@@ -78,6 +75,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupEdgeGesture()
         DeviceTokenAPIcall()
         setupHeaderView()
+        Global_variabel()
         setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         setupProfileImage()
         
@@ -184,7 +182,12 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         for indexPath in safeIndexPaths {
                             if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC,
                                let item = self.menu_details?[indexPath.item] {
-                                cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
+                                if item.id == Menu_id.MessageFromManagement{
+                                    cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
+                                }else{
+                                    cell.readVieaw.isHidden = true
+                                }
+                               
                             }
                         }
                     }
@@ -268,6 +271,33 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                     print("Device token registered successfully")
                 } else {
                     print("Device token registration failed")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func Global_variabel() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.global_global_variables,
+            parameters: ["key_names" : []],
+            type: ApitTypeSringFile.POST,
+            token: ServiceUrl.token
+        ) { (result: Result<GlobalVariablesResponse, Error>) in
+            switch result {
+                
+            case .success(let successMessage):
+                if successMessage.status == true {
+                        if let respo = successMessage.data?.first {
+                            UserDefaultFileManager
+                                .save_global_Selection(data: respo)
+                            print("resporespo",respo)}
+                        
+                    
+                    else {
+                        print("Device token registration failed")
+                    }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -463,7 +493,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
         case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
         case 22: navigateOrSchoolList { MenuRedirect.senderMgmt(from: self) }
-        case 23: MenuRedirect.senderNoticeboardNavigate(from: self)
+        case 23: navigateOrSchoolList { MenuRedirect.senderNoticeboardNavigate(from: self)}
         case 24: MenuRedirect.senderOnlineNavigate(from: self)
         case 26: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
         case 27: navigateOrSchoolList { MenuRedirect.senderQuiz(from: self) }
@@ -475,7 +505,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 38: break
-        case 39: MenuRedirect.senderAttachment(from: self)
+        case 39:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
         default: print("Unknown menuId:", item.id ?? 0)
         }
     }

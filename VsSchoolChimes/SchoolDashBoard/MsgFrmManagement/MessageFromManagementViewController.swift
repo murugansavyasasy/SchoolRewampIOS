@@ -32,6 +32,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     }
 
     
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var SearchBar: UISearchBar!
@@ -53,6 +54,10 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         BackBtn.applyBackButton()
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
+        
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         SearchBar.searchTextField.addDoneButton()
         SearchBar.delegate = self

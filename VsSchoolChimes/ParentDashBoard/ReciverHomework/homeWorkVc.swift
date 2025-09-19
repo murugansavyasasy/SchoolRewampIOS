@@ -229,6 +229,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         NameLbl.text = studentDetails?.name
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        homeWorkDefaultLbl.text = MenuStringFile.selectedMenuName
         searchbar.isHidden = true
         searchbar.delegate = self
         searchbar.searchTextField.addDoneButton()

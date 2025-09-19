@@ -206,7 +206,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             if let data = school_details?[indexPath.row]{
                 UserDefaultFileManager.saveStaffDetails(data: data)}
             switch Menu_id.staffSelectedMenuId{
-    
             case Menu_id.staffGeoAttendaceReport:
                 MenuRedirect.StaffWiseAttendance(from: self)
             case Menu_id.geoMatricAttendace:
@@ -243,6 +242,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.SenderLSRWVCNavigate(from: self)
             case Menu_id.quiz :
                 MenuRedirect.senderQuiz(from: self)
+            case Menu_id.AttachmentMenuId :
+                MenuRedirect.senderAttachment(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
