@@ -17,6 +17,16 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         if edit ?? false{
             if let selectedEvent = HomeWork(withId: id ?? "") {
                 selectNotice?.editDta(edit: selectedEvent)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                   
+                        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+                    vc.editId = selectedEvent.id
+                    vc.EditHomeWork = selectedEvent
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    
+                }
             }
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -155,6 +165,15 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         }
     }
 
+    
+    @IBAction func CreateNewAct(_ sender: UIButton) {
+        
+        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+        vc.editId = ""
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
     @IBAction func selectStandard(_ sender: UIButton) {
         guard !dropDownStack.isHidden else { return }
         standardDropdown.anchorView = standerdView

@@ -388,6 +388,9 @@
                                             <buttonConfiguration key="configuration" style="plain" title="Create">
                                                 <imageReference key="image" image="plus" catalog="system" symbolScale="medium"/>
                                             </buttonConfiguration>
+                                            <connections>
+                                                <action selector="CreateNewAct:" destination="-1" eventType="touchUpInside" id="po1-lP-ByM"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Okp-T0-tbw">
                                             <rect key="frame" x="385" y="0.0" width="35" height="35"/>

@@ -9,34 +9,7 @@ import Foundation
 
 struct MenuStringFile{
     
-//    static let Communication = TranslationManager.shared.translate(key:"Communication");
-//    static let ImagePdf = TranslationManager.shared.translate(key:"Image/Pdf");
-//    static let VideoUpload = TranslationManager.shared.translate(key:"Video Upload");
-//    static let Circulars = TranslationManager.shared.translate(key:"Circulars");
-//    static let NoticeBoard = TranslationManager.shared.translate(key:"Notice Board");
-//    static let LeaveRequests = TranslationManager.shared.translate(key:"Leave Requests");
-//    static let Assignment = TranslationManager.shared.translate(key:"Assignment");
-//    static let OnlineMeeting = TranslationManager.shared.translate(key:"Online Meeting");
-//    static let Homework = TranslationManager.shared.translate(key:"Homework");
-//    static let ScheduleExamTest = TranslationManager.shared.translate(key:"Schedule Exam/Test");
-//    static let AttendanceMarking = TranslationManager.shared.translate(key:"Attendance marking");
-//    static let MessagesFromManagement = TranslationManager.shared.translate(key:"Messages from management");
-//    static let InteractionWithStudent = TranslationManager.shared.translate(key:"Interaction with student");
-//    static let LessonPlan = TranslationManager.shared.translate(key:"Lesson Plan");
-//    static let PTM = TranslationManager.shared.translate(key:"PTM");
-//    static let TextToParentsStaff = TranslationManager.shared.translate(key:"Text to Parents/Staff");
-//    static let SchoolClassEvents = TranslationManager.shared.translate(key:"School / Class Events");
-//    static let SchoolNeeds = TranslationManager.shared.translate(key:"School Needs");
-//    static let VeryImportantInfo = TranslationManager.shared.translate(key:"Very Important Info");
-//    static let AbsenteesReport = TranslationManager.shared.translate(key:"Absentees Report");
-//    static let SchoolStrength = TranslationManager.shared.translate(key:"School strength");
-//    static let DailyCollection = TranslationManager.shared.translate(key:"Daily Collection");
-//    static let StudentReport = TranslationManager.shared.translate(key:"Student Report");
-//    static let FeePendingReport = TranslationManager.shared.translate(key:"Fee Pending Report");
-//    static let MarkYourAttendance = TranslationManager.shared.translate(key:"Mark Your Attendance");
-//    static let StaffWiseAttendanceReport = TranslationManager.shared.translate(key:"Staff Wise Attendance Report");
-//    static let LSRW = TranslationManager.shared.translate(key:"LSRW");
-  
+
     static let Communication = "Communication"
     static let ImagePdf = "Image/Pdf"
     static let VideoUpload = "Video Upload"

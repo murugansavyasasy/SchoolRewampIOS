@@ -375,17 +375,17 @@ struct HomeworkResponse: Codable {
 }
 
 struct Homework: Codable {
-    let title: String?
-    let description: String?
-    let subject_name: String?
-    let sent_by: String?
-    let file_path: [FilePath]?
+    var title: String?
+    var description: String?
+    var subject_name: String?
+    var sent_by: String?
+    var file_path: [FilePath]?
     var is_completed : Bool?
-    let id : String?
+    var id : String?
     var is_unread : Bool?
-    let detail_id : String?
-    let can_edit : Bool?
-    let can_delete : Bool?
+    var detail_id : String?
+    var can_edit : Bool?
+    var can_delete : Bool?
     
 }
 
@@ -2388,4 +2388,79 @@ struct InvoiceItem: Codable {
     var invoice_no: String?
     var invoice_date: String?
     var invoice_amount: String?
+}
+
+
+
+struct GlobalVariablesResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [GlobalVariable]?
+}
+
+// MARK: - GlobalVariable
+struct GlobalVariable: Codable {
+    let resendOtpTimer: String?
+    let imageSize: String?
+    let pdfSize: String?
+    let fileContent: String?
+    let videoSizeLimit: String?
+    let videoSizeLimitAlert: String?
+    let awsAccessKey: String?
+    let awsSecreteKey: String?
+    let inAppUpdate: String?
+    let offersLink: String?
+    let alertContent: String?
+    let awsMasterBucketName: String?
+    let awsMasterBucketRegion: String?
+    let awsTransBucketName: String?
+    let awsTransBucketRegion: String?
+    let awsTransCognitoPoolId: String?
+    let awsMasterCognitoPoolId: String?
+    let versionAlertContent: String?
+    let helplineUrl: String?
+    let reportsLink: String?
+    let profileLink: String?
+    let isAlertAvailable: String?
+    let adTimerInterval: String?
+    let newVersion: String?
+    let newUpdates: String?
+    let otpDialInbound: String?
+    let videoVimeoToken: String?
+    let ebooksUrl: String?
+    let marketPlaceUrl: String?
+    let feesUrl: String?
+
+    enum CodingKeys: String, CodingKey {
+        case resendOtpTimer = "resend_otp_timer"
+        case imageSize = "image_size"
+        case pdfSize = "pdf_size"
+        case fileContent = "file_content"
+        case videoSizeLimit = "video_size_limit"
+        case videoSizeLimitAlert = "video_size_limit_alert"
+        case awsAccessKey = "aws_access_key"
+        case awsSecreteKey = "aws_secrete_key"
+        case inAppUpdate = "in_app_update"
+        case offersLink = "offers_link"
+        case alertContent = "alert_content"
+        case awsMasterBucketName = "aws_master_bucket_name"
+        case awsMasterBucketRegion = "aws_master_bucket_region"
+        case awsTransBucketName = "aws_trans_bucket_name"
+        case awsTransBucketRegion = "aws_trans_bucket_region"
+        case awsTransCognitoPoolId = "aws_trans_cognito_pool_id"
+        case awsMasterCognitoPoolId = "aws_master_cognito_pool_id"
+        case versionAlertContent = "version_alert_content"
+        case helplineUrl = "helpline_url"
+        case reportsLink = "reports_link"
+        case profileLink = "profile_link"
+        case isAlertAvailable = "is_alert_available"
+        case adTimerInterval = "ad_timer_interval"
+        case newVersion = "new_version"
+        case newUpdates = "new_updates"
+        case otpDialInbound = "otp_dial_inbound"
+        case videoVimeoToken = "video_vimeo_token"
+        case ebooksUrl = "ebooks_url"
+        case marketPlaceUrl = "market_place_url"
+        case feesUrl = "fees_url"
+    }
 }

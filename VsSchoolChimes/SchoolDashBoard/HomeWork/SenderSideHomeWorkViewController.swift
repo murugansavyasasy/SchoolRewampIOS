@@ -22,6 +22,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var headerView: UIStackView!
+    @IBOutlet weak var BackBtnNm: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ToStdOrSecBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
@@ -54,8 +56,21 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var selectedVideoURL: URL?
     var editId : String?
     var selectNotice: EditObjectDelegate?
+    var EditHomeWork = Homework()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        BackBtnNm
+            .configureAsBackButton(
+                firstLine: "Create New " + MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? "",
+                colour: .white
+            )
+        
+        
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
@@ -76,12 +91,35 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
         imageSelection()
+        
+        if editId != "" {
+            BackBtnNm
+                .configureAsBackButton(
+                    firstLine: "Update Existing " + MenuStringFile.selectedMenuName,
+                    secondLine: staffDetails?.school_name ?? "",
+                    colour: .white
+                )
+            
+            setSelectedHomeWork(
+                title:EditHomeWork.title ?? "",
+                content:EditHomeWork.description ?? "",
+                imageUrls:EditHomeWork.file_path ?? [] ,
+                editId:EditHomeWork.id ?? ""
+            )
+        }
+        
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    @IBAction func backBtnAct(_ sender: UIButton) {
+        
+        dismiss(animated: true)
     }
     
     func setSelectedHomeWork(
@@ -227,7 +265,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                             DetailsTxtview.text = ""
                             attachments.removeAll()
                             uploadAttachmentView.imageCollectionview.reloadData()
-                            selectNotice?.editDta(edit: nil)
+                            dismiss(animated: true)
                         }
                     }
                 }

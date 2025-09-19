@@ -18,6 +18,7 @@ struct UserDefaultFileManager {
     static let  User_details = "User_details"
     static let staffDetails = "staff_details"
     static let childDetails = "child_details"
+    static let selectionKey = "SelectionDetails"
     static func saveCountryDetails(data: CountryData) {
         if let encoded = try? JSONEncoder().encode(data) {
             UserDefaults.standard.set(encoded, forKey: countryKey)
@@ -109,6 +110,20 @@ struct UserDefaultFileManager {
     }
     
     
+    static func save_global_Selection(data: GlobalVariable) {
+            if let encoded = try? JSONEncoder().encode(data) {
+                UserDefaults.standard.set(encoded, forKey: selectionKey)
+            }
+        }
+        
+        // Get Selection Data
+        static func get_globalSelection() -> GlobalVariable? {
+            if let savedData = UserDefaults.standard.data(forKey: selectionKey),
+               let details = try? JSONDecoder().decode(GlobalVariable.self, from: savedData) {
+                return details
+            }
+            return nil
+        }
     
 
 }
