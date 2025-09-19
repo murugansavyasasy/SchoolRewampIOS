@@ -12,9 +12,17 @@ class AttachHistroyVC: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedEvent = Attachments(withId: id ?? "") {
-                selectNotice?.editDta(edit: selectedEvent) 
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    if #available(iOS 14.0, *) {
+                        let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
+                        vc.editId = selectedEvent.id
+                        vc.Editattachment = selectedEvent
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                }
             }
-
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.AttachmentDelete(id:id ?? "")
@@ -22,7 +30,10 @@ class AttachHistroyVC: UIViewController, SelectedId {
         }
     }
 
-
+    
+    @IBOutlet weak var backBtnName: UIButton!
+    @IBOutlet weak var createFileBtn: UIButton!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
@@ -45,6 +56,18 @@ class AttachHistroyVC: UIViewController, SelectedId {
     let alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createFileBtn.layer.cornerRadius = createFileBtn.frame.height / 2
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+       
+        backBtnName
+            .configureAsBackButton(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: staffDetails?.school_name ?? "",
+                colour: .white
+            )
         
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
@@ -109,6 +132,15 @@ class AttachHistroyVC: UIViewController, SelectedId {
         
     }
     
+    @available(iOS 14.0, *)
+    @IBAction func createBtnAct(_ sender: Any) {
+        
+        let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
+         vc.editId = ""
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")

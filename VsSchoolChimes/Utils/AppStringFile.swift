@@ -615,3 +615,4 @@ struct PTMString{
     static let custom = "Custom".translated()
     static let minShort = "%d Min".translated()
 }
+

@@ -9,18 +9,22 @@ import UIKit
 
 protocol SideMenuDelegate: AnyObject {
     func meunu(viewController: UIViewController?)
+    func didTapProfileImage(from imageView: UIImageView?)
 }
 
 @available(iOS 14.0, *)
 class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var profileImgaView: UIImageView!
     @IBOutlet weak var menuTable: UITableView!
     weak var delegate: SideMenuDelegate?
     var isSwitchRoleExpanded = false
     var isStudent = false
     // MARK: - Data
     var menuArray: [MenuItem] = [
+        MenuItem(name: "DashBoard", icon: "house"),
         MenuItem(name: "View Profile", icon: "person.circle"),
         MenuItem(name: "Settings", icon: "gear"),
         MenuItem(name: "Help", icon: "questionmark.circle")
@@ -28,11 +32,19 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var childeDetail = UserDefaultFileManager.get_child_Details()
+    let transitionDelegate = TransitioningDelegate()
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if isStudent{
+            userName.text = childeDetail?.name
+            setupProfileImage(url: URL(string: childeDetail?.profile ?? ""))
+        }else{
+            userName.text = staffDetails?.name
+            setupProfileImage(url: URL(string: staffDetails?.staff_profile ?? ""))
+        }
         menuTable.register(UINib(nibName: "SideTvcell", bundle: nil), forCellReuseIdentifier: "SideTvcell")
         if checkMutipleSchool() {
             menuArray.append(MenuItem(name: "Switch Role", icon: "arrow.2.squarepath"))
@@ -46,6 +58,26 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         menuTable.tableFooterView = UIView() // Removes extra separators
     }
     
+    private func setupProfileImage(url:URL?) {
+        if let url = url{
+            profileImgaView.kf.setImage(with: url,placeholder:UIImage(systemName: "person.circle.fill"))
+        }else{
+            profileImgaView.image = UIImage(systemName: "person.circle.fill")
+        }
+       
+        profileImgaView.layer.cornerRadius = profileImgaView.frame.width / 2
+        profileImgaView.clipsToBounds = true
+        profileImgaView.layer.borderWidth = 2
+        profileImgaView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+        profileImgaView.isUserInteractionEnabled = true
+        // 2️⃣ Add tap gesture recognizer
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        profileImgaView.addGestureRecognizer(tapGesture)
+        
+    }
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.didTapProfileImage(from: sender.view as? UIImageView)
+    }
     func checkMutipleSchool() -> Bool {
         if staffDetailsCount?.count ?? 0 > 1 {
             switch staff_roll {

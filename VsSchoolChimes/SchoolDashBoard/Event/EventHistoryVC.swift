@@ -12,7 +12,14 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedEvent = event(withId: id ?? "") {
-                delegate?.editDta(edit: selectedEvent)
+//                delegate?.editDta(edit: selectedEvent)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let vc = EventsVC()
+                    
+                    vc.editReport = selectedEvent
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
             }
 
            
@@ -22,7 +29,9 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             }
         }
     }
-    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
@@ -36,6 +45,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     var delegate:EditObjectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
+        backBtn.configureAsBackButton(firstLine: "Event History", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         historyTable.register(UINib(nibName: CellConfingName.EventTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.EventTVC)
         historyTable.register(UINib(nibName: "OngoingTVC", bundle: nil), forCellReuseIdentifier: "OngoingTVC")
         historyTable.register(UINib(nibName: "ReciverEventTVC", bundle: nil), forCellReuseIdentifier: "ReciverEventTVC")
@@ -48,6 +59,10 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchBar.backgroundColor = .clear
         searchBar.delegate = self
         searchBar.addDoneButton()
+        createBtn.layer.cornerRadius = 6
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -61,6 +76,26 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         } else {
             searchBar?.resignFirstResponder()
         }
+    }
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar?.isHidden = !sender.isSelected
+        searchView?.isHidden = !sender.isSelected
+        if sender.isSelected {
+            searchBar?.becomeFirstResponder()
+        } else {
+            searchBar?.resignFirstResponder()
+        }
+    }
+    @IBAction func createAssignment(_ sender: UIButton) {
+        let vc = EventsVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     // MARK: - API Call
     func GetEvent() {
