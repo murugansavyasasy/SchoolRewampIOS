@@ -81,6 +81,7 @@ class ReciverEventTVC: UITableViewCell, SelectedId, UIPopoverPresentationControl
             }
         }
     }
+    
     @IBAction func edit(_ sender: UIButton) {
         let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
         popoverContentVC.delegate = self
@@ -102,6 +103,7 @@ class ReciverEventTVC: UITableViewCell, SelectedId, UIPopoverPresentationControl
             topVC.present(popoverContentVC, animated: true, completion: nil)
         }
     }
+    
     func addReminderToReminderApp() {
         guard let dateString = date, let timeString = time else {
             print("Date or time is nil")

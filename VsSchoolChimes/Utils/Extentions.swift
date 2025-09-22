@@ -956,3 +956,11 @@ extension UILabel {
         self.attributedText = combined
     }
 }
+
+extension UIView {
+    func applyBottomCornerRadius() {
+        self.layer.cornerRadius = 20
+        self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        self.clipsToBounds = true
+    }
+}

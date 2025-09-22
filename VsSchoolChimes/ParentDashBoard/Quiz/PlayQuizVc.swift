@@ -13,7 +13,6 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var PreviousBtn: UIButton!
-    @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var BaseView: UIView!
@@ -69,7 +68,12 @@ class PlayQuizVc: UIViewController {
 //            loadQuestion()
 //        }
 //        
+        let name = childDetails?.name ?? ""
+        let stadard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         
+        backBtn.configureAsBackButton(firstLine: name, secondLine: stadard)
+        
+        NameLbl.text = MenuStringFile.selectedMenuName
         
         StyleAndTranslate()
     }
@@ -152,11 +156,6 @@ class PlayQuizVc: UIViewController {
         Button4.layer.cornerRadius = 15
         
         //MARK: Font Style
-        NameLbl.setFont(style: .body, size: 12)
-        sectionLbl.setFont(style: .body, size: 12)
-        backBtn.setTitleFont(style: .body, size: 20)
-        NameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
         QuestionLbl.setFont(style: .title, size: FontSize.TitleSize)
 //        QuestionCountLbl.setFont(style: .title, size: FontSize.TitleSize)
         NextBtn.setTitleFont(style: .body, size: FontSize.BodySize)
