@@ -929,4 +929,30 @@ extension UILabel {
 
         self.attributedText = combined
     }
+    func profilesetRequiredText(_ text: String, asteriskColor: UIColor = .red) {
+
+        // Asterisk font: Poppins-Regular, larger size
+        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
+
+        let normalText = NSAttributedString(
+            string: text,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 12, weight: .medium),
+                .foregroundColor: self.textColor ?? .black
+            ])
+
+        let asteriskText = NSAttributedString(
+            string: "*",
+            attributes: [
+                .font: asteriskFont,
+                .foregroundColor: asteriskColor,
+                .baselineOffset: 2 // tweak to align nicely with main text
+            ])
+
+        let combined = NSMutableAttributedString()
+        combined.append(normalText)
+        combined.append(asteriskText)
+
+        self.attributedText = combined
+    }
 }

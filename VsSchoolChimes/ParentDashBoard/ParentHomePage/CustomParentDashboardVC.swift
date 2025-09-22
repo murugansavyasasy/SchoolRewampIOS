@@ -39,7 +39,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             } else if vc is LogoutViewController {
                 delegate?.back(logout: false)
             }else if vc is CustomDasboard {
-                dismiss(animated: true)
+                hideSideMenu()
             }else{
                 delegate?.back(logout: false)
             }

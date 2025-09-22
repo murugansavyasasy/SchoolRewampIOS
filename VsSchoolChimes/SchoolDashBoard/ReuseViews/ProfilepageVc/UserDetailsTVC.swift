@@ -145,7 +145,11 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
             return
         }
         node = item.node
-        titleLable.text = item.title
+        if item.optional ?? false{
+            titleLable.profilesetRequiredText(item.title)
+        }else{
+            titleLable.profilesetRequiredText(item.title)
+        }
         titleLable.isHidden = false
         
         switch item.type {
