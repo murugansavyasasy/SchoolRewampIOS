@@ -1,0 +1,412 @@
+//
+//  AttendanceMarkingVC.swift
+//  School Chimes
+//
+//  Created by Lakshmanan on 19/09/25.
+//
+
+import UIKit
+import DropDown
+
+class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate {
+    
+    @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var statusLbl: UILabel!
+    @IBOutlet weak var rollNoLbl: UILabel!
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var PresentCountView: UIView!
+    @IBOutlet weak var AbsentCountView: UIView!
+    @IBOutlet weak var PresentCountLbl: UILabel!
+    @IBOutlet weak var AbsentCountLbl: UILabel!
+    @IBOutlet weak var PresentDefLbl: UILabel!
+    @IBOutlet weak var AbsentDefLbl: UILabel!
+    @IBOutlet weak var filterBtn: UIButton!
+    @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var selectAllBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchStack: UIStackView!
+    @IBOutlet weak var confirmBtn: UIButton!
+    
+    var filterData : [StudentDetails]?
+    var studentsDetails: [StudentDetails]?
+    var totalcount = 0
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var selected_sectionID = ""
+    var selectedAcadimicYearId : Int?
+    var StandardString = ""
+    var SectionString = ""
+    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var dropDown = DropDown()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let standard = StandardString + " - " + SectionString
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: standard)
+        
+        confirmBtn.layer.cornerRadius = 10
+
+        PresentCountView.layer.cornerRadius = 5
+        PresentCountView.layer.borderWidth = 0.3
+        PresentCountView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        AbsentCountView.layer.cornerRadius = 5
+        AbsentCountView.layer.borderWidth = 0.3
+        AbsentCountView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        PresentCountLbl.setFont(style: .title, size: 25)
+        AbsentCountLbl.setFont(style: .title, size: 25)
+        PresentDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        AbsentDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        filterBtn.setTitle(CommonStringFile.NameASC, for: .normal)
+        filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        confirmBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+        
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        searchStack.isHidden = true
+        
+        tv.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
+        tv.delegate = self
+        tv.dataSource = self
+        
+        recipient_get_student_list(selected_sectionId: Int(selected_sectionID) ?? 0, academic_year_id: selectedAcadimicYearId ?? 0)
+    }
+
+    func StyleAndTranslater() {
+        
+        //MARK: Label And Button Font Style
+        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
+        filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        //MARK: Translation
+        rollNoLbl.text = CommonStringFile.RollNo.translated()
+        nameLbl.text = CommonStringFile.Name.translated()
+        statusLbl.text = CommonStringFile.Status.translated()
+        searchBar.placeholder = CommonStringFile.Search.translated()
+        //filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
+    }
+    
+    func recipient_get_student_list(selected_sectionId: Int,academic_year_id:Int){
+        
+        let param: [String:Any] = [
+            speficStudentStringFile.section_id : selected_sectionId,
+            speficStudentStringFile.academic_year_id : academic_year_id
+        ]
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list, parameters:param , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result:Result <GetStudentlistSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let successMessage):
+                    
+                    if successMessage.status == true {
+                        self.studentsDetails = successMessage.data?.map { student in
+                            var s = student
+                            s.isAbsent = true   // 👈 everyone present by default
+                            return s
+                        }
+                        self.filterData = self.studentsDetails
+                        self.PresentCountLbl.text = String(self.studentsDetails?.count ?? 0)
+                        self.AbsentCountLbl.text = "0"   // 👈 none absent initially
+                        self.tv.reloadData()
+                    }else{
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: successMessage.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
+    func markAttendaceApi(){
+
+        
+        let MakeAbsentId: [[String: String]] = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
+            print("Absent Studets: ", Student.name ?? "")
+            if let id =  Student.id{
+                return ["ID":id]
+            }
+            return nil
+        } ?? []
+        
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
+                
+                MarkAttendenceStringFile.student_id: MakeAbsentId,
+                MarkAttendenceStringFile.class_id: user_inputs.class_id,
+                MarkAttendenceStringFile.section_id: user_inputs.section_id,
+                MarkAttendenceStringFile.all_present: user_inputs.all_present,
+                MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
+                MarkAttendenceStringFile.session_type: user_inputs.session_type,
+                MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date
+                
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.attendaceGoBackDashBoard()
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.attendaceGoBackDashBoard()
+                                    
+                                }
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+        
+        
+    }
+    
+    func attendaceGoBackDashBoard(){
+        switch staff_role {
+        case PriorityType.is_staff:
+            self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+            
+        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+            
+            
+            if (staffDetailsCount?.count ?? 0) > 1 {
+                self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                
+            } else {
+                self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+            }
+            
+        default:
+            print("Unhandled staff role")
+        }
+    }
+    
+    func statusUpdate(status: Bool, index: Int) {
+        guard let studentId = filterData?[index].id else { return }
+        if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
+            studentsDetails?[originalIndex].isAbsent = status
+            filterData?[index].isAbsent = status
+            // Count of students marked as absent
+            totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
+            let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
+            PresentCountLbl.text = String(PresenrCount)
+            AbsentCountLbl.text = String(totalcount)
+            let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
+            selectAllBtn.setImage(image, for: .normal)
+        }
+    }
+    
+    @IBAction func selectAllAct(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        // Update data model to mark all students as present/absent
+        let isSelectingAll = sender.isSelected
+            for i in 0..<(studentsDetails?.count ?? 0) {
+                studentsDetails?[i].isAbsent = !isSelectingAll
+                filterData?[i].isAbsent = !isSelectingAll
+                let indexPath = IndexPath(row: i, section: 0)
+                if let customCell = tv.cellForRow(at: indexPath) as? AttendenceTVC {
+                    customCell.custSwitch.isOn = !isSelectingAll
+                    customCell.hideLbl(isAbsent: !isSelectingAll)
+                }
+            }
+            // Update select all button image and total count
+            if isSelectingAll {
+                selectAllBtn.setImage(ImageName.checkmark, for: .normal)
+                totalcount = studentsDetails?.count ?? 0
+                AbsentCountLbl.text = String(totalcount)
+                PresentCountLbl.text = "0"
+            } else {
+                selectAllBtn.setImage(ImageName.square, for: .normal)
+                totalcount = 0
+                PresentCountLbl.text = String(studentsDetails?.count ?? 0 )
+                AbsentCountLbl.text = String(totalcount)
+            }
+        }
+    
+    @IBAction func BackAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
+    @IBAction func submitAttendanceAct(_ sender: Any) {
+        
+        let alert = CustomAlert()
+        
+        alert.showAlertCancel(title:AlertstringFile.Confirm, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
+            self.markAttendaceApi()
+        } onNo: {
+            
+        }
+
+    }
+    
+    @IBAction func searchBtnCilck(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        searchStack.isHidden = !sender.isSelected
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+    }
+    
+    @IBAction func fliter(_ sender: UIButton) {
+        dropDown.dataSource = [CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.AdmissionNoASC,CommonStringFile.AdmissionNoDESC]
+        dropDown.anchorView = filterBtn
+        dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
+        
+        dropDown.direction = .bottom
+        
+        dropDown.show()
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+            self.filterBtn.setTitle(item.translated(), for: .normal)
+            
+            switch item{
+            case CommonStringFile.RollNoASC:
+                let sortedByRollNumber = studentsDetails?.sorted {
+                    $0.roll_no ?? "" < $1.roll_no ?? ""
+                }
+                filterData = sortedByRollNumber
+            case CommonStringFile.RollNoDESC:
+                let sortedByName = studentsDetails?.sorted {
+                    $0.roll_no ?? "" > $1.roll_no ?? ""
+                }
+                filterData = sortedByName
+            case CommonStringFile.NameASC:
+                let sortedByName = studentsDetails?.sorted {
+                    $0.name?.localizedCompare($1.name ?? "") == .orderedAscending
+                }
+                filterData = sortedByName
+            case CommonStringFile.NameDESC:
+                let sortedByName = studentsDetails?.sorted {
+                    $0.name ?? "" > $1.name ?? ""
+                }
+                filterData = sortedByName
+            case CommonStringFile.Absent:
+                
+                filterData = studentsDetails?.sorted {
+                    !($0.isAbsent ?? false) && ($1.isAbsent != nil)
+                }
+            case CommonStringFile.Present:
+                filterData = studentsDetails?.sorted {
+                    $0.isAbsent ?? false && !(
+                        $1.isAbsent ?? false
+                    ) // Absent students first
+                }
+            case CommonStringFile.AdmissionNoASC:
+                let sortedByAdmission = studentsDetails?.sorted {
+                    $0.admission_no ?? "" < $1.admission_no ?? ""
+                }
+                filterData = sortedByAdmission
+            case CommonStringFile.AdmissionNoDESC:
+                let sortByAdmision = studentsDetails?.sorted {
+                    $0.admission_no ?? "" > $1.admission_no ?? ""
+                }
+                filterData = sortByAdmision
+                
+            default:
+                filterData = studentsDetails
+                
+            }
+            tv.reloadData()
+            self.filterBtn.setTitle(item.translated(), for: .normal)
+        }
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let query = searchText.lowercased()
+        if query.isEmpty {
+            filterData = studentsDetails
+            selectAllBtn.isHidden = false
+        } else {
+            filterData = studentsDetails?.filter { student in
+                return student.name?.lowercased().contains(query) ?? false ||
+                student.roll_no?.lowercased().contains(query) ?? false ||
+                student.admission_no?.lowercased().contains(query) ?? false
+            }
+            selectAllBtn.isHidden = true
+        }
+        tv.reloadData()
+    }
+}
+
+extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filterData?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
+        cell.nameLbl.text = filterData?[indexPath.row].name
+        cell.rollNo.isHidden = true
+        cell.admissionlbl.text = "ADMIS No: " +  (
+            filterData?[indexPath.row].admission_no ?? ""
+        )
+        if filterData?[indexPath.row].roll_no != ""{
+            cell.rollNo.isHidden = false
+            cell.rollNo.setTitle(filterData?[indexPath.row].roll_no, for: .normal)
+        }
+        
+        cell.rollNo.isHidden = filterData?[indexPath.row].roll_no?.isEmpty ?? false
+        cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
+        cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
+        cell.phnBtn.tag = indexPath.row
+        cell.phnBtn.isHidden = true
+        cell.custSwitch.index = indexPath.row
+        cell.delegate = self
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+    

@@ -56,8 +56,6 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     
-    
-    
     @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var createView: UIView!
     @IBOutlet weak var toDateLbl: UILabel!
@@ -68,12 +66,10 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var AllslotsLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
-    
     @IBOutlet weak var TodaysBookedSlotsLbl: UILabel!
-    
     @IBOutlet weak var upcomingView: customView!
-    
     @IBOutlet weak var CompletedView: customView!
+    
     var instituteId  = Int()
     var sectionId = Int()
     var staffId  = Int()

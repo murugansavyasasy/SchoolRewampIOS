@@ -20,6 +20,7 @@ class FeeDetails: UIViewController {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var NodataImage: UIImageView!
+    @IBOutlet weak var menuNameLbl: UILabel!
     
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var feeDetailsList: [InvoiceItem] = []
@@ -31,6 +32,7 @@ class FeeDetails: UIViewController {
         
         backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true
