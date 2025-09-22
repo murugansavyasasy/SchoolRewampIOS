@@ -91,12 +91,12 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     // MARK: - Setup
     private func setupCaptions() {
         guard let lsrw = lsrw else { return }
-        self.lsrw?.test = [
-            TestQuestion(question: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"]),
-            TestQuestion(question: "Which is the largest planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"]),
-            TestQuestion(question: "Who wrote the national anthem of India?", options: ["Tagore", "Gandhi", "Nehru", "Vivekananda"]),
-            TestQuestion(question: "Which is the fastest land animal?", options: ["Tiger", "Cheetah", "Lion", "Horse"])
-        ]
+//        self.lsrw?.test = [
+//            TestQuestion(question: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"]),
+//            TestQuestion(question: "Which is the largest planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"]),
+//            TestQuestion(question: "Who wrote the national anthem of India?", options: ["Tagore", "Gandhi", "Nehru", "Vivekananda"]),
+//            TestQuestion(question: "Which is the fastest land animal?", options: ["Tiger", "Cheetah", "Lion", "Horse"])
+//        ]
         if let type = lsrw.activity_type{
             // Configure captions based on LSRW type
             switch type {
@@ -340,8 +340,10 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        // Handle no data / error case
-                    }
+                        guard let self = self else { return }
+                        self.alert.showAlert(title: "NO Record",
+                                             message: response.message ?? "",
+                                             on: self)}
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

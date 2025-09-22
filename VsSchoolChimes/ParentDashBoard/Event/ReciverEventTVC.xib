@@ -173,7 +173,7 @@
                                     <constraint firstAttribute="trailing" secondItem="XuJ-WI-C9E" secondAttribute="trailing" constant="10" id="jeF-GN-3qp"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmp-wr-LgQ">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmp-wr-LgQ">
                                 <rect key="frame" x="388" y="197" width="30" height="30"/>
                                 <color key="backgroundColor" red="0.39215686274509803" green="0.40392156862745099" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>

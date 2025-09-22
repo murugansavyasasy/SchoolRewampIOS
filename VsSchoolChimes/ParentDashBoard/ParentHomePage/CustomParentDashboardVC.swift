@@ -284,7 +284,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
        
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
         swipeGesture.direction = .left
-        menuVC.view.addGestureRecognizer(swipeGesture)
+        dimView.addGestureRecognizer(swipeGesture)
         
         menuVC.delegate = self
         window.addSubview(menuVC.view)

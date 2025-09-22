@@ -2,7 +2,7 @@
 //  SplashViewController.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 12/06/24.
+//  Created by chandhru on 19/09/25.
 import UIKit
 import Darwin
 import LocalAuthentication
@@ -428,9 +428,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     
     // MARK: - Validate User Flow
     func validateUser() {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd ?? ""
         let secureID = SecureIDManager.getSecureID()
@@ -447,10 +444,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
-                    
                     guard response.status == true, let Data = response.data?.first else {
                         // show alert and go to login
                         CustomAlert.showAlertWithOkAction(title: "Alert", message: response.message ?? "Something went wrong", on: self) {
@@ -604,7 +597,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             countryId = countryDetails.id
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) { [weak self] in
             guard let self else { return }
             if self.countryId != nil {
                 self.checkBiometricStatus()

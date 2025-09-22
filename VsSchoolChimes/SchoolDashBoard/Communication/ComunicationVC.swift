@@ -63,7 +63,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var doneButton: UIButton!
     var activeButton: UIButton?
     var isScheduleSelected = false
-    let backgroundcolor = Colornames.topBackgroundCLr
+    let backgroundcolor = Colornames.topBackgroundCLr1
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
     let alert = CustomAlert()

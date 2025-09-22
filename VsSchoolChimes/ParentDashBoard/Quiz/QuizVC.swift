@@ -11,10 +11,8 @@ class QuizVC: UIViewController {
 
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
-   
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var IncorrectAnswerLbl: UILabel!
     @IBOutlet weak var CorrectAnswerLbl: UILabel!
     
@@ -89,14 +87,17 @@ class QuizVC: UIViewController {
        
         
         //MARK: Font Style
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        NameLbl.setFont(style: .header, size: FontSize.HeaderSize)
       
-        BackBtn.setTitleFont(style: .body, size: 20)
         IncorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
         CorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Translate
+        
+        let name = childDetails?.name ?? ""
+        let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        NameLbl.text = MenuStringFile.selectedMenuName
         
     }
     

@@ -56,7 +56,7 @@ class SchoolStrengthVC: UIViewController {
     }
 
     func UIupdate() {
-        applyShadowAndCornerRadius(to: academicyearDrp)
+        academicyearDrp.setShadow()
     }
 
     @IBAction func academicYearDrop_action() {
