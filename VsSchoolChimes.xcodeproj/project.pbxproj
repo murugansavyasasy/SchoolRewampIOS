@@ -745,6 +745,8 @@
 		FA6CD8A22E3DEEC500C146AB /* OutpassVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */; };
 		FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */; };
 		FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */; };
+		FA7014D12E7D76CD00B3C012 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */; };
+		FA7014D22E7D76CD00B3C012 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
 		FA7C7BAF2E55B55B009BD4CF /* CreateSlotsBottomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */; };
@@ -1651,6 +1653,8 @@
 		FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassVC.xib; sourceTree = "<group>"; };
 		FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveHistoryTV.swift; sourceTree = "<group>"; };
 		FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveHistoryTV.xib; sourceTree = "<group>"; };
+		FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceMarkingVC.swift; sourceTree = "<group>"; };
+		FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceMarkingVC.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
 		FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotsBottomVC.swift; sourceTree = "<group>"; };
@@ -2974,6 +2978,8 @@
 				8499783F2CEF1FE5007D45BA /* StudentHistryTVC.xib */,
 				849978402CEF1FE5007D45BA /* StudentHistryVC.swift */,
 				849978412CEF1FE5007D45BA /* StudentHistryVC.xib */,
+				FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */,
+				FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */,
 			);
 			path = Attendance;
 			sourceTree = "<group>";
@@ -4399,6 +4405,7 @@
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
 				841ACC8F2DA5076800326D52 /* loader.json in Resources */,
 				848E4F622DF6A874006F6658 /* AssignmentSummitionVC.xib in Resources */,
+				FA7014D12E7D76CD00B3C012 /* AttendanceMarkingVC.xib in Resources */,
 				187CF4D62D119C82001422CE /* ClassTimeTableViewController.xib in Resources */,
 				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
@@ -4995,6 +5002,7 @@
 				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EF9D232E7A7B7E00F57838 /* SwitchRollTVC.swift in Sources */,
+				FA7014D22E7D76CD00B3C012 /* AttendanceMarkingVC.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
 				FA6CD8A12E3DEEC500C146AB /* OutpassVC.swift in Sources */,
@@ -5663,7 +5671,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = SplashStoryboard.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -5706,7 +5714,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = SplashStoryboard.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

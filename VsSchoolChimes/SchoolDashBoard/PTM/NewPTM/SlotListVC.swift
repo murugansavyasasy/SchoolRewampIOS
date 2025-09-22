@@ -233,6 +233,8 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.BookingBaseview.backgroundColor = .systemRed.withAlphaComponent(0.1)
                 cell.WaitingLbl.text = "Slot Cancelled"
             }
+            
+            cell.optionsBtn.isHidden = !(slot?.can_cancel ?? false)
                 return cell
         }
     }

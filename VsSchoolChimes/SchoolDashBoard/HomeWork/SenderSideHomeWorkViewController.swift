@@ -685,4 +685,5 @@ struct AttachmentItem {
     var fileType: String
     var VideoURl : URL?// "image", "pdf", etc.
     var VimeoVideoURL : String?
+    var displayName : String?
 }

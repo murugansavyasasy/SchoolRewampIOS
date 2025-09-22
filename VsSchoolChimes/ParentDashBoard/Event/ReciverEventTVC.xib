@@ -51,14 +51,14 @@
                                             <action selector="reminder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qXr-X1-e8F"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
+                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
                                         <rect key="frame" x="33" y="-7" width="40" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="OZV-vV-YCz"/>
                                             <constraint firstAttribute="width" constant="40" id="kel-Vv-QbZ"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="16" minY="3" maxX="0.0" maxY="5"/>
+                                        <inset key="imageEdgeInsets" minX="7" minY="3" maxX="0.0" maxY="5"/>
                                         <state key="normal" image="three-dot"/>
                                         <connections>
                                             <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zoA-my-26G"/>

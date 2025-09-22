@@ -117,7 +117,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         setupCollectionView()
         setupRefreshControl()
         setupLoader()
-        createBtn.layer.cornerRadius = 6
+        createBtn.layer.cornerRadius = createBtn.frame.height / 2
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]

@@ -38,6 +38,8 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
                 delegate?.back(logout: false)
+            }else if vc is CustomDasboard {
+                hideSideMenu()
             }else{
                 delegate?.back(logout: false)
             }
@@ -276,10 +278,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         window.addSubview(dimView)
         self.dimmedView = dimView
         
-        let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
+        let menuVC = SideMenuVC(isStudent: true)
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
-        menuVC.isStudent = true
+       
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
         swipeGesture.direction = .left
         menuVC.view.addGestureRecognizer(swipeGesture)

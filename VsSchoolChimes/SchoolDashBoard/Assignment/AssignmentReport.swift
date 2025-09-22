@@ -173,7 +173,7 @@ class AssignmentReport: UIViewController, SelectedId {
         applyShadowAndCornerRadius(to: academicView)
         academicView.layer.borderColor = UIColor.lightGray.cgColor
         academicView.layer.borderWidth = 0.5
-        createBtn.layer.cornerRadius = 6
+        createBtn.layer.cornerRadius = createBtn.frame.height / 2
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]

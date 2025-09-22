@@ -1619,6 +1619,8 @@ struct SlotItem: Codable {
     let break_duration: Int?
     var is_cancelled_by_staff: Bool?
     let date: String?
+    let sent_by: String?
+    let can_cancel: Bool?
 }
 
 struct ClassSectionDetail: Codable {
@@ -2306,8 +2308,15 @@ struct UserDetailItem: Codable {
     var is_editable: Bool?
     var optional: Bool?
     var options: [String]?
+    var file_path: [DocumentFile]? 
     var node: String?
     
+}
+struct DocumentFile: Codable {
+    var documentPath: String?
+    var documentName: String?
+    var documentDisplayName: String?
+    var isViewChange: Int?
 }
 
 // MARK: - Field Types

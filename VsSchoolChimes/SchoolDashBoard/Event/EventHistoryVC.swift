@@ -59,7 +59,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchBar.backgroundColor = .clear
         searchBar.delegate = self
         searchBar.addDoneButton()
-        createBtn.layer.cornerRadius = 6
+        createBtn.layer.cornerRadius = createBtn.frame.height / 2
+        
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]

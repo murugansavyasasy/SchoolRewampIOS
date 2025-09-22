@@ -72,7 +72,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
         
-        TitleLbl.text = AttendanceString.attendanceReport
+        TitleLbl.text = AttendanceString.LeaveHistory
         TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
         NoDataImage.isHidden = true

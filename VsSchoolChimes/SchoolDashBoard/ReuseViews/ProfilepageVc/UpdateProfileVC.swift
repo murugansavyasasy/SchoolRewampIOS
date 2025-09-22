@@ -31,7 +31,6 @@ class UpdateProfileVC: UIViewController {
         super.viewDidLoad()
         backBtn.isHidden = hideBack
         profileImg.isUserInteractionEnabled = true
-        // 2️⃣ Add tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         profileImg.addGestureRecognizer(tapGesture)
         setupUI()
@@ -70,7 +69,7 @@ class UpdateProfileVC: UIViewController {
             guard let self = self else { return }
             user_inputs.selectedFileType = CommonStringFile.pdf
             self.attachments.append(
-                AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf)
+                AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf,displayName: data.lastPathComponent)
             )
             self.attachmentNode = "documents"
             reloadDocumentSection()
@@ -136,8 +135,6 @@ class UpdateProfileVC: UIViewController {
                         
                         // Populate profileSections excluding photo section
                         self.profileSections = firstProfileData.getAllSections().filter { $0.title != "Photo" }
-                        
-                        // Set profile image if available
                         if let photoPathItems = firstProfileData.photoPath,
                            let photoItem = photoPathItems.first,
                            let photoPath = photoItem.value,
@@ -153,22 +150,51 @@ class UpdateProfileVC: UIViewController {
                             section.items.contains(where: { $0.node == "documents" })
                         }), let documentItem = documentSection.items.first(where: { $0.node == "documents" }) {
                             
-                            if let files = documentItem.options {
-                                self.attachments = files.map { urlString in
-                                    let url = urlString
-                                    let type = urlString.lowercased().hasSuffix(".jpg") || urlString.lowercased().hasSuffix(".png") ? "image" :
-                                    urlString.lowercased().hasSuffix(".mp4") || urlString.lowercased().hasSuffix(".mov") ? "video" :
-                                    urlString.lowercased().hasSuffix(".pdf") ? "pdf" :
-                                    "unknown"
+                            if let files = documentItem.file_path {
+                                self.attachments = files.map { file in
+                                    let url = file.documentPath?.lowercased()
                                     
-                                    if type == "image" {
-                                        return AttachmentItem(image: nil, imageURL: url, fileType: "image")
-                                    } else if type == "video" {
-                                        return AttachmentItem(image: UIImage(systemName: "video"), imageURL: url, fileType: "video", VideoURl: URL(string: url))
-                                    } else if type == "pdf" {
-                                        return AttachmentItem(image: UIImage(systemName: "doc.richtext"), imageURL: url, fileType: "pdf")
+                                    let type: String
+                                    if url?.hasSuffix(".jpg") ?? false || ((url?.hasSuffix(".png")) != nil) {
+                                        type = "image"
+                                    } else if url?.hasSuffix(".mp4") ?? false || ((url?.hasSuffix(".mov")) != nil) {
+                                        type = "video"
+                                    } else if ((url?.hasSuffix(".pdf")) != nil) {
+                                        type = "pdf"
                                     } else {
-                                        return AttachmentItem(image: nil, imageURL: url, fileType: type)
+                                        type = "unknown"
+                                    }
+                                    
+                                    switch type {
+                                    case "image":
+                                        return AttachmentItem(
+                                            image: nil,
+                                            imageURL: file.documentPath,
+                                            fileType: "image",
+                                            displayName: file.documentDisplayName
+                                        )
+                                    case "video":
+                                        return AttachmentItem(
+                                            image: UIImage(systemName: "video"),
+                                            imageURL: file.documentPath,
+                                            fileType: "video",
+                                            VideoURl: URL(string: file.documentPath ?? ""),
+                                            displayName: file.documentDisplayName
+                                        )
+                                    case "pdf":
+                                        return AttachmentItem(
+                                            image: UIImage(systemName: "doc.richtext"),
+                                            imageURL: file.documentPath,
+                                            fileType: "pdf",
+                                            displayName: file.documentDisplayName
+                                        )
+                                    default:
+                                        return AttachmentItem(
+                                            image: nil,
+                                            imageURL: file.documentPath,
+                                            fileType: type,
+                                            displayName: file.documentDisplayName
+                                        )
                                     }
                                 }
                             }
@@ -416,16 +442,28 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                 group.leave()
             }
         }
-        
         // Handle attachments upload if present
         if !attachments.isEmpty {
             group.enter()
             uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
                 if let self = self {
-                    let uploadedFiles: [String] = urls.compactMap { urlString in
-                        guard let url = URL(string: urlString) else { return nil }
-                        return urlString
+                    // Now `urls` is [[String: String]] containing "url" + "fileOriginalName"
+                    let uploadedFiles: [[String: Any]] = urls.compactMap { dict in
+                        guard
+                            let urlString = dict["url"],
+                            let displayFileName = dict["fileOriginalName"],
+                            let path = URL(string: urlString)
+                        else { return nil }
+                        
+                        let fullFileName = path.lastPathComponent
+                        
+                        return [
+                            "documentPath": urlString,         // S3 uploaded URL
+                            "documentName": fullFileName,      // File name in bucket
+                            "documentDisplayName": displayFileName // Original file name (from local before upload)
+                        ]
                     }
+                    
                     if let attachmentNode = self.attachmentNode {
                         self.changedParams[attachmentNode] = uploadedFiles
                     }
@@ -433,6 +471,33 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                 group.leave()
             }
         }
+
+
+//        // Handle attachments upload if present
+//        if !attachments.isEmpty {
+//            group.enter()
+//            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
+//                if let self = self {
+//                    let uploadedFiles: [[String: Any]] = urls.compactMap { urlString in
+//                        guard let path = URL(string: urlString) else { return nil }
+//                        
+//                        let fullFileName = path.lastPathComponent
+//                        let fileName = fullFileName.components(separatedBy: "-").last ?? fullFileName
+//                        
+//                        return [
+//                            "documentPath": urlString,
+//                            "documentName": fullFileName,
+//                            "documentDisplayName": fileName
+//                        ]
+//                    }
+//                    
+//                    if let attachmentNode = self.attachmentNode {
+//                        self.changedParams[attachmentNode] = uploadedFiles
+//                    }
+//                }
+//                group.leave()
+//            }
+//        }
         
         // Once all uploads complete, call updateProfile
         group.notify(queue: .main) { [weak self] in
@@ -453,32 +518,32 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    private func processAttachmentsAndUpdate() {
-        if !attachments.isEmpty {
-            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
-                guard let self = self else { return }
-                let uploadedFiles: [[String: String]] = urls.compactMap { urlString in
-                    guard let url = URL(string: urlString) else { return nil }
-                    
-                    let fileType = url.pathExtension.lowercased()
-                    let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                    
-                    return [
-                        CommonStringFile.url: urlString,
-                        CommonStringFile.type: type
-                    ]
-                }
-                
-                if let attachmentNode = self.attachmentNode {
-                    self.changedParams[attachmentNode] = uploadedFiles
-                }
-                
-                self.updateProfile(with: self.changedParams)
-            }
-        } else {
-            updateProfile(with: changedParams)
-        }
-    }
+//    private func processAttachmentsAndUpdate() {
+//        if !attachments.isEmpty {
+//            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
+//                guard let self = self else { return }
+//                let uploadedFiles: [[String: String]] = urls.compactMap { urlString in
+//                    guard let url = URL(string: urlString) else { return nil }
+//                    
+//                    let fileType = url.pathExtension.lowercased()
+//                    let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+//                    
+//                    return [
+//                        CommonStringFile.url: urlString,
+//                        CommonStringFile.type: type
+//                    ]
+//                }
+//                
+//                if let attachmentNode = self.attachmentNode {
+//                    self.changedParams[attachmentNode] = uploadedFiles
+//                }
+//                
+//                self.updateProfile(with: self.changedParams)
+//            }
+//        } else {
+//            updateProfile(with: changedParams)
+//        }
+//    }
     
     func updateProfile(with parameters: [String: Any]) {
         guard !parameters.isEmpty else {
@@ -521,9 +586,9 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
     // MARK: - Upload Media (Images + Video)
     private func uploadMedia(
         file: Any,
-        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
+        completion: @escaping (_ urls: [[String: String]], _ iframeHTML: String?, _ filename: Int?, _ embedUrl: String?) -> Void
     ) {
-        var uploadedURLs: [String] = []
+        var uploadedURLs: [[String: String]] = []
         var completed = 0
         
         func updateAndCheckCompletion(total: Int, iframe: String? = nil, size: Int? = nil, embed: String? = nil) {
@@ -557,7 +622,11 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                         progressHandler: nil
                     ) { url in
                         if let uploadedURL = url {
-                            uploadedURLs.append(uploadedURL)
+                            let fileName = item.fileType.lowercased() == "image" ? UUID().uuidString + ".jpg":item.displayName ?? ""
+                            uploadedURLs.append([
+                                "url": uploadedURL,
+                                "fileOriginalName": fileName
+                            ])
                         }
                         completed += 1
                         updateAndCheckCompletion(total: total)
@@ -565,7 +634,10 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                 } else if let fileURLStr = item.imageURL {
                     if fileURLStr.lowercased().hasPrefix("http") {
                         // Already an uploaded file (skip upload)
-                        uploadedURLs.append(fileURLStr)
+//                        uploadedURLs.append([
+//                            "url": fileURLStr,
+//                            "fileOriginalName": URL(string: fileURLStr)?.lastPathComponent ?? "unknown"
+//                        ])
                         completed += 1
                         updateAndCheckCompletion(total: total)
                     } else if let fileURL = URL(string: fileURLStr) {
@@ -577,7 +649,10 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                             progressHandler: nil
                         ) { url in
                             if let uploadedURL = url {
-                                uploadedURLs.append(uploadedURL)
+                                uploadedURLs.append([
+                                    "url": uploadedURL,
+                                    "fileOriginalName": fileURL.lastPathComponent
+                                ])
                             }
                             completed += 1
                             updateAndCheckCompletion(total: total)
@@ -595,6 +670,86 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
             completion([], nil, nil, nil)
         }
     }
+
+    
+//
+//    // MARK: - Upload Media (Images + Video)
+//    private func uploadMedia(
+//        file: Any,
+//        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ filename: Int?, _ embedUrl: String?) -> Void
+//    ) {
+//        var uploadedURLs: [String] = []
+//        var completed = 0
+//        
+//        func updateAndCheckCompletion(total: Int, iframe: String? = nil, size: Int? = nil, embed: String? = nil) {
+//            let progress = (Double(completed) / Double(total)) * 100
+//            CircularProgressLoader.shared.updateProgress(to: progress)
+//            if completed == total {
+//                CircularProgressLoader.shared.hide()
+//                completion(uploadedURLs, iframe, size, embed)
+//            }
+//        }
+//        
+//        switch file {
+//        case let attachments as [AttachmentItem]:
+//            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
+//            let total = uploadableItems.count
+//            guard total > 0 else {
+//                completion([], nil, nil, nil)
+//                return
+//            }
+//            
+//            CircularProgressLoader.shared.show(style: .circle)
+//            CircularProgressLoader.shared.updateProgress(to: 0)
+//            
+//            for item in uploadableItems {
+//                if let image = item.image {
+//                    // Upload local image to AWS
+//                    AWSUploadManager.shared.uploadFileToAWS(
+//                        file: image,
+//                        bucketPath: "uploads/images/",
+//                        bucketName: "schoolchimes-communication",
+//                        progressHandler: nil
+//                    ) { url in
+//                        if let uploadedURL = url {
+//                            uploadedURLs.append(uploadedURL)
+//                        }
+//                        completed += 1
+//                        updateAndCheckCompletion(total: total)
+//                    }
+//                } else if let fileURLStr = item.imageURL {
+//                    if fileURLStr.lowercased().hasPrefix("http") {
+//                        // Already an uploaded file (skip upload)
+////                        uploadedURLs.append(fileURLStr)
+//                        completed += 1
+//                        updateAndCheckCompletion(total: total)
+//                    } else if let fileURL = URL(string: fileURLStr) {
+//                        let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
+//                        AWSUploadManager.shared.uploadFileToAWS(
+//                            file: fileURL,
+//                            bucketPath: path,
+//                            bucketName: "schoolchimes-communication",
+//                            progressHandler: nil
+//                        ) { url in
+//                            if let uploadedURL = url {
+//                                uploadedURLs.append(uploadedURL)
+//                            }
+//                            completed += 1
+//                            updateAndCheckCompletion(total: total)
+//                        }
+//                    } else {
+//                        print("❌ Invalid fileURL: \(fileURLStr)")
+//                        completed += 1
+//                        updateAndCheckCompletion(total: total)
+//                    }
+//                }
+//            }
+//            
+//        default:
+//            print("❌ Unsupported file type")
+//            completion([], nil, nil, nil)
+//        }
+//    }
 }
 
 // MARK: - UIImagePickerController Delegate
