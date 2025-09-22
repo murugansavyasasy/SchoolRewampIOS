@@ -1770,6 +1770,7 @@
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
+		849183E62E7DC34900DE4F7C /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
 		8491FFCF2D818A080060C22B /* ApiService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApiService; sourceTree = "<group>"; };
 		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
 		84AB0FFC2E78E094001160AD /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
@@ -2980,6 +2981,7 @@
 		849ACFFD2D1A8369002DEC07 /* ReciverAttendanceReport */ = {
 			isa = PBXGroup;
 			children = (
+				849183E62E7DC34900DE4F7C /* CvCell */,
 				849ACFF92D1A8369002DEC07 /* ReciverAttendanceReportVC.swift */,
 				849ACFFA2D1A8369002DEC07 /* ReciverAttendanceReportVC.xib */,
 				849ACFFB2D1A8369002DEC07 /* ReciverAttendReportTV.swift */,
@@ -4189,6 +4191,7 @@
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
+				849183E62E7DC34900DE4F7C /* CvCell */,
 				8491FFCF2D818A080060C22B /* ApiService */,
 				849DD1612D9668B00027910D /* Biometric */,
 				84AB0FFC2E78E094001160AD /* CvCell */,

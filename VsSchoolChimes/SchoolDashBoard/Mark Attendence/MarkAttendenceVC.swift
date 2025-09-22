@@ -572,25 +572,39 @@ class MarkAttendenceVC: UIViewController {
                             Double(absentCount ?? 0) / Double(totalCount ?? 0)
                         ) * 100 : 0
                         
-                        print("Total Students: \(totalCount)")
-                        print("Present: \(presentCount) (\(presentPercentage)%)")
-                        print("Absent: \(absentCount) (\(absentPercentage)%)")
+                    
                         
                         presentPeretageLbl.text = "\(presentPercentage.rounded(.down))%"
                         absentPersentage.text = "\(absentPercentage.rounded(.down))%"
                         
                         if Int(presentPercentage.rounded(.down)) == 100 {
-                            presentPeretageLbl.text = "100%"
-                            absentPersentage.text = "" // or "nil" if you want to explicitly show
+                            
+                            graphDownImg.image = UIImage(named: "presentGraps")
+                            graphDownImg.image = UIImage(named: "AbsentGraph")
+//                            absent
+                            
                         } else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
                             let value = Int(presentPercentage.rounded(.down))
-                            presentPeretageLbl.text = "\(value)%"
-                            absentPersentage.text = "\(value)%"
+                          
+                            graphDownImg.image = UIImage(named: "presentGraps")
+                            graphDownImg.image = UIImage(named: "AbsentGraph")
+                            
                         } else if presentPercentage < absentPercentage {
-                            presentPeretageLbl.text = "\(Int(presentPercentage.rounded(.down)))%"
-                            absentPersentage.text = "\(Int(absentPercentage.rounded(.down)))%"
+                            
+                            graphDownImg.image = UIImage(named: "presentGraps")
+                            
+                            graphDownImg.tintColor = .green
+                            graphUpImg.image = UIImage(named: "AbsentGraph")
+                            graphUpImg.tintColor = .red
+                            
                         } else if presentPercentage > absentPercentage {
                             
+                            
+                            graphDownImg.image = UIImage(named: "AbsentGraph")
+                            
+                            graphDownImg.tintColor = .red
+                            graphUpImg.image = UIImage(named: "presentGraps")
+                            graphUpImg.tintColor = .green
                             
                         }else {
                             // default case

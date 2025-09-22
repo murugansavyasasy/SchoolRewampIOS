@@ -281,7 +281,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             url: ServiceUrl.global_global_variables,
             parameters: ["key_names" : []],
             type: ApitTypeSringFile.POST,
-            token: ServiceUrl.token
+            token: ""
         ) { (result: Result<GlobalVariablesResponse, Error>) in
             switch result {
                 

@@ -8,9 +8,10 @@
 import UIKit
 import WebKit
 
-class FeeDetails: UIViewController {
+class FeeDetails: UIViewController,WKNavigationDelegate {
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
+    @IBOutlet weak var LoadingView: UIView!
     @IBOutlet weak var reportsLb: UILabel!
     @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var tableOuterView: UIView!
@@ -20,34 +21,46 @@ class FeeDetails: UIViewController {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var NodataImage: UIImageView!
-    
+    @IBOutlet weak var LoadingLbl: UILabel!
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    var global = UserDefaultFileManager.get_globalSelection()
     var feeDetailsList: [InvoiceItem] = []
     var isWebViewLoaded = false
     var receipt_url: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        webView.navigationDelegate = self
         backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true
+
         
-        if let pdfURL = URL(string: "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063") {
+        let baseURL = global?.fees_url ?? ""
+
+        let schoolId = studentDetails?.school_id ?? ""
+        let childId = studentDetails?.child_id ?? ""
+
+        let urlString = "\(baseURL)/\(schoolId)/\(childId)"
+
+        if let pdfURL = URL(string: urlString) {
             let request = URLRequest(url: pdfURL)
             webView.load(request)
         } else {
-            print("Invalid URL")
+            print("Invalid URL: \(urlString)")
         }
+
+
 
         // Register custom cell
         feeDetailTableView.register(UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeedetailTVC)
         feeDetailTableView.delegate = self
         feeDetailTableView.dataSource = self
         
-        Get_Fee_Invoice_Api()
+        
     }
 
     @IBAction func backBtn(_ sender: UIButton) {
@@ -67,8 +80,7 @@ class FeeDetails: UIViewController {
                    case 1:
                        self.webOuterView.isHidden = true
                        self.tableOuterView.isHidden = false
-                       self.feeDetailTableView.reloadData()
-                       
+                       Get_Fee_Invoice_Api()
                    default:
                        break
                    }
@@ -100,7 +112,7 @@ class FeeDetails: UIViewController {
                     self.NodataImage.isHidden = success.status ?? true
                     self.NoDataLbl.isHidden = success.status ?? true
                     self.NoDataLbl.text = success.message ?? ""
-                    
+                    self.feeDetailTableView.reloadData()
                 case .failure(let failure):
                     
                     self.NodataImage.isHidden = false
@@ -174,6 +186,28 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         let id = feeDetailsList[indexPath.row].id ?? ""
         Get_Invoice_Receipt_Api(invoiceId: id)
     }
+    
+    
+    // MARK: - WKNavigationDelegate Methods
+
+       // Show loading animation when page starts loading
+       func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+           LoadingView.isHidden = false
+           ActivityIndicator.startAnimating()
+       }
+
+       // Hide loading animation when page finishes loading
+       func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+           LoadingView.isHidden = true
+           ActivityIndicator.stopAnimating()
+       }
+
+       // Hide loading animation in case of an error
+       func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+           LoadingView.isHidden = true
+           ActivityIndicator.stopAnimating()
+           print("Error loading page: \(error.localizedDescription)")
+       }
 }
 
 
