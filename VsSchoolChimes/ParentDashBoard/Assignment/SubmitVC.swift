@@ -16,7 +16,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
-    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var submitBtn: UIButton!
@@ -48,8 +47,10 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        let studentName = studentDetails?.name ?? ""
+        let Standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        backBtn.configureAsBackButton(firstLine: studentName, secondLine: Standard)
+        NameLbl.text = "Submit " + MenuStringFile.selectedMenuName
         setupUI()
         videoPicker = VideoPickerManager(presenter: self, delegate: self)
         imageSelection()
@@ -62,9 +63,8 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         adjustTextViewHeights()
         setupPlaceholder()
         //FontStyle
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        NameLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        
         DescriptionTextview.addDoneButton()
        
     }

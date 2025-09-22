@@ -445,12 +445,11 @@ class MarkAttendenceVC: UIViewController {
         user_inputs.class_id = StandardId
         user_inputs.attendance_date = selectedDate
         
-        let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        vc.isAttandanceMarkingScreen = true
+        let vc = AttendanceMarkingVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = sectionId
         vc.selectedAcadimicYearId = AcademicYearId
-        vc.StandardString = standardLbl.text
-        vc.SectionString = sectionLbl.text
+        vc.StandardString = standardLbl.text ?? ""
+        vc.SectionString = sectionLbl.text ?? ""
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

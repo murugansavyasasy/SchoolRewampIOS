@@ -18,8 +18,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             // Count of students marked as absent
             totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
             let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-            PresentCountLbl.text = String(PresenrCount)
-            AbsentCountLbl.text = String(totalcount)
+//            PresentCountLbl.text = String(PresenrCount)
+//            AbsentCountLbl.text = String(totalcount)
             let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
             selectAllBtn.setImage(image, for: .normal)
         }
@@ -27,23 +27,23 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBOutlet weak var SearchStack: UIStackView!
     @IBOutlet weak var BackBtn: UIButton!
-    @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
-    @IBOutlet weak var headerView: UIView!
+//    @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
+//    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var search: UISearchBar!
-    @IBOutlet weak var statusLbl: UILabel!
-    @IBOutlet weak var rollNoLbl: UILabel!
-    @IBOutlet weak var nameLbl: UILabel!
+//    @IBOutlet weak var statusLbl: UILabel!
+//    @IBOutlet weak var rollNoLbl: UILabel!
+//    @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var filterBtn: UIButton!
     @IBOutlet weak var sendbtnName: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     @IBOutlet weak var TopView: UIView!
-    @IBOutlet weak var PresentCountView: UIView!
-    @IBOutlet weak var AbsentCountView: UIView!
-    @IBOutlet weak var PresentCountLbl: UILabel!
-    @IBOutlet weak var AbsentCountLbl: UILabel!
-    @IBOutlet weak var PresentDefLbl: UILabel!
-    @IBOutlet weak var AbsentDefLbl: UILabel!
+//    @IBOutlet weak var PresentCountView: UIView!
+//    @IBOutlet weak var AbsentCountView: UIView!
+//    @IBOutlet weak var PresentCountLbl: UILabel!
+//    @IBOutlet weak var AbsentCountLbl: UILabel!
+//    @IBOutlet weak var PresentDefLbl: UILabel!
+//    @IBOutlet weak var AbsentDefLbl: UILabel!
     
     
     var switchCell = 1
@@ -89,20 +89,20 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        PresentCountView.layer.cornerRadius = 5
-        PresentCountView.layer.borderWidth = 0.3
-        PresentCountView.layer.borderColor = UIColor.systemGray4.cgColor
-        
-        AbsentCountView.layer.cornerRadius = 5
-        AbsentCountView.layer.borderWidth = 0.3
-        AbsentCountView.layer.borderColor = UIColor.systemGray4.cgColor
+//        PresentCountView.layer.cornerRadius = 5
+//        PresentCountView.layer.borderWidth = 0.3
+//        PresentCountView.layer.borderColor = UIColor.systemGray4.cgColor
+//        
+//        AbsentCountView.layer.cornerRadius = 5
+//        AbsentCountView.layer.borderWidth = 0.3
+//        AbsentCountView.layer.borderColor = UIColor.systemGray4.cgColor
         
         SearchStack.isHidden = true
         
-        PresentCountLbl.setFont(style: .title, size: 25)
-        AbsentCountLbl.setFont(style: .title, size: 25)
-        PresentDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        AbsentDefLbl.setFont(style: .body, size: FontSize.BodySize)
+//        PresentCountLbl.setFont(style: .title, size: 25)
+//        AbsentCountLbl.setFont(style: .title, size: 25)
+//        PresentDefLbl.setFont(style: .body, size: FontSize.BodySize)
+//        AbsentDefLbl.setFont(style: .body, size: FontSize.BodySize)
         
         selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         sendbtnName.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -110,17 +110,18 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
         BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "", colour: .white)
         
-        if isAttandanceMarkingScreen == false{
-            HeaderviewHeight.constant = 0
-            headerView.isHidden = true
+//        if isAttandanceMarkingScreen == false{
+//            HeaderviewHeight.constant = 0
+//            headerView.isHidden = true
+//            
+//        }else{
             
-        }else{
-            
-            filterBtn.isHidden = false
+            filterBtn.isHidden = true
             selectAllBtn.setImage(ImageName.square, for: .normal)
+            selectAllBtn.semanticContentAttribute = .forceRightToLeft
             filterBtn.isUserInteractionEnabled = true
             
-        }
+       // }
         
         registerCell()
         recipient_get_student_list(
@@ -128,9 +129,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             academic_year_id: selectedAcadimicYearId ?? 0
         )
         search.delegate = self
-        headerView.layer.cornerRadius = 5
-        headerView.layer.borderWidth = 0.5
-        headerView.layer.borderColor = UIColor.systemGray4.cgColor
+//        headerView.layer.cornerRadius = 5
+//        headerView.layer.borderWidth = 0.5
+//        headerView.layer.borderColor = UIColor.systemGray4.cgColor
         // Do any additional setup after loading the view.
         
     }
@@ -146,15 +147,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func StyleAndTranslater() {
         
         //MARK: Label And Button Font Style
-        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
-        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
         filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Translation
-        rollNoLbl.text = CommonStringFile.RollNo.translated()
-        nameLbl.text = CommonStringFile.Name.translated()
-        statusLbl.text = CommonStringFile.Status.translated()
+//        rollNoLbl.text = CommonStringFile.RollNo.translated()
+//        nameLbl.text = CommonStringFile.Name.translated()
+//        statusLbl.text = CommonStringFile.Status.translated()
         search.placeholder = CommonStringFile.Search.translated()
         //filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
         
@@ -240,13 +241,13 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             if isSelectingAll {
                 selectAllBtn.setImage(ImageName.checkmark, for: .normal)
                 totalcount = studentsDetails?.count ?? 0
-                AbsentCountLbl.text = String(totalcount)
-                PresentCountLbl.text = "0"
+//                AbsentCountLbl.text = String(totalcount)
+//                PresentCountLbl.text = "0"
             } else {
                 selectAllBtn.setImage(ImageName.square, for: .normal)
                 totalcount = 0
-                PresentCountLbl.text = String(studentsDetails?.count ?? 0 )
-                AbsentCountLbl.text = String(totalcount)
+//                PresentCountLbl.text = String(studentsDetails?.count ?? 0 )
+//                AbsentCountLbl.text = String(totalcount)
             }
         }
         else{
@@ -333,7 +334,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                 count: studentsDetails?.count ?? 0
                             )
                             filterData = studentsDetails
-                            PresentCountLbl.text = String(studentsDetails?.count ?? 0)
+                           // PresentCountLbl.text = String(studentsDetails?.count ?? 0)
                             historyTable.reloadData()
                         }
                     }else{
@@ -805,7 +806,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if  isAttandanceMarkingScreen == false{
+        
             let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
             let backgroundColor = colorForName(
                 filterData?[indexPath.row].name ?? ""
@@ -835,30 +836,8 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             }
             
             return cell
-        }
-        else{
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
-            cell.nameLbl.text = filterData?[indexPath.row].name
-            cell.rollNo.isHidden = true
-            cell.admissionlbl.text = "ADMIS No: " +  (
-                filterData?[indexPath.row].admission_no ?? ""
-            )
-            if filterData?[indexPath.row].roll_no != ""{
-                cell.rollNo.isHidden = false
-                cell.rollNo
-                    .setTitle(filterData?[indexPath.row].roll_no, for: .normal)
-            }
-            
-            cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
-            cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
-            cell.phnBtn.tag = indexPath.row
-            cell.phnBtn.isHidden = true
-            cell.custSwitch.index = indexPath.row
-            cell.delegate = self
-            return cell
-        }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
