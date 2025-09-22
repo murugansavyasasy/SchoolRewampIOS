@@ -21,7 +21,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var menuTable: UITableView!
     weak var delegate: SideMenuDelegate?
     var isSwitchRoleExpanded = false
-    var isStudent = false
+    var isStudent:Bool?
     // MARK: - Data
     var menuArray: [MenuItem] = [
         MenuItem(name: "DashBoard", icon: "house"),
@@ -38,7 +38,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isStudent{
+        if isStudent ?? false{
             userName.text = childeDetail?.name
             setupProfileImage(url: URL(string: childeDetail?.profile ?? ""))
         }else{
@@ -74,6 +74,13 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         profileImgaView.addGestureRecognizer(tapGesture)
         
+    }
+    init(isStudent: Bool = false) {
+        self.isStudent = isStudent
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         delegate?.didTapProfileImage(from: sender.view as? UIImageView)
@@ -132,7 +139,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         switch selectedItem.name {
         case "View Profile":
-            delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent))
+            delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent ?? false))
             
         case "Settings":
             delegate?.meunu(viewController: SettingsViewController())
@@ -174,7 +181,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //                tableView.reloadData()
 //                delegate?.meunu(viewController: nil)
 //            }
-            delegate?.meunu(viewController: UIViewController())
+            delegate?.meunu(viewController: CustomDasboard())
         }
     }
 }

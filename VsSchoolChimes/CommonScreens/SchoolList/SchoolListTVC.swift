@@ -9,6 +9,7 @@ import UIKit
 
 class SchoolListTVC: UITableViewCell {
 
+    @IBOutlet weak var outlinView: UIView!
     @IBOutlet weak var schoolIconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var arrowWidth: NSLayoutConstraint!
@@ -22,7 +23,8 @@ class SchoolListTVC: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         showPopUpEffect()
-        outerView.setShadow(cornerRadius: 20)
+        outerView.layer.cornerRadius = 8
+        outlinView.setShadow(cornerRadius: 10)
         schoolIconBtn.setShadow(cornerRadius: schoolIconBtn.frame.width/2)
     }
  

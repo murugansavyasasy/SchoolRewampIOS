@@ -17,6 +17,8 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     func backToCall() {
         AppFlowChecking()
     }
+    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var circleView: UIView!
     @IBOutlet weak var okBtn: UIButton!
     @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var bottumSheet: UIView!
@@ -26,9 +28,15 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     var version_Data : VersionData? = nil
     var AlertModal = CustomAlert()
     // MARK: - Lifecycle Methods
+    var progress: Float = 0.0
+       var timer: Timer?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Configure language and layout
+        circleView.layer.cornerRadius = circleView.frame.width/2
+        progressView.progress = 0.0   // start from 0
+        progressView.tintColor = .green
+               startLoading()
         configureLanguageLayout()
         proceedWithAppFlow()
         //        checkDeveloperMode()
@@ -53,7 +61,22 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     
-    
+    func startLoading() {
+        progress = 0.0
+        progressView.progress = 0.0
+        
+        // Timer runs every 0.05 sec
+        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] t in
+            guard let self = self else { return }
+            
+            if self.progress < 1.0 {
+                self.progress += 0.01
+                self.progressView.setProgress(self.progress, animated: true)
+            } else {
+                t.invalidate()   // stop timer once completed
+            }
+        }
+    }
     func vibrateDevice() {
         // Basic vibration
         AudioServicesPlaySystemSound(1004)

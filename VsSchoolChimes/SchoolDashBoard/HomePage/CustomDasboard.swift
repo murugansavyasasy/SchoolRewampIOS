@@ -103,6 +103,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
                 delegate?.back(logout: false)
+            }else if vc is CustomDasboard {
+                dismiss(animated: true)
             }else{
                 delegate?.back(logout: false)
             }
@@ -279,7 +281,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     func Global_variabel() {
         APIService.shared.makeApi(
             url: ServiceUrl.global_global_variables,
-            parameters: [:],
+            parameters: ["key_names" : []],
             type: ApitTypeSringFile.POST,
             token: ServiceUrl.token
         ) { (result: Result<GlobalVariablesResponse, Error>) in
@@ -396,7 +398,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         window.addSubview(dimView)
         self.dimmedView = dimView
         
-        let menuVC = SideMenuVC(nibName: "SideMenuVC", bundle: nil)
+        let menuVC = SideMenuVC()
         menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
         menuVC.isStudent = false
@@ -503,8 +505,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 38: break
-        case 39:
-            navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
+        case 39:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
         default: print("Unknown menuId:", item.id ?? 0)
         }
     }

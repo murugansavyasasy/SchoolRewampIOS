@@ -31,6 +31,7 @@
                 <outlet property="collectionViewHeght" destination="RR2-lf-gWv" id="Mzn-yT-gE7"/>
                 <outlet property="contentTextView" destination="Rch-Dj-jHk" id="jKs-eS-TLe"/>
                 <outlet property="customizedDateBtn" destination="sfq-Mf-bKf" id="LJl-Cj-e8E"/>
+                <outlet property="headerView" destination="uHq-oe-agh" id="Pap-jV-c5c"/>
                 <outlet property="letterscountLbl" destination="vfF-Qp-a9V" id="cMJ-gR-4Du"/>
                 <outlet property="outerView" destination="BUO-2J-dua" id="tMN-kt-AdG"/>
                 <outlet property="scrollView" destination="YT0-qY-ngg" id="pFj-Lu-3UL"/>
@@ -44,24 +45,35 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7U-N3-tnC">
-                    <rect key="frame" x="10" y="69" width="373" height="35"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHq-oe-agh">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7U-N3-tnC">
+                            <rect key="frame" x="10" y="69" width="363" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="VaW-1n-QcQ"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Assignment" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                            </state>
+                            <connections>
+                                <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="5CG-S4-ZMB"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" name="PrimeryColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="35" id="VaW-1n-QcQ"/>
+                        <constraint firstItem="L7U-N3-tnC" firstAttribute="leading" secondItem="uHq-oe-agh" secondAttribute="leading" constant="10" id="27m-yX-wDz"/>
+                        <constraint firstAttribute="trailing" secondItem="L7U-N3-tnC" secondAttribute="trailing" constant="20" id="8t5-ar-LM5"/>
+                        <constraint firstAttribute="bottom" secondItem="L7U-N3-tnC" secondAttribute="bottom" constant="20" id="PQw-hu-6A1"/>
                     </constraints>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Assignment" image="chevron.left" catalog="system">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                    </state>
-                    <connections>
-                        <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="5CG-S4-ZMB"/>
-                    </connections>
-                </button>
+                </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YT0-qY-ngg">
-                    <rect key="frame" x="0.0" y="114" width="393" height="738"/>
+                    <rect key="frame" x="0.0" y="124" width="393" height="728"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUO-2J-dua">
                             <rect key="frame" x="0.0" y="10" width="393" height="597"/>
@@ -350,14 +362,15 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="PrimeryColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="L7U-N3-tnC" secondAttribute="trailing" constant="10" id="3vt-v4-ub2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uHq-oe-agh" secondAttribute="trailing" id="9Tz-go-i6X"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B4x-Ui-VYN"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="GwY-hW-1iC"/>
                 <constraint firstItem="BUO-2J-dua" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="HVj-Qb-a7c"/>
-                <constraint firstItem="YT0-qY-ngg" firstAttribute="top" secondItem="L7U-N3-tnC" secondAttribute="bottom" constant="10" id="U6a-MB-tC7"/>
-                <constraint firstItem="L7U-N3-tnC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="bkQ-HJ-zgZ"/>
+                <constraint firstItem="uHq-oe-agh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="L19-ZD-syC"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="i9H-dF-3Pe"/>
-                <constraint firstItem="L7U-N3-tnC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ysi-iA-cVe"/>
+                <constraint firstItem="YT0-qY-ngg" firstAttribute="top" secondItem="uHq-oe-agh" secondAttribute="bottom" id="oGN-78-tKz"/>
+                <constraint firstItem="L7U-N3-tnC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="rmV-Pn-S8r"/>
+                <constraint firstItem="uHq-oe-agh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ydL-s9-eys"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
