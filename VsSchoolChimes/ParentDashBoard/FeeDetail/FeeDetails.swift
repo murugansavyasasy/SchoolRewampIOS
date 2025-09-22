@@ -34,7 +34,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
         webView.navigationDelegate = self
         backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
-        menuNameLbl.text = MenuStringFile.selectedMenuName
+      //  menuNameLbl.text = MenuStringFile.selectedMenuName
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true

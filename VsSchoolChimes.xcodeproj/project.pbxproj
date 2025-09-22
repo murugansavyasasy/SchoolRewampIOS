@@ -1771,6 +1771,7 @@
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		8405884C2DE18CE100A7384E /* FeeDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeeDetail; sourceTree = "<group>"; };
 		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
+		845CF1202E81737E001B2147 /* What'sNewVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "What'sNewVC"; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
@@ -3623,6 +3624,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				845CF1202E81737E001B2147 /* What'sNewVC */,
 				8481087A2E164CFE004A0F87 /* VideoPreviewVC */,
 				8435EA152DE9C68B00F02CB9 /* VideoPickAndPlay */,
 				8406396F2DDF541800930943 /* GalleryPickerPage */,
@@ -4194,6 +4196,7 @@
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
 				843BCD752E2E71EA00D4364A /* CalanderCv */,
+				845CF1202E81737E001B2147 /* What'sNewVC */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,

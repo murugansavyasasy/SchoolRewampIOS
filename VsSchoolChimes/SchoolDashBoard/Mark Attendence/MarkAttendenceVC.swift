@@ -12,6 +12,7 @@ import FSCalendar
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController {
     
+    @IBOutlet weak var notTakenView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtnName: UIButton!
     @IBOutlet weak var graphDownImg: UIImageView!
@@ -58,6 +59,7 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var MarkAttendanceBtn: UIButton!
     @IBOutlet weak var ReportsBtn: UIButton!
     
+    @IBOutlet weak var notTakenLbl: UILabel!
     let formatter = DateFormatter()
     let customdate = DateFormatter()
     let standardDropdown = DropDown()
@@ -82,11 +84,25 @@ class MarkAttendenceVC: UIViewController {
         super.viewDidLoad()
         
         BottomView.layer.cornerRadius = 8
+        notTakenView.layer.cornerRadius = 8
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
         let currentDateString = formatter.string(from: Date())
         selectedDate = currentDateString
+    
         dateDayLbl.text = currentDateString
+        
+        
+        if let date = formatter.date(from: selectedDate) {
+            let showFormatter = DateFormatter()
+            showFormatter.dateFormat = "EE MMM dd, yyyy"
+            
+            let formattedDate = showFormatter.string(from: date)
+            print(formattedDate)  // Example: Mon Sep 22, 2025
+            dateDayLbl.text = formattedDate
+        }
+        
+        AttendaceSectionStac.isHidden = true
         updateMonthLabel()
         UIupdate()
         get_Academic_year()
@@ -160,7 +176,7 @@ class MarkAttendenceVC: UIViewController {
         AcademicYearView.setShadow()
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
-        calendar.appearance.selectionColor = .systemRed
+        calendar.appearance.selectionColor = .primery
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
@@ -201,11 +217,11 @@ class MarkAttendenceVC: UIViewController {
         addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
         reportFullView.isHidden = true
         attendaceTypeStack.isHidden = false
-        AttendaceSectionStac.isHidden = false
         attendancedefault.isHidden = false
         reportFullView.isHidden = true
         MarkAbsentiesBtn.isHidden = false
         IsMarkAttendaceSelected = true
+        notTakenView.isHidden = true
     }
     
     @IBAction func ReportsAct(_ sender: Any) {
@@ -255,13 +271,12 @@ class MarkAttendenceVC: UIViewController {
         HalfDayBtn.backgroundColor = .systemGray4
         AttendaceSectionStac.isHidden = true
         fulldayAction()
-        FirsthalfAct()
     
         
     }
     
     @IBAction func halfDayBtnAct(_ sender: UIButton) {
-        
+        FirsthalfAct()
         FulldayBtn.backgroundColor = .systemGray4
         HalfDayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
         AttendaceSectionStac.isHidden = false
@@ -284,24 +299,18 @@ class MarkAttendenceVC: UIViewController {
         //FulldayImgview.image = UIImage(named: "checked_Tick")
       
     }
-    @objc func HalfdayAction(){
-        
-        user_inputs.attendance_type = "H"
-        user_inputs.session_type = ""
-        user_inputs.all_present = "T"
-        
-        
-    }
+   
+
     @objc func FirsthalfAct(){
         user_inputs.attendance_type = "H"
         user_inputs.session_type = "FH"
-        user_inputs.all_present = "T"
+        user_inputs.all_present = "F"
         
     }
     @objc func SecondhalfAct(){
         user_inputs.attendance_type = "H"
         user_inputs.session_type = "SH"
-        user_inputs.all_present = "T"
+        user_inputs.all_present = "F"
         
         
     }
@@ -399,6 +408,8 @@ class MarkAttendenceVC: UIViewController {
     }
     
     func markAttendaceApi(){
+        
+        
         APIService.shared.makeApi(url:ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
                 
                 MarkAttendenceStringFile.student_id: [],
@@ -487,6 +498,10 @@ class MarkAttendenceVC: UIViewController {
                                 on: self) {
                                 self.dismiss(animated: true)
                             }
+                        
+                        notTakenView.isHidden = false
+                        BottomView.isHidden = true
+                      
                         sectionId = ""
                         StandardId = ""
                     }
@@ -553,6 +568,9 @@ class MarkAttendenceVC: UIViewController {
                     DispatchQueue.main.async { [self] in
                         attendenceReport = successMessage.data
                         FilteredReport = attendenceReport
+                        
+                        reportFullView.isHidden = false
+                        notTakenView.isHidden = true
                         
                         // ✅ Calculate counts
                         let totalCount = attendenceReport?.count
@@ -629,12 +647,9 @@ class MarkAttendenceVC: UIViewController {
                         
                         attendenceReport = successMessage.data
                         FilteredReport = attendenceReport
-                        alert.showAlert(
-                            title: AlertstringFile.Alert_title,
-                            message:  successMessage.message ?? "" + "\n" + " on this date",
-                            on: self
-                        )
                         reportFullView.isHidden = true
+                        notTakenView.isHidden = false
+                        notTakenLbl.text = successMessage.message ?? ""
                         TV.reloadData()
                         updateTableHeight()
                     }
@@ -714,7 +729,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
         filterFormatter.dateFormat = "dd-MM-yyyy"
         
         let showFormatter = DateFormatter()
-        showFormatter.dateFormat = "MMMM dd, yyyy"
+        showFormatter.dateFormat = "EE MMM dd, yyyy"
         
         let selectedDateForFilter = filterFormatter.string(from: date)
         let selectedDateForLabel = showFormatter.string(from: date)

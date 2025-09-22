@@ -130,6 +130,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         search.toggle()
         searchBar.isHidden = search
         
+        tv.reloadData()
     }
     
     @available(iOS 14.0, *)

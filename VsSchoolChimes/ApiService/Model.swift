@@ -1389,6 +1389,7 @@ struct ManagemantMessageData: Codable {
     var duration: Int?
     var isExpand:Bool?
     
+    
    
 }
 //MARK: CLASS TIMETABLE
