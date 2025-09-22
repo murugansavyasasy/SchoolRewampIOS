@@ -2305,8 +2305,15 @@ struct UserDetailItem: Codable {
     var is_editable: Bool?
     var optional: Bool?
     var options: [String]?
+    var file_path: [DocumentFile]? 
     var node: String?
     
+}
+struct DocumentFile: Codable {
+    var documentPath: String?
+    var documentName: String?
+    var documentDisplayName: String?
+    var isViewChange: Int?
 }
 
 // MARK: - Field Types
