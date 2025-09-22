@@ -44,6 +44,7 @@ class AssignmentDetailTVC: UITableViewCell {
         
         attachmentList = attachments
         attachmentLbl.text = "𓄲 Attachments (\(attachments.count))"
+        attachmentLbl.isHidden = attachments.count == 0
         
         reloadCollectionAndUpdateHeight()
     }

@@ -47,7 +47,6 @@ class SenderAssignmentTextViewController: UIViewController,
     @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
     
     // MARK: - Public/External Dependencies (kept as-is)
@@ -96,9 +95,6 @@ class SenderAssignmentTextViewController: UIViewController,
         backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
         backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
         backBtn.imageView?.applyRTLFlip(language == "ar")
-        headerView.layer.cornerRadius = 20
-        headerView.layer.masksToBounds = true
-        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         backBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         StyleAndTranslater()
