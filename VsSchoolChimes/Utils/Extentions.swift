@@ -956,11 +956,21 @@ extension UILabel {
         self.attributedText = combined
     }
 }
-
-extension UIView {
-    func applyBottomCornerRadius() {
+class BottomRoundedView: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupCorners()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupCorners()
+    }
+    
+    private func setupCorners() {
         self.layer.cornerRadius = 20
-        self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] // bottom left + bottom right
         self.clipsToBounds = true
     }
 }
