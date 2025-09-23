@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +31,8 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" name="ParentClr"/>
+                                <color key="backgroundColor" red="0.70196078431372544" green="0.8784313725490196" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="d84-nC-TiX" secondAttribute="trailing" constant="5" id="2TT-bS-cvg"/>
                                     <constraint firstAttribute="bottom" secondItem="d84-nC-TiX" secondAttribute="bottom" constant="5" id="ByL-o6-OKa"/>
@@ -43,19 +43,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNu-rg-YZZ">
-                                <rect key="frame" x="26" y="10" width="10" height="25"/>
-                                <color key="backgroundColor" red="0.0" green="0.56470588235294117" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="26" y="10" width="10" height="20"/>
+                                <color key="backgroundColor" red="0.60392156862745094" green="0.72549019607843135" blue="0.73333333333333328" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="7cr-Sy-NTs"/>
-                                    <constraint firstAttribute="height" constant="25" id="m5M-oZ-IQ7"/>
+                                    <constraint firstAttribute="height" constant="20" id="m5M-oZ-IQ7"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyu-zV-mOg">
-                                <rect key="frame" x="81" y="10" width="10" height="25"/>
-                                <color key="backgroundColor" red="0.0" green="0.56514477147260278" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="81" y="10" width="10" height="20"/>
+                                <color key="backgroundColor" red="0.60392156862745094" green="0.72549019607843135" blue="0.73333333333333328" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="u2J-lW-pbB"/>
-                                    <constraint firstAttribute="height" constant="25" id="wc7-9K-Ti0"/>
+                                    <constraint firstAttribute="height" constant="20" id="wc7-9K-Ti0"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kyr-E4-2dz">
@@ -76,13 +76,13 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oaZ-H7-Rlx">
                                         <rect key="frame" x="0.0" y="21" width="111.66666666666667" height="12"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <color key="textColor" name="ParentClr"/>
+                                        <color key="textColor" red="0.5625" green="0.7036132812" blue="0.697265625" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uH-RN-fws">
-                                <rect key="frame" x="114.33333333333331" y="77.666666666666671" width="50" height="30"/>
+                                <rect key="frame" x="119.33333333333331" y="77.666666666666671" width="50" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="0.74964735243055558" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Bci-Gy-g9p"/>
@@ -101,7 +101,7 @@
                             <constraint firstItem="kyr-E4-2dz" firstAttribute="centerX" secondItem="6DD-lI-2p2" secondAttribute="centerX" id="9Pl-dL-3ob"/>
                             <constraint firstAttribute="bottom" secondItem="Kf4-2E-HXD" secondAttribute="bottom" constant="10" id="Ba6-Sn-e8Z"/>
                             <constraint firstItem="wyu-zV-mOg" firstAttribute="top" secondItem="6DD-lI-2p2" secondAttribute="top" constant="-15" id="H8y-pZ-VlH"/>
-                            <constraint firstItem="7uH-RN-fws" firstAttribute="leading" secondItem="kyr-E4-2dz" secondAttribute="trailing" constant="30" id="IP7-1I-sQP"/>
+                            <constraint firstItem="7uH-RN-fws" firstAttribute="leading" secondItem="kyr-E4-2dz" secondAttribute="trailing" constant="35" id="IP7-1I-sQP"/>
                             <constraint firstItem="7uH-RN-fws" firstAttribute="centerY" secondItem="kyr-E4-2dz" secondAttribute="centerY" id="Kdy-5l-xyg"/>
                             <constraint firstItem="Kf4-2E-HXD" firstAttribute="top" secondItem="kyr-E4-2dz" secondAttribute="bottom" constant="5" id="P8H-5g-r2Q"/>
                             <constraint firstItem="fNu-rg-YZZ" firstAttribute="top" secondItem="6DD-lI-2p2" secondAttribute="top" constant="-15" id="UOh-fr-X02"/>
@@ -138,14 +138,11 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

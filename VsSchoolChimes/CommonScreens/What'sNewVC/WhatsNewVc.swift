@@ -9,10 +9,38 @@ import UIKit
 
 class WhatsNewVc: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var skipNowBtn: UIButton!
+    @IBOutlet weak var tryItnowBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       
+        
+        headerView.layer.cornerRadius = 20
+//        headerView.layer.masksToBounds = true
+        headerView.layer.shadowColor = UIColor.black.cgColor   // Shadow color
+           headerView.layer.shadowOpacity = 0.3                   // Shadow transparency
+           headerView.layer.shadowOffset = CGSize(width: 0, height: 3) // Shadow direction
+           headerView.layer.shadowRadius = 5                      // Blur radius
+        headerView.layer.masksToBounds = true                 // Important: shadow visible outside bounds
+        tryItnowBtn.layer.cornerRadius = tryItnowBtn.layer.frame.height/2
+        skipNowBtn.layer.cornerRadius = 5
+        skipNowBtn.layer.masksToBounds = true
+        skipNowBtn.layer.borderColor = UIColor.primery.cgColor
+        skipNowBtn.layer.borderWidth = 0.5
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        tryItnowBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        skipNowBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        imageView.kf.setImage(with: URL(string: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//F5CB9561-8D48-492A-BEED-445BD479F5C6.jpg"))
+        imageView.layer.cornerRadius = 10
     }
 
+    @IBAction func backBtn(_ sender: UIButton) {
+        
+        dismiss(animated: true)
+        
+    }
 }
