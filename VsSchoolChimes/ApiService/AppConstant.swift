@@ -24,7 +24,7 @@ struct ServiceUrl{
     static let cred_forgot_password      = "app/api/cred/forgot-password"
     static let cred_reset_password       = "app/api/cred/reset-password"
     static let  cred_create_new_password = "app/api/cred/create-new-password"
-    static let global_global_variables   = "app/global/global-variables"
+    static let global_global_variables   = "app/api/global/global-variables"
     static let  auth_device_token        = "app/api/auth/device-token"
 //    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
     static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
@@ -225,6 +225,11 @@ struct Menu_id{
     static let  senderChat = 17
     static let  quiz = 27
     static let  ptm = 26
+    static let  e_books = 25
+    static let  Market_place = 30
+    static let  Alert = 36
+    
+    
 }
 struct TargetTypes{
     

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "graph 2.svg",
+      "filename" : "down 1.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "graph 3.svg",
+      "filename" : "down 2.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "graph 4.svg",
+      "filename" : "down 3.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

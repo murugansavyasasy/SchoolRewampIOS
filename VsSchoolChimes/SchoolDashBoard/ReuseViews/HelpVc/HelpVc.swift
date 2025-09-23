@@ -14,7 +14,7 @@ class HelpVc: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     var passVale = 1
-    
+    var global = UserDefaultFileManager.get_globalSelection()
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -26,7 +26,7 @@ class HelpVc: UIViewController, WKNavigationDelegate {
     }
     
     func webkitLoading() {
-        var urlStr = "https://www.schoolchimes.com/vs_web/help_line/"
+        let urlStr = global?.helpline_url ?? ""
         let url = URL (string: urlStr)
                let requestObj = URLRequest(url: url!)
         webview.load(requestObj)

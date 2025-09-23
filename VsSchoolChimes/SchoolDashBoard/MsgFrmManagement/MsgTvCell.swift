@@ -13,6 +13,7 @@ protocol viewAttachments {
 class MsgTvCell: UITableViewCell {
 
     @IBOutlet weak var alphbetLbl: UILabel!
+    @IBOutlet weak var readView: UIView!
     @IBOutlet weak var timeAndDateLbl: UILabel!
     
     @IBOutlet weak var descrptionLb: UILabel!
@@ -34,6 +35,7 @@ class MsgTvCell: UITableViewCell {
         alphbetView.layer.cornerRadius = alphbetView.frame.height/2
         fullview.layer.cornerRadius = 10
         rollBtn.layer.cornerRadius = 5
+        readView.layer.cornerRadius = readView.frame.width/2
     }
 
     @IBAction func viewBtnAct(_ sender: UIButton) {

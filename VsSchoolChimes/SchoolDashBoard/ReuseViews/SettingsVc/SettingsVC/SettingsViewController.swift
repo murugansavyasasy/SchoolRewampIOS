@@ -26,14 +26,15 @@ class SettingsViewController: UIViewController, BaktoHome {
                 menuname.faq,
                 menuname.contactUs,
                 menuname.termsAndConditions,
-                menuname.changeAppLanguage,menuname.faceID
+                menuname.changeAppLanguage,menuname.faceID,
+                "What's new"
             ]
         ),
         Section(title: menuname.feedback, items: [menuname.reportABug, menuname.feedback, menuname.logout])
     ]
     var section:[Section]?
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid"]),
+        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid","text.document.fill"]),
         Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
     ]
     
@@ -202,6 +203,11 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
+        }else if sections[indexPath.section].items[indexPath.row] == "What's new"{
+            
+            let vc = WhatsNewVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true)
         }
         
     }
@@ -229,6 +235,6 @@ struct Image {
 }
 
 let Images: [Image] = [
-    Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja"]),
+    Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","text.document.fill"]),
     Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
 ]

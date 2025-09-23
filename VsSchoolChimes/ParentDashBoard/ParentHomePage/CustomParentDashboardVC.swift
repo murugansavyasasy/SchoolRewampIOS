@@ -85,6 +85,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         setupLabels()
         setupProfileImage()
         get_dashboard_details()
+        Global_variabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,6 +139,32 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         }
     }
 
+    func Global_variabel() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.global_global_variables,
+            parameters: ["key_names" : []],
+            type: ApitTypeSringFile.POST,
+            token: ""
+        ) { (result: Result<GlobalVariablesResponse, Error>) in
+            switch result {
+                
+            case .success(let successMessage):
+                if successMessage.status == true {
+                        if let respo = successMessage.data?.first {
+                            UserDefaultFileManager
+                                .save_global_Selection(data: respo)
+                            print("resporespo",respo)}
+                        
+                    
+                    else {
+                        print("Device token registration failed")
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     func get_MenuCount() {
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
@@ -334,7 +361,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             menuItem = recentMenuItems?[indexPath.row].id
             menuName = recentMenuItems?[indexPath.row].name ?? ""
         }
-
+        Menu_id.staffSelectedMenuId = menuItem ?? 0
         MenuStringFile.selectedMenuName = menuName
         guard let menuId = menuItem else { return }
 
@@ -352,10 +379,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 20: MenuRedirect.receiverLsrwNavigate(from: self)
         case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self)
         case 24: MenuRedirect.receiverOnlineNavigate(from: self)
-        case 25: MenuRedirect.receiverFeeDetails(from: self)
+        case 25: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 26: MenuRedirect.receiverPtmNavigate(from: self)
         case 27: MenuRedirect.QuizExam(from: self)
         case 28: MenuRedirect.LeaveRquest(from: self)
+        case 30:MenuRedirect.senderImportantInfoNavigate(from: self)
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 39: MenuRedirect.receiverAttachment(from: self, notificationId: "")
         case 40: MenuRedirect.receiverPauckt(from: self)
