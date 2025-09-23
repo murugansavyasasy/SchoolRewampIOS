@@ -124,20 +124,20 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0Ws-p1-NZE">
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="60.333333333333336"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCL-YX-oSW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="60.333333333333336"/>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCL-YX-oSW">
+                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycj-FI-GlR">
-                                                            <rect key="frame" x="10" y="10" width="353" height="40.333333333333336"/>
+                                                            <rect key="frame" x="10" y="10" width="353" height="20"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qY7-5j-tu6">
-                                                                    <rect key="frame" x="10" y="9.9999999999999982" width="333" height="20.333333333333329"/>
+                                                                    <rect key="frame" x="10" y="10" width="333" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDm-Dr-IfD">
-                                                                    <rect key="frame" x="323" y="10.333333333333343" width="20" height="20"/>
+                                                                    <rect key="frame" x="323" y="0.0" width="20" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="20" id="dHL-0p-QVU"/>
                                                                         <constraint firstAttribute="height" constant="20" id="zFc-fz-zfS"/>
