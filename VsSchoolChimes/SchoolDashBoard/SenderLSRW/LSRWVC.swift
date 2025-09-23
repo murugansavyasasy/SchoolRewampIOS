@@ -67,10 +67,11 @@ class LSRWVC: UIViewController, FilterDelegate {
         lsrwTable.showsVerticalScrollIndicator = false
         
         BackBtn.configureAsBackButton(firstLine: "LSRW", secondLine:"Listening, Speaking, Reading, Writing")
-        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         getLSRW()
     }
-    
     // MARK: - API
     func getLSRW() {
         APIService.shared.makeApi(
@@ -193,26 +194,69 @@ class LSRWVC: UIViewController, FilterDelegate {
     }
 }
 
+//// MARK: - UITableViewDataSource
+//extension LSRWVC: UITableViewDataSource {
+//    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return filterTask.count
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        switch filterTask[section] {
+//        case .overview:
+//            return 1
+//        case .filterArray:
+//            return 1
+//        case .active(let tasks), .completed(let tasks):
+//            return tasks.count
+//        }
+//    }
+//    
+//    func tableView(_ tableView: UITableView,
+//                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        switch filterTask[indexPath.section] {
+//        case .overview(let overview):
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
+//            cell.configure(with: overview)
+//            cell.delegate = self
+//            return cell
+//            
+//        case .filterArray:
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
+//            cell.configure(with: nil, selectedIndex: selectedIndex)
+//            cell.delegate = self
+//            return cell
+//            
+//        case .active(let tasks):
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
+//            cell.configure(with: tasks[indexPath.row])
+//            return cell
+//            
+//        case .completed(let tasks):
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
+//            cell.configure(with: tasks[indexPath.row])
+//            return cell
+//        }
+//    }
+//}
 // MARK: - UITableViewDataSource
 extension LSRWVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filterTask.count
+        return filterTask.isEmpty ? 1 : filterTask.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch filterTask[section] {
-        case .overview:
-            return 1
-        case .filterArray:
-            return 1
-        case .active(let tasks), .completed(let tasks):
-            return tasks.count
-        }
+        return filterTask.isEmpty ? 0 : {
+            switch filterTask[section] {
+            case .overview, .filterArray: return 1
+            case .active(let tasks), .completed(let tasks): return tasks.count
+            }
+        }()
     }
     
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !filterTask.isEmpty else { return UITableViewCell() }
         switch filterTask[indexPath.section] {
         case .overview(let overview):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
@@ -238,7 +282,6 @@ extension LSRWVC: UITableViewDataSource {
         }
     }
 }
-
 // MARK: - UITableViewDelegate
 extension LSRWVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -269,38 +312,37 @@ extension LSRWVC: UITableViewDelegate {
 
 // MARK: - Custom Section Header with Button
 extension LSRWVC {
-    func tableView(_ tableView: UITableView,
-                   viewForHeaderInSection section: Int) -> UIView? {
+
+    private func createNewTaskButton() -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.setTitle("New Task", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(newTaskTapped), for: .touchUpInside)
+        return button
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = .white
+
         let titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.textColor = .label
-        switch filterTask[section] {
-        case .overview: titleLabel.text = "Dashboard Overview"
-        case .filterArray: titleLabel.text = ""
-        case .active: titleLabel.text = "Active Tasks"
-        case .completed: titleLabel.text = "Completed Tasks"
-        }
-        
         headerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
-        
-        if case .overview = filterTask[section] {
-            let newTaskButton = UIButton(type: .system)
-            newTaskButton.setImage(UIImage(systemName: "plus"), for: .normal)
-            newTaskButton.tintColor = .white
-            newTaskButton.setTitle("New Task", for: .normal)
-            newTaskButton.setTitleColor(.white, for: .normal)
-            newTaskButton.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-            newTaskButton.backgroundColor = .systemBlue
-            newTaskButton.layer.cornerRadius = 8
-            newTaskButton.addTarget(self, action: #selector(newTaskTapped), for: .touchUpInside)
-            
+
+        if filterTask.isEmpty {
+            titleLabel.text = "Dashboard Overview"
+            let newTaskButton = createNewTaskButton()
             headerView.addSubview(newTaskButton)
             newTaskButton.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -309,20 +351,41 @@ extension LSRWVC {
                 newTaskButton.widthAnchor.constraint(equalToConstant: 100),
                 newTaskButton.heightAnchor.constraint(equalToConstant: 34)
             ])
+        } else {
+            switch filterTask[section] {
+            case .overview:
+                titleLabel.text = "Dashboard Overview"
+                let newTaskButton = createNewTaskButton()
+                headerView.addSubview(newTaskButton)
+                newTaskButton.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    newTaskButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
+                    newTaskButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+                    newTaskButton.widthAnchor.constraint(equalToConstant: 100),
+                    newTaskButton.heightAnchor.constraint(equalToConstant: 34)
+                ])
+            case .filterArray:
+                titleLabel.text = ""
+            case .active:
+                titleLabel.text = "Active Tasks"
+            case .completed:
+                titleLabel.text = "Completed Tasks"
+            }
         }
-        
+
         return headerView
     }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if filterTask.isEmpty { return 50 }
+
         switch filterTask[section] {
-        case .overview:
-            return 50
-        case .active,.completed:
-            return 40
-        default:
-            return 0
+        case .overview: return 50
+        case .active, .completed: return 40
+        default: return 0
         }
     }
+
     @objc private func newTaskTapped() {
         if #available(iOS 15.0, *) {
             let vc = SenderLSRWVC()

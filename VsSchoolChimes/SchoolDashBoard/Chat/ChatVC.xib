@@ -66,9 +66,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="50"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5iE-Cz-m1r">
-                                            <rect key="frame" x="0.0" y="15" width="43" height="35"/>
+                                            <rect key="frame" x="0.0" y="15" width="0.0" height="35"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="43" id="KXN-nS-vXV"/>
+                                                <constraint firstAttribute="width" id="KXN-nS-vXV"/>
                                                 <constraint firstAttribute="height" constant="35" id="zRt-jV-g1P"/>
                                             </constraints>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -78,7 +78,7 @@
                                             </connections>
                                         </button>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="e0o-TB-C1M">
-                                            <rect key="frame" x="51" y="0.0" width="281" height="50"/>
+                                            <rect key="frame" x="8" y="0.0" width="324" height="50"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <color key="textColor" systemColor="labelColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -216,7 +216,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

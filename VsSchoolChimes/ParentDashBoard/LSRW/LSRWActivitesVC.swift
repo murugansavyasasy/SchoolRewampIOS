@@ -50,7 +50,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             }
         }
     }
-
+    
     
     func backtohome(type: String) {
         testTable.beginUpdates()
@@ -91,12 +91,12 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     // MARK: - Setup
     private func setupCaptions() {
         guard let lsrw = lsrw else { return }
-//        self.lsrw?.test = [
-//            TestQuestion(question: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"]),
-//            TestQuestion(question: "Which is the largest planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"]),
-//            TestQuestion(question: "Who wrote the national anthem of India?", options: ["Tagore", "Gandhi", "Nehru", "Vivekananda"]),
-//            TestQuestion(question: "Which is the fastest land animal?", options: ["Tiger", "Cheetah", "Lion", "Horse"])
-//        ]
+        //        self.lsrw?.test = [
+        //            TestQuestion(question: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"]),
+        //            TestQuestion(question: "Which is the largest planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"]),
+        //            TestQuestion(question: "Who wrote the national anthem of India?", options: ["Tagore", "Gandhi", "Nehru", "Vivekananda"]),
+        //            TestQuestion(question: "Which is the fastest land animal?", options: ["Tiger", "Cheetah", "Lion", "Horse"])
+        //        ]
         if let type = lsrw.activity_type{
             // Configure captions based on LSRW type
             switch type {
@@ -138,7 +138,17 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
 @available(iOS 15.0, *)
 extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3 // 0: Task, 1: Captions, 2: Footer
+        if let type = lsrw?.activity_type {
+            switch type {
+            case .listening, .reading:
+                return 2
+            case .speaking, .writing:
+                return 3
+            case .unknown(_):
+                return 1   // அல்லது உங்களுக்கு தேவையான default section count
+            }
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -160,11 +170,17 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
             cell.titleLbl.text = lsrw?.title ?? "No Title"
             cell.descriptionLbl.text = lsrw?.description ?? "No Description"
+            
+            cell.reminderBtn.isHidden = true
             if let task = lsrw {
                 cell.configureCell(with: task, attachments: task.file_path ?? [])
+                switch task.activity_type{
+                case .listening,.reading:
+                    cell.exportRecordBtn.isHidden = true
+                default :
+                    cell.exportRecordBtn.isHidden = false
+                }
             }
-            cell.reminderBtn.isHidden = true
-            cell.exportRecordBtn.isHidden = false
             cell.exportRecordBtn.setTitle("My Submission", for: .normal)
             cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
             cell.delegate = self
@@ -318,10 +334,16 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                         
                         let data = response.data ?? []
                         if data.count == 1 {
-                            let vc = LSRWSubmisionListVC()
-                            vc.attachment = data.first?.file_path
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                            if data.first?.file_path?.count != 0{
+                                let vc = LSRWSubmisionListVC()
+                                vc.attachment = data.first?.file_path
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }else{
+                                self.alert.showAlert(title: "NO Record",
+                                                     message: response.message ?? "",
+                                                     on: self)
+                            }
                         } else {
                             let vc = LSRWSubmissionVC()
                             vc.submitedAssignment = data

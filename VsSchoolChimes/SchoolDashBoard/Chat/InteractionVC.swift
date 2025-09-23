@@ -9,6 +9,7 @@ import UIKit
 
 class InteractionVC: UIViewController {
    
+    @IBOutlet weak var chatCV: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var FullView: UIView!
     @IBOutlet weak var tv: UITableView!
@@ -34,8 +35,11 @@ class InteractionVC: UIViewController {
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
+        chatCV.register(UINib(nibName: "ChatCVC", bundle: nil), forCellWithReuseIdentifier: "ChatCVC")
         tv.delegate = self
         tv.dataSource = self
+        chatCV.delegate = self
+        chatCV.dataSource = self
         getStaff()
         
     }
@@ -53,6 +57,61 @@ class InteractionVC: UIViewController {
         dismiss(animated: true)
     }
  
+}
+extension InteractionVC: UICollectionViewDelegate,
+                         UICollectionViewDataSource,
+                         UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return staffMembersData?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = chatCV.dequeueReusableCell(withReuseIdentifier: "ChatCVC", for: indexPath) as! ChatCVC
+        
+        if let datas = staffMembersData?[indexPath.row] {
+            cell.nameLbl.text = datas.name ?? ""
+            cell.subjectLbl.text = datas.subject_name ?? ""
+            
+            // Unread count handling
+            let unreadCount = datas.unread_count ?? 0
+            cell.unReadCountBtn.isHidden = unreadCount == 0
+            cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
+//           cell.userImg.kf.setImage(with: URL(string: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//B571964C-A403-4C8C-AEFD-85C82EC127B0.jpg"))
+            // Last update time
+            if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
+                let (timeAgo, _) = submittedDate
+                cell.lastUpdateTimeLbl.text = timeAgo
+                cell.lastUpdateTimeLbl.isHidden = cell.unReadCountBtn.isHidden
+            } else {
+                cell.lastUpdateTimeLbl.isHidden = true
+            }
+        }
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ChatVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        if let datas = staffMembersData?[indexPath.row]{
+            vc.staffMembersData = datas
+        }
+       
+        // vc.getValue = getValue
+        present(vc, animated: true)
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let inset: CGFloat = 5
+        let spacing: CGFloat = 10
+        let totalSpacing = inset * 2 + spacing
+        let availableWidth = collectionView.frame.width - totalSpacing
+        let itemWidth = availableWidth / 2
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+
 }
 
 extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
@@ -112,6 +171,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
                         DispatchQueue.main.async { [self] in
                             staffMembersData = successMessage.data ?? []
                             tv.reloadData()
+                            chatCV.reloadData()
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
