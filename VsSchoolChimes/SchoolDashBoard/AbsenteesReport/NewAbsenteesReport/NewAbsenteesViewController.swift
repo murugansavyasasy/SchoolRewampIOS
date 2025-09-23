@@ -11,6 +11,8 @@ import FSCalendar
 
 class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var mothView: UIView!
+    @IBOutlet weak var mothLbl: UILabel!
     @IBOutlet weak var studentLbl: UILabel!
     @IBOutlet weak var infoStack: UIStackView!
     @IBOutlet weak var calanderHeighnt: NSLayoutConstraint!
@@ -52,23 +54,33 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
 
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
+        updateMonthLabel()
         dateLbl.isHidden = true
         cvIcon.isHidden = true
         infoStack.isHidden = true
         Tv.isHidden = true
         fullview.backgroundColor = .clear
         studentLbl.isHidden = true
-       
-        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EE MMM dd, yyyy"
+
+        // current date string in dd-MM-yyyy
+        let currentDateString = formatter.string(from: Date())
+        dateLbl.text = currentDateString
         calanderFulView.layer.cornerRadius = 10
 
         calendar.delegate = self
         calendar.dataSource = self
         scrollview.delegate = self
         scrollview.alwaysBounceVertical = true
-//        calendar.appearance.todayColor = .clear
-//        calendar.appearance.titleTodayColor = .label
-    calendar.allowsMultipleSelection = false
+
+        calendar.appearance.headerTitleColor = .systemBlue
+        calendar.appearance.weekdayTextColor = .darkGray
+        calendar.appearance.selectionColor = .primery
+        calendar.placeholderType = .none
+        calendar.headerHeight = 0
+        calendar.allowsMultipleSelection = false
+        mothView.layer.cornerRadius = 10
         fullview.layer.cornerRadius = 10
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
         Tv.register(UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
@@ -111,14 +123,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
                             }
                         }
                     }
-                    
-                    self.calendar.reloadData()
-                
-                    
-                    if let firstDate = self.absentData?.first?.date {
-                        self.filterData(for: firstDate)
-                    }
-                    
+            
+                   
                     
                     let today = Date()
                     let calendar = Calendar.current
@@ -148,6 +154,12 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
                         self.studentLbl.isHidden = false
                         
                     }
+                    
+                    self.calendar.reloadData()
+                    if let firstDate = self.absentData?.first?.date {
+                        self.filterData(for: firstDate)
+                    }
+                    
                     
                 }
                 
@@ -434,7 +446,7 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         filterFormatter.dateFormat = "dd-MM-yyyy"
         
         let showFormatter = DateFormatter()
-        showFormatter.dateFormat = "MMMM dd, yyyy"
+        showFormatter.dateFormat = "EE MMM dd, yyyy"
         
         let selectedDateForFilter = filterFormatter.string(from: date)
         let selectedDateForLabel = showFormatter.string(from: date)
@@ -489,6 +501,33 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         self.view.layoutIfNeeded()
     }
     
+    @IBAction func nextMonthTapped(_ sender: UIButton) {
+        moveCurrentPage(isNext: true)
+    }
+
+    @IBAction func prevMonthTapped(_ sender: UIButton) {
+        moveCurrentPage(isNext: false)
+    }
+
+    func moveCurrentPage(isNext: Bool) {
+        let current = calendar.currentPage
+        var dateComponents = DateComponents()
+        dateComponents.month = isNext ? 1 : -1
+        
+        let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
+        calendar.setCurrentPage(newDate, animated: true)
+        
+        updateMonthLabel()
+    }
+    
+   
+    
+    func updateMonthLabel() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"   // Example: "September 2025"
+        mothLbl.text = formatter.string(from: calendar.currentPage)
+    }
+
 
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,

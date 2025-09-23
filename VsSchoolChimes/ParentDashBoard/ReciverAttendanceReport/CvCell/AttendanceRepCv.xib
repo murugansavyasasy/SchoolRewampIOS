@@ -82,7 +82,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uH-RN-fws">
-                                <rect key="frame" x="119.33333333333331" y="77.666666666666671" width="50" height="30"/>
+                                <rect key="frame" x="138" y="77.666666666666671" width="50" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="0.74964735243055558" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Bci-Gy-g9p"/>
@@ -101,10 +101,10 @@
                             <constraint firstItem="kyr-E4-2dz" firstAttribute="centerX" secondItem="6DD-lI-2p2" secondAttribute="centerX" id="9Pl-dL-3ob"/>
                             <constraint firstAttribute="bottom" secondItem="Kf4-2E-HXD" secondAttribute="bottom" constant="10" id="Ba6-Sn-e8Z"/>
                             <constraint firstItem="wyu-zV-mOg" firstAttribute="top" secondItem="6DD-lI-2p2" secondAttribute="top" constant="-15" id="H8y-pZ-VlH"/>
-                            <constraint firstItem="7uH-RN-fws" firstAttribute="leading" secondItem="kyr-E4-2dz" secondAttribute="trailing" constant="35" id="IP7-1I-sQP"/>
                             <constraint firstItem="7uH-RN-fws" firstAttribute="centerY" secondItem="kyr-E4-2dz" secondAttribute="centerY" id="Kdy-5l-xyg"/>
                             <constraint firstItem="Kf4-2E-HXD" firstAttribute="top" secondItem="kyr-E4-2dz" secondAttribute="bottom" constant="5" id="P8H-5g-r2Q"/>
                             <constraint firstItem="fNu-rg-YZZ" firstAttribute="top" secondItem="6DD-lI-2p2" secondAttribute="top" constant="-15" id="UOh-fr-X02"/>
+                            <constraint firstAttribute="trailing" secondItem="7uH-RN-fws" secondAttribute="trailing" constant="30" id="f3k-kQ-bV8"/>
                             <constraint firstItem="wyu-zV-mOg" firstAttribute="trailing" secondItem="6DD-lI-2p2" secondAttribute="trailing" constant="-10" id="gCH-3m-3CA"/>
                             <constraint firstItem="kyr-E4-2dz" firstAttribute="top" secondItem="6DD-lI-2p2" secondAttribute="bottom" constant="5" id="ipA-Yl-qqj"/>
                             <constraint firstItem="Kf4-2E-HXD" firstAttribute="leading" secondItem="u1e-Oo-Qoz" secondAttribute="leading" constant="15" id="ttU-Tf-Ian"/>
