@@ -500,6 +500,36 @@
             endingLineNumber = "290"
             landmarkName = "Global_variabel()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "98AD750D-FFA5-440C-AD5A-20B92B647598 - eda1c22b9f8b889"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.GlobalVariablesResponse, Swift.Error&gt;) -&gt; () in School_Chimes.CustomDasboard.Global_variabel() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%207/VsSchoolChimes/SchoolDashBoard/HomePage/CustomDasboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "290"
+                  endingLineNumber = "290">
+               </Location>
+               <Location
+                  uuid = "98AD750D-FFA5-440C-AD5A-20B92B647598 - eda1c22b9f8b889"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.GlobalVariablesResponse, Swift.Error&gt;) -&gt; () in School_Chimes.CustomDasboard.Global_variabel() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%207/VsSchoolChimes/SchoolDashBoard/HomePage/CustomDasboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "290"
+                  endingLineNumber = "290">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -611,38 +641,6 @@
             startingLineNumber = "619"
             endingLineNumber = "619"
             landmarkName = "student_attendance_report()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E6406C19-452E-4522-B0A0-B414281FED1E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
-            landmarkName = "filterEventListsByTitle(searchText:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6E62BDA5-ADDD-42F2-A1AD-9BEB16695486"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
-            landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

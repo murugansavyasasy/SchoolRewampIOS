@@ -15,7 +15,8 @@
             <connections>
                 <outlet property="MenuNameLbl" destination="KNW-gW-zW5" id="UsM-dE-8QJ"/>
                 <outlet property="backBtn" destination="LaQ-if-uv3" id="Wo6-VY-rrK"/>
-                <outlet property="noDataLabel" destination="dUB-7c-vth" id="N9J-qu-XkH"/>
+                <outlet property="noDataLabel" destination="gw2-zt-wrK" id="5l2-kv-SFv"/>
+                <outlet property="noRecordStack" destination="ynL-Eh-qtc" id="ed0-pE-nHO"/>
                 <outlet property="searchBar" destination="aPe-Xy-alW" id="TTY-ST-Y7h"/>
                 <outlet property="searchBtn" destination="AGn-gU-oAr" id="PkQ-UZ-zit"/>
                 <outlet property="tv" destination="nsR-Jj-DY8" id="wuk-eX-Ey2"/>
