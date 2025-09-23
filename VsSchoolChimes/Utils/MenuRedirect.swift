@@ -326,7 +326,6 @@ class MenuRedirectHandler {
     }
     func senderSchoolNeedsNavigate(from viewController: UIViewController) {
         let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
-        vc.Header = "School Needs"
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         
@@ -386,6 +385,7 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func receiverFeeDetails(from viewController: UIViewController) {
+        
         let vc = FeeDetails(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)

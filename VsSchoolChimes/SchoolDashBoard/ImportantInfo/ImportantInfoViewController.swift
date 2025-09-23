@@ -10,19 +10,32 @@ import WebKit
 
 class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
 
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var backBtnNm: UIButton!
     @IBOutlet weak var LoadingView: UIView!
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var BackBtn: UIButton!
-    
+   
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
-    var Header = "Important info"
+   
+    var global = UserDefaultFileManager.get_globalSelection()
+    
+    var Child_details = UserDefaultFileManager.get_child_Details()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
         webView.navigationDelegate = self
-       
+        
+        backBtnNm
+            .configureAsBackButton(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: Child_details?.school_name ?? "",
+                colour: .white)
         webkitLoading()
     }
 
@@ -40,8 +53,17 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
     }
     
     func webkitLoading() {
-        var urlStr = "https://gradit.voicesnap.com/School/SchoolImportantUpdates?inputpar=9003769500"
-        let url = URL (string: urlStr)
+        var Weburl = ""
+        if Menu_id.e_books == Menu_id.staffSelectedMenuId{
+            Weburl = global?.ebooks_url ?? ""
+        }else if Menu_id.Alert == Menu_id.staffSelectedMenuId{
+            Weburl = global?.offers_link ?? ""
+        }else if Menu_id.Market_place == Menu_id.staffSelectedMenuId{
+            Weburl = global?.market_place_url ?? ""
+        }
+        
+        print("WeburlWeburl",Weburl)
+        let url = URL (string: Weburl)
                let requestObj = URLRequest(url: url!)
                webView.load(requestObj)
     }

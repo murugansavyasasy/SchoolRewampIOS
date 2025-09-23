@@ -29,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CLS-XZ-Sv7">
-                    <rect key="frame" x="0.0" y="59" width="393" height="50"/>
+                    <rect key="frame" x="0.0" y="69" width="393" height="50"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Srh-ts-hOe">
                             <rect key="frame" x="16" y="10.33333333333333" width="30" height="24.666666666666671"/>
@@ -79,7 +79,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8es-bj-1VI">
-                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
+                    <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timetable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDF-cK-1iQ">
                             <rect key="frame" x="19.999999999999986" y="19.999999999999996" width="254.66666666666663" height="40.666666666666657"/>
@@ -132,10 +132,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="BackGroundClr"/>
             <constraints>
+                <constraint firstItem="8es-bj-1VI" firstAttribute="top" secondItem="CLS-XZ-Sv7" secondAttribute="bottom" constant="5" id="1M1-Ow-l0X"/>
                 <constraint firstItem="8es-bj-1VI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="2hK-M7-Med"/>
                 <constraint firstItem="CLS-XZ-Sv7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9uX-DN-FB4"/>
-                <constraint firstItem="8es-bj-1VI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="Ian-y9-NNG"/>
-                <constraint firstItem="CLS-XZ-Sv7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bjx-Uc-nI4"/>
+                <constraint firstItem="CLS-XZ-Sv7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="bjx-Uc-nI4"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CLS-XZ-Sv7" secondAttribute="trailing" id="c8k-jF-lrF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="8es-bj-1VI" secondAttribute="bottom" id="el8-LQ-9y1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8es-bj-1VI" secondAttribute="trailing" id="kyB-LS-ecN"/>

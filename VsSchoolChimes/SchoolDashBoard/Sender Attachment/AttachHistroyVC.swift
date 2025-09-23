@@ -31,6 +31,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     }
 
     
+    @IBOutlet weak var schoolDropDownFullview: UIView!
     @IBOutlet weak var backBtnName: UIButton!
     @IBOutlet weak var createFileBtn: UIButton!
     @IBOutlet weak var headerView: UIView!
@@ -69,6 +70,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
                 colour: .white
             )
         
+        
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
@@ -84,6 +86,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
             self.dropDown.dataSource = self.schoolList ?? []
         }else{
             schoolDropDown.isHidden = true
+            schoolDropDownFullview.isHidden = true
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
@@ -130,6 +133,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         search.toggle()
         searchBar.isHidden = search
         
+        tv.reloadData()
     }
     
     @available(iOS 14.0, *)

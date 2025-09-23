@@ -19,7 +19,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     var FilteredExamDetails: [DetailedExamItem]?
     var subject_details: [SubjectDetail]?
     let eventStore = EKEventStore()
-
+    var groupedExamDetails: [GroupedExam] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +58,9 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
                 case .success(let response):
                     self?.examDetails = response.data
                     self?.FilteredExamDetails = self?.examDetails
+                    
                     self?.subject_details = response.data?.first?.exam_subject_details
+//                    self?.prepareGroupedData()
                     self?.tv.reloadData()
                     self?.NoDataLbl.isHidden = response.status ?? false
                     self?.NoDataLbl.text = response.message ?? ""
@@ -87,19 +89,131 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         let headerview = UIView()
         headerview.backgroundColor = .clear
         
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .label
-        label.setFont(style: .title, size: 20)
-        label.text = FilteredExamDetails?[section].name
+        // Title Label
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = .primery
+        titleLabel.setFont(style: .body, size: 25)
+        titleLabel.text = FilteredExamDetails?[section].name
         
-        headerview.addSubview(label)
+        headerview.addSubview(titleLabel)
         
-        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)])
+        // Body Label
+        let bodyLabel = UILabel()
+        bodyLabel.translatesAutoresizingMaskIntoConstraints = false
+        bodyLabel.textColor = .secondaryLabel
+        bodyLabel.setFont(style: .body, size: 14)
+        bodyLabel.numberOfLines = 0
+        bodyLabel.text = FilteredExamDetails?[section].created_on   // ← உன் dataல இருக்க body text
+        
+        headerview.addSubview(bodyLabel)
+        
+        NSLayoutConstraint.activate([
+            // Title label constraints
+            titleLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
+            titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
+            titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
+            
+            // Body label constraints
+            bodyLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
+            bodyLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
+            bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            bodyLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
+        ])
         
         return headerview
     }
+
     
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        
+//        let headerView = UIView()
+//        headerView.backgroundColor = .clear
+//        
+//        let stackView = UIStackView()
+//        stackView.axis = .vertical
+//        stackView.spacing = 4
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        let titleLabel = UILabel()
+//        titleLabel.setFont(style: .body, size: 25)
+//        titleLabel.textColor = UIColor.systemBlue
+//        titleLabel.text = FilteredExamDetails?[section].name
+//        
+//        let bodyLabel = UILabel()
+//        bodyLabel.font = UIFont.systemFont(ofSize: 14)
+//        bodyLabel.textColor = .secondaryLabel
+//        if let created = FilteredExamDetails?[section].created_on {
+//            bodyLabel.text = "Created on: \(created.components(separatedBy: " ").first ?? "")"
+//        }
+//        
+//        stackView.addArrangedSubview(titleLabel)
+//        stackView.addArrangedSubview(bodyLabel)
+//        
+//        headerView.addSubview(stackView)
+//        
+//        NSLayoutConstraint.activate([
+//            stackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),
+//            stackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),
+//            stackView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
+//            stackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8)
+//        ])
+//        
+//        return headerView
+//    }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerview = UIView()
+//        headerview.backgroundColor = .clear
+//        
+//        let examNameLabel = UILabel()
+//        examNameLabel.translatesAutoresizingMaskIntoConstraints = false
+//        examNameLabel.textColor = .label
+//        examNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+//        examNameLabel.text = groupedExamDetails[section].examName
+//        
+//        let createdOnLabel = UILabel()
+//        createdOnLabel.translatesAutoresizingMaskIntoConstraints = false
+//        createdOnLabel.textColor = .secondaryLabel
+//        createdOnLabel.font = UIFont.systemFont(ofSize: 14)
+//        createdOnLabel.text = groupedExamDetails[section].createdOn
+//        
+//        let dashedView = DashedLineWithTextView()
+//        dashedView.translatesAutoresizingMaskIntoConstraints = false
+//        dashedView.setText(groupedExamDetails[section].date.convertToHeaderDate())
+//        
+//        headerview.addSubview(examNameLabel)
+//        headerview.addSubview(createdOnLabel)
+//        headerview.addSubview(dashedView)
+//        
+//        NSLayoutConstraint.activate([
+//            examNameLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
+//            examNameLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
+//            examNameLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
+//            
+//            createdOnLabel.leadingAnchor.constraint(equalTo: examNameLabel.leadingAnchor),
+//            createdOnLabel.trailingAnchor.constraint(equalTo: examNameLabel.trailingAnchor),
+//            createdOnLabel.topAnchor.constraint(equalTo: examNameLabel.bottomAnchor, constant: 2),
+//            
+//            dashedView.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
+//            dashedView.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
+//            dashedView.topAnchor.constraint(equalTo: createdOnLabel.bottomAnchor, constant: 8),
+//            dashedView.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5),
+//            dashedView.heightAnchor.constraint(equalToConstant: 25)
+//        ])
+//        
+//        return headerview
+//    }
+
+
+
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return groupedExamDetails.count
+//    }
+
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return groupedExamDetails[section].exams.count
+//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return FilteredExamDetails?[section].exam_subject_details?.count ?? 0
@@ -124,12 +238,35 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
 
+    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
+//        
+//        let data = groupedExamDetails[indexPath.section].exams[indexPath.row]
+//        
+//        if (indexPath.row % 2) == 0 {
+//            cell.cellView.backgroundColor = UIColor(hex: "#DEECFD")
+//        } else {
+//            cell.cellView.backgroundColor = UIColor(hex: "#F1EBFC")
+//        }
+//        
+//        cell.SubjectLbl.text = data.subject_name
+//        cell.syllabusLbl.text = data.syllabus
+//        cell.DateBtn.setTitle(data.exam_date?.convertToHeaderDate(), for: .normal)
+//        cell.MaxMarkBtn.setTitle("Marks : " + (data.max_mark ?? ""), for: .normal)
+//        cell.TimeBtn.setTitle("\(data.start_time ?? "") - \(data.end_time ?? "")", for: .normal)
+//        cell.indexPath = indexPath
+//        cell.delegate = self
+//        
+//        return cell
+//    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return UITableView.automaticDimension
     }
     
     
@@ -249,5 +386,126 @@ extension ExamTmTblVCViewController: UISearchBarDelegate {
         NoDataLbl.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
         NoDataImage.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
         tv.reloadData()
+    }
+    
+//    func prepareGroupedData() {
+//        guard let exams = examDetails else { return }
+//        
+//        var tempGrouped: [GroupedExam] = []
+//        
+//        for exam in exams {
+//            if let subjects = exam.exam_subject_details {
+//                
+//                // Group subjects by date
+//                let dict = Dictionary(grouping: subjects, by: { $0.exam_date ?? "" })
+//                
+//                for (date, subs) in dict {
+//                    let grouped = GroupedExam(
+//                        examName: exam.name ?? "",         // Same for all subjects
+//                        createdOn: exam.created_on ?? "",  // Same for all subjects
+//                        date: date,
+//                        exams: subs
+//                    )
+//                    tempGrouped.append(grouped)
+//                }
+//            }
+//        }
+//        
+//        // Sort by date
+//        groupedExamDetails = tempGrouped.sorted {
+//            $0.date.convertToDate() ?? Date() < $1.date.convertToDate() ?? Date()
+//        }
+//        
+//        tv.reloadData()
+//    }
+
+
+}
+
+struct GroupedExam {
+    var examName: String
+    var createdOn: String
+    var date: String
+    var exams: [SubjectDetail]
+}
+
+
+extension String {
+    func convertToDate() -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy" // API format
+        return formatter.date(from: self)
+    }
+    
+    func convertToHeaderDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        if let date = formatter.date(from: self) {
+            formatter.dateFormat = "MMMM dd, yyyy" // September 30, 2025
+            return formatter.string(from: date)
+        }
+        return self
+    }
+}
+
+// MARK: - Custom View for Dashed Line + Date
+class DashedLineWithTextView: UIView {
+    
+    private let textLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        label.backgroundColor = .systemBackground // dark/light mode ok
+        return label
+    }()
+    
+    private let shapeLayer = CAShapeLayer()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .clear
+        layer.addSublayer(shapeLayer)
+        addSubview(textLabel)
+        setDateToToday()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        textLabel.sizeToFit()
+        textLabel.center = CGPoint(x: bounds.midX, y: bounds.midY)
+        
+        let path = UIBezierPath()
+        let y = bounds.midY
+        
+        // Left line
+        path.move(to: CGPoint(x: 0, y: y))
+        path.addLine(to: CGPoint(x: textLabel.frame.minX - 8, y: y))
+        
+        // Right line
+        path.move(to: CGPoint(x: textLabel.frame.maxX + 8, y: y))
+        path.addLine(to: CGPoint(x: bounds.width, y: y))
+        
+        shapeLayer.strokeColor = UIColor.lightGray.cgColor
+        shapeLayer.lineWidth = 1
+        shapeLayer.lineDashPattern = [4, 4]
+        shapeLayer.path = path.cgPath
+    }
+    
+    func setText(_ text: String) {
+        textLabel.text = text
+        setNeedsLayout()
+    }
+    
+    func setDateToToday() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd, yyyy"
+        let todayString = formatter.string(from: Date())
+        setText(todayString)
     }
 }

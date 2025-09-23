@@ -10,12 +10,20 @@ import UIKit
 class QuizCompletedVc: UIViewController {
 
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
     var get_QuizDetails : [myQuizDetails] = []
     var quiz_details : [MyQuizDetails]?
     var selected_QuizId : String?
     var childDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let name = childDetails?.name ?? ""
+        let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        menuNameLbl.text = MenuStringFile.selectedMenuName
 
         tv.register(UINib(nibName: "QuizCompletedFirstTv", bundle: nil), forCellReuseIdentifier: "QuizCompletedFirstTv")
 //        

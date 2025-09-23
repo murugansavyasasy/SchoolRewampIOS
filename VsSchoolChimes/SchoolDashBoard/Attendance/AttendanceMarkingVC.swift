@@ -137,10 +137,11 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate {
     
     func markAttendaceApi(){
 
-        
+        user_inputs.all_present = "T"
         let MakeAbsentId: [[String: String]] = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
             print("Absent Studets: ", Student.name ?? "")
             if let id =  Student.id{
+                user_inputs.all_present = "F"
                 return ["ID":id]
             }
             return nil

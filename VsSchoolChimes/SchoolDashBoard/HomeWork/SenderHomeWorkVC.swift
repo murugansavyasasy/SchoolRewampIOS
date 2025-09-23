@@ -389,11 +389,13 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         cell.SubjectLbl.text = FilterHomeWorkList?[indexPath.row].subject_name
         cell.stafNamLbl.text = FilterHomeWorkList?[indexPath.row].sent_by
         cell.edit(edit: FilterHomeWorkList?[indexPath.row].can_edit ?? false, delete:  FilterHomeWorkList?[indexPath.row].can_delete ?? false, selectedId: FilterHomeWorkList?[indexPath.row].id ?? "")
-
+        cell.threeDotBtn.isHidden = (
+            (FilterHomeWorkList?[indexPath.row].can_edit) == false
+        )
         cell.delegate = self
         cell.roundview.isHidden = true
         cell.homeWorkCompletImg.isHidden = true
-        cell.threeDotBtn.isHidden = false
+//        cell.threeDotBtn.isHidden = false
             cell.pieChartWidth.constant = 0
             cell.PieChartTrailling.constant = -10
         cell.pieChartHeight.constant = 5

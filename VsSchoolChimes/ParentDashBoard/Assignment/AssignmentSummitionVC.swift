@@ -21,8 +21,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     
-    @IBOutlet weak var standerdSectionLbl: UILabel!
-    @IBOutlet weak var sudentName: UILabel!
+    @IBOutlet weak var MenuName: UILabel!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noDtaImg: UIImageView!
     @IBOutlet weak var backBtn: UIButton!
@@ -38,11 +37,13 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     var submitedList = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        sudentName.text = studentDetails?.name
-        standerdSectionLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        sudentName.setFont(style: .body, size: FontSize.BodySize)
-        standerdSectionLbl.setFont(style: .body, size: FontSize.BodySize)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        let name = studentDetails?.name ?? ""
+        let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        //MenuName.setFont(style: .header, size: FontSize.HeaderSize)
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        MenuName.text = "My Submission"
+        noDtaImg.isHidden = true
+        nodataLbl.isHidden = true
         sumitionList.delegate = self
         sumitionList.dataSource = self
         sumitionList.register(UINib(nibName: "SubmissionTVC", bundle: nil), forCellReuseIdentifier: "SubmissionTVC")

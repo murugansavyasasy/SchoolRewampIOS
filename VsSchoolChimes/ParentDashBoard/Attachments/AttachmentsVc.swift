@@ -51,11 +51,19 @@ class AttachmentsVc: UIViewController {
     }
     
     @IBAction func searchBtnCilck(_ sender: UIButton) {
+        
         sender.isSelected.toggle()
-        searchBar.isHidden =
-        !sender.isSelected
+        searchBar.isHidden = !sender.isSelected
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        if sender.isSelected {
+            searchBar.becomeFirstResponder()
+        }else{
+            searchBar.searchTextField.text = ""
+//            filteredAttachments = attachmentHeaders
+            tv.reloadData()
+            view.endEditing(true)
+        }
     }
     
     private func fetchAttachments() {
@@ -265,6 +273,12 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterAttachments(with: searchText)
     }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+            // Called when keyboard is dismissed
+            print("Keyboard dismissed for search bar")
+            // Do your custom actions here
+        }
     
     private func filterAttachments(with searchText: String) {
         if searchText.isEmpty {

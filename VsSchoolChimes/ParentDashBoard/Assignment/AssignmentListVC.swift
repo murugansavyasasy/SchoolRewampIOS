@@ -79,7 +79,6 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                             self?.nodataLbl.isHidden = !isEmpty
                             self?.nodataLbl.text = isEmpty ? response.message : CommonStringFile.No_data_found
                             self?.noRecordImg.isHidden = !isEmpty
-                    self?.searchview.isHidden = self?.data?.count ?? 0 <= 2 && !((self?.searchBtn.isSelected) == nil)
                             
                             self?.listTable.reloadData()
                         
@@ -97,11 +96,23 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         dismiss(animated: true)
     }
     @IBAction func search(_ sender: UIButton) {
-        searchview.becomeFirstResponder()
+       
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         searchview.isHidden = !sender.isSelected
+       if sender.isSelected{
+            searchview.becomeFirstResponder()
+       }else {
+           view.endEditing(true)
+           searchview.searchTextField.text = ""
+           filteredData = data
+           let isEmpty = filteredData?.isEmpty ?? true
+           nodataLbl.isHidden = !isEmpty
+           noRecordImg.isHidden = !isEmpty
+           nodataLbl.text = CommonStringFile.No_data_found
+           listTable.reloadData()
+       }
     }
     func register(){
         listTable.register(UINib(nibName: CellConfingName.AssignmentListCTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AssignmentListCTVC)
