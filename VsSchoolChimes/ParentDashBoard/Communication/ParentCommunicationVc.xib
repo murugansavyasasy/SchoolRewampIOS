@@ -25,6 +25,7 @@
                 <outlet property="SearchbarStack" destination="XBM-BP-zIF" id="TBJ-fs-gm9"/>
                 <outlet property="UnreadBtn" destination="oah-Cx-55a" id="Eg0-8j-guU"/>
                 <outlet property="backBtn" destination="Rve-lW-nuS" id="WfH-82-laS"/>
+                <outlet property="menuNameLbl" destination="LiK-KX-e40" id="IpT-eu-HLQ"/>
                 <outlet property="tv" destination="0aZ-ZG-7aL" id="bFw-4a-3Ju"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

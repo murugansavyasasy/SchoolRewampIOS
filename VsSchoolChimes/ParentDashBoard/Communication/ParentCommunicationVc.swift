@@ -60,7 +60,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodataImgHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchbarStack: UIStackView!
-    
+    @IBOutlet weak var menuNameLbl: UILabel!
     
     var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
@@ -92,6 +92,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         SearchBar.searchTextField.addDoneButton()
 
         backBtn.configureAsBackButton(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         backBtn.applyBackButton()
         
       
