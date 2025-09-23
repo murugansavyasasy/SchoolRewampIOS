@@ -68,7 +68,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Get_Notice()
         backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
@@ -81,7 +80,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 
                 schoolName.text = matchedSchoolName ?? "School name not found"
             }
-            
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
         }else{
@@ -91,6 +89,10 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
         setupView()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Get_Notice()
     }
     @objc func catagoryTapped() {
         print("Category View Tapped")

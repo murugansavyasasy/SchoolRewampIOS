@@ -307,13 +307,13 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         switch sectionData {
         case .featured(let events):
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
-            cell.config(category: nil, onGoing: events, type: false)
+            cell.config(category: nil, onGoing: events, type: false, index: 0)
             cell.pageController.numberOfPages = events.count
             return cell
             
         case .categories(let categories):
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
-            cell.config(category: categories, onGoing: nil, type: true)
+            cell.config(category: categories, onGoing: nil, type: true, index: 0)
             cell.delegate = self
             return cell
             

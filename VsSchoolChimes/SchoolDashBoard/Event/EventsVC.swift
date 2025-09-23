@@ -101,7 +101,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         backBtn.configureAsBackButton(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        get_CatagoryListApi()
         eventTxt.delegate = self
         contentTxtView.delegate = self
         eventTxt.applyRightTxt()
@@ -145,7 +144,10 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             fetchData(eventList: edit)
         }
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        get_CatagoryListApi()
+    }
     deinit {
         // Remove observers
         NotificationCenter.default.removeObserver(self)

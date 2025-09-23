@@ -30,9 +30,10 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
         collectionView.register(UINib(nibName: "CatogoryCVC", bundle: nil), forCellWithReuseIdentifier: "CatogoryCVC")
     }
 
-    func config(category: [EventCategory]?, onGoing: [EventList]?, type: Bool) {
+    func config(category: [EventCategory]?, onGoing: [EventList]?, type: Bool,index:Int) {
         self.category = category
         self.onGoing = onGoing
+        self.selectedIndex = index
 //        pageController.isHidden = type && onGoing?.count ?? 0<1
         self.type = type
         collectionView.isPagingEnabled = !type
@@ -56,9 +57,14 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             }
 
             // Track selection and refresh visuals
-            selectedIndex = indexPath.item
-            collectionView.reloadData()
-            delegate?.filterCatagories(name: category?[indexPath.item].name ?? "")
+//            selectedIndex = indexPath.item
+//            collectionView.reloadData()
+
+            // Delegate should be called after reload is applied
+            DispatchQueue.main.async {
+                self.delegate?.filterCatagories(name: self.category?[indexPath.item].name ?? "")
+            }
+
         }else{
             guard let notice = onGoing?[indexPath.item],
                              let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }

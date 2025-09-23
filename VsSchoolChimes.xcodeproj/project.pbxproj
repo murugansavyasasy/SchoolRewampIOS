@@ -557,6 +557,8 @@
 		84B57EE22D15533000E0EA29 /* SubmitVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EE12D15533000E0EA29 /* SubmitVC.xib */; };
 		84B57EE32D15533000E0EA29 /* SubmitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EE02D15533000E0EA29 /* SubmitVC.swift */; };
 		84B5D0332D030C24003CFAAF /* AppStringFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B5D0322D030C24003CFAAF /* AppStringFile.swift */; };
+		84B688652E829CB90053D6A8 /* ChatCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B688642E829CB90053D6A8 /* ChatCVC.xib */; };
+		84B688662E829CB90053D6A8 /* ChatCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B688632E829CB90053D6A8 /* ChatCVC.swift */; };
 		84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */; };
 		84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		84BB5EAB2D11334400AD0C87 /* ScheduleExamsList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EAA2D11334400AD0C87 /* ScheduleExamsList.xib */; };
@@ -1460,6 +1462,8 @@
 		84B57EE02D15533000E0EA29 /* SubmitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitVC.swift; sourceTree = "<group>"; };
 		84B57EE12D15533000E0EA29 /* SubmitVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitVC.xib; sourceTree = "<group>"; };
 		84B5D0322D030C24003CFAAF /* AppStringFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStringFile.swift; sourceTree = "<group>"; };
+		84B688632E829CB90053D6A8 /* ChatCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCVC.swift; sourceTree = "<group>"; };
+		84B688642E829CB90053D6A8 /* ChatCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCVC.xib; sourceTree = "<group>"; };
 		84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleExamVC.swift; sourceTree = "<group>"; };
 		84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleExamVC.xib; sourceTree = "<group>"; };
 		84BB5EA92D11334400AD0C87 /* ScheduleExamsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleExamsList.swift; sourceTree = "<group>"; };
@@ -2597,6 +2601,8 @@
 			children = (
 				84127DB92E13EB260092159D /* interactTvcell.swift */,
 				84127DBA2E13EB260092159D /* interactTvcell.xib */,
+				84B688632E829CB90053D6A8 /* ChatCVC.swift */,
+				84B688642E829CB90053D6A8 /* ChatCVC.xib */,
 			);
 			path = intractTvcell;
 			sourceTree = "<group>";
@@ -4408,6 +4414,7 @@
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
 				841ACC8F2DA5076800326D52 /* loader.json in Resources */,
 				848E4F622DF6A874006F6658 /* AssignmentSummitionVC.xib in Resources */,
+				84B688652E829CB90053D6A8 /* ChatCVC.xib in Resources */,
 				FA7014D12E7D76CD00B3C012 /* AttendanceMarkingVC.xib in Resources */,
 				187CF4D62D119C82001422CE /* ClassTimeTableViewController.xib in Resources */,
 				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
@@ -4998,6 +5005,7 @@
 				84EA0E9B2DAF91E9001630FB /* HomeWorkTVC.swift in Sources */,
 				84FC4DCA2DBCAE6700BBEDD7 /* FiltersCvCell.swift in Sources */,
 				84FC4DCB2DBCAE6700BBEDD7 /* ParentCommunicationVc.swift in Sources */,
+				84B688662E829CB90053D6A8 /* ChatCVC.swift in Sources */,
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
 				84A0D1182DC8E40C0037E1BF /* BannerView.swift in Sources */,
 				844DF0092E5AD28F0016A347 /* QuistionPagenationVc.swift in Sources */,
