@@ -89,7 +89,7 @@ class EventResiverVC: UIViewController {
         searchbar.barTintColor = .clear
         searchbar.backgroundColor = .clear
         searchbar.delegate = self
-        searchbar.addDoneButton()
+        searchbar.searchTextField.addDoneButton()
     }
 
     private func registerTableView() {

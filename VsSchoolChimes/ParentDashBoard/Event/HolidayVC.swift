@@ -37,7 +37,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         let name = studentDetails?.name ?? ""
         let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard)
         titleLbl.text = AttendanceString.holidays
         setupViews()
         addSwipeGestures()

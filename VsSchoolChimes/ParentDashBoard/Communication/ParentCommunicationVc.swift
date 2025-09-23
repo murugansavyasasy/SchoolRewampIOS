@@ -146,6 +146,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
         FilterCV.isHidden = true
         ReadUnreadStack.isHidden = true
+        SearchbarStack.isHidden = true
         
         ReadBtn.layer.cornerRadius = 12
         UnreadBtn.layer.cornerRadius = 12
@@ -275,18 +276,19 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
 //
 //        }
         
-        FilterCV.isHidden = false
-        ReadUnreadStack.isHidden = false
         
-        showfilter.toggle()
+        FilterCV.isHidden.toggle()
+        ReadUnreadStack.isHidden.toggle()
         
-       if showfilter == true {
-            ViewAnimator.showFade(FilterCV)
-            ViewAnimator.showFade(ReadUnreadStack)
-        }else {
-            ViewAnimator.hideFade(FilterCV)
-            ViewAnimator.hideFade(ReadUnreadStack)
-        }
+//        showfilter.toggle()
+//        
+//       if showfilter == true {
+//            ViewAnimator.showFade(FilterCV)
+//            ViewAnimator.showFade(ReadUnreadStack)
+//        }else {
+//            ViewAnimator.hideFade(FilterCV)
+//            ViewAnimator.hideFade(ReadUnreadStack)
+//        }
     }
     
     func filterSelection(FilterType: String) {
@@ -331,7 +333,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         FilteredMessages = TotalMessageList
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
-                        SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
+                        //SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         tv.reloadData()
                     }
                     
@@ -341,7 +343,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         TotalMessageList = []
                         SearchMessages = TotalMessageList
                         FilteredMessages = TotalMessageList
-                        SearchbarStack.isHidden = true
+                       // SearchbarStack.isHidden = true
                         NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
                         NodataLbl.isHidden = false
                         NodataImage.isHidden = false
@@ -410,7 +412,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         
                         SearchMessages = FilteredMessages
                         
-                        SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
+                       // SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.isHidden = false
@@ -425,7 +427,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         tv.reloadData()
                         
                         if TotalMessageList?.count == 0 {
-                            SearchbarStack.isHidden = true
+                            //SearchbarStack.isHidden = true
                             NodataLbl.text = SuccessMessage.message
                             //NodataLbl.text = "Something went wrong! Try again Later"
                             tv.isHidden = true
@@ -509,6 +511,33 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             }
         }
     }
+    
+    @IBAction func SearchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            SearchbarStack.isHidden = false
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else {
+            FilteredMessages = TotalMessageList
+            SearchMessages = FilteredMessages
+            tv.reloadData()
+            SearchbarStack.isHidden = true
+            SearchBar.searchTextField.text = ""
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            FilterCV.isHidden = true
+            ReadUnreadStack.isHidden = true
+            NodataImage.isHidden = true
+            NodataLbl.isHidden = true
+            AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
+            ReadBtn.backgroundColor = .white
+            UnreadBtn.backgroundColor = .white
+            selectedIndex = IndexPath(item: 0, section: 0)
+            FilterCV.reloadData()
+        }
+    }
+    
 }
 
 //MARK: Tableview Functions

@@ -23,6 +23,7 @@ class InteractionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        searchBar.searchTextField.addDoneButton()
         backBtn.applyBackButton()
         FullView.layer.cornerRadius = 30
         FullView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -30,7 +31,7 @@ class InteractionVC: UIViewController {
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         let name = studentDetails?.name ?? ""
         let standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self

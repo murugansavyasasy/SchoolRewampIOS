@@ -299,6 +299,7 @@ struct user_inputs {
     static var attendance_date = ""
     static var submissionDate = ""
     static var assigmentCategory = ""
+    static var menuList:[String] = []
 
     static func clearTempData() -> Bool {
         selectedImgData.removeAll()

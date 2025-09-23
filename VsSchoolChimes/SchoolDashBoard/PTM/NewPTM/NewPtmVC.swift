@@ -49,7 +49,7 @@ class NewPtmVC: UIViewController, Datepicker {
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "",colour: .white)
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "")
         
         selectDateBtn.setTitle(CommonStringFile.all, for: .normal)
         selectDateBtn.semanticContentAttribute = .forceRightToLeft

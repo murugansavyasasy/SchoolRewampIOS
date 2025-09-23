@@ -34,8 +34,8 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
         backBtnNm
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
-                secondLine: Child_details?.school_name ?? "",
-                colour: .white)
+                secondLine: Child_details?.school_name ?? ""
+            )
         webkitLoading()
     }
 
