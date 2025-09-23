@@ -63,8 +63,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         BackBtnNm
             .configureAsBackButton(
                 firstLine: "Create New " + MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? "",
-                colour: .white
+                secondLine: staffDetails?.school_name ?? ""
+
             )
         
         
@@ -96,8 +96,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             BackBtnNm
                 .configureAsBackButton(
                     firstLine: "Update Existing " + MenuStringFile.selectedMenuName,
-                    secondLine: staffDetails?.school_name ?? "",
-                    colour: .white
+                    secondLine: staffDetails?.school_name ?? ""
                 )
             
             setSelectedHomeWork(

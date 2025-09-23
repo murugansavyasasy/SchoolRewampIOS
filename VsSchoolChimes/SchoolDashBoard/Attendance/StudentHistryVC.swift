@@ -108,7 +108,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         sendbtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         
         let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
-        BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "", colour: .white)
+        BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         
 //        if isAttandanceMarkingScreen == false{
 //            HeaderviewHeight.constant = 0

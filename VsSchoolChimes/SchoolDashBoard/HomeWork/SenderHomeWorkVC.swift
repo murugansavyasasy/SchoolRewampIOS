@@ -107,8 +107,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         backBtnNm
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? "",
-                colour: .white
+                secondLine: staffDetails?.school_name ?? ""
             )
         
         

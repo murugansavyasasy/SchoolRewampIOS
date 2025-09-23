@@ -66,8 +66,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         backBtnName
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? "",
-                colour: .white
+                secondLine: staffDetails?.school_name ?? ""
             )
         
         

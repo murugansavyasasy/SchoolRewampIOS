@@ -169,9 +169,11 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         let feeDetail = feeDetailsList[indexPath.row]
 
         cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoice_no ?? "")"
-        cell.invoceDate.text = "Invoice Date: \(feeDetail.invoice_date ?? "")"
+        let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
+        cell.invoceDate.text = "Invoice Date: \(result.date ?? "")"
+        cell.timeLbl.text = result.time
         cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoice_amount ?? "")"
-        cell.timeLbl.text = ""
+      
        // cell.sizeLbl.text = feeDetail.fileSize
         let iconImage = UIImage(named: "pdf (1)")
         cell.document.image = iconImage
@@ -187,6 +189,27 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         let id = feeDetailsList[indexPath.row].id ?? ""
         Get_Invoice_Receipt_Api(invoiceId: id)
     }
+
+    func extractDateAndTime(from input: String) -> (date: String?, time: String?) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent parsing
+
+        guard let dateObject = formatter.date(from: input) else {
+            return (nil, nil) // Return nils if parsing fails
+        }
+
+        // Format date
+        formatter.dateFormat = "dd-MM-yyyy"
+        let dateString = formatter.string(from: dateObject)
+
+        // Format time
+        formatter.dateFormat = "hh:mm a"
+        let timeString = formatter.string(from: dateObject)
+
+        return (dateString, timeString)
+    }
+
     
     
     // MARK: - WKNavigationDelegate Methods

@@ -255,4 +255,61 @@ extension String {
         
         return (timeAgo, dateString)
     }
+    func chatTimeDisplay() -> (String, String) {
+        let possibleFormats = [
+            "dd-MM-yyyy hh:mm a",
+            "dd-MM-yyyy hh:mm:ss a",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd hh:mm a",
+            "yyyy-MM-dd'T'HH:mm:ssZ"
+        ]
+        
+        var date: Date? = nil
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        for format in possibleFormats {
+            formatter.dateFormat = format
+            if let parsedDate = formatter.date(from: self) {
+                date = parsedDate
+                break
+            }
+        }
+        
+        guard let date = date else {
+            return ("Invalid time", "")
+        }
+        
+        let now = Date()
+        let calendar = Calendar.current
+        let submittedDay = calendar.startOfDay(for: date)
+        let currentDay = calendar.startOfDay(for: now)
+        
+        let components = calendar.dateComponents([.day], from: submittedDay, to: currentDay)
+        let interval = now.timeIntervalSince(date)
+        
+        // Time ago part
+        var timeAgo = ""
+        if calendar.isDateInToday(date) {
+            if interval < 60 {
+                timeAgo = "Just now"
+            } else if interval < 3600 {
+                timeAgo = "\(Int(interval / 60)) min ago"
+            } else {
+                timeAgo = "\(Int(interval / 3600)) hr ago"
+            }
+        } else if let days = components.day {
+            timeAgo = "\(days) Day\(days > 1 ? "s" : "") Ago"
+        }
+        
+        // Date part
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM"
+        let dateString = dateFormatter.string(from: date)
+        
+        return (timeAgo, dateString)
+    }
+
 }
+

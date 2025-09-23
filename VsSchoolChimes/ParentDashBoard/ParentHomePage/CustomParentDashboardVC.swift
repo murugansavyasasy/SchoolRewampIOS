@@ -114,9 +114,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
                 switch result {
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
@@ -128,6 +125,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
+                        user_inputs.menuList = self.menu_details.compactMap{$0.name}
                     } else {
                         self.MenuCollection.reloadData()
                     }
@@ -184,6 +182,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         if !changedIndexPaths.isEmpty {
                             self.MenuCollection.reloadItems(at: changedIndexPaths)
                         }
+                    }
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
                     }
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)

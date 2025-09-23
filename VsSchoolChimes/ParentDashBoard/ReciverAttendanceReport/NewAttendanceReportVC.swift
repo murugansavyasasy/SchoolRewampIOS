@@ -70,7 +70,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
+        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
         
         TitleLbl.text = AttendanceString.LeaveHistory
         TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
