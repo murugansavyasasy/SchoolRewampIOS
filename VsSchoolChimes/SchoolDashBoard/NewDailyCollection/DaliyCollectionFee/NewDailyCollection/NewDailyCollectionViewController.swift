@@ -196,23 +196,71 @@ import UIKit
 extension UIButton {
     
     
-        func configureAsBackButton(firstLine: String, secondLine: String) {
+//        func configureAsBackButton(firstLine: String, secondLine: String) {
+//            let fullTitle = "\(firstLine)\n\(secondLine)"
+//            
+//            // Force Plain style (iOS 15+ only)
+//            if #available(iOS 15.0, *) {
+//                self.configuration = .plain()
+//                self.configuration?.contentInsets = .zero // remove default paddings
+//            }
+//            
+//            // Set the back arrow image
+//            let image = UIImage(systemName: "chevron.left")
+//            self.setImage(image, for: .normal)
+//            
+//            // Configure paragraph style
+//            let paragraphStyle = NSMutableParagraphStyle()
+//            paragraphStyle.alignment = .left
+//            paragraphStyle.lineSpacing = 1
+//            
+//            // Create attributed title
+//            let attributedTitle = NSMutableAttributedString(
+//                string: fullTitle,
+//                attributes: [
+//                    .font: UIFont(name: "Poppins-Medium", size: 13) as Any,
+//                    .paragraphStyle: paragraphStyle
+//                ]
+//            )
+//            
+//            // Apply style to second line
+//            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
+//            if secondLineRange.location != NSNotFound {
+//                attributedTitle.addAttributes([
+//                    .font: UIFont(name: "Poppins-Medium", size: 12) as Any
+//                ], range: secondLineRange)
+//            }
+//            
+//            // Configure title label
+//            self.titleLabel?.numberOfLines = 0
+//            self.titleLabel?.lineBreakMode = .byWordWrapping
+//            self.titleLabel?.textAlignment = .left
+//            
+//            // Apply attributed title
+//            self.setAttributedTitle(attributedTitle, for: .normal)
+//            
+//            // Adjust content and insets
+//            self.contentHorizontalAlignment = .left
+//            self.contentVerticalAlignment = .center
+//            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
+//            self.imageEdgeInsets = .zero
+//            self.contentEdgeInsets = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
+//        }
+    
+    func configureAsBackButton(firstLine: String, secondLine: String) {
             let fullTitle = "\(firstLine)\n\(secondLine)"
             
-            // Force Plain style (iOS 15+ only)
-            if #available(iOS 15.0, *) {
-                self.configuration = .plain()
-                self.configuration?.contentInsets = .zero // remove default paddings
-            }
+            // Don’t use UIButton.Configuration → gives us control
+           // self.configuration = nil
             
             // Set the back arrow image
             let image = UIImage(systemName: "chevron.left")
             self.setImage(image, for: .normal)
             
-            // Configure paragraph style
+            // Configure paragraph style (reduce vertical space between lines)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .left
-            paragraphStyle.lineSpacing = 3
+            paragraphStyle.lineSpacing = 1  // tighter line spacing
             
             // Create attributed title
             let attributedTitle = NSMutableAttributedString(
@@ -223,7 +271,7 @@ extension UIButton {
                 ]
             )
             
-            // Apply style to second line
+            // Apply style to second line (smaller font)
             let secondLineRange = (fullTitle as NSString).range(of: secondLine)
             if secondLineRange.location != NSNotFound {
                 attributedTitle.addAttributes([
@@ -239,65 +287,67 @@ extension UIButton {
             // Apply attributed title
             self.setAttributedTitle(attributedTitle, for: .normal)
             
-            // Adjust content and insets
+            // Alignments
             self.contentHorizontalAlignment = .left
             self.contentVerticalAlignment = .center
-            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+            
+            // Add more space between image and text
+            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
             self.imageEdgeInsets = .zero
-            self.contentEdgeInsets = UIEdgeInsets(top: 6, left: 0, bottom: 6, right: 0)
+            self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         }
 
-        func configureAsBackButton(firstLine: String, secondLine: String, colour: UIColor) {
-            let fullTitle = "\(firstLine)\n\(secondLine)"
-            
-            // Set the back arrow image
-            let image = UIImage(systemName: "chevron.left")
-            self.setImage(image, for: .normal)
-            
-            // Configure paragraph style
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .left
-            paragraphStyle.lineSpacing = 3
-            paragraphStyle.lineBreakMode = .byWordWrapping
-            
-            // Create attributed title
-            let attributedTitle = NSMutableAttributedString(
-                string: fullTitle,
-                attributes: [
-                    .font: UIFont(name: "Poppins-Bold", size: 15)!,
-                    .foregroundColor: colour,
-                    .paragraphStyle: paragraphStyle
-                ]
-            )
-            
-            // Apply style to second line
-            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
-            if secondLineRange.location != NSNotFound {
-                attributedTitle.addAttributes([
-                    .font: UIFont(name: "Poppins-Bold", size: 11)!,
-                    .foregroundColor: colour.withAlphaComponent(0.8),
-                    .paragraphStyle: paragraphStyle
-                ], range: secondLineRange)
-            }
-            
-            // Configure title label
-            self.titleLabel?.numberOfLines = 0              // allow multiple lines
-            self.titleLabel?.lineBreakMode = .byWordWrapping
-            self.titleLabel?.textAlignment = .left
-            
-            // Apply attributed title
-            self.setAttributedTitle(attributedTitle, for: .normal)
-            
-            // Adjust content and insets
-            self.contentHorizontalAlignment = .left
-            self.contentVerticalAlignment = .center
-            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-            self.imageEdgeInsets = .zero
-            self.contentEdgeInsets = .zero
-            
-            // 🔑 Auto resize the button to fit multi-line text
-            self.sizeToFit()
-        }
+//        func configureAsBackButton(firstLine: String, secondLine: String, colour: UIColor) {
+//            let fullTitle = "\(firstLine)\n\(secondLine)"
+//            
+//            // Set the back arrow image
+//            let image = UIImage(systemName: "chevron.left")
+//            self.setImage(image, for: .normal)
+//            
+//            // Configure paragraph style
+//            let paragraphStyle = NSMutableParagraphStyle()
+//            paragraphStyle.alignment = .left
+//            paragraphStyle.lineSpacing = 3
+//            paragraphStyle.lineBreakMode = .byWordWrapping
+//            
+//            // Create attributed title
+//            let attributedTitle = NSMutableAttributedString(
+//                string: fullTitle,
+//                attributes: [
+//                    .font: UIFont(name: "Poppins-Medium", size: 13)!,
+//                    .foregroundColor: colour,
+//                    .paragraphStyle: paragraphStyle
+//                ]
+//            )
+//            
+//            // Apply style to second line
+//            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
+//            if secondLineRange.location != NSNotFound {
+//                attributedTitle.addAttributes([
+//                    .font: UIFont(name: "Poppins-Medium", size: 12)!,
+//                    .foregroundColor: colour.withAlphaComponent(0.8),
+//                    .paragraphStyle: paragraphStyle
+//                ], range: secondLineRange)
+//            }
+//            
+//            // Configure title label
+//            self.titleLabel?.numberOfLines = 0              // allow multiple lines
+//            self.titleLabel?.lineBreakMode = .byWordWrapping
+//            self.titleLabel?.textAlignment = .left
+//            
+//            // Apply attributed title
+//            self.setAttributedTitle(attributedTitle, for: .normal)
+//            
+//            // Adjust content and insets
+//            self.contentHorizontalAlignment = .left
+//            self.contentVerticalAlignment = .center
+//            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+//            self.imageEdgeInsets = .zero
+//            self.contentEdgeInsets = .zero
+//            
+//            // 🔑 Auto resize the button to fit multi-line text
+//            self.sizeToFit()
+//        }
     
 
 }

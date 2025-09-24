@@ -81,12 +81,8 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, DeleteImg
     
     @IBAction func ModuleDrop(){
 
-        let stringArray  = ["Text"
-                            ,"image","Video"]
-        let myArray = stringArray
-        
-        dropDown.dataSource = myArray//4
-        dropDown.anchorView = ModuleDropDown //5
+        dropDown.dataSource = user_inputs.menuList
+        dropDown.anchorView = ModuleDropDown
         
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         
@@ -96,7 +92,6 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, DeleteImg
         
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             selectModuleLbl.text = item
-            
         }
     }
     
@@ -135,47 +130,60 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, DeleteImg
     @IBAction func SendBtnAct(_ sender: Any) {
      
        
-            var itemsToShare: [Any] = []
-            
-            for item in attachments {
-                if let image = item.image {
-                    itemsToShare.append(image)
-                } else if let videoURL = item.VideoURl {
-                    itemsToShare.append(videoURL)
-                } else if let imagePath = item.imageURL {
-                    itemsToShare.append(URL(fileURLWithPath: imagePath))
-                }
-            }
-            
-            guard !itemsToShare.isEmpty else { return }
-            
-            let activityVC = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-            
-            // Exclude everything except Mail (Gmail will still appear if installed)
-            activityVC.excludedActivityTypes = [
-                .postToFacebook,
-                .postToTwitter,
-                .postToWeibo,
-                .message,
-                .print,
-                .copyToPasteboard,
-                .assignToContact,
-                .saveToCameraRoll,
-                .addToReadingList,
-                .postToFlickr,
-                .postToVimeo,
-                .postToTencentWeibo,
-                .airDrop,
-                .openInIBooks,
-                .markupAsPDF
-            ]
-            
-        activityVC.popoverPresentationController?.sourceView = sender as? UIView
-            present(activityVC, animated: true)
-        
-
+//            var itemsToShare: [Any] = []
+//            
+//            for item in attachments {
+//                if let image = item.image {
+//                    itemsToShare.append(image)
+//                } else if let videoURL = item.VideoURl {
+//                    itemsToShare.append(videoURL)
+//                } else if let imagePath = item.imageURL {
+//                    itemsToShare.append(URL(fileURLWithPath: imagePath))
+//                }
+//            }
+//            
+//            guard !itemsToShare.isEmpty else { return }
+//            
+//            let activityVC = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+//            
+//            // Exclude everything except Mail (Gmail will still appear if installed)
+//            activityVC.excludedActivityTypes = [
+//                .postToFacebook,
+//                .postToTwitter,
+//                .postToWeibo,
+//                .message,
+//                .print,
+//                .copyToPasteboard,
+//                .assignToContact,
+//                .saveToCameraRoll,
+//                .addToReadingList,
+//                .postToFlickr,
+//                .postToVimeo,
+//                .postToTencentWeibo,
+//                .airDrop,
+//                .openInIBooks,
+//                .markupAsPDF
+//            ]
+//            
+//        activityVC.popoverPresentationController?.sourceView = sender as? UIView
+//            present(activityVC, animated: true)
+        openGmail()
 
     }
+    
+    func openGmail() {
+        let to = "test@example.com"
+        let subject = "My Subject"
+        let body = "Hello, this is the body."
+
+        let urlString = "googlegmail://co?to=\(to)&subject=\(subject)&body=\(body)"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+
     
     
     func textViewDidBeginEditing(_ textView: UITextView) {

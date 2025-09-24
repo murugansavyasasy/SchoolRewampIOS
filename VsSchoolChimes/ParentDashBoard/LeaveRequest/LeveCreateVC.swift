@@ -136,7 +136,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         let name = childDetails?.name ?? ""
         let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard)
         
         OutlineView.layer.cornerRadius = 12
         OutlineView.layer.borderWidth = 1

@@ -107,7 +107,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "", colour: .white)
+        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "")
         
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         purposeDefLbl.setFont(style: .title, size: FontSize.TitleSize)

@@ -54,8 +54,7 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
         backBtn
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? "",
-                colour: .white
+                secondLine: staffDetails?.school_name ?? ""
             )
         createQuizBtn.layer.cornerRadius = createQuizBtn.frame.height / 2
         headerView.layer.cornerRadius = 20

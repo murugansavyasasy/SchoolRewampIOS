@@ -52,6 +52,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         nameLbl.text = childDetails?.name
         standerdLbl.text = "\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")"
         searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
         customizeSearchBar()
         setupCollectionView()
         setupRefreshControl()

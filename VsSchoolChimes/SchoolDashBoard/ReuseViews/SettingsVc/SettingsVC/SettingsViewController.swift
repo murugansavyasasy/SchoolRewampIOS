@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     ]
     var section:[Section]?
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid","text.document.fill"]),
+        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid","WhatNews"]),
         Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
     ]
     
@@ -47,7 +47,7 @@ class SettingsViewController: UIViewController, BaktoHome {
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         section = sections
         SettingspageHeading.text = MenuTapbar.shared.Settings
-        SettingspageHeading.setFont(style: .body, size: 16)
+        SettingspageHeading.setFont(style: .body, size: 20)
         // Do any additional setup after loading the view.
         
         for imageCategory in Images {
@@ -63,7 +63,6 @@ class SettingsViewController: UIViewController, BaktoHome {
         }
         tableview.dataSource = self
         tableview.delegate = self
-        view.backgroundColor = Colornames.topBackgroundCLr
         tableview.backgroundColor = Colornames.bottomClr
         
         
@@ -75,21 +74,8 @@ class SettingsViewController: UIViewController, BaktoHome {
         
         
     }
-    override func viewDidLayoutSubviews() {
-        if passVale == 2{
-            topView.applyGradient(
-                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }else{
-            topView.applyGradient(
-                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }
-    }
+
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         section = sections
@@ -129,7 +115,13 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         cell.faceIdSwitch.isHidden = sections[indexPath.section].items[indexPath.row].translated() != menuname.faceID ? true:false
         cell.arrowImg.isHidden = sections[indexPath.section].items[indexPath.row].translated() != menuname.faceID ? false:true
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
+        if sections[indexPath.section].items[indexPath.row] == "What's new"{
+            cell.imgView.image = UIImage(named: "WhatNews")
+        }
+       
+        
         cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(systemName: "iphone.and.arrow.forward") ? .red : .black
+        
         
         cell.arrowImg.applyRTLFlip(Language == "ar")
         cell.imgView.applyRTLFlip(Language == "ar")
@@ -163,10 +155,16 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
         }else if  sections[indexPath.section].items[indexPath.row] == menuname.feedback{
             
-            let vc = RateUsViewController(nibName: nil, bundle: nil)
-            vc.passValue = passVale
-            vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: true)
+//            let vc = RateUsViewController(nibName: nil, bundle: nil)
+//            vc.passValue = passVale
+//            vc.modalPresentationStyle = .overFullScreen
+//            present(vc, animated: true)
+            
+           
+            if let url = URL(string: "https://apps.apple.com/app/id700513732?action=write-review") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+
             
         }
         
@@ -235,6 +233,6 @@ struct Image {
 }
 
 let Images: [Image] = [
-    Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","text.document.fill"]),
+    Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","WhatNews"]),
     Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
 ]

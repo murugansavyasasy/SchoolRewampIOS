@@ -46,7 +46,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        view.applyTopToWhiteGradient(topColor: UIColor.homeWorkClr)
+        //view.applyTopToWhiteGradient(topColor: UIColor.homeWorkClr)
         
         // Invalidate layout when bounds change
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -88,6 +88,8 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         backBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 8)
         backBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -8)
         backBtn.contentHorizontalAlignment = .leading
+        backBtn.titleLabel?.numberOfLines = 0
+        backBtn.titleLabel?.lineBreakMode = .byWordWrapping
         
         doneHomeWorkBtnName.setTitle("\"Click\" here when you're done", for: .normal)
         doneHomeWorkBtnName.setTitleColor(.systemBlue, for: .normal)

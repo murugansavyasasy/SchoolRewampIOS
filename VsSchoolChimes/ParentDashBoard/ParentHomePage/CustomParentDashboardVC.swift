@@ -125,6 +125,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
+                        user_inputs.menuList = self.menu_details.compactMap{$0.name}
                     } else {
                         self.MenuCollection.reloadData()
                     }

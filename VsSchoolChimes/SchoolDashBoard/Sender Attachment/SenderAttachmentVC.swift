@@ -109,15 +109,13 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         BackBtn
             .configureAsBackButton(
                 firstLine: "Create new " + MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? "",
-                colour: .white
+                secondLine: staffDetails?.school_name ?? ""
             )
         if editId != ""{
             BackBtn
                 .configureAsBackButton(
                     firstLine: "Update Existing " + MenuStringFile.selectedMenuName,
-                    secondLine: staffDetails?.school_name ?? "",
-                    colour: .white
+                    secondLine: staffDetails?.school_name ?? ""
                 )
            setSelectedHomeWork(
             title:  Editattachment.title ?? "",

@@ -10,7 +10,6 @@ import WebKit
 
 class FeedetailTVC: UITableViewCell {
 
-    @IBOutlet weak var sizeLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var document: GlowingImageView!

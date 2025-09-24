@@ -57,7 +57,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         
         let name = childDetails?.name ?? ""
         let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        Backbtn.configureAsBackButton(firstLine: name, secondLine: stanard, colour: .white)
+        Backbtn.configureAsBackButton(firstLine: name, secondLine: stanard)
         
         LeaveRequestsLbl.setFont(style: .header, size: 20)
         LeaveRequestsLbl.text = AttendanceString.leaveRequests

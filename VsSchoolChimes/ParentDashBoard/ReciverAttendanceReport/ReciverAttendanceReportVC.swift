@@ -51,7 +51,7 @@ class ReciverAttendanceReportVC: UIViewController {
         
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: standard, colour: .white)
+        BackBtn.configureAsBackButton(firstLine: name, secondLine: standard)
         MenuTitleLbl.text = AttendanceString.attendance
         MenuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         Topview.layer.cornerRadius = 25
