@@ -1285,6 +1285,7 @@ struct StaffListResponse: Codable {
 struct StaffMember: Codable {
     let id: String?
     let name: String?
+    let profile: String?
     let subject_id: String?
     let subject_name: String?
     let is_assigned: Bool?
@@ -1296,6 +1297,7 @@ struct StaffMember: Codable {
     init() {
         self.id = nil
         self.name = nil
+        self.profile = ""
         self.subject_id = nil
         self.subject_name = nil
         self.is_assigned = nil

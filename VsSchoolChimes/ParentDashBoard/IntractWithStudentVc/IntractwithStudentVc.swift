@@ -9,6 +9,8 @@ import UIKit
 
 class IntractwithStudentVc: UIViewController {
 
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var noDataFoundLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -18,7 +20,8 @@ class IntractwithStudentVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
+        backBtn.configureAsBackButton(firstLine: " Intract With Student", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
@@ -47,19 +50,47 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
         }
         
         cell.selectionStyle = .none
-        
-        let datas = getStandardDetails?[indexPath.row]
-        cell.teacherNameLbl.text = (datas?.name ?? "")  + "   -  " + (
-            datas?.section_name ?? "")
-        cell.subjectNameLbl.text = datas?.subject_name ?? ""
-        cell.profileImage.image = UIImage(systemName: "person.3.sequence.fill")
-       
-        cell.countBtnName.isHidden = datas?.unread_count == 0 ? true : false
-        cell.timeLablandCountStk.isHidden = cell.countBtnName.isHidden
-        cell.TimeAndcountLabl.text = formattedDateStatus(
-            from: datas?.last_msg_time ?? ""
-        )
-        cell.countBtnName.setTitle(String(datas?.unread_count ?? 0), for: .normal)
+//        
+//        let datas = getStandardDetails?[indexPath.row]
+//        cell.teacherNameLbl.text = (datas?.name ?? "")  + "   -  " + (
+//            datas?.section_name ?? "")
+//        cell.subjectNameLbl.text = datas?.subject_name ?? ""
+//        cell.profileImage.image = UIImage(systemName: "person.3.sequence.fill")
+//       
+//        cell.countBtnName.isHidden = datas?.unread_count == 0 ? true : false
+//        cell.timeLablandCountStk.isHidden = cell.countBtnName.isHidden
+//        cell.TimeAndcountLabl.text = formattedDateStatus(
+//            from: datas?.last_msg_time ?? ""
+//        )
+//        cell.countBtnName.setTitle(String(datas?.unread_count ?? 0), for: .normal)
+        if let datas = getStandardDetails?[indexPath.row] {
+            cell.nameLbl.text = datas.subject_name ?? ""
+            cell.subjectLbl.text = "Class - \(datas.name ?? "") (\(datas.section_name ?? ""))"
+            
+            // Unread count handling
+            let unreadCount = datas.unread_count ?? 0
+            cell.unReadCountBtn.isHidden = unreadCount == 0
+            cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
+            // Last update time
+            if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
+                let (timeAgo, _) = submittedDate
+                cell.lastUpdateTimeLbl.text = timeAgo
+                cell.lastUpdateTimeLbl.isHidden = timeAgo == "Invalid time"
+                cell.iconBtn.isHidden = timeAgo == "Invalid time"
+            } else {
+                cell.lastUpdateTimeLbl.isHidden = true
+                cell.iconBtn.isHidden = true
+            }
+            cell.userImg.image = UIImage(systemName: "person.3.sequence.fill")
+            cell.userImg.isHidden = true
+            cell.userBtn.isHidden = false
+            if let name = datas.subject_name, !name.isEmpty {
+                let firstTwo = String(name.prefix(2)).uppercased()
+                cell.userBtn.setTitle(firstTwo, for: .normal)
+            } else {
+                cell.userBtn.setTitle("-", for: .normal) // fallback if empty
+            }
+        }
         return cell
         
     }
@@ -94,6 +125,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                         DispatchQueue.main.async { [self] in
                             getStandardDetails = successMessage.data ?? []
                             searchBar.isHidden = (successMessage.status ?? true)
+                            searchView.isHidden = (successMessage.status ?? true)
                             noDataFoundLbl.isHidden = searchBar.isHidden
                             imgView.isHidden = noDataFoundLbl.isHidden
                             tv.reloadData()
@@ -101,6 +133,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                     }else{
                         DispatchQueue.main.async { [self] in
                             searchBar.isHidden = (successMessage.status ?? false)
+                            searchView.isHidden = (successMessage.status ?? false)
                             noDataFoundLbl.isHidden = searchBar.isHidden
                             imgView.isHidden = noDataFoundLbl.isHidden
                             noDataFoundLbl.text = successMessage.message ?? ""
@@ -109,6 +142,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                 case .failure(let error):
                     DispatchQueue.main.async { [self] in
                         searchBar.isHidden = true
+                        searchView.isHidden = true
                         noDataFoundLbl.isHidden = false
                         noDataFoundLbl.text = error.localizedDescription
                         imgView.isHidden = noDataFoundLbl.isHidden

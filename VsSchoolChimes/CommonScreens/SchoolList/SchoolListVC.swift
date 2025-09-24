@@ -242,6 +242,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.SenderLSRWVCNavigate(from: self)
             case Menu_id.quiz :
                 MenuRedirect.senderQuiz(from: self)
+            case Menu_id.senderChat :
+                MenuRedirect.Senderchat(from: self)
             case Menu_id.AttachmentMenuId :
                 MenuRedirect.senderAttachment(from: self)
             default:

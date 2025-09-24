@@ -18,12 +18,13 @@ class WhatsNewVc: UIViewController {
 
         
         headerView.layer.cornerRadius = 20
-//        headerView.layer.masksToBounds = true
-        headerView.layer.shadowColor = UIColor.black.cgColor   // Shadow color
-           headerView.layer.shadowOpacity = 0.3                   // Shadow transparency
-           headerView.layer.shadowOffset = CGSize(width: 0, height: 3) // Shadow direction
-           headerView.layer.shadowRadius = 5                      // Blur radius
-        headerView.layer.masksToBounds = true                 // Important: shadow visible outside bounds
+
+        headerView.layer.shadowColor = UIColor.black.cgColor
+        headerView.layer.shadowOpacity = 0.15   // softness level
+        headerView.layer.shadowOffset = CGSize(width: 0, height: 4) // shadow direction
+        headerView.layer.shadowRadius = 8      // blur effect
+        headerView.layer.masksToBounds = false
+
         tryItnowBtn.layer.cornerRadius = tryItnowBtn.layer.frame.height/2
         skipNowBtn.layer.cornerRadius = 5
         skipNowBtn.layer.masksToBounds = true

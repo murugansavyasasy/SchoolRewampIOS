@@ -10,6 +10,7 @@ import UIKit
 
 class AttachmentsVc: UIViewController {
     
+    @IBOutlet weak var noRecordStack: UIStackView!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var backBtn: UIButton!
@@ -88,6 +89,10 @@ class AttachmentsVc: UIViewController {
                 case .success(let response):
                     if response.status == true {
                         //                        self.hideView(ishide: true)
+                        
+                        self.noRecordStack.isHidden = true
+                        self.noDataLabel.isHidden = true
+                        self.tv.isHidden = false
                         self.attachmentData = response.data ?? []
                         self.filteredAttachments = response.data
                         self.SearchAttachments = response.data
@@ -115,8 +120,11 @@ class AttachmentsVc: UIViewController {
                         }
                         self.tv.reloadData()
                     } else {
-                        //                        self.hideView(ishide: false)
-                        //                        self.NodataLbl.text = response.message
+                        
+                        self.noRecordStack.isHidden = false
+                        self.noDataLabel.isHidden = false
+                        self.noDataLabel.text = response.message ?? ""
+                        self.tv.isHidden = true
                     }
                     
                 case .failure(_):
