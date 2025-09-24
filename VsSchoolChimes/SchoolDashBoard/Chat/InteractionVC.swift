@@ -107,10 +107,9 @@ extension InteractionVC: UICollectionViewDelegate,
         let spacing: CGFloat = 10
         let totalSpacing = inset * 2 + spacing
         let availableWidth = collectionView.frame.width - totalSpacing
-        let itemWidth = availableWidth / 2
-        return CGSize(width: itemWidth, height: itemWidth)
+        let itemWidth = availableWidth
+        return CGSize(width: itemWidth, height: 110)
     }
-
 }
 
 extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
@@ -126,16 +125,34 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        
-        let datas = staffMembersData?[indexPath.row]
-        cell.teacherNameLbl.text = datas?.name ?? ""
-        cell.subjectNameLbl.text = datas?.subject_name ?? ""
-        cell.countBtnName.isHidden = datas?.unread_count == 0 ? true : false
-        cell.timeLablandCountStk.isHidden = cell.countBtnName.isHidden
-        cell.TimeAndcountLabl.text = formattedDateStatus(
-            from: datas?.last_msg_time ?? ""
-        )
-        cell.countBtnName.setTitle(String(datas?.unread_count ?? 0), for: .normal)
+        if let datas = staffMembersData?[indexPath.row] {
+            cell.nameLbl.text = datas.name ?? ""
+            cell.subjectLbl.text = datas.subject_name ?? ""
+            
+            // Unread count handling
+            let unreadCount = datas.unread_count ?? 0
+            cell.unReadCountBtn.isHidden = unreadCount == 0
+            cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
+            // Last update time
+            if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
+                let (timeAgo, _) = submittedDate
+                cell.lastUpdateTimeLbl.text = timeAgo
+                cell.lastUpdateTimeLbl.isHidden = timeAgo == "Invalid time"
+                cell.iconBtn.isHidden = timeAgo == "Invalid time"
+            } else {
+                cell.lastUpdateTimeLbl.isHidden = true
+                cell.iconBtn.isHidden = true
+            }
+            
+            cell.userImg.isHidden = datas.profile?.isEmpty ?? true
+            cell.userBtn.isHidden = !cell.userImg.isHidden
+            if let name = datas.name, !name.isEmpty {
+                let firstTwo = String(name.prefix(2)).uppercased()
+                cell.userBtn.setTitle(firstTwo, for: .normal)
+            } else {
+                cell.userBtn.setTitle("-", for: .normal) // fallback if empty
+            }
+        }
         return cell
         
     }
