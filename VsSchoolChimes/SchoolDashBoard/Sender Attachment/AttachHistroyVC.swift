@@ -146,7 +146,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     }
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -159,7 +159,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {

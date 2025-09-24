@@ -88,7 +88,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         let refreshAlert = UIAlertController(title: "", message: "Are you sure want to delete this loacation ?", preferredStyle: UIAlertController.Style.alert)
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
             if #available(iOS 15.0, *) {
-                showLottieProgressLoader(animationName: "loader (2)")
+                showActivityLoader()
             }
             
             APIService.shared.makeApi(
@@ -99,7 +99,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
-                        self?.hideLottieProgressLoader()
+                        self?.hideActivityLoader()
                     }
                     
                     switch result {
@@ -123,7 +123,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
     func update(param:[String:Any]){
         
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -134,7 +134,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
+                    self?.hideActivityLoader()
                 }
                 
                 switch result {
@@ -155,7 +155,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func fetchAttachments() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -166,7 +166,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
+                    self?.hideActivityLoader()
                 }
                 
                 switch result {

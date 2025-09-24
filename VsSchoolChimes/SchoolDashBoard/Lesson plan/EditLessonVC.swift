@@ -106,7 +106,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func Get_Edit_Details(){
         
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         let param: [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.request_type: ReqestType ?? ""]
@@ -118,7 +118,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 guard let self = self else {return}
                 
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 
@@ -140,7 +140,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func LessonPlan_Update_Api(){
         
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         let converted = editedFields.map { (key, value) in
@@ -160,7 +160,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 guard let self = self else {return}
                 
                 if #available(iOS 15.0, *){
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {

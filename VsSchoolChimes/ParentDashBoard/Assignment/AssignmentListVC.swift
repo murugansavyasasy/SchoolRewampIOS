@@ -54,7 +54,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     func getAssigment() {
         
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -67,7 +67,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
             DispatchQueue.main.async {
                 
                 if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
+                    self?.hideActivityLoader()
                 }
                 
                 switch result {

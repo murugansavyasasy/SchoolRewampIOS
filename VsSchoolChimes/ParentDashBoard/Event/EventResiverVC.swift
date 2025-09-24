@@ -106,7 +106,7 @@ class EventResiverVC: UIViewController {
     // MARK: - API Call
     func GetEvent() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -140,7 +140,7 @@ class EventResiverVC: UIViewController {
                         }
                     }
                     if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
+                        self.hideActivityLoader()
                     }
                     self.filteredSections = self.allEventSections
                     self.noDataLbl.isHidden = true

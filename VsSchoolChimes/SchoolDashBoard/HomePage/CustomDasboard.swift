@@ -114,7 +114,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: - API Calls
     func get_dashboard_details(token:String) {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
@@ -141,13 +141,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.menu_details = []
                         self.MenuCollection.reloadData()
                     }
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)
                     if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
+                        self.hideActivityLoader()
                     }
                 }
             }
@@ -190,6 +187,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                                
                             }
                         }
+                    }
+                    if #available(iOS 15.0, *) {
+                       
+                            self.hideActivityLoader()
+            
                     }
                 }
             case .failure(let error):

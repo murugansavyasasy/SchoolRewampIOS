@@ -212,7 +212,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
 
     func getLeaveRequestHistory() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_list,
                                   parameters: [LeaveRequestStringFile.member_type: "STUDENT"],
@@ -221,7 +221,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
 
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                if #available(iOS 15.0, *) { self.hideLottieProgressLoader() }
+                if #available(iOS 15.0, *) {  self.hideActivityLoader() }
 
                 switch result {
                 case .success(let response):

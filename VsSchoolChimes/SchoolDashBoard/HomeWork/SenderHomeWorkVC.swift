@@ -322,7 +322,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
        let dateFormatted = ConvertDateStringSmart(date)
 
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
 
         APIService.shared.makeApi(
@@ -335,7 +335,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
 
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
 
                 switch result {

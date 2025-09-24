@@ -63,7 +63,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - API
     func event_holiday() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
 
         APIService.shared.makeApi(
@@ -73,7 +73,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             token: studentDetails?.access_token ?? "") { [weak self] (result: Result<EventHolidayResponse, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
-                        self?.hideLottieProgressLoader()
+                        self?.hideActivityLoader()
                     }
                     
                     switch result {

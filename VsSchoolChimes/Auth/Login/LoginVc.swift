@@ -159,7 +159,7 @@ class LoginVc: UIViewController {
     
     func validate_user() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         let secureID = SecureIDManager.getSecureID()
         var parameters: [String: Any] = [
@@ -186,7 +186,7 @@ class LoginVc: UIViewController {
                                 return
                             }
                             if #available(iOS 15.0, *) {
-                                hideLottieProgressLoader()
+                                self.hideActivityLoader()
                             }
                             UserDefaultFileManager
                                 .saveUserDetails(
@@ -299,7 +299,7 @@ class LoginVc: UIViewController {
                         DispatchQueue.main.async { [self] in
                             
                             if #available(iOS 15.0, *) {
-                                hideLottieProgressLoader()
+                                self.hideActivityLoader()
                             }
                             AlertModal
                                 .showAlert(
@@ -328,7 +328,7 @@ class LoginVc: UIViewController {
     
     func ForgotPasswordAPIcall() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         APIService.shared
             .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
@@ -341,7 +341,7 @@ class LoginVc: UIViewController {
                 case.success(let successmessage):
                     DispatchQueue.main.async { [self] in
                     if #available(iOS 15.0, *) {
-                        hideLottieProgressLoader()
+                        self.hideActivityLoader()
                     }
                     if successmessage.status == true {
                         
@@ -372,7 +372,7 @@ class LoginVc: UIViewController {
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                         if #available(iOS 15.0, *) {
-                            self.hideLottieProgressLoader()
+                            self.hideActivityLoader()
                         }
                     }
                     

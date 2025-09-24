@@ -122,7 +122,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     func Get_Notice() {
         
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<NoticeResponse,Error>) in
@@ -132,7 +132,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
                 guard let self = self else{return}
                 
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {
