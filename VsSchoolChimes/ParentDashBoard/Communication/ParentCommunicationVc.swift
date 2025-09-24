@@ -90,6 +90,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
        
         SearchBar.delegate = self
         SearchBar.searchTextField.addDoneButton()
+        SearchBar.placeholder = CommonStringFile.Search
+        SearchBar.backgroundImage = UIImage()
 
         backBtn.configureAsBackButton(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         menuNameLbl.text = MenuStringFile.selectedMenuName

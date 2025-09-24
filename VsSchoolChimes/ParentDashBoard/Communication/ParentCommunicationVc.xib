@@ -76,7 +76,7 @@
                                             </constraints>
                                             <imageReference key="image" image="slider.horizontal.3" catalog="system" symbolScale="medium"/>
                                         </imageView>
-                                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="3Hh-31-eMX">
+                                        <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="3Hh-31-eMX">
                                             <rect key="frame" x="30" y="0.0" width="333" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="C3G-Cf-wfO"/>

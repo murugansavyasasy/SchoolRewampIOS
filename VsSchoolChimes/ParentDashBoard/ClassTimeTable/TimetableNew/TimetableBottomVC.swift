@@ -20,30 +20,30 @@ class TimetableBottomVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.layer.cornerRadius = 30
-        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        noDataimage.isHidden = true
-        DayLbl.setFont(style: .title, size: FontSize.TitleSize)
-        nodataLbl.setFont(style: .title, size: FontSize.BodySize)
-        tv.register(UINib(nibName: "TimetableTvCell", bundle: nil),
-                    forCellReuseIdentifier: "TimetableTvCell")
-        tv.delegate = self
-        tv.dataSource = self
+//        view.layer.cornerRadius = 30
+//        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//        noDataimage.isHidden = true
+//        DayLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        nodataLbl.setFont(style: .title, size: FontSize.BodySize)
+//        tv.register(UINib(nibName: "TimetableTvCell", bundle: nil),
+//                    forCellReuseIdentifier: "TimetableTvCell")
+//        tv.delegate = self
+//        tv.dataSource = self
         
-        get_Timetable()
+       // get_Timetable()
         
         // Schedule periodic check for current hour highlight
-        highlightTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            if self.isTodayMatchingDayLabel() {
-                self.highlightCurrentHour()
-            }
-        }
+//        highlightTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+//            guard let self = self else { return }
+//            if self.isTodayMatchingDayLabel() {
+//                self.highlightCurrentHour()
+//            }
+        //}
     }
     
-    deinit {
-        highlightTimer?.invalidate()
-    }
+//    deinit {
+//        highlightTimer?.invalidate()
+//    }
     
     // MARK: Api call
     func get_Timetable() {
@@ -67,11 +67,11 @@ class TimetableBottomVC: UIViewController, UITableViewDelegate, UITableViewDataS
                         self.nodataLbl.isHidden = true
                         
                         // ✅ Highlight if today
-                        if self.isTodayMatchingDayLabel() {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                self.highlightCurrentHour()
-                            }
-                        }
+//                        if self.isTodayMatchingDayLabel() {
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                                self.highlightCurrentHour()
+//                            }
+//                        }
                     } else {
                         self.timetableData = []
                         self.tv.reloadData()
