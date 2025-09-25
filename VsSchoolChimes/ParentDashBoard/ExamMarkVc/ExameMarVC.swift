@@ -34,7 +34,7 @@ class ExameMarVC: UIViewController {
     
     func examListApi() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_exam_list,
@@ -43,7 +43,7 @@ class ExameMarVC: UIViewController {
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<ExamListResponse, Error>) in
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
                 switch result {
                 case .success(let response):
                     

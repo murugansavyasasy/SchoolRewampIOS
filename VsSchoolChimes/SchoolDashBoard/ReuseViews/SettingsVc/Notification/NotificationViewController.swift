@@ -198,7 +198,7 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
     
     func getNotification() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
 
         APIService.shared.makeApi(
@@ -209,7 +209,7 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         ) { [weak self] (result: Result<notificationSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
+                    self?.hideActivityLoader()
                 }
                 guard let self = self else { return }
 
@@ -235,7 +235,7 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
     
     func clearNotification(id:[String],onComplete:@escaping (Bool)->(Void)) {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
 
         APIService.shared.makeApi(
@@ -246,7 +246,7 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         ) { [weak self] (result: Result<notificationSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
+                    self?.hideActivityLoader()
                 }
                 guard let self = self else { return }
 

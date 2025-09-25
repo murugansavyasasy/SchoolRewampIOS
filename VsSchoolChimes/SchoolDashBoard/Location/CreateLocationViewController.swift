@@ -288,7 +288,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         }else{
             if locationNameTxt.text != "" && longitude != "" && latitude != "" && distanceTxt.text != ""{
                 if #available(iOS 15.0, *) {
-                    showLottieProgressLoader(animationName: "loader (2)")
+                    showActivityLoader()
                 }
                 
                 APIService.shared.makeApi(
@@ -302,7 +302,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                 ) { [self] (result: Result<StaffGeometricLocation, Error>) in
                     DispatchQueue.main.async {
                         if #available(iOS 15.0, *) {
-                            self.hideLottieProgressLoader()
+                            self.hideActivityLoader()
                         }
                         
                         switch result {

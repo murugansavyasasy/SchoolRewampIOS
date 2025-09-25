@@ -55,7 +55,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     
     private func SkillListApi() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -66,7 +66,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         ) { [weak self] (result: Result<LSRWListResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self?.hideLottieProgressLoader()
+                    self?.hideActivityLoader()
                 }
                 
                 switch result {

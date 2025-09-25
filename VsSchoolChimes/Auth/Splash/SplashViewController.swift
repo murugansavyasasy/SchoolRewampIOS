@@ -522,9 +522,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 
             case .failure(let error):
                 DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
                     print("validate_user error:", error.localizedDescription)
                     // Optionally show alert
                 }

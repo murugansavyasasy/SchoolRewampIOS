@@ -101,7 +101,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     // MARK: - API Call
     func GetEvent() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -113,7 +113,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {

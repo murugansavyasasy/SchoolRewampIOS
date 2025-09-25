@@ -88,7 +88,7 @@ class ViewLessonVC: UIViewController, SelectedId {
     func View_Lesson_Plan_Api(){
         
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         let param: [String: Any] = [LessonPlanStringFile.section_subject_id : SubjectId ?? "",LessonPlanStringFile.lesson_plan_status: 0]
@@ -100,7 +100,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                 guard let self = self else{return}
                 
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {

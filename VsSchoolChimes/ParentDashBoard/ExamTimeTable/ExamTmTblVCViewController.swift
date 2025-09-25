@@ -43,7 +43,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     // MARK: - API Call
     func examDetailApi() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
 
         APIService.shared.makeApi(
@@ -53,7 +53,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<DetailedExamListResponse, Error>) in
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
                 switch result {
                 case .success(let response):
                     self?.examDetails = response.data

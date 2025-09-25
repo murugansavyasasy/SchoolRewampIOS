@@ -207,10 +207,6 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
     
     
     func AbsentStudent(sectionId: String, date: String) {
-//        if #available(iOS 15.0, *) {
-//            showLottieProgressLoader(animationName: "loader (2)")
-//        }
-
         let param = [
             AbsenteesReportStringFile.absent_on: date,
             AbsenteesReportStringFile.section_id: sectionId
