@@ -310,11 +310,13 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     
                     let isEmpty = filteredHomework.isEmpty
                   
-                    self.NodataFoundLbl.isHidden = !isEmpty
+//                    self.NodataFoundLbl.isHidden = !isEmpty
                     
                     self.noDataImage.isHidden = !isEmpty
                     //                    self.searchbar.isHidden = isEmpty
                     self.homeWorkDefaultLbl.isHidden = isEmpty
+                    
+                    
                     
                 case .failure(let error):
                     

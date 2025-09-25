@@ -152,6 +152,7 @@ class AttachmentsVc: UIViewController {
                             return updated
                         }
                         
+                        tv.reloadData()
                     }
                 }
             case .failure(let error):
@@ -209,13 +210,13 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
+        
         header.configure(with: attachmentHeaders[section])
         
         header.discretpionLbl
             .setupExpandable(
                 text: attachmentHeaders[section].description ?? "",
-                isExpanded: attachmentHeaders[section].isExpanded
-            )
+                isExpanded: attachmentHeaders[section].isExpanded)
         
         
         header.discretpionLbl.onExpandableTap = { [weak self] in
@@ -225,11 +226,11 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             header.discretpionLbl.isExpanded = newValue
             self.attachmentHeaders[section].isExpanded = newValue
             
-            //             if self.attachmentHeaders[section].is_unread == true {
-            //                 self.ReadStatusUpdate(
-            //                     type: "ATTACHMENT",
-            //                     detail_id: self.attachmentHeaders[section].id ?? "")
-            //             }
+                         if self.attachmentHeaders[section].is_unread == true {
+                             self.ReadStatusUpdate(
+                                 type: "ATTACHMENT",
+                                 detail_id: self.attachmentHeaders[section].id ?? "")
+                         }
             
             tableView.beginUpdates()
             tableView.endUpdates()

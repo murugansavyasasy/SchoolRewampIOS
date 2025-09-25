@@ -506,6 +506,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 38: break
         case 39:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
+        case 40:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
         default: print("Unknown menuId:", item.id ?? 0)
         }
     }
