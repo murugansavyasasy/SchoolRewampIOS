@@ -105,7 +105,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         view.addGestureRecognizer(tapGesture)
 
         getLeaveRequestHistory()
-        applyFilter()
+        
     }
 
     @objc func dismissPopup() {
@@ -283,8 +283,15 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         
         if sender.isSelected{
             searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
         }else{
             searchBar.isHidden = true
+            view.endEditing(true)
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            searchText = ""
+            applyFilter()
         }
     }
     

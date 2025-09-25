@@ -34,7 +34,8 @@ class AttachmentsVc: UIViewController {
         MenuNameLbl.text = MenuStringFile.selectedMenuName
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
-        searchBar.layer.cornerRadius = 5
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.backgroundImage = UIImage()
         tv.register(
             UINib(nibName: CellConfingName.AttachTvHeader, bundle: nil),
             forHeaderFooterViewReuseIdentifier: CellConfingName.AttachTvHeader
