@@ -192,7 +192,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             //            enableDisable()
         }
         else{
-            isEmergencyVoice = true
+            isEmergencyVoice = false
             //            enableDisable()
         }
         

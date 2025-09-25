@@ -100,9 +100,15 @@ class AttachHistroyVC: UIViewController, SelectedId {
             )
         tv.register(UINib(nibName: "ContentCell", bundle: nil), forCellReuseIdentifier: "ContentCell")
         
-        fetchAttachments()
+//        fetchAttachments()
     }
 
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchAttachments()
+    }
     @objc func catagoryTapped() {
         print("Category View Tapped")
         dropDown.anchorView = schoolDropDown
@@ -173,6 +179,8 @@ class AttachHistroyVC: UIViewController, SelectedId {
                         // Separate headers and file_paths
                         self.attachmentHeaders = []
                         self.attachmentFiles = []
+                        self.tv.isHidden = false
+                        self.noDataLabel.isHidden = true
                         
                         for item in self.attachmentData {
                             let header = AttachmentHeaderInfo(
@@ -191,12 +199,17 @@ class AttachHistroyVC: UIViewController, SelectedId {
                         self.tv.dataSource = self
                         self.tv.reloadData()
                     } else {
-                        //                        self.hideView(ishide: false)
-                        //                        self.NodataLbl.text = response.message
+//                                                self.hideView(ishide: false)
+                        self.noDataLabel.text = response.message
+                        self.tv.isHidden = true
+                        self.noDataLabel.isHidden = false
                     }
                     
                 case .failure(_):
-                    ""
+            
+                    self.noDataLabel.text = "Something went wrong"
+                    self.tv.isHidden = true
+                    self.noDataLabel.isHidden = false
                 }
             }
         }
@@ -267,7 +280,11 @@ class AttachHistroyVC: UIViewController, SelectedId {
             // Optional: Update filtered lists if you’re using search
             filteredAttachments?.removeAll(where: { $0.id == attachmentId })
             SearchAttachments?.removeAll(where: { $0.id == attachmentId })
-            
+            if attachmentHeaders.count == 0 {
+                noDataLabel.isHidden = false
+                noDataLabel.text = "There are no attachment posted yet."
+                self.tv.isHidden = true
+            }
             // Reload tableView section
             tv.beginUpdates()
             tv.deleteSections(IndexSet(integer: index), with: .fade)

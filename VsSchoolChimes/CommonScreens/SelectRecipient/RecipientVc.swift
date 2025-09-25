@@ -532,6 +532,7 @@ class RecipientVc: UIViewController{
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
         vc.AlertMessageContent = message
+        vc.Common_request_params  = Common_request_params
         vc.accidmaticNAme = acidmicYrLbl.text
         vc.selectedAcadimicYearId = self.selectedAcadimicYearId
         vc.StandardString = drpodonLbl.text
@@ -1384,23 +1385,44 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func gotoDashboard(){
         DispatchQueue.main.async { [self] in
-            switch staff_role {
-            case PriorityType.is_staff:
-                self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                
-            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-                if (staffDetailsCount?.count ?? 0) > 1 {
-                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                } else {
+            if Menu_id.staffSelectedMenuId == Menu_id.communicationMenuId{
+                switch staff_role {
+                case PriorityType.is_staff:
                     self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    
+                case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                    if (staffDetailsCount?.count ?? 0) > 1 {
+                        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    } else {
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    }
+                    
+                default:
+                    print("Unhandled staff role")
                 }
                 
-            default:
-                print("Unhandled staff role")
-            }
+                // Add segments from updated array
             
-            // Add segments from updated array
-        }
+            }else{
+                
+                switch staff_role {
+                case PriorityType.is_staff:
+                    self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    
+                case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                    if (staffDetailsCount?.count ?? 0) > 1 {
+                        self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    } else {
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    }
+                    
+                default:
+                    print("Unhandled staff role")
+                }
+                
+                // Add segments from updated array
+            }
+            }
     }
     
     override func didReceiveMemoryWarning() {
