@@ -171,42 +171,6 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
             }
         }
     }
-
-//    private func addReminderToReminderApp() {
-//        guard let dateString = date else {
-//            print("Date or time is nil")
-//            return
-//        }
-//
-//        let fullString = "\(dateString)"
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "MMM dd h:mm a" // Match formatted label format
-//        formatter.locale = Locale(identifier: "en_US_POSIX")
-//
-//        guard let reminderDate = formatter.date(from: fullString) else {
-//            print("Invalid date/time format")
-//            return
-//        }
-//
-//        let reminder = EKReminder(eventStore: eventStore)
-//        reminder.title = titleLbl.text ?? "Event Reminder"
-//        reminder.notes = ""
-//        reminder.calendar = eventStore.defaultCalendarForNewReminders()
-//        reminder.addAlarm(EKAlarm(absoluteDate: reminderDate))
-//
-//        do {
-//            try eventStore.save(reminder, commit: true)
-//            if let topVC = getCurrentViewController() {
-//                alert.showAlert(title: "Reminder Saved", message: "Saved to Reminder app for \(formatter.string(from: reminderDate))", on: topVC)
-//            }
-//        } catch {
-//            print("Error saving reminder: \(error.localizedDescription)")
-//            if let topVC = getCurrentViewController() {
-//                alert.showAlert(title: "Error", message: "Failed to save reminder.", on: topVC)
-//            }
-//        }
-//    }
-
     private func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }

@@ -52,24 +52,16 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     }
     
     func getAssigment() {
-        
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_assignment_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<AssignmentReportResponse, Error>) in
-            
             DispatchQueue.main.async {
-                
-                if #available(iOS 15.0, *) {
-                    self?.hideActivityLoader()
-                }
-                
                 switch result {
                 case .success(let response):
                         
@@ -87,6 +79,9 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                     self?.noRecordImg.isHidden = false
                     self?.nodataLbl.text = error.localizedDescription
                     print("API Error: \(error.localizedDescription)")
+                }
+                if #available(iOS 15.0, *) {
+                    self?.hideActivityLoader()
                 }
             }
         }

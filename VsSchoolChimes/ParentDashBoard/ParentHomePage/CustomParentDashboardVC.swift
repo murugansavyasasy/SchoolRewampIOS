@@ -131,7 +131,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                     }
                     
                 case .failure(let error):
-                    print("API Error:", error.localizedDescription)
+                    if #available(iOS 15.0, *) {
+                        self.hideActivityLoader()
+                    }
                 }
             }
         }
@@ -187,7 +189,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.hideActivityLoader()
                     }
                 case .failure(let error):
-                    print("API Error:", error.localizedDescription)
+                    if #available(iOS 15.0, *) {
+                        self.hideActivityLoader()
+                    }
                 }
             }
         }

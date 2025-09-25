@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 // MARK: - Data Model
 struct SubCategories {
@@ -22,16 +23,18 @@ struct SubCategories {
     }
 }
 
+// MARK: - UITableViewCell
 class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
+    
+    // MARK: - Delegate
+    weak var delegate: SelectedId?
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)
     }
     
-    
     // MARK: - IBOutlets
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
-//    @IBOutlet weak var createdDateLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var assignmentProgressLbl: UILabel!
     @IBOutlet weak var outerView: UIView!
@@ -54,57 +57,69 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     var subject :String?
     var edit:Bool?
     var delete:Bool?
-    var delegate:SelectedId?
     var selectedId:String?
+    
+    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
     
-    @IBAction func submitBtn(_ sender: UIButton) {
-        if let currentVC = getCurrentViewController() {
-            if #available(iOS 14.0, *) {
-                let vcc = SubmitVC(nibName: nil, bundle: nil)
-                vcc.titleName = titleLbl.text
-                vcc.id = id
-                vcc.modalPresentationStyle = .fullScreen
-                currentVC.present(vcc, animated: true, completion: nil)
-            }
-        }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        [img1,img2,img3].forEach { $0?.image = nil }
+        imgCount.setTitle(nil, for: .normal)
+        assignment = nil
+        subCatogoriesStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
-    @IBAction func mySubmission(_ sender: UIButton) {
+    
+    // MARK: - Submit Button Action
+    @IBAction func submitBtn(_ sender: UIButton) {
+        guard let currentVC = getCurrentViewController() else { return }
         if #available(iOS 14.0, *) {
-            if let currentVC = getCurrentViewController() {
-                let vcc = AssignmentSummitionVC(nibName: nil, bundle: nil)
-                vcc.titleName = titleLbl.text
-                vcc.subject = subject
-                vcc.id = id
-                vcc.modalPresentationStyle = .fullScreen
-                currentVC.present(vcc, animated: true, completion: nil)
-            }
+            let vcc = SubmitVC(nibName: nil, bundle: nil)
+            vcc.titleName = titleLbl.text
+            vcc.id = id
+            vcc.modalPresentationStyle = .fullScreen
+            currentVC.present(vcc, animated: true)
         }
     }
     
+    // MARK: - My Submission Action
+    @IBAction func mySubmission(_ sender: UIButton) {
+        guard let currentVC = getCurrentViewController() else { return }
+        let vcc = AssignmentSummitionVC(nibName: nil, bundle: nil)
+        vcc.titleName = titleLbl.text
+        vcc.subject = subject
+        vcc.id = id
+        vcc.modalPresentationStyle = .fullScreen
+        currentVC.present(vcc, animated: true)
+    }
+    
+    // MARK: - View Attachments
     @IBAction func viewAttachment(_ sender: UIButton) {
-        if let topVC = getCurrentViewController() {
-            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-            imageVC.fileURL = assignment?.file_path ?? []
-            imageVC.subjectName = assignment?.subject
-            imageVC.index = 0
-            imageVC.modalPresentationStyle = .fullScreen
-            topVC.present(imageVC, animated: true)
-        }
+        guard let topVC = getCurrentViewController() else { return }
+        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+        imageVC.fileURL = assignment?.file_path ?? []
+        imageVC.subjectName = assignment?.subject
+        imageVC.index = 0
+        imageVC.modalPresentationStyle = .fullScreen
+        topVC.present(imageVC, animated: true)
     }
+    
+    // MARK: - Get Current VC
     func getCurrentViewController() -> UIViewController? {
-        return UIApplication.shared.connectedScenes
-            .filter { $0.activationState == .foregroundActive }
-            .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
-            .first?.rootViewController?.topMostViewController()
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController?.topMostViewController()
     }
+    
     // MARK: - UI Setup
     func setupUI() {
         [img1, img2, img3, imgCount].forEach { $0?.isHidden = true }
-        [img1, img2, img3, imgCount].forEach {
+        [img1, img2, img3].forEach {
             if let view = $0 {
                 setBorderAndCornerRadius(for: view, cornerRadius: view.frame.width / 2)
             }
@@ -112,9 +127,6 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         imgCount.layer.cornerRadius = imgCount.frame.width / 2
         completedBtn.layer.cornerRadius = 6
         submitBtn.layer.cornerRadius = 6
-        mysubmitBtn.layer.cornerRadius = 6
-//        mysubmitBtn.backgroundColor = UIColor.systemOrange
-//        submitBtn.backgroundColor = UIColor.systemGreen
         mysubmitBtn.layer.cornerRadius = 10
         outerView.setShadow()
         outerView.backgroundColor = .systemBackground
@@ -123,89 +135,78 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         titleLbl.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLbl.textColor = .label
         
-//        createdDateLbl.font = .systemFont(ofSize: 12, weight: .medium) // Slightly bolder
-//        createdDateLbl.textColor = .secondaryLabel
-//        createdDateLbl.backgroundColor = .systemBackground
-//        createdDateLbl.layer.cornerRadius = 15
-//        createdDateLbl.layer.borderWidth = 1
-//        createdDateLbl.layer.borderColor = UIColor.separator.cgColor // Subtle border
-//        createdDateLbl.textAlignment = .center
-//        createdDateLbl.layer.masksToBounds = true
-        
         descriptionLbl.font = .systemFont(ofSize: 14, weight: .regular)
         descriptionLbl.textColor = .secondaryLabel
         
         assignmentProgressLbl.font = .systemFont(ofSize: 12, weight: .medium)
         assignmentProgressLbl.textColor = .label
     }
+    
     func edit(edit:Bool,delete:Bool,selectedId:String){
         self.selectedId = selectedId
         self.delete = delete
         self.edit = edit
         editBtn.isHidden = !(edit || delete)
     }
-    // MARK: - Cell Configuration
+    
+    // MARK: - Configure Cell
     func configure(with assignment: Report) {
         self.assignment = assignment
-        
         titleLbl.text = assignment.title
         descriptionLbl.text = assignment.description
+        
         // Clear old stack items
         subCatogoriesStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        // Create and add new category pills
         categories = createCategoriesArray(from: assignment)
         
-        if let categories = categories {
+        if let categories = categories, !categories.isEmpty {
             let generatedStack = createSubCategoriesStack(with: categories)
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
+        
         assignmentProgressLbl.text = "Submitted Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)
     }
+    
+    // MARK: - Load Files
     func loadFiles(into cell: AssignmentTVC, files: [FilePath]) {
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
         cell.imgCount.isHidden = true
 
-        for (index, file) in files.enumerated() where index < 3 {
+        for (index, file) in files.prefix(3).enumerated() {
             guard let urlString = file.url, let url = URL(string: urlString) else { continue }
-
             let imageViews = [cell.img1, cell.img2, cell.img3]
-            guard index < imageViews.count, let imageView = imageViews[index] else { continue }
-
-            imageView.isHidden = false
-
+            let imageView = imageViews[index]
+            imageView?.isHidden = false
+            
             if file.type?.lowercased() != "image" {
-                let iconName = getFileIconName(for: url) // Ensure this function exists
-                imageView.image = UIImage(named: iconName) ?? UIImage(systemName: "doc.fill")
+                imageView?.image = UIImage(named: getFileIconName(for: url)) ?? UIImage(systemName: "doc.fill")
             } else {
-                imageView.kf.setImage(with: url)
+                imageView?.sd_setImage(with: url)
             }
         }
-
+        
         if files.count > 3 {
-            let extraCount = files.count - 3
-            cell.imgCount.setTitle("+\(extraCount)", for: .normal)
+            cell.imgCount.setTitle("+\(files.count - 3)", for: .normal)
             cell.imgCount.isHidden = false
         }
     }
+    
     // MARK: - Create Categories Array
     func createCategoriesArray(from assignment: Report) -> [SubCategories] {
         var cats: [SubCategories] = []
-        if let subject = assignment.created_date {
+        if let created = assignment.created_date {
             cats.append(SubCategories(
-                name: "Assigned : \(assignment.created_date?.convertToTargetDateFormat() ?? "")",
+                name: "Assigned : \(created.convertToTargetDateFormat() ?? "")",
                 icon: "calendar",
                 backgroundColor: .systemBlue.withAlphaComponent(0.15),
                 textColor: .systemBlue
             ))
         }
         if let category = assignment.category {
-            cats.append(SubCategories(
-                name: category,
-                icon: "square.grid.2x2"
-            ))
+            cats.append(SubCategories(name: category, icon: "square.grid.2x2"))
         }
         if let subject = assignment.subject {
             cats.append(SubCategories(
@@ -223,10 +224,10 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
                 textColor: .systemOrange
             ))
         }
-        
-        
         return cats
     }
+    
+    // MARK: - Edit Popup
     @IBAction func edit(_ sender: UIButton) {
         let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
         popoverContentVC.delegate = self
@@ -239,22 +240,21 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             popoverController.delegate = self
         }
         
-        // For iPhones: Present as a pop-up instead of full-screen
         if UIDevice.current.userInterfaceIdiom == .phone {
             popoverContentVC.modalPresentationStyle = .overFullScreen
-            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         }
-        if let topVC = getCurrentViewController() {
-            topVC.present(popoverContentVC, animated: true, completion: nil)
-        }
+        getCurrentViewController()?.present(popoverContentVC, animated: true)
     }
+    
+    // MARK: - Helpers
     func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
         view.layer.cornerRadius = cornerRadius
         view.layer.borderWidth = borderWidth
         view.layer.borderColor = borderColor.cgColor
         view.clipsToBounds = true
     }
-    // MARK: - Configure Progress
+    
     func configureProgress(_ value: Float) {
         progressView.progress = value
         progressView.trackTintColor = .systemGray5
@@ -262,29 +262,24 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         progressView.layer.cornerRadius = 4
         progressView.clipsToBounds = true
         switch value {
-        case 0.0..<0.3:
-            progressView.progressTintColor = UIColor.systemRed
-        case 0.3..<0.7:
-            progressView.progressTintColor = UIColor.systemOrange
-        default:
-            progressView.progressTintColor = UIColor.systemGreen
+        case 0.0..<0.3: progressView.progressTintColor = .systemRed
+        case 0.3..<0.7: progressView.progressTintColor = .systemOrange
+        default: progressView.progressTintColor = .systemGreen
         }
-        
     }
+    
     func calculateProgressPercentage(submitted: Int?, total: Int?) -> Float {
-        guard let submitted = submitted, let total = total, total > 0 else {
-            return 0.0
-        }
+        guard let submitted = submitted, let total = total, total > 0 else { return 0.0 }
         return Float(submitted) / Float(total)
     }
-
     
-    // MARK: - Create Subcategory Stack with Wrapping
+    // MARK: - Subcategories Layout
     func createSubCategoriesStack(with tags: [SubCategories]) -> UIStackView {
         let containerStack = UIStackView()
         containerStack.axis = .vertical
         containerStack.spacing = 8
         containerStack.translatesAutoresizingMaskIntoConstraints = false
+        containerStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
 
         var currentLineStack = createHorizontalStack()
         var currentLineWidth: CGFloat = 0
@@ -292,29 +287,26 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
 
         for tag in tags {
             if let pill = createPill(for: tag) {
-                let estimatedPillWidth = estimateWidth(for: pill)
-
-                if currentLineWidth + estimatedPillWidth > maxLineWidth && currentLineStack.arrangedSubviews.count > 0 {
-                    currentLineStack.addArrangedSubview(createFlexibleSpacer()) // Add empty space to fill
+                let estimatedPillWidth = estimateWidth(for: pill) + 8
+                if currentLineWidth + estimatedPillWidth > maxLineWidth && !currentLineStack.arrangedSubviews.isEmpty {
+                    currentLineStack.addArrangedSubview(createFlexibleSpacer())
                     containerStack.addArrangedSubview(currentLineStack)
                     currentLineStack = createHorizontalStack()
                     currentLineWidth = 0
                 }
-
                 currentLineStack.addArrangedSubview(pill)
-                currentLineWidth += estimatedPillWidth + 8
+                currentLineWidth += estimatedPillWidth
             }
         }
 
-        if currentLineStack.arrangedSubviews.count > 0 {
-            currentLineStack.addArrangedSubview(createFlexibleSpacer()) // Fill remaining space
+        if !currentLineStack.arrangedSubviews.isEmpty {
+            currentLineStack.addArrangedSubview(createFlexibleSpacer())
             containerStack.addArrangedSubview(currentLineStack)
         }
 
         return containerStack
     }
 
-    // MARK: - Create Horizontal Stack
     func createHorizontalStack() -> UIStackView {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -324,7 +316,6 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         return stack
     }
 
-    // MARK: - Create Pill View
     func createPill(for category: SubCategories) -> UIView? {
         guard !category.name.isEmpty else { return nil }
 
@@ -338,7 +329,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         iconView.tintColor = category.textColor
 
         let label = UILabel()
-        label.text = category.name.isEmpty ? " " : category.name
+        label.text = category.name
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = category.textColor
         label.numberOfLines = 1
@@ -360,7 +351,6 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         return pillView
     }
 
-    // MARK: - Configure Icon
     func configureIcon(_ iconView: UIImageView, with systemName: String) {
         let image = UIImage(systemName: systemName) ?? UIImage(systemName: "tag.fill")
         iconView.image = image
@@ -373,7 +363,6 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         ])
     }
 
-    // MARK: - Estimate Width of Pill
     func estimateWidth(for view: UIView) -> CGFloat {
         view.setNeedsLayout()
         view.layoutIfNeeded()
@@ -385,21 +374,24 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         return size.width
     }
 
-    // MARK: - Empty View to Fill Remaining Space
     func createFlexibleSpacer() -> UIView {
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
         spacer.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return spacer
     }
-
-    // MARK: - Date Formatting (Placeholder)
-    func formatDate(_ dateString: String) -> String {
-        // TODO: Replace with actual date formatting
-        return dateString
+    
+    // MARK: - File Icon Mapping
+    func getFileIconName(for url: URL) -> String {
+        switch url.pathExtension.lowercased() {
+        case "pdf": return "pdf_icon"
+        case "doc","docx": return "word_icon"
+        case "xls","xlsx": return "excel_icon"
+        case "ppt","pptx": return "ppt_icon"
+        default: return "doc.fill"
+        }
     }
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        // Ensure the popup style is maintained on iPhone
-        return .none
-    }
+    
+    // MARK: - Keep Popup Style
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle { return .none }
 }

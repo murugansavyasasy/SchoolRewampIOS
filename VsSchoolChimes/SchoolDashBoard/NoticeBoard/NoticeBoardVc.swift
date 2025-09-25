@@ -206,7 +206,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     
     func Get_Notice() {
         showLoadingState()
-        APIService.shared.makeApi(url: ServiceUrl.admin_api_notice_board_report, parameters: [:], type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_notice_board_report, parameters: [:], type: ApitTypeSringFile.GET, token: localData.editToken ?? staffdetails?.access_token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.hideLoadingState()
@@ -216,6 +216,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                     self.allNotices = successResponse.data ?? []
                     self.searchData = self.allNotices
                     self.collectionView.reloadData()
+                    self.noDataLbl.text = successResponse.message ?? ""
                     self.noDataLbl.isHidden = !self.searchData.isEmpty
                     self.noDataImg.isHidden = !self.searchData.isEmpty
                 case .failure(let error):
@@ -341,7 +342,7 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
         let notice = searchData[indexPath.item]
         cell.configure(with: notice)
         cell.editBtn.isHidden = false
-        cell.reminderBtn.isHidden = false
+//        cell.reminderBtn.isHidden = false
         cell.edit = notice.can_edit
         cell.delete = notice.can_delete
         cell.selectedId = notice.id
