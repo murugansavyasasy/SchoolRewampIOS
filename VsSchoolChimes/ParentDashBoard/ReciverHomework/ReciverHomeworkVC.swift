@@ -91,7 +91,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
 
     // MARK: - API Calls
     func GetHomeWorkReport() {
-        if #available(iOS 15.0, *) { showLottieProgressLoader(animationName: "loader (2)") }
+        if #available(iOS 15.0, *) { showActivityLoader() }
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_list,
             parameters: [:],
@@ -99,7 +99,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
             token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<HomeworListkResponse, Error>) in
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
 
                 switch result {
                 case .success(let successMessage):
@@ -125,7 +125,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     }
 
     func GetHomeWorkArchive() {
-        if #available(iOS 15.0, *) { showLottieProgressLoader(animationName: "loader (2)") }
+        if #available(iOS 15.0, *) { showActivityLoader() }
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_list_archive,
             parameters: [:],
@@ -133,7 +133,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
             token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<HomeworListkResponse, Error>) in
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
 
                 switch result {
                 case .success(let successMessage):

@@ -134,7 +134,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func homeWorkFinished() {
-        if #available(iOS 15.0, *) { showLottieProgressLoader(animationName: "loader (2)") }
+        if #available(iOS 15.0, *) { showActivityLoader() }
         
         APIService.shared.makeApi(
             url: ServiceUrl.homework_mark_complete,
@@ -143,7 +143,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideLottieProgressLoader() }
+                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
                 
                 guard let self = self else { return }
                 switch result {

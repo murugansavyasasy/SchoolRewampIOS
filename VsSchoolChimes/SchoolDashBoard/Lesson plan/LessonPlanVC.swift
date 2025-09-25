@@ -90,7 +90,7 @@ class LessonPlanVC: UIViewController {
     
     //MARK: Lesson plan Api call
     func lesson_plan_staff_report_Api(){
-        showLottieProgressLoader(animationName: "loader (2)")
+        showActivityLoader()
         let param: [String: Any] = [LessonPlanStringFile.request_type: ReqestType]
         
         APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanStaffReportResponse,Error>) in
@@ -98,7 +98,7 @@ class LessonPlanVC: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 
                 guard let self = self else {return}
-                self.hideLottieProgressLoader()
+                self.hideActivityLoader()
                 
                 switch result{
                     

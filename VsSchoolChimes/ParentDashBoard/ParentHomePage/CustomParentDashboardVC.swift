@@ -101,7 +101,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     // MARK: - API Calls
     func get_dashboard_details() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
@@ -184,7 +184,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         }
                     }
                     if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
+                        self.hideActivityLoader()
                     }
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)

@@ -186,81 +186,61 @@ func setAttributedText(for label: UILabel, with text: String, firstString: Strin
     // Set the attributed string to the label
     label.attributedText = attributedString
 }
+
+private var loaderActivityIndicator: UIActivityIndicatorView?
+var backgroundView: UIView?
+import ObjectiveC
 @available(iOS 15.0, *)
 extension UIViewController {
-    
-    func showLottieProgressLoader(animationName: String = "loader") {
-        DispatchQueue.main.async {
-            self.hideLottieProgressLoader()
-
-            // Create full-screen background layer that blocks interactions
-            let backgroundView = UIView(frame: self.view.bounds)
-            backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.3) // semi-transparent
-            backgroundView.translatesAutoresizingMaskIntoConstraints = false
-            backgroundView.isUserInteractionEnabled = true // block interactions
-            self.view.addSubview(backgroundView)
-            
-            NSLayoutConstraint.activate([
-                backgroundView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                backgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                backgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                backgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-            ])
-            
-            let containerSize: CGFloat = 100
-            let container = UIView()
-            container.backgroundColor = .white
-            container.translatesAutoresizingMaskIntoConstraints = false
-            container.layer.cornerRadius = 16
-            container.layer.masksToBounds = true
-            backgroundView.addSubview(container)
-            
-            NSLayoutConstraint.activate([
-                container.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-                container.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-                container.widthAnchor.constraint(equalToConstant: containerSize),
-                container.heightAnchor.constraint(equalToConstant: containerSize)
-            ])
-
-            // Load Lottie animation
-            let animationView = LottieAnimationView(name: animationName)
-            animationView.translatesAutoresizingMaskIntoConstraints = false
-            animationView.contentMode = .scaleAspectFit
-            animationView.loopMode = .loop
-            animationView.play()
-
-            container.addSubview(animationView)
-            
-            NSLayoutConstraint.activate([
-                animationView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-                animationView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-                animationView.topAnchor.constraint(equalTo: container.topAnchor),
-                animationView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-            ])
-
-            loaderContainerView = container
-            loaderAnimationView = animationView
-            loaderBackgroundView = backgroundView
+    // Keep a static dictionary to store loader views per VC
+        private static var loaders: [ObjectIdentifier: UIView] = [:]
+        
+        func showActivityLoader() {
+            DispatchQueue.main.async {
+                let id = ObjectIdentifier(self)
+                if UIViewController.loaders[id] != nil { return } // already showing
+                
+                guard let window = UIApplication.shared.connectedScenes
+                        .compactMap({ $0 as? UIWindowScene })
+                        .first?.keyWindow else { return }
+                
+                // Fullscreen background
+                let bg = UIView(frame: window.bounds)
+                bg.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+                
+                // Lottie animation
+                let animationView = LottieAnimationView(name: "loader (2)")
+                animationView.loopMode = .loop
+                animationView.translatesAutoresizingMaskIntoConstraints = false
+                bg.addSubview(animationView)
+                
+                NSLayoutConstraint.activate([
+                    animationView.centerXAnchor.constraint(equalTo: bg.centerXAnchor),
+                    animationView.centerYAnchor.constraint(equalTo: bg.centerYAnchor),
+                    animationView.widthAnchor.constraint(equalToConstant: 120),
+                    animationView.heightAnchor.constraint(equalToConstant: 120)
+                ])
+                
+                animationView.play()
+                
+                window.addSubview(bg)
+                window.bringSubviewToFront(bg)
+                
+                // Save reference
+                UIViewController.loaders[id] = bg
+            }
         }
-    }
-
-    func updateLottieProgress(to percent: Double) {
-        DispatchQueue.main.async {
-            let percentageText = "\(Int(percent))%"
-            loaderAnimationView?.textProvider = DictionaryTextProvider(["percentage": percentageText])
+        
+        func hideActivityLoader() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                let id = ObjectIdentifier(self)
+                UIViewController.loaders[id]?.removeFromSuperview()
+                UIViewController.loaders[id] = nil
+            }
         }
-    }
-
-    func hideLottieProgressLoader() {
-        DispatchQueue.main.async {
-            loaderAnimationView?.stop()
-            loaderBackgroundView?.removeFromSuperview()
-            loaderContainerView = nil
-            loaderAnimationView = nil
-            loaderBackgroundView = nil
-        }
-    }
 }
+
+
 
 
 enum LoaderStyle {
@@ -974,3 +954,4 @@ class BottomRoundedView: UIView {
         self.clipsToBounds = true
     }
 }
+

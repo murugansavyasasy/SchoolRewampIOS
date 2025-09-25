@@ -50,7 +50,7 @@ class SectionViewController: UIViewController, sectionCellDelegate {
     
     func AbsentStudent(sectionId:String,date:String) {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         let param = [AbsenteesReportStringFile.absent_on: date,AbsenteesReportStringFile.section_id: sectionId]
         APIService.shared.makeApi(
@@ -60,7 +60,7 @@ class SectionViewController: UIViewController, sectionCellDelegate {
             token:staffDetails?.access_token ?? "") { [self] (result: Result<AbsentisReportStudentResponse, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
+                        self.hideActivityLoader()
                     }
                     
                     switch result {

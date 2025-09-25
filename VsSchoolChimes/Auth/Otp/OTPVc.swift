@@ -148,7 +148,7 @@ class OTPVc: UIViewController {
     @IBAction func validationBtn(_ sender: Any) {
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             if #available(iOS 15.0, *) {
-                showLottieProgressLoader(animationName: "loader (2)")
+                showActivityLoader()
             }
             Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
         }else{
@@ -275,7 +275,7 @@ class OTPVc: UIViewController {
                         
                         guard let self = self else {return}
                         if #available(iOS 15.0, *) {
-                            hideLottieProgressLoader()
+                            self.hideActivityLoader()
                         }
                         if successMessage.status == true {
                             
@@ -420,7 +420,7 @@ class OTPVc: UIViewController {
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                         if #available(iOS 15.0, *) {
-                            hideLottieProgressLoader()
+                            self.hideActivityLoader()
                         }
                     }
                 }

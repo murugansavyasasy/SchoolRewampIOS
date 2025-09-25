@@ -140,7 +140,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     
     private func fetchArchiveAttachments() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -153,7 +153,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             
             DispatchQueue.main.async { [self] in
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {
@@ -182,7 +182,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -195,7 +195,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {

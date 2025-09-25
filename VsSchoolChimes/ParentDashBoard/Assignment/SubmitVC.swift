@@ -285,7 +285,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     // MARK: - Delegate Methods
     func videoPickerManager(didPickVideo url: URL) {
         if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
+            self.hideActivityLoader()
         }
         attachments.removeAll()
         selectImgPdfview.isHidden = true
@@ -295,7 +295,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     func videoPickerManagerDidCloseVideo() {
         if #available(iOS 15.0, *) {
-            self.hideLottieProgressLoader()
+            self.hideActivityLoader()
         }
         selectedVideoURL = nil
         selectImgPdfview.isHidden = false

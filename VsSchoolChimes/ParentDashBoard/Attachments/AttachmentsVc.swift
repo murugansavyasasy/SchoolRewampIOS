@@ -69,7 +69,7 @@ class AttachmentsVc: UIViewController {
     
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            showActivityLoader()
         }
         
         APIService.shared.makeApi(
@@ -82,7 +82,7 @@ class AttachmentsVc: UIViewController {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
                 
                 switch result {

@@ -121,7 +121,7 @@ class AbsentStudentListVC: UIViewController, UICollectionViewDelegate, UICollect
 
     func AbsentStudent(sectionId: String, date: String) {
         if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
+            self.hideActivityLoader()
         }
 
         let param = [
@@ -139,7 +139,7 @@ class AbsentStudentListVC: UIViewController, UICollectionViewDelegate, UICollect
                 guard let self = self else { return }
 
                 if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
+                    self.hideActivityLoader()
                 }
 
                 switch result {
