@@ -23,45 +23,96 @@ class TimetableVC: UIViewController {
     var selectedIndex: Int = 0
     var studentDetails = UserDefaultFileManager.get_child_Details()
     
-//    var bottomSheetVC: TimetableBottomVC?
-//    var BottomsheetPresented = false
+    var bottomSheetVC: TimetableBottomVC?
+    var BottomsheetPresented = false
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+            super.viewDidLoad()
 
-        // Get today’s short day
-        getCurrentDay = getCurrentDayShort()
-        if let todayIndex = days.firstIndex(of: getCurrentDay) {
-            selectedIndex = todayIndex
-        }
-        
-        // Format today’s date
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEE, dd MMM yy"
-        TodayDateLbl.text = formatter.string(from: Date())
+            // Get today’s short day
+            getCurrentDay = getCurrentDayShort()
+            if let todayIndex = days.firstIndex(of: getCurrentDay) {
+                selectedIndex = todayIndex
+            }
+            
+            // Format today’s date
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEE, dd MMM yy"
+            TodayDateLbl.text = formatter.string(from: Date())
 
-        // UI setup
-        BackBtn.applyBackButton()
-        MenuTitleLbl.setFont(style: .header, size: 20)
-        TodayDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        TodayDateLbl.setFont(style: .body, size: FontSize.BodySize)
-        
-        let Name = studentDetails?.name ?? ""
-        let Standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+            // UI setup
+            BackBtn.applyBackButton()
+            BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+            MenuTitleLbl.setFont(style: .header, size: 20)
+           
+            TodayDefLbl.setFont(style: .body, size: FontSize.BodySize)
+            TodayDateLbl.setFont(style: .body, size: FontSize.BodySize)
+            
+            let Name = studentDetails?.name ?? ""
+            let Standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         
         BackBtn.configureAsBackButton(firstLine: Name, secondLine: Standard)
 
-        // Collection view setup
-        cv.register(UINib(nibName: CellConfingName.WeekDaysNameCollectionViewCell, bundle: nil),
-                    forCellWithReuseIdentifier: CellConfingName.WeekDaysNameCollectionViewCell)
-        cv.delegate = self
-        cv.dataSource = self
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            // Collection view setup
+            cv.register(UINib(nibName: CellConfingName.WeekDaysNameCollectionViewCell, bundle: nil),
+                        forCellWithReuseIdentifier: CellConfingName.WeekDaysNameCollectionViewCell)
+            cv.delegate = self
+            cv.dataSource = self
             
-            let bottomVc = TimetableBottomVC()
+            let bottomSheet = TimetableBottomVC()
+            bottomSheetVC = bottomSheet
+            bottomSheet.DayId = selectedIndex + 1
+            bottomSheet.loadViewIfNeeded()
+            bottomSheet.DayLbl.text = daysFullname[selectedIndex]
+            //bottomSheet.get_Timetable()
+        }
+        
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+
+            // ✅ Select today immediately (so no jump later)
+            let indexPath = IndexPath(item: selectedIndex, section: 0)
+            cv.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+
+            if !BottomsheetPresented, let bottomSheet = bottomSheetVC {
+                let nav = UINavigationController(rootViewController: bottomSheet)
+                nav.modalPresentationStyle = .pageSheet
+                if #available(iOS 15.0, *), let sheet = nav.sheetPresentationController {
+                    if #available(iOS 16.0, *) {
+                        sheet.detents = [.custom(resolver: { _ in 510 }), .large()]
+                    } else {
+                        sheet.detents = [.medium(), .large()]
+                    }
+                    sheet.largestUndimmedDetentIdentifier = .large
+                    sheet.prefersGrabberVisible = true
+                }
+                nav.isModalInPresentation = true
+
+                // ✅ now it will animate fast on first try
+                present(nav, animated: true)
+                BottomsheetPresented = true
+            }
+        }
+
+        
+        func PresentBottomSheet(animated: Bool) {
+            let bottomSheet = TimetableBottomVC()
+            self.bottomSheetVC = bottomSheet
+            let nav = UINavigationController(rootViewController: bottomSheet)
+            nav.modalPresentationStyle = .pageSheet
+
+            // Pass today’s data
+            bottomSheet.DayId = selectedIndex + 1
+            bottomSheet.loadViewIfNeeded()
+            bottomSheet.DayLbl.text = daysFullname[selectedIndex]
+            bottomSheet.get_Timetable()
+
             if #available(iOS 15.0, *) {
-                if let sheet = bottomVc.sheetPresentationController {
+                if let sheet = nav.sheetPresentationController {
                     if #available(iOS 16.0, *) {
                         sheet.detents = [.custom(resolver: { _ in 510 }), .large()]
                     } else {
@@ -71,53 +122,10 @@ class TimetableVC: UIViewController {
                     sheet.prefersGrabberVisible = true
                 }
             }
-            
-            bottomVc.modalPresentationStyle = .pageSheet
-            self?.present(bottomVc, animated: true)
+
+            nav.isModalInPresentation = true
+            present(nav, animated: animated) // ✅ controlled by caller
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        // ✅ Select today immediately (so no jump later)
-        let indexPath = IndexPath(item: selectedIndex, section: 0)
-        cv.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
-    }
-
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        // ✅ Present sheet once when entering screen
-//        if !BottomsheetPresented {
-//            PresentBottomSheet(animated: true)
-//            BottomsheetPresented = true
-//        }
-//    }
-
-    
-    func PresentBottomSheet(animated: Bool) {
-        let bottomSheet = TimetableBottomVC()
-
-        // Pass today’s data
-//        bottomSheet.DayId = selectedIndex + 1
-//        bottomSheet.DayLbl.text = daysFullname[selectedIndex]
-
-        if #available(iOS 15.0, *) {
-            if let sheet = bottomSheet.sheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    sheet.detents = [.custom(resolver: { _ in 510 }), .large()]
-                } else {
-                    sheet.detents = [.medium(), .large()]
-                }
-                sheet.largestUndimmedDetentIdentifier = .large
-                sheet.prefersGrabberVisible = true
-            }
-        }
-
-        bottomSheet.modalPresentationStyle = .pageSheet
-        present(bottomSheet, animated: animated) // ✅ controlled by caller
-    }
 
 
     @IBAction func BackAct(_ sender: Any) {

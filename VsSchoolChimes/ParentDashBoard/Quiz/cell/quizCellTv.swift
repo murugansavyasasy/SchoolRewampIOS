@@ -20,9 +20,11 @@ class quizCellTv: UITableViewCell {
     @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var discretiponsLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
-//    @IBOutlet weak var EndTimeLbl: UILabel!
-//    @IBOutlet weak var strtTimeLbl: UILabel!
-//    @IBOutlet weak var exameDateLbl: UILabel!
+    @IBOutlet weak var LevelLbl: UILabel!
+    @IBOutlet weak var MaxmarkLbl: UILabel!
+    @IBOutlet weak var NoOfQuestionLbl: UILabel!
+    @IBOutlet weak var createdDateLbl: UILabel!
+    @IBOutlet weak var PostByLbl: UILabel!
 //    @IBOutlet weak var DeafultimageView: UIImageView!
 //    @IBOutlet weak var CellView: UIView!
     override func awakeFromNib() {

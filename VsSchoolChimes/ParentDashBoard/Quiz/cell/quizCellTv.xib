@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -277,7 +277,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sz5-he-E7L">
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sz5-he-E7L">
                                                 <rect key="frame" x="209" y="106.66666666666666" width="138" height="30"/>
                                                 <color key="backgroundColor" red="0.2627450980392157" green="0.4823529411764706" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
@@ -349,8 +349,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="LevelLbl" destination="yVW-di-4rB" id="Wcx-3I-1o3"/>
+                <outlet property="MaxmarkLbl" destination="MLg-Ni-Lkw" id="rc5-cq-ZbG"/>
+                <outlet property="NoOfQuestionLbl" destination="Q4j-m5-nZc" id="4je-ga-aA9"/>
+                <outlet property="PostByLbl" destination="Ws1-rE-uge" id="34Y-ll-B2P"/>
                 <outlet property="child1View" destination="Hkk-eF-Eu6" id="uhG-Di-L2B"/>
                 <outlet property="child2View" destination="OxM-uc-5i1" id="IPM-1t-Vtq"/>
+                <outlet property="createdDateLbl" destination="fdF-VT-TEa" id="vCe-ar-HTc"/>
                 <outlet property="discretiponsLbl" destination="KeS-fm-2Th" id="6e9-dw-YGO"/>
                 <outlet property="parentFullview" destination="bn0-K3-gg9" id="qjp-QL-5kM"/>
                 <outlet property="playBtn" destination="Sz5-he-E7L" id="Sei-IN-Rgz"/>
