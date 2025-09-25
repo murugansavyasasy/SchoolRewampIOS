@@ -594,6 +594,9 @@ class MarkAttendenceVC: UIViewController {
                         presentPeretageLbl.text = "\(presentPercentage.rounded(.down))%"
                         absentPersentage.text = "\(absentPercentage.rounded(.down))%"
                         
+                        print("presentPeretageLbl","\(presentPercentage.rounded(.down))%")
+                        print("absentPersentage","\(absentPercentage.rounded(.down))%")
+                        
                         if Int(presentPercentage.rounded(.down)) == 100 {
                             
                             graphDownImg.image = UIImage(named: "presentGraps")
@@ -623,12 +626,7 @@ class MarkAttendenceVC: UIViewController {
                             graphUpImg.image = UIImage(named: "presentGraps")
                             graphUpImg.tintColor = .green
                             
-                        }else {
-                            // default case
-                            presentPeretageLbl.text = "\(Int(presentPercentage.rounded(.down)))%"
-                            absentPersentage.text = "\(Int(absentPercentage.rounded(.down)))%"
                         }
-
                         
                         
                         // ✅ Table reload
