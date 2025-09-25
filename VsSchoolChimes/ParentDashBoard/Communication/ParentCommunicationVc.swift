@@ -61,6 +61,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var NodataImgHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchbarStack: UIStackView!
     @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
     
     var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
@@ -335,6 +336,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         FilteredMessages = TotalMessageList
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
+                        searchBtn.isHidden = false
                         //SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         tv.reloadData()
                     }
@@ -349,6 +351,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
                         NodataLbl.isHidden = false
                         NodataImage.isHidden = false
+                        searchBtn.isHidden = true
                         tv.isScrollEnabled = false
                         tv.reloadData()
                     }
@@ -418,6 +421,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.isHidden = false
+                        searchBtn.isHidden = false
                         tv.isScrollEnabled = true
                         tv.reloadData()
                     }
@@ -433,6 +437,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                             NodataLbl.text = SuccessMessage.message
                             //NodataLbl.text = "Something went wrong! Try again Later"
                             tv.isHidden = true
+                            searchBtn.isHidden = true
                             NodataImage.isHidden = false
                             NodataLbl.isHidden = false
                         }
@@ -539,7 +544,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             FilterCV.reloadData()
         }
     }
-    
 }
 
 //MARK: Tableview Functions

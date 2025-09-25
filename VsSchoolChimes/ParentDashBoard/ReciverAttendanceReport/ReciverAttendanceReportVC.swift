@@ -455,8 +455,8 @@ class ReciverAttendanceReportVC: UIViewController {
         let popup = PopoverView()
         popup.arrowDirection = .left
         popup.arrowPosition = 50
-        popup.frame = CGRect(x: WeekStatusDefBtn.frame.maxX - 120,
-                             y: WeekStatusDefBtn.frame.maxY + 100,
+        popup.frame = CGRect(x: WeekStatusDefBtn.frame.maxX - 110,
+                             y: WeekStatusDefBtn.frame.maxY + 50,
                              width: 180,
                              height: 180)
         backgroundView.addSubview(popup) // Add to backgroundView, not view

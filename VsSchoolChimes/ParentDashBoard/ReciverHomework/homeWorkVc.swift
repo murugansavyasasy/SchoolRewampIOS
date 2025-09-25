@@ -77,6 +77,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         self.NodataFoundLbl.isHidden = !isEmpty
         self.noDataImage.isHidden = !isEmpty
         self.homeWorkDefaultLbl.isHidden = isEmpty
+        self.searchBtnName.isHidden = isEmpty
+        self.searchbar.searchTextField.text = ""
+        view.endEditing(true)
+        if searchBtnName.isSelected && searchBtnName.isHidden == false {
+            self.searchbar.isHidden = false
+        }else {
+            self.searchbar.isHidden = true
+        }
         
         self.bottomCV.reloadData()
     }
@@ -188,8 +196,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     let today = Date()
     var selectedDate  : String?
     var allHomeworkData: [HomeworkList] = []
-    @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var NameLbl: UILabel!
     var isReadStatus : Bool?
     var toggle = true
     override func viewDidLoad() {
@@ -226,10 +232,10 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     func UiUpdate(){
         
         // Do any additional setup after loading the view.
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        
+        let Name = studentDetails?.name ?? ""
+        let Standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        backBtnName.configureAsBackButton(firstLine: Name, secondLine: Standard)
         homeWorkDefaultLbl.text = MenuStringFile.selectedMenuName
         searchbar.isHidden = true
         searchbar.delegate = self
@@ -241,10 +247,25 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     @IBAction func searchBtn(_ sender: UIButton) {
-        toggle.toggle()
-        searchbar.isHidden = toggle
         
+        sender.isSelected.toggle()
+        searchbar.isHidden = !sender.isSelected
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtnName.setImage(UIImage(systemName: icon), for: .normal)
+        if sender.isSelected {
+            searchbar.becomeFirstResponder()
+        }else{
+            searchbar.searchTextField.text = ""
+            self.FilterHomeWorkList = self.filterHomeworkGroupByDate(
+                from: self.allHomeworkData,
+                date: self.selectedDate ?? ""
+            )
+            NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+            bottomCV.reloadData()
+            view.endEditing(true)
+        }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
       
@@ -315,11 +336,13 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     self.noDataImage.isHidden = !isEmpty
                     //                    self.searchbar.isHidden = isEmpty
                     self.homeWorkDefaultLbl.isHidden = isEmpty
+                    self.searchBtnName.isHidden = isEmpty
                     
                 case .failure(let error):
                     
                     self.noDataImage.isHidden = false
                     self.searchbar.isHidden = true
+                    self.searchBtnName.isHidden = true
                     
                     
                 }
