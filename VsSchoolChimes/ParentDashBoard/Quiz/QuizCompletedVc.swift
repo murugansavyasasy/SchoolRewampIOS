@@ -132,7 +132,9 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                 }
                 
                 cell.file_path = detail?.file_path
-
+                cell.cv.isHidden = detail?.file_path?.count == 0
+                //cell.pageControls.isHidden = detail?.file_path?.count ?? 0 <= 1
+                cell.pageControls.numberOfPages = detail?.file_path?.count ?? 0
                 return cell
             }
     }

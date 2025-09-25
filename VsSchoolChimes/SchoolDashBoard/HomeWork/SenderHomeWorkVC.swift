@@ -86,7 +86,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
 //        HomeWorkCvCell
         setupViews()
         registerCVCells()
-        getAcademicYearList()
+       
         searchBar.delegate = self
     }
  
@@ -95,11 +95,12 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         dismiss(animated: true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // clear caches or large objects
+   
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        getAcademicYearList()
     }
-
     // MARK: - Setup
     private func setupViews() {
 //        applyShadowAndCornerRadius(to: dateView)
@@ -513,19 +514,14 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
         // Remove from original list
         homeWorkList = homeWorkList?.filter { $0.id != eventId }
         // Reload the UI
+        if FilterHomeWorkList?.count == 0{
+            self.noDataFound.isHidden = false
+            self.cvHeight.constant = 0
+        }
         Cv.reloadData()
     }
 
     
-//    func didTapButton(title: String, content: String, items: [FilePath],) {
-//        selectNotice?
-//            .didTapButton(
-//                title: title,
-//                content: content,
-//                items: items,
-//                editId: <#String#>
-//            )
-//    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {

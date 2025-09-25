@@ -26,6 +26,7 @@
                 <outlet property="UnreadBtn" destination="oah-Cx-55a" id="Eg0-8j-guU"/>
                 <outlet property="backBtn" destination="Rve-lW-nuS" id="WfH-82-laS"/>
                 <outlet property="menuNameLbl" destination="LiK-KX-e40" id="IpT-eu-HLQ"/>
+                <outlet property="searchBtn" destination="3Au-Qi-CGq" id="37P-Nf-dSL"/>
                 <outlet property="tv" destination="0aZ-ZG-7aL" id="bFw-4a-3Ju"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -76,7 +77,7 @@
                                             </constraints>
                                             <imageReference key="image" image="slider.horizontal.3" catalog="system" symbolScale="medium"/>
                                         </imageView>
-                                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="3Hh-31-eMX">
+                                        <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="3Hh-31-eMX">
                                             <rect key="frame" x="30" y="0.0" width="333" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="C3G-Cf-wfO"/>

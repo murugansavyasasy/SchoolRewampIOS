@@ -766,6 +766,7 @@
 		FAAC9F482E4B006600203F04 /* PtmCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAC9F452E4B006600203F04 /* PtmCV.swift */; };
 		FAAF79902DFBE3C400227DCC /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */; };
 		FAAF79922DFBE3E000227DCC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */; };
+		FAB037ED2E84194400C0D3D3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB037EC2E84194400C0D3D3 /* WebKit.framework */; };
 		FAB3C1D12E567B8400E361CA /* CreatedSlotsTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB3C1D02E567B8400E361CA /* CreatedSlotsTv.xib */; };
 		FAB3C1D22E567B8400E361CA /* CreatedSlotsTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB3C1CF2E567B8400E361CA /* CreatedSlotsTv.swift */; };
 		FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = FACD4D692E30BE6D0084B125 /* FSCalendar */; };
@@ -1677,6 +1678,7 @@
 		FAAC9F462E4B006600203F04 /* PtmCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmCV.xib; sourceTree = "<group>"; };
 		FAAF798F2DFBE3C400227DCC /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		FAAF79912DFBE3E000227DCC /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		FAB037EC2E84194400C0D3D3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		FAB3C1CF2E567B8400E361CA /* CreatedSlotsTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedSlotsTv.swift; sourceTree = "<group>"; };
 		FAB3C1D02E567B8400E361CA /* CreatedSlotsTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatedSlotsTv.xib; sourceTree = "<group>"; };
 		FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBottomVC.swift; sourceTree = "<group>"; };
@@ -1807,6 +1809,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB037ED2E84194400C0D3D3 /* WebKit.framework in Frameworks */,
 				84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */,
 				FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */,
 				365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */,
@@ -2323,6 +2326,7 @@
 		3CDBD330E75F67CE1AED6022 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAB037EC2E84194400C0D3D3 /* WebKit.framework */,
 				B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */,
 				35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */,
 				C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */,

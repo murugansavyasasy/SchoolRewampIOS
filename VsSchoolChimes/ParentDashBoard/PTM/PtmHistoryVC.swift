@@ -202,6 +202,17 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
            }
        }
     
+    func JoinButtonTapped(Link: String) {
+        let meetingURLString = Link
+        if let url = URL(string: meetingURLString) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                print("Cannot open meeting link")
+            }
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         FilteredSection?.count ?? 0
@@ -242,6 +253,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.DurationBtn.setTitle(duration, for: .normal)
         cell.ModeBtn.setTitle(slot?.mode, for: .normal)
         cell.callBtn.isHidden = slot?.mode != "Phone Call"
+        cell.JoinBtn.isHidden = slot?.mode != "Virtual"
         cell.cancelBtn.isHidden = slot?.status == "Completed"
         cell.statusBtn.setTitle(slot?.status, for: .normal)
         cell.DateLbl.text = slot?.date
@@ -279,6 +291,10 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.onCall = { [weak self] in
             
             self?.callButtonTapped(Mobile: slot?.staff_mobile_no ?? "")
+        }
+        
+        cell.onJoin = {[weak self] in
+            self?.JoinButtonTapped(Link: slot?.event_link ?? "")
         }
         
         return cell

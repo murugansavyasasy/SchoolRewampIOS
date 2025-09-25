@@ -15,6 +15,11 @@ class QuizVC: UIViewController {
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var IncorrectAnswerLbl: UILabel!
     @IBOutlet weak var CorrectAnswerLbl: UILabel!
+    @IBOutlet weak var upcomingBtn: UIButton!
+    @IBOutlet weak var CompletedBtn: UIButton!
+    @IBOutlet weak var NoDataImage: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    
     
     //var colours = ["lesson1","lesson2","lesson3"]
     let colours = ["AttendenceColor","Color","lesson1","lesson3"]
@@ -28,6 +33,7 @@ class QuizVC: UIViewController {
     var childDetails = UserDefaultFileManager.get_child_Details()
     let images = ["Quiz1", "Quiz2", "Quiz3"]
     var stausType   = "1"
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -68,14 +74,21 @@ class QuizVC: UIViewController {
                         
                         self.get_QuizDetails = successResponse.data ?? []
                         self.tv.reloadData()
+                        self.NoDataImage.isHidden = true
+                        self.NoDataLbl.isHidden = true
                     }else{
                         
-                        
+                        self.NoDataImage.isHidden = false
+                        self.NoDataLbl.isHidden = false
+                        self.NoDataLbl.text = successResponse.message ?? ""
                     }
                     
                     
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
+                    self.NoDataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = error.localizedDescription
                 }
             }
         }
@@ -84,8 +97,9 @@ class QuizVC: UIViewController {
     func StyleAndTranslate(){
         
         //MARK: UI Changes
-       
-        
+        NoDataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        addUnderline(to: upcomingBtn, unselectedButton: CompletedBtn)
         //MARK: Font Style
         NameLbl.setFont(style: .header, size: FontSize.HeaderSize)
       
@@ -132,6 +146,30 @@ class QuizVC: UIViewController {
         button.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
+        // Remove underline from both buttons
+        [selectedButton, unselectedButton].forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+        
+        // Add underline to the selected button
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
+        
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
+    }
+    
+    
     func configureButton(
         _ button: UIButton,
         gradientColors: [UIColor],
@@ -148,7 +186,7 @@ class QuizVC: UIViewController {
     }
     
     @IBAction func UpcomingAct(_ sender: Any) {
-       
+        addUnderline(to: upcomingBtn, unselectedButton: CompletedBtn)
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
         stausType = "1"
@@ -158,8 +196,7 @@ class QuizVC: UIViewController {
     
     
     @IBAction func CompletedAct(_ sender: Any) {
-        
-        
+        addUnderline(to: CompletedBtn, unselectedButton: upcomingBtn)
         stausType = "2"
         Get_Quiz()
         
@@ -196,6 +233,11 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description?.capitalized
 //            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
             cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
+        cell.LevelLbl.text = String(get_QuizDetails[indexPath.row].level ?? 0)
+        cell.MaxmarkLbl.text = String(get_QuizDetails[indexPath.row].max_mark ?? 0)
+        cell.NoOfQuestionLbl.text = String(get_QuizDetails[indexPath.row].no_of_questions ?? 0)
+        cell.createdDateLbl.text = get_QuizDetails[indexPath.row].created_on?.convertToTargetDateFormat()
+        cell.PostByLbl.text = get_QuizDetails[indexPath.row].SentBy
 //            cell.postedByLbl.text = ("Posted By:") + (
 //                get_QuizDetails[indexPath.row].SentBy ?? ""
 //            )

@@ -71,12 +71,13 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                             self?.nodataLbl.isHidden = !isEmpty
                             self?.nodataLbl.text = isEmpty ? response.message : CommonStringFile.No_data_found
                             self?.noRecordImg.isHidden = !isEmpty
-                            
+                            self?.searchBtn.isHidden = isEmpty
                             self?.listTable.reloadData()
                         
                 case .failure(let error):
                     self?.nodataLbl.isHidden = false
                     self?.noRecordImg.isHidden = false
+                    self?.searchBtn.isHidden = true
                     self?.nodataLbl.text = error.localizedDescription
                     print("API Error: \(error.localizedDescription)")
                 }

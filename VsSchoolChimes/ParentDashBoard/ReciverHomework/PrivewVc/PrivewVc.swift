@@ -37,6 +37,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var delegate : readStatusUpdate?
     var is_unreadStatus : Bool?
     var buttonTitle:String?
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Reload collection view once the view has appeared and frame is set

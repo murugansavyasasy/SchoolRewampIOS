@@ -28,10 +28,12 @@ class BookedSlotTV: UITableViewCell {
     @IBOutlet weak var timeDefLbl: UILabel!
     @IBOutlet weak var DateLbl: UILabel!
     @IBOutlet weak var TimeLbl: UILabel!
+    @IBOutlet weak var JoinBtn: UIButton!
     
     
     var onCancel : (() -> Void)?
     var onCall : (() -> Void)?
+    var onJoin : (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,6 +65,9 @@ class BookedSlotTV: UITableViewCell {
         statusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         cancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         callBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        callBtn.isHidden = true
+        JoinBtn.isHidden = true
     }
     
     override func layoutSubviews() {
@@ -98,4 +103,9 @@ class BookedSlotTV: UITableViewCell {
         
         onCall?()
     }
+    
+    @IBAction func JoinAct(_ sender: Any) {
+        onJoin?()
+    }
+    
 }
