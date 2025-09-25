@@ -25,8 +25,7 @@ class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
     
     // MARK: - Properties
     weak var delegate: SearchDelegate?
-    private var selectedTab: Int = 0  // 0 = All, 1 = Submitted, 2 = Pending
-    
+    private var selectedTab: Int = 0
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()

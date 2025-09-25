@@ -93,6 +93,7 @@ class AttachmentsVc: UIViewController {
                         self.noRecordStack.isHidden = true
                         self.noDataLabel.isHidden = true
                         self.tv.isHidden = false
+                        self.searchBtn.isHidden = false
                         self.attachmentData = response.data ?? []
                         self.filteredAttachments = response.data
                         self.SearchAttachments = response.data
@@ -125,6 +126,7 @@ class AttachmentsVc: UIViewController {
                         self.noDataLabel.isHidden = false
                         self.noDataLabel.text = response.message ?? ""
                         self.tv.isHidden = true
+                        self.searchBtn.isHidden = true
                     }
                     
                 case .failure(_):

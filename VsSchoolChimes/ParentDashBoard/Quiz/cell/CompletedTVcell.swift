@@ -40,7 +40,7 @@ class CompletedTVcell: UITableViewCell,UIScrollViewDelegate {
         }
         
         
-        cv.isHidden = file_path?.count == 0
+//        cv.isHidden = file_path?.count == 0
         cv.register(UINib(nibName: "MsgVoiceCvCell", bundle: nil),
     forCellWithReuseIdentifier: "MsgVoiceCvCell")
         cv.delegate = self
@@ -59,9 +59,9 @@ extension CompletedTVcell : UICollectionViewDelegate,UICollectionViewDataSource,
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cv.isHidden = file_path?.count == 0
-        pageControls.isHidden = file_path?.count == 1 || file_path?.count == 0
-        pageControls.numberOfPages = file_path?.count ?? 0
+//        cv.isHidden = file_path?.count == 0
+//        pageControls.isHidden = file_path?.count == 1 || file_path?.count == 0
+//        pageControls.numberOfPages = file_path?.count ?? 0
         return file_path?.count ?? 0
         
     }

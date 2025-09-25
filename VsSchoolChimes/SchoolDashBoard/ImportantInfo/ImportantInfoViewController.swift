@@ -14,7 +14,6 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var backBtnNm: UIButton!
     @IBOutlet weak var LoadingView: UIView!
     @IBOutlet weak var webView: WKWebView!
-   
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
    

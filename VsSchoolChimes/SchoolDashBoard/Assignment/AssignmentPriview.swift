@@ -12,7 +12,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
         imageVC.fileURL = allAttachments
-        imageVC.subjectName = "Event"
+        imageVC.subjectName = data?.subject ?? ""
         imageVC.scrollIndex = IndexPath(index:index)
         imageVC.index = index
         imageVC.modalPresentationStyle = .fullScreen
@@ -24,28 +24,27 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         
         if searchText == "All" {
             filterAssignment = submittedAssignment
+            selectedAssignment = submittedAssignment
         }
         else if searchText == "Submited" {
             filterAssignment = submittedAssignment.filter {
                 ($0.submit_status ?? "") != "NOTSUBMITTED"
             }
+            selectedAssignment = filterAssignment
         }
         else if searchText == "Pending" {
             filterAssignment = submittedAssignment.filter {
                 ($0.submit_status ?? "") == "NOTSUBMITTED"
             }
+            selectedAssignment = filterAssignment
         }
         else if searchText == "true" {
-            // No filtering
-            filterAssignment = submittedAssignment
             assignmentTable.endUpdates()
             assignmentTable.beginUpdates()
-        }
-        else if searchText.isEmpty {
-            filterAssignment = submittedAssignment
-        }
-        else {
-            filterAssignment = submittedAssignment.filter {
+        }else if searchText.isEmpty {
+            filterAssignment = selectedAssignment
+        }else {
+            filterAssignment = selectedAssignment.filter {
                 ($0.student_name?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                 ($0.standard?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                 ($0.section?.localizedCaseInsensitiveContains(searchText) ?? false)
@@ -53,7 +52,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         }
         assignmentTable.reloadSections(IndexSet(integer: 2), with: .automatic)
     }
-
+    
     // MARK: - IBOutlets
     @IBOutlet weak var standerdLbl: UILabel!
     @IBOutlet weak var userName: UILabel!
@@ -62,6 +61,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     var data: Report?
     var submittedAssignment: [StudentSubmission] = []
     var filterAssignment: [StudentSubmission] = []
+    var selectedAssignment: [StudentSubmission] = []
     var userNameValue:String?
     var sectionValue:String?
     var reciver = false
@@ -80,10 +80,10 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
         assignmentTable.register(UINib(nibName: "AssignmentsearchTVC", bundle: nil), forCellReuseIdentifier: "AssignmentsearchTVC")
         // Keyboard observers
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                                   name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                                   name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
         assignmentTable.delegate = self
         assignmentTable.dataSource = self
         assignmentTable.tableFooterView = UIView()
@@ -100,7 +100,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: Notification) {
         assignmentTable.contentInset.bottom = 0
         
@@ -110,11 +110,11 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             assignmentTable.scrollIndicatorInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         }
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: false)
     }
@@ -133,19 +133,19 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                         self?.submittedAssignment = response.data ?? []
                         self?.filterAssignment = response.data ?? []
                         self?.assignmentTable.reloadData()
-//                        self?.updateCountLabels()
+                        //                        self?.updateCountLabels()
                     }
                 } else {
                     DispatchQueue.main.async {
-//                        // Handle API error response
-//                        self?.showAlert(message: response.message ?? "Failed to load assignments")
+                        //                        // Handle API error response
+                        //                        self?.showAlert(message: response.message ?? "Failed to load assignments")
                         self?.assignmentTable.reloadData()
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
-//                    self?.showAlert(message: "Network error occurred. Please try again.")
+                    //                    self?.showAlert(message: "Network error occurred. Please try again.")
                     self?.assignmentTable.reloadData()
                 }
             }
@@ -210,12 +210,12 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
             let statusText = isNotSubmitted ? "Pending" : "Submitted"
             let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
-
+            
             // Background color & corner radius
             cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
             cell.statusView.layer.cornerRadius = 8
             cell.statusView.clipsToBounds = true
-
+            
             // Attributed text
             let fullText = NSMutableAttributedString(
                 string: statusText,
@@ -224,9 +224,9 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                     .foregroundColor: statusColor
                 ]
             )
-
+            
             cell.statusView.setAttributedTitle(fullText, for: .normal)
-
+            
             // Resize icon to match text height
             let iconSize: CGFloat = 13 // same as text size
             let iconConfig = UIImage.SymbolConfiguration(pointSize: iconSize, weight: .medium)
@@ -237,7 +237,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             let lastSubmittedOn = student.submissions_details?.last?.submitted_on
             let date: String?
             let txt: String
-
+            
             if let submittedOn = lastSubmittedOn, !submittedOn.isEmpty {
                 date = submittedOn
                 txt = "Submitted"
@@ -245,15 +245,15 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                 date = data?.end_date
                 txt = "Due Date"
             }
-
+            
             cell.submitDate.text = "\(txt): \(formattedDateStatus(from: date ?? ""))"
             cell.statusView.setImage(icon, for: .normal)
             cell.statusView.tintColor = statusColor
-
+            
             // Optional: Adjust image & title spacing
             cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
-
+            
             return cell
         }
     }
@@ -286,10 +286,10 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         
         present(submissionVC, animated: false)
     }
-
+    
     // MARK: - TableView Delegate (Optional)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return UITableView.automaticDimension
-        }
+        return UITableView.automaticDimension
     }
+}
 

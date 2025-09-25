@@ -6,7 +6,7 @@
 //
 
 import UIKit
-protocol SelectedId{
+protocol SelectedId:AnyObject{
     func selectId(id:String?,edit:Bool?)
 }
 class PopupVC: UIViewController {

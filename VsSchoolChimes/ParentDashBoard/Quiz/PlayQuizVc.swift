@@ -253,20 +253,14 @@ class PlayQuizVc: UIViewController {
           
             
             let zeroCount = answeredOptions.values.filter { $0 == 0 }.count
-            
-           
             if zeroCount > 0 {
                 print("Number of zeros: \(zeroCount)")
                 showAlert(message: "Are you sure want to submit ?")
                 
             } else {
                 print("No zeros found")
-                
                 showAlert(message: " Are you sure you want to submit the quiz? because you not answered \(zeroCount) questions!")
             }
-            
-            
-
         }
     }
     
@@ -376,123 +370,7 @@ class PlayQuizVc: UIViewController {
         for question in getQuestiondataDetails {
             correctOption.append(question.correctOptionIndex ?? 0)
         }
-        
-//        let vc = QuizVC(nibName: nil, bundle: nil)
-//        vc.correctoption = correctOption
-//        vc.questions = getQuestiondataDetails
-//        for i in selectedOptions {
-//            vc.selectedOption.append(i ?? 0)
-//        }
-//        vc.correctAnswers = correctAnswers
-//        //vc.selectedOption = selectedOptions
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
     }
-    
-    //    var questions: [Question] = [
-    //        Question(
-    //            text: "In which year did the American Civil War begin, and what was its primary cause?",
-    //            options: [
-    //                "1860; Disputes over territorial expansion.",
-    //                "1861; Issues related to slavery and states' rights.",
-    //                "1865; Industrialization conflicts between the North and South.",
-    //                "1862; Economic rivalry between different regions."
-    //            ],
-    //            correctOptionIndex: 1
-    //        ),
-    //        Question(
-    //            text: "Who is considered the father of modern physics, and what groundbreaking theory did he develop in 1905?",
-    //            options: [
-    //                "Isaac Newton; Theory of Gravity.",
-    //                "Albert Einstein; Theory of Special Relativity.",
-    //                "Niels Bohr; Quantum Theory.",
-    //                "Galileo Galilei; Heliocentric Theory."
-    //            ],
-    //            correctOptionIndex: 1
-    //        ),
-    //        Question(
-    //            text: "What is the process called by which plants convert sunlight into energy, and what are its key components?",
-    //            options: [
-    //                "Osmosis; Water and cell walls.",
-    //                "Respiration; Oxygen and carbon dioxide.",
-    //                "Photosynthesis; Sunlight, water, and carbon dioxide.",
-    //                "Fermentation; Sugars and bacteria."
-    //            ],
-    //            correctOptionIndex: 2
-    //        ),
-    //        Question(
-    //            text: "What is the largest organ in the human body, and what are its primary functions?",
-    //            options: [
-    //                "The liver; Filtering toxins and aiding digestion.",
-    //                "The skin; Protection, regulation, and sensation.",
-    //                "The heart; Pumping blood throughout the body.",
-    //                "The lungs; Facilitating oxygen exchange."
-    //            ],
-    //            correctOptionIndex: 1
-    //        ),
-    //        Question(
-    //            text: "Which famous English writer is known for works like 'Hamlet,' 'Macbeth,' and 'Romeo and Juliet,' and in which era did he write?",
-    //            options: [
-    //                "Charles Dickens; Victorian Era.",
-    //                "William Shakespeare; Elizabethan Era.",
-    //                "Jane Austen; Regency Era.",
-    //                "J.K. Rowling; Contemporary Era."
-    //            ],
-    //            correctOptionIndex: 1
-    //        ),
-    //        Question(
-    //            text: "What is the phenomenon called when a species evolves over time due to natural selection, and who proposed this theory?",
-    //            options: [
-    //                "Adaptation; Gregor Mendel.",
-    //                "Evolution; Charles Darwin.",
-    //                "Mutation; James Watson.",
-    //                "Speciation; Alfred Wallace."
-    //            ],
-    //            correctOptionIndex: 1
-    //        ),
-    //        Question(
-    //            text: "Which global organization was established in 1945 to promote peace and security, and where is its headquarters located?",
-    //            options: [
-    //                "The United Nations; New York City, USA.",
-    //                "The League of Nations; Geneva, Switzerland.",
-    //                "NATO; Brussels, Belgium.",
-    //                "The World Trade Organization; Paris, France."
-    //            ],
-    //            correctOptionIndex: 0
-    //        ),
-    //        Question(
-    //            text: "What is the primary function of DNA in living organisms, and what is its structural shape?",
-    //            options: [
-    //                "To store genetic information; Double helix.",
-    //                "To provide energy for cells; Spiral staircase.",
-    //                "To protect cells from damage; Single strand.",
-    //                "To synthesize proteins; Triple helix."
-    //            ],
-    //            correctOptionIndex: 0
-    //        ),
-    //        Question(
-    //            text: "What is the Great Barrier Reef, where is it located, and why is it significant?",
-    //            options: [
-    //                "A mountain range; Australia; Known for its height and wildlife.",
-    //                "A coral reef system; Australia; The world's largest and rich in biodiversity.",
-    //                "A desert; Africa; Famous for its sand dunes and unique ecosystem.",
-    //                "A rainforest; South America; Renowned for its dense canopy and species diversity."
-    //            ],
-    //            correctOptionIndex: 1
-    //        ),
-    //        Question(
-    //            text: "What is the theory of plate tectonics, and what phenomena does it explain?",
-    //            options: [
-    //                "The idea that Earth's plates are static; It explains mountain formation.",
-    //                "The hypothesis that Earth's crust moves due to tidal forces; It explains volcanic eruptions.",
-    //                "The scientific theory that Earth's lithosphere is divided into moving plates; It explains earthquakes, volcanic activity, and continental drift.",
-    //                "The belief that Earth's core drives all geological changes; It explains erosion and sedimentation."
-    //            ],
-    //            correctOptionIndex: 2
-    //        )
-    //    ]
-    
-    
 }
 
 

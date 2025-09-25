@@ -41,13 +41,19 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var TopInfoView: UIView!
     @IBOutlet weak var Backbtn: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBtn: UIButton!
+    
+    
     let alert = CustomAlert()
     var leaveHistoryData: [LeaveMonth] = []
     var filteredLeaveData: [LeaveMonth] = []
+    var SearchLeaveData: [LeaveMonth] = []
     var childDetails = UserDefaultFileManager.get_child_Details()
     var openedPopupIndex: IndexPath?
     var delegate: EditObject?
     var selectedFilter: LeaveFilterType = .all
+    var searchText: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +89,12 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         TopInfoView.isHidden = true
         NodataImage.isHidden = true
         NodataLbl.isHidden = true
+        
+        searchBar.isHidden = true
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.backgroundImage = UIImage()
 
         historyTable.register(UINib(nibName: CellConfingName.LeaveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeaveHistoryTV)
         historyTable.delegate = self
@@ -264,7 +276,18 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
     }
-
+    
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            searchBar.isHidden = false
+        }else{
+            searchBar.isHidden = true
+        }
+    }
+    
     // MARK: - Filter Actions
     @IBAction func approveAct(_ sender: UIButton) {
         addUnderline(to: approveBtn, unSelectedBtn: [rejectBtn, allBtn, waitingBtn])
@@ -402,23 +425,74 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
         dismissPopup()
     }
     
+//    func applyFilter() {
+//        guard selectedFilter != .all else {
+//            filteredLeaveData = leaveHistoryData
+//            historyTable.reloadData()
+//            return
+//        }
+//
+//        filteredLeaveData = leaveHistoryData.compactMap { month in
+//            let filteredDetails = month.details?.filter {
+//                $0.status == selectedFilter.rawValue
+//            }
+//            if let details = filteredDetails, !details.isEmpty {
+//                return LeaveMonth(month: month.month, details: details)
+//            }
+//            return nil
+//        }
+//        
+//        historyTable.reloadData()
+//    }
+    
     func applyFilter() {
-        guard selectedFilter != .all else {
-            filteredLeaveData = leaveHistoryData
-            historyTable.reloadData()
-            return
+        // 1. Apply status filter first
+        var baseData: [LeaveMonth]
+
+        if selectedFilter == .all {
+            baseData = leaveHistoryData
+        } else {
+            baseData = leaveHistoryData.compactMap { month in
+                let filteredDetails = month.details?.filter {
+                    $0.status == selectedFilter.rawValue
+                }
+                if let details = filteredDetails, !details.isEmpty {
+                    return LeaveMonth(month: month.month, details: details)
+                }
+                return nil
+            }
         }
 
-        filteredLeaveData = leaveHistoryData.compactMap { month in
-            let filteredDetails = month.details?.filter {
-                $0.status == selectedFilter.rawValue
+        if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+            let lowercasedQuery = searchText.lowercased()
+
+            filteredLeaveData = baseData.compactMap { month in
+                let filteredDetails = month.details?.filter { info in
+                    // Convert leave_from & leave_to into display format
+                    let fromDate = info.leave_from?.convertToTargetDateFormat()
+                    let toDate   = info.leave_to?.convertToTargetDateFormat()
+
+                    return
+//                        (info.student_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+//                        (info.class_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+//                        (info.section_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.reason?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.leave_type?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.no_of_days?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (fromDate?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (toDate?.lowercased().contains(lowercasedQuery) ?? false)
+                }
+                
+                if let details = filteredDetails, !details.isEmpty {
+                    return LeaveMonth(month: month.month, details: details)
+                }
+                
+                return nil
             }
-            if let details = filteredDetails, !details.isEmpty {
-                return LeaveMonth(month: month.month, details: details)
-            }
-            return nil
+        } else {
+            filteredLeaveData = baseData
         }
-        
+
         historyTable.reloadData()
     }
 
@@ -450,3 +524,17 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
         return totalDays == 1 ? "( 1 day )" : "( \(totalDays) days )"
     }
 }
+
+extension LeveHistoryVC: UISearchBarDelegate{
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+           self.searchText = searchText
+           applyFilter()
+       }
+
+       // Optional: hide keyboard when user taps search button
+       func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+           searchBar.resignFirstResponder()
+       }
+}
+

@@ -328,7 +328,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.time = event.time
             cell.edit(edit: event.can_edit ?? false, delete:  event.can_delete ?? false, selectedId: event.id ?? "")
             cell.delegate = self
-            cell.reminderBtn.isHidden = false
+//            cell.reminderBtn.isHidden = false
             cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
             loadFiles(into: cell, files: event.file_path)
             cell.attacmentView.isHidden = event.file_path.count ==  0
@@ -344,7 +344,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.time = event.time
             cell.delegate = self
             cell.edit(edit: event.can_edit ?? false, delete:  event.can_delete ?? false, selectedId: event.id ?? "")
-            cell.reminderBtn.isHidden = true
+//            cell.reminderBtn.isHidden = true
             cell.outerView.backgroundColor = .black
             loadFiles(into: cell, files: event.file_path)
             cell.attacmentView.isHidden = event.file_path.count ==  0
