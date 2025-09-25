@@ -64,8 +64,12 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         if checkMutipleSchool() {
             profileImageView.isHidden = true
+            setupLabels(
+                name: staffDetails?.name,
+                school: staffDetails?.role)
         } else {
             profileImageView.isHidden = false
+            setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         }
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
@@ -76,9 +80,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         DeviceTokenAPIcall()
         setupHeaderView()
         Global_variabel()
-        setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         setupProfileImage()
-        
         getacadmicYr {
             self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
         }
@@ -507,8 +509,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 38: break
-        case 39:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
-        case 40:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
+        case 39:MenuRedirect.senderAttachment(from: self)
+        case 40:navigateOrSchoolList { MenuRedirect.receiverPauckt(from: self) }
         default: print("Unknown menuId:", item.id ?? 0)
         }
     }
