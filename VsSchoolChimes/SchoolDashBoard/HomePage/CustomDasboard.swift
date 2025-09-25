@@ -22,12 +22,12 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         present(vc, animated: true)
     }
-
+    
     
     func switchRoll(userToken: String) {
         self.get_dashboard_details(token: userToken)
         setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
-            setupProfileImage()
+        setupProfileImage()
     }
     
     
@@ -57,15 +57,18 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
         MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-
+        
         if checkMutipleSchool() {
             profileImageView.isHidden = true
+            setupLabels(
+                name: staffDetails?.name,
+                school: staffDetails?.role)
         } else {
             profileImageView.isHidden = false
+            setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         }
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
@@ -76,9 +79,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         DeviceTokenAPIcall()
         setupHeaderView()
         Global_variabel()
-        setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         setupProfileImage()
-        
         getacadmicYr {
             self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
         }
@@ -88,16 +89,15 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-
+    
     // MARK: - SideMenuDelegate
     func meunu(viewController: UIViewController?) {
         hideSideMenu()
-        
         if let vc = viewController {
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
                 self.navigationController?.pushViewController(vc, animated: true)
@@ -136,7 +136,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
-                        
                     } else {
                         self.menu_details = []
                         self.MenuCollection.reloadData()
@@ -168,14 +167,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                        let newDetails = details.menu_details {
                         
                         let changedIndexPaths = self.updateMenuCounts(with: newDetails)
-                        
-                        // ✅ Reload only changed cells safely
                         let safeIndexPaths = changedIndexPaths.filter { $0.item < (self.menu_details?.count ?? 0) }
                         if !safeIndexPaths.isEmpty {
                             self.MenuCollection.reloadItems(at: safeIndexPaths)
                         }
-                        
-                        // ✅ Also update visible cells directly (no flicker)
                         for indexPath in safeIndexPaths {
                             if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC,
                                let item = self.menu_details?[indexPath.item] {
@@ -184,24 +179,24 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                                 }else{
                                     cell.readVieaw.isHidden = true
                                 }
-                               
+                                
                             }
                         }
                     }
                     if #available(iOS 15.0, *) {
-                       
-                            self.hideActivityLoader()
-            
+                        self.hideActivityLoader()
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("API Error:", error.localizedDescription)
+                    if #available(iOS 15.0, *) {
+                        self.hideActivityLoader()
+                    }
                 }
             }
         }
     }
-
+    
     func updateMenuCounts(with newDetails: [MenuCountDetail]) -> [IndexPath] {
         guard let currentDetails = menu_details else { return [] }
         var updatedDetails = currentDetails
@@ -216,12 +211,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 changedIndexPaths.append(IndexPath(item: index, section: 0))
             }
         }
-        
         self.menu_details = updatedDetails
         return changedIndexPaths
     }
-
-
+    
+    
     
     func getacadmicYr(onComplete: @escaping () -> Void) {
         APIService.shared.makeApi(
@@ -291,11 +285,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
             case .success(let successMessage):
                 if successMessage.status == true {
-                        if let respo = successMessage.data?.first {
-                            UserDefaultFileManager
-                                .save_global_Selection(data: respo)
-                            print("resporespo",respo)}
-                        
+                    if let respo = successMessage.data?.first {
+                        UserDefaultFileManager
+                            .save_global_Selection(data: respo)
+                        print("resporespo",respo)}
+                    
                     
                     else {
                         print("Device token registration failed")
@@ -316,7 +310,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         welcomeLabel.text = school
         welcomeLabel.textColor = UIColor.white.withAlphaComponent(0.9)
         welcomeLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        
         nameLabel.text = name
         nameLabel.textColor = UIColor.white
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -329,7 +322,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
         profileImageView.isUserInteractionEnabled = true
-        // 2️⃣ Add tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         profileImageView.addGestureRecognizer(tapGesture)
         
@@ -343,7 +335,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         vc.transitioningDelegate = transitionDelegate
         transitionDelegate.originFrame = cellFrameInSuperview
         vc.type = "IMAGE"
-            vc.selectedFileURL = URL(string: staffDetails?.school_logo ?? "")
+        vc.selectedFileURL = URL(string: staffDetails?.school_logo ?? "")
         
         present(vc, animated: true)
     }
@@ -352,7 +344,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         edgeSwipe.edges = .left
         view.addGestureRecognizer(edgeSwipe)
     }
-
+    
     @objc private func handleEdgeSwipe(_ gesture: UIScreenEdgePanGestureRecognizer) {
         if gesture.state == .began {
             showSideMenu()
@@ -374,12 +366,12 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                     .medium(),
                     .large()
                 ]
-//                context.maximumDetentValue * 0.3
+                //                context.maximumDetentValue * 0.3
                 sheet.prefersGrabberVisible = true
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
                 sheet.largestUndimmedDetentIdentifier = .large
             }
-
+            
         }
         present(bottomSheetVC, animated: true, completion: nil)
     }
@@ -418,7 +410,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             menuVC.view.frame.origin.x = 0
         }
     }
-
+    
     @objc func hideSideMenu() {
         guard let menuVC = sideMenu else { return }
         UIView.animate(withDuration: 0.3, animations: {
@@ -507,7 +499,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 38: break
-        case 39:navigateOrSchoolList { MenuRedirect.senderAttachment(from: self) }
+        case 39:MenuRedirect.senderAttachment(from: self)
+        case 40:navigateOrSchoolList { MenuRedirect.receiverPauckt(from: self) }
         default: print("Unknown menuId:", item.id ?? 0)
         }
     }
@@ -538,8 +531,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 extension CustomDasboard: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView == recentActiveMenuCollection
-            ? CGSize(width: 200, height: 90)
-            : CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
+        ? CGSize(width: 200, height: 90)
+        : CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

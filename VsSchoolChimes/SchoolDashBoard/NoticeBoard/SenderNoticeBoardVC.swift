@@ -132,7 +132,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDate))
         ToDateView.addGestureRecognizer(ToDateGesture)
         
-        setInitialDate()
+        setInitialDate("", "")
         setupPlaceholder()
         TitleTextfield.addDoneButton()
         textview.addDoneButton()
@@ -168,32 +168,11 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
-    func fetchData(notice:Notice?){
+    func fetchData(notice: Notice?) {
         attachments.removeAll()
-        if let notice = notice{
-            TitleTextfield.text = notice.title
-            textview.text = notice.description
-            placeholderLabel.isHidden = !textview.text.isEmpty
-            if let files = notice.file_path {
-                let imageItems: [AttachmentItem] = files.map { file in
-                    let type = file.type?.lowercased() ?? ""
-                    return AttachmentItem(
-                        image: nil,
-                        imageURL: type != "video" ? file.url : nil,
-                        fileType: type,
-                        VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
-                    )
-                }
-                
-                attachments = imageItems
-            } else {
-                attachments = []
-            }
-            
-            Attachmentview.imageCollectionview.reloadData()
-            editId = notice.id
-            NextBtn.setTitle("Update", for: .normal)
-        }else{
+        
+        guard let notice = notice else {
+            // Clear UI for new notice
             TitleTextfield.text = ""
             textview.text = ""
             placeholderLabel.isHidden = !textview.text.isEmpty
@@ -201,8 +180,31 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             Attachmentview.imageCollectionview.reloadData()
             editId = nil
             NextBtn.setTitle("Next", for: .normal)
+            return
         }
+    
+        // Populate title and description
+        TitleTextfield.text = notice.title
+        textview.text = notice.description
+        placeholderLabel.isHidden = !textview.text.isEmpty
+        // Map attachments
+        if let files = notice.file_path {
+            attachments = files.map { file in
+                let type = file.type?.lowercased() ?? ""
+                return AttachmentItem(
+                    image: nil,
+                    imageURL: type != "video" ? file.url : nil,
+                    fileType: type,
+                    VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+                )
+            }
+        }
+        setInitialDate(notice.visible_from,notice.visible_to)
+        Attachmentview.imageCollectionview.reloadData()
+        editId = notice.id
+        NextBtn.setTitle("Update", for: .normal)
     }
+
     func imageSelection(){
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
@@ -255,27 +257,35 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dismiss(animated: true)
     }
     
-    //MARK: Setting Current Date as initial Date
-    func setInitialDate() {
+    // MARK: - Setting Current Date as Initial Date
+    func setInitialDate(_ fromDate: String?, _ toDate: String?) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"   // 🔑 match your string
         
+        print("Standard format =", dateFormatter.dateFormat)
+        print("From date string =", fromDate ?? "nil")
+        print("To date string =", toDate ?? "nil")
         
-        let currentDate = Date() // Current date and time
-        dateFormatter.dateFormat = standardDateFormat
+        let currentDate = Date()
         
-        NewFromdateLbl.setFormattedDate(from: currentDate)
-        NewToDateLbl.setFormattedDate(from: currentDate)
+        // Parse or fallback
+        let startDate = (fromDate != nil ? dateFormatter.date(from: fromDate!) : nil) ?? currentDate
+        let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? currentDate
         
-        let formattedDate = dateFormatter.string(from: currentDate)
-        fromdateBtn.setTitle(formattedDate, for: .normal)
-        todateBtn.setTitle(formattedDate, for: .normal)
+        // Update buttons with input format
+        fromdateBtn.setTitle(dateFormatter.string(from: startDate), for: .normal)
+        todateBtn.setTitle(dateFormatter.string(from: endDate), for: .normal)
         
+        // Update labels with custom format
         dateFormatter.dateFormat = DateFormatString.Day_and_date
-        let customDate = dateFormatter.string(from: currentDate)
+        setFormattedDate(dateFormatter.string(from: startDate), label: fromDateLbl)
+        setFormattedDate(dateFormatter.string(from: endDate), label: toDateLbl)
         
-        setFormattedDate(customDate, label: fromDateLbl)
-        setFormattedDate(customDate, label: toDateLbl)
+        // Update your custom labels
+        NewFromdateLbl.setFormattedDate(from: startDate)
+        NewToDateLbl.setFormattedDate(from: endDate)
     }
-    
+
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()

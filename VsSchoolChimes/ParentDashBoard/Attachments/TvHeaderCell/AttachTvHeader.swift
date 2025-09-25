@@ -27,7 +27,7 @@ class AttachTvHeader: UITableViewHeaderFooterView, SelectedId, UIPopoverPresenta
     override func awakeFromNib() {
             super.awakeFromNib()
            
-        roundView.isHidden = true
+//        roundView.isHidden = true
         roundView.layer.cornerRadius = roundView.frame.width/2
         }
     
@@ -81,8 +81,8 @@ class AttachTvHeader: UITableViewHeaderFooterView, SelectedId, UIPopoverPresenta
 //        discretpionLbl.text = item.description
         titleLbl.text =  item.title
         let displayText = formattedDateStatus(from: item.date ?? "")
-        dateLbl.text = "🗓️" + displayText
-
+        dateLbl.text = "🗓️ " + displayText
+        roundView.isHidden = !item.is_unread
         
        }
 }

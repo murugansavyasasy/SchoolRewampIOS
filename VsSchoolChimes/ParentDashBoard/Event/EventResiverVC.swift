@@ -285,7 +285,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             cell.descriptionLbl.text = event.description
             cell.date = event.date
             cell.time = event.time
-            cell.reminderBtn.isHidden = false
+//            cell.reminderBtn.isHidden = false
             cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
             loadFiles(into: cell, files: event.file_path)
             cell.attacmentView.isHidden = event.file_path.count ==  0

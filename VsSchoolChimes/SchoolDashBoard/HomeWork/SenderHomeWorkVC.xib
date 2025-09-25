@@ -239,7 +239,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9WN-9N-3Sa">
                                     <rect key="frame" x="10" y="148" width="420" height="20.333333333333343"/>
                                     <subviews>
-                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="msi-ow-kCq">
+                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NohomeWork" translatesAutoresizingMaskIntoConstraints="NO" id="msi-ow-kCq">
                                             <rect key="frame" x="0.0" y="0.0" width="420" height="300"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="300" id="Cdw-fh-abp"/>
@@ -444,7 +444,7 @@
         </view>
     </objects>
     <resources>
-        <image name="NoMessage" width="650" height="512"/>
+        <image name="NohomeWork" width="341.33334350585938" height="341.33334350585938"/>
         <image name="calendarimage" width="24" height="24"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>

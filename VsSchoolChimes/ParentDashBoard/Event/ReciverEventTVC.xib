@@ -24,7 +24,7 @@
                         <rect key="frame" x="10" y="10" width="428" height="243"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0h0-GQ-Kzk">
-                                <rect key="frame" x="10" y="9.9999999999999982" width="325" height="19.333333333333329"/>
+                                <rect key="frame" x="10" y="9.9999999999999982" width="373" height="19.333333333333329"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -36,9 +36,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RKl-fw-742">
-                                <rect key="frame" x="345" y="10" width="73" height="25"/>
+                                <rect key="frame" x="393" y="10" width="35" height="25"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-c4-x7P">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-c4-x7P">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="4e4-JJ-pQ9"/>
@@ -51,14 +51,14 @@
                                             <action selector="reminder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qXr-X1-e8F"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
-                                        <rect key="frame" x="33" y="-7" width="40" height="32"/>
+                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
+                                        <rect key="frame" x="0.0" y="-7" width="35" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="OZV-vV-YCz"/>
-                                            <constraint firstAttribute="width" constant="40" id="kel-Vv-QbZ"/>
+                                            <constraint firstAttribute="width" constant="35" id="kel-Vv-QbZ"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="7" minY="3" maxX="0.0" maxY="5"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="3" maxX="0.0" maxY="3"/>
                                         <state key="normal" image="three-dot"/>
                                         <connections>
                                             <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zoA-my-26G"/>
@@ -204,7 +204,7 @@
                             <constraint firstItem="A6B-DG-xFD" firstAttribute="top" secondItem="0h0-GQ-Kzk" secondAttribute="bottom" constant="10" id="kYH-Sn-mlY"/>
                             <constraint firstItem="KqS-QS-X2l" firstAttribute="leading" secondItem="Saa-1g-u5l" secondAttribute="leading" constant="10" id="meq-tO-qof"/>
                             <constraint firstAttribute="trailing" secondItem="KqS-QS-X2l" secondAttribute="trailing" constant="10" id="y9J-68-jNh"/>
-                            <constraint firstAttribute="trailing" secondItem="RKl-fw-742" secondAttribute="trailing" constant="10" id="yUD-RY-ga7"/>
+                            <constraint firstAttribute="trailing" secondItem="RKl-fw-742" secondAttribute="trailing" id="yUD-RY-ga7"/>
                         </constraints>
                     </view>
                 </subviews>

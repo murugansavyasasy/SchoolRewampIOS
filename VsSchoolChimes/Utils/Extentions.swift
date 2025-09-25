@@ -192,52 +192,60 @@ var backgroundView: UIView?
 import ObjectiveC
 @available(iOS 15.0, *)
 extension UIViewController {
-    // Keep a static dictionary to store loader views per VC
-        private static var loaders: [ObjectIdentifier: UIView] = [:]
-        
-        func showActivityLoader() {
-            DispatchQueue.main.async {
-                let id = ObjectIdentifier(self)
-                if UIViewController.loaders[id] != nil { return } // already showing
-                
-                guard let window = UIApplication.shared.connectedScenes
-                        .compactMap({ $0 as? UIWindowScene })
-                        .first?.keyWindow else { return }
-                
-                // Fullscreen background
-                let bg = UIView(frame: window.bounds)
-                bg.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-                
-                // Lottie animation
-                let animationView = LottieAnimationView(name: "loader (2)")
-                animationView.loopMode = .loop
-                animationView.translatesAutoresizingMaskIntoConstraints = false
-                bg.addSubview(animationView)
-                
-                NSLayoutConstraint.activate([
-                    animationView.centerXAnchor.constraint(equalTo: bg.centerXAnchor),
-                    animationView.centerYAnchor.constraint(equalTo: bg.centerYAnchor),
-                    animationView.widthAnchor.constraint(equalToConstant: 120),
-                    animationView.heightAnchor.constraint(equalToConstant: 120)
-                ])
-                
-                animationView.play()
-                
-                window.addSubview(bg)
-                window.bringSubviewToFront(bg)
-                
-                // Save reference
-                UIViewController.loaders[id] = bg
+    
+    // Store loader views and their timers per VC
+    private static var loaders: [ObjectIdentifier: UIView] = [:]
+    private static var loaderTimers: [ObjectIdentifier: DispatchWorkItem] = [:]
+    
+    /// Show loader with optional max duration (default 10s)
+    func showActivityLoader(maxDuration: TimeInterval = 10.0) {
+        DispatchQueue.main.async {
+            let id = ObjectIdentifier(self)
+            if UIViewController.loaders[id] != nil { return }
+            
+            guard let window = UIApplication.shared.connectedScenes
+                    .compactMap({ $0 as? UIWindowScene })
+                    .first?.keyWindow else { return }
+            
+            let bg = UIView(frame: window.bounds)
+            bg.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+            
+            let animationView = LottieAnimationView(name: "loader (2)")
+            animationView.loopMode = .loop
+            animationView.translatesAutoresizingMaskIntoConstraints = false
+            bg.addSubview(animationView)
+            
+            NSLayoutConstraint.activate([
+                animationView.centerXAnchor.constraint(equalTo: bg.centerXAnchor),
+                animationView.centerYAnchor.constraint(equalTo: bg.centerYAnchor),
+                animationView.widthAnchor.constraint(equalToConstant: 120),
+                animationView.heightAnchor.constraint(equalToConstant: 120)
+            ])
+            
+            animationView.play()
+            window.addSubview(bg)
+            window.bringSubviewToFront(bg)
+            UIViewController.loaders[id] = bg
+            let workItem = DispatchWorkItem { [weak self] in
+                self?.hideActivityLoader()
             }
+            UIViewController.loaderTimers[id] = workItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + maxDuration, execute: workItem)
         }
-        
-        func hideActivityLoader() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                let id = ObjectIdentifier(self)
-                UIViewController.loaders[id]?.removeFromSuperview()
-                UIViewController.loaders[id] = nil
+    }
+    
+    /// Hide loader manually
+    func hideActivityLoader() {
+        DispatchQueue.main.async {
+            let id = ObjectIdentifier(self)
+            if let workItem = UIViewController.loaderTimers[id] {
+                workItem.cancel()
+                UIViewController.loaderTimers[id] = nil
             }
+            UIViewController.loaders[id]?.removeFromSuperview()
+            UIViewController.loaders[id] = nil
         }
+    }
 }
 
 
@@ -954,4 +962,3 @@ class BottomRoundedView: UIView {
         self.clipsToBounds = true
     }
 }
-
