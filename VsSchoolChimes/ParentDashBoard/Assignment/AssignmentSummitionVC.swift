@@ -21,6 +21,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     
+    @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var MenuName: UILabel!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noDtaImg: UIImageView!
@@ -39,8 +40,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
         super.viewDidLoad()
         let name = studentDetails?.name ?? ""
         let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        //MenuName.setFont(style: .header, size: FontSize.HeaderSize)
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         MenuName.text = "My Submission"
         noDtaImg.isHidden = true
         nodataLbl.isHidden = true

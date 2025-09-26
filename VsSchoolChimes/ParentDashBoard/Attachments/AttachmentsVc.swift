@@ -17,6 +17,7 @@ class AttachmentsVc: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var MenuNameLbl: UILabel!
+    @IBOutlet weak var TitleLbl: UILabel!
     
     var attachmentHeaders: [AttachmentHeaderInfo] = []
     var attachmentFiles: [[FilePath]]?
@@ -28,9 +29,10 @@ class AttachmentsVc: UIViewController {
     var search = true
     var isExpanded: Bool = false
     var clickedMessageId: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        TitleLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         MenuNameLbl.text = MenuStringFile.selectedMenuName
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
@@ -44,8 +46,6 @@ class AttachmentsVc: UIViewController {
         
         fetchAttachments()
     }
-    
-    
     
     @IBAction func back(_ sender: Any) {
         

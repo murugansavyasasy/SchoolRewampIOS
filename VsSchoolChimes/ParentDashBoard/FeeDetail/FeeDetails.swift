@@ -23,6 +23,9 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var global = UserDefaultFileManager.get_globalSelection()
     var feeDetailsList: [InvoiceItem] = []
@@ -32,9 +35,9 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
-        backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
-      //  menuNameLbl.text = MenuStringFile.selectedMenuName
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true
