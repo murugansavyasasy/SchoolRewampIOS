@@ -271,7 +271,10 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         cell.senderNamelbl.text = SearchData?[indexPath.row].sent_by ?? ""
         cell.timeAndDateLbl.text = (displayText) + ("  " + (SearchData?[indexPath.row].time ?? ""))
         cell.viewBtn.tag = indexPath.row
+        
         cell.descrptionLb.isHidden = SearchData?[indexPath.row].description == "" ? true : false
+        
+        cell.descrptionLb.text = SearchData?[indexPath.row].description ?? ""
         cell.delegate = self
         cell.alphbetLbl.text = shortName(
             from: SearchData?[indexPath.row].sent_by ?? ""

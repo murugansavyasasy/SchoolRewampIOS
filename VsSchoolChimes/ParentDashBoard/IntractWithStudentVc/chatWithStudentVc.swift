@@ -8,13 +8,16 @@
 import UIKit
 
 class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate {
+    
+    @IBOutlet weak var closeLabel: UILabel!
+    @IBOutlet weak var replyFullview: UIView!
+    @IBOutlet weak var replyBtnStck: UIStackView!
     @IBOutlet weak var noRecordlbl: UILabel!
     @IBOutlet weak var replayStackView: UIStackView!
-    @IBOutlet weak var subjectLbl: UILabel!
-    @IBOutlet weak var teacherLbl: UILabel!
-    @IBOutlet weak var profileImage: UIImageView!
+   
     @IBOutlet weak var TextViewFullView: UIView!
     
+    @IBOutlet weak var studetnNameLbl: UILabel!
     @IBOutlet weak var MessgeTextview: UITextView!
     @IBOutlet weak var ReplyTextFild: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -22,9 +25,11 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
     var staffMembersData = StaffMember()
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var chatDataDetails : [ChatMessage]?
+    var isChangeAns : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        replyFullview.layer.cornerRadius = 10
+        MessgeTextview.layer.cornerRadius = 10
         MessgeTextview.addDoneButton()
         ViewAnimator.hideFade(TextViewFullView)
         let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
@@ -37,20 +42,20 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
-        TextViewFullView.layer.cornerRadius = Colornames.CORadius5
-        TextViewFullView.layer.masksToBounds = true
-        TextViewFullView.layer.borderColor = UIColor.lightGray.cgColor
-        TextViewFullView.layer.borderWidth = 0.5
+        
 //        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
 //        tableView.addGestureRecognizer(longPressGesture)
         
+        let close = UITapGestureRecognizer(target: self, action: #selector(closedView) )
+        closeLabel.addGestureRecognizer(close)
+        closeLabel.isUserInteractionEnabled = true
         ReplyTextFild.delegate = self
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-        MessgeTextview.textColor = .lightGray
+        
         
         MessgeTextview.delegate = self
        
@@ -58,6 +63,12 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
     }
  
 
+    @IBAction func closedView(){
+        ReplyTextFild.isUserInteractionEnabled = false
+        ReplyTextFild.text = ""
+        replyFullview.isHidden = true
+        ViewAnimator.hideFade(TextViewFullView)
+    }
  
  override func viewWillAppear(_ animated: Bool) {
      super.viewWillAppear(animated)
@@ -85,7 +96,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
 //           view.endEditing(true)
      ReplyTextFild.isUserInteractionEnabled = false
      ReplyTextFild.text = ""
-     replayStackView.isHidden = true
+     replyFullview.isHidden = true
      ViewAnimator.hideFade(TextViewFullView)
         return true
     }
@@ -124,8 +135,14 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
  }
  
  
- @IBAction func sendBtnAction(_ sender: Any) {
-     sendChat()
+    @IBAction func sendBtnAction(_ sender: UIButton) {
+     
+        if sender.titleLabel?.text == "Reply" {
+            sendChat(replayType: "2", chageAnswer: isChangeAns)
+        }else{
+            sendChat(replayType: "1", chageAnswer: isChangeAns)
+        }
+        
  }
  // MARK: - UITableView DataSource
  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,7 +150,10 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
  }
  
  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     
      let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTVCell", for: indexPath) as! ChatTVCell
+     
+     cell.selectionStyle = .none
      let message = chatDataDetails?[indexPath.row]
  
      if message?.ans_file_path?.count == 0 {
@@ -142,7 +162,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
              cell
                  .configure(
                     with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
-                    isSender: false
+                    isSender: false, studentName: message?.student_name ?? ""
                  )
 //             cell.sendByStack.isHidden = false
 //             cell.studentName.text = message?.student_name
@@ -164,7 +184,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
              cell
                  .configure(
                      with: message?.question ?? "", timeStamp: message?.asked_on ?? "",
-                     isSender: message?.my_question ?? false
+                     isSender: message?.my_question ?? false, studentName: message?.student_name ?? ""
                  )
          }
          
@@ -173,7 +193,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
              cell
                  .configure(
                      with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
-                     isSender: false
+                     isSender: false, studentName: message?.student_name ?? ""
                  )
          }
      }else{
@@ -188,26 +208,14 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
  }
  
  // MARK: - ChatTableViewCellDelegate
- func didSlideToReply(for message: String) {
+ func didSlideToReply(for message: String,studentName: String) {
      print("Reply to: \(message)")
      
-     // Show a reply indicator (e.g., move focus to an input field with the selected message)
-     //           messageHeight.constant = 190
-     
-     //           ReplyTextFild.isUserInteractionEnabled = false
-     replayStackView.isHidden = false
+     replyFullview.isHidden = false
      ReplyTextFild.text = message
+     studetnNameLbl.text = "Reply to: \(studentName)"
      ViewAnimator.showFade(TextViewFullView)
-     //
-     //           let alert = UIAlertController(title: "Reply", message: "Replying to: \(message)", preferredStyle: .alert)
-     //           alert.addTextField { textField in
-     //               textField.placeholder = "Write your reply..."
-     //           }
-     //           alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
-     //               // Handle sending the reply here
-     //           }))
-     //           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-     //           present(alert, animated: true, completion: nil)
+     
  }
  
  
@@ -305,7 +313,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
          }
  }
  
- func sendChat(){
+    func sendChat(replayType:String,chageAnswer:Bool){
      DispatchQueue.main.async { [weak self] in
          guard let self = self else { return }
          let parameters: [String: Any] = [
@@ -315,8 +323,8 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
              "is_class_teacher": self.staffMembersData.is_class_teacher ?? false,
              "file_path": [],
              "question_id" : "",
-             "reply_type" : "1",
-             "is_change_answer" : false
+             "reply_type" : replayType,
+             "is_change_answer" : chageAnswer
          ]
          
          
