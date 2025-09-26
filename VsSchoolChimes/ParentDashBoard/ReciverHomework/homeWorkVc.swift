@@ -185,6 +185,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var bottomCV: UICollectionView!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     var calendarItems: [CalendarItem] = []
     let transitionDelegate = TransitioningDelegate()
@@ -235,11 +236,13 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         
         let Name = studentDetails?.name ?? ""
         let Standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        backBtnName.configureAsBackButton(firstLine: Name, secondLine: Standard)
+        studentNameLbl.configureAsBackTitle(firstLine: Name, secondLine: Standard)
         homeWorkDefaultLbl.text = MenuStringFile.selectedMenuName
         searchbar.isHidden = true
         searchbar.delegate = self
         searchbar.searchTextField.addDoneButton()
+        searchbar.placeholder = CommonStringFile.Search
+        searchbar.backgroundImage = UIImage()
         topView.layer.cornerRadius = 30
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         topView.layer.masksToBounds = true

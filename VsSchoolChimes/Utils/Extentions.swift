@@ -962,3 +962,45 @@ class BottomRoundedView: UIView {
         self.clipsToBounds = true
     }
 }
+
+
+import UIKit
+
+extension UILabel {
+    func configureAsBackTitle(firstLine: String, secondLine: String, textColor: UIColor? = nil) {
+        let fullText = "\(firstLine)\n\(secondLine)"
+        
+        // Use user-provided color or default to white
+        let color = textColor ?? .white
+        
+        // Paragraph style
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = 1
+        
+        // Attributed text
+        let attributedText = NSMutableAttributedString(
+            string: fullText,
+            attributes: [
+                .font: UIFont(name: "Poppins-Bold", size: 15) as Any,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+        
+        // Apply smaller font to second line (same color)
+        let secondLineRange = (fullText as NSString).range(of: secondLine)
+        if secondLineRange.location != NSNotFound {
+            attributedText.addAttributes([
+                .font: UIFont(name: "Poppins-Bold", size: 11) as Any,
+                .foregroundColor: color
+            ], range: secondLineRange)
+        }
+        
+        // Apply to label
+        self.attributedText = attributedText
+        self.numberOfLines = 0
+        self.lineBreakMode = .byWordWrapping
+        self.textAlignment = .left
+    }
+}

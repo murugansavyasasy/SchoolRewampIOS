@@ -28,21 +28,36 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8es-bj-1VI">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Srh-ts-hOe">
-                            <rect key="frame" x="10" y="10.000000000000002" width="373" height="24.666666666666671"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.backward" catalog="system">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                            </state>
-                            <connections>
-                                <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="5Vd-sv-QIV"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="G6V-wb-Jml">
+                            <rect key="frame" x="10" y="10" width="373" height="40.666666666666664"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Srh-ts-hOe">
+                                    <rect key="frame" x="0.0" y="3" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="03O-8a-iy9"/>
+                                        <constraint firstAttribute="width" constant="35" id="Lu6-oS-wGr"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.backward" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="5Vd-sv-QIV"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hdfhsfdhfhfhdfhgdhghjgdgdggdhjfdghgdfhgfhgfghghgfdhfhdfhjdhfhdfdhfhdhdhfd" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xl-IC-cX4">
+                                    <rect key="frame" x="35" y="0.0" width="338" height="40.666666666666664"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="ejm-gp-RSR">
-                            <rect key="frame" x="15" y="54.666666666666686" width="363" height="40.666666666666657"/>
+                            <rect key="frame" x="15" y="70.666666666666657" width="363" height="40.666666666666657"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timetable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDF-cK-1iQ">
                                     <rect key="frame" x="0.0" y="0.0" width="159.66666666666666" height="40.666666666666664"/>
@@ -60,7 +75,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Thu, 24 jul 25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Mp-Vy-AYY">
-                                            <rect key="frame" x="0.0" y="23.333333333333329" width="83.333333333333329" height="17.333333333333329"/>
+                                            <rect key="frame" x="0.0" y="23.333333333333343" width="83.333333333333329" height="17.333333333333329"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -70,7 +85,7 @@
                             </subviews>
                         </stackView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="trQ-OE-sTx">
-                            <rect key="frame" x="20" y="115.33333333333334" width="353" height="90"/>
+                            <rect key="frame" x="20" y="131.33333333333334" width="353" height="90"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="90" id="npP-Oo-kNK"/>
@@ -86,14 +101,14 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="ejm-gp-RSR" firstAttribute="leading" secondItem="8es-bj-1VI" secondAttribute="leading" constant="15" id="7e2-GP-l34"/>
-                        <constraint firstItem="ejm-gp-RSR" firstAttribute="top" secondItem="Srh-ts-hOe" secondAttribute="bottom" constant="20" id="BEN-51-wCY"/>
+                        <constraint firstItem="G6V-wb-Jml" firstAttribute="leading" secondItem="8es-bj-1VI" secondAttribute="leading" constant="10" id="FDz-PC-DWy"/>
+                        <constraint firstAttribute="trailing" secondItem="G6V-wb-Jml" secondAttribute="trailing" constant="10" id="KH7-7c-9Ri"/>
                         <constraint firstAttribute="trailing" secondItem="trQ-OE-sTx" secondAttribute="trailing" constant="20" id="PVc-Cz-FLg"/>
-                        <constraint firstItem="Srh-ts-hOe" firstAttribute="leading" secondItem="8es-bj-1VI" secondAttribute="leading" constant="10" id="Vrm-JX-5M4"/>
                         <constraint firstAttribute="trailing" secondItem="ejm-gp-RSR" secondAttribute="trailing" constant="15" id="ale-1T-rje"/>
                         <constraint firstItem="trQ-OE-sTx" firstAttribute="top" secondItem="ejm-gp-RSR" secondAttribute="bottom" constant="20" id="bLs-NI-qk3"/>
-                        <constraint firstItem="Srh-ts-hOe" firstAttribute="top" secondItem="8es-bj-1VI" secondAttribute="top" constant="10" id="hdi-ZP-w8l"/>
+                        <constraint firstItem="G6V-wb-Jml" firstAttribute="top" secondItem="8es-bj-1VI" secondAttribute="top" constant="10" id="gdf-PZ-OO7"/>
                         <constraint firstItem="trQ-OE-sTx" firstAttribute="leading" secondItem="8es-bj-1VI" secondAttribute="leading" constant="20" id="iVz-uF-djP"/>
-                        <constraint firstAttribute="trailing" secondItem="Srh-ts-hOe" secondAttribute="trailing" constant="10" id="uU7-Dz-AGA"/>
+                        <constraint firstItem="ejm-gp-RSR" firstAttribute="top" secondItem="G6V-wb-Jml" secondAttribute="bottom" constant="20" id="oWV-Wb-jEt"/>
                     </constraints>
                 </view>
             </subviews>

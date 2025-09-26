@@ -16,6 +16,7 @@
                 <outlet property="backBtn" destination="gSz-8w-IkJ" id="FvB-go-zJY"/>
                 <outlet property="noDtaImg" destination="kA5-4Z-hZZ" id="g9W-rD-HFl"/>
                 <outlet property="nodataLbl" destination="dsq-h5-GU2" id="zOJ-yg-8MD"/>
+                <outlet property="studentNameLbl" destination="fCf-at-ep1" id="r4A-oh-6YN"/>
                 <outlet property="sumitionList" destination="Dmi-AR-H9n" id="Ax4-Xd-V18"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,40 +26,54 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-AQ-x6f">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="117"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-AQ-x6f" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-8w-IkJ">
-                            <rect key="frame" x="15" y="69" width="363" height="28"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Summision" image="chevron.left" catalog="system">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
-                            </state>
-                            <connections>
-                                <action selector="BackBtn:" destination="-1" eventType="touchUpInside" id="fpP-A4-FHA"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0Dn-bX-ag1">
+                            <rect key="frame" x="10" y="69" width="373" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-8w-IkJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="IqN-fo-1Qo"/>
+                                        <constraint firstAttribute="height" constant="35" id="yjT-dT-wd7"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackBtn:" destination="-1" eventType="touchUpInside" id="fpP-A4-FHA"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submission" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCf-at-ep1">
+                                    <rect key="frame" x="35" y="7.3333333333333268" width="338" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" name="BackGroundClr"/>
                     <constraints>
-                        <constraint firstItem="gSz-8w-IkJ" firstAttribute="leading" secondItem="XVL-AQ-x6f" secondAttribute="leading" constant="15" id="UTN-x0-gm0"/>
-                        <constraint firstAttribute="bottom" secondItem="gSz-8w-IkJ" secondAttribute="bottom" constant="20" id="im9-ec-sfC"/>
-                        <constraint firstAttribute="trailing" secondItem="gSz-8w-IkJ" secondAttribute="trailing" constant="15" id="mkI-qR-PYz"/>
+                        <constraint firstAttribute="bottom" secondItem="0Dn-bX-ag1" secondAttribute="bottom" constant="20" id="7aR-t0-eUm"/>
+                        <constraint firstItem="0Dn-bX-ag1" firstAttribute="leading" secondItem="XVL-AQ-x6f" secondAttribute="leading" constant="10" id="EQh-zX-Nmx"/>
+                        <constraint firstAttribute="trailing" secondItem="0Dn-bX-ag1" secondAttribute="trailing" constant="10" id="ito-RJ-2Fp"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZK-m2-Btc">
-                    <rect key="frame" x="0.0" y="117" width="393" height="701"/>
+                    <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGz-Zu-Dlg">
-                            <rect key="frame" x="15" y="15.000000000000002" width="363" height="21.666666666666671"/>
+                            <rect key="frame" x="15" y="15" width="363" height="14.666666666666664"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="btN-ur-shk">
-                            <rect key="frame" x="0.0" y="51.666666666666686" width="393" height="649.33333333333326"/>
+                            <rect key="frame" x="0.0" y="44.666666666666686" width="393" height="649.33333333333326"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="kA5-4Z-hZZ">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="280"/>
@@ -107,13 +122,13 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="LZK-m2-Btc" firstAttribute="top" secondItem="XVL-AQ-x6f" secondAttribute="bottom" id="4mA-L4-YgY"/>
+                <constraint firstItem="0Dn-bX-ag1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="D1E-du-Qx0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LZK-m2-Btc" secondAttribute="trailing" id="J6W-A9-oKZ"/>
                 <constraint firstItem="LZK-m2-Btc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Rlt-Pd-Cwf"/>
                 <constraint firstItem="XVL-AQ-x6f" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="SJ8-ob-gze"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LZK-m2-Btc" secondAttribute="bottom" id="hF2-Ex-U2b"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XVL-AQ-x6f" secondAttribute="trailing" id="vd2-uP-19q"/>
                 <constraint firstItem="XVL-AQ-x6f" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="x3S-9j-Rqr"/>
-                <constraint firstItem="gSz-8w-IkJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="yaf-ZH-zBh"/>
             </constraints>
             <point key="canvasLocation" x="127.48091603053435" y="20.422535211267608"/>
         </view>
