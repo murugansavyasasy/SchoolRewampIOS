@@ -100,6 +100,9 @@ class AssignmentReport: UIViewController, SelectedId {
                                 ) {
                                     self.filteredData.removeAll { $0.id == targetID }
                                     self.data.removeAll { $0.id == targetID }
+                                    let isEmpty = self.data.isEmpty
+                                    self.noDataLabel.isHidden = !isEmpty
+                                    self.noRecordImage.isHidden = !isEmpty
                                     self.reportTable.reloadData()
                                 }
                             } else {
@@ -142,7 +145,6 @@ class AssignmentReport: UIViewController, SelectedId {
                     self?.noDataLabel.isHidden = !isEmpty
                     self?.noDataLabel.text = isEmpty ? response.message : ""
                     self?.noRecordImage.isHidden = !isEmpty
-                    self?.reportTable.isHidden = isEmpty
                     self?.reportTable.reloadData()
                     
                 }

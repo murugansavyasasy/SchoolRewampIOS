@@ -59,6 +59,11 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
         }
         iconBtn.layer.cornerRadius = iconBtn.frame.width / 2
         readStatusView.layer.cornerRadius = readStatusView.frame.width / 2
+        titleLbl.setContentHuggingPriority(.required, for: .vertical)
+        titleLbl.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        descriptionLbl.setContentHuggingPriority(.defaultLow, for: .vertical)
+        descriptionLbl.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
     }
     @IBAction func edit(_ sender: UIButton) {
         

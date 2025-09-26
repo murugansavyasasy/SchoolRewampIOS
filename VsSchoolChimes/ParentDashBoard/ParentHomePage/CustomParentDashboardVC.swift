@@ -37,7 +37,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
                 navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
-                delegate?.back(logout: false)
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(true, forKey: "Logout")
+                let vc = LogoutViewController(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .overFullScreen
+                present(vc, animated: false)
             }else if vc is CustomDasboard {
                 hideSideMenu()
             }else{
@@ -173,22 +177,36 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             token: childDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
+
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    if response.status == true,
-                       let details = response.data?.first,
-                       let newDetails = details.menu_details {
-                        
-                        let changedIndexPaths = self.updateMenuCounts(with: newDetails)
-                        if !changedIndexPaths.isEmpty {
-                            self.MenuCollection.reloadItems(at: changedIndexPaths)
+                    guard response.status == true,
+                          let details = response.data?.first,
+                          let newDetails = details.menu_details else {
+                        if #available(iOS 15.0, *) { self.hideActivityLoader() }
+                        return
+                    }
+                    // Update menu counts
+                    let changedIndexPaths = self.updateMenuCounts(with: newDetails)
+                    let menuDetails = self.menu_details
+                    let safeIndexPaths = changedIndexPaths.filter { $0.item < menuDetails.count }
+                    for indexPath in safeIndexPaths {
+                        let item = menuDetails[indexPath.item]
+
+                        if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC {
+                            cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
+                        }
+                        if let cell = self.recentActiveMenuCollection.cellForItem(at: indexPath) as? TopCVCell {
+                            cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
                         }
                     }
                     if #available(iOS 15.0, *) {
                         self.hideActivityLoader()
                     }
+
                 case .failure(let error):
+                    print("API Error:", error.localizedDescription)
                     if #available(iOS 15.0, *) {
                         self.hideActivityLoader()
                     }
@@ -196,6 +214,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             }
         }
     }
+
 
     func updateMenuCounts(with newDetails: [MenuCountDetail]) -> [IndexPath] {
         var changedIndexPaths: [IndexPath] = []
@@ -393,6 +412,14 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 39: MenuRedirect.receiverAttachment(from: self, notificationId: "")
         case 40: MenuRedirect.receiverPauckt(from: self)
         default: break
+        }
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == recentActiveMenuCollection {
+            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
+            if let maxIndex = visibleIndexes.max() {
+                pagecontroller.currentPage = maxIndex
+            }
         }
     }
 }

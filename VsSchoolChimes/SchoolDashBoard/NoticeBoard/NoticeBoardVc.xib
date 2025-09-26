@@ -18,6 +18,7 @@
                 <outlet property="headerView" destination="caG-6U-gQP" id="ApH-nW-PGt"/>
                 <outlet property="noDataImg" destination="6q3-II-2pU" id="lfw-LH-Orl"/>
                 <outlet property="noDataLbl" destination="8rn-rG-H72" id="wl4-5J-RE6"/>
+                <outlet property="outerDropDownView" destination="NCL-YX-oSW" id="13m-7E-iXa"/>
                 <outlet property="schoolDropDown" destination="ycj-FI-GlR" id="frp-Mq-eeP"/>
                 <outlet property="schoolName" destination="qY7-5j-tu6" id="s0p-GR-0qE"/>
                 <outlet property="searchBar" destination="OZ7-nr-L1Y" id="hcM-0V-nbS"/>

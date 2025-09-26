@@ -266,7 +266,10 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         // Remove from allEventSections (for reset support)
         allEventSections = allEventSections.compactMap { removeEvent(from: $0) }
-        
+        let hasData = !self.allEventSections.isEmpty
+        self.noDataLbl.isHidden = hasData
+        self.nodataImg.isHidden = hasData
+        self.searchBar.isHidden = !hasData
         historyTable.reloadData()
     }
     func event(withId eventId: String) -> EventList? {

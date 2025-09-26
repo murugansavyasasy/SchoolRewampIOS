@@ -216,7 +216,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 cell.Adddelegate = self
                 cell.descriptionTXT.delegate = self
                 cell.descriptionTXT.addDoneButton()
-                cell.config(attachments)
+                cell.config(attachments, task: lsrw?.activity_type)
                 return cell
                 
             case .record:
