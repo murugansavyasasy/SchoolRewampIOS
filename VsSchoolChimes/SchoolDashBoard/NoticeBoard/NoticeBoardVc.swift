@@ -41,6 +41,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     }
     
     // MARK: - IBOutlets
+    @IBOutlet weak var outerDropDownView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var createBtn: UIButton!
@@ -52,6 +53,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     @IBOutlet weak var collectionView: UICollectionView!
     
     var staffdetails = UserDefaultFileManager.get_staff_Details()
+    var Scholldetails = UserDefaultFileManager.getUserDetails()
     let transitionDelegate = TransitioningDelegate()
     // MARK: - Properties
     var searchData: [Notice] = []
@@ -68,7 +70,13 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        if staffCount > 1 {
+            backBtn.setTitle("NoticeBoard", for: .normal)
+        } else {
+            let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: schoolName)
+        }
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
@@ -77,13 +85,12 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 let matchedSchoolName = school_details?
                     .first(where: { $0.access_token == staffToken })?
                     .school_name
-                
                 schoolName.text = matchedSchoolName ?? "School name not found"
             }
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
         }else{
-            schoolDropDown.isHidden = true
+            outerDropDownView.isHidden = true
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
@@ -259,6 +266,8 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                                     self.allNotices.removeAll { $0.id == noticeId }
                                     self.searchData.removeAll { $0.id == noticeId }
                                     self.collectionView.reloadData()
+                                    self.noDataLbl.isHidden = !self.searchData.isEmpty
+                                    self.noDataImg.isHidden = !self.searchData.isEmpty
                                 }
                             } else {
                                 self.alert.showAlert(

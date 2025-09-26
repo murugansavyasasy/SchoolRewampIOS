@@ -32,6 +32,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var childCount = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var childeDetail = UserDefaultFileManager.get_child_Details()
     let transitionDelegate = TransitioningDelegate()
@@ -46,9 +47,12 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             setupProfileImage(url: URL(string: staffDetails?.staff_profile ?? ""))
         }
         menuTable.register(UINib(nibName: "SideTvcell", bundle: nil), forCellReuseIdentifier: "SideTvcell")
-        if checkMutipleSchool() {
+        let staffCount = staffDetailsCount?.count ?? 0
+        let studentCount = childCount?.count ?? 0
+        if (staffCount + studentCount) > 1 {
             menuArray.append(MenuItem(name: "Switch Role", icon: "arrow.2.squarepath"))
         }
+
         
         // Exit is always last
         menuArray.append(MenuItem(name: "Logout", icon: "iphone.and.arrow.forward"))
@@ -84,17 +88,6 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         delegate?.didTapProfileImage(from: sender.view as? UIImageView)
-    }
-    func checkMutipleSchool() -> Bool {
-        if staffDetailsCount?.count ?? 0 > 1 {
-            switch staff_roll {
-            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-                return true
-            default:
-                return false
-            }
-        }
-        return false
     }
     
     // MARK: - TableView DataSource

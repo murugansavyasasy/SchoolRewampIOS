@@ -40,7 +40,7 @@ class LoginVc: UIViewController {
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
-       
+        
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
@@ -94,7 +94,7 @@ class LoginVc: UIViewController {
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 2)
         loginBtnNm.layer.shadowOpacity = 0.2
         loginBtnNm.layer.shadowRadius = 2
-       
+        
         passTextFld.delegate = self
         passTextFld.keyboardType = .default
         passTextFld.isSecureTextEntry = true
@@ -340,11 +340,11 @@ class LoginVc: UIViewController {
                     
                 case.success(let successmessage):
                     DispatchQueue.main.async { [self] in
-                    if #available(iOS 15.0, *) {
-                        self.hideActivityLoader()
-                    }
-                    if successmessage.status == true {
-                        
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                        if successmessage.status == true {
+                            
                             let vc = OTPVc(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = MobilTextFld.text
@@ -433,7 +433,7 @@ extension LoginVc: UITextFieldDelegate {
             if formattedText != currentText {
                 textField.text = formattedText
             }
-
+            
             // Check length restriction
             let newLength = (formattedText.count + string.count - range.length)
             return newLength <= (country_data?.mobile_number_length ?? 10)
@@ -443,24 +443,24 @@ extension LoginVc: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else { return }
-
+        
         // Remove country code & spaces
         let cleanedText = removeCountryCodeAndSpaces(from: text)
-
+        
         // Limit to max length
         let maxLength = country_data?.mobile_number_length ?? 10
         let finalText = String(cleanedText.prefix(maxLength))
-
+        
         // Set cleaned text back to textField
         textField.text = finalText
     }
-
+    
     
     func removeCountryCodeAndSpaces(from phone: String) -> String {
         // Define a regex pattern that matches a leading '+' followed by 1-3 digits and any optional whitespace.
         let pattern = "^\\+\\d{1,3}\\s*"
         var phoneWithoutCountryCode = phone
-
+        
         // Remove the country code using the regular expression.
         if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
             let range = NSRange(location: 0, length: phone.utf16.count)
@@ -475,41 +475,41 @@ extension LoginVc: UITextFieldDelegate {
         return trimmedPhone
     }
     
-//    @objc func keyboardWillShow(notification: NSNotification) {
-//        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-//
-//        let bottomInset = keyboardFrame.height + 20 // padding
-//        scrollView.contentInset.bottom = bottomInset
-//        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
-//    }
-//
-//    @objc func keyboardWillHide(notification: NSNotification) {
-//        scrollView.contentInset.bottom = 0
-//        scrollView.verticalScrollIndicatorInsets.bottom = 0
-//    }
-
-   
-
+    //    @objc func keyboardWillShow(notification: NSNotification) {
+    //        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+    //
+    //        let bottomInset = keyboardFrame.height + 20 // padding
+    //        scrollView.contentInset.bottom = bottomInset
+    //        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+    //    }
+    //
+    //    @objc func keyboardWillHide(notification: NSNotification) {
+    //        scrollView.contentInset.bottom = 0
+    //        scrollView.verticalScrollIndicatorInsets.bottom = 0
+    //    }
+    
+    
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-
+        
         // Store the current insets only the first time
         if originalContentInset == .zero {
             originalContentInset = scrollView.contentInset
             originalScrollIndicatorInsets = scrollView.verticalScrollIndicatorInsets
         }
-
+        
         let bottomInset = keyboardFrame.height + 20 // padding
         scrollView.contentInset.bottom = bottomInset
         scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         // Restore original insets
         scrollView.contentInset.bottom = 0
         scrollView.verticalScrollIndicatorInsets.bottom = 0
     }
-
+    
 }
 
 

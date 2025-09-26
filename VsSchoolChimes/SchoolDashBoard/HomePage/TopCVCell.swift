@@ -28,8 +28,15 @@ class TopCVCell: UICollectionViewCell {
                 let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
                 let img = UIImage(named: filteredItems.first?.name ?? "")
                 iconBtn.setImage(img, for: .normal)
+                // aspect fill set pannum
+                iconBtn.imageView?.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    iconBtn.imageView!.widthAnchor.constraint(equalToConstant: 40),
+                    iconBtn.imageView!.heightAnchor.constraint(equalToConstant: 40),
+                    iconBtn.imageView!.centerXAnchor.constraint(equalTo: iconBtn.centerXAnchor),
+                    iconBtn.imageView!.centerYAnchor.constraint(equalTo: iconBtn.centerYAnchor)
+                ])
                 nameLbl.text = item.name
-                readVieaw.isHidden = item.unread_count == 0
             }
         }
     }

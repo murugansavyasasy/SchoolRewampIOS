@@ -53,19 +53,21 @@ class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
             textField.addDoneButton()
         }
-        // Show the selected one
         switch selectedTab {
         case 0:
             allLbl.isHidden = false
             delegate?.searchText("All")
+            searchBar.text = ""
             allBtn.tintColor = .blue
         case 1:
             submitLbl.isHidden = false
             delegate?.searchText("Submited")
+            searchBar.text = ""
             submitedBtn.tintColor = .blue
         case 2:
             pendingLbl.isHidden = false
             delegate?.searchText("Pending")
+            searchBar.text = ""
             pendingBtn.tintColor = .blue
         default: break
         }
