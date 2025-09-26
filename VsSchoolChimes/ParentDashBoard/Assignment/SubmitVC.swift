@@ -29,6 +29,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var bagrountview: UIView!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     var placeholderLabel: UILabel!
     var attachments: [AttachmentItem] = []
@@ -49,7 +50,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         super.viewDidLoad()
         let studentName = studentDetails?.name ?? ""
         let Standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        backBtn.configureAsBackButton(firstLine: studentName, secondLine: Standard)
+        studentNameLbl.configureAsBackTitle(firstLine: studentName, secondLine: Standard)
         NameLbl.text = "Submit " + MenuStringFile.selectedMenuName
         setupUI()
         videoPicker = VideoPickerManager(presenter: self, delegate: self)

@@ -29,7 +29,7 @@ class AddAttachmentTVC: UITableViewCell,
     var attachments: [AttachmentItem] = []
     var delegate: BaktoHome?
     var Adddelegate: EditObjectDelegate?
-    
+    var taskType:LSRWType?
     private let maxAttachments = 5
     private var lastAttachmentCount = 0
     
@@ -40,8 +40,9 @@ class AddAttachmentTVC: UITableViewCell,
         setupCollectionView()
     }
 
-    func config(_ attachment:[AttachmentItem]){
+    func config(_ attachment:[AttachmentItem],task:LSRWType?){
         attachments = attachment
+        taskType = task
         reloadAttachments()
     }
     
@@ -225,7 +226,12 @@ class AddAttachmentTVC: UITableViewCell,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
             // Add button tapped
-            presentAttachmentOptions(for: "General")
+            if let taskType = taskType{
+                presentAttachmentOptions(for:taskType)
+            }else{
+                presentAttachmentOptions(for: .unknown(""))
+            }
+            
             delegate?.backtohome(type: "")
         } else {
             // Attachment tapped
@@ -295,7 +301,7 @@ class AddAttachmentTVC: UITableViewCell,
     }
     
     // MARK: - Options / Picker
-    private func presentAttachmentOptions(for task: String) {
+    private func presentAttachmentOptions(for task: LSRWType) {
         let alertController = UIAlertController(
             title: "Select".translated(),
             message: "Choose an option".translated(),
@@ -323,21 +329,28 @@ class AddAttachmentTVC: UITableViewCell,
             }
         ]
         
-        if task == "Reading" || task == "Listening"{
+        switch task {
+        case .reading, .listening,.writing:
+            // remove recording & audio for reading/listening
             options.removeAll { $0.type == .recording || $0.type == .audio }
-        }else if task == "Speaking"{
-            options.removeAll { $0.type != .recording || $0.type != .audio ||  $0.type != .video}
+            
+        case .speaking:
+            // keep only recording, audio, video
+            options.removeAll { ![.recording, .audio, .video].contains($0.type) }
+            
+        default:
+            break
         }
         
         for option in options {
-            alertController.addAction(UIAlertAction(title: option.title,
-                                                    style: .default,
+            alertController.addAction(UIAlertAction(title: option.title,style: .default,
                                                     handler: { _ in option.handler() }))
         }
         alertController.addAction(UIAlertAction(title: "Cancel".translated(),
                                                 style: .cancel))
         getCurrentViewController()?.present(alertController, animated: true)
     }
+
     
     func videoPick() {
         let videoCount = attachments.filter { $0.fileType == CommonStringFile.VIDEO }.count

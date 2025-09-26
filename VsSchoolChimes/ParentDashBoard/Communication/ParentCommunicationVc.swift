@@ -62,6 +62,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var SearchbarStack: UIStackView!
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var TitleLbl: UILabel!
+    
     
     var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
@@ -94,11 +96,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         SearchBar.placeholder = CommonStringFile.Search
         SearchBar.backgroundImage = UIImage()
 
-        backBtn.configureAsBackButton(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        TitleLbl.configureAsBackTitle(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         menuNameLbl.text = MenuStringFile.selectedMenuName
         backBtn.applyBackButton()
         
-      
         RegisterCell()
         
         setupTableFooter()

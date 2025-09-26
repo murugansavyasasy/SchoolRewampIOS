@@ -19,6 +19,7 @@ class QuizVC: UIViewController {
     @IBOutlet weak var CompletedBtn: UIButton!
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     
     //var colours = ["lesson1","lesson2","lesson3"]
@@ -70,18 +71,12 @@ class QuizVC: UIViewController {
                 switch result {
                 case .success(let successResponse):
                    
-                    if successResponse.status == true{
-                        
                         self.get_QuizDetails = successResponse.data ?? []
+                        let isempty = self.get_QuizDetails.isEmpty
                         self.tv.reloadData()
-                        self.NoDataImage.isHidden = true
-                        self.NoDataLbl.isHidden = true
-                    }else{
-                        
-                        self.NoDataImage.isHidden = false
-                        self.NoDataLbl.isHidden = false
+                        self.NoDataImage.isHidden = !isempty
+                        self.NoDataLbl.isHidden = !isempty
                         self.NoDataLbl.text = successResponse.message ?? ""
-                    }
                     
                     
                 case .failure(let error):
@@ -110,7 +105,7 @@ class QuizVC: UIViewController {
         
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         NameLbl.text = MenuStringFile.selectedMenuName
         
     }

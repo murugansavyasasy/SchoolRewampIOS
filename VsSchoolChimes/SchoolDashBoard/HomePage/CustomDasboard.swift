@@ -102,7 +102,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
                 self.navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
-                delegate?.back(logout: false)
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(true, forKey: "Logout")
+                let vc = LogoutViewController(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .overFullScreen
+                present(vc, animated: false)
             }else if vc is CustomDasboard {
                 hideSideMenu()
             }else{
@@ -159,36 +163,40 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
             
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
                     if response.status == true,
                        let details = response.data?.first,
                        let newDetails = details.menu_details {
                         
                         let changedIndexPaths = self.updateMenuCounts(with: newDetails)
                         let safeIndexPaths = changedIndexPaths.filter { $0.item < (self.menu_details?.count ?? 0) }
-                        if !safeIndexPaths.isEmpty {
-                            self.MenuCollection.reloadItems(at: safeIndexPaths)
-                        }
+                        
                         for indexPath in safeIndexPaths {
-                            if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC,
-                               let item = self.menu_details?[indexPath.item] {
-                                if item.id == Menu_id.MessageFromManagement{
+                            guard let item = self.menu_details?[indexPath.item] else { continue }
+                            
+                            if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC {
+                                if item.id == Menu_id.MessageFromManagement {
                                     cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
-                                }else{
+                                } else {
                                     cell.readVieaw.isHidden = true
                                 }
-                                
+                            }else if let cell = self.recentActiveMenuCollection.cellForItem(at: indexPath) as? TopCVCell {
+                                if item.id == Menu_id.MessageFromManagement {
+                                    cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
+                                } else {
+                                    cell.readVieaw.isHidden = true
+                                }
                             }
                         }
                     }
                     if #available(iOS 15.0, *) {
                         self.hideActivityLoader()
                     }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
+                    
+                case .failure(let error):
+                    print("API Error:", error.localizedDescription)
                     if #available(iOS 15.0, *) {
                         self.hideActivityLoader()
                     }
@@ -524,6 +532,14 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
         return false
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == recentActiveMenuCollection {
+            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
+            if let maxIndex = visibleIndexes.max() {
+                pagecontroller.currentPage = maxIndex
+            }
+        }
     }
 }
 

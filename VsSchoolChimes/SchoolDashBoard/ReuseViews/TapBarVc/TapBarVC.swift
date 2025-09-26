@@ -232,19 +232,9 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
         if logout {
             let userDefaults = UserDefaults.standard
             userDefaults.set(true, forKey: "Logout")
-            
-            let logoutVC = LogoutViewController(nibName: nil, bundle: nil)
-            logoutVC.modalPresentationStyle = .overFullScreen
-            
-            // Present from the root view controller safely
-            if let window = UIApplication.shared.connectedScenes
-                .compactMap({ $0 as? UIWindowScene })
-                .first?.windows.first(where: { $0.isKeyWindow }),
-               let rootVC = window.rootViewController {
-                rootVC.present(logoutVC, animated: true)
-            } else {
-                print("❌ Could not find root view controller to present LogoutViewController")
-            }
+            let vc = LogoutViewController(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: false)
         } else {
             // Check if we can pop from navigation stack
             if let navController = self.navigationController,

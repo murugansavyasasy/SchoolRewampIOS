@@ -16,7 +16,6 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     @IBOutlet weak var MenuNameLbl: UILabel!
@@ -34,19 +33,20 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NameLbl.text = studentDetails?.name
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        let Name = studentDetails?.name ?? ""
+        let Standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+        NameLbl.configureAsBackTitle(firstLine: Name, secondLine: Standard)
         MenuNameLbl.text = MenuStringFile.selectedMenuName
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         nodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         searchview.placeholder = CommonStringFile.Search.translated()
         searchview.delegate = self
-        calendarItems = getAllPastDatesIncludingTodayForLastMonth()
         searchview.searchTextField.addDoneButton()
+        searchview.isHidden = true
+        searchview.backgroundImage = UIImage()
+        calendarItems = getAllPastDatesIncludingTodayForLastMonth()
         nodataLbl.isHidden = true
         noRecordImg.isHidden = true
-        searchview.isHidden = true
+        
         register()
         getAssigment()
     }

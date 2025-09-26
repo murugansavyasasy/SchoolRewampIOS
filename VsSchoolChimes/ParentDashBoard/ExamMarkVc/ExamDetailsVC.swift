@@ -20,6 +20,8 @@ class ExamDetailsVC: UIViewController {
     @IBOutlet weak var TimeTableBtn: UIButton!
     @IBOutlet weak var MarksBtn: UISegmentedControl!
     @IBOutlet weak var ExamMarksBtn: UIButton!
+    @IBOutlet weak var ExamLbl: UILabel!
+    
     
     let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
     let secondChildVC = ExameMarVC()
@@ -28,8 +30,8 @@ class ExamDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+       
+        ExamLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
         TimeTableBtn.setTitle(ExamStringFile.examTimetable, for: .normal)
         ExamMarksBtn.setTitle(ExamStringFile.examMarks, for: .normal)
