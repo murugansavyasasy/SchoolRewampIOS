@@ -24,7 +24,6 @@ class EventResiverVC: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var searchStack: UIStackView!
     @IBOutlet weak var studentNameLbl: UILabel!
-    @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
@@ -76,10 +75,11 @@ class EventResiverVC: UIViewController {
     
     // MARK: - Setup Methods
     private func setupStudentInfo() {
-        studentNameLbl.setFont(style: .body, size: FontSize.BodySize)
-        sectionLbl.setFont(style: .body, size: FontSize.BodySize)
-        studentNameLbl.text = studentDetails?.name
-        sectionLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+       
+        let name = studentDetails?.name ?? ""
+        let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
     }
     
     private func setupUI() {
