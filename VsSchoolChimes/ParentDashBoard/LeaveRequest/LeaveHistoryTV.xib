@@ -69,7 +69,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ec-yT-64y">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ec-yT-64y">
                                         <rect key="frame" x="0.0" y="57.333333333333336" width="280" height="20.333333333333336"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -187,7 +187,7 @@
                 <outlet property="popupView" destination="Hmk-m3-p2L" id="3ut-cN-XN6"/>
                 <outlet property="statusBtnWidth" destination="kVT-wH-JSV" id="xvj-Km-exH"/>
             </connections>
-            <point key="canvasLocation" x="141.98473282442748" y="40.492957746478872"/>
+            <point key="canvasLocation" x="141.98473282442748" y="39.7887323943662"/>
         </tableViewCell>
     </objects>
     <resources>

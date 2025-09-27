@@ -64,12 +64,14 @@ class certificateReqVc: UIViewController,UITableViewDelegate,UITableViewDataSour
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var studentNameLbl: UILabel!
+    
     var certificates: [CertificateRequest]? = []
     var filteredCertificates: [CertificateRequest]? = []
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         // Do any additional setup after loading the view.
         
         tv

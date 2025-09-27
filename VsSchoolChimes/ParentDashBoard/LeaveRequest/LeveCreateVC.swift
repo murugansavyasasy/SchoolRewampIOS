@@ -101,10 +101,11 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         if let leave = editLeaveData{
            
+            dateFormatter.dateFormat = "dd MMM yyyy"
             placeholderLabel.isHidden = !leave.reson.isEmpty
             LeaveTypeBtn.setTitle(leave.LeaveType, for: .normal)
-            FromDateBtn.setTitle(leave.fromDate, for: .normal)
-            ToDateBtn.setTitle(leave.toDate, for: .normal)
+            FromDateBtn.setTitle(leave.fromDate.convertToTargetDateFormat(), for: .normal)
+            ToDateBtn.setTitle(leave.toDate.convertToTargetDateFormat(), for: .normal)
             CauseTextView.text = leave.reson
             let size = CGSize(width: CauseTextView.frame.width, height: .infinity)
             let estimatedSize = CauseTextView.sizeThatFits(size)
@@ -115,6 +116,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             NewLeaveDefLbl.text = AttendanceString.editLeaveRequest
             let daysText = "\(AttendanceString.updateFor) \(leave.NoOfDays) \(AttendanceString.daysLeave)"
             ApplyLeaveBtn.setTitle(daysText, for: .normal)
+            FromDatePicker.date = dateFormatter.date(from: leave.fromDate.convertToTargetDateFormat() ?? "") ?? Date()
+            toDatePicker.date = dateFormatter.date(from: leave.toDate.convertToTargetDateFormat() ?? "") ?? Date()
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -269,6 +272,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     @IBAction func SubmitAct(_ sender: Any) {
         
         if validateInputs(){
+            
             ApplyLeave()
         }else {
             alert.showAlert(title: "Missing Information", message: AlertstringFile.Fill_All_Required_Fields, on: self)
@@ -288,13 +292,13 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         }
         
         if let fromDate = FromDateBtn.title(for: .normal),
-           fromDate.isEmpty || fromDate == "Select From Date" {
+           fromDate.isEmpty || fromDate == AttendanceString.selectFromDate {
             showError("Please select a From Date.")
             return false
         }
         
         if let toDate = ToDateBtn.title(for: .normal),
-           toDate.isEmpty || toDate == "Select To Date" {
+           toDate.isEmpty || toDate == AttendanceString.selectToDate {
             showError("Please select a To Date.")
             return false
         }
@@ -338,9 +342,9 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         var toSessionCode = ""
 
         if let fromTitle = FromSessionBtn.title(for: .normal) {
-            if fromTitle.contains("First") {
+            if fromTitle == options.first {
                 fromSessionCode = "FH"
-            } else if fromTitle.contains("Second") {
+            } else if fromTitle == options.last {
                 fromSessionCode = "SH"
             }
         }
@@ -403,17 +407,17 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         var toSessionCode = ""
 
         if let fromTitle = FromSessionBtn.title(for: .normal) {
-            if fromTitle.contains("First") {
+            if fromTitle == options.first {
                 fromSessionCode = "FH"
-            } else if fromTitle.contains("Second") {
+            } else if fromTitle == options.last {
                 fromSessionCode = "SH"
             }
         }
 
         if let toTitle = ToSessionBtn.title(for: .normal) {
-            if toTitle.contains("First") {
+            if toTitle == options.first {
                 toSessionCode = "FH"
-            } else if toTitle.contains("Second") {
+            } else if toTitle == options.last {
                 toSessionCode = "SH"
             }
         }

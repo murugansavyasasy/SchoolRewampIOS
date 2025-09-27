@@ -54,7 +54,6 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     // MARK: - IBOutlets
-    @IBOutlet weak var standerdLbl: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var assignmentTable: UITableView!
     // MARK: - Properties
@@ -65,13 +64,15 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     var userNameValue:String?
     var sectionValue:String?
     var reciver = false
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         getAssignment()
-        userName.text = userNameValue ?? ""
-        standerdLbl.text = sectionValue ?? ""
+        let Name = userNameValue ?? ""
+        let Standard = sectionValue ?? ""
+        userName.configureAsBackTitle(firstLine: Name, secondLine: Standard)
     }
     
     // MARK: - TableView Setup

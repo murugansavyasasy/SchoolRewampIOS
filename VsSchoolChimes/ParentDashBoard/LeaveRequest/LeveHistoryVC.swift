@@ -500,6 +500,9 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
             filteredLeaveData = baseData
         }
 
+        NodataLbl.text = CommonStringFile.No_data_found
+        NodataLbl.isHidden = !filteredLeaveData.isEmpty
+        NodataImage.isHidden = !filteredLeaveData.isEmpty
         historyTable.reloadData()
     }
 
