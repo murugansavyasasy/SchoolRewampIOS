@@ -580,6 +580,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         guard let credentials = UserDefaultFileManager.getLoginCredentials(),
               credentials.mobile_number != nil,
               credentials.pwd != nil else {
+            
             let isLoggedOut = UserDefaults.standard.bool(forKey: "Logout")
             let vc = isLoggedOut ? LoginVc() : MobileNumberVc()
             vc.modalPresentationStyle = .fullScreen

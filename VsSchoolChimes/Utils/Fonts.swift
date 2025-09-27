@@ -79,5 +79,6 @@ class FontSize {
     
     static var HeaderSize : CGFloat = 15//20
     static var TitleSize : CGFloat = 14
+    static var Twelve : CGFloat = 12
     static var BodySize : CGFloat = 13
 }

@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 protocol ChatTableViewCellDelegate: AnyObject {
-    func didSlideToReply(for message: String)
+    func didSlideToReply(for message: String ,studentName : String)
 }
 class ChatTVCell: UITableViewCell {
 
@@ -26,7 +26,7 @@ class ChatTVCell: UITableViewCell {
        weak var delegate: ChatTableViewCellDelegate?
        private var panGestureRecognizer: UIPanGestureRecognizer!
        private var originalCenter: CGPoint = .zero
-       
+    var studName : String?
        override func awakeFromNib() {
            super.awakeFromNib()
            setupGesture()
@@ -44,10 +44,10 @@ class ChatTVCell: UITableViewCell {
                 )
         }
     }
-    func configure(with message: String, timeStamp: String, isSender: Bool) {
+    func configure(with message: String, timeStamp: String, isSender: Bool,studentName:String) {
         messageLabel.text = message
         timeStampLbl.text = timeStamp
-
+            self.studName = studentName
         let totalLength = message.count + timeStamp.count
 
         // Optional: adjust based on total character count
@@ -105,7 +105,11 @@ class ChatTVCell: UITableViewCell {
                    UIView.animate(withDuration: 0.2) {
                        self.bubbleView.center = self.originalCenter
                    }
-                   delegate?.didSlideToReply(for: messageLabel.text ?? "")
+                   delegate?
+                       .didSlideToReply(
+                        for: messageLabel.text ?? "",
+                        studentName: studName ?? ""
+                       )
                } else { // Revert if not enough swiped
                    UIView.animate(withDuration: 0.2) {
                        self.bubbleView.center = self.originalCenter

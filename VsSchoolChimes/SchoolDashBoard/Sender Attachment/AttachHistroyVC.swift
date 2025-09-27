@@ -72,7 +72,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
-            schoolDropDown.isHidden = false
+            schoolDropDownFullview.isHidden = false
             if let staffToken = staffdetails?.access_token {
                 let matchedSchoolName = school_details?
                     .first(where: { $0.access_token == staffToken })?
@@ -82,7 +82,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
         }else{
-            schoolDropDown.isHidden = true
+            schoolDropDownFullview.isHidden = true
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
