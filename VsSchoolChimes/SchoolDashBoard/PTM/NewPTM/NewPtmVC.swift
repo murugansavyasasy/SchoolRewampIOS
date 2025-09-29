@@ -30,6 +30,8 @@ class NewPtmVC: UIViewController, Datepicker {
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var removeDateBtn: UIButton!
     @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -46,6 +48,9 @@ class NewPtmVC: UIViewController, Datepicker {
         
         removeDateBtn.isHidden = true
         tv.isHidden = tvHidden ?? false
+        
+        noDataImage.isHidden = true
+        nodataLbl.isHidden = true
 
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -74,9 +79,9 @@ class NewPtmVC: UIViewController, Datepicker {
         
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
         
-        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
-        cv.delegate = self
-        cv.dataSource = self
+//        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
+//        cv.delegate = self
+//        cv.dataSource = self
         
         tv.register(UINib(nibName: CellConfingName.MeetingDetailTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDetailTV)
         tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
@@ -121,6 +126,8 @@ class NewPtmVC: UIViewController, Datepicker {
                         self.Meeting_data = success.data ?? []
                         self.sections.removeAll()
                         
+                        self.noDataImage.isHidden = true
+                        self.nodataLbl.isHidden = true
                         guard let slotData = success.data?.first else { return }
                         
                         // Today
@@ -146,8 +153,10 @@ class NewPtmVC: UIViewController, Datepicker {
                         //"You have " + String(slotData.today?.count ?? 0) + " Meetings Today"
                         
                         self.tv.reloadData()
-                        self.cv.reloadData() // if you’re also showing in collection view
+                       // self.cv.reloadData() // if you’re also showing in collection view
                     }else {
+                        self.noDataImage.isHidden = false
+                        self.nodataLbl.isHidden = false
                         self.Meeting_data = success.data ?? []
                         self.sections.removeAll()
                         self.tv.reloadData()
@@ -155,6 +164,8 @@ class NewPtmVC: UIViewController, Datepicker {
                     
                 case .failure(let error):
                     print("Error: ", error.localizedDescription)
+                    self.noDataImage.isHidden = false
+                    self.nodataLbl.isHidden = false
                 }
             }
         }
