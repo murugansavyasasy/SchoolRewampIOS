@@ -52,6 +52,8 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     @IBOutlet weak var allBtn: UIButton!
     @IBOutlet weak var rejectedBtn: UIButton!
     @IBOutlet weak var waitingBtn: UIButton!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
     
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var allLeaveRecords: [LeaveMonth]?
@@ -68,13 +70,14 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
+        menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
         
         addUnderline(to: allBtn, unSelectedBtn: [approvedBtn,rejectedBtn,waitingBtn])
         
         searchBar.isHidden = true
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
         
         NodateLbl.isHidden = true
@@ -210,7 +213,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         dismiss(animated: true)
     }
     
-    @IBAction func searchBtnAct(_ sender: Any) {
+    @IBAction func searchBtnAct(_ sender: UIButton) {
         searchBar.isHidden.toggle()
     }
     
@@ -413,11 +416,15 @@ extension SenderLeaveRqstVC: UISearchBarDelegate {
                     // Convert leave_from & leave_to into display format
                     let fromDate = info.leave_from?.convertToTargetDateFormat()
                     let toDate   = info.leave_to?.convertToTargetDateFormat()
+                    
+                    let classSection = [info.class_name, info.section_name]
+                                    .compactMap { $0 }
+                                    .joined(separator: " - ")
 
                     return
                         (info.student_name?.lowercased().contains(lowercasedQuery) ?? false) ||
                         (info.class_name?.lowercased().contains(lowercasedQuery) ?? false) ||
-                        (info.section_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (classSection.lowercased().contains(lowercasedQuery)) ||
                         (info.reason?.lowercased().contains(lowercasedQuery) ?? false) ||
                         (info.leave_type?.lowercased().contains(lowercasedQuery) ?? false) ||
                         (info.no_of_days?.lowercased().contains(lowercasedQuery) ?? false) ||

@@ -40,6 +40,9 @@ class AttachHistroyVC: UIViewController, SelectedId {
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var schoolName: UILabel!
     @IBOutlet weak var schoolDropDown: UIView!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
+    
     var attachmentHeaders: [AttachmentHeaderInfo] = []
     var attachmentFiles: [[FilePath]]?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -63,12 +66,14 @@ class AttachHistroyVC: UIViewController, SelectedId {
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
        
-        backBtnName
-            .configureAsBackButton(
-                firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? ""
-            )
+//        backBtnName
+//            .configureAsBackButton(
+//                firstLine: MenuStringFile.selectedMenuName,
+//                secondLine: ""
+//            )
         
+        menuNameLbl.text = MenuStringFile.selectedMenuName
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
@@ -91,6 +96,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
         searchBar.layer.cornerRadius = 5
+        searchBar.backgroundImage = UIImage()
         tv.register(
                 UINib(nibName: "AttachTvHeader", bundle: nil),
                 forHeaderFooterViewReuseIdentifier: "AttachTvHeader"
