@@ -61,20 +61,43 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     var submittedAssignment: [StudentSubmission] = []
     var filterAssignment: [StudentSubmission] = []
     var selectedAssignment: [StudentSubmission] = []
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     var userNameValue:String?
     var sectionValue:String?
     var reciver = false
-    
+    var onDismiss: (() -> Void)?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        if data?.is_unread ?? false{
+            ReadStatusUpdate(type: "ASSIGNMENT", detail_id: data?.id ?? "")
+        }
         getAssignment()
         let Name = userNameValue ?? ""
         let Standard = sectionValue ?? ""
         userName.configureAsBackTitle(firstLine: Name, secondLine: Standard)
     }
     
+    func ReadStatusUpdate(type: String,detail_id: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+            case .success(let SuccessMessage):
+                if SuccessMessage.status == true {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                        self?.onDismiss?()
+                    }
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
     // MARK: - TableView Setup
     private func setupTableView() {
         assignmentTable.register(UINib(nibName: "AssignmentDetailTVC", bundle: nil), forCellReuseIdentifier: "AssignmentDetailTVC")

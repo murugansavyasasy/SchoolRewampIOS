@@ -32,7 +32,6 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
     var delete:Bool?
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         // Style outer view (rounded card style)
         outerView.layer.cornerRadius = 10
         outerView.layer.borderWidth = 1
@@ -54,6 +53,7 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         EditBtn.isHidden = true
         EditBtn1.isHidden = true
     }
+    
     func edit(edit:Bool,delete:Bool,selectedId:String){
         self.selectedId = selectedId
         self.delete = delete
@@ -91,47 +91,56 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = sumisionCollectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        
-        if let img = FilesUrl?[indexPath.row] {
-            let fileURL = URL(fileURLWithPath: img.url ?? "")
-            let iconName = getFileIconName(for: fileURL)
-            if iconName != "image" {
-                if img.type?.uppercased() == "VIDEO"{
-                    cell.webView.isHidden = true
-                    cell.hide = true
-                    cell.imageView.isHidden = false
-                    cell.imageView.image = UIImage(named: "video (1)")
-                    let iconImage = UIImage(named: "")
-                    cell.IndicaterImageView.image = iconImage
-                }else{
-                    if let pdfURL = URL(string: img.url ?? ""){
-                        cell.hide = false
-                        let request = URLRequest(url: pdfURL)
-                        cell.webView.load(request)
-                        cell.webView.isHidden = false
-                        cell.webView.isUserInteractionEnabled = false  // ✅ Add this
-                        cell.webView.scrollView.isScrollEnabled = false // ✅ Optional
-                        cell.imageView.isHidden = true
-                        
-                    } else {
-                        cell.webView.isHidden = true
-                        cell.imageView.isHidden = false
-                    }
-                    let iconImage = UIImage(named: iconName)
-                    cell.IndicaterImageView.image = iconImage
-                }
-            } else {
-                cell.hide = false
+        let cell = sumisionCollectionView.dequeueReusableCell(
+            withReuseIdentifier: CellConfingName.ImagePdfCvCell,
+            for: indexPath
+        ) as! ImagePdfCvCell
+
+        if let img = FilesUrl?[indexPath.row],
+           let urlString = img.url,
+           let url = URL(string: urlString) {
+
+            let fileType = img.type?.uppercased() ?? ""
+            
+            switch fileType {
+            case "IMAGE":
+                // Show actual image
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
-                let iconImage = UIImage(named: iconName)
-                cell.IndicaterImageView.image = iconImage
+                cell.imageView.sd_setImage(with: url, placeholderImage: ImageName.placeholder)
+                cell.IndicaterImageView.image = UIImage(named: "")
+                cell.hide = false
+                
+            case "VIDEO":
+                // Show video icon
+                cell.webView.isHidden = true
+                cell.imageView.isHidden = false
+                cell.imageView.image = UIImage(named: "video (1)")
+                cell.IndicaterImageView.image = UIImage(named: "video (1)")
+                cell.hide = true
+                
+            default:
+                // PDF / Docs / Unknown
+                cell.hide = false
+                cell.webView.isHidden = false
+                cell.imageView.isHidden = true
+                cell.webView.isUserInteractionEnabled = false
+                cell.webView.scrollView.isScrollEnabled = false
+                let request = URLRequest(url: url)
+                cell.webView.load(request)
+                let iconName = getFileIconName(for: url)
+                cell.IndicaterImageView.image = UIImage(named: iconName)
             }
-            
+
+        } else {
+            // Fallback if URL is invalid
+            cell.webView.isHidden = true
+            cell.imageView.isHidden = false
+            cell.imageView.image = UIImage(named: "placeholder") // placeholder image
+            cell.IndicaterImageView.image = UIImage(named: "placeholder")
+            cell.hide = false
         }
-        
+
         return cell
     }
     

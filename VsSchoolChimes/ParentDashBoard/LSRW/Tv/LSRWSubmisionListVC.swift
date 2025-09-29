@@ -22,6 +22,7 @@ class LSRWSubmisionListVC: UIViewController,
     @IBOutlet weak var remarkView: UIView!
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var percentageLbl: UILabel!
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var lsrwCV: UICollectionView!
     @IBOutlet weak var backBtn: UIButton!
     var attachment: [FilePath]?
@@ -30,9 +31,10 @@ class LSRWSubmisionListVC: UIViewController,
     var student_id :String?
     var backTitle1:String?
     var backTitle2:String?
+    var titleSting:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        titleLbl.text = titleSting ?? ""
         lsrwCV.delegate = self
         lsrwCV.dataSource = self
         slider.transform = CGAffineTransform(scaleX: 1, y: 1.5)

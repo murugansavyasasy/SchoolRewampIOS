@@ -148,6 +148,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     
                     let hasData = !self.allEventSections.isEmpty
                     self.noDataLbl.isHidden = hasData
+                    self.noDataLbl.text = response.message
                     self.nodataImg.isHidden = hasData
                     self.searchBar.isHidden = !hasData
                     self.historyTable.reloadData()

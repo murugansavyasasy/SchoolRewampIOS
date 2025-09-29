@@ -8,7 +8,7 @@
 import UIKit
 
 class NewLSRWTVcell: UITableViewCell {
-
+    @IBOutlet weak var readVieaw: UIView!
     @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var tittleLbl: UILabel!
@@ -21,7 +21,7 @@ class NewLSRWTVcell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        readVieaw.layer.cornerRadius = readVieaw.frame.width/2
         // Cell design
         cellView.layer.cornerRadius = 10
         cellView.backgroundColor = .white

@@ -9,6 +9,7 @@ import UIKit
 
 class interactTvcell: UITableViewCell {
 
+    @IBOutlet weak var lastMessageLbl: UILabel!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var userImg: UIImageView!
     @IBOutlet weak var userBtn: UIButton!
@@ -30,5 +31,4 @@ class interactTvcell: UITableViewCell {
         userBtn.backgroundColor = UIColor.blue.withAlphaComponent(0.6)
         userBtn.setShadow(cornerRadius: userBtn.frame.width/2)
     }
-
 }

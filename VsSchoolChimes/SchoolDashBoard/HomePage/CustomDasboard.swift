@@ -80,14 +80,14 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupHeaderView()
         Global_variabel()
         setupProfileImage()
-        getacadmicYr {
-            self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        getacadmicYr {
+            self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

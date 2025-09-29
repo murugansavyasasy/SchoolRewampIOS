@@ -134,6 +134,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
             let unreadCount = datas.unread_count ?? 0
             cell.unReadCountBtn.isHidden = unreadCount == 0
             cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
+            cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
             // Last update time
             if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
                 let (timeAgo, _) = submittedDate

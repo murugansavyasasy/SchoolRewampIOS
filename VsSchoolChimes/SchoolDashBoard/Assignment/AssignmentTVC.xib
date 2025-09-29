@@ -48,6 +48,14 @@
                                                     <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hxY-sN-cG5"/>
                                                 </connections>
                                             </button>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRu-6R-Max">
+                                                <rect key="frame" x="576" y="0.0" width="7" height="7"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="7" id="Az6-t0-S3o"/>
+                                                    <constraint firstAttribute="height" constant="7" id="aei-aJ-UJI"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP9-eE-snK">
@@ -193,7 +201,7 @@
                             <constraint firstAttribute="bottom" secondItem="KeI-92-A7b" secondAttribute="bottom" constant="10" id="qz1-ZS-mjC"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSN-aY-lhg">
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSN-aY-lhg">
                         <rect key="frame" x="20" y="285.33333333333331" width="90" height="47"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <connections>
@@ -227,6 +235,7 @@
                 <outlet property="mysubmitBtn" destination="vkq-n5-VDR" id="mBZ-iZ-ssg"/>
                 <outlet property="outerView" destination="XL1-CB-cJ1" id="eOe-3o-bj2"/>
                 <outlet property="progressView" destination="I3C-tA-Xbh" id="OJz-aO-ZCK"/>
+                <outlet property="readVieaw" destination="dRu-6R-Max" id="4FX-nf-apX"/>
                 <outlet property="subCatogoriesStack" destination="Ji1-p1-OuP" id="lSH-2P-7px"/>
                 <outlet property="submitBtn" destination="Etf-oa-dvt" id="7sF-e9-8Qg"/>
                 <outlet property="submitBtnStack" destination="a3J-j3-ilb" id="DrT-x3-em3"/>
@@ -245,6 +254,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
