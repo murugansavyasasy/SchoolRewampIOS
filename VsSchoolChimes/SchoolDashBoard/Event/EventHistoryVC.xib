@@ -19,6 +19,7 @@
                 <outlet property="noDataLbl" destination="50H-9F-Thd" id="oyA-da-EmS"/>
                 <outlet property="nodataImg" destination="q5m-lf-7nQ" id="5Aj-1x-7YQ"/>
                 <outlet property="searchBar" destination="0OT-Cb-b0I" id="dOb-zt-TMx"/>
+                <outlet property="searchBtn" destination="Od1-xZ-9Ln" id="ZAD-wV-uXc"/>
                 <outlet property="searchView" destination="q8L-Tl-YHz" id="idw-TX-CLC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

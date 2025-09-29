@@ -50,6 +50,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     
     var staffdetails = UserDefaultFileManager.get_staff_Details()
@@ -71,6 +72,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     override func viewDidLoad() {
         super.viewDidLoad()
         let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        searchBar.searchTextField.addDoneButton()
         if staffCount > 1 {
             backBtn.setTitle("NoticeBoard", for: .normal)
         } else {
@@ -226,6 +228,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                     self.noDataLbl.text = successResponse.message ?? ""
                     self.noDataLbl.isHidden = !self.searchData.isEmpty
                     self.noDataImg.isHidden = !self.searchData.isEmpty
+                    self.searchBtn.isHidden = self.searchData.isEmpty
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
                 }

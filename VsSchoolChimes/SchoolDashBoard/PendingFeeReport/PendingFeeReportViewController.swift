@@ -57,7 +57,9 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         tv.dataSource = self
         tv.estimatedRowHeight = 100
         tv.rowHeight = UITableView.automaticDimension
-
+        acodemicdropView.layer.cornerRadius = 8
+        acodemicdropView.layer.borderWidth = 1
+        acodemicdropView.layer.borderColor = UIColor.white.cgColor
         getacadmicYr()
     }
 
