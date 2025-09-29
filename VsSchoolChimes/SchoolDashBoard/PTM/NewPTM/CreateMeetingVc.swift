@@ -76,6 +76,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var afterSlotsDefLbl: UILabel!
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var NameLbl: UILabel!
+    
+    
     
     var breakDuration: [String] = []
     var SelectedClasses = Set<IndexPath>()
@@ -107,7 +110,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "")
+        NameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         purposeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -243,9 +246,10 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         if let layout = selectedDatesCv.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .vertical
-            layout.minimumInteritemSpacing = 8
-            layout.minimumLineSpacing = 8
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
             layout.sectionInset = .zero
+            layout.itemSize.height = 50
         }
         
         classCv.register(UINib(nibName: "SlotCV", bundle: nil), forCellWithReuseIdentifier: "SlotCV")
@@ -583,9 +587,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         let dateStrings = PickedDates.map { formatter.string(from: $0)}
         self.SelectedDates = dateStrings
         let rows = ceil(Double(SelectedDates.count) / 3.0)
-        let height = rows * 50
-        DatesCvHeight.constant = height
-        selectedDatesCv.reloadData()
+        let height = CGFloat(rows) * 50.0
+        DispatchQueue.main.async {
+            self.DatesCvHeight.constant = height
+            self.view.layoutIfNeeded()
+            self.selectedDatesCv.reloadData()
+        }
         hideCalendar()
     }
     
@@ -604,9 +611,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         SelectedDates.remove(at: index)
         
         let rows = ceil(Double(SelectedDates.count) / 3.0)
-        DatesCvHeight.constant = rows * 50
         
-        selectedDatesCv.reloadData()
+        DispatchQueue.main.async {
+            self.DatesCvHeight.constant = CGFloat(rows) * 50.0
+            self.view.layoutIfNeeded()
+            self.selectedDatesCv.reloadData()
+        }
     }
 
     
@@ -996,9 +1006,22 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
         
         if collectionView == classCv {
             let cell = classCv.dequeueReusableCell(withReuseIdentifier: "SlotCV", for: indexPath) as! SlotCV
+            
+            let classItem = classList[indexPath.item]
+            
             cell.closeBtn.isHidden = true
             cell.label.textAlignment = .center
-            cell.label.text = classList[indexPath.item].displayName
+            cell.label.text = classItem.displayName
+            
+           
+            let isSelected = selectedClasses.contains {
+                $0["class_id"] == classItem.standardId &&
+                $0["section_id"] == classItem.sectionId
+            }
+            
+            // ✅ Update UI here
+            cell.cellView.backgroundColor = isSelected ? .systemBlue : .systemGray4
+            cell.label.textColor = isSelected ? .white : .black
             
             return cell
             
@@ -1024,25 +1047,26 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         if collectionView == classCv {
                 let classItem = classList[indexPath.row]
-                
                 let detail: [String: String] = [
                     "class_id": classItem.standardId,
                     "section_id": classItem.sectionId
                 ]
                 
-                // Add if not already in the array
-                if !selectedClasses.contains(where: { $0["class_id"] == detail["class_id"] && $0["section_id"] == detail["section_id"] }) {
+                // Toggle selection
+                if let index = selectedClasses.firstIndex(where: { $0["class_id"] == detail["class_id"] && $0["section_id"] == detail["section_id"] }) {
+                    selectedClasses.remove(at: index)
+                } else {
                     selectedClasses.append(detail)
                 }
                 
-                if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
-                    cell.cellView.backgroundColor = .systemBlue
-                    cell.label.textColor = .white
-                }
+                // ✅ Refresh just that cell
+                collectionView.reloadItems(at: [indexPath])
             
-        } else if collectionView == breakDurationCV {
+            } else if collectionView == breakDurationCV {
+                
             if SelectedDuration == indexPath { return }
             SelectedDuration = indexPath
             let components = breakDuration[indexPath.item].components(separatedBy: " ")
@@ -1053,20 +1077,20 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if collectionView == classCv {
-                let classItem = classList[indexPath.row]
-                
-                selectedClasses.removeAll {
-                    $0["class_id"] == classItem.standardId && $0["section_id"] == classItem.sectionId
-                }
-                
-                if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
-                    cell.cellView.backgroundColor = .systemGray4
-                    cell.label.textColor = .black
-                }
-            }
-    }
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        if collectionView == classCv {
+//                let classItem = classList[indexPath.row]
+//                
+//                selectedClasses.removeAll {
+//                    $0["class_id"] == classItem.standardId && $0["section_id"] == classItem.sectionId
+//                }
+//                
+//                if let cell = collectionView.cellForItem(at: indexPath) as? SlotCV {
+//                    cell.cellView.backgroundColor = .systemGray4
+//                    cell.label.textColor = .black
+//                }
+//            }
+//    }
 
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -1105,13 +1129,13 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8 // vertical spacing between rows (try 0–4)
+        return .zero // vertical spacing between rows (try 0–4)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8 // horizontal spacing between items (try 0–4)
+        return .zero // horizontal spacing between items (try 0–4)
     }
     
     func collectionView(_ collectionView: UICollectionView,

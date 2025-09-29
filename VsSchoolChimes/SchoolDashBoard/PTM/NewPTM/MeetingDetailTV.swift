@@ -68,6 +68,8 @@ class MeetingDetailTV: UITableViewCell, SelectedId, UIPopoverPresentationControl
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        cellView.clipsToBounds = true
+        
         cellView.applyVerticalGradient(
             topColor: UIColor(
                 red: 184/255,

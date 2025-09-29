@@ -25,7 +25,8 @@ class quizCellTv: UITableViewCell {
     @IBOutlet weak var NoOfQuestionLbl: UILabel!
     @IBOutlet weak var createdDateLbl: UILabel!
     @IBOutlet weak var PostByLbl: UILabel!
-//    @IBOutlet weak var DeafultimageView: UIImageView!
+    @IBOutlet weak var playBtnWidth: NSLayoutConstraint!
+    //    @IBOutlet weak var DeafultimageView: UIImageView!
 //    @IBOutlet weak var CellView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()

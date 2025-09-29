@@ -59,6 +59,8 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     var selectedStatus: String? = nil
     var searchQuery: String = ""
     let alert = CustomAlert()
+    var selectedFilter: LeaveFilterType = .all
+    var searchText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,24 +217,28 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     @IBAction func allBtnAct(_ sender: Any) {
         addUnderline(to: allBtn, unSelectedBtn: [approvedBtn,rejectedBtn,waitingBtn])
         selectedStatus = nil
-        applyFilters()
+        selectedFilter = .all
+        applyFilter()
     }
     
     @IBAction func approvedBtnAct(_ sender: Any) {
         addUnderline(to: approvedBtn, unSelectedBtn: [allBtn,rejectedBtn,waitingBtn])
         selectedStatus = "Approved"
-        applyFilters()
+        selectedFilter = .approved
+        applyFilter()
     }
     
     @IBAction func rejectedBtnAct(_ sender: Any) {
         addUnderline(to: rejectedBtn, unSelectedBtn: [allBtn,approvedBtn,waitingBtn])
         selectedStatus = "Rejected"
-        applyFilters()
+        selectedFilter = .rejected
+        applyFilter()
     }
     @IBAction func waitingBtnAct(_ sender: Any) {
         addUnderline(to: waitingBtn, unSelectedBtn: [allBtn,rejectedBtn,approvedBtn])
         selectedStatus = "Waiting for approval"
-        applyFilters()
+        selectedFilter = .waiting
+        applyFilter()
     }
 }
 
@@ -274,7 +280,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
         cell.dateLbl.text = "\(convertDate(leaveData.leave_from ?? "", toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to ?? "", toFormat: DateFormatString.StandardFormat) ?? "")"
         cell.resonLbl.text = leaveData.reason
         cell.aproveBtn.setTitle(leaveData.status, for: .normal)
-       
+        cell.classLbl.text = (leaveData.class_name ?? "") + " - " + (leaveData.section_name ?? "")
        // cell.delegate = self
         cell.aproveBtn.isUserInteractionEnabled = true
         cell.rejectBtn.isUserInteractionEnabled = true
@@ -287,6 +293,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             cell.editClickBtn.setTitle("Approved", for: .normal)
             cell.aproveBtn.isHidden = true
             cell.rejectBtn.isHidden = true
+            cell.editClickBtn.isHidden = false
         } else if leaveData.status == "Rejected" {
             cell.aproveBtn.isHidden = true
             cell.rejectBtn.isHidden = true
@@ -302,7 +309,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             cell.rejectBtn.isHidden = false
             cell.editClickBtn.isHidden = true
         }
-        
+        cell.LeaveTypeLbl.text = leaveData.leave_type
         cell.indexPath = indexPath
         cell.delegate = self
         
@@ -347,41 +354,97 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
 @available(iOS 14.0, *)
 extension SenderLeaveRqstVC: UISearchBarDelegate {
     
-    func applyFilters() {
-        filteredLeaveRecords = allLeaveRecords?.compactMap { month in
-            let filteredDetails = month.details?.filter { leave in
-                // Status filter
-                let statusMatches = selectedStatus == nil || leave.status == selectedStatus
-                
-                // Search filter
-                let searchMatches = searchQuery.isEmpty ||
-                    leave.applied_on?.lowercased().contains(searchQuery) == true ||
-                    leave.student_name?.lowercased().contains(searchQuery) == true ||
-                    leave.class_name?.lowercased().contains(searchQuery) == true ||
-                    leave.section_name?.lowercased().contains(searchQuery) == true ||
-                    leave.reason?.lowercased().contains(searchQuery) == true ||
-                    leave.status?.lowercased().contains(searchQuery) == true
-                
-                return statusMatches && searchMatches
-            }
-            
-            if let filteredDetails, !filteredDetails.isEmpty {
-                return LeaveMonth(month: month.month, details: filteredDetails)
-            }
-            return nil
+//    func applyFilters() {
+//        filteredLeaveRecords = allLeaveRecords?.compactMap { month in
+//            let filteredDetails = month.details?.filter { leave in
+//                // Status filter
+//                let statusMatches = selectedStatus == nil || leave.status == selectedStatus
+//                
+//                // Search filter
+//                let searchMatches = searchQuery.isEmpty ||
+//                    leave.applied_on?.lowercased().contains(searchQuery) == true ||
+//                    leave.student_name?.lowercased().contains(searchQuery) == true ||
+//                    leave.class_name?.lowercased().contains(searchQuery) == true ||
+//                    leave.section_name?.lowercased().contains(searchQuery) == true ||
+//                    leave.reason?.lowercased().contains(searchQuery) == true ||
+//                    leave.status?.lowercased().contains(searchQuery) == true
+//                
+//                return statusMatches && searchMatches
+//            }
+//            
+//            if let filteredDetails, !filteredDetails.isEmpty {
+//                return LeaveMonth(month: month.month, details: filteredDetails)
+//            }
+//            return nil
+//        }
+//        
+//        // Show/hide "No data" message
+//        let isEmpty = filteredLeaveRecords?.allSatisfy { $0.details?.isEmpty ?? true } ?? false
+//        NodataImage.isHidden = !isEmpty
+//        NodateLbl.isHidden = !isEmpty
+//        NodateLbl.text = isEmpty ? "No data found!" : ""
+//        leaveRequestTable.reloadData()
+//    }
+    
+    
+    func applyFilter() {
+        // 1. Apply status filter first
+        var baseData: [LeaveMonth]
+
+        if selectedFilter == .all {
+            baseData = allLeaveRecords ?? []
+        } else {
+            baseData = allLeaveRecords?.compactMap { month in
+                let filteredDetails = month.details?.filter {
+                    $0.status == selectedFilter.rawValue
+                }
+                if let details = filteredDetails, !details.isEmpty {
+                    return LeaveMonth(month: month.month, details: details)
+                }
+                return nil
+            } ?? []
         }
-        
-        // Show/hide "No data" message
-        let isEmpty = filteredLeaveRecords?.allSatisfy { $0.details?.isEmpty ?? true } ?? false
-        NodataImage.isHidden = !isEmpty
-        NodateLbl.isHidden = !isEmpty
-        NodateLbl.text = isEmpty ? "No data found!" : ""
+
+        if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+            let lowercasedQuery = searchText.lowercased()
+
+            filteredLeaveRecords = baseData.compactMap { month in
+                let filteredDetails = month.details?.filter { info in
+                    // Convert leave_from & leave_to into display format
+                    let fromDate = info.leave_from?.convertToTargetDateFormat()
+                    let toDate   = info.leave_to?.convertToTargetDateFormat()
+
+                    return
+                        (info.student_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.class_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.section_name?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.reason?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.leave_type?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (info.no_of_days?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (fromDate?.lowercased().contains(lowercasedQuery) ?? false) ||
+                        (toDate?.lowercased().contains(lowercasedQuery) ?? false)
+                }
+                
+                if let details = filteredDetails, !details.isEmpty {
+                    return LeaveMonth(month: month.month, details: details)
+                }
+                
+                return nil
+            }
+        } else {
+            filteredLeaveRecords = baseData
+        }
+
+        NodateLbl.text = CommonStringFile.No_data_found
+        NodateLbl.isHidden = !(filteredLeaveRecords?.isEmpty ?? false)
+        NodataImage.isHidden = !(filteredLeaveRecords?.isEmpty ?? false)
         leaveRequestTable.reloadData()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchQuery = searchText.lowercased()
-        applyFilters()
+        self.searchText = searchText
+        applyFilter()
     }
 }
 

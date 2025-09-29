@@ -44,6 +44,7 @@
                 <outlet property="TypeImage" destination="iOf-Hk-LLy" id="YSx-k4-aTf"/>
                 <outlet property="errorLbl" destination="g2H-4b-txD" id="lK1-7I-Zs6"/>
                 <outlet property="scrollView" destination="cRB-N6-kn9" id="sdA-3P-3d8"/>
+                <outlet property="studentNameLbl" destination="yAA-wZ-h2G" id="Oct-9H-uNg"/>
                 <outlet property="toDatePicker" destination="zro-1T-sqb" id="oBO-By-de4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -54,31 +55,46 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dF-4F-dIP">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="118.66666666666667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="129.66666666666666"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ut3-To-j5F">
-                            <rect key="frame" x="10" y="63.999999999999993" width="373" height="24.666666666666664"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                            </state>
-                            <connections>
-                                <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="3Ko-dG-Rvc"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="31R-xv-tqb">
+                            <rect key="frame" x="10" y="69" width="373" height="40.666666666666657"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ut3-To-j5F">
+                                    <rect key="frame" x="0.0" y="3" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="38R-0e-zLW"/>
+                                        <constraint firstAttribute="width" constant="35" id="Hnn-ly-cTi"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="3Ko-dG-Rvc"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hdfhsfdhfhfhdfhgdhghjgdgdggdhjfdghgdfhgfhgfghghgfdhfhdfhjdhfhdfdhfhdhdhfd" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAA-wZ-h2G">
+                                    <rect key="frame" x="35" y="0.0" width="338" height="40.666666666666664"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" name="BackGroundClr"/>
                     <constraints>
-                        <constraint firstItem="Ut3-To-j5F" firstAttribute="leading" secondItem="6dF-4F-dIP" secondAttribute="leading" constant="10" id="Et8-Iu-o7L"/>
-                        <constraint firstAttribute="trailing" secondItem="Ut3-To-j5F" secondAttribute="trailing" constant="10" id="L95-9p-mZe"/>
-                        <constraint firstAttribute="bottom" secondItem="Ut3-To-j5F" secondAttribute="bottom" constant="30" id="Sbg-BF-hkU"/>
+                        <constraint firstAttribute="bottom" secondItem="31R-xv-tqb" secondAttribute="bottom" constant="20" id="ke0-9g-W9w"/>
+                        <constraint firstItem="31R-xv-tqb" firstAttribute="leading" secondItem="6dF-4F-dIP" secondAttribute="leading" constant="10" id="kwX-5P-jma"/>
+                        <constraint firstAttribute="trailing" secondItem="31R-xv-tqb" secondAttribute="trailing" constant="10" id="wzc-J6-z0w"/>
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRB-N6-kn9">
-                    <rect key="frame" x="8" y="128.66666666666669" width="377" height="689.33333333333326"/>
+                    <rect key="frame" x="8" y="139.66666666666669" width="377" height="678.33333333333326"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6r-CO-JSJ">
                             <rect key="frame" x="0.0" y="0.0" width="377" height="1402.3333333333333"/>
@@ -328,7 +344,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select From Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BmI-Ye-Lck">
-                                                                    <rect key="frame" x="15" y="8" width="301" height="17"/>
+                                                                    <rect key="frame" x="15" y="7.9999999999999432" width="301" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -568,7 +584,7 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cRB-N6-kn9" secondAttribute="trailing" constant="8" id="0wt-Qf-oyG"/>
                 <constraint firstItem="cRB-N6-kn9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="3Pq-yE-0Rd"/>
-                <constraint firstItem="Ut3-To-j5F" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="H7W-BW-LrL"/>
+                <constraint firstItem="31R-xv-tqb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="Q9X-xn-QSl"/>
                 <constraint firstItem="cRB-N6-kn9" firstAttribute="top" secondItem="6dF-4F-dIP" secondAttribute="bottom" constant="10" id="YwL-H3-zas"/>
                 <constraint firstItem="6dF-4F-dIP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ed9-F7-0lQ"/>
                 <constraint firstAttribute="trailing" secondItem="6dF-4F-dIP" secondAttribute="trailing" id="kB9-nP-ezm"/>
@@ -597,10 +613,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

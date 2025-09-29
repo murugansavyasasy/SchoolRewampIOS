@@ -236,6 +236,11 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
 //            cell.postedByLbl.text = ("Posted By:") + (
 //                get_QuizDetails[indexPath.row].SentBy ?? ""
 //            )
+        let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
+        cell.playBtn.setImage(imgae, for: .normal)
+        let title = stausType == "1" ? "Play Now" : ""
+        cell.playBtn.setTitle(title, for: .normal)
+        cell.playBtnWidth.constant = stausType == "1" ? 138 : 40
             return cell
 //        }
     }

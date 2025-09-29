@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PtmNavigationVC" customModule="School_Chimes" customModuleProvider="target">
+            <connections>
+                <outlet property="BackBtn" destination="Nar-94-LKX" id="Hnv-kI-koB"/>
+                <outlet property="StudentNameLbl" destination="SUo-wl-tDb" id="Tua-Dt-pO8"/>
+                <outlet property="containerView" destination="BRr-FB-7gm" id="huJ-HL-xO6"/>
+                <outlet property="scheduleMeetingBtn" destination="Qof-gR-fdU" id="vYT-cS-glf"/>
+                <outlet property="searchBtn" destination="lY1-LH-ZPh" id="0pR-C4-RML"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="yourMeetingBtn" destination="bYt-B3-oeB" id="urE-dJ-HMO"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qj0-3K-JUc" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="174"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kv4-Dz-8Pj">
+                            <rect key="frame" x="10" y="69" width="373" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nar-94-LKX">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="cOn-qL-mhf"/>
+                                        <constraint firstAttribute="width" constant="35" id="qbu-0w-dTG"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="backAct:" destination="-1" eventType="touchUpInside" id="7Zp-c8-1rw"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PTM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SUo-wl-tDb">
+                                    <rect key="frame" x="35" y="7.3333333333333268" width="303" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lY1-LH-ZPh">
+                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="j4m-EF-hIs"/>
+                                        <constraint firstAttribute="width" constant="35" id="rRi-Ax-Ujo"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="magnifyingglass" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="bFf-AJ-hxr"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="FlQ-iF-rlu">
+                            <rect key="frame" x="15" y="124" width="363" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qof-gR-fdU">
+                                    <rect key="frame" x="0.0" y="0.0" width="171.66666666666666" height="35"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Schedule Meeting"/>
+                                    <connections>
+                                        <action selector="scheduleMeetingAct:" destination="-1" eventType="touchUpInside" id="PNd-UQ-JtV"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYt-B3-oeB">
+                                    <rect key="frame" x="191.66666666666663" y="0.0" width="171.33333333333337" height="35"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Your Meetings"/>
+                                    <connections>
+                                        <action selector="yourMeetingAct:" destination="-1" eventType="touchUpInside" id="tZI-z4-2Sa"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="Qd1-jv-Jia"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstItem="Kv4-Dz-8Pj" firstAttribute="leading" secondItem="Qj0-3K-JUc" secondAttribute="leading" constant="10" id="Bho-1O-av8"/>
+                        <constraint firstAttribute="bottom" secondItem="FlQ-iF-rlu" secondAttribute="bottom" constant="15" id="Dbt-mL-1e8"/>
+                        <constraint firstItem="FlQ-iF-rlu" firstAttribute="top" secondItem="Kv4-Dz-8Pj" secondAttribute="bottom" constant="20" id="He4-Eu-M7M"/>
+                        <constraint firstAttribute="trailing" secondItem="Kv4-Dz-8Pj" secondAttribute="trailing" constant="10" id="W82-wV-Wal"/>
+                        <constraint firstItem="FlQ-iF-rlu" firstAttribute="leading" secondItem="Qj0-3K-JUc" secondAttribute="leading" constant="15" id="XVT-1B-YpQ"/>
+                        <constraint firstAttribute="trailing" secondItem="FlQ-iF-rlu" secondAttribute="trailing" constant="15" id="jbI-pl-KBM"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRr-FB-7gm">
+                    <rect key="frame" x="0.0" y="174" width="393" height="644"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Qj0-3K-JUc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4MP-BK-H1l"/>
+                <constraint firstItem="Kv4-Dz-8Pj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="5h6-86-1WC"/>
+                <constraint firstItem="Qj0-3K-JUc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9Bp-Ix-WoH"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BRr-FB-7gm" secondAttribute="bottom" id="FlL-5D-dEM"/>
+                <constraint firstItem="BRr-FB-7gm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TSt-Yk-pYH"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Qj0-3K-JUc" secondAttribute="trailing" id="Uyt-XZ-c7S"/>
+                <constraint firstItem="BRr-FB-7gm" firstAttribute="top" secondItem="Qj0-3K-JUc" secondAttribute="bottom" id="ahq-bG-Z0R"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BRr-FB-7gm" secondAttribute="trailing" id="sMQ-Ne-GbL"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -19,6 +19,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     // MARK: - Properties
     var eventHolidayData: [EventHolidayData]?
@@ -29,6 +30,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var studentDetails = UserDefaultFileManager.get_child_Details()
     private let weekdays = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     let formatter = DateFormatter()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         let name = studentDetails?.name ?? ""
         let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard)
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
         titleLbl.text = AttendanceString.holidays
         setupViews()
         addSwipeGestures()

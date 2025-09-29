@@ -359,6 +359,7 @@
                 <outlet property="discretiponsLbl" destination="KeS-fm-2Th" id="6e9-dw-YGO"/>
                 <outlet property="parentFullview" destination="bn0-K3-gg9" id="qjp-QL-5kM"/>
                 <outlet property="playBtn" destination="Sz5-he-E7L" id="Sei-IN-Rgz"/>
+                <outlet property="playBtnWidth" destination="J1O-nV-KoQ" id="5Ve-8e-gu2"/>
                 <outlet property="subjectLbl" destination="jSQ-dO-eUe" id="gSf-Um-sJ1"/>
                 <outlet property="titleLbl" destination="rLN-rZ-NmQ" id="eQe-YD-rw6"/>
             </connections>

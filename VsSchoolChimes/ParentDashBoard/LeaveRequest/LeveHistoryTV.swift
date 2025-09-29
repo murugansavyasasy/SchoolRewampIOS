@@ -22,6 +22,7 @@ class LeveHistoryTV: UITableViewCell {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var editClickBtn: UIButton!
     @IBOutlet weak var LeaveTypeLbl: UILabel!
+    @IBOutlet weak var classLbl: UILabel!
     
     
     var indexPath: IndexPath?
@@ -38,6 +39,7 @@ class LeveHistoryTV: UITableViewCell {
         durationLbl.setFont(style: .body, size: FontSize.BodySize)
         resonLbl.setFont(style: .body, size: FontSize.BodySize)
         LeaveTypeLbl.setFont(style: .body, size: FontSize.BodySize)
+        classLbl.setFont(style: .body, size: FontSize.BodySize)
         
         editClickBtn.layer.cornerRadius = 5
         editClickBtn.setTitleFont(style: .body, size: FontSize.BodySize)

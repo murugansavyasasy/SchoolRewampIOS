@@ -43,7 +43,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
     @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
-    
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     let alert = CustomAlert()
     var leaveHistoryData: [LeaveMonth] = []
@@ -63,7 +63,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         
         let name = childDetails?.name ?? ""
         let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        Backbtn.configureAsBackButton(firstLine: name, secondLine: stanard)
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
         
         LeaveRequestsLbl.setFont(style: .header, size: 20)
         LeaveRequestsLbl.text = AttendanceString.leaveRequests
@@ -103,9 +103,10 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopup))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getLeaveRequestHistory()
-        
     }
 
     @objc func dismissPopup() {
@@ -244,6 +245,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
                     self.NodataImage.isHidden = !isEmpty
                     self.NodataLbl.isHidden = !isEmpty
                     self.TopInfoView.isHidden = isEmpty
+                    self.searchBtn.isHidden = isEmpty
                     self.historyTable.reloadData()
 
                 case .failure(let error):
