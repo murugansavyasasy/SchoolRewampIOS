@@ -286,8 +286,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }
         
         var currentDate = pastStartDate
-        
-        // Loop until currentDate is equal to or before today
         while currentDate <= today {
             items.append(CalendarItem(date: currentDate))
             guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
@@ -295,7 +293,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             }
             currentDate = nextDate
         }
-        
         return items
     }
 

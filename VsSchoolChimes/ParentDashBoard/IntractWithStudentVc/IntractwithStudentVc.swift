@@ -50,19 +50,6 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
         }
         
         cell.selectionStyle = .none
-//        
-//        let datas = getStandardDetails?[indexPath.row]
-//        cell.teacherNameLbl.text = (datas?.name ?? "")  + "   -  " + (
-//            datas?.section_name ?? "")
-//        cell.subjectNameLbl.text = datas?.subject_name ?? ""
-//        cell.profileImage.image = UIImage(systemName: "person.3.sequence.fill")
-//       
-//        cell.countBtnName.isHidden = datas?.unread_count == 0 ? true : false
-//        cell.timeLablandCountStk.isHidden = cell.countBtnName.isHidden
-//        cell.TimeAndcountLabl.text = formattedDateStatus(
-//            from: datas?.last_msg_time ?? ""
-//        )
-//        cell.countBtnName.setTitle(String(datas?.unread_count ?? 0), for: .normal)
         if let datas = getStandardDetails?[indexPath.row] {
             cell.nameLbl.text = datas.subject_name ?? ""
             cell.subjectLbl.text = "Class - \(datas.name ?? "") (\(datas.section_name ?? ""))"
@@ -71,6 +58,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             let unreadCount = datas.unread_count ?? 0
             cell.unReadCountBtn.isHidden = unreadCount == 0
             cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
+            cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
             // Last update time
             if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
                 let (timeAgo, _) = submittedDate
@@ -81,6 +69,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                 cell.lastUpdateTimeLbl.isHidden = true
                 cell.iconBtn.isHidden = true
             }
+            
             cell.userImg.image = UIImage(systemName: "person.3.sequence.fill")
             cell.userImg.isHidden = true
             cell.userBtn.isHidden = false

@@ -88,13 +88,13 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         setupHeaderView()
         setupLabels()
         setupProfileImage()
-        get_dashboard_details()
         Global_variabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        get_dashboard_details()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

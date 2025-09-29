@@ -110,47 +110,42 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         self.currentData = data
         var newReportData: [ReportData] = []
 
-        // ✅ Weekly Reports — comparing across all categories
         let totalWeeks = weeksInMonth(month: monthId)
-        var weeklyReports: [PerformanceReport] = []
-print("totalWeeks ==>",totalWeeks)
+        var weeklyReports: [PerformanceReport] = Array(repeating: PerformanceReport(title: "", percentage: 0), count: totalWeeks)
+
+        let readingDetails = data.reading?.details ?? []
+        let listeningDetails = data.listening?.details ?? []
+        let speakingDetails = data.speaking?.details ?? []
+        let writingDetails = data.writing?.details ?? []
+
+        let allDetails = readingDetails + listeningDetails + speakingDetails + writingDetails
+        // Group by week
+        var weekWise: [Int: (submitted: Int, total: Int)] = [:]
+
+        for detail in allDetails {
+            guard let dateStr = detail.student_submited_on,
+                  let week = weekOfMonth(from: dateStr) else { continue }
+
+            let submitted = detail.submitted_count ?? 0
+            let total = detail.member_count ?? 0
+
+            let prev = weekWise[week] ?? (0,0)
+            weekWise[week] = (prev.submitted + submitted, prev.total + total)
+        }
+
+        // Fill weekly reports
         for week in 1...totalWeeks {
-            // Reading
-            let readingDetail = data.reading?.details?[safe: week - 1]
-            let readingSubmitted = readingDetail?.submitted_count ?? 0
-            let readingTotal = readingDetail?.member_count ?? 0
-
-            // Listening
-            let listeningDetail = data.listening?.details?[safe: week - 1]
-            let listeningSubmitted = listeningDetail?.submitted_count ?? 0
-            let listeningTotal = listeningDetail?.member_count ?? 0
-
-            // Speaking
-            let speakingDetail = data.speaking?.details?[safe: week - 1]
-            let speakingSubmitted = speakingDetail?.submitted_count ?? 0
-            let speakingTotal = speakingDetail?.member_count ?? 0
-
-            // Writing
-            let writingDetail = data.writing?.details?[safe: week - 1]
-            let writingSubmitted = writingDetail?.submitted_count ?? 0
-            let writingTotal = writingDetail?.member_count ?? 0
-
-            let totalSubmitted = readingSubmitted + listeningSubmitted + speakingSubmitted + writingSubmitted
-            let totalMembers = readingTotal + listeningTotal + speakingTotal + writingTotal
-
-            let percentage = totalMembers > 0 ? Int((Double(totalSubmitted) / Double(totalMembers)) * 100) : 0
-            weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
+            let info = weekWise[week] ?? (0,0)
+            let percentage = info.total > 0 ? Int((Double(info.submitted) / Double(info.total)) * 100) : 0
+            weeklyReports[week-1] = PerformanceReport(title: "Week \(week)", percentage: percentage)
         }
 
         let topPerformers = getTopPerformers(from: data)
+        let monthlyReport = MonthlyReport(weeklyReport: weeklyReports, topPerformance: topPerformers)
 
-        let monthlyReport = MonthlyReport(
-            weeklyReport: weeklyReports,
-            topPerformance: topPerformers
-        )
         let studentList = data.today_submitted ?? []
 
-        // ✅ Map Categories → Overview
+        // ✅ Overview
         var filterArray: [Overview] = []
         if let todaySubmitted = data.today_submitted {
             filterArray.append(Overview(title: "Today Submitted", value: "", subtitle: "\(todaySubmitted.count) Students"))
@@ -176,6 +171,77 @@ print("totalWeeks ==>",totalWeeks)
         self.reportData = newReportData
         self.tableView.reloadData()
     }
+//
+//    private func mapResponseToReportData(data: PerformanceData) {
+//        self.currentData = data
+//        var newReportData: [ReportData] = []
+//
+//        // ✅ Weekly Reports — comparing across all categories
+//        let totalWeeks = weeksInMonth(month: monthId)
+//        var weeklyReports: [PerformanceReport] = []
+//print("totalWeeks ==>",totalWeeks)
+//        for week in 1...totalWeeks {
+//            // Reading
+//            let readingDetail = data.reading?.details?[safe: week - 1]
+//            let readingSubmitted = readingDetail?.submitted_count ?? 0
+//            let readingTotal = readingDetail?.member_count ?? 0
+//
+//            // Listening
+//            let listeningDetail = data.listening?.details?[safe: week - 1]
+//            let listeningSubmitted = listeningDetail?.submitted_count ?? 0
+//            let listeningTotal = listeningDetail?.member_count ?? 0
+//
+//            // Speaking
+//            let speakingDetail = data.speaking?.details?[safe: week - 1]
+//            let speakingSubmitted = speakingDetail?.submitted_count ?? 0
+//            let speakingTotal = speakingDetail?.member_count ?? 0
+//
+//            // Writing
+//            let writingDetail = data.writing?.details?[safe: week - 1]
+//            let writingSubmitted = writingDetail?.submitted_count ?? 0
+//            let writingTotal = writingDetail?.member_count ?? 0
+//
+//            let totalSubmitted = readingSubmitted + listeningSubmitted + speakingSubmitted + writingSubmitted
+//            let totalMembers = readingTotal + listeningTotal + speakingTotal + writingTotal
+//
+//            let percentage = totalMembers > 0 ? Int((Double(totalSubmitted) / Double(totalMembers)) * 100) : 0
+//            weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
+//        }
+//
+//        let topPerformers = getTopPerformers(from: data)
+//
+//        let monthlyReport = MonthlyReport(
+//            weeklyReport: weeklyReports,
+//            topPerformance: topPerformers
+//        )
+//        let studentList = data.today_submitted ?? []
+//
+//        // ✅ Map Categories → Overview
+//        var filterArray: [Overview] = []
+//        if let todaySubmitted = data.today_submitted {
+//            filterArray.append(Overview(title: "Today Submitted", value: "", subtitle: "\(todaySubmitted.count) Students"))
+//        }
+//        if let listening = data.listening {
+//            filterArray.append(Overview(title: "Listening", value: listening.over_all_percentage ?? "0%", subtitle: "\(listening.student_count ?? "0") Students"))
+//        }
+//        if let speaking = data.speaking {
+//            filterArray.append(Overview(title: "Speaking", value: speaking.over_all_percentage ?? "0%", subtitle: "\(speaking.student_count ?? "0") Students"))
+//        }
+//        if let reading = data.reading {
+//            filterArray.append(Overview(title: "Reading", value: reading.over_all_percentage ?? "0%", subtitle: "\(reading.student_count ?? "0") Students"))
+//        }
+//        if let writing = data.writing {
+//            filterArray.append(Overview(title: "Writing", value: writing.over_all_percentage ?? "0%", subtitle: "\(writing.student_count ?? "0") Students"))
+//        }
+//
+//        // ✅ Final Report Data
+//        newReportData.append(.filterList(filterArray))
+//        newReportData.append(.monthlyReport(monthlyReport))
+//        newReportData.append(.studentList(studentList))
+//
+//        self.reportData = newReportData
+//        self.tableView.reloadData()
+//    }
 
     func getTopPerformers(from data: PerformanceData) -> [TopReport] {
         let readingDetails = data.reading?.details ?? []
@@ -223,7 +289,36 @@ print("totalWeeks ==>",totalWeeks)
         return Array(reports.prefix(4))
     }
 
-    
+//    // MARK: - Weeks in Current Month (Days ÷ 7)
+//    func weeksInMonth(month: Int) -> Int {
+//        let calendar = Calendar.current
+//        let date = Date()
+//        let currentYear = calendar.component(.year, from: date)
+//        
+//        // Create the start date of the given month
+//        var components = DateComponents()
+//        components.year = currentYear
+//        components.month = month
+//        components.day = 1
+//        
+//        guard let startOfMonth = calendar.date(from: components),
+//              let monthRange = calendar.range(of: .day, in: .month, for: startOfMonth) else {
+//            return 0
+//        }
+//        
+//        let days = monthRange.count
+//        let weeks = Int(ceil(Double(days) / 7.0))
+//        return weeks
+//    }
+    func weekOfMonth(from dateString: String, format: String = "dd-MM-yyyy") -> Int? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.timeZone = .current
+        
+        guard let date = formatter.date(from: dateString) else { return nil }
+        return Calendar.current.component(.weekOfMonth, from: date)
+    }
+
     // MARK: - Weeks in Current Month
     func weeksInMonth(month: Int) -> Int {
         let calendar = Calendar.current

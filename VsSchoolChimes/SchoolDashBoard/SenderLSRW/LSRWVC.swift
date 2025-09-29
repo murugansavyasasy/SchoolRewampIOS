@@ -51,6 +51,7 @@ class LSRWVC: UIViewController, FilterDelegate {
             lsrwTable.sectionHeaderTopPadding = 0
         }
         setupTableView()
+        getLSRW()
     }
     
     // MARK: - Setup
@@ -66,10 +67,6 @@ class LSRWVC: UIViewController, FilterDelegate {
         lsrwTable.showsVerticalScrollIndicator = false
         
         BackBtn.configureAsBackButton(firstLine: "LSRW", secondLine:"Listening, Speaking, Reading, Writing")
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getLSRW()
     }
     // MARK: - API
     func getLSRW() {

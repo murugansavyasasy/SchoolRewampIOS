@@ -29,20 +29,20 @@ class AddAttachmentTVC: UITableViewCell,
     var attachments: [AttachmentItem] = []
     var delegate: BaktoHome?
     var Adddelegate: EditObjectDelegate?
-    var taskType:LSRWType?
+    var taskType: LSRWType?
     private let maxAttachments = 5
     private var lastAttachmentCount = 0
     
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageSelection()
         setupCollectionView()
     }
 
-    func config(_ attachment:[AttachmentItem],task:LSRWType?){
+    func config(_ attachment:[AttachmentItem], task:LSRWType?) {
         attachments = attachment
         taskType = task
+        setupPhotoPickerClosures()
         reloadAttachments()
     }
     
@@ -54,17 +54,14 @@ class AddAttachmentTVC: UITableViewCell,
             collectionViewHeight.constant = max(contentHeight, 120) // minimum 120
         }
     }
+    
     // MARK: - Reload Helper
     private func reloadAttachments() {
         addAttachmentView.imageCollectionview.reloadData()
         adjustCollectionViewHeight()
-        
         if lastAttachmentCount != attachments.count {
             lastAttachmentCount = attachments.count
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-                guard let self = self else { return }
-                self.Adddelegate?.editDta(edit: self.attachments)
-            }
+            Adddelegate?.editDta(edit: attachments)
         }
     }
     
@@ -84,42 +81,44 @@ class AddAttachmentTVC: UITableViewCell,
         imageCV?.backgroundColor = .clear
     }
     
-    func imageSelection() {
-        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+    // MARK: - Picker Closures
+    private func setupPhotoPickerClosures() {
+        // Reset old closures
+        PhotoPickerManager.shared.onCameraImagePicked = nil
+        PhotoPickerManager.shared.onImagesPicked = nil
+        PhotoPickerManager.shared.onFilePicked = nil
+        PhotoPickerManager.shared.onVideoPicked = nil
+
+        PhotoPickerManager.shared.onCameraImagePicked = { [weak self] image in
+            guard let self = self else { return }
+            self.attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             self.reloadAttachments()
         }
         
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+        PhotoPickerManager.shared.onImagesPicked = { [weak self] images in
+            guard let self = self else { return }
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-            
             let imageItems = images.map {
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
-            attachments.append(contentsOf: imageItems)
+            self.attachments.append(contentsOf: imageItems)
             self.reloadAttachments()
         }
         
-        PhotoPickerManager.shared.onFilePicked = { [self] data in
-            // handle picked PDF
+        PhotoPickerManager.shared.onFilePicked = { [weak self] data in
+            guard let self = self else { return }
             user_inputs.selectedFileType = CommonStringFile.pdf
-            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            self.attachments.append(AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
             self.reloadAttachments()
         }
-        PhotoPickerManager.shared.onVideoPicked = { [self] data in
-            // handle picked PDF
+        
+        PhotoPickerManager.shared.onVideoPicked = { [weak self] data in
+            guard let self = self else { return }
             user_inputs.selectedFileType = CommonStringFile.VIDEO
-            attachments
-                .append(
-                    AttachmentItem(
-                        image:nil,
-                        imageURL: nil,
-                        fileType: CommonStringFile.VIDEO,
-                        VideoURl: data
-                    )
-                )
+            self.attachments.append(
+                AttachmentItem(image: nil, imageURL: data.absoluteString, fileType: CommonStringFile.VIDEO, VideoURl: nil)
+            )
             self.reloadAttachments()
         }
     }
@@ -136,12 +135,12 @@ class AddAttachmentTVC: UITableViewCell,
     
     // MARK: - CollectionView DataSource
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1 // Single section
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 1 + attachments.count // 1 for add button + all attachments
+        return 1 + attachments.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -151,17 +150,14 @@ class AddAttachmentTVC: UITableViewCell,
         
         switch cellType {
         case "add_button":
-            // Add button cell
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.AttachmentCVCell,
                 for: indexPath
             ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
-            
             return cell
             
         case "audio":
-            // Audio cell
             let file = attachments[indexPath.item - 1]
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "AudioCVC",
@@ -182,8 +178,7 @@ class AddAttachmentTVC: UITableViewCell,
             
             return cell
             
-        default: // "non_audio"
-            // Non-audio files (images, PDFs, videos)
+        default:
             let file = attachments[indexPath.item - 1]
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.ImageCvCell,
@@ -225,19 +220,14 @@ class AddAttachmentTVC: UITableViewCell,
     // MARK: - CollectionView Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
-            // Add button tapped
-            if let taskType = taskType{
-                presentAttachmentOptions(for:taskType)
-            }else{
+            if let taskType = taskType {
+                presentAttachmentOptions(for: taskType)
+            } else {
                 presentAttachmentOptions(for: .unknown(""))
             }
-            
             delegate?.backtohome(type: "")
         } else {
-            // Attachment tapped
             let file = attachments[indexPath.item - 1]
-            
-            // Don't show preview for audio files
             guard file.fileType.lowercased() != "audio" else { return }
             
             let vc = PreviewImageVC()
@@ -268,12 +258,10 @@ class AddAttachmentTVC: UITableViewCell,
         
         switch cellType {
         case "add_button", "non_audio":
-            // Square cells for add button and non-audio files
             let width = (collectionViewWidth - 30) / 3
             return CGSize(width: width, height: 100)
             
         case "audio":
-            // Full width for audio cells
             return CGSize(width: collectionViewWidth - 20, height: 70)
             
         default:
@@ -325,19 +313,15 @@ class AddAttachmentTVC: UITableViewCell,
                 self?.audio()
             },
             AttachmentOption(type: .video, title: "Video") { [weak self] in
-                self?.videoPick()
+                self?.VideoPick()
             }
         ]
         
         switch task {
-        case .reading, .listening,.writing:
-            // remove recording & audio for reading/listening
+        case .reading, .listening, .writing:
             options.removeAll { $0.type == .recording || $0.type == .audio }
-            
         case .speaking:
-            // keep only recording, audio, video
             options.removeAll { ![.recording, .audio, .video].contains($0.type) }
-            
         default:
             break
         }
@@ -351,29 +335,19 @@ class AddAttachmentTVC: UITableViewCell,
         getCurrentViewController()?.present(alertController, animated: true)
     }
 
-    
-    func videoPick() {
-        let videoCount = attachments.filter { $0.fileType == CommonStringFile.VIDEO }.count
-        guard videoCount < 2 else {
-            if let vc = getCurrentViewController() {
-                CustomAlert().showAlert(title: "",
-                                        message: AlertstringFile.Already_Reach_Your_Limit,
-                                        on: vc)
-            }
-            return
-        }
+    func VideoPick() {
+        guard let vc = getCurrentViewController() else { return }
+        let video = attachments.filter { $0.fileType != CommonStringFile.VIDEO }
         
-        if attachments.count < 10 {
-            PhotoPickerManager.shared.limiSelection = 10 - attachments.count
-            if let vc = getCurrentViewController() {
+        if video.count != 2 {
+            if attachments.count <= 10 {
+                PhotoPickerManager.shared.limiSelection = 10 - attachments.count
                 PhotoPickerManager.shared.presentPicker(ofType: .video, from: vc)
+            } else {
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
             }
         } else {
-            if let vc = getCurrentViewController() {
-                CustomAlert().showAlert(title: "",
-                                        message: AlertstringFile.Already_Reach_Your_Limit,
-                                        on: vc)
-            }
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
         }
     }
     
@@ -388,27 +362,21 @@ class AddAttachmentTVC: UITableViewCell,
     private func handleGallerySelection() {
         guard let vc = getCurrentViewController() else { return }
         let imageCount = attachments.filter { $0.fileType == CommonStringFile.IMAGE }.count
-        guard imageCount < maxAttachments else {
-            showLimitReachedAlert(); return
-        }
+        guard imageCount < maxAttachments else { showLimitReachedAlert(); return }
         PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: maxAttachments - imageCount), from: vc)
     }
     
     private func handleCameraSelection() {
         guard let vc = getCurrentViewController() else { return }
         let imageCount = attachments.filter { $0.fileType == CommonStringFile.IMAGE }.count
-        guard imageCount < maxAttachments else {
-            showLimitReachedAlert(); return
-        }
+        guard imageCount < maxAttachments else { showLimitReachedAlert(); return }
         PhotoPickerManager.shared.presentPicker(ofType: .camera, from: vc)
     }
     
     private func handlePDFSelection() {
         guard let vc = getCurrentViewController() else { return }
         let pdfCount = attachments.filter { $0.fileType == CommonStringFile.pdf }.count
-        guard pdfCount < maxAttachments else {
-            showLimitReachedAlert(); return
-        }
+        guard pdfCount < maxAttachments else { showLimitReachedAlert(); return }
         PhotoPickerManager.shared.limiSelection = maxAttachments - pdfCount
         PhotoPickerManager.shared.presentPicker(ofType: .file, from: vc)
     }
@@ -422,10 +390,7 @@ class AddAttachmentTVC: UITableViewCell,
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let selectedFileURL = urls.first else {
-            print("No file selected.")
-            return
-        }
+        guard let selectedFileURL = urls.first else { return }
         self.attachments.append(AttachmentItem(image: nil, imageURL: selectedFileURL.absoluteString, fileType: CommonStringFile.audio))
         reloadAttachments()
     }

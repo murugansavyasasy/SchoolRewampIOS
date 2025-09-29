@@ -928,16 +928,17 @@ struct LeaveInfo: Codable {
 //}
 //MARK: ASSIGNMENT MY SUBMISION
 struct SubmissionResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [Submission]
+    let status: Bool?
+    let message: String?
+    let data: [Submission]?
 }
 
 struct Submission: Codable {
-    let id: String
-    let description: String
-    let submitted_on: String
-    let file_path: [FilePath]
+    let id: String?
+    let description: String?
+    let tittle: String?
+    let submitted_on: String?
+    let file_path: [FilePath]?
 }
 
 //MARK: Lesson Plan
@@ -1292,6 +1293,7 @@ struct StaffMember: Codable {
     let is_class_teacher: Bool?
     let unread_count: Int?
     let last_msg_time: String?
+    let last_msg: String?
     let section_id: String?
     let section_name: String?
     init() {
@@ -1306,6 +1308,7 @@ struct StaffMember: Codable {
         self.section_id = nil
         self.section_name = nil
         self.last_msg_time = nil
+        self.last_msg = nil
     }
     
 }

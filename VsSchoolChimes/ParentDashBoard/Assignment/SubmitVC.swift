@@ -45,7 +45,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     var vimeoUploader: VimeoUploader?
-   
+    var editReport : Submission?
     override func viewDidLoad() {
         super.viewDidLoad()
         let studentName = studentDetails?.name ?? ""
@@ -80,12 +80,34 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         DescriptionTextview.applyRightTxt(with: placeholderLabel)
         DescriptionTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !DescriptionTextview.text.isEmpty // Hide if text exists
+        if let edit = editReport{
+            fetchData(notice: edit)
+        }
     }
-//    override func viewDidLayoutSubviews() {
-//        view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-//                           startPoint: CGPoint(x: 1, y: 0.5),
-//                           endPoint: CGPoint(x: 0, y: 0.5))
-//    }
+    func fetchData(notice: Submission?) {
+        attachments.removeAll()
+        if let notice = notice {
+            titleTxt.text = notice.tittle ?? ""
+            DescriptionTextview.text = notice.description
+            DescriptionTextview.textColor = .black
+            placeholderLabel?.isHidden = !DescriptionTextview.text.isEmpty
+            adjustTextViewHeights()
+            submitBtn.setTitle("Update", for: .normal)
+            if let files = notice.file_path {
+                attachments = files.map { file in
+                    let type = (file.type ?? "").lowercased()
+                    return AttachmentItem(
+                        image: nil,
+                        imageURL: file.url,
+                        fileType: type,
+                        VideoURl: nil
+                    )
+                }
+                selectImgPdfview.imageCollectionview.reloadData()
+                
+            }
+        }
+    }
     
     // MARK: - Setup
     
@@ -103,54 +125,46 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         descriptionLbl.setRequiredText(CommonStringFile.Description)
     }
     
-    // MARK: - IBActions
-    
     @IBAction func submitBtn(_ sender: UIButton) {
         
         if DescriptionTextview.text != "", id != nil, !attachments.isEmpty {
-            
-            uploadAWSMedia(file: attachments) { [self] in
-                CircularProgressLoader.shared.hide()
-                
-                let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { urlString in
-                    guard let url = URL(string: urlString) else { return nil }
-                    
-                    let fileType = url.pathExtension.lowercased()
-                    let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                    
-                    return [
+            uploadMedia(
+                file: attachments,
+                viewController: self,
+                title: titleTxt.text,
+                description: DescriptionTextview.text ?? ""
+            ) { [weak self] urls, iframe, fileSize, embedUrl in
+                guard let self = self else { return }
+
+                var uploadedFiles: [[String: String]] = []
+                for urlString in urls {
+                    guard let url = URL(string: urlString) else {
+                        print("❌ Invalid URL: \(urlString)")
+                        continue
+                    }
+
+                    let ext = url.pathExtension.lowercased()
+                    var type = ""
+                    if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
+                            type = CommonStringFile.IMAGE
+                        } else if urlString.contains("vimeo.com") {
+                            type = CommonStringFile.VIDEO
+                        } else {
+                            type = ext.uppercased()
+                        }
+                    uploadedFiles.append([
                         CommonStringFile.url: urlString,
                         CommonStringFile.type: type
-                    ]
+                    ])
                 }
-                
+
+                let iframeValue = iframe ?? ""
+                let fileSizeStr = fileSize != nil ? "\(fileSize!)" : ""
+
                 sendAttachment(with: uploadedFiles, iframe: "", file_size: "")
             }
-            
-        }else if DescriptionTextview.text != "", id != nil, selectedVideoURL != nil {
-            
-            guard let videoURL = selectedVideoURL else {return}
-            let selectedType = user_inputs.selectedFileType
-            var uploadedFiles: [[String: String]] = []
-            var fileSizeValue = ""
-            var iframe = ""
-            startUpload(from: self, videoURL: videoURL , title: titleTxt.text, description: DescriptionTextview.text) {videoURLString,iframeHTML,fileSize,finalEmbedUrl in
                 
-                if let videoURLString = videoURLString {
-                    uploadedFiles = [[CommonStringFile.url: videoURLString,
-                                      CommonStringFile.type: "video"]]
-                    if let iframeHTML = iframeHTML {
-                        iframe = iframeHTML
-                        
-                    }
-                    if let size = fileSize {
-                        fileSizeValue = self.convertSize(size)//String(size)
-                    }
-                    self.sendAttachment(with: uploadedFiles, iframe: iframe, file_size: fileSizeValue)
-                }
-            }
-        }
-        else {
+        }else {
             DispatchQueue.main.async {
                 self.alert.showAlert(
                     title: AlertstringFile.Alert_title,
@@ -161,7 +175,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         }
         
     }
-    
     func convertSize(_ sizeInBytes: Int) -> String {
         let kb = 1024.0
         let mb = kb * 1024
@@ -251,9 +264,9 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 .append(
                     AttachmentItem(
                         image:nil,
-                        imageURL: nil,
+                        imageURL: data.absoluteString,
                         fileType: CommonStringFile.VIDEO,
-                        VideoURl: data
+                        VideoURl:nil
                     )
                 )
             selectImgPdfview.imageCollectionview.reloadData()
@@ -338,8 +351,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // First cell is the "Add Attachment" button cell
+
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.AttachmentCVCell,
@@ -430,231 +442,134 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             }
         }
     }
-    private func uploadAWSMedia(file: Any, completion: @escaping () -> Void) {
+    private func uploadMedia(
+        file: Any,
+        viewController: UIViewController,
+        title: String = "",
+        description: String = "",
+        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
+    ) {
+        var uploadedURLs: [String] = []
         var completed = 0
+        var iframeValue: String?
+        var fileSizeValue: Int?
+        var embedUrlValue: String?
+
         func updateAndCheckCompletion(total: Int) {
             let progress = (Double(completed) / Double(total)) * 100
             CircularProgressLoader.shared.updateProgress(to: progress)
             if completed == total {
                 CircularProgressLoader.shared.hide()
-                completion()
+                completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
             }
         }
+
         switch file {
-            // 🎙️ Case: Audio File from String (URL Path)
-        case let files as String:
-            guard let audioURL = URL(string: files) else {
-                print("❌ Invalid audio URL.")
-                return
-            }
-            let total = 1
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            let today_date = AwsCurrentDateString()
-            AWSUploadManager.shared.uploadFileToAWS(
-                file: audioURL,
-                bucketPath:  "communication" + "/" + (UserDefaultFileManager
-                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
-                ,
-                bucketName: "schoolchimes-communication",
-                progressHandler: { progress in
-                    CircularProgressLoader.shared.updateProgress(to: progress)
-                },
-                completion: { url in
-                    if let uploadedURL = url {
-                        print("✅ Audio uploaded: \(uploadedURL)")
-                        user_inputs.voice_link = uploadedURL
-                    } else {
-                        print("❌ Audio upload failed.")
-                    }
-                    
-                    completed += 1
-                    let progress = (Double(completed) / Double(total)) * 100
-                    CircularProgressLoader.shared.updateProgress(to: progress)
-                    
-                    if completed == total {
-                        CircularProgressLoader.shared.hide()
-                        completion()
-                    }
-                }
-            )
-            
-            // 🖼️ Case: Array of Images
-        case let images as [UIImage]:
-            let total = images.count
-            guard !images.isEmpty else {
-                completion()
-                return
-            }
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            
-            for (index, img) in images.enumerated() {
-                AWSUploadManager.shared.uploadFileToAWS(
-                    file: img,
-                    bucketPath: "uploads/images/",
-                    bucketName: "schoolchimes-communication",
-                    progressHandler: { progress in
-                        // Optional: Update progress per file individually if you want
-                    },
-                    completion: { [self] url in
-                        if let uploadedURL = url {
-                            uploadedURLs.append(uploadedURL)
-                            
-                        } else {
-                            print("❌ Failed to upload image \(index)")
-                        }
-                        
-                        completed += 1
-                        let progress = (Double(completed) / Double(total)) * 100
-                        CircularProgressLoader.shared.updateProgress(to: progress)
-                        if completed == total {
-                            CircularProgressLoader.shared.hide()
-                            // Do something with uploadedURLs if needed
-                            completion()
-                        }
-                    }
-                )
-            }
-            // 🖼️ Case: Array of Images
-        case let files as [String]:
-            let total = files.count
-            guard !files.isEmpty else {
-                completion()
-                return
-            }
-            
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            
-            for (index, url) in files.enumerated() {
-                guard let PdfURL = URL(string: url) else {
-                    print("❌ Invalid audio URL.")
-                    return
-                }
-                AWSUploadManager.shared.uploadFileToAWS(
-                    file: PdfURL,
-                    bucketPath: "uploads/Documents/",
-                    bucketName: "schoolchimes-communication",
-                    progressHandler: { progress in
-                        // Optional: Update progress per file individually if you want
-                    },
-                    completion: { [self] url in
-                        if let uploadedURL = url {
-                            uploadedURLs.append(uploadedURL)
-                            
-                        } else {
-                            print("❌ Failed to upload image \(index)")
-                        }
-                        
-                        completed += 1
-                        let progress = (Double(completed) / Double(total)) * 100
-                        CircularProgressLoader.shared.updateProgress(to: progress)
-                        
-                        if completed == total {
-                            CircularProgressLoader.shared.hide()
-                            // Do something with uploadedURLs if needed
-                            completion()
-                        }
-                    }
-                )
-            }
         case let attachments as [AttachmentItem]:
             let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
             let total = uploadableItems.count
             guard total > 0 else {
-                completion()
+                completion([], nil, nil, nil)
                 return
             }
-            
+
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-            
+
             for item in uploadableItems {
                 if let image = item.image {
-                    // 🖼️ Upload local image
+                    // 🖼 Local image → upload to AWS
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
                         bucketPath: "uploads/images/",
                         bucketName: "schoolchimes-communication",
-                        progressHandler: nil,
-                        completion: { url in
-                            if let uploadedURL = url {
-                                self.uploadedURLs.append(uploadedURL)
-                            }
-                            completed += 1
-                            updateAndCheckCompletion(total: total)
+                        progressHandler: nil
+                    ) { url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
                         }
-                    )
-                } else if let fileURLStr = item.imageURL {
-                    if fileURLStr.lowercased().starts(with: "http") {
-                        self.uploadedURLs.append(fileURLStr)
                         completed += 1
                         updateAndCheckCompletion(total: total)
-                    } else if let fileURL = URL(string: fileURLStr) {
-                        let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
-                        
-                        AWSUploadManager.shared.uploadFileToAWS(
-                            file: fileURL,
-                            bucketPath: path,
-                            bucketName: "schoolchimes-communication",
-                            progressHandler: nil,
-                            completion: { url in
+                    }
+
+                } else if let fileURLStr = item.imageURL,
+                          let fileURL = URL(string: fileURLStr) {
+
+                    if item.fileType.uppercased() == CommonStringFile.VIDEO {
+                        // 🎥 Handle Videos
+                        if fileURLStr.contains("vimeo.com") {
+                            // Already Vimeo → just append
+                            uploadedURLs.append(fileURLStr)
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        } else {
+                            // 🚀 Upload video (even AWS URLs) to Vimeo
+                            CircularProgressLoader.shared.show()
+                            vimeoUploader = VimeoUploader(
+                                accessToken: YOUR_VIMEO_TOKEN,
+                                presentingViewController: viewController
+                            )
+                            vimeoUploader?.upload(
+                                videoFileURL: fileURL,
+                                title: title,
+                                description: description,
+                                progress: { progress in
+                                    CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                                },
+                                completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
+                                    if let finalEmbedUrl = finalEmbedUrl {
+                                        uploadedURLs.append(finalEmbedUrl)
+                                    }
+                                    iframeValue = iframeHTML
+                                    fileSizeValue = fileSize
+                                    embedUrlValue = finalEmbedUrl
+
+                                    completed += 1
+                                    updateAndCheckCompletion(total: total)
+                                }
+                            )
+                        }
+
+                    } else {
+                        if fileURLStr.lowercased().starts(with: "http") {
+                            uploadedURLs.append(fileURLStr)
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        } else {
+                            // Local/Other file → upload to AWS
+                            let path = item.fileType.uppercased() != CommonStringFile.IMAGE
+                                ? "uploads/Documents/"
+                                : "uploads/images/"
+
+                            AWSUploadManager.shared.uploadFileToAWS(
+                                file: fileURL,
+                                bucketPath: path,
+                                bucketName: "schoolchimes-communication",
+                                progressHandler: nil
+                            ) { url in
                                 if let uploadedURL = url {
-                                    self.uploadedURLs.append(uploadedURL)
+                                    uploadedURLs.append(uploadedURL)
                                 }
                                 completed += 1
                                 updateAndCheckCompletion(total: total)
                             }
-                        )
-                    } else {
-                        print("❌ Invalid fileURL: \(fileURLStr)")
-                        completed += 1
-                        updateAndCheckCompletion(total: total)
+                        }
                     }
+
+                } else {
+                    print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
+                    completed += 1
+                    updateAndCheckCompletion(total: total)
                 }
             }
+
         default:
             print("❌ Unsupported file type")
-            return
+            completion([], nil, nil, nil)
         }
     }
-    
-    func startUpload(from viewController: UIViewController,videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?,_ embedUrl: String?) -> Void) {
-        print("📂 Selected video URL: \(videoURL)")
-        
-        CircularProgressLoader.shared.show()
-        
-        vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: viewController)
-        //        vimeoUploader?.userProvidedThumbnail = user_inputs.thumbNail
-        vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
-            print("📊 Upload progress: \(progress * 100)%")
-            CircularProgressLoader.shared.updateProgress(to: progress)
-        }, completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
-            CircularProgressLoader.shared.hide()
-            
-            if let videoURL = videoURL {
-                print("✅ Video uploaded! Watch it at: \(videoURL)")
-                if let iframeHTML = iframeHTML {
-                    print("💻 Embed HTML: \(iframeHTML)")
-                }
-                if let size = fileSize {
-                    print("📦 File size: \(size) bytes")
-                }
-                if let emb = finalEmbedUrl {
-                    print("📦 File : \(emb)")
-                }
-                try? FileManager.default.removeItem(at: URL(fileURLWithPath: videoURL))
-                
-                
-                completion(videoURL, iframeHTML, fileSize, finalEmbedUrl)
-            } else {
-                print("❌ Upload failed!")
-                completion(nil, nil, nil,nil)
-            }
-        })
-    }
-    
+
+
     
     func sendAttachment(with uploadedFiles: [[String: String]],iframe:String,file_size:String) {
         DispatchQueue.main.async { [weak self] in

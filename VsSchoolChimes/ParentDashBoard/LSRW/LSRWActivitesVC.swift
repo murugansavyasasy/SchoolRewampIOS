@@ -82,12 +82,35 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     var descriptionString:String?
     var alert = CustomAlert()
     var vimeoUploader: VimeoUploader?
+    var onDismiss: (() -> Void)?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptions()
         setupTableView()
+        if lsrw?.is_unread ?? false{
+            ReadStatusUpdate(type: "LSRW", detail_id: lsrw?.id ?? "")
+        }
     }
-    
+    func ReadStatusUpdate(type: String,detail_id: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+            case .success(let SuccessMessage):
+                if SuccessMessage.status == true {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                        self?.onDismiss?()
+                    }
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
     // MARK: - Setup
     private func setupCaptions() {
         guard let lsrw = lsrw else { return }
@@ -138,18 +161,19 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
 @available(iOS 15.0, *)
 extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let type = lsrw?.activity_type {
-            switch type {
-            case .listening, .reading:
-                return 2
-            case .speaking, .writing:
-                return 3
-            case .unknown(_):
-                return 1   // அல்லது உங்களுக்கு தேவையான default section count
-            }
+        guard let type = lsrw?.activity_type else { return 0 }
+        guard lsrw?.is_submitted == false else { return 1 }
+
+        switch type {
+        case .listening, .reading:
+            return 2
+        case .speaking, .writing:
+            return 3
+        case .unknown(_):
+            return 1
         }
-        return 0
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -181,6 +205,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     cell.exportRecordBtn.isHidden = false
                 }
             }
+            cell.exportRecordBtn.isHidden = !(lsrw?.is_submitted ?? false)
             cell.exportRecordBtn.setTitle("My Submission", for: .normal)
             cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
             cell.delegate = self
@@ -259,37 +284,58 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     @objc private func submitTapped() {
-        guard !attachments.isEmpty else {
+        guard !attachments.isEmpty, let desc = descriptionString, !desc.isEmpty else {
             alert.showAlert(title: "", message: AlertstringFile.Please_Add_Attachment, on: self)
             return
         }
-        
-        uploadMedia(file: attachments, viewController: self, title: lsrw?.title ?? "", description: descriptionString ?? "") { [weak self] urls, iframe, fileSize, embedUrl in
+
+        uploadMedia(
+            file: attachments,
+            viewController: self,
+            title: lsrw?.title ?? "",
+            description: descriptionString ?? ""
+        ) { [weak self] urls, iframe, fileSize, embedUrl in
             guard let self = self else { return }
-            let uploadedFiles: [[String: String]] = urls.compactMap { urlString in
-                guard let url = URL(string: urlString) else { return nil }
-                
-                let fileType = url.pathExtension.lowercased()
-                let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                
-                return [
+
+            var uploadedFiles: [[String: String]] = []
+            for urlString in urls {
+                guard let url = URL(string: urlString) else {
+                    print("❌ Invalid URL: \(urlString)")
+                    continue
+                }
+
+                let ext = url.pathExtension.lowercased()
+                var type = ""
+                if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
+                        type = CommonStringFile.IMAGE
+                    } else if urlString.contains("vimeo.com") {
+                        type = CommonStringFile.VIDEO
+                    } else {
+                        type = ext.uppercased()
+                    }
+                uploadedFiles.append([
                     CommonStringFile.url: urlString,
                     CommonStringFile.type: type
-                ]
+                ])
             }
+
             let iframeValue = iframe ?? ""
             let fileSizeStr = fileSize != nil ? "\(fileSize!)" : ""
+
+            // 🔹 Always include description
             let params: [String: Any] = [
-                SendAttachmentStringFile.id:lsrw?.id ?? "",
+                SendAttachmentStringFile.id: lsrw?.id ?? "",
                 assignmentResquestStringKey.description: descriptionString ?? "",
                 assignmentResquestStringKey.iframe: iframeValue,
                 assignmentResquestStringKey.file_size: fileSizeStr,
                 assignmentResquestStringKey.filePath: uploadedFiles
             ]
-            // 🔹 Call API
+
+            // 🚀 Call API
             self.sendAttachment(with: params)
         }
     }
+
     
     func sendAttachment(with parameters: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
@@ -337,6 +383,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                             if data.first?.file_path?.count != 0{
                                 let vc = LSRWSubmisionListVC()
                                 vc.attachment = data.first?.file_path
+                                vc.titleSting = data.first?.description ?? ""
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
                             }else{
@@ -375,7 +422,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    // MARK: - Upload Media (Images + Video)
+    // MARK: - Upload Media (Images + Video + Docs)
     private func uploadMedia(
         file: Any,
         viewController: UIViewController,
@@ -385,16 +432,19 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     ) {
         var uploadedURLs: [String] = []
         var completed = 0
-        
-        func updateAndCheckCompletion(total: Int, iframe: String? = nil, size: Int? = nil, embed: String? = nil) {
+        var iframeValue: String?
+        var fileSizeValue: Int?
+        var embedUrlValue: String?
+
+        func updateAndCheckCompletion(total: Int) {
             let progress = (Double(completed) / Double(total)) * 100
             CircularProgressLoader.shared.updateProgress(to: progress)
             if completed == total {
                 CircularProgressLoader.shared.hide()
-                completion(uploadedURLs, iframe, size, embed)
+                completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
             }
         }
-        
+
         switch file {
         case let attachments as [AttachmentItem]:
             let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
@@ -403,13 +453,13 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 completion([], nil, nil, nil)
                 return
             }
-            
+
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-            
+
             for item in uploadableItems {
                 if let image = item.image {
-                    // Upload local image to AWS
+                    // 🖼 Local image → upload to AWS
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
                         bucketPath: "uploads/images/",
@@ -422,46 +472,56 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                         completed += 1
                         updateAndCheckCompletion(total: total)
                     }
-                } else if let fileURLStr = item.imageURL {
-                    if fileURLStr.lowercased().starts(with: "http") {
-                        // Already an uploaded file (skip upload)
-                        uploadedURLs.append(fileURLStr)
-                        completed += 1
-                        updateAndCheckCompletion(total: total)
-                    } else if let fileURL = URL(string: fileURLStr) {
-                        if item.fileType.lowercased() == CommonStringFile.VIDEO {
-                            // 🎥 Video Handling
-                            if fileURLStr.lowercased().starts(with: "http") {
-                                // ✅ Already remote video URL → skip Vimeo upload
-                                uploadedURLs.append(fileURLStr)
-                                completed += 1
-                                updateAndCheckCompletion(total: total)
-                            } else {
-                                // 🚀 Upload to Vimeo (local file only)
-                                CircularProgressLoader.shared.show()
-                                vimeoUploader = VimeoUploader(
-                                    accessToken: YOUR_VIMEO_TOKEN,
-                                    presentingViewController: viewController
-                                )
-                                vimeoUploader?.upload(
-                                    videoFileURL: fileURL,
-                                    title: title,
-                                    description: description,
-                                    progress: { progress in
-                                        CircularProgressLoader.shared.updateProgress(to: progress)
-                                    },
-                                    completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
-                                        completed += 1
-                                        if let videoURL = videoURL {
-                                            uploadedURLs.append(videoURL)
-                                        }
-                                        updateAndCheckCompletion(total: total, iframe: iframeHTML, size: fileSize, embed: finalEmbedUrl)
-                                    }
-                                )
-                            }
+
+                } else if let fileURLStr = item.imageURL,
+                          let fileURL = URL(string: fileURLStr) {
+
+                    if item.fileType.uppercased() == CommonStringFile.VIDEO {
+                        // 🎥 Handle Videos
+                        if fileURLStr.contains("vimeo.com") {
+                            // Already Vimeo → just append
+                            uploadedURLs.append(fileURLStr)
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
                         } else {
-                            // 📄 Docs / Images → upload to AWS
-                            let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
+                            // 🚀 Upload video (even AWS URLs) to Vimeo
+                            CircularProgressLoader.shared.show()
+                            vimeoUploader = VimeoUploader(
+                                accessToken: YOUR_VIMEO_TOKEN,
+                                presentingViewController: viewController
+                            )
+                            vimeoUploader?.upload(
+                                videoFileURL: fileURL,
+                                title: title,
+                                description: description,
+                                progress: { progress in
+                                    CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                                },
+                                completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
+                                    if let finalEmbedUrl = finalEmbedUrl {
+                                        uploadedURLs.append(finalEmbedUrl)
+                                    }
+                                    iframeValue = iframeHTML
+                                    fileSizeValue = fileSize
+                                    embedUrlValue = finalEmbedUrl
+
+                                    completed += 1
+                                    updateAndCheckCompletion(total: total)
+                                }
+                            )
+                        }
+
+                    } else {
+                        if fileURLStr.lowercased().starts(with: "http") {
+                            uploadedURLs.append(fileURLStr)
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        } else {
+                            // Local/Other file → upload to AWS
+                            let path = item.fileType.uppercased() != CommonStringFile.IMAGE
+                                ? "uploads/Documents/"
+                                : "uploads/images/"
+
                             AWSUploadManager.shared.uploadFileToAWS(
                                 file: fileURL,
                                 bucketPath: path,
@@ -475,21 +535,21 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                                 updateAndCheckCompletion(total: total)
                             }
                         }
-                    } else {
-                        print("❌ Invalid fileURL: \(fileURLStr)")
-                        completed += 1
-                        updateAndCheckCompletion(total: total)
                     }
+
+                } else {
+                    print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
+                    completed += 1
+                    updateAndCheckCompletion(total: total)
                 }
             }
-            
+
         default:
             print("❌ Unsupported file type")
             completion([], nil, nil, nil)
         }
     }
-    
-    
+ 
 }
 
 // MARK: - CaptionType Enum

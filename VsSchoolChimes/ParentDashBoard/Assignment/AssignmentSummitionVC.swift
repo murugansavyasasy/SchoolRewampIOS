@@ -11,7 +11,14 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedNotice = self.assignments?.first(where: { $0.id == id }) {
-                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    if #available(iOS 14.0, *) {
+                        let vc = SubmitVC()
+                        vc.editReport = selectedNotice
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                }
             }
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -61,8 +68,8 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
             case .success(let SuccessMessage):
                 DispatchQueue.main.async { [self] in
                     assignments = SuccessMessage.data
-                    noDtaImg.isHidden = !SuccessMessage.data.isEmpty
-                    nodataLbl.isHidden = !SuccessMessage.data.isEmpty
+                    noDtaImg.isHidden = !(SuccessMessage.data?.isEmpty ?? false)
+                    nodataLbl.isHidden = !(SuccessMessage.data?.isEmpty ?? false)
                     nodataLbl.text = SuccessMessage.message
                     sumitionList.reloadData()
                 }
@@ -150,31 +157,22 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                 cell.FilesUrl = data.file_path
                 cell.timeLeft.text = "Submited: \(timeAgo)"
                 cell.descriptionLbl.text = data.description
-//                cell.descriptionLbl.setupExpandable(text: data.description ?? "")
-//                cell.descriptionLbl.onExpandableTap = {
-//                    cell.descriptionLbl.isExpanded.toggle()
-//                    tableView.beginUpdates()
-//                    tableView.endUpdates()
-//                }
             }
             return cell
         }else{
             if let data = assignments?[indexPath.row]{
-                let (timeAgo, dateString) = data.submitted_on.submissionTimeDisplay()
+                if let (timeAgo, dateString) = data.submitted_on?.submissionTimeDisplay(){
+                    cell.date.text = dateString
+                    cell.timeLeft.text = "Submited: \(timeAgo)"
+                }
                 cell.assignmentTitle.text = titleName
                 cell.subjectName.text = subject
-                cell.date.text = dateString
+                
                 cell.FilesUrl = data.file_path
-                cell.timeLeft.text = "Submited: \(timeAgo)"
+               
                 cell.descriptionLbl.text = data.description
-                cell.edit(edit:true, delete: true, selectedId: data.id)
+                cell.edit(edit:true, delete: true, selectedId: data.id ?? "")
                 cell.delegate = self
-//                cell.descriptionLbl.setupExpandable(text: data.description)
-//                cell.descriptionLbl.onExpandableTap = {
-//                    cell.descriptionLbl.isExpanded.toggle()
-//                    tableView.beginUpdates()
-//                    tableView.endUpdates()
-//                }
             }
             
             return cell

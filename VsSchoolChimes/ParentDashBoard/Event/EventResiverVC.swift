@@ -143,9 +143,9 @@ class EventResiverVC: UIViewController {
                         self.hideActivityLoader()
                     }
                     self.filteredSections = self.allEventSections
-                    self.noDataLbl.isHidden = true
-                    self.noDataImg.isHidden = true
-                    self.searchbar.isHidden = false
+                    self.noDataLbl.isHidden = self.filteredSections.count != 0
+                    self.noDataLbl.text = response.message
+                    self.noDataImg.isHidden = self.filteredSections.count != 0
                     self.tableview.isHidden = false
                     self.tableview.reloadData()
                     

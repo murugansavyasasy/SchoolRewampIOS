@@ -37,6 +37,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var assignmentProgressLbl: UILabel!
+    @IBOutlet weak var readVieaw: UIView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var submittedProgressStack: UIStackView!
@@ -125,6 +126,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             }
         }
         imgCount.layer.cornerRadius = imgCount.frame.width / 2
+        readVieaw.layer.cornerRadius = readVieaw.frame.width/2
         completedBtn.layer.cornerRadius = 6
         submitBtn.layer.cornerRadius = 6
         mysubmitBtn.layer.cornerRadius = 10

@@ -121,7 +121,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         
         let item = filteredTasks[indexPath.row]
         cell.configure(with: item)
-        
+        cell.readVieaw.isHidden = !(item.is_unread ?? false)
         cell.startBtn.tag = indexPath.row
         cell.starticon.tag = indexPath.row
         cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
@@ -143,6 +143,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         if #available(iOS 15.0, *) {
             let vc = LSRWActivitesVC(nibName: nil, bundle: nil)
             vc.lsrw = selectedTask
+            vc.onDismiss = { [weak self] in
+                self?.SkillListApi()
+            }
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

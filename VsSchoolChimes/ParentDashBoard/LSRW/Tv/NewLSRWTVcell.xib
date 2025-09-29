@@ -57,6 +57,14 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8yY-Nr-sn5">
+                                <rect key="frame" x="346" y="5" width="7" height="7"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="7" id="4NN-oI-RwD"/>
+                                    <constraint firstAttribute="height" constant="7" id="9RH-d4-ex1"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oum-XY-AAZ">
                                 <rect key="frame" x="10" y="10" width="30" height="30"/>
                                 <color key="backgroundColor" name="Red1"/>
@@ -133,6 +141,8 @@
                             <constraint firstItem="Oum-XY-AAZ" firstAttribute="leading" secondItem="ecU-cd-bJR" secondAttribute="leading" constant="10" id="kt1-m2-GRj"/>
                             <constraint firstItem="Jeb-9j-OTG" firstAttribute="top" secondItem="UPk-On-iyQ" secondAttribute="bottom" constant="10" id="lky-LX-Ccv"/>
                             <constraint firstItem="7DH-eC-eYx" firstAttribute="top" secondItem="WaU-5A-f32" secondAttribute="bottom" constant="10" id="mKe-6t-39G"/>
+                            <constraint firstAttribute="trailing" secondItem="8yY-Nr-sn5" secondAttribute="trailing" constant="5" id="o7e-x7-vxt"/>
+                            <constraint firstItem="8yY-Nr-sn5" firstAttribute="top" secondItem="ecU-cd-bJR" secondAttribute="top" constant="5" id="yLR-ck-HkF"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -149,6 +159,7 @@
                 <outlet property="cellView" destination="ecU-cd-bJR" id="9pQ-uD-rCr"/>
                 <outlet property="descriptionLbl" destination="WaU-5A-f32" id="M9v-Ar-Rxf"/>
                 <outlet property="iconBtn" destination="Oum-XY-AAZ" id="Aak-6l-Q4e"/>
+                <outlet property="readVieaw" destination="8yY-Nr-sn5" id="R40-h0-AoH"/>
                 <outlet property="sendedByLbl" destination="33L-6p-lSL" id="Die-Or-RDz"/>
                 <outlet property="startBtn" destination="ptM-XM-OiG" id="cQ8-lL-uhb"/>
                 <outlet property="starticon" destination="bqW-g6-dRb" id="MFF-Nz-lWx"/>
@@ -165,6 +176,9 @@
         <namedColor name="Red1">
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -130,6 +130,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
             cell.configure(with: report)
             cell.id = report.header_id
             cell.subject = report.subject
+            cell.readVieaw.isHidden = !(report.is_unread ?? false)
             cell.loadFiles(into: cell, files: report.file_path ?? [])
             cell.mysubmitBtn.isHidden = report.submitted_count == 0
         }
@@ -151,6 +152,9 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.data = selectedItem
         detailVC.userNameValue = UserDefaultFileManager.get_child_Details()?.name
         detailVC.sectionValue = UserDefaultFileManager.get_child_Details()?.school_name
+        detailVC.onDismiss = { [weak self] in
+            self?.getAssigment()
+        }
         detailVC.reciver = true
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview

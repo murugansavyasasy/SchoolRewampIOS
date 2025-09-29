@@ -28,7 +28,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sae-QA-gVh">
-                                <rect key="frame" x="1" y="11.666666666666668" width="60" height="56.666666666666671"/>
+                                <rect key="frame" x="1" y="11.666666666666668" width="60" height="56.666666666666657"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
@@ -149,6 +149,7 @@
             <connections>
                 <outlet property="iconBtn" destination="HKf-67-36L" id="Cu2-nz-m31"/>
                 <outlet property="innerView" destination="GRQ-FM-tLb" id="uf3-o2-4wP"/>
+                <outlet property="lastMessageLbl" destination="qO7-26-dk6" id="NKr-yb-zUT"/>
                 <outlet property="lastUpdateTimeLbl" destination="Eyi-1i-Az6" id="OTI-G5-6kz"/>
                 <outlet property="nameLbl" destination="K7b-t1-jkH" id="pPc-do-HbJ"/>
                 <outlet property="subjectLbl" destination="3uN-VU-rS7" id="Hjw-Nl-z2n"/>
