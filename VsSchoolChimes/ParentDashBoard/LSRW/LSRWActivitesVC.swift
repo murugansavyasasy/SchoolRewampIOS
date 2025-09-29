@@ -89,7 +89,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
         setupCaptions()
         setupTableView()
         if lsrw?.is_unread ?? false{
-            ReadStatusUpdate(type: "LSRW", detail_id: lsrw?.id ?? "")
+            ReadStatusUpdate(type: "LSRW", detail_id: lsrw?.detail_id ?? "")
         }
     }
     func ReadStatusUpdate(type: String,detail_id: String){
@@ -163,7 +163,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let type = lsrw?.activity_type else { return 0 }
         guard lsrw?.is_submitted == false else { return 1 }
-
         switch type {
         case .listening, .reading:
             return 2
@@ -178,11 +177,11 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1 // LSWTaskTVC
+            return 1
         case 1:
-            return captions.count // dynamic rows
+            return captions.count
         case 2:
-            return 1 // footer cell
+            return 1
         default:
             return 0
         }
@@ -194,7 +193,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
             cell.titleLbl.text = lsrw?.title ?? "No Title"
             cell.descriptionLbl.text = lsrw?.description ?? "No Description"
-            
             cell.reminderBtn.isHidden = true
             if let task = lsrw {
                 cell.configureCell(with: task, attachments: task.file_path ?? [])
@@ -210,7 +208,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
             cell.delegate = self
             return cell
-            
         case 1:
             let type = captions[indexPath.row]
             switch type {

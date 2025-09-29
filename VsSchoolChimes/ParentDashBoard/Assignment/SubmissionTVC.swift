@@ -154,54 +154,15 @@ extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UI
         let fileExtension = url.pathExtension.lowercased()
         
         let vc = getCurrentViewController()
-        if file.type?.uppercased() == "VIDEO"{
-            playVimeoVideo(from: file.url ?? "")
-        }else{
             let vcc = ImageShowVc(nibName: nil, bundle: nil)
-            vcc.imageURL = FilesUrl?.filter({ img in
-                img.type?.uppercased() == CommonStringFile.IMAGE
-            }) ?? []
             var homeworkDocs = FilesUrl ?? []
-            let filePath = homeworkDocs[indexPath.row]
-            homeworkDocs.remove(at: indexPath.row)
-            homeworkDocs.insert(filePath, at: 0)
             vcc.fileURL =  homeworkDocs
-            vcc.pdfUrl = FilesUrl?[indexPath.row].url
             vcc.scrollIndex = indexPath
-            //            vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+            vcc.index = indexPath.row
             vcc.modalPresentationStyle = .fullScreen
             vc?.present(vcc, animated: true)
-        }
-        
     }
-    func playVimeoVideo(from url: String) {
-        if let videoID = extractVimeoID(from: url) {
-            let vc = getCurrentViewController()
-            fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
-                if let firstURLString = urls.first,
-                   let videoURL = URL(string: firstURLString) {
-                    
-                    DispatchQueue.main.async {
-                        let player = AVPlayer(url: videoURL)
-                        self.player = player
-                        
-                        let playerViewController = AVPlayerViewController()
-                        playerViewController.player = player
-                        playerViewController.delegate = self
-                        playerViewController.presentationController?.delegate = self
-                        
-                        vc?.present(playerViewController, animated: true) {
-                            player.play()
-                        }
-                    }
-                } else {
-                    print("No video URLs found or error")
-                }
-            }
-        } else {
-            print("Invalid Vimeo URL")
-        }
-    }
+   
     func getCurrentViewController() -> UIViewController? {
         return UIApplication.shared.connectedScenes
             .filter { $0.activationState == .foregroundActive }
