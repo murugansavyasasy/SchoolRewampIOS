@@ -99,12 +99,12 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         proceedWithAppFlow()
         
         // Load GIF
-        if let animatedImage = loadGif(named: "Splach") {
-            imgview.image = animatedImage
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                self?.vibrateDevice()
-            }
-        }
+//        if let animatedImage = loadGif(named: "Splach") {
+//            imgview.image = animatedImage
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+//                self?.vibrateDevice()
+//            }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
