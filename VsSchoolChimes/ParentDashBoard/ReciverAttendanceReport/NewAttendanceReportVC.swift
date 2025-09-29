@@ -57,6 +57,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
@@ -70,7 +71,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         
         TitleLbl.text = AttendanceString.LeaveHistory
         TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)

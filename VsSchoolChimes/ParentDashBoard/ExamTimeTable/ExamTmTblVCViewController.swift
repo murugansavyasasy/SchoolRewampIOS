@@ -20,6 +20,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     var subject_details: [SubjectDetail]?
     let eventStore = EKEventStore()
     var groupedExamDetails: [GroupedExam] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -99,26 +100,27 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         headerview.addSubview(titleLabel)
         
         // Body Label
-        let bodyLabel = UILabel()
-        bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-        bodyLabel.textColor = .secondaryLabel
-        bodyLabel.setFont(style: .body, size: 14)
-        bodyLabel.numberOfLines = 0
-        bodyLabel.text = FilteredExamDetails?[section].created_on   // ← உன் dataல இருக்க body text
-        
-        headerview.addSubview(bodyLabel)
+//        let bodyLabel = UILabel()
+//        bodyLabel.translatesAutoresizingMaskIntoConstraints = false
+//        bodyLabel.textColor = .secondaryLabel
+//        bodyLabel.setFont(style: .body, size: 14)
+//        bodyLabel.numberOfLines = 0
+//        bodyLabel.text = FilteredExamDetails?[section].created_on   // ← உன் dataல இருக்க body text
+//        
+//        headerview.addSubview(bodyLabel)
         
         NSLayoutConstraint.activate([
             // Title label constraints
             titleLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
             titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
             titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
+            titleLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
             
             // Body label constraints
-            bodyLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
-            bodyLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
-            bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            bodyLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
+//            bodyLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
+//            bodyLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
+//            bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+//            bodyLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
         ])
         
         return headerview

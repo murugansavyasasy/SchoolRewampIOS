@@ -36,6 +36,8 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var attendanceReportDefLbl: UILabel!
     @IBOutlet weak var holidaysDefLbl: UILabel!
     @IBOutlet weak var MenuTitleLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
+    
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
@@ -47,12 +49,12 @@ class ReciverAttendanceReportVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.applyBackButton()
+        //BackBtn.applyBackButton()
         
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: standard)
-        MenuTitleLbl.text = AttendanceString.attendance
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
+        MenuTitleLbl.text = MenuStringFile.selectedMenuName
         MenuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         Topview.layer.cornerRadius = 25
         Topview.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]

@@ -784,6 +784,8 @@
 		FAD8BDA52E66BE6C00C7CD53 /* PtmHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD8BDA32E66BE6C00C7CD53 /* PtmHistoryVC.xib */; };
 		FAD8BDA82E66CDD100C7CD53 /* BookedSlotTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD8BDA72E66CDD100C7CD53 /* BookedSlotTV.xib */; };
 		FAD8BDA92E66CDD100C7CD53 /* BookedSlotTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD8BDA62E66CDD100C7CD53 /* BookedSlotTV.swift */; };
+		FAE4958A2E89AF960099DF24 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
+		FAE4958B2E89AF960099DF24 /* PtmNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE495882E89AF960099DF24 /* PtmNavigationVC.swift */; };
 		FAED58542E4B4E6E00497026 /* SlotListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAED58532E4B4E6E00497026 /* SlotListVC.xib */; };
 		FAED58552E4B4E6E00497026 /* SlotListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAED58522E4B4E6E00497026 /* SlotListVC.swift */; };
 		FAED58582E4B61B000497026 /* SlotListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAED58572E4B61B000497026 /* SlotListTV.xib */; };
@@ -1695,6 +1697,8 @@
 		FAD8BDA32E66BE6C00C7CD53 /* PtmHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmHistoryVC.xib; sourceTree = "<group>"; };
 		FAD8BDA62E66CDD100C7CD53 /* BookedSlotTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookedSlotTV.swift; sourceTree = "<group>"; };
 		FAD8BDA72E66CDD100C7CD53 /* BookedSlotTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookedSlotTV.xib; sourceTree = "<group>"; };
+		FAE495882E89AF960099DF24 /* PtmNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtmNavigationVC.swift; sourceTree = "<group>"; };
+		FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PtmNavigationVC.xib; sourceTree = "<group>"; };
 		FAED58522E4B4E6E00497026 /* SlotListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotListVC.swift; sourceTree = "<group>"; };
 		FAED58532E4B4E6E00497026 /* SlotListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotListVC.xib; sourceTree = "<group>"; };
 		FAED58562E4B61B000497026 /* SlotListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotListTV.swift; sourceTree = "<group>"; };
@@ -3976,6 +3980,8 @@
 				FAD8BDA32E66BE6C00C7CD53 /* PtmHistoryVC.xib */,
 				FAD8BDA62E66CDD100C7CD53 /* BookedSlotTV.swift */,
 				FAD8BDA72E66CDD100C7CD53 /* BookedSlotTV.xib */,
+				FAE495882E89AF960099DF24 /* PtmNavigationVC.swift */,
+				FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */,
 			);
 			path = PTM;
 			sourceTree = "<group>";
@@ -4421,6 +4427,7 @@
 				84B688652E829CB90053D6A8 /* ChatCVC.xib in Resources */,
 				FA7014D12E7D76CD00B3C012 /* AttendanceMarkingVC.xib in Resources */,
 				187CF4D62D119C82001422CE /* ClassTimeTableViewController.xib in Resources */,
+				FAE4958A2E89AF960099DF24 /* PtmNavigationVC.xib in Resources */,
 				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */,
@@ -5119,6 +5126,7 @@
 				18D718AB2D0D477900E9EDA3 /* StaffListResp.swift in Sources */,
 				84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */,
 				18D718AC2D0D477900E9EDA3 /* PunchHistryResp.swift in Sources */,
+				FAE4958B2E89AF960099DF24 /* PtmNavigationVC.swift in Sources */,
 				8435EA172DE9C6B200F02CB9 /* videoPickAndPlay.swift in Sources */,
 				84B57EBB2D1437EC00E0EA29 /* EventResiverVC.swift in Sources */,
 				8474CBA22D9A6F6000DA0951 /* RecipientCVcell.swift in Sources */,

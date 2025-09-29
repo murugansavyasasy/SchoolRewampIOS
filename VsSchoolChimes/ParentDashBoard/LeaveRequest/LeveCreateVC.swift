@@ -44,6 +44,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     @IBOutlet weak var toDatePicker: UIDatePicker!
     @IBOutlet weak var FromDatePicker: UIDatePicker!
     @IBOutlet weak var errorLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
     @IBAction func ShowFromDate() {
         FromDatePickerView.isHidden = false
@@ -97,8 +98,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
        
         setupPlaceholder()
         
-        ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
-        
         if let leave = editLeaveData{
            
             dateFormatter.dateFormat = "dd MMM yyyy"
@@ -120,6 +119,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             toDatePicker.date = dateFormatter.date(from: leave.toDate.convertToTargetDateFormat() ?? "") ?? Date()
         }
         
+        ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -139,7 +140,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         
         let name = childDetails?.name ?? ""
         let stanard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        BackBtn.configureAsBackButton(firstLine: name, secondLine: stanard)
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
         
         OutlineView.layer.cornerRadius = 12
         OutlineView.layer.borderWidth = 1
@@ -272,8 +273,11 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     @IBAction func SubmitAct(_ sender: Any) {
         
         if validateInputs(){
-            
-            ApplyLeave()
+            if let leave = editLeaveData{
+                updateLeave()
+            }else{
+                ApplyLeave()
+            }
         }else {
             alert.showAlert(title: "Missing Information", message: AlertstringFile.Fill_All_Required_Fields, on: self)
         }
@@ -422,7 +426,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             }
         }
         
-        let param: [String:Any] = [LeaveRequestStringFile.id:editLeaveData?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session: toSessionCode]
+        let param: [String:Any] = [LeaveRequestStringFile.id:editLeaveData?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session: toSessionCode,LeaveRequestStringFile.leave_type:LeaveTypeBtn.title(for: .normal) ?? ""]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
                               
@@ -532,51 +536,60 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         showDropdown(for: sender)
     }
     
-     func calculateDays() {
-        
-         errorLbl.isHidden = true // Hide error by default
+    func calculateDays() {
+        errorLbl.isHidden = true // Hide error by default
 
-         guard let fromDate = fromDate,
-               let toDate = toDate,
-               let fromSession = FromSessionBtn.title(for: .normal),
-               let toSession = ToSessionBtn.title(for: .normal) else {
-                 // Not all inputs selected yet — silently return
-                 return
-             }
-             
-             // ❌ Validation 1: from date > to date
-             if fromDate > toDate {
-                 showError("To date should be greater than from date")
-                 return
-             }
+        // Always take dates directly from pickers
+        let fromDate = FromDatePicker.date
+        let toDate = toDatePicker.date
 
-             // ❌ Validation 2: same date but invalid session order
-             if Calendar.current.isDate(fromDate, inSameDayAs: toDate) {
-                 if isSecondHalf(session: fromSession) && isFirstHalf(session: toSession) {
-                     showError("From session cannot be after To session on the same day.")
-                     return
-                 }
-             }
-         
-         ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
-
-            let totalDays = calculateDays(from: fromDate, fromSession: fromSession, to: toDate, toSession: toSession)
-            
-         let formattedDays: String
-         if floor(totalDays) == totalDays {
-             formattedDays = String(Int(totalDays))  // e.g. "7"
-         } else {
-             formattedDays = String(totalDays)       // e.g. "7.5"
-         }
-
-         if let leave = editLeaveData{
-             let daysText = "Update for \(formattedDays) Days Leave"
-             ApplyLeaveBtn.setTitle(daysText, for: .normal)
-         }else{
-             let daysText = "Apply for \(formattedDays) Days Leave"
-             ApplyLeaveBtn.setTitle(daysText, for: .normal)
-         }
+        guard let fromSession = FromSessionBtn.title(for: .normal),
+              let toSession = ToSessionBtn.title(for: .normal) else {
+            // Not all inputs selected yet — silently return
+            return
         }
+
+        // ❌ Validation 1: from date > to date
+        if fromDate > toDate {
+            showError("To date should be greater than from date")
+            return
+        }
+
+        // ❌ Validation 2: same date but invalid session order
+        if Calendar.current.isDate(fromDate, inSameDayAs: toDate) {
+            if isSecondHalf(session: fromSession) && isFirstHalf(session: toSession) {
+                showError("From session cannot be after To session on the same day.")
+                return
+            }
+        }
+
+        // Enable / disable Apply button
+        ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
+
+        // ✅ Calculate total days
+        let totalDays = calculateDays(
+            from: fromDate,
+            fromSession: fromSession,
+            to: toDate,
+            toSession: toSession
+        )
+
+        // Format day count (int vs half-day decimal)
+        let formattedDays: String
+        if floor(totalDays) == totalDays {
+            formattedDays = String(Int(totalDays)) // e.g. "7"
+        } else {
+            formattedDays = String(totalDays)      // e.g. "7.5"
+        }
+
+        // Update button title
+        if let leave = editLeaveData {
+            ApplyLeaveBtn.setTitle("Update for \(formattedDays) Days Leave", for: .normal)
+        } else {
+            ApplyLeaveBtn.setTitle("Apply for \(formattedDays) Days Leave", for: .normal)
+        }
+    }
+
     
     func showError(_ message: String) {
         let fullMessage = "* \(message)"

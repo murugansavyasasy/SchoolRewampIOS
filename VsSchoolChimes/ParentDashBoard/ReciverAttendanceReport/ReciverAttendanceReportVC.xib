@@ -39,6 +39,7 @@
                 <outlet property="noResordStack" destination="n7d-EO-BNb" id="K3q-5t-W1U"/>
                 <outlet property="percentagesBaseView" destination="voa-cS-Hrw" id="JJm-cZ-PHH"/>
                 <outlet property="requestHistoryDefLbl" destination="bG9-eQ-WAu" id="oNh-e4-gRw"/>
+                <outlet property="studentNameLbl" destination="vo8-cw-EVm" id="8uz-pb-ttg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -50,22 +51,34 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lvu-Qf-qIH">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="180"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqu-d0-EaJ">
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="M1S-90-TWU">
                             <rect key="frame" x="10" y="69" width="373" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="35" id="EJQ-gx-vuQ"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                            </state>
-                            <connections>
-                                <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="Hsq-mo-5Qt"/>
-                            </connections>
-                        </button>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqu-d0-EaJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="EJQ-gx-vuQ"/>
+                                        <constraint firstAttribute="width" constant="35" id="Wcl-P1-Uvw"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="Hsq-mo-5Qt"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vo8-cw-EVm">
+                                    <rect key="frame" x="35" y="7.3333333333333268" width="338" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqM-ig-LyO">
                             <rect key="frame" x="30" y="114" width="348" height="25.333333333333343"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
@@ -75,11 +88,11 @@
                     </subviews>
                     <color key="backgroundColor" name="PrimeryColor"/>
                     <constraints>
+                        <constraint firstItem="M1S-90-TWU" firstAttribute="leading" secondItem="lvu-Qf-qIH" secondAttribute="leading" constant="10" id="4wD-We-mov"/>
+                        <constraint firstAttribute="trailing" secondItem="M1S-90-TWU" secondAttribute="trailing" constant="10" id="5cU-et-aXf"/>
                         <constraint firstAttribute="bottom" secondItem="lqM-ig-LyO" secondAttribute="bottom" constant="40.670000000000002" id="6PI-ga-MnJ"/>
-                        <constraint firstItem="lqM-ig-LyO" firstAttribute="top" secondItem="kqu-d0-EaJ" secondAttribute="bottom" constant="10" id="CdZ-q3-Dc5"/>
-                        <constraint firstAttribute="trailing" secondItem="kqu-d0-EaJ" secondAttribute="trailing" constant="10" id="Ga7-aT-YHg"/>
+                        <constraint firstItem="lqM-ig-LyO" firstAttribute="top" secondItem="M1S-90-TWU" secondAttribute="bottom" constant="10" id="Jgd-dn-laZ"/>
                         <constraint firstItem="lqM-ig-LyO" firstAttribute="leading" secondItem="lvu-Qf-qIH" secondAttribute="leading" constant="30" id="U7H-gI-gJA"/>
-                        <constraint firstItem="kqu-d0-EaJ" firstAttribute="leading" secondItem="lvu-Qf-qIH" secondAttribute="leading" constant="10" id="iUA-OC-lmR"/>
                         <constraint firstAttribute="trailing" secondItem="lqM-ig-LyO" secondAttribute="trailing" constant="15" id="qzu-Jb-Hbp"/>
                     </constraints>
                 </view>
@@ -486,8 +499,8 @@
                 <constraint firstItem="lvu-Qf-qIH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Jp9-Eb-xPu"/>
                 <constraint firstAttribute="trailing" secondItem="lvu-Qf-qIH" secondAttribute="trailing" id="Msd-mr-r75"/>
                 <constraint firstItem="bej-tn-ch4" firstAttribute="top" secondItem="lvu-Qf-qIH" secondAttribute="bottom" id="fVw-Xq-HhG"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="kqu-d0-EaJ" secondAttribute="top" constant="-10" id="kbu-6l-8Jm"/>
                 <constraint firstItem="bej-tn-ch4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lPM-BG-8uT"/>
+                <constraint firstItem="M1S-90-TWU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="mK5-XU-LFQ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bej-tn-ch4" secondAttribute="trailing" id="nEw-2p-hUO"/>
             </constraints>
             <point key="canvasLocation" x="129.00763358778624" y="20.422535211267608"/>
@@ -513,7 +526,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

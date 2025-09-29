@@ -72,7 +72,7 @@ class BookedSlotTV: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        cellView.clipsToBounds = true
         cellView.applyVerticalGradient(
             topColor: UIColor(
                 red: 184/255,

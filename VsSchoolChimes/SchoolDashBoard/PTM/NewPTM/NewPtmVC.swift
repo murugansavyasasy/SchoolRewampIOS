@@ -29,6 +29,7 @@ class NewPtmVC: UIViewController, Datepicker {
     @IBOutlet weak var plusBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var removeDateBtn: UIButton!
+    @IBOutlet weak var menuNameLbl: UILabel!
     
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -49,7 +50,7 @@ class NewPtmVC: UIViewController, Datepicker {
         topView.layer.cornerRadius = 20
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "")
+        menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         
         selectDateBtn.setTitle(CommonStringFile.all, for: .normal)
         selectDateBtn.semanticContentAttribute = .forceRightToLeft

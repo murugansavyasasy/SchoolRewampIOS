@@ -452,8 +452,19 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         searchBtn.isHidden = false
         let vc = PtmHistoryVC(nibName: nil, bundle: nil)
         addChild(vc)
-        vc.view.frame = containerView.bounds
+//        vc.view.frame = containerView.bounds
+//        containerView.addSubview(vc.view)
         containerView.addSubview(vc.view)
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            vc.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            vc.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            vc.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            vc.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            vc.view.widthAnchor.constraint(equalTo: containerView.widthAnchor) // Important for scroll
+        ])
+
         vc.didMove(toParent: self)
         self.childVc = vc
     }

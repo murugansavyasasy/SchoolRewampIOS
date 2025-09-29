@@ -19,6 +19,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var nameLbl: UILabel!
     
     var slotData: SlotEventDetail?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -26,7 +27,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backBtn.configureAsBackButton(firstLine: PTMString.ptm, secondLine: staffDetails?.school_name ?? "")
+        nameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         tv.register(UINib(nibName: CellConfingName.MeetingDataTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDataTV)
         tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self
