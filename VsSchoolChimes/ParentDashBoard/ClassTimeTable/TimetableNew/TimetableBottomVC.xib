@@ -36,19 +36,19 @@
                             <rect key="frame" x="10" y="50.333333333333314" width="373" height="767.66666666666674"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Nodata" translatesAutoresizingMaskIntoConstraints="NO" id="SSV-RJ-syG">
-                                    <rect key="frame" x="30" y="0.0" width="313" height="300"/>
+                                    <rect key="frame" x="30" y="0.0" width="313" height="280"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="300" id="ykJ-O7-3nr"/>
+                                        <constraint firstAttribute="height" constant="280" id="ykJ-O7-3nr"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No timetable available." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hf9-Pr-kOi">
-                                    <rect key="frame" x="30" y="300" width="313" height="20.333333333333314"/>
+                                    <rect key="frame" x="30" y="280" width="313" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nEc-yd-wMV">
-                                    <rect key="frame" x="0.0" y="320.33333333333337" width="373" height="447.33333333333337"/>
+                                    <rect key="frame" x="0.0" y="300.33333333333337" width="373" height="467.33333333333337"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
                             </subviews>
@@ -88,7 +88,7 @@
     <resources>
         <image name="Nodata" width="6000" height="4000"/>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

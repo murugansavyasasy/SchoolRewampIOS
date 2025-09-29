@@ -888,7 +888,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                         
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
-                            
+                            self.dismiss(animated: true)
                         }
                     }
                     

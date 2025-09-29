@@ -45,7 +45,10 @@ class shareAndDownloadVc: UIViewController {
                         CustomAlert.showAlertWithOkAction(
                             title:"",
                             message: "\(filename) Downloaded successfully ✅",
-                            on: self)
+                            on: self){
+                                self.dismiss(animated: true)
+                            }
+                        
                     case .failure(let error):
                         CustomAlert.showAlertWithOkAction(
                             title:"",

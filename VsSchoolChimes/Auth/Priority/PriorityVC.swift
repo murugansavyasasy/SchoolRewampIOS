@@ -44,9 +44,9 @@ class PriorityVC: UIViewController {
     
         StyleAndTranslate()
         
-        gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-       
-        gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+//        gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+//       
+//        gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.tintColor = .white
     
         let nib1 = UINib(nibName: CellConfingName.SchoolTVCell, bundle: nil)
@@ -61,6 +61,11 @@ class PriorityVC: UIViewController {
     
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        apply_gradients()
+    }
  
    func StyleAndTranslate(){
         
@@ -124,6 +129,50 @@ class PriorityVC: UIViewController {
        teacherButton.setTitle(rollname, for: .normal)
     }
     
+    func apply_gradients() {
+        // Always apply gradient for NextButtonView
+        gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor, UIColor.systemTeal.cgColor])
+        
+        // Check visibility of teacher and parent buttons
+        let teacherVisible = !teacherButton.isHidden
+        let parentVisible = !ParentButton.isHidden
+        
+        if teacherVisible && parentVisible {
+            // Both visible → highlight teacher by default if nothing selected
+            if login_astype == 0 { // no selection yet
+                login_astype = 1
+            }
+        } else if teacherVisible {
+            // Only teacher visible
+            login_astype = 1
+        } else if parentVisible {
+            // Only parent visible
+            login_astype = 2
+        }
+        
+        // Apply gradient based on login_astype
+        if teacherVisible {
+            if login_astype == 1 {
+                gradientcolours(button: teacherButton, colours: [UIColor.blue.cgColor, UIColor.systemTeal.cgColor])
+                teacherButton.setTitleColor(.white, for: .normal)
+            } else {
+                gradientcolours(button: teacherButton, colours: [UIColor.clear.cgColor, UIColor.clear.cgColor])
+                teacherButton.setTitleColor(.black, for: .normal)
+            }
+        }
+        
+        if parentVisible {
+            if login_astype == 2 {
+                gradientcolours(button: ParentButton, colours: [UIColor.blue.cgColor, UIColor.systemTeal.cgColor])
+                ParentButton.setTitleColor(.white, for: .normal)
+            } else {
+                gradientcolours(button: ParentButton, colours: [UIColor.clear.cgColor, UIColor.clear.cgColor])
+                ParentButton.setTitleColor(.black, for: .normal)
+            }
+        }
+    }
+
+    
     @IBAction func teacherAct(_ sender: Any) {
         
         if staff_role == PriorityType.is_principal{
@@ -142,13 +191,13 @@ class PriorityVC: UIViewController {
             ProceedInstructionLbl.isHidden = false
         }
         
-        gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        teacherButton.setTitleColor(.white, for:.normal)
-        
-        
-        gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        ParentButton.setTitleColor(.black, for:.normal)
-        
+//        gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+//        teacherButton.setTitleColor(.white, for:.normal)
+//        
+//        
+//        gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+//        ParentButton.setTitleColor(.black, for:.normal)
+        apply_gradients()
         login_astype = 1
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
@@ -163,16 +212,16 @@ class PriorityVC: UIViewController {
        
         TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Parent"
         
-        gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        ParentButton.setTitleColor(.white, for:.normal)
+//        gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+//        ParentButton.setTitleColor(.white, for:.normal)
+//        
+//        //teacherButton.backgroundColor = .clear
+//        
+//        
+//        gradientcolours(button: teacherButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+//        teacherButton.setTitleColor(.black, for:.normal)
         
-        //teacherButton.backgroundColor = .clear
-        
-        
-        gradientcolours(button: teacherButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        teacherButton.setTitleColor(.black, for:.normal)
-        
-        
+        apply_gradients()
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()

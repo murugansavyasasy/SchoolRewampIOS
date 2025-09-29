@@ -549,8 +549,6 @@ class MarkAttendenceVC: UIViewController {
     //MARK: Attendance report API Call
     func student_attendance_report(){
         
-        
-        
         let Param = [
             AttendanceReportStringFile.from_date :  selectedDate,
             AttendanceReportStringFile.to_date : selectedDate,
@@ -603,7 +601,9 @@ class MarkAttendenceVC: UIViewController {
                             graphDownImg.image = UIImage(named: "AbsentGraph")
 //                            absent
                             
-                        } else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
+                        } else if  Int(absentPercentage.rounded(.down)) == 100 {
+                            
+                        }else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
                             let value = Int(presentPercentage.rounded(.down))
                           
                             graphDownImg.image = UIImage(named: "presentGraps")

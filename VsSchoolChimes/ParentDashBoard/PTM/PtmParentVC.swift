@@ -25,6 +25,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var StudentNameLbl: UILabel!
     
     var dateComponents: [(month: String, day: String, date: Date, count: String?)] = []
     var selectedIndex: IndexPath?
@@ -65,7 +66,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         
         scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting, for: .normal)
         yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)

@@ -163,6 +163,10 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
             
             // Reload just that row to reflect height change
             self.tableView.reloadRows(at: [currentIndexPath], with: .automatic)
+            
+            if slotData.count == 0{
+                self.dismiss(animated: true)
+            }
         }
         
         return cell

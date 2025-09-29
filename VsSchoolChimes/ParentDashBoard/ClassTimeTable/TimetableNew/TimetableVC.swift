@@ -15,6 +15,8 @@ class TimetableVC: UIViewController {
     @IBOutlet weak var MenuTitleLbl: UILabel!
     @IBOutlet weak var TodayDateLbl: UILabel!
     @IBOutlet weak var TodayDefLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
+    
     
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     let daysFullname = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -42,16 +44,15 @@ class TimetableVC: UIViewController {
 
             // UI setup
             BackBtn.applyBackButton()
-            BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-            MenuTitleLbl.setFont(style: .header, size: 20)
-           
+        
             TodayDefLbl.setFont(style: .body, size: FontSize.BodySize)
             TodayDateLbl.setFont(style: .body, size: FontSize.BodySize)
+           // MenuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
             
             let Name = studentDetails?.name ?? ""
             let Standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         
-        BackBtn.configureAsBackButton(firstLine: Name, secondLine: Standard)
+        studentNameLbl.configureAsBackTitle(firstLine: Name, secondLine: Standard)
 
             // Collection view setup
             cv.register(UINib(nibName: CellConfingName.WeekDaysNameCollectionViewCell, bundle: nil),
@@ -156,9 +157,9 @@ extension TimetableVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
-//        bottomSheetVC?.DayLbl.text = daysFullname[indexPath.row]
-//        bottomSheetVC?.DayId = indexPath.row + 1
-//        bottomSheetVC?.get_Timetable() // refresh data
+        bottomSheetVC?.DayLbl.text = daysFullname[indexPath.row]
+        bottomSheetVC?.DayId = indexPath.row + 1
+        bottomSheetVC?.get_Timetable() // refresh data
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         collectionView.reloadData()
     }

@@ -109,7 +109,7 @@ class AttachmentsVc: UIViewController {
                                 description: item.description ?? "",
                                 date: item.date ?? "",
                                 time: item.time ?? "",
-                                sender_info: item.sender_info ?? "", sent_by: "", is_unread: item.is_unread ?? false, id: item.id ?? "", headerID: item.header_id ,can_edit: false,can_delete: false
+                                sender_info: item.sender_info ?? "", sent_by: item.sent_by, is_unread: item.is_unread ?? false, id: item.id ?? "", headerID: item.header_id ,can_edit: false,can_delete: false
                                 
                             )
                             self.attachmentHeaders.append(header)
@@ -257,7 +257,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             .configure(
                 with: attachmentFiles?[indexPath.section],
                 sendBy: ("Posted By : ") + (
-                    attachmentHeaders[indexPath.section].sender_info ?? ""
+                    attachmentHeaders[indexPath.section].sent_by ?? ""
                 )
             )
         cell.layoutIfNeeded()
@@ -273,7 +273,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             .configure(
                 with: attachmentFiles?[indexPath.section],
                 sendBy: ("Posted By : ") + (
-                    attachmentHeaders[indexPath.section].sender_info ?? ""
+                    attachmentHeaders[indexPath.section].sent_by ?? ""
                 )
             )
         return cell.collectionContentHeight() + 60
@@ -314,7 +314,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                     description: item.description ?? "",
                     date: item.date ?? "",
                     time: item.time ?? "",
-                    sender_info: item.sender_info ?? "", sent_by: "",
+                    sender_info: item.sender_info ?? "", sent_by: item.sent_by,
                     is_unread: item.is_unread ?? false,
                     id: item.id ?? "", headerID: item.header_id,
                     can_edit: false,can_delete: false

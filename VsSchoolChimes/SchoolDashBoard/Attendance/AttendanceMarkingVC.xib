@@ -222,7 +222,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u7j-2T-USK">
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
                                     <subviews>
-                                        <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="oUz-QG-ein">
+                                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="oUz-QG-ein">
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </searchBar>

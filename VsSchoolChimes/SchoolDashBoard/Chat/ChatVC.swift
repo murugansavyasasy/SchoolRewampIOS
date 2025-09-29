@@ -8,6 +8,7 @@
 import UIKit
 
 class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatTableViewCellDelegate,UITextFieldDelegate, UITextViewDelegate {
+    
 
     @IBOutlet weak var noRecordlbl: UILabel!
     @IBOutlet weak var replayStackView: UIStackView!
@@ -182,7 +183,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                         timeStamp: formattedDateStatus(
                             from: message?.asked_on ?? ""
                         ) ,
-                        isSender: message?.my_question ?? false
+                        isSender: message?.my_question ?? false, studentName: ""
                     )
             }
             
@@ -191,7 +192,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                 cell
                     .configure(
                         with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
-                        isSender: false
+                        isSender: false, studentName: ""
                     )
             }
         }else{
@@ -206,7 +207,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     }
     
     // MARK: - ChatTableViewCellDelegate
-    func didSlideToReply(for message: String) {
+    func didSlideToReply(for message: String,studentName: String) {
         print("Reply to: \(message)")
         
         // Show a reply indicator (e.g., move focus to an input field with the selected message)

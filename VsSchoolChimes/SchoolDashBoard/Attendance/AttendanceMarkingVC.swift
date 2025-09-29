@@ -43,6 +43,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        StyleAndTranslater()
+        
         let standard = StandardString + " - " + SectionString
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: standard)
         
@@ -67,6 +69,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate {
         
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
         searchStack.isHidden = true
         
         tv.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)

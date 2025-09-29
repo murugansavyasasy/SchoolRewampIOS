@@ -16,7 +16,6 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabView: UIView!
     @IBOutlet weak var nameLbl: UILabel!
-    @IBOutlet weak var standerdLbl: UILabel!
     @IBOutlet weak var todayCount: UIButton!
     @IBOutlet weak var totalCount: UIButton!
     @IBOutlet weak var withFileCount: UIButton!
@@ -48,9 +47,9 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         tabView.layer.borderWidth = 0.5
         tabView.layer.borderColor = UIColor.lightGray.cgColor
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        standerdLbl.setFont(style: .body, size: FontSize.BodySize)
-        nameLbl.text = childDetails?.name
-        standerdLbl.text = "\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")"
+        let name = childDetails?.name ?? ""
+        let standard = "\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")"
+        nameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
         customizeSearchBar()
