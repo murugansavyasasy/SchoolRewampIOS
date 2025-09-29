@@ -41,7 +41,7 @@ class LSRWVC: UIViewController, FilterDelegate {
         "Reading",
         "Writing",
         "Completed",
-        "Pending"
+        "Active"
     ]
     
     // MARK: - Lifecycle
@@ -134,12 +134,11 @@ class LSRWVC: UIViewController, FilterDelegate {
         case "All":
             // Restore all tasks (reset)
             filterTask = recentTasks
-            
-        case "Completed":
-            updateSection(.completed(completedTask))
-        case "Pending":
-            let pending = activeTask.filter { $0.is_submitted == false }
-            updateSection(.active(pending))
+//        case "Completed":
+//            updateSection(.completed(completedTask))
+//        case "Active":
+//            let pending = activeTask.filter { $0.is_submitted == false }
+//            updateSection(.active(pending))
         default:
             let filteredActive = activeTask.filter { $0.activity_type?.displayName == selectedFilter }
             let filteredCompleted = completedTask.filter { $0.activity_type?.displayName == selectedFilter }

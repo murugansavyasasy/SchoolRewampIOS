@@ -32,6 +32,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var createBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
@@ -60,7 +61,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchBar.delegate = self
         searchBar.addDoneButton()
         createBtn.layer.cornerRadius = createBtn.frame.height / 2
-        
+        searchBar.searchTextField.addDoneButton()
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -74,6 +75,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchView?.isHidden = !hide
         if hide {
             searchBar?.becomeFirstResponder()
+            filteredSections = allEventSections
+            self.historyTable.reloadData()
         } else {
             searchBar?.resignFirstResponder()
         }
@@ -151,6 +154,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     self.noDataLbl.text = response.message
                     self.nodataImg.isHidden = hasData
                     self.searchBar.isHidden = !hasData
+                    self.searchBtn.isHidden = hasData
                     self.historyTable.reloadData()
                     
                 case .failure(let error):

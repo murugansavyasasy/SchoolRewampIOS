@@ -22,6 +22,7 @@
                 <outlet property="schoolDropDown" destination="ycj-FI-GlR" id="frp-Mq-eeP"/>
                 <outlet property="schoolName" destination="qY7-5j-tu6" id="s0p-GR-0qE"/>
                 <outlet property="searchBar" destination="OZ7-nr-L1Y" id="hcM-0V-nbS"/>
+                <outlet property="searchBtn" destination="YM7-28-utu" id="Ddg-4j-tYj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
