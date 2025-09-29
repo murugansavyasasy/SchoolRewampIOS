@@ -50,6 +50,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     }
 
     
+    @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -57,6 +58,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     @IBOutlet weak var FilterCV: UICollectionView!
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
     
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var messageData: [ManagemantMessageData]?
@@ -69,7 +71,9 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+//        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+        menuNameLbl.text = MenuStringFile.selectedMenuName
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         BackBtn.applyBackButton()
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         
@@ -77,11 +81,13 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
+        SearchBar.isHidden = true
         SearchBar.searchTextField.addDoneButton()
+        SearchBar.placeholder = CommonStringFile.Search
+        SearchBar.backgroundImage = UIImage()
         SearchBar.delegate = self
         
         FilterCV.isHidden = true
-        SearchBar.isHidden = true
         NoDataLbl.isHidden = true
         NoDataImage.isHidden = true
         
@@ -119,7 +125,6 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     NoDataLbl.text = success.message
                     NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
-                    SearchBar.isHidden = (messageData?.isEmpty ?? false)
                     tv.reloadData()
                 }
                 
@@ -128,7 +133,6 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     
                     NoDataImage.isHidden = false
                     NoDataLbl.isHidden = false
-                    SearchBar.isHidden = true
                     NoDataLbl.text = error.localizedDescription
                     tv.reloadData()
                 }
@@ -151,7 +155,6 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     NoDataLbl.text = success.message
                     NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
-                    SearchBar.isHidden = (messageData?.isEmpty ?? false)
                     tv.reloadData()
                 }
                 
@@ -160,7 +163,6 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                     
                     NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
-                    SearchBar.isHidden = (messageData?.isEmpty ?? false)
                     NoDataLbl.text = error.localizedDescription
                 }
             }
@@ -254,6 +256,28 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     @IBAction func backAct() {
         dismiss(animated: true)
     }
+    
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            SearchBar.isHidden = false
+            SearchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            SearchBar.isHidden = true
+            SearchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            SearchBar.searchTextField.text = ""
+            SearchData = messageData
+            NoDataImage.isHidden = !(SearchData?.isEmpty ?? false)
+            NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+            NoDataLbl.text = CommonStringFile.No_data_found
+            tv.reloadData()
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SearchData?.count ?? 0

@@ -57,7 +57,8 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var acodemicdropView: UIView!
-
+    @IBOutlet weak var searchBtn: UIButton!
+    
     // MARK: - Properties
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
@@ -95,7 +96,29 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         dismiss(animated: true)
     }
     
-   
+
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            searchBar.isHidden = true
+            searchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            FilterHomeWorkList = homeWorkList
+            noDataFound.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
+            nodataFoundLbl.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
+            Cv.reloadData()
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -120,7 +143,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         acodemicdropView.setShadow()
         standerdView.setShadow(cornerRadius: 8)
         sectionView.setShadow(cornerRadius: 8)
-        searchBar.addDoneButton()
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         dateView.layer.borderWidth = 0.5
         dateView.layer.cornerRadius = 8
@@ -135,8 +157,9 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         sectionView.layer.borderColor = UIColor.lightGray.cgColor
         sectionView.layer.borderWidth = 0.5
 
-        searchBar.addDoneButton()
+        searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
+        searchBar.backgroundImage = UIImage()
         dateLbl.setFont(style: .title, size: FontSize.TitleSize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         SectionLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -345,6 +368,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                     self.homeWorkList = response.data
                     self.nodataFoundLbl.isHidden = response.status ?? false
                     self.noDataFound.isHidden = response.status ?? false
+                    self.searchBtn.isHidden = !(response.status ?? false)
 //                    self.Cv.isHidden = !(response.status ?? false)
                     self.nodataFoundLbl.text = response.message
                     self.Cv.delegate = self
@@ -534,6 +558,9 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
                 $0.description?.lowercased().contains(lower) == true
             }
         }
+        noDataFound.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
+        nodataFoundLbl.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
+        nodataFoundLbl.text = CommonStringFile.No_data_found
         Cv.reloadData()
     }
 }

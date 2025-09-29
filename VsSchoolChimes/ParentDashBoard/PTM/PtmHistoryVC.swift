@@ -53,7 +53,8 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         continueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         continueBtn.layer.cornerRadius = 8
-    
+        tv.showsVerticalScrollIndicator = false
+        tv.showsHorizontalScrollIndicator = false
         tv.register(UINib(nibName: CellConfingName.BookedSlotTV, bundle: nil), forCellReuseIdentifier: CellConfingName.BookedSlotTV)
         tv.delegate = self
         tv.dataSource = self

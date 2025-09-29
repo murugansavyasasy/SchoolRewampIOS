@@ -217,6 +217,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         prevButton.isEnabled = !isCurrentMonth(calendar.currentPage)
         prevButton.tintColor = isCurrentMonth(calendar.currentPage) ? .darkGray : .systemBlue
         
+        calendar.appearance.todayColor = .clear      // removes the circle background
+        calendar.appearance.titleTodayColor = .systemBlue   // set text color for today
+        
+        calendar.appearance.selectionColor = .backGroundClr
+        calendar.appearance.titleSelectionColor = .white
+        
         calendarBaseview.layer.shadowColor = UIColor.black.cgColor   // shadow color
         calendarBaseview.layer.shadowOpacity = 0.2                   // transparency (0 = invisible, 1 = solid)
         calendarBaseview.layer.shadowOffset = CGSize(width: 0, height: 4) // shadow position
@@ -296,7 +302,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         fromTimeLbl.text = PTMString.startWith
         toTimeLbl.text = PTMString.endWith
         DurationAndBreakDefLbl.text = PTMString.durationAndBreak
-        durationLbl.text = PTMString.duration
+        durationLbl.text = "Slot Duration"//PTMString.duration
         minutesDefLbl.text = PTMString.minutes
         needBreakDefLbl.text = PTMString.needBreakBetweenSlots
         breakAfterLbl.text = PTMString.breakAfter
