@@ -190,13 +190,13 @@
                                     </subviews>
                                 </stackView>
                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="6q3-II-2pU">
-                                    <rect key="frame" x="10" y="60" width="373" height="300"/>
+                                    <rect key="frame" x="10" y="75" width="373" height="300"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="300" id="Hx7-x5-Yz3"/>
                                     </constraints>
                                 </imageView>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rn-rG-H72">
-                                    <rect key="frame" x="10" y="370" width="373" height="20.333333333333314"/>
+                                    <rect key="frame" x="10" y="385" width="373" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -208,11 +208,11 @@
                                 <constraint firstItem="6q3-II-2pU" firstAttribute="leading" secondItem="j6P-LG-bCQ" secondAttribute="leading" id="4v9-4r-c5d"/>
                                 <constraint firstItem="6q3-II-2pU" firstAttribute="trailing" secondItem="j6P-LG-bCQ" secondAttribute="trailing" id="5Zx-Da-VLY"/>
                                 <constraint firstItem="8rn-rG-H72" firstAttribute="trailing" secondItem="6q3-II-2pU" secondAttribute="trailing" id="BRw-rE-TFr"/>
-                                <constraint firstItem="6q3-II-2pU" firstAttribute="top" secondItem="j6P-LG-bCQ" secondAttribute="top" constant="50" id="K3J-aK-1M7"/>
                                 <constraint firstItem="j6P-LG-bCQ" firstAttribute="leading" secondItem="dHb-EU-pjT" secondAttribute="leading" constant="10" id="XqE-Jw-qph"/>
                                 <constraint firstItem="j6P-LG-bCQ" firstAttribute="top" secondItem="dHb-EU-pjT" secondAttribute="top" constant="10" id="a5n-c5-xkj"/>
                                 <constraint firstItem="8rn-rG-H72" firstAttribute="leading" secondItem="6q3-II-2pU" secondAttribute="leading" id="g3b-st-COm"/>
                                 <constraint firstItem="8rn-rG-H72" firstAttribute="top" secondItem="6q3-II-2pU" secondAttribute="bottom" constant="10" id="nVG-2F-EJy"/>
+                                <constraint firstItem="6q3-II-2pU" firstAttribute="top" secondItem="0Ws-p1-NZE" secondAttribute="bottom" constant="10" id="ohA-OW-IxY"/>
                                 <constraint firstAttribute="trailing" secondItem="j6P-LG-bCQ" secondAttribute="trailing" constant="10" id="uJI-jB-Ipj"/>
                             </constraints>
                         </view>

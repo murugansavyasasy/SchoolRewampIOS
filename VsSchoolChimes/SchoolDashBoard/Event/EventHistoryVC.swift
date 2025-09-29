@@ -75,8 +75,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchView?.isHidden = !hide
         if hide {
             searchBar?.becomeFirstResponder()
-            filteredSections = allEventSections
-            self.historyTable.reloadData()
+           
         } else {
             searchBar?.resignFirstResponder()
         }
@@ -93,6 +92,12 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {
+            filteredSections = allEventSections
+            let hasData = !self.filteredSections.isEmpty
+            self.noDataLbl.isHidden = hasData
+            self.nodataImg.isHidden = hasData
+            self.historyTable.reloadData()
+            searchBar.searchTextField.text = ""
             searchBar?.resignFirstResponder()
         }
     }
@@ -153,8 +158,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     self.noDataLbl.isHidden = hasData
                     self.noDataLbl.text = response.message
                     self.nodataImg.isHidden = hasData
-                    self.searchBar.isHidden = !hasData
-                    self.searchBtn.isHidden = hasData
+                    self.searchBtn.isHidden = !hasData
                     self.historyTable.reloadData()
                     
                 case .failure(let error):
@@ -472,6 +476,9 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
                     }
                 }
             }
+            let hasData = !self.filteredSections.isEmpty
+            self.noDataLbl.isHidden = hasData
+            self.nodataImg.isHidden = hasData
             self.historyTable.reloadData()
         }
     }

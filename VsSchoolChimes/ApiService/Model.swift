@@ -2267,6 +2267,8 @@ struct SkillSubmission: Codable {
     let std_sec: String?
     let student_submited_on: String?
     let is_submitted: Bool?
+    let file_path: [FilePath]?
+    let created_on: String?
 }
 // MARK: - Main Response Structure
 struct UserProfileResponse: Codable {

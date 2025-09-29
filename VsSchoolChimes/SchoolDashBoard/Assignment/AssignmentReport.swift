@@ -198,6 +198,13 @@ class AssignmentReport: UIViewController, SelectedId {
                 searchBar?.becomeFirstResponder()
             } else {
                 searchBar?.resignFirstResponder()
+                filteredData = data
+                let noResults = filteredData.isEmpty
+                noDataLabel.text = noResults ? "No Records Found" : ""
+                noDataLabel.isHidden = !noResults
+                noRecordImage.isHidden = !noResults
+                searchBar.searchTextField.text = ""
+                reportTable.reloadData()
             }
     }
     @objc func deletedTapped(_ sender: UIButton) {

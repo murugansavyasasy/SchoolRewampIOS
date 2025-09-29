@@ -8,6 +8,8 @@
 import UIKit
 
 class LSRWPerformenceTVC: UITableViewCell {
+    @IBOutlet weak var tittleLbl: UILabel!
+    @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var persantageLbl: UILabel!
     @IBOutlet weak var pesantageProgress: UIProgressView!
     @IBOutlet weak var classLbl: UILabel!

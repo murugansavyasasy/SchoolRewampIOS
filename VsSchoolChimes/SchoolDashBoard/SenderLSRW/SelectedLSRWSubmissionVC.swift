@@ -426,6 +426,10 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.nameLbl.text = student.student_name
+            cell.tittleLbl.isHidden = false
+            cell.tittleLbl.text = student.title
+            cell.descriptionLbl.isHidden = false
+            cell.descriptionLbl.text = student.description
             cell.classLbl.text = student.std_sec
             cell.pesantageProgress.isHidden = true
             cell.persantageLbl.text = student.remark
