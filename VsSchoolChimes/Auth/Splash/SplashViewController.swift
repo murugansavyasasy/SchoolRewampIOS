@@ -65,7 +65,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var gradientView: UIView!
     @IBOutlet weak var circleView: UIView!
     @IBOutlet weak var okBtn: UIButton!
-    @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var bottumSheet: UIView!
     @IBOutlet weak var developerDescript: UILabel!
     
@@ -97,14 +96,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         }
         configureLanguageLayout()
         proceedWithAppFlow()
-        
-        // Load GIF
-//        if let animatedImage = loadGif(named: "Splach") {
-//            imgview.image = animatedImage
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-//                self?.vibrateDevice()
-//            }
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -173,7 +164,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         animateBellEntrance()
         animateTextElements()
         animateLoadingElements()
-//        startBellRingingAnimation()
         startLogoRingAnimation()
     }
     
@@ -217,21 +207,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             self?.startLoadingDotsAnimation()
         }
     }
-    
-//    private func startBellRingingAnimation() {
-//        let anim = CABasicAnimation(keyPath: "transform.rotation")
-//        anim.fromValue = -0.1
-//        anim.toValue = 0.1
-//        anim.duration = 0.5
-//        anim.autoreverses = true
-//        anim.repeatCount = .infinity
-//        anim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-//        bellAnimation = anim
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-//            self?.bellImageView.layer.add(anim, forKey: "bellRing")
-//        }
-//    }
     private func startLogoRingAnimation() {
         // Ensure shadow is configured
         bellImageView.layer.shadowColor = UIColor.systemYellow.cgColor
@@ -673,32 +648,5 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         false
     }
-    
-    // MARK: - GIF Loader
-    func loadGif(named name: String) -> UIImage? {
-        guard let path = Bundle.main.path(forResource: name, ofType: "gif"),
-              let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
-              let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return nil
-        }
-        
-        var images: [UIImage] = []
-        var duration: Double = 0.0
-        let count = CGImageSourceGetCount(source)
-        
-        for i in 0..<count {
-            if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
-                images.append(UIImage(cgImage: cgImage))
-                if let props = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [CFString: Any],
-                   let gifInfo = props[kCGImagePropertyGIFDictionary] as? [CFString: Any],
-                   let frameDuration = gifInfo[kCGImagePropertyGIFUnclampedDelayTime] as? Double ?? gifInfo[kCGImagePropertyGIFDelayTime] as? Double {
-                    duration += frameDuration
-                } else {
-                    duration += 0.1
-                }
-            }
-        }
-        
-        return duration > 0 ? UIImage.animatedImage(with: images, duration: duration) : nil
-    }
+
 }

@@ -74,7 +74,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     private func registerTableCells() {
         tableView.register(UINib(nibName: "LSRWReportTVC", bundle: nil), forCellReuseIdentifier: "LSRWReportTVC")
         tableView.register(UINib(nibName: "LSRWProgressTVC", bundle: nil), forCellReuseIdentifier: "LSRWProgressTVC")
-        tableView.register(UINib(nibName: "LSRWPerformenceTVC", bundle: nil), forCellReuseIdentifier: "LSRWPerformenceTVC")
+        tableView.register(UINib(nibName: "LSRWTaskTVC", bundle: nil), forCellReuseIdentifier: "LSRWTaskTVC")
     }
     
     // MARK: - API Call
@@ -144,8 +144,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         let monthlyReport = MonthlyReport(weeklyReport: weeklyReports, topPerformance: topPerformers)
 
         let studentList = data.today_submitted ?? []
-
-        // ✅ Overview
+        let uniqueStudentList = filterArray(studentList:studentList)
         var filterArray: [Overview] = []
         if let todaySubmitted = data.today_submitted {
             filterArray.append(Overview(title: "Today Submitted", value: "", subtitle: "\(todaySubmitted.count) Students"))
@@ -166,7 +165,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         // ✅ Final Report Data
         newReportData.append(.filterList(filterArray))
         newReportData.append(.monthlyReport(monthlyReport))
-        newReportData.append(.studentList(studentList))
+        newReportData.append(.studentList(uniqueStudentList))
 
         self.reportData = newReportData
         self.tableView.reloadData()
@@ -360,15 +359,27 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         guard let index = index, let currentData = currentData else { return }
         
         switch index {
-        case 0: updateStudentList(with: currentData.today_submitted ?? [])
-        case 1: updateStudentList(with: currentData.listening?.details ?? [])
-        case 2: updateStudentList(with: currentData.speaking?.details ?? [])
-        case 3: updateStudentList(with: currentData.reading?.details ?? [])
-        case 4: updateStudentList(with: currentData.writing?.details ?? [])
+        case 0: updateStudentList(with: filterArray(studentList:currentData.today_submitted ?? []))
+        case 1: updateStudentList(with: filterArray(studentList:currentData.listening?.details ?? []))
+        case 2: updateStudentList(with: filterArray(studentList:currentData.speaking?.details ?? []))
+        case 3: updateStudentList(with: filterArray(studentList:currentData.reading?.details ?? []))
+        case 4: updateStudentList(with: filterArray(studentList:currentData.writing?.details ?? []))
         default: break
         }
     }
-    
+    func filterArray(studentList: [SkillSubmission]) -> [SkillSubmission] {
+        var seenIds = Set<String>()
+        let uniqueStudentList = studentList.filter { student in
+            guard let id = student.id else { return false }
+            if seenIds.contains(id) {
+                return false
+            } else {
+                seenIds.insert(id)
+                return true
+            }
+        }
+        return uniqueStudentList
+    }
     private func updateStudentList(with students: [SkillSubmission]) {
         guard var reportData = reportData else { return }
         
@@ -416,30 +427,69 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .studentList(let students):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWPerformenceTVC", for: indexPath) as! LSRWPerformenceTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
             let student = students[indexPath.row]
-            
-            if let firstLetter = student.student_name?.first {
-                cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
-            } else {
-                cell.initialBtn.setTitle("-", for: .normal)
-            }
-            
-            cell.nameLbl.text = student.student_name
-            cell.tittleLbl.isHidden = false
-            cell.tittleLbl.text = student.title
-            cell.descriptionLbl.isHidden = false
-            cell.descriptionLbl.text = student.description
-            cell.classLbl.text = student.std_sec
-            cell.pesantageProgress.isHidden = true
-            cell.persantageLbl.text = student.remark
-            cell.persantageLbl.textColor = .systemGreen
+            let task = LSRWTask(
+                id: student.id,
+                detail_id: student.id,
+                title: student.title,
+                description: student.description,
+                sent_to: student.student_id,
+                activity_type: LSRWType(student.activity_type ?? ""),
+                subject: student.subject,
+                date: student.submission_date,
+                time: student.student_submited_on,
+                submitted_date: student.student_submited_on,
+                is_submitted: student.is_submitted,
+                is_unread: nil,
+                sent_by: student.student_name,
+                created_on: student.created_on,
+                iframe: nil,
+                file_size: nil,
+                thumbnail: nil,
+                file_path: student.file_path,
+                test: nil,
+                submittedCount: student.submitted_count,
+                totalCount: student.member_count,
+                submitted_average: student.submitted_average
+            )
+            cell.configure(with: task)
+          
+//            if let firstLetter = student.student_name?.first {
+//                cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
+//            } else {
+//                cell.initialBtn.setTitle("-", for: .normal)
+//            }
+//            
+//            cell.nameLbl.text = student.student_name
+//            cell.tittleLbl.isHidden = false
+//            cell.tittleLbl.text = student.title
+//            cell.descriptionLbl.isHidden = false
+//            cell.descriptionLbl.text = student.description
+//            cell.classLbl.text = student.std_sec
+//            cell.pesantageProgress.isHidden = true
+//            cell.persantageLbl.text = student.remark
+//            cell.persantageLbl.textColor = .systemGreen
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // No header for first section
         if section == 0 { return nil }
+        
+        // Check if there's data for this section
+        guard let sectionData = reportData?[section] else { return nil }
+        
+        // Only show header if there is meaningful data
+        switch sectionData {
+        case .monthlyReport(let report):
+            guard !report.weeklyReport.isEmpty else { return nil }
+        case .studentList(let students):
+            guard !students.isEmpty else { return nil }
+        default:
+            return nil
+        }
         
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGroupedBackground
@@ -447,19 +497,62 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 16, y: 8, width: tableView.frame.width - 32, height: 20))
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .darkGray
-        switch reportData?[section] {
+        
+        switch sectionData {
         case .monthlyReport: label.text = "Monthly Report"
-        case .studentList: label.text = "Students"
+        case .studentList: label.text = "Tasks"
         default: label.text = ""
         }
+        
         headerView.addSubview(label)
         return headerView
     }
+
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 0 : 30
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch reportData?[indexPath.section] {
+        case .studentList(let students):
+            let student = students[indexPath.row]
+            let task = LSRWTask(
+                id: student.id,
+                detail_id: student.id,
+                title: student.title,
+                description: student.description,
+                sent_to: student.sent_by,
+                activity_type: LSRWType(student.activity_type ?? ""),
+                subject: student.subject,
+                date: student.created_on,
+                time: student.student_submited_on,
+                submitted_date: student.student_submited_on,
+                is_submitted: student.is_submitted,
+                is_unread: nil,
+                sent_by: student.student_name,
+                created_on: student.created_on,
+                iframe: nil,
+                file_size: nil,
+                thumbnail: nil,
+                file_path: student.file_path,
+                test: nil,
+                submittedCount: student.submitted_count,
+                totalCount: student.member_count,
+                submitted_average: student.submitted_average
+            )
+            navigateToTaskDetail(task: task)
+
+        default:
+            break
+        }
+    }
+
+    private func navigateToTaskDetail(task: LSRWTask) {
+        let vc = LSRWPreviewVC()
+        vc.modalPresentationStyle = .fullScreen
+        vc.report = task
+        present(vc, animated: true)
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch reportData?[indexPath.section] {
         case .filterList: return 120

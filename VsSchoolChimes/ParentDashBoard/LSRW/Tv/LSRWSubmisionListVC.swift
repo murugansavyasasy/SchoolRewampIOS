@@ -22,7 +22,6 @@ class LSRWSubmisionListVC: UIViewController,
     @IBOutlet weak var remarkView: UIView!
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var percentageLbl: UILabel!
-    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var lsrwCV: UICollectionView!
     @IBOutlet weak var backBtn: UIButton!
     var attachment: [FilePath]?
@@ -34,7 +33,6 @@ class LSRWSubmisionListVC: UIViewController,
     var titleSting:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLbl.text = titleSting ?? ""
         lsrwCV.delegate = self
         lsrwCV.dataSource = self
         slider.transform = CGAffineTransform(scaleX: 1, y: 1.5)
@@ -208,35 +206,49 @@ class LSRWSubmisionListVC: UIViewController,
         }
     }
     
-    // MARK: - Section Headers
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: "SectionHeader",
-                for: indexPath
-            )
-            header.subviews.forEach { $0.removeFromSuperview() }
-            
-            let titleLabel = UILabel(frame: CGRect(x: 16, y: 0,
-                                                   width: collectionView.frame.width - 32,
-                                                   height: 30))
-            titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-            titleLabel.textColor = .black
-            
-            switch filterSection[indexPath.section] {
-            case .videos: titleLabel.text = "📹 Videos"
-            case .audios: titleLabel.text = "🎵 Audios"
-            case .images: titleLabel.text = "🖼 Images & Docs"
-            }
-            
-            header.addSubview(titleLabel)
-            return header
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            return UICollectionReusableView()
         }
-        return UICollectionReusableView()
+        
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "SectionHeader",
+            for: indexPath
+        )
+        header.subviews.forEach { $0.removeFromSuperview() }
+        
+        var yOffset: CGFloat = 0
+        
+        // Add description label only for the first header
+        if indexPath.section == 0 {
+            let descriptionLabel = UILabel(frame: CGRect(x: 16, y: yOffset,
+                                                         width: collectionView.frame.width - 32,
+                                                         height: 20))
+            descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+            descriptionLabel.textColor = .darkGray
+            descriptionLabel.text = titleSting ?? ""
+            header.addSubview(descriptionLabel)
+            
+            yOffset += 22 // spacing between description and title
+        }
+        let titleLabel = UILabel(frame: CGRect(x: 16, y: yOffset,
+                                               width: collectionView.frame.width - 32,
+                                               height: 30))
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.textColor = .black
+        
+        switch filterSection[indexPath.section] {
+        case .videos: titleLabel.text = "📹 Videos"
+        case .audios: titleLabel.text = "🎵 Audios"
+        case .images: titleLabel.text = "🖼 Images & Docs"
+        }
+        header.addSubview(titleLabel)
+        return header
     }
+
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -277,6 +289,34 @@ class LSRWSubmisionListVC: UIViewController,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch filterSection[indexPath.section] {
+        case .videos(let videos):
+            guard indexPath.item < videos.count else { return }
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.fileURL = videos
+            imageVC.subjectName = "Videos"
+            imageVC.index = indexPath.item
+            imageVC.scrollIndex = indexPath
+            imageVC.modalPresentationStyle = .fullScreen
+            present(imageVC, animated: true)
+            
+        case .images(let images):
+            guard indexPath.item < images.count else { return }
+            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+            imageVC.fileURL = images
+            imageVC.subjectName = "Images & Docs"
+            imageVC.index = indexPath.item
+            imageVC.scrollIndex = indexPath
+            imageVC.modalPresentationStyle = .fullScreen
+            present(imageVC, animated: true)
+            
+        default:
+            break
+        }
+    }
+
+
 }
 
 class CustomSlider: UISlider {

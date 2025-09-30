@@ -74,7 +74,6 @@ extension PerformenceReportCVC: UITableViewDataSource, UITableViewDelegate {
             cell.classLbl.text = "Class \(top.studentClass) - \(top.section)"
             cell.nameLbl.text = top.name
             cell.initialBtn.isHidden = false
-            // Optional: put initials in button
             let initials = top.name.split(separator: " ").compactMap { $0.first }.map { String($0) }.joined()
             cell.initialBtn.setTitle(initials, for: .normal)
         }
