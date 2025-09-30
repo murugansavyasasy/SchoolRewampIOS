@@ -468,7 +468,6 @@ struct AcadimicYearData : Codable {
 //MARK: Send Attachment
 
 struct Send_AttachmentResponse : Codable {
-    
     let status: Bool
     let message: String
     let data: [String]
