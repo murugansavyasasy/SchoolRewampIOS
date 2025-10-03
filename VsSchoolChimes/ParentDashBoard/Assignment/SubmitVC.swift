@@ -89,6 +89,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         if let notice = notice {
             titleTxt.text = notice.tittle ?? ""
             DescriptionTextview.text = notice.description
+            id = notice.id
             DescriptionTextview.textColor = .black
             placeholderLabel?.isHidden = !DescriptionTextview.text.isEmpty
             adjustTextViewHeights()
@@ -582,11 +583,16 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 "file_size": file_size,
                 "file_path": uploadedFiles
             ]
-            
+            let baseURL = (submitBtn.currentTitle == "Update")
+            ? ServiceUrl.comm_api_assignment_update_submission
+                :ServiceUrl.comm_api_assignment_submit_assignment
+            let type = (submitBtn.currentTitle == "Update")
+            ? ApitTypeSringFile.PUT
+                :ApitTypeSringFile.POST
             APIService.shared.makeApi(
-                url: ServiceUrl.comm_api_assignment_submit_assignment,
+                url: baseURL,
                 parameters: parameters,
-                type: ApitTypeSringFile.POST,
+                type: type,
                 token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
             ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
                 guard let self = self else { return }

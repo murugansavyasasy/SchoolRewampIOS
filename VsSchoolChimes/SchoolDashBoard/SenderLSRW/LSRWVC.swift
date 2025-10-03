@@ -330,6 +330,24 @@ extension LSRWVC {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard !filterTask.isEmpty else {
+            return nil
+        }
+        
+        let sectionData = filterTask[section]
+        
+        // Check if section has data
+        switch sectionData {
+        case .overview(let overviewData):
+            guard !overviewData.isEmpty else { return nil }
+        case .filterArray(let filterData):
+            guard !filterData.isEmpty else { return nil }
+        case .active(let activeData):
+            guard !activeData.isEmpty else { return nil }
+        case .completed(let completedData):
+            guard !completedData.isEmpty else { return nil }
+        }
+        
         let headerView = UIView()
         headerView.backgroundColor = .white
         
@@ -343,7 +361,8 @@ extension LSRWVC {
             titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
         
-        if filterTask.isEmpty {
+        switch sectionData {
+        case .overview:
             titleLabel.text = "Dashboard Overview"
             let newTaskButton = createNewTaskButton()
             headerView.addSubview(newTaskButton)
@@ -354,41 +373,29 @@ extension LSRWVC {
                 newTaskButton.widthAnchor.constraint(equalToConstant: 100),
                 newTaskButton.heightAnchor.constraint(equalToConstant: 34)
             ])
-        } else {
-            switch filterTask[section] {
-            case .overview:
-                titleLabel.text = "Dashboard Overview"
-                let newTaskButton = createNewTaskButton()
-                headerView.addSubview(newTaskButton)
-                newTaskButton.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    newTaskButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
-                    newTaskButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-                    newTaskButton.widthAnchor.constraint(equalToConstant: 100),
-                    newTaskButton.heightAnchor.constraint(equalToConstant: 34)
-                ])
-            case .filterArray:
-                titleLabel.text = ""
-            case .active:
-                titleLabel.text = "Active Tasks"
-            case .completed:
-                titleLabel.text = "Completed Tasks"
-            }
+        case .filterArray:
+            titleLabel.text = ""
+        case .active:
+            titleLabel.text = "Active Tasks"
+        case .completed:
+            titleLabel.text = "Completed Tasks"
         }
         
         return headerView
     }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if filterTask.isEmpty { return 50 }
-        
+        guard !filterTask.isEmpty else { return 0 }
         switch filterTask[section] {
-        case .overview: return 50
-        case .active, .completed: return 40
+        case .overview(let overviewData):
+            return overviewData.isEmpty ? 0 : 50
+        case .active(let activeData):
+            return activeData.isEmpty ? 0 : 40
+        case .completed(let completedData):
+            return completedData.isEmpty ? 0 : 40
         default: return 0
         }
     }
-    
+
     @objc private func newTaskTapped() {
         if #available(iOS 15.0, *) {
             let vc = SenderLSRWVC()

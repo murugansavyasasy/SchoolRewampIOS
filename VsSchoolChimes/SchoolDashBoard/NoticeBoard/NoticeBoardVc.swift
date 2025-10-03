@@ -73,7 +73,8 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         super.viewDidLoad()
         let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
         searchBar.searchTextField.addDoneButton()
-        if staffCount > 1 {
+        
+        if checkMutipleSchool() {
             backBtn.setTitle("NoticeBoard", for: .normal)
         } else {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
@@ -98,6 +99,18 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
         setupView()
+    }
+    func checkMutipleSchool() -> Bool {
+        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        if staffCount > 1 {
+            switch Scholldetails?.user_details?.staff_details?.first?.role {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -153,6 +166,11 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {
+            searchData = allNotices
+            self.noDataLbl.isHidden = !self.searchData.isEmpty
+            self.noDataImg.isHidden = !self.searchData.isEmpty
+            collectionView.reloadData()
+            searchBar.searchTextField.text = ""
             searchBar?.resignFirstResponder()
         }
     }
@@ -163,9 +181,10 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     }
     
     private func customizeSearchBar() {
-//        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.borderStyle = .none
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.layer.cornerRadius = 8
+        searchBar.searchTextField.backgroundColor = .white
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
         searchBar.placeholder = "Search"

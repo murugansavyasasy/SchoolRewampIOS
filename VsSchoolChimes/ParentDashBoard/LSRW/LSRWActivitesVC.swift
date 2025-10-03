@@ -125,6 +125,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             switch type {
             case .reading, .listening:
                 captions += Array(repeating: .test, count: self.lsrw?.test?.count ?? 0)
+                captions.append(.addAttachment)
             case .writing:
                 captions.append(.addAttachment)
             case .speaking:
@@ -164,9 +165,9 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         guard let type = lsrw?.activity_type else { return 0 }
         guard lsrw?.is_submitted == false else { return 1 }
         switch type {
-        case .listening, .reading:
+        case .listening:
             return 2
-        case .speaking, .writing:
+        case .speaking, .writing,.reading:
             return 3
         case .unknown(_):
             return 1

@@ -468,7 +468,6 @@ struct AcadimicYearData : Codable {
 //MARK: Send Attachment
 
 struct Send_AttachmentResponse : Codable {
-    
     let status: Bool
     let message: String
     let data: [String]
@@ -1865,6 +1864,18 @@ enum LSRWType: Codable {
         }
     }
 }
+extension LSRWType {
+    init(_ rawValue: String) {
+        switch rawValue.lowercased() {
+        case "listening": self = .listening
+        case "speaking":  self = .speaking
+        case "reading":   self = .reading
+        case "writing":   self = .writing
+        default:          self = .unknown(rawValue)
+        }
+    }
+}
+
 
 
 
@@ -2257,6 +2268,8 @@ struct SkillSubmission: Codable {
     let title: String?
     let description: String?
     let activity_type: String?
+    let sent_by: String?
+    let subject: String?
     let submitted_average: String?
     let member_count: Int?
     let submission_date: String?
@@ -2267,6 +2280,8 @@ struct SkillSubmission: Codable {
     let std_sec: String?
     let student_submited_on: String?
     let is_submitted: Bool?
+    let file_path: [FilePath]?
+    let created_on: String?
 }
 // MARK: - Main Response Structure
 struct UserProfileResponse: Codable {

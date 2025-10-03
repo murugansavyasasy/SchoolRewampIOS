@@ -8,16 +8,17 @@
 import UIKit
 
 class InteractionVC: UIViewController {
-   
-    @IBOutlet weak var chatCV: UICollectionView!
+
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var FullView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
-   
+    @IBOutlet weak var noDatimgView: UIImageView!
+    @IBOutlet weak var noDataFoundLbl: UILabel!
     var passvalue = 0
     var staffMembersData: [StaffMember]?
+    var filterData: [StaffMember]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     
     
@@ -35,22 +36,30 @@ class InteractionVC: UIViewController {
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
-        chatCV.register(UINib(nibName: "ChatCVC", bundle: nil), forCellWithReuseIdentifier: "ChatCVC")
         tv.delegate = self
         tv.dataSource = self
-        chatCV.delegate = self
-        chatCV.dataSource = self
+        searchBar.delegate = self
         getStaff()
         
     }
     @IBAction func search(_ sender: UIButton) {
-        searchBar.becomeFirstResponder()
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        
         searchBar.isHidden = !sender.isSelected
+        if sender.isSelected {
+            searchBar.becomeFirstResponder()
+        } else {
+            view.endEditing(true)
+            searchBar.text = ""
+            filterData = staffMembersData
+            noDataFoundLbl.isHidden = !(filterData?.isEmpty ?? true)
+            noDatimgView.isHidden = !(filterData?.isEmpty ?? true)
+            noDataFoundLbl.text = CommonStringFile.No_data_found
+            tv.reloadData()
+        }
     }
-    
     
     @IBAction func backBtnAct(_ sender: Any) {
         
@@ -58,64 +67,10 @@ class InteractionVC: UIViewController {
     }
  
 }
-extension InteractionVC: UICollectionViewDelegate,
-                         UICollectionViewDataSource,
-                         UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        return staffMembersData?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = chatCV.dequeueReusableCell(withReuseIdentifier: "ChatCVC", for: indexPath) as! ChatCVC
-        
-        if let datas = staffMembersData?[indexPath.row] {
-            cell.nameLbl.text = datas.name ?? ""
-            cell.subjectLbl.text = datas.subject_name ?? ""
-            
-            // Unread count handling
-            let unreadCount = datas.unread_count ?? 0
-            cell.unReadCountBtn.isHidden = unreadCount == 0
-            cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
-//           cell.userImg.kf.setImage(with: URL(string: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//B571964C-A403-4C8C-AEFD-85C82EC127B0.jpg"))
-            // Last update time
-            if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
-                let (timeAgo, _) = submittedDate
-                cell.lastUpdateTimeLbl.text = timeAgo
-                cell.lastUpdateTimeLbl.isHidden = cell.unReadCountBtn.isHidden
-            } else {
-                cell.lastUpdateTimeLbl.isHidden = true
-            }
-        }
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ChatVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        if let datas = staffMembersData?[indexPath.row]{
-            vc.staffMembersData = datas
-        }
-       
-        // vc.getValue = getValue
-        present(vc, animated: true)
-    }
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let inset: CGFloat = 5
-        let spacing: CGFloat = 10
-        let totalSpacing = inset * 2 + spacing
-        let availableWidth = collectionView.frame.width - totalSpacing
-        let itemWidth = availableWidth
-        return CGSize(width: itemWidth, height: 110)
-    }
-}
 
 extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return staffMembersData?.count ?? 0
+        return filterData?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -126,7 +81,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        if let datas = staffMembersData?[indexPath.row] {
+        if let datas = filterData?[indexPath.row] {
             cell.nameLbl.text = datas.name ?? ""
             cell.subjectLbl.text = datas.subject_name ?? ""
             
@@ -166,7 +121,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
         
         let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        if let datas = staffMembersData?[indexPath.row]{
+        if let datas = filterData?[indexPath.row]{
             vc.staffMembersData = datas
         }
        
@@ -188,12 +143,18 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             staffMembersData = successMessage.data ?? []
+                            filterData = successMessage.data ?? []
+                            noDatimgView.isHidden = !(filterData?.isEmpty ?? false)
+                            noDataFoundLbl.isHidden = !(filterData?.isEmpty ?? false)
                             tv.reloadData()
-                            chatCV.reloadData()
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
-                            
+                            staffMembersData = successMessage.data ?? []
+                            filterData = successMessage.data ?? []
+                            noDatimgView.isHidden = !(filterData?.isEmpty ?? false)
+                            noDataFoundLbl.isHidden = !(filterData?.isEmpty ?? false)
+                            tv.reloadData()
                         }
                     }
                 case .failure(let error):
@@ -202,4 +163,19 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
             }
     }
     
+}
+extension InteractionVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filterData = staffMembersData
+        } else {
+            filterData = staffMembersData?.filter {
+                $0.subject_name?.localizedCaseInsensitiveContains(searchText) == true ||
+                $0.name?.localizedCaseInsensitiveContains(searchText) == true
+            }
+        }
+        noDataFoundLbl.isHidden = !(filterData?.isEmpty ?? true)
+        noDatimgView.isHidden = !(filterData?.isEmpty ?? true)
+        tv.reloadData()
+    }
 }

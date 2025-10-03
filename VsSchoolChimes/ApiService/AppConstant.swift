@@ -91,6 +91,7 @@ struct ServiceUrl{
  = "comm/api/assignment/delete-submission"
     static let   comm_api_assignment_update = "comm/api/assignment/update"
     static let comm_api_assignment_submit_assignment = "comm/api/assignment/submit-assignment"
+    static let comm_api_assignment_update_submission = "comm/api/assignment/update-submission"
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
     static let comm_api_leave_req_list = "comm/api/leave-req/list"
     static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
