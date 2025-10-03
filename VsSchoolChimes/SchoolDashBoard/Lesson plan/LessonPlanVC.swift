@@ -11,6 +11,7 @@ import UIKit
 @available(iOS 15.0, *)
 class LessonPlanVC: UIViewController {
     
+    @IBOutlet weak var MenuNameLbl: UILabel!
     @IBOutlet weak var searchIconBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -42,7 +43,7 @@ class LessonPlanVC: UIViewController {
         searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
         let menuName = MenuStringFile.LessonPlan
-        BackBtn.configureAsBackButton(firstLine: menuName, secondLine: staffDetails?.school_name ?? "")
+        MenuNameLbl.configureAsBackTitle(firstLine: menuName, secondLine: staffDetails?.school_name ?? "")
         searchBar.isHidden = true
         MyClassBtn.setTitle(LessonplanStringFile.myClasses, for: .normal)
         AllClassBtn.setTitle(LessonplanStringFile.allClasses, for: .normal)

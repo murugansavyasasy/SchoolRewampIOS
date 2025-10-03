@@ -24,10 +24,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFc-iC-tUY">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="119"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGx-FA-3fY">
-                            <rect key="frame" x="15" y="69" width="363" height="21"/>
+                            <rect key="frame" x="15" y="69" width="363" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="2ZC-lv-zWN"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -36,12 +39,12 @@
                     <color key="backgroundColor" name="BackGroundClr"/>
                     <constraints>
                         <constraint firstItem="WGx-FA-3fY" firstAttribute="leading" secondItem="xFc-iC-tUY" secondAttribute="leading" constant="15" id="pqe-3u-gFX"/>
-                        <constraint firstAttribute="bottom" secondItem="WGx-FA-3fY" secondAttribute="bottom" constant="20" id="wdk-PO-YV0"/>
+                        <constraint firstAttribute="bottom" secondItem="WGx-FA-3fY" secondAttribute="bottom" constant="15" id="wdk-PO-YV0"/>
                         <constraint firstAttribute="trailing" secondItem="WGx-FA-3fY" secondAttribute="trailing" constant="15" id="xr5-dX-fIT"/>
                     </constraints>
                 </view>
                 <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fP2-ZH-Rig">
-                    <rect key="frame" x="0.0" y="110" width="393" height="708"/>
+                    <rect key="frame" x="0.0" y="119" width="393" height="699"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <wkWebViewConfiguration key="configuration">
                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>

@@ -35,6 +35,7 @@ class ViewLessonVC: UIViewController, SelectedId {
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var TableView: UITableView!
     @IBOutlet weak var FilterCV: UICollectionView!
+    @IBOutlet weak var menuNameLbl: UILabel!
     
     var SubjectId : String?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -49,8 +50,7 @@ class ViewLessonVC: UIViewController, SelectedId {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BAckBtn
-            .configureAsBackButton(
+        menuNameLbl.configureAsBackTitle(
                 firstLine: MenuStringFile.LessonPlan,
                 secondLine: staffDetails?.school_name ?? ""
             )

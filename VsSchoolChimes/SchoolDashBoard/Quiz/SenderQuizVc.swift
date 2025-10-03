@@ -16,10 +16,16 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var discriptionsTextFild: UITextView!
     @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkBox: UIView!
+    @IBOutlet weak var checkBoxImage: UIImageView!
+    @IBOutlet weak var nextBtn: UIButton!
+    
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectNotice: SelectNotice?
+    var IsChecked = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fullView.layer.cornerRadius = 10
@@ -39,6 +45,11 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
+        nextBtn.layer.cornerRadius = 10
+        discriptionsTextFild.layer.cornerRadius = 10
+        
+        checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
+        checkBox.isUserInteractionEnabled = true
         
         // Do any additional setup after loading the view.
     }
@@ -48,6 +59,17 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         
         dismiss(animated: true)
     }
+    
+    @IBAction func checkboxAct(){
+        
+        IsChecked.toggle()
+        if IsChecked {
+            checkBoxImage.image = UIImage(systemName: "checkmark.circle.fill")
+        }else{
+            checkBoxImage.image = UIImage(systemName: "circle")
+        }
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
 //        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         
