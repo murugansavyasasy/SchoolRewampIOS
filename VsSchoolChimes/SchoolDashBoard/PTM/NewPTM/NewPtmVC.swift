@@ -378,6 +378,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = SlotListVC(nibName: nil, bundle: nil)
         vc.slotData = sections[indexPath.section].events[indexPath.row]
+        vc.MeetingStatus = sections[indexPath.section].title
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

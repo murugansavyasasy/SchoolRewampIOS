@@ -72,6 +72,11 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         
         menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
         
+        allBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        approvedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        rejectedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        waitingBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         addUnderline(to: allBtn, unSelectedBtn: [approvedBtn,rejectedBtn,waitingBtn])
         
         searchBar.isHidden = true
@@ -214,7 +219,20 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     }
     
     @IBAction func searchBtnAct(_ sender: UIButton) {
-        searchBar.isHidden.toggle()
+        
+        sender.isSelected.toggle()
+        if sender.isSelected{
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else {
+            searchBar.isHidden = true
+            searchBar.resignFirstResponder()
+            searchBar.searchTextField.text = ""
+            searchText = ""
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            applyFilter()
+        }
     }
     
     @IBAction func allBtnAct(_ sender: Any) {
