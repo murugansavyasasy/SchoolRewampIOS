@@ -58,6 +58,8 @@ class AttachHistroyVC: UIViewController, SelectedId {
     let dropDown = DropDown()
     var schoolList:[String]?
     let alert = CustomAlert()
+    var Scholldetails = UserDefaultFileManager.getUserDetails()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,25 +67,24 @@ class AttachHistroyVC: UIViewController, SelectedId {
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-       
-//        backBtnName
-//            .configureAsBackButton(
-//                firstLine: MenuStringFile.selectedMenuName,
-//                secondLine: ""
-//            )
-        
+    
         menuNameLbl.text = MenuStringFile.selectedMenuName
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        
         schoolDropDown.setShadow(cornerRadius: 4)
+        
+        if checkMutipleSchool() {
+            backBtnName.setTitle(MenuStringFile.selectedMenuName, for: .normal)
+        } else {
+            let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            backBtnName.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
+        }
         if school_details?.count ?? 0 > 1 {
             schoolDropDownFullview.isHidden = false
-            if let staffToken = staffdetails?.access_token {
                 let matchedSchoolName = school_details?
-                    .first(where: { $0.access_token == staffToken })?
+                    .first?
                     .school_name
                 schoolName.text = matchedSchoolName ?? "School name not found"
-            }
+            
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
         }else{
@@ -107,6 +108,18 @@ class AttachHistroyVC: UIViewController, SelectedId {
     }
 
     
+    func checkMutipleSchool() -> Bool {
+        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        if staffCount > 1 {
+            switch Scholldetails?.user_details?.staff_details?.first?.priority_level {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -381,8 +394,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
             .configure(
                 with: attachmentFiles?[indexPath.section],
                 sendBy: ("Posted By : ") + (
-                    attachmentHeaders[indexPath.section].sent_by ?? ""
-                )
+                    attachmentHeaders[indexPath.section].sent_by ?? "")
             )
         return cell.collectionContentHeight() + 60
     }

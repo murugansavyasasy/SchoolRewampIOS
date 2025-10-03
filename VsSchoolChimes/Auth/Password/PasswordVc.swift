@@ -229,8 +229,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                     }
                                     else if(data.user_details?.is_staff == true){
                                         
-                                        if(
-                                            data.user_details?.staff_role == PriorityType.is_staff
+                                        if(data.user_details?.staff_role == PriorityType.is_staff) || (data.user_details?.staff_role == PriorityType.is_principal) || (
+                                            data.user_details?.staff_role == PriorityType.is_grouphead
                                         ){
                                             if(
                                                 data.user_details?.staff_details?.count ?? 0 > 1

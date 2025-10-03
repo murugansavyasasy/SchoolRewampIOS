@@ -9,7 +9,12 @@
 import UIKit
 import FSCalendar
 
-class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate {
+class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate, call {
+    func callMobileNumber(indexPath: Int) {
+       
+        makePhoneCall(to: absentStudentData[indexPath].primary_mobile ?? "")
+    }
+
     
     @IBOutlet weak var mothView: UIView!
     @IBOutlet weak var mothLbl: UILabel!
@@ -98,6 +103,16 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBAction func BackAct() {
         dismiss(animated: true)
+    }
+    
+    func makePhoneCall(to phoneNumber: String) {
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
+            if UIApplication.shared.canOpenURL(phoneCallURL) {
+                UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: nil)
+            } else {
+                print("Device cannot make calls")
+            }
+        }
     }
     
     func Absentees_Response() {
@@ -362,7 +377,9 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
         cell.StatusBtn.backgroundColor = .systemBlue
         cell.addmissionLbl.isHidden = data.admission_no ==  "" ? true : false
         cell.addmissionLbl.text =  "admission no: " + (data.admission_no ?? "")
-       
+        cell.delegate = self
+        cell.StatusBtn.tag = indexPath.row
+        cell.StatusBtn.isUserInteractionEnabled = true
 //        if let urlStr = data.photo_path, let url = URL(string: urlStr) {
 //            cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
 //        }

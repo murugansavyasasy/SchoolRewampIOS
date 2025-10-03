@@ -227,7 +227,10 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                         
                                     }
                                     else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
-                                        if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
+                                        if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_staff) || (UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_grouphead) || (
+                                            UserDefaultFileManager
+                                                .getUserDetails()?.user_details?.staff_role == PriorityType.is_principal
+                                        ){
                                             if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1)
                                             {
                                                 let vc = PriorityVC(nibName: nil,bundle: nil)

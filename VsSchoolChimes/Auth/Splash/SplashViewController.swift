@@ -447,7 +447,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                             
                             } else if Data.user_details?.is_staff == true {
                                 // staff flow
-                                if Data.user_details?.staff_role == PriorityType.is_staff {
+                                if Data.user_details?.staff_role == PriorityType.is_staff || Data.user_details?.staff_role == PriorityType.is_grouphead || Data.user_details?.staff_role == PriorityType.is_principal {
                                     if (Data.user_details?.staff_details?.count ?? 0) > 1 {
                                         let vc = PriorityVC(nibName: nil, bundle: nil)
                                         vc.modalPresentationStyle = .fullScreen
