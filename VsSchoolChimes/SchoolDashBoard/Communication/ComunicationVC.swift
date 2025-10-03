@@ -137,8 +137,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var textCountLbl: UILabel!
     @IBOutlet weak var no_recordLbl: UILabel!
     @IBOutlet weak var voiceSetTitleLbl: UILabel!
-    
     @IBOutlet weak var recordImgHeightCon: NSLayoutConstraint!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     
@@ -156,6 +157,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var accadimYrIDs :[Int] = []
     var accadmicDefaultYrName : String?
     var forWardVoiceDuraction : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -479,8 +481,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
         clickTextView.text = CommonStringFile.TextMessage.translated()
         clickSchedule.text = CommonStringFile.ScheduleCall.translated()
-        BackBtn.setTitle( MenuStringFile.selectedMenuName.translated(), for: .normal)
+        //BackBtn.setTitle( MenuStringFile.selectedMenuName.translated(), for: .normal)
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         //MARK: Label font style
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
         voiceSetTitleLbl.setRequiredText(CommonStringFile.Title)
         ScheduleLbl.setRequiredText(ScheduleLbl.text ?? "")

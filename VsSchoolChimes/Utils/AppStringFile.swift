@@ -17,7 +17,7 @@ struct MenuStringFile{
     static let Circulars = "Circulars"
     static let NoticeBoard = "Notice Board"
     static let LeaveRequest = "Leave Request"
-    static let Assignment = "Assignment"
+    static let Assignment = "assignment"
     static let OnlineMeeting = "Online Meeting"
     static let Homework = "Homework"
     static let ScheduleExamTest = "Schedule Exam/Test"

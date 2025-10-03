@@ -223,7 +223,9 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         sender.isSelected.toggle()
         if sender.isSelected{
             searchBar.isHidden = false
-            searchBar.becomeFirstResponder()
+            DispatchQueue.main.async {
+                self.searchBar.becomeFirstResponder()
+            }
             sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
         }else {
             searchBar.isHidden = true
