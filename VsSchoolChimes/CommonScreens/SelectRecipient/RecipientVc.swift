@@ -87,7 +87,11 @@ class RecipientVc: UIViewController{
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr{
-            self.homeWorkShowProps()
+            self.homeWorkShowProps{ succes in
+                if !succes{
+                    self.configureRecipientTabs()
+                }
+            }
         }
         
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
@@ -116,9 +120,7 @@ class RecipientVc: UIViewController{
         selectSubject.addGestureRecognizer(tap3)
         selectLevel.addGestureRecognizer(tap4)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-        tv.delegate = self
-        tv.dataSource = self
-        configureRecipientTabs()
+       
         
     }
     
@@ -170,6 +172,7 @@ class RecipientVc: UIViewController{
                     UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
                 )
             nodataFound.isHidden = false
+            segmentName.isHidden = false
             nodataFound.image = ImageName.girl_and_boy_are
             noRecordLbl.isHidden = false
         default:
@@ -185,7 +188,7 @@ class RecipientVc: UIViewController{
         
         
     }
-    func homeWorkShowProps() {
+    func homeWorkShowProps(onSuccess: @escaping (Bool) -> Void) {
         guard accedmicYrEligible else { return }
         nodataFound.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
@@ -205,12 +208,13 @@ class RecipientVc: UIViewController{
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
                 heightSegment.constant = 0
-               
+                segment_selected_index = 0
                 cv_itemsarry = [recipeint_tabBarName.Section_Student]
+                onSuccess(true)
             } else {
                 speficBtnName.isEnabled = true
                 selectStandardDropDown.isHidden = true
-                
+                onSuccess(false)
             }
         }
     }
@@ -623,6 +627,7 @@ class RecipientVc: UIViewController{
             guard let self = self else { return }
             if let label = self.selectLevel.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = "Level \(item)"
+//                user_inputs.level = item
             }
         }
     }
@@ -645,6 +650,8 @@ class RecipientVc: UIViewController{
             classID = self.standardDetails?[index].id
             speficBtnName.isHidden = true
             self.tv.isHidden = false
+            self.tv.dataSource = self
+            self.tv.delegate = self
             self.tv.reloadData()
             DispatchQueue.main.async {
                 self.tableHeight.constant = self.tv.contentSize.height
@@ -652,6 +659,7 @@ class RecipientVc: UIViewController{
             }
         }
     }
+    
     func setupSubjectDropdown() {
         StdDropdown.anchorView = selectSubject
         StdDropdown.dataSource = subjectList
@@ -986,6 +994,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 }
                                 groupDetails = students
                             }
+                            tv.delegate = self
+                            tv.dataSource = self
                             tv.reloadData()
                         }
                     }else{
@@ -1032,6 +1042,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         drpodonLbl.text = standardDetails?.first?.name
                         classID = standardDetails?.first?.id ?? ""
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
+                        tv.delegate = self
+                        tv.dataSource = self
                         tv.reloadData()
                         DispatchQueue.main.async {
                             self.tableHeight.constant = self.tv.contentSize.height
@@ -1084,6 +1096,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 }
                                 staffDetails = students
                             }
+                            tv.delegate = self
+                            tv.dataSource = self
                             tv.reloadData()
                             DispatchQueue.main.async {
                                 self.tableHeight.constant = self.tv.contentSize.height

@@ -115,11 +115,12 @@ class AttachmentsVc: UIViewController {
                             self.attachmentHeaders.append(header)
                             self.attachmentFiles?.append(item.file_path ?? [])
                         }
-                        self.tv.delegate = self
-                        self.tv.dataSource = self
+                       
                         if self.clickedMessageId != ""{
                             self.loadDataAndScrollIfNeeded()
                         }
+                        self.tv.delegate = self
+                        self.tv.dataSource = self
                         self.tv.reloadData()
                     } else {
                         
