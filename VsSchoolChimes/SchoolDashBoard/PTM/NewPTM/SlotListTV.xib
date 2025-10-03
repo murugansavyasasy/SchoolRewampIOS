@@ -161,6 +161,7 @@
                 <outlet property="bookedByNameLbl" destination="zJu-Uy-dzI" id="URJ-G4-IZq"/>
                 <outlet property="cellView" destination="uxp-bg-rRg" id="55N-tQ-eJs"/>
                 <outlet property="optionsBtn" destination="Fr8-zc-BSP" id="m66-YO-0Uk"/>
+                <outlet property="profileImage" destination="Aeb-eD-I0m" id="ghe-D3-U87"/>
             </connections>
             <point key="canvasLocation" x="168.70229007633588" y="47.535211267605639"/>
         </tableViewCell>

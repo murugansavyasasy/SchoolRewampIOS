@@ -31,7 +31,7 @@ class MenuRedirectHandler {
     var Imgitems: [MenuImage] = [
         // MenuImage(id: 0, name: "Communication"),
         MenuImage(id: 1, name: "Absentees Report"),
-        MenuImage(id: 2, name: "Assignment"),
+        MenuImage(id: 2, name: "assignment"),
         MenuImage(id: 3, name: "Attendance marking"),
         MenuImage(id: 4, name: "Attendance Report"),
         MenuImage(id: 5, name: "Certificate Request"),

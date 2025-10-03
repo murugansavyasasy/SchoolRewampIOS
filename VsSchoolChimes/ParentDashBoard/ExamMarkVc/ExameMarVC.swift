@@ -16,6 +16,8 @@ class ExameMarVC: UIViewController {
     
     var examList: [ExamItem]?
     var FilteredExamList: [ExamItem]?
+    weak var delegate : Searchable?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +27,7 @@ class ExameMarVC: UIViewController {
         searchBar.placeholder = CommonStringFile.Search
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
         NoDataLbl.setFont(style: .title, size: FontSize.TitleSize)
         cv.register(UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil),forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
         cv.dataSource = self
@@ -42,24 +45,29 @@ class ExameMarVC: UIViewController {
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<ExamListResponse, Error>) in
+            
+            guard let self = self else {return}
+            
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
+                if #available(iOS 15.0, *) { self.hideActivityLoader() }
                 switch result {
                 case .success(let response):
                     
-                    self?.examList = response.data
-                    self?.FilteredExamList = response.data
-                    self?.cv.reloadData()
-                    self?.NoDataImage.isHidden = response.status ?? false
-                    self?.NoDataLbl.isHidden = response.status ?? false
-                    self?.NoDataLbl.text = response.message
+                    self.examList = response.data
+                    self.FilteredExamList = response.data
+                    self.cv.reloadData()
+                    self.NoDataImage.isHidden = response.status ?? false
+                    self.NoDataLbl.isHidden = response.status ?? false
+                    self.NoDataLbl.text = response.message
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: !(response.status ?? false))
                     
                 case .failure(let error):
                     print("API Error:", error)
                     
-                    self?.NoDataImage.isHidden = false
-                    self?.NoDataLbl.isHidden = false
-                    self?.NoDataLbl.text = error.localizedDescription
+                    self.NoDataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = error.localizedDescription
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: true)
                 }
             }
         }

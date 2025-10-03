@@ -155,6 +155,7 @@ class NewPtmVC: UIViewController, Datepicker {
                         self.tv.reloadData()
                        // self.cv.reloadData() // if you’re also showing in collection view
                     }else {
+                        self.nodataLbl.text = success.message
                         self.noDataImage.isHidden = false
                         self.nodataLbl.isHidden = false
                         self.Meeting_data = success.data ?? []
@@ -166,6 +167,7 @@ class NewPtmVC: UIViewController, Datepicker {
                     print("Error: ", error.localizedDescription)
                     self.noDataImage.isHidden = false
                     self.nodataLbl.isHidden = false
+                    self.nodataLbl.text = error.localizedDescription
                 }
             }
         }
