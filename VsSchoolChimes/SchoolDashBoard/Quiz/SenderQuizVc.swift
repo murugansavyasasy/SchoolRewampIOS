@@ -9,6 +9,9 @@ import UIKit
 
 class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var noOfQuestionDefaultLbl: UILabel!
+    @IBOutlet weak var descrptionDefaultLbl: UILabel!
+    @IBOutlet weak var titleDefaultLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var fullView: UIView!
@@ -40,7 +43,12 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         titleText.addDoneButton()
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
-        
+        numberOfQuestionText.keyboardType = .numberPad
+       
+        noOfQuestionDefaultLbl
+            .setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
+        titleDefaultLbl.setRequiredText(MenuStringFile.Title)
+        descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -93,12 +101,35 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBAction func createQuizBtnAct(_ sender: UIButton) {
         
+       
+        // Trim and validate inputs
+        guard let title = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty,
+              let description = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines), !description.isEmpty,
+              let questionCountText = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines), !questionCountText.isEmpty,
+              let questionCount = Int(questionCountText), questionCount > 0
+        else {
+            
+            let alert  = CustomAlert()
+            alert
+                .showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Please_fill,
+                    on: self
+                )
+            return
+        }
+
+        // ✅ Inputs are valid
+        print("Title: \(title), Description: \(description), Count: \(questionCount)")
+
+        
+        
         let params: [String: Any] = [
             "title": titleText.text ?? "",
             "description": discriptionsTextFild.text ?? "",
             "no_of_question" : Int(numberOfQuestionText.text ?? "0") ?? 0,
-            "level": 1,
-            "level_flag" : false
+            "level": user_inputs.level,
+            "level_flag" : IsChecked
         ]
         
 //        let vc = QuizSubmissionVc(nibName: nil, bundle: nil)
