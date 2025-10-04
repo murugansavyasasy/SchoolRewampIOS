@@ -114,24 +114,28 @@ class ExamDetailsVC: UIViewController, Searchable {
     func transition(to newVC: UIViewController) {
         guard let currentVC = currentChildVC, newVC != currentVC else { return }
         
-        // Begin transition
         currentVC.willMove(toParent: nil)
         addChild(newVC)
         newVC.view.frame = PresentView.bounds
         
-        // Choose an animation option, for example cross dissolve
         transition(from: currentVC, to: newVC, duration: 0.3, options: [.transitionCrossDissolve], animations: nil) { finished in
             currentVC.removeFromParent()
             newVC.didMove(toParent: self)
             self.currentChildVC = newVC
+            
+            // ✅ Update parent's empty-state immediately based on current data
+            if let child = newVC as? ExamTmTblVCViewController {
+                self.childViewController(child, didUpdateDataIsEmpty: child.examDetails?.isEmpty ?? true)
+            } else if let child = newVC as? ExameMarVC {
+                self.childViewController(child, didUpdateDataIsEmpty: child.examList?.isEmpty ?? true)
+            }
         }
     }
+
     
     @IBAction func BackAct(_ sender: Any) {
         
-        
         dismiss(animated: true)
-        
     }
     
     @IBAction func TimetableBtnAct(_ sender: Any) {
@@ -139,6 +143,7 @@ class ExamDetailsVC: UIViewController, Searchable {
         addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
         transition(to: firstChildVC)
     }
+    
     @IBAction func ExamMarkBtnAct(_ sender: Any) {
         
         addUnderline(to: ExamMarksBtn, unselectedButton: TimeTableBtn)

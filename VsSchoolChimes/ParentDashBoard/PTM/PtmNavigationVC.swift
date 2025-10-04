@@ -47,6 +47,7 @@ class PtmNavigationVC: UIViewController {
     @IBAction func scheduleMeetingAct(_ sender: Any) {
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.backgroundColor = .clear
+        searchBtn.isHidden = true
         transition(to: firstChildVC)
 //        removeChildVc()
 //        getSlotsApi()
@@ -54,6 +55,7 @@ class PtmNavigationVC: UIViewController {
     @IBAction func yourMeetingAct(_ sender: Any) {
         scheduleMeetingBtn.backgroundColor = .clear
         yourMeetingBtn.backgroundColor = .white
+        searchBtn.isHidden = false
         transition(to: secondChildVC)
        // addChildVc()
     }

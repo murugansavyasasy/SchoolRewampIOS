@@ -56,14 +56,18 @@ class ExameMarVC: UIViewController {
                     self.examList = response.data
                     self.FilteredExamList = response.data
                     self.cv.reloadData()
-                    self.NoDataImage.isHidden = response.status ?? false
-                    self.NoDataLbl.isHidden = response.status ?? false
+                    let isEmpty = self.examList?.isEmpty ?? true
+                    self.NoDataImage.isHidden = !isEmpty
+                    self.NoDataLbl.isHidden = !isEmpty
                     self.NoDataLbl.text = response.message
-                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: !(response.status ?? false))
+                    
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
                     
                 case .failure(let error):
                     print("API Error:", error)
-                    
+                    self.examList = []
+                    self.FilteredExamList = []
+                    self.cv.reloadData()
                     self.NoDataImage.isHidden = false
                     self.NoDataLbl.isHidden = false
                     self.NoDataLbl.text = error.localizedDescription

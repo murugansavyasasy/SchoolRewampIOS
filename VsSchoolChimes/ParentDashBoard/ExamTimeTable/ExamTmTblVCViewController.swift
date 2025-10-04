@@ -68,10 +68,12 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
                     self.subject_details = response.data?.first?.exam_subject_details
 //                    self?.prepareGroupedData()
                     self.tv.reloadData()
-                    self.NoDataLbl.isHidden = response.status ?? false
+                    let isEmpty = self.examDetails?.isEmpty ?? true
+                    self.NoDataLbl.isHidden = !isEmpty
                     self.NoDataLbl.text = response.message ?? ""
-                    self.NoDataImage.isHidden = response.status ?? false
-                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: !(response.status ?? false))
+                    self.NoDataImage.isHidden = !isEmpty
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
+                    
                     
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)

@@ -33,6 +33,7 @@
                 <outlet property="clickSchedule" destination="7PF-xm-F5V" id="RuS-vL-Syc"/>
                 <outlet property="clickTextView" destination="3Bf-F2-x3B" id="LrW-Kv-C14"/>
                 <outlet property="clickVoiceLbl" destination="5eG-vt-UVY" id="B9z-yq-3jy"/>
+                <outlet property="dateBtn" destination="DH2-Tu-bkw" id="NgT-v8-8WN"/>
                 <outlet property="dateCV" destination="pUe-Nk-U5z" id="V8d-T0-cJl"/>
                 <outlet property="dateSelectedViewHeight" destination="AkC-tR-ycK" id="fYO-pc-8zd"/>
                 <outlet property="dltbtn" destination="ABr-GZ-DoQ" id="icM-7S-piX"/>

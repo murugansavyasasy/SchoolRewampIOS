@@ -139,6 +139,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var voiceSetTitleLbl: UILabel!
     @IBOutlet weak var recordImgHeightCon: NSLayoutConstraint!
     @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var dateBtn: UIButton!
     
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
@@ -1386,6 +1387,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
             
         }
+        dateBtn.isSelected = false
         ViewAnimator.hideFade(calanderOuter)
     }
     
@@ -1404,7 +1406,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         } else {
             ViewAnimator.hideFade(calanderOuter)
         }
-        
     }
     @IBAction func textviewshow(_ sender: Any) {
         playbackOff()
@@ -1629,7 +1630,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         ViewAnimator.animateConstraintChange { [self] in
             timePickerHeight.constant = 141
-            dateSelectedViewHeight.constant = 0
+            //dateSelectedViewHeight.constant = 0
             self.view.layoutIfNeeded()
         }
         
