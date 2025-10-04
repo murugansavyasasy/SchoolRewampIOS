@@ -68,15 +68,14 @@ class AttachHistroyVC: UIViewController, SelectedId {
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     
-        menuNameLbl.text = MenuStringFile.selectedMenuName
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
         
         if checkMutipleSchool() {
-            backBtnName.setTitle(MenuStringFile.selectedMenuName, for: .normal)
+            menuNameLbl.text = MenuStringFile.selectedMenuName
         } else {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
-            backBtnName.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
+            menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
         }
         if school_details?.count ?? 0 > 1 {
             schoolDropDownFullview.isHidden = false

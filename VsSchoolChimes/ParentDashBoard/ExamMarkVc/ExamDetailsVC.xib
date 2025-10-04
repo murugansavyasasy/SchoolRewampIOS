@@ -21,6 +21,7 @@
                 <outlet property="SegmentController" destination="9jJ-bT-VKq" id="43F-fs-9jJ"/>
                 <outlet property="StandardLbl" destination="vfT-zj-wBu" id="S9y-7h-sLn"/>
                 <outlet property="TimeTableBtn" destination="TvD-Or-rat" id="MRO-ZD-aam"/>
+                <outlet property="searchBtn" destination="yIG-9s-gX4" id="6xJ-Fx-lQW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

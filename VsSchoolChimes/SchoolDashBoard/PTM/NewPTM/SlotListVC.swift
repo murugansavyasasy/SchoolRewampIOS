@@ -165,6 +165,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             cell.DurationLbl.text = PTMString.duration + " - " + String(slot?.meeting_duration ?? 0) +  " " + PTMString.minutes
             cell.bookedByNameLbl.text = slot?.booked_by
             
+            let imageUrl = URL(string: slot?.profile_url ?? "")
+            cell.profileImage.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "interactProfile"))
+            
             if MeetingStatus == PTMString.completedMeetings{
                 cell.optionsBtn.isHidden = true
             }else if MeetingStatus == PTMString.todayMeetings{

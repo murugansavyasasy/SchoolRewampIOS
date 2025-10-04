@@ -20,6 +20,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     var subject_details: [SubjectDetail]?
     let eventStore = EKEventStore()
     var groupedExamDetails: [GroupedExam] = []
+    weak var delegate : Searchable?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
         searchBar.placeholder = CommonStringFile.Search
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
         NoDataLbl.setFont(style: .title, size: FontSize.TitleSize)
         setupTableView()
         examDetailApi()
@@ -53,25 +55,32 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<DetailedExamListResponse, Error>) in
+            
+            guard let self = self else {return}
+            
             DispatchQueue.main.async {
-                if #available(iOS 15.0, *) { self?.hideActivityLoader() }
+                if #available(iOS 15.0, *) { self.hideActivityLoader() }
                 switch result {
                 case .success(let response):
-                    self?.examDetails = response.data
-                    self?.FilteredExamDetails = self?.examDetails
+                    self.examDetails = response.data
+                    self.FilteredExamDetails = self.examDetails
                     
-                    self?.subject_details = response.data?.first?.exam_subject_details
+                    self.subject_details = response.data?.first?.exam_subject_details
 //                    self?.prepareGroupedData()
-                    self?.tv.reloadData()
-                    self?.NoDataLbl.isHidden = response.status ?? false
-                    self?.NoDataLbl.text = response.message ?? ""
-                    self?.NoDataImage.isHidden = response.status ?? false
+                    self.tv.reloadData()
+                    let isEmpty = self.examDetails?.isEmpty ?? true
+                    self.NoDataLbl.isHidden = !isEmpty
+                    self.NoDataLbl.text = response.message ?? ""
+                    self.NoDataImage.isHidden = !isEmpty
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
+                    
                     
                 case .failure(let error):
                     print("API Error:", error.localizedDescription)
-                    self?.NoDataLbl.text = error.localizedDescription
-                    self?.NoDataLbl.isHidden = false
-                    self?.NoDataImage.isHidden = false
+                    self.NoDataLbl.text = error.localizedDescription
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataImage.isHidden = false
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: true)
                 }
             }
         }

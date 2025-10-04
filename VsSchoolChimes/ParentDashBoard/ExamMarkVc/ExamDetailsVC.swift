@@ -5,12 +5,12 @@
 //  Created by Lakshmanan on 27/03/25.
 //
 protocol Searchable: AnyObject {
-    func updateSearchResults(for query: String)
+    func childViewController(_ child: UIViewController, didUpdateDataIsEmpty isEmpty: Bool)
 }
 
 import UIKit
 
-class ExamDetailsVC: UIViewController {
+class ExamDetailsVC: UIViewController, Searchable {
     
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
@@ -21,6 +21,7 @@ class ExamDetailsVC: UIViewController {
     @IBOutlet weak var MarksBtn: UISegmentedControl!
     @IBOutlet weak var ExamMarksBtn: UIButton!
     @IBOutlet weak var ExamLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
     
     
     let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
@@ -44,6 +45,10 @@ class ExamDetailsVC: UIViewController {
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         NameLbl.text = studentDetails?.name ?? ""
+        
+        firstChildVC.delegate = self
+        secondChildVC.delegate = self
+        
         currentChildVC = firstChildVC
         add(asChildViewController: firstChildVC)
         
@@ -109,24 +114,28 @@ class ExamDetailsVC: UIViewController {
     func transition(to newVC: UIViewController) {
         guard let currentVC = currentChildVC, newVC != currentVC else { return }
         
-        // Begin transition
         currentVC.willMove(toParent: nil)
         addChild(newVC)
         newVC.view.frame = PresentView.bounds
         
-        // Choose an animation option, for example cross dissolve
         transition(from: currentVC, to: newVC, duration: 0.3, options: [.transitionCrossDissolve], animations: nil) { finished in
             currentVC.removeFromParent()
             newVC.didMove(toParent: self)
             self.currentChildVC = newVC
+            
+            // ✅ Update parent's empty-state immediately based on current data
+            if let child = newVC as? ExamTmTblVCViewController {
+                self.childViewController(child, didUpdateDataIsEmpty: child.examDetails?.isEmpty ?? true)
+            } else if let child = newVC as? ExameMarVC {
+                self.childViewController(child, didUpdateDataIsEmpty: child.examList?.isEmpty ?? true)
+            }
         }
     }
+
     
     @IBAction func BackAct(_ sender: Any) {
         
-        
         dismiss(animated: true)
-        
     }
     
     @IBAction func TimetableBtnAct(_ sender: Any) {
@@ -134,17 +143,16 @@ class ExamDetailsVC: UIViewController {
         addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
         transition(to: firstChildVC)
     }
+    
     @IBAction func ExamMarkBtnAct(_ sender: Any) {
         
         addUnderline(to: ExamMarksBtn, unselectedButton: TimeTableBtn)
         transition(to: secondChildVC)
     }
     
-}
-
-extension ExamDetailsVC: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func childViewController(_ child: UIViewController, didUpdateDataIsEmpty isEmpty: Bool) {
         
+        searchBtn.isHidden = isEmpty
     }
+    
 }
