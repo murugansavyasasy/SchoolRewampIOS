@@ -30,7 +30,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchView: UIView!
@@ -46,8 +46,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     var delegate:EditObjectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBtn.configureAsBackButton(firstLine: "Event History", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        backBtn.configureAsBackTitle(firstLine: "Event History", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         historyTable.register(UINib(nibName: CellConfingName.EventTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.EventTVC)
         historyTable.register(UINib(nibName: "OngoingTVC", bundle: nil), forCellReuseIdentifier: "OngoingTVC")
         historyTable.register(UINib(nibName: "ReciverEventTVC", bundle: nil), forCellReuseIdentifier: "ReciverEventTVC")
@@ -102,7 +101,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     @IBAction func createAssignment(_ sender: UIButton) {
-        let vc = EventsVC()
+        let vc = NotificationCallVC()
+//        let vc = EventsVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

@@ -43,7 +43,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - IBOutlets
     @IBOutlet weak var outerDropDownView: UIView!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var schoolName: UILabel!
     @IBOutlet weak var schoolDropDown: UIView!
@@ -75,12 +75,11 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         searchBar.searchTextField.addDoneButton()
         
         if checkMutipleSchool() {
-            backBtn.setTitle("NoticeBoard", for: .normal)
+            backBtn.text = "NoticeBoard"
         } else {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
-            backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: schoolName)
+            backBtn.configureAsBackTitle(firstLine: "NoticeBoard", secondLine: schoolName)
         }
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
@@ -88,6 +87,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 let matchedSchoolName = school_details?
                     .first(where: { $0.access_token == staffToken })?
                     .school_name
+                token = staffToken
                 schoolName.text = matchedSchoolName ?? "School name not found"
             }
             schoolList = school_details?.compactMap { $0.school_name }
@@ -124,7 +124,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
             if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-                
+                token = selectedSchool.access_token
                 localData.editToken = selectedSchool.access_token
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     self.Get_Notice()
@@ -234,11 +234,10 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     
     func Get_Notice() {
         showLoadingState()
-        APIService.shared.makeApi(url: ServiceUrl.admin_api_notice_board_report, parameters: [:], type: ApitTypeSringFile.GET, token: localData.editToken ?? staffdetails?.access_token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_notice_board_report, parameters: [:], type: ApitTypeSringFile.GET, token: token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.hideLoadingState()
-                
                 switch result {
                 case .success(let successResponse):
                     self.allNotices = successResponse.data ?? []
@@ -271,7 +270,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                     url: ServiceUrl.admin_api_notice_board_delete,
                     parameters: ["id": noticeId],
                     type: ApitTypeSringFile.PUT,
-                    token: self.staffdetails?.access_token ?? ""
+                    token: self.token ?? ""
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }

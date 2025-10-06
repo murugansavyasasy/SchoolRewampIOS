@@ -12,7 +12,7 @@ class InteractionVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var FullView: UIView!
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var noDatimgView: UIImageView!
     @IBOutlet weak var noDataFoundLbl: UILabel!
@@ -26,14 +26,13 @@ class InteractionVC: UIViewController {
         super.viewDidLoad()
       
         searchBar.searchTextField.addDoneButton()
-        backBtn.applyBackButton()
+        searchBar.searchTextField.backgroundColor = .white
         FullView.layer.cornerRadius = 30
         FullView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         FullView.layer.masksToBounds = true
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         let name = studentDetails?.name ?? ""
         let standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        backBtn.configureAsBackTitle(firstLine: name, secondLine: standard)
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self

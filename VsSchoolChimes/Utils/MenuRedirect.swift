@@ -430,11 +430,11 @@ class MenuRedirectHandler {
     }
     
     func receiverclassTimeTable(from viewController: UIViewController) {
-        //let vc = ClassTimeTableViewController(nibName: nil, bundle: nil)
         let vc = TimetableVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        viewController.present(vc, animated: false)
     }
+
     
     func receiverAttendenceMark(from viewController: UIViewController){
         

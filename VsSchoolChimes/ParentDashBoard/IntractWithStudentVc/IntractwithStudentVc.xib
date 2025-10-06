@@ -13,7 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IntractwithStudentVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="backBtn" destination="dIh-3w-yPa" id="9KL-e0-O2t"/>
+                <outlet property="backBtn" destination="rbp-rI-rsb" id="uTt-BN-EWw"/>
                 <outlet property="imgView" destination="8bE-iv-3Ah" id="Xgb-uf-hmX"/>
                 <outlet property="noDataFoundLbl" destination="yyG-j4-6Iq" id="z2x-QP-QDG"/>
                 <outlet property="searchBar" destination="78M-gm-8ih" id="ZoQ-ng-Pez"/>
@@ -31,13 +31,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f7S-IS-SQh">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="156"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oJ4-pG-Kdd">
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oJ4-pG-Kdd">
                             <rect key="frame" x="10" y="69" width="373" height="67"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIh-3w-yPa">
-                                    <rect key="frame" x="0.0" y="16" width="17" height="35"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIh-3w-yPa">
+                                    <rect key="frame" x="0.0" y="16" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="eoN-3H-eTu"/>
+                                        <constraint firstAttribute="width" constant="35" id="y79-bX-JxU"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -50,6 +51,12 @@
                                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="s8B-EH-8DL"/>
                                     </connections>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbp-rI-rsb">
+                                    <rect key="frame" x="35" y="23.333333333333329" width="298" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CX4-Xb-RTu">
                                     <rect key="frame" x="333" y="13.666666666666671" width="40" height="40"/>
                                     <constraints>

@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoticeBoardVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="backBtn" destination="Qci-OS-S46" id="u5z-v5-q12"/>
+                <outlet property="backBtn" destination="kAE-Oq-MQ2" id="y1e-rJ-3ue"/>
                 <outlet property="collectionView" destination="soM-TE-loq" id="MxH-ld-EeV"/>
                 <outlet property="createBtn" destination="AN3-ff-ngH" id="vSy-3h-rNk"/>
                 <outlet property="headerView" destination="caG-6U-gQP" id="ApH-nW-PGt"/>
@@ -41,14 +41,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qci-OS-S46">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="30" height="35"/>
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="DkR-J5-XaI"/>
                                                 <constraint firstAttribute="height" constant="35" id="iOs-Sd-YgT"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Assignment" image="chevron.left" catalog="system">
+                                            <state key="normal" image="chevron.left" catalog="system">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                             </state>
@@ -56,6 +57,12 @@
                                                 <action selector="back:" destination="-1" eventType="touchUpInside" id="ZU5-cA-Cml"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAE-Oq-MQ2">
+                                            <rect key="frame" x="30" y="0.0" width="343" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WvH-Xc-Sv1">
