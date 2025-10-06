@@ -7,41 +7,143 @@
 
 import UIKit
 
-class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-
+class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SelectedId,UIPopoverPresentationControllerDelegate {
+    func selectId(id: String?, edit: Bool?) {
+        delegate?.selectId(id:id, edit: edit)
+    }
+    
+    @IBOutlet weak var roundView: UIView!
+    @IBOutlet weak var editAndDeleteBtnName: UIButton!
+    @IBOutlet weak var descriptionLbl: UILabel!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var sendByLbl: UILabel!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var cv: UICollectionView!
     var attachmentFiles: [FilePath]?
+    var delegate:SelectedId?
+    var edit:Bool?
+    var delete:Bool?
+    var selectedId:String?
+    private weak var parentTableView: UITableView?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        roundView.layer.cornerRadius = roundView.frame.width/2
+        
         cv.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
         cv.delegate = self
         cv.dataSource = self
+        
+        if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
+                   layout.estimatedItemSize = .zero
+               }
+               cv.isScrollEnabled = false
     }
     
     
     
-    func configure(with files: [FilePath]?,sendBy:String) {
-        sendByLbl.text = sendBy
-           self.attachmentFiles = files
-        cv.isScrollEnabled = false
-           cv.reloadData()
-           updateCollectionViewHeight()
-       }
-
-       func updateCollectionViewHeight() {
-           let height = cv.collectionViewLayout.collectionViewContentSize.height
-           cvHeight.constant = height
-       }
+    @IBAction func EditAndDeletBtn(_ sender: UIButton) {
+        
+        let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
+        popoverContentVC.delegate = self
+        popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 70)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .right
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
+    }
+    
+    func getCurrentViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController?
+            .topMostViewController()
+    }
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        editAndDeleteBtnName.isHidden = !(edit || delete)
+    }
+    
     
    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        descriptionLbl.preferredMaxLayoutWidth = descriptionLbl.frame.width
+//        cv.layoutIfNeeded()
+//        cvHeight.constant = cv.contentSize.height
+//    }
 
-       func collectionContentHeight() -> CGFloat {
-           return cv.collectionViewLayout.collectionViewContentSize.height
-       }
+    private func updateCollectionHeight() {
+        self.cv.layoutIfNeeded()
+        let newHeight = self.cv.collectionViewLayout.collectionViewContentSize.height
+        
+        if abs(cvHeight.constant - newHeight) > 1 {
+            cvHeight.constant = newHeight
+            parentTableView?.beginUpdates()
+            parentTableView?.endUpdates()
+        }
+    }
+
+   
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.cv.collectionViewLayout.invalidateLayout()
+        self.cv.layoutIfNeeded()
+        self.updateCollectionHeight()
+    }
+
+    func configureCell(with files: [FilePath]?,
+                       title: String,
+                       description: String,
+                       date: String,
+                       sendBy: String,
+                       isunread: Bool,
+                       parentTableView: UITableView) {
+        
+        self.titleLbl.text = title
+        self.sendByLbl.text = sendBy
+        self.dateLbl.text = date
+        self.roundView.isHidden = !isunread
+        self.attachmentFiles = files
+        self.parentTableView = parentTableView
+
+        // Reload and force layout updates for collection view
+        DispatchQueue.main.async {
+            self.cv.reloadData()
+            self.cv.collectionViewLayout.invalidateLayout()
+            self.cv.layoutIfNeeded()
+            self.updateCollectionHeight()
+        }
+    }
+
+
+   
+
+      
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -116,15 +218,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         
     }
     
-    func getCurrentViewController() -> UIViewController? {
-        UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .flatMap { $0.windows }
-            .first { $0.isKeyWindow }?
-            .rootViewController?
-            .topMostViewController()
-    }
-    
+   
     func playVideo(for item: String) {
         let vc = VideoPreviewVc(nibName: nil, bundle: nil)
         vc.url = item

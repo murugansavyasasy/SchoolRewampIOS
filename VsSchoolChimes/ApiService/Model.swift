@@ -495,6 +495,7 @@ struct Attachment: Codable {
     var iframe: String?
     var can_edit: Bool?
     var can_delete: Bool?
+    var isExpanded: Bool?
 }
 
 struct AttachmentFilePath: Codable {
