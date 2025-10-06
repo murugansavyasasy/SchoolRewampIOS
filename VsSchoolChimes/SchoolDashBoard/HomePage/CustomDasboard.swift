@@ -140,6 +140,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
+                        user_inputs.menuList = self.menu_details?.compactMap{$0.name} ?? []
                     } else {
                         self.menu_details = []
                         self.MenuCollection.reloadData()

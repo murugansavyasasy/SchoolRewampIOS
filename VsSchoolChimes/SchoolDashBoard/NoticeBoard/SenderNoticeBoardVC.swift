@@ -80,6 +80,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBOutlet weak var TextfieldCharCountLbl: UILabel!
     @IBOutlet weak var NextBtn: UIButton!
     @IBOutlet weak var PopupView: UIView!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
+    
     let photoPickManager = PhotoPickerManager.shared
     var dateSelection = false
     var placeholderLabel: UILabel!
@@ -107,8 +110,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        backBtn.configureAsBackButton(firstLine: "NoticeBoard", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         DisplayRangeLbl.setRequiredText(CommonStringFile.Notice_Display_Date_Range)
         
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)

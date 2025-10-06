@@ -1392,10 +1392,8 @@ struct ManagemantMessageData: Codable {
     var order_date: String?
     var duration: Int?
     var isExpand:Bool?
-    
-    
-   
 }
+
 //MARK: CLASS TIMETABLE
 struct TimetableResponse: Codable {
     let status: Bool?
