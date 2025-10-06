@@ -18,6 +18,7 @@
                 <outlet property="NoDataLbl" destination="U6W-aT-YQR" id="KzT-9w-Xy6"/>
                 <outlet property="SearchBar" destination="4bt-n2-Tdm" id="BQG-L6-Tah"/>
                 <outlet property="TableView" destination="8P0-Gz-HKh" id="SC9-Cw-BJV"/>
+                <outlet property="menuNameLbl" destination="Vms-HN-nE6" id="w98-l8-U5J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,20 +27,8 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wrh-WQ-FAC">
-                    <rect key="frame" x="10" y="64" width="333" height="23.333333333333329"/>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Lesson Plan" image="chevron.left" catalog="system">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                    </state>
-                    <connections>
-                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="tR6-pc-5dk"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nH-gv-uwe">
-                    <rect key="frame" x="0.0" y="102.33333333333331" width="393" height="749.66666666666674"/>
+                    <rect key="frame" x="0.0" y="134" width="393" height="684"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nn2-oz-2G4">
                             <rect key="frame" x="0.0" y="10" width="393" height="414"/>
@@ -52,7 +41,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zkG-Gb-HQt">
-                                    <rect key="frame" x="15" y="50.000000000000014" width="363" height="40"/>
+                                    <rect key="frame" x="15" y="50" width="363" height="40"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="RC5-6R-r8L"/>
@@ -87,7 +76,7 @@
                             </constraints>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8P0-Gz-HKh">
-                            <rect key="frame" x="0.0" y="424" width="393" height="325.66666666666674"/>
+                            <rect key="frame" x="0.0" y="424" width="393" height="260"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
@@ -95,33 +84,72 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="nn2-oz-2G4" secondAttribute="trailing" id="DTf-OE-6xu"/>
                         <constraint firstItem="8P0-Gz-HKh" firstAttribute="leading" secondItem="5nH-gv-uwe" secondAttribute="leading" id="GPO-qf-NFW"/>
-                        <constraint firstAttribute="bottom" secondItem="8P0-Gz-HKh" secondAttribute="bottom" id="VXe-y7-tri"/>
+                        <constraint firstAttribute="bottom" secondItem="8P0-Gz-HKh" secondAttribute="bottom" id="Mr9-V5-AZL"/>
                         <constraint firstItem="8P0-Gz-HKh" firstAttribute="top" secondItem="nn2-oz-2G4" secondAttribute="bottom" id="a40-DZ-vCs"/>
                         <constraint firstAttribute="trailing" secondItem="8P0-Gz-HKh" secondAttribute="trailing" id="eye-fD-awi"/>
                         <constraint firstItem="nn2-oz-2G4" firstAttribute="top" secondItem="5nH-gv-uwe" secondAttribute="top" constant="10" id="lMa-N0-SE9"/>
                         <constraint firstItem="nn2-oz-2G4" firstAttribute="leading" secondItem="5nH-gv-uwe" secondAttribute="leading" id="oD7-ZQ-lXb"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wCT-RH-3hr" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i4T-3n-kPd">
+                            <rect key="frame" x="10" y="69" width="373" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wrh-WQ-FAC">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="9sJ-s4-xB2"/>
+                                        <constraint firstAttribute="height" constant="35" id="f5h-ba-CVe"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="tR6-pc-5dk"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lesson Plan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vms-HN-nE6">
+                                    <rect key="frame" x="35" y="7.3333333333333268" width="338" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="i4T-3n-kPd" secondAttribute="trailing" constant="10" id="1d7-iq-bDf"/>
+                        <constraint firstAttribute="bottom" secondItem="i4T-3n-kPd" secondAttribute="bottom" constant="20" id="FNQ-r4-hhz"/>
+                        <constraint firstItem="i4T-3n-kPd" firstAttribute="leading" secondItem="wCT-RH-3hr" secondAttribute="leading" constant="10" id="Wkt-04-Jd9"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="ParentClr"/>
+            <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Wrh-WQ-FAC" secondAttribute="trailing" constant="50" id="BxY-Hd-g0i"/>
-                <constraint firstAttribute="bottom" secondItem="5nH-gv-uwe" secondAttribute="bottom" id="IT6-gi-5mp"/>
-                <constraint firstItem="Wrh-WQ-FAC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="KfQ-00-Pgq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wCT-RH-3hr" secondAttribute="trailing" id="App-Gr-Z74"/>
+                <constraint firstItem="wCT-RH-3hr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Cfy-6C-xum"/>
+                <constraint firstItem="5nH-gv-uwe" firstAttribute="top" secondItem="wCT-RH-3hr" secondAttribute="bottom" constant="10" id="Gyt-9G-QGR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5nH-gv-uwe" secondAttribute="trailing" id="PdI-4z-tIQ"/>
                 <constraint firstItem="5nH-gv-uwe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="UA1-96-G6o"/>
-                <constraint firstItem="Wrh-WQ-FAC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="ZbG-Jt-xde"/>
-                <constraint firstItem="5nH-gv-uwe" firstAttribute="top" secondItem="Wrh-WQ-FAC" secondAttribute="bottom" constant="15" id="d12-yx-fDv"/>
+                <constraint firstItem="i4T-3n-kPd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="ZtO-uU-Y4x"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="5nH-gv-uwe" secondAttribute="bottom" id="dAa-q6-J1O"/>
+                <constraint firstItem="wCT-RH-3hr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="xNi-no-DiG"/>
             </constraints>
-            <point key="canvasLocation" x="140" y="20"/>
+            <point key="canvasLocation" x="139.69465648854961" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

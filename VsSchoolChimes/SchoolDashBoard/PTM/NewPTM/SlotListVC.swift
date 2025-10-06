@@ -23,6 +23,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     var slotData: SlotEventDetail?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var MeetingStatus = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,22 +165,38 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             cell.DurationLbl.text = PTMString.duration + " - " + String(slot?.meeting_duration ?? 0) +  " " + PTMString.minutes
             cell.bookedByNameLbl.text = slot?.booked_by
             
-            if slot?.is_booked ?? false{
-                cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
-            }else {
-                cell.edit(edit:false,delete:true,selectedId:slot?.slot_id ?? "")
+            let imageUrl = URL(string: slot?.profile_url ?? "")
+            cell.profileImage.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "interactProfile"))
+            
+            if MeetingStatus == PTMString.completedMeetings{
+                cell.optionsBtn.isHidden = true
+            }else if MeetingStatus == PTMString.todayMeetings{
+                
+                cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
+                
+            }else{
+                
+                if slot?.is_booked ?? false{
+                    cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
+                }else {
+                    cell.edit(edit:false,delete:true,selectedId:slot?.slot_id ?? "")
+                }
+                
+                if slot?.is_cancelled ?? false{
+                    cell.edit(edit:true,delete:false,selectedId:slot?.slot_id ?? "")
+                }
+                cell.delegate = self
+                
+                cell.optionsBtn.isHidden = !(slot?.can_cancel ?? false)
             }
             
-            if slot?.is_cancelled ?? false{
-                cell.edit(edit:true,delete:false,selectedId:slot?.slot_id ?? "")
-            }
             
-            
-            //cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
-            cell.delegate = self
+            //cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? ""
             
             if slot?.is_booked == true {
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
+                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                cell.StatusBtn.setTitle(title, for: .normal)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
                 cell.StatusBtn.setTitleColor(.aproved, for: .normal)
                 cell.StatusBtn.tintColor = .aproved
@@ -235,8 +252,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.WaitingLbl.text = "Slot Cancelled"
             }
             
-            cell.optionsBtn.isHidden = !(slot?.can_cancel ?? false)
-                return cell
+            return cell
         }
     }
     
@@ -250,5 +266,30 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func isCurrentTimeLater(than timeString: String) -> Bool {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let givenDate = formatter.date(from: timeString) else {
+            return false // invalid input
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // Extract hour and minute from given time
+        let components = calendar.dateComponents([.hour, .minute], from: givenDate)
+        
+        guard let givenTimeToday = calendar.date(bySettingHour: components.hour!,
+                                                 minute: components.minute!,
+                                                 second: 0,
+                                                 of: now) else {
+            return false
+        }
+        
+        return now > givenTimeToday
     }
 }

@@ -43,6 +43,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         searchBar.placeholder = CommonStringFile.Search
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
         NoDataLbl.setFont(style: .title, size: FontSize.TitleSize)
         
         PopupContainerview.isHidden = true

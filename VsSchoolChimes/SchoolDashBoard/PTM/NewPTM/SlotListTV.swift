@@ -22,6 +22,8 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var WaitingLbl: UILabel!
     @IBOutlet weak var bookedByNameLbl: UILabel!
     @IBOutlet weak var bookedByDefLbl: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    
     
     var showpopup:ShowPopupDelegate?
     var edit:Bool?
@@ -45,6 +47,8 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         
         BookingBaseview.layer.cornerRadius = 10
         BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.5)
+        
+        profileImage.layer.cornerRadius = profileImage.frame.width / 2
         
         WaitingLbl.isHidden = true
     }

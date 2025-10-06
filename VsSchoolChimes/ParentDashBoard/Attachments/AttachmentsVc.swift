@@ -19,7 +19,6 @@ class AttachmentsVc: UIViewController {
     @IBOutlet weak var MenuNameLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     
-    var attachmentHeaders: [AttachmentHeaderInfo] = []
     var attachmentFiles: [[FilePath]]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var attachmentData = [Attachment]()
@@ -99,27 +98,12 @@ class AttachmentsVc: UIViewController {
                         self.filteredAttachments = response.data
                         self.SearchAttachments = response.data
                         
-                        // Separate headers and file_paths
-                        self.attachmentHeaders = []
-                        self.attachmentFiles = []
-                        
-                        for item in self.attachmentData {
-                            let header = AttachmentHeaderInfo(
-                                title: item.title ?? "",
-                                description: item.description ?? "",
-                                date: item.date ?? "",
-                                time: item.time ?? "",
-                                sender_info: item.sender_info ?? "", sent_by: item.sent_by, is_unread: item.is_unread ?? false, id: item.id ?? "", headerID: item.header_id ,can_edit: false,can_delete: false
-                                
-                            )
-                            self.attachmentHeaders.append(header)
-                            self.attachmentFiles?.append(item.file_path ?? [])
-                        }
-                        self.tv.delegate = self
-                        self.tv.dataSource = self
+                    
                         if self.clickedMessageId != ""{
                             self.loadDataAndScrollIfNeeded()
                         }
+                        self.tv.delegate = self
+                        self.tv.dataSource = self
                         self.tv.reloadData()
                     } else {
                         
@@ -138,52 +122,55 @@ class AttachmentsVc: UIViewController {
     }
     
     
-    func ReadStatusUpdate(type: String,detail_id: String){
-        
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+    func ReadStatusUpdate(type: String, detail_id: String) {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_communication_read_status_update,
+            parameters: [
+                ReadStatusUpdateStringFile.type: type,
+                ReadStatusUpdateStringFile.detail_id: detail_id
+            ],
+            type: ApitTypeSringFile.POST,
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<ReadStatusResponse, Error>) in
+            
+            guard let self = self else { return }
             
             switch result {
-            case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
-                    DispatchQueue.main.async { [self] in
-                        attachmentHeaders = attachmentHeaders.map { attachment in
+            case .success(let successMessage):
+                if successMessage.status == true {
+                    DispatchQueue.main.async {
+                        // ✅ Safely unwrap the optional array
+                        self.filteredAttachments = self.filteredAttachments?.map { attachment in
                             var updated = attachment
                             if attachment.id == detail_id {
                                 updated.is_unread = false
                             }
                             return updated
                         }
-                        
-                        tv.reloadData()
+                        self.tv.reloadData()
                     }
                 }
-            case .failure(let error):
                 
+            case .failure(let error):
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
                 }
             }
         }
     }
-    
+
 }
 
 extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return attachmentHeaders.count
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
+  
     
     func scrollToHeaderMessageId(_ messageId: String) {
         // 1. Find section index where header.id == messageId
         
         
-        if let targetSection = attachmentHeaders.firstIndex(
-            where: { "\($0.headerID ?? "")" == messageId
+        if let targetSection = filteredAttachments?.firstIndex(
+            where: { "\($0.id ?? "")" == messageId
             }) {
             
             // 2. Scroll after layout is ready
@@ -210,87 +197,98 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         }
     }
     
+//    func tableView(_ tableView: UITableView,
+//                   viewForHeaderInSection section: Int) -> UIView? {
+//        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
+//        
+//        header.configure(with: attachmentHeaders[section])
+//        
+//        header.discretpionLbl
+//            .setupExpandable(
+//                text: attachmentHeaders[section].description ?? "",
+//                isExpanded: attachmentHeaders[section].isExpanded)
+//        
+//        
+//        header.discretpionLbl.onExpandableTap = { [weak self] in
+//            guard let self = self else { return }
+//            
+//            let newValue = !header.discretpionLbl.isExpanded
+//            header.discretpionLbl.isExpanded = newValue
+//            self.attachmentHeaders[section].isExpanded = newValue
+//            
+//                         if self.attachmentHeaders[section].is_unread == true {
+//                             self.ReadStatusUpdate(
+//                                 type: "ATTACHMENT",
+//                                 detail_id: self.attachmentHeaders[section].id ?? "")
+//                         }
+//            
+//            tableView.beginUpdates()
+//            tableView.endUpdates()
+//        }
+//        
+//        header.layoutIfNeeded()
+//        
+//        return header
+//    }
+//    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredAttachments?.count ?? 0
+    }
+
     func tableView(_ tableView: UITableView,
-                   viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath) as? ContentCell else {
+            return UITableViewCell()
+        }
+        let displayText = formattedDateStatus(from: filteredAttachments?[indexPath.row].date ?? "")
+        cell
+            .configureCell(
+                with: filteredAttachments?[indexPath.row].file_path ?? [],
+                title: filteredAttachments?[indexPath.row].title ?? "",
+                description: filteredAttachments?[indexPath.row].description ?? "",
+                date: "🗓️ " + displayText,
+                sendBy:  "Posted by :  " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
+                isunread: filteredAttachments?[indexPath.row].is_unread ?? false,
+                parentTableView: tv
+            )
         
-        header.configure(with: attachmentHeaders[section])
-        
-        header.discretpionLbl
+        cell.editAndDeleteBtnName.tag = indexPath.row
+        cell
+            .edit(
+                edit: filteredAttachments?[indexPath.row].can_edit ?? false,
+                delete:  filteredAttachments?[indexPath.row].can_delete ?? false,
+                selectedId: filteredAttachments?[indexPath.row].id ?? ""
+                   )
+//        cell.delegate = self
+        cell.descriptionLbl
             .setupExpandable(
-                text: attachmentHeaders[section].description ?? "",
-                isExpanded: attachmentHeaders[section].isExpanded)
-        
-        
-        header.discretpionLbl.onExpandableTap = { [weak self] in
-            guard let self = self else { return }
+                text: filteredAttachments?[indexPath.row].description ?? ""
+            )
+        cell.descriptionLbl.onExpandableTap = {
+//            cell.descriptionLbl.isExpanded.toggle()
             
-            let newValue = !header.discretpionLbl.isExpanded
-            header.discretpionLbl.isExpanded = newValue
-            self.attachmentHeaders[section].isExpanded = newValue
+            let newValue = !cell.descriptionLbl.isExpanded
+            cell.descriptionLbl.isExpanded = newValue
+            self.filteredAttachments?[indexPath.row].isExpanded = newValue
             
-                         if self.attachmentHeaders[section].is_unread == true {
+                         if self.filteredAttachments?[indexPath.row].is_unread == true {
                              self.ReadStatusUpdate(
                                  type: "ATTACHMENT",
-                                 detail_id: self.attachmentHeaders[section].id ?? "")
+                                 detail_id: self.filteredAttachments?[indexPath.row].id ?? "")
                          }
-            
             tableView.beginUpdates()
             tableView.endUpdates()
         }
-        
-        header.layoutIfNeeded()
-        
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView,
-                   heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContentCell, for: indexPath) as? ContentCell else {
-            return UITableViewCell()
-        }
-        cell
-            .configure(
-                with: attachmentFiles?[indexPath.section],
-                sendBy: ("Posted By : ") + (
-                    attachmentHeaders[indexPath.section].sent_by ?? ""
-                )
-            )
-        cell.layoutIfNeeded()
+//        cell.layoutIfNeeded()
         return cell
     }
     
-    func tableView(_ tableView: UITableView,
-                   heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContentCell) as? ContentCell else {
-            return 100
-        }
-        cell
-            .configure(
-                with: attachmentFiles?[indexPath.section],
-                sendBy: ("Posted By : ") + (
-                    attachmentHeaders[indexPath.section].sent_by ?? ""
-                )
-            )
-        return cell.collectionContentHeight() + 60
-    }
-    
-    
-    
+
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterAttachments(with: searchText)
     }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-            // Called when keyboard is dismissed
-            print("Keyboard dismissed for search bar")
-            // Do your custom actions here
-        }
     
     private func filterAttachments(with searchText: String) {
         if searchText.isEmpty {
@@ -303,32 +301,16 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             }
         }
         
-        // Rebuild header & file list
-        self.attachmentHeaders = []
-        self.attachmentFiles = []
-        
-        if let attachments = self.filteredAttachments {
-            for item in attachments {
-                let header = AttachmentHeaderInfo(
-                    title: item.title ?? "",
-                    description: item.description ?? "",
-                    date: item.date ?? "",
-                    time: item.time ?? "",
-                    sender_info: item.sender_info ?? "", sent_by: item.sent_by,
-                    is_unread: item.is_unread ?? false,
-                    id: item.id ?? "", headerID: item.header_id,
-                    can_edit: false,can_delete: false
-                )
-                self.attachmentHeaders.append(header)
-                self.attachmentFiles?.append(item.file_path ?? [])
-            }
+        UIView.performWithoutAnimation {
+            self.tv.reloadData()
+            self.tv.layoutIfNeeded()
         }
-        
-        self.tv.reloadData()
+
         
         if self.filteredAttachments?.isEmpty ?? true {
             self.noDataLabel.isHidden = false
             self.noDataLabel.text = "No Attachment Found"
+            
             self.tv.isHidden = true
         } else {
             self.noDataLabel.isHidden = true
@@ -336,17 +318,4 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         }
     }
 }
-struct AttachmentHeaderInfo {
-    let title: String?
-    let description: String?
-    let date: String?
-    let time: String?
-    let sender_info: String?
-    let sent_by: String?
-    var is_unread: Bool
-    let id: String?
-    let headerID: String?
-    let can_edit: Bool
-    let can_delete: Bool
-    var isExpanded: Bool = false
-}
+

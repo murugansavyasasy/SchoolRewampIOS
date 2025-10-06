@@ -71,7 +71,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+
         searchBar.searchTextField.addDoneButton()
         
         if checkMutipleSchool() {
@@ -85,7 +85,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             schoolDropDown.isHidden = false
             if let staffToken = staffdetails?.access_token {
                 let matchedSchoolName = school_details?
-                    .first(where: { $0.access_token == staffToken })?
+                    .first?
                     .school_name
                 token = staffToken
                 schoolName.text = matchedSchoolName ?? "School name not found"
@@ -103,7 +103,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     func checkMutipleSchool() -> Bool {
         let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
         if staffCount > 1 {
-            switch Scholldetails?.user_details?.staff_details?.first?.role {
+            switch Scholldetails?.user_details?.staff_details?.first?.priority_level {
             case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
                 return true
             default:

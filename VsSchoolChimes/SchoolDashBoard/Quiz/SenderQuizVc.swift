@@ -9,6 +9,9 @@ import UIKit
 
 class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var noOfQuestionDefaultLbl: UILabel!
+    @IBOutlet weak var descrptionDefaultLbl: UILabel!
+    @IBOutlet weak var titleDefaultLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var fullView: UIView!
@@ -16,10 +19,16 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var discriptionsTextFild: UITextView!
     @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkBox: UIView!
+    @IBOutlet weak var checkBoxImage: UIImageView!
+    @IBOutlet weak var nextBtn: UIButton!
+    
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectNotice: SelectNotice?
+    var IsChecked = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fullView.layer.cornerRadius = 10
@@ -34,11 +43,21 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         titleText.addDoneButton()
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
-        
+        numberOfQuestionText.keyboardType = .numberPad
+       
+        noOfQuestionDefaultLbl
+            .setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
+        titleDefaultLbl.setRequiredText(MenuStringFile.Title)
+        descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
+        nextBtn.layer.cornerRadius = 10
+        discriptionsTextFild.layer.cornerRadius = 10
+        
+        checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
+        checkBox.isUserInteractionEnabled = true
         
         // Do any additional setup after loading the view.
     }
@@ -48,6 +67,17 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         
         dismiss(animated: true)
     }
+    
+    @IBAction func checkboxAct(){
+        
+        IsChecked.toggle()
+        if IsChecked {
+            checkBoxImage.image = UIImage(systemName: "checkmark.circle.fill")
+        }else{
+            checkBoxImage.image = UIImage(systemName: "circle")
+        }
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
 //        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         
@@ -71,12 +101,35 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBAction func createQuizBtnAct(_ sender: UIButton) {
         
+       
+        // Trim and validate inputs
+        guard let title = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty,
+              let description = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines), !description.isEmpty,
+              let questionCountText = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines), !questionCountText.isEmpty,
+              let questionCount = Int(questionCountText), questionCount > 0
+        else {
+            
+            let alert  = CustomAlert()
+            alert
+                .showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Please_fill,
+                    on: self
+                )
+            return
+        }
+
+        // ✅ Inputs are valid
+        print("Title: \(title), Description: \(description), Count: \(questionCount)")
+
+        
+        
         let params: [String: Any] = [
             "title": titleText.text ?? "",
             "description": discriptionsTextFild.text ?? "",
             "no_of_question" : Int(numberOfQuestionText.text ?? "0") ?? 0,
-            "level": 1,
-            "level_flag" : false
+            "level": user_inputs.level,
+            "level_flag" : IsChecked
         ]
         
 //        let vc = QuizSubmissionVc(nibName: nil, bundle: nil)

@@ -25,7 +25,7 @@ class NotificationViewController: UIViewController {
     var passValue = 1
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var tvheadernotidata : [notificationData] = []
-    
+    var token : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -200,12 +200,14 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
+        
+       
 
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_notifications,
             parameters: ["device_type" : "Iphone"],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: token
         ) { [weak self] (result: Result<notificationSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {

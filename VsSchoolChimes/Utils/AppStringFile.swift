@@ -17,7 +17,7 @@ struct MenuStringFile{
     static let Circulars = "Circulars"
     static let NoticeBoard = "Notice Board"
     static let LeaveRequest = "Leave Request"
-    static let Assignment = "Assignment"
+    static let Assignment = "assignment"
     static let OnlineMeeting = "Online Meeting"
     static let Homework = "Homework"
     static let ScheduleExamTest = "Schedule Exam/Test"
@@ -43,6 +43,8 @@ struct MenuStringFile{
     static let GeometricAttendance = "Geometric Attendance"
     static let AbsentStudents = "Absent Students"
     static var selectedMenuName = ""
+    static let Title = "Title".translated()
+    static let description = "Description".translated()
 }
 
 
@@ -75,6 +77,7 @@ struct ReceiverMenuItems {
 struct AlertstringFile{
     
     static let title = "Confirm Action".translated()
+    static let Please_fill = "Please fill all required field".translated()
     static let voice_or_title_is_required = "Voice and title is required".translated()
     static let enter_title_description = "Enter title and description".translated()
     static let Choose_any_target = "Choose any target to send message".translated()

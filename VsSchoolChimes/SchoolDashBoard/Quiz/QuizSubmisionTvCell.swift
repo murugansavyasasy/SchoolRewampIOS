@@ -6,7 +6,10 @@
 //
 
 import UIKit
-
+protocol call: AnyObject{
+    
+    func callMobileNumber(indexPath:Int)
+}
 class QuizSubmisionTvCell: UITableViewCell {
 
     @IBOutlet weak var profileImage: UIImageView!
@@ -17,7 +20,7 @@ class QuizSubmisionTvCell: UITableViewCell {
     @IBOutlet weak var SubmittedOnBtn: UIButton!
     @IBOutlet weak var StatusBtn: UIButton!
     @IBOutlet weak var cellView: UIView!
-    
+    weak var delegate:call?
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -39,4 +42,8 @@ class QuizSubmisionTvCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func stausBtnAct(_ sender: UIButton) {
+        delegate?.callMobileNumber(indexPath: sender.tag)
+        
+    }
 }

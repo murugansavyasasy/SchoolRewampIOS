@@ -82,6 +82,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupProfileImage()
     }
     
+    @IBAction func notificationBtn(_ sender: UIButton) {
+        let vc = NotificationViewController(nibName: nil, bundle: nil)
+        vc.token = staffDetails?.access_token ?? ""
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)

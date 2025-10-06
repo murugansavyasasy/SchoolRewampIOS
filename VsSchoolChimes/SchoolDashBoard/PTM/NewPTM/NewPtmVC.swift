@@ -155,6 +155,7 @@ class NewPtmVC: UIViewController, Datepicker {
                         self.tv.reloadData()
                        // self.cv.reloadData() // if you’re also showing in collection view
                     }else {
+                        self.nodataLbl.text = success.message
                         self.noDataImage.isHidden = false
                         self.nodataLbl.isHidden = false
                         self.Meeting_data = success.data ?? []
@@ -166,6 +167,7 @@ class NewPtmVC: UIViewController, Datepicker {
                     print("Error: ", error.localizedDescription)
                     self.noDataImage.isHidden = false
                     self.nodataLbl.isHidden = false
+                    self.nodataLbl.text = error.localizedDescription
                 }
             }
         }
@@ -378,6 +380,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = SlotListVC(nibName: nil, bundle: nil)
         vc.slotData = sections[indexPath.section].events[indexPath.row]
+        vc.MeetingStatus = sections[indexPath.section].title
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

@@ -548,7 +548,8 @@ class MarkAttendenceVC: UIViewController {
     
     //MARK: Attendance report API Call
     func student_attendance_report(){
-        
+        presentPeretageLbl.text = ""
+        absentPersentage.text = ""
         let Param = [
             AttendanceReportStringFile.from_date :  selectedDate,
             AttendanceReportStringFile.to_date : selectedDate,
@@ -597,31 +598,33 @@ class MarkAttendenceVC: UIViewController {
                         
                         if Int(presentPercentage.rounded(.down)) == 100 {
                             
-                            graphDownImg.image = UIImage(named: "presentGraps")
-                            graphDownImg.image = UIImage(named: "AbsentGraph")
+                            graphDownImg.image = UIImage(named: "slachImg")
+                            graphUpImg.image = UIImage(named: "presentGraps")
+                            graphUpImg.tintColor = .green
+                            graphDownImg.tintColor = .primery
 //                            absent
                             
                         } else if  Int(absentPercentage.rounded(.down)) == 100 {
                             
+                            graphUpImg.image = UIImage(named: "slachImg")
+                            graphUpImg.tintColor = .primery
+                            graphDownImg.image = UIImage(named: "presentGraps")
+                            graphDownImg.tintColor = .red
+                            
                         }else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
-                            let value = Int(presentPercentage.rounded(.down))
-                          
+                            graphDownImg.image = UIImage(named: "slachImg")
+                            graphUpImg.image = UIImage(named: "slachImg")
+                            graphUpImg.tintColor = .systemYellow
+                            graphDownImg.tintColor = .systemYellow
+                            
+                        } else if Int(presentPercentage.rounded(.down)) < Int(absentPercentage.rounded(.down)) {
                             graphDownImg.image = UIImage(named: "presentGraps")
-                            graphDownImg.image = UIImage(named: "AbsentGraph")
-                            
-                        } else if presentPercentage < absentPercentage {
-                            
-                            graphDownImg.image = UIImage(named: "presentGraps")
-                            
-                            graphDownImg.tintColor = .green
+                            graphDownImg.tintColor = .red
                             graphUpImg.image = UIImage(named: "AbsentGraph")
-                            graphUpImg.tintColor = .red
+                            graphUpImg.tintColor = .green
                             
-                        } else if presentPercentage > absentPercentage {
-                            
-                            
+                        } else if Int(presentPercentage.rounded(.down)) > Int(absentPercentage.rounded(.down)) {
                             graphDownImg.image = UIImage(named: "AbsentGraph")
-                            
                             graphDownImg.tintColor = .red
                             graphUpImg.image = UIImage(named: "presentGraps")
                             graphUpImg.tintColor = .green

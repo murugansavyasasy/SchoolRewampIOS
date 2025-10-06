@@ -20,6 +20,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    
+    @IBOutlet weak var menuTitleLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var PopupView: UIView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -106,17 +108,13 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         selectImgPdfview.imageCollectionview.backgroundColor = .clear
         imageSelection()
         
-        BackBtn
-            .configureAsBackButton(
-                firstLine: "Create new " + MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? ""
-            )
+        menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        menuTitleLbl.text = "Create new " + MenuStringFile.selectedMenuName
+        
         if editId != ""{
-            BackBtn
-                .configureAsBackButton(
-                    firstLine: "Update Existing " + MenuStringFile.selectedMenuName,
-                    secondLine: staffDetails?.school_name ?? ""
-                )
+            
+            menuTitleLbl.text = "Update Existing " + MenuStringFile.selectedMenuName
+            
            setSelectedHomeWork(
             title:  Editattachment.title ?? "",
                 content: Editattachment.description ?? "",

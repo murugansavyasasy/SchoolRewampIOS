@@ -792,6 +792,38 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                 return false
             }
         
+        // 7. Time vs Today validation
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MM-yyyy"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            let todayString = formatter.string(from: Date())
+            
+        if SelectedDates.contains(todayString) {
+            // Parse "hh:mm a" formatted times
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "hh:mm a"
+            timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            if let from = timeFormatter.date(from: fromTime) {
+                // Build today’s datetime with the selected fromTime
+                let calendar = Calendar.current
+                let comps = calendar.dateComponents([.hour, .minute], from: from)
+                if let fromDateTime = calendar.date(bySettingHour: comps.hour!,
+                                                    minute: comps.minute!,
+                                                    second: 0,
+                                                    of: Date()) {
+                    if Date() > fromDateTime {
+                        CustomAlert.showAlertWithOkAction(
+                            title: "Invalid Time",
+                            message: "Start time cannot be in the past for today",
+                            on: self
+                        )
+                        return false
+                    }
+                }
+            }
+        }
         // ✅ Passed all validations
         return true
     }
