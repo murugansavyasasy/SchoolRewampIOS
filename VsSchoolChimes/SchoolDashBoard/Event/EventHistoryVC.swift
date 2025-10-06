@@ -101,8 +101,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     @IBAction func createAssignment(_ sender: UIButton) {
-        let vc = NotificationCallVC()
-//        let vc = EventsVC()
+//        let vc = NotificationCallVC()
+        let vc = EventsVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
