@@ -51,7 +51,7 @@ class AttachTvHeader: UITableViewHeaderFooterView, SelectedId, UIPopoverPresenta
             popoverContentVC.modalPresentationStyle = .overFullScreen
             popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
         }
-        if let topVC = getCurrentViewController() {
+        if let topVC = getCurrentViewControllerss() {
             topVC.present(popoverContentVC, animated: true, completion: nil)
         }
         
@@ -62,7 +62,7 @@ class AttachTvHeader: UITableViewHeaderFooterView, SelectedId, UIPopoverPresenta
         return .none
     }
     
-    func getCurrentViewController() -> UIViewController? {
+    func getCurrentViewControllerss() -> UIViewController? {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .flatMap { $0.windows }
@@ -76,13 +76,13 @@ class AttachTvHeader: UITableViewHeaderFooterView, SelectedId, UIPopoverPresenta
         self.edit = edit
         editAndDeleteBtnName.isHidden = !(edit || delete)
     }
-    func configure(with item: AttachmentHeaderInfo) {
-        
-//        discretpionLbl.text = item.description
-        titleLbl.text =  item.title
-        let displayText = formattedDateStatus(from: item.date ?? "")
-        dateLbl.text = "🗓️ " + displayText
-        roundView.isHidden = !item.is_unread
-        
-       }
+//    func configure(with item: AttachmentHeaderInfo) {
+//        
+////        discretpionLbl.text = item.description
+//        titleLbl.text =  item.title
+//        let displayText = formattedDateStatus(from: item.date ?? "")
+//        dateLbl.text = "🗓️ " + displayText
+//        roundView.isHidden = !item.is_unread
+//        
+//       }
 }

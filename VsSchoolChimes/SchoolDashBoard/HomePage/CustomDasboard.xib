@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -29,10 +29,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-GC-JgT" customClass="HeaderWaveView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="205.66666666666666"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="224"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfh-Ne-KxY">
-                            <rect key="frame" x="10" y="70.333333333333329" width="30" height="30"/>
+                            <rect key="frame" x="10" y="119" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="aWU-TS-xrH"/>
                                 <constraint firstAttribute="height" constant="30" id="eKk-uf-H44"/>
@@ -47,13 +47,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-xi-caa">
-                            <rect key="frame" x="60" y="105.33333333333333" width="213" height="20.333333333333329"/>
+                            <rect key="frame" x="60" y="144" width="213" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6q-ZO-PGs">
-                            <rect key="frame" x="273" y="100.66666666666667" width="30" height="30.000000000000014"/>
+                            <rect key="frame" x="273" y="129" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="HwH-2w-EIc"/>
                                 <constraint firstAttribute="height" constant="30" id="K2E-34-PnQ"/>
@@ -68,13 +68,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xm8-ou-byW">
-                            <rect key="frame" x="60" y="75" width="213" height="20.333333333333329"/>
+                            <rect key="frame" x="60" y="134" width="213" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="CvV-EF-P3q">
-                            <rect key="frame" x="273" y="69" width="110" height="60"/>
+                            <rect key="frame" x="273" y="128" width="110" height="60"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yII-3C-CKd">
                                     <rect key="frame" x="0.0" y="15" width="30" height="30"/>
@@ -88,6 +88,9 @@
                                         <imageReference key="image" image="bell" catalog="system" symbolScale="large"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
                                     </state>
+                                    <connections>
+                                        <action selector="notificationBtn:" destination="-1" eventType="touchUpInside" id="hFn-vR-gmn"/>
+                                    </connections>
                                 </button>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SBz-sf-EYc">
                                     <rect key="frame" x="50" y="0.66666666666666785" width="60" height="58.666666666666657"/>
@@ -117,10 +120,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Bj-00-zHJ">
-                    <rect key="frame" x="0.0" y="195.66666666666669" width="393" height="622.33333333333326"/>
+                    <rect key="frame" x="0.0" y="214" width="393" height="570"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pCW-mj-7SX">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="622.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="570"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-r1-Ddw">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
@@ -136,7 +139,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="A6G-fe-j6j">
-                                    <rect key="frame" x="0.0" y="100.00000000000003" width="393" height="30"/>
+                                    <rect key="frame" x="0.0" y="100" width="393" height="30"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="DvL-ns-eO2"/>
@@ -145,7 +148,7 @@
                                     <color key="currentPageIndicatorTintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </pageControl>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8j8-rO-HUO">
-                                    <rect key="frame" x="0.0" y="130.00000000000003" width="393" height="492.33333333333337"/>
+                                    <rect key="frame" x="0.0" y="130" width="393" height="440"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZST-5D-OKJ">
                                         <size key="itemSize" width="128" height="128"/>
@@ -155,7 +158,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uhY-rK-gyY">
-                                    <rect key="frame" x="0.0" y="622.33333333333337" width="393" height="100"/>
+                                    <rect key="frame" x="0.0" y="570" width="393" height="100"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="ccp-h9-uyK"/>
