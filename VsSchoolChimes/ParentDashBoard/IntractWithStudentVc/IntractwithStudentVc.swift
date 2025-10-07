@@ -9,7 +9,7 @@ import UIKit
 
 class IntractwithStudentVc: UIViewController {
     
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var noDataFoundLbl: UILabel!
@@ -25,15 +25,15 @@ class IntractwithStudentVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        backBtn.configureAsBackButton(firstLine: " Intract With Student",
+        backBtn.configureAsBackTitle(firstLine: " Intract With Student",
                                       secondLine: StaffDetails?.school_name ?? "")
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
         tv.dataSource = self
         searchBar.delegate = self
+        searchBar.barTintColor = .white
         searchBar.searchTextField.backgroundColor = .white
         getStaff()
     }

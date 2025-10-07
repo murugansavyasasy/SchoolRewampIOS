@@ -92,8 +92,6 @@ class TimetableVC: UIViewController {
                     sheet.prefersGrabberVisible = true
                 }
                 nav.isModalInPresentation = true
-
-                // ✅ now it will animate fast on first try
                 present(nav, animated: true)
                 BottomsheetPresented = true
             }

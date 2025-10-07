@@ -91,7 +91,47 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
         if lsrw?.is_unread ?? false{
             ReadStatusUpdate(type: "LSRW", detail_id: lsrw?.detail_id ?? "")
         }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
+              let animationCurveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else { return }
+
+        let animationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw << 16)
+        let keyboardHeight = keyboardFrame.height
+
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationOptions) {
+            self.testTable.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 30, right: 0)
+            self.testTable.scrollIndicatorInsets = self.testTable.contentInset
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
+              let animationCurveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else { return }
+
+        let animationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw << 16)
+
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationOptions) {
+            self.testTable.contentInset = .zero
+            self.testTable.scrollIndicatorInsets = .zero
+        }
+    }
+
     func ReadStatusUpdate(type: String,detail_id: String){
         
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
