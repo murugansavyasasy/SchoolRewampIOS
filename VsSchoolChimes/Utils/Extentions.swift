@@ -91,8 +91,10 @@ extension UIView {
         
         if let textField = self as? UITextField {
             textField.inputAccessoryView = toolbar
+            textField.autocapitalizationType = .sentences
         } else if let textView = self as? UITextView {
             textView.inputAccessoryView = toolbar
+            textView.autocapitalizationType = .sentences
         }
     }
     

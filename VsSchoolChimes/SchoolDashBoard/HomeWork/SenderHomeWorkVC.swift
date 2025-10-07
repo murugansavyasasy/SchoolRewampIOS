@@ -40,6 +40,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     
     @IBOutlet weak var headerView: UIView!
 
+    @IBOutlet weak var designUseView: UIView!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
     // MARK: - Outlets
     @IBOutlet weak var Cv: UICollectionView!
@@ -364,23 +365,34 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
 
                 switch result {
                 case .success(let response):
-                    self.FilterHomeWorkList = response.data
-                    self.homeWorkList = response.data
-                    self.nodataFoundLbl.isHidden = response.status ?? false
-                    self.noDataFound.isHidden = response.status ?? false
-                    self.searchBtn.isHidden = !(response.status ?? false)
-//                    self.Cv.isHidden = !(response.status ?? false)
-                    self.nodataFoundLbl.text = response.message
-                    self.Cv.delegate = self
-                    self.Cv.dataSource = self
-                    self.Cv.reloadData()
-//                    DispatchQueue.main.async {
-//                        self.Cv.layoutIfNeeded()
-//                        self.cvHeight.constant = self.Cv.contentSize.height
-//                    }
+                   
+                    if response.status == true{
+                        
+                        self.FilterHomeWorkList = response.data
+                        self.homeWorkList = response.data
+                        self.nodataFoundLbl.isHidden = true
+                        self.noDataFound.isHidden = true
+                        self.designUseView.isHidden = true
+                        self.Cv.isHidden = false
+                        self.Cv.delegate = self
+                        self.Cv.dataSource = self
+                        self.Cv.reloadData()
+                        DispatchQueue.main.async {
+                            self.cvHeight.constant = self.Cv.contentSize.height
+                        }
+                    }else{
+                        self.designUseView.isHidden = false
+                        self.nodataFoundLbl.isHidden = false
+                        self.nodataFoundLbl.text = response.message ?? ""
+                        self.noDataFound.isHidden = false
+                        self.Cv.isHidden = true
+                        self.cvHeight.constant = 0
+                        
+                    }
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
                     self.noDataFound.isHidden = false
+                    self.designUseView.isHidden = false
                     self.cvHeight.constant = 0
                 }
             }
@@ -394,6 +406,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         nodataFoundLbl.text = message
         nodataFoundLbl.isHidden = false
         noDataFound.isHidden = false
+        Cv.isHidden = true
 //        cvHeight.constant = 0
     }
 }
