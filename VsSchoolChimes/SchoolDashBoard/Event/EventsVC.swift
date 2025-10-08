@@ -944,8 +944,6 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
             // Adjust the scroll view content inset
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
             scrollView.scrollIndicatorInsets = scrollView.contentInset
-            
-            // Ensure the UITextView is visible
             scrollToView(contentTxtView)
         }
     }
