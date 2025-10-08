@@ -6,10 +6,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TermsAndCondVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TermsAndCondVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="ActivityIndicator" destination="9lr-4q-5Ay" id="ewf-cu-FH1"/>
                 <outlet property="BackBtn" destination="pYC-cU-X4S" id="TwY-kc-zdH"/>
@@ -25,26 +26,26 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYC-cU-X4S">
+                    <rect key="frame" x="10" y="69" width="373" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="uMl-vS-upZ"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Terms &amp; Conditions" image="chevron.backward" catalog="system">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="ftw-Eo-WPa"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErB-Et-4YM">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="119" width="393" height="733"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYC-cU-X4S">
-                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="35" id="uMl-vS-upZ"/>
-                            </constraints>
-                            <color key="tintColor" systemColor="darkTextColor"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Terms &amp; Conditions" image="chevron.backward" catalog="system">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                            </state>
-                            <connections>
-                                <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="ftw-Eo-WPa"/>
-                            </connections>
-                        </button>
                         <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYm-At-cav">
-                            <rect key="frame" x="0.0" y="43" width="393" height="716"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="689"/>
                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <wkWebViewConfiguration key="configuration">
                                 <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -52,7 +53,7 @@
                             </wkWebViewConfiguration>
                         </wkWebView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xs7-2g-bgG">
-                            <rect key="frame" x="118" y="317" width="157" height="125"/>
+                            <rect key="frame" x="118" y="304" width="157" height="125"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYm-Nt-bQk">
                                     <rect key="frame" x="32.999999999999993" y="88" width="91.333333333333314" height="30"/>
@@ -80,38 +81,40 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" name="topBackgroundCLr 1"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="bYm-At-cav" firstAttribute="top" secondItem="ErB-Et-4YM" secondAttribute="top" id="0On-69-zRT"/>
                         <constraint firstItem="Xs7-2g-bgG" firstAttribute="centerX" secondItem="ErB-Et-4YM" secondAttribute="centerX" id="8Nl-gg-hJt"/>
                         <constraint firstItem="bYm-At-cav" firstAttribute="leading" secondItem="ErB-Et-4YM" secondAttribute="leading" id="8TS-CT-s4Y"/>
                         <constraint firstAttribute="trailing" secondItem="bYm-At-cav" secondAttribute="trailing" id="EKc-9d-hXy"/>
-                        <constraint firstAttribute="trailing" secondItem="pYC-cU-X4S" secondAttribute="trailing" constant="10" id="K0Q-Qa-rQT"/>
-                        <constraint firstItem="bYm-At-cav" firstAttribute="top" secondItem="pYC-cU-X4S" secondAttribute="bottom" constant="8" id="WwV-ks-d0R"/>
                         <constraint firstItem="Xs7-2g-bgG" firstAttribute="centerY" secondItem="ErB-Et-4YM" secondAttribute="centerY" id="a5D-dO-elz"/>
-                        <constraint firstItem="pYC-cU-X4S" firstAttribute="top" secondItem="ErB-Et-4YM" secondAttribute="top" id="djj-Sj-PMc"/>
-                        <constraint firstAttribute="bottom" secondItem="bYm-At-cav" secondAttribute="bottom" id="gTj-dj-Ifj"/>
-                        <constraint firstItem="pYC-cU-X4S" firstAttribute="leading" secondItem="ErB-Et-4YM" secondAttribute="leading" constant="10" id="xYk-v3-Hlz"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="topBackgroundCLr 1"/>
+            <color key="backgroundColor" name="BackGroundClr"/>
             <constraints>
-                <constraint firstItem="ErB-Et-4YM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="HJf-Q9-gQC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bYm-At-cav" secondAttribute="bottom" constant="10" id="9zm-5H-37U"/>
+                <constraint firstItem="pYC-cU-X4S" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="BCJ-9N-eAm"/>
+                <constraint firstItem="ErB-Et-4YM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="JWE-G3-icf"/>
                 <constraint firstItem="ErB-Et-4YM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OuJ-n7-DC2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ErB-Et-4YM" secondAttribute="trailing" id="V15-e2-e9q"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ErB-Et-4YM" secondAttribute="bottom" id="y7Q-Qh-h3d"/>
+                <constraint firstItem="pYC-cU-X4S" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="YYy-bn-1hA"/>
+                <constraint firstItem="ErB-Et-4YM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kPh-o8-7Aj"/>
+                <constraint firstAttribute="bottom" secondItem="ErB-Et-4YM" secondAttribute="bottom" id="pyp-Mh-V05"/>
+                <constraint firstItem="ErB-Et-4YM" firstAttribute="top" secondItem="pYC-cU-X4S" secondAttribute="bottom" constant="15" id="vBc-pF-P6K"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pYC-cU-X4S" secondAttribute="trailing" constant="10" id="yMF-Cl-cr2"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <namedColor name="topBackgroundCLr 1">
-            <color red="0.4779999852180481" green="0.77600002288818359" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

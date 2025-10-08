@@ -198,7 +198,6 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }else if sections[indexPath.section].items[indexPath.row] == menuname.termsAndConditions{
             
             let vc = TermsAndCondVC(nibName: nil, bundle: nil)
-            vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
         }else if sections[indexPath.section].items[indexPath.row] == "What's new"{
