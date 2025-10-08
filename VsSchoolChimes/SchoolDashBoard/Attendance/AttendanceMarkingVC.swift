@@ -8,8 +8,25 @@
 import UIKit
 import DropDown
 
-class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate {
+class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
+    func markAsAbsent(AbsentStudent: [StudentDetails]) {
+        ""
+//        filterData = AbsentStudent
+//        tv.reloadData()
+    }
+
     
+    func markStudentAsAbsent(studentId: String) {
+        filterData = filterData?.map { student in
+            var mutableStudent = student
+            if student.id == studentId {
+                mutableStudent.isAbsent = true
+            }
+            return mutableStudent
+        }
+        
+        tv.reloadData()
+    }
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var rollNoLbl: UILabel!
@@ -283,13 +300,21 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate {
     
     @IBAction func submitAttendanceAct(_ sender: Any) {
         
-        let alert = CustomAlert()
+    
+        filterData = studentsDetails?.filter { $0.isAbsent == false }
+        let vc = absentPrivewVC(nibName: nil, bundle: nil)
+        vc.studentsDetails = filterData
+        vc.delegate = self
+        vc.modalPresentationStyle = .formSheet
+        present(vc, animated: true)
         
-        alert.showAlertCancel(title:AlertstringFile.Confirm, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
-            self.markAttendaceApi()
-        } onNo: {
-            
-        }
+//        let alert = CustomAlert()
+//        
+//        alert.showAlertCancel(title:AlertstringFile.Confirm, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
+//            self.markAttendaceApi()
+//        } onNo: {
+//            
+//        }
 
     }
     

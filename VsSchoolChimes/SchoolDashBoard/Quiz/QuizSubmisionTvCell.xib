@@ -113,6 +113,7 @@
                 <outlet property="addmissionLbl" destination="f7l-g6-sOC" id="1bX-td-8Sg"/>
                 <outlet property="cellView" destination="2A9-c4-SKf" id="0gf-SY-teJ"/>
                 <outlet property="classLbl" destination="KCw-xJ-ru5" id="HGQ-H8-jzW"/>
+                <outlet property="imageViewWith" destination="Y0a-NK-vv4" id="E8A-0N-fMb"/>
                 <outlet property="nameLbl" destination="IdK-nu-so2" id="O6b-Q5-psP"/>
                 <outlet property="profileImage" destination="ies-v6-Aqh" id="4C5-yu-fni"/>
             </connections>
@@ -126,10 +127,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

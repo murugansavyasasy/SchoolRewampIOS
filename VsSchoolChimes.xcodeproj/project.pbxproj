@@ -321,6 +321,8 @@
 		844DF00A2E5AD28F0016A347 /* QuistionPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DF0082E5AD28F0016A347 /* QuistionPagenationVc.xib */; };
 		844DF0882E5ADBDE0016A347 /* ReportsQuizVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DF0862E5ADBDE0016A347 /* ReportsQuizVc.swift */; };
 		844DF0892E5ADBDE0016A347 /* ReportsQuizVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DF0872E5ADBDE0016A347 /* ReportsQuizVc.xib */; };
+		8450D0082E9639A1008D57D9 /* absentPrivewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8450D0072E9639A1008D57D9 /* absentPrivewVC.xib */; };
+		8450D0092E9639A1008D57D9 /* absentPrivewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8450D0062E9639A1008D57D9 /* absentPrivewVC.swift */; };
 		8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451EC8F2E24E55B00D6DBB4 /* HolidayTVC.xib */; };
 		8451EC932E24E55B00D6DBB4 /* CalanderDateCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451EC912E24E55B00D6DBB4 /* CalanderDateCVC.xib */; };
 		8451EC942E24E55B00D6DBB4 /* HolidayVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8451EC8D2E24E55B00D6DBB4 /* HolidayVC.xib */; };
@@ -1222,6 +1224,8 @@
 		844DF0082E5AD28F0016A347 /* QuistionPagenationVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuistionPagenationVc.xib; sourceTree = "<group>"; };
 		844DF0862E5ADBDE0016A347 /* ReportsQuizVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsQuizVc.swift; sourceTree = "<group>"; };
 		844DF0872E5ADBDE0016A347 /* ReportsQuizVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportsQuizVc.xib; sourceTree = "<group>"; };
+		8450D0062E9639A1008D57D9 /* absentPrivewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = absentPrivewVC.swift; sourceTree = "<group>"; };
+		8450D0072E9639A1008D57D9 /* absentPrivewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = absentPrivewVC.xib; sourceTree = "<group>"; };
 		8451EC8C2E24E55B00D6DBB4 /* HolidayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayVC.swift; sourceTree = "<group>"; };
 		8451EC8D2E24E55B00D6DBB4 /* HolidayVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HolidayVC.xib; sourceTree = "<group>"; };
 		8451EC8E2E24E55B00D6DBB4 /* HolidayTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayTVC.swift; sourceTree = "<group>"; };
@@ -3106,6 +3110,8 @@
 				FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */,
 				84AB0F672E76F5ED001160AD /* StudentAttendanceVc.swift */,
 				84AB0F682E76F5ED001160AD /* StudentAttendanceVc.xib */,
+				8450D0062E9639A1008D57D9 /* absentPrivewVC.swift */,
+				8450D0072E9639A1008D57D9 /* absentPrivewVC.xib */,
 			);
 			path = "Mark Attendence";
 			sourceTree = "<group>";
@@ -4717,6 +4723,7 @@
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				84769D272E7285BD008F521E /* AbsentStudentCVC.xib in Resources */,
+				8450D0082E9639A1008D57D9 /* absentPrivewVC.xib in Resources */,
 				84DE949C2E53252E008E1BF4 /* SenderQuizVc.xib in Resources */,
 				843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
@@ -5199,6 +5206,7 @@
 				849AD02B2D1A840E002DEC07 /* OnlineMeetingVC.swift in Sources */,
 				84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */,
 				18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */,
+				8450D0092E9639A1008D57D9 /* absentPrivewVC.swift in Sources */,
 				84C3A1F72E66EF4B002E7506 /* MsgVoiceCvCell.swift in Sources */,
 				18926D2A2D04140B002BBB97 /* PendingFeeReportViewController.swift in Sources */,
 				84079FF32D15A7B000D6DF04 /* LeveCreateVC.swift in Sources */,
