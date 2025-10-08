@@ -34,18 +34,18 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZe-y5-0z2">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="Mns-ZV-uyC"/>
+                    </constraints>
+                </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3r-lp-4BJ">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <rect key="frame" x="0.0" y="120" width="393" height="732"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZe-y5-0z2">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
-                            <color key="backgroundColor" name="BackGroundClr"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="120" id="Mns-ZV-uyC"/>
-                            </constraints>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dt2-dW-xJ2">
-                            <rect key="frame" x="0.0" y="120" width="393" height="642.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="642.66666666666663"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vu-LF-pzv">
                                     <rect key="frame" x="10" y="10" width="373" height="35"/>
@@ -70,8 +70,10 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seamless school communication, anytime, anywhere.effortlessly connecting students, teachers, and parents at all times." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLr-a7-2oN">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLr-a7-2oN">
                                             <rect key="frame" x="16" y="63.666666666666657" width="361" height="61"/>
+                                            <string key="text">Stay connected with your school community.
+Your updates, communication, and school life—all in one place.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -152,7 +154,7 @@
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvf-5c-OPO">
                                             <rect key="frame" x="16" y="577.66666666666663" width="361" height="45"/>
-                                            <color key="backgroundColor" red="0.4180320501" green="0.70926976200000003" blue="0.92551809549999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" name="BackGroundClr"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="gJj-11-fbM"/>
                                             </constraints>
@@ -204,13 +206,10 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="GZe-y5-0z2" firstAttribute="top" secondItem="e3r-lp-4BJ" secondAttribute="top" id="2N2-Od-loL"/>
                         <constraint firstAttribute="trailing" secondItem="dt2-dW-xJ2" secondAttribute="trailing" id="Hh5-20-UBg"/>
-                        <constraint firstItem="GZe-y5-0z2" firstAttribute="leading" secondItem="e3r-lp-4BJ" secondAttribute="leading" id="JOh-Q9-NCq"/>
                         <constraint firstAttribute="bottom" secondItem="dt2-dW-xJ2" secondAttribute="bottom" id="QGu-wh-cXn"/>
-                        <constraint firstAttribute="trailing" secondItem="GZe-y5-0z2" secondAttribute="trailing" id="emS-Ng-ILu"/>
+                        <constraint firstItem="dt2-dW-xJ2" firstAttribute="top" secondItem="e3r-lp-4BJ" secondAttribute="top" id="erd-Ni-duq"/>
                         <constraint firstItem="dt2-dW-xJ2" firstAttribute="leading" secondItem="e3r-lp-4BJ" secondAttribute="leading" id="jpX-Gh-fqB"/>
-                        <constraint firstItem="dt2-dW-xJ2" firstAttribute="top" secondItem="e3r-lp-4BJ" secondAttribute="top" constant="120" id="lbi-Bn-DxL"/>
                         <constraint firstItem="dt2-dW-xJ2" firstAttribute="width" secondItem="e3r-lp-4BJ" secondAttribute="width" id="uQl-sT-LYL"/>
                     </constraints>
                 </scrollView>
@@ -219,8 +218,11 @@
             <color key="backgroundColor" name="BackGroundClr"/>
             <constraints>
                 <constraint firstItem="e3r-lp-4BJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KTc-Ww-jKY"/>
-                <constraint firstItem="e3r-lp-4BJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="an6-qJ-A9n"/>
+                <constraint firstItem="e3r-lp-4BJ" firstAttribute="top" secondItem="GZe-y5-0z2" secondAttribute="bottom" id="LJl-pE-Vfg"/>
+                <constraint firstItem="GZe-y5-0z2" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="NsH-KY-bgL"/>
+                <constraint firstItem="GZe-y5-0z2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PMo-We-chN"/>
                 <constraint firstAttribute="bottom" secondItem="e3r-lp-4BJ" secondAttribute="bottom" id="h5d-0b-I6p"/>
+                <constraint firstItem="GZe-y5-0z2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ywc-oq-MsN"/>
                 <constraint firstItem="e3r-lp-4BJ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="zuR-tK-Crh"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-12.67605633802817"/>

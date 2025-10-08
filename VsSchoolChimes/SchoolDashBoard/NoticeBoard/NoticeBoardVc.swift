@@ -52,6 +52,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var menuNameLbl: UILabel!
     
     var staffdetails = UserDefaultFileManager.get_staff_Details()
     var Scholldetails = UserDefaultFileManager.getUserDetails()
@@ -75,11 +76,12 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         searchBar.searchTextField.addDoneButton()
         
         if checkMutipleSchool() {
-            backBtn.text = "NoticeBoard"
+            menuNameLbl.text = MenuStringFile.selectedMenuName
         } else {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
-            backBtn.configureAsBackTitle(firstLine: "NoticeBoard", secondLine: schoolName)
+            menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
         }
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false

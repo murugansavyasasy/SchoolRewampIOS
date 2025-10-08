@@ -73,20 +73,24 @@ class BookedSlotTV: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         cellView.clipsToBounds = true
-        cellView.applyVerticalGradient(
-            topColor: UIColor(
-                red: 184/255,
-                green: 201/255,
-                blue: 234/255,
-                alpha: 1
-            ),
-            bottomColor: UIColor(
-                red: 211/255,
-                green: 224/255,
-                blue: 245/255,
-                alpha: 1
-            ) // darker bottom
-        )
+        
+        DispatchQueue.main.async {
+            
+            self.cellView.applyVerticalGradient(
+                topColor: UIColor(
+                    red: 184/255,
+                    green: 201/255,
+                    blue: 234/255,
+                    alpha: 1
+                ),
+                bottomColor: UIColor(
+                    red: 211/255,
+                    green: 224/255,
+                    blue: 245/255,
+                    alpha: 1
+                ) // darker bottom
+            )
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

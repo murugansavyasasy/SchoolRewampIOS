@@ -288,6 +288,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBAction func switchAction(_ sender: Any) {
         
         if emengencyCall.isOn{
+            stopRecording()
+            if let url = URL(string:AudioPlayUrl ?? ""){
+    //            deleteFile(at:url)
+                deletRecoding()
+            }
             isEmergencyVoice = true
             Timinglbl.text = "00:00/00:30"
             Enabel_buble()
@@ -1929,7 +1934,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             self.present(alert, animated: true, completion: nil)
             return
         }
-        if selectedDates.count < 6 {
+        if selectedDates.count < 7 {
             if !selectedDates.contains(date) {
                 selectedDates.append(date)
             }

@@ -11,10 +11,14 @@ import SDWebImage   // Use this instead of Kingfisher
 
 class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var newBottomview: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var newNextBtn: UIButton!
+    @IBOutlet weak var termsCheckBtn: UIButton!
+    @IBOutlet weak var termsLbl: UILabel!
+    
     
     let dropDown = DropDown()
     var CountryCheck = 0
@@ -30,6 +34,10 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         get_CountryListApi()
         configureUI()
         searchBar.searchTextField.backgroundColor = .white
+        
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(GotoTermsVc))
+        termsLbl.addGestureRecognizer(tap1)
+        termsLbl.isUserInteractionEnabled = true
     }
     
     private func configureUI() {
@@ -39,8 +47,13 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tv.layer.cornerRadius = 40
         tv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
+        backBtn.layer.cornerRadius = backBtn.frame.width / 2
+        
         newNextBtn.layer.cornerRadius = 10
         newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        
+        tv.showsVerticalScrollIndicator = false
+        tv.showsHorizontalScrollIndicator = false
         
         tv.register(UINib(nibName: "CountryTvcell", bundle: nil), forCellReuseIdentifier: "CountryTvcell")
         tv.delegate = self
@@ -85,24 +98,46 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
 
-
+    
+    @IBAction func TermsCheckAct(_ sender: UIButton) {
+        
+        termsCheckBtn.isSelected.toggle()
+        let image = termsCheckBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(named: "CheckCircle")
+        termsCheckBtn.setImage(image, for: .normal)
+    }
+    
+    @IBAction  func GotoTermsVc(){
+        let vc = TermsAndCondVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
+    
 
     // MARK: - Next Action
     @available(iOS 14.0, *)
     @IBAction func nextAct(_ sender: Any) {
-        guard let CountryDetails = country_data else {
-            alert.showAlert(title: "", message: AlertstringFile.Please_Select_Your_Country, on: self)
-            return
+        
+        if termsCheckBtn.isSelected{
+            
+            guard let CountryDetails = country_data else {
+                alert.showAlert(title: "Oops!", message: AlertstringFile.Please_Select_Your_Country, on: self)
+                return
+            }
+            
+            UserDefaultFileManager.saveCountryDetails(data: CountryDetails)
+            ServiceUrl.baseurl = CountryDetails.base_url ?? ""
+            ServiceUrl.report_url = CountryDetails.reporting_url ?? ""
+            
+            let vc = MobileNumberVc(nibName: nil, bundle: nil)
+            vc.country_data = CountryDetails
+            vc.isFromCountry = true
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }else {
+            
+            alert.showAlert(title: "Oops!", message: AlertstringFile.Terms_And_Conditions, on: self)
         }
-        
-        UserDefaultFileManager.saveCountryDetails(data: CountryDetails)
-        ServiceUrl.baseurl = CountryDetails.base_url ?? ""
-        ServiceUrl.report_url = CountryDetails.reporting_url ?? ""
-        
-        let vc = MobileNumberVc(nibName: nil, bundle: nil)
-        vc.country_data = CountryDetails
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     
     // MARK: - Search
@@ -147,43 +182,144 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     // MARK: - TableView
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Filter_CountryList.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tv.dequeueReusableCell(withIdentifier: "CountryTvcell", for: indexPath) as? CountryTvcell else {
-            return UITableViewCell()
-        }
-        
-        let country = Filter_CountryList[indexPath.row]
-        cell.nameLbl.text = country.name
-        
-        if let urlStr = country.flag_url, let url = URL(string: urlStr) {
-            cell.FlagImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
-        }
-        
-        if country.name?.uppercased() == selectedName {
-            cell.checkImage.isHidden = false
-            cell.cellView.backgroundColor = .white
-            cell.cellView.layer.borderWidth = 1
-            cell.cellView.layer.borderColor = UIColor.systemBlue.cgColor
-        } else {
-            cell.checkImage.isHidden = true
-            cell.cellView.backgroundColor = .systemGray5
-            cell.cellView.layer.borderWidth = 0
-            cell.cellView.layer.borderColor = UIColor.clear.cgColor
-        }
-        
-        return cell
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return Filter_CountryList.count <= 3 ? 1 : 2
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return Filter_CountryList.count
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tv.dequeueReusableCell(withIdentifier: "CountryTvcell", for: indexPath) as? CountryTvcell else {
+//            return UITableViewCell()
+//        }
+//        
+//        let country = Filter_CountryList[indexPath.row]
+//        cell.nameLbl.text = country.name
+//        
+//        if let urlStr = country.flag_url, let url = URL(string: urlStr) {
+//            cell.FlagImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
+//        }
+//        
+//        if country.name?.uppercased() == selectedName {
+//            cell.checkImage.isHidden = false
+//            cell.cellView.backgroundColor = .white
+//            cell.cellView.layer.borderWidth = 1
+//            cell.cellView.layer.borderColor = UIColor.systemBlue.cgColor
+//        } else {
+//            cell.checkImage.isHidden = true
+//            cell.cellView.backgroundColor = .systemGray5
+//            cell.cellView.layer.borderWidth = 0
+//            cell.cellView.layer.borderColor = UIColor.clear.cgColor
+//        }
+//        
+//        return cell
+//    }
+//    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        selectedIndex = indexPath.row
+//        selectedName = Filter_CountryList[indexPath.row].name?.uppercased() ?? ""
+//        country_data = Filter_CountryList[indexPath.row]
+//        tv.reloadData()
+//    }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        selectedName = Filter_CountryList[indexPath.row].name?.uppercased() ?? ""
-        country_data = Filter_CountryList[indexPath.row]
-        tv.reloadData()
-    }
+    var topCountries: [CountryData] {
+            return Array(CountryListRespons.prefix(3))
+        }
+
+        var filteredTopCountries: [CountryData] {
+            let topIds = Set(topCountries.compactMap { $0.id })
+            return Filter_CountryList.filter { country in
+                if let id = country.id {
+                    return topIds.contains(id)
+                }
+                return false
+            }
+        }
+
+        var filteredAllCountries: [CountryData] {
+            let topIds = Set(topCountries.compactMap { $0.id })
+            return Filter_CountryList.filter { country in
+                if let id = country.id {
+                    return !topIds.contains(id)
+                }
+                return false
+            }
+        }
+
+        func numberOfSections(in tableView: UITableView) -> Int {
+            // If none of the top countries match → single section
+            return filteredTopCountries.isEmpty ? 1 : 2
+        }
+
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            if filteredTopCountries.isEmpty {
+                return filteredAllCountries.count
+            } else {
+                return section == 0 ? filteredTopCountries.count : filteredAllCountries.count
+            }
+        }
+
+        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            if filteredTopCountries.isEmpty {
+                return "All Countries"
+            } else {
+                return section == 0 ? "Top Countries" : "All Countries"
+            }
+        }
+
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            guard let cell = tv.dequeueReusableCell(withIdentifier: "CountryTvcell", for: indexPath) as? CountryTvcell else {
+                return UITableViewCell()
+            }
+
+            let country: CountryData
+
+            if filteredTopCountries.isEmpty {
+                country = filteredAllCountries[indexPath.row]
+            } else {
+                country = (indexPath.section == 0)
+                    ? filteredTopCountries[indexPath.row]
+                    : filteredAllCountries[indexPath.row]
+            }
+
+            // Configure cell
+            cell.nameLbl.text = country.name
+            if let urlStr = country.flag_url, let url = URL(string: urlStr) {
+                cell.FlagImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
+            }
+
+            if country.name?.uppercased() == selectedName {
+                cell.checkImage.isHidden = false
+                cell.cellView.backgroundColor = .white
+                cell.cellView.layer.borderWidth = 1
+                cell.cellView.layer.borderColor = UIColor.systemBlue.cgColor
+            } else {
+                cell.checkImage.isHidden = true
+                cell.cellView.backgroundColor = .systemGray5
+                cell.cellView.layer.borderWidth = 0
+                cell.cellView.layer.borderColor = UIColor.clear.cgColor
+            }
+
+            return cell
+        }
+
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let country: CountryData
+            if filteredTopCountries.isEmpty {
+                country = filteredAllCountries[indexPath.row]
+            } else {
+                country = (indexPath.section == 0)
+                    ? filteredTopCountries[indexPath.row]
+                    : filteredAllCountries[indexPath.row]
+            }
+
+            selectedName = country.name?.uppercased() ?? ""
+            country_data = country
+            tv.reloadData()
+        }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

@@ -70,20 +70,23 @@ class MeetingDetailTV: UITableViewCell, SelectedId, UIPopoverPresentationControl
         
         cellView.clipsToBounds = true
         
-        cellView.applyVerticalGradient(
-            topColor: UIColor(
-                red: 184/255,
-                green: 201/255,
-                blue: 234/255,
-                alpha: 1
-            ),
-            bottomColor: UIColor(
-                red: 211/255,
-                green: 224/255,
-                blue: 245/255,
-                alpha: 1
-            ) // darker bottom
-        )
+        DispatchQueue.main.async {
+            
+            self.cellView.applyVerticalGradient(
+                topColor: UIColor(
+                    red: 184/255,
+                    green: 201/255,
+                    blue: 234/255,
+                    alpha: 1
+                ),
+                bottomColor: UIColor(
+                    red: 211/255,
+                    green: 224/255,
+                    blue: 245/255,
+                    alpha: 1
+                ) // darker bottom
+            )
+        }
         
 //        cellView.applyVerticalGradient(
 //            topColor: UIColor(red: 244/255, green: 227/255, blue: 202/255, alpha: 1), // #F4E3CA
@@ -139,19 +142,47 @@ class MeetingDetailTV: UITableViewCell, SelectedId, UIPopoverPresentationControl
 
 import UIKit
 
+//extension UIView {
+//    func applyVerticalGradient(topColor: UIColor, bottomColor: UIColor) {
+//        // Remove any existing gradient layer
+//        layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+//        
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // top
+//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)   // bottom
+//        gradientLayer.frame = bounds
+//        gradientLayer.cornerRadius = layer.cornerRadius
+//        
+//        layer.insertSublayer(gradientLayer, at: 0)
+//    }
+//}
+
 extension UIView {
+    private static let gradientLayerName = "CustomGradientLayer"
+
     func applyVerticalGradient(topColor: UIColor, bottomColor: UIColor) {
-        // Remove any existing gradient layer
-        layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-        
+        // Check if gradient already exists
+        if let existing = layer.sublayers?.first(where: { $0.name == UIView.gradientLayerName }) as? CAGradientLayer {
+            existing.colors = [topColor.cgColor, bottomColor.cgColor]
+            existing.frame = bounds
+            return
+        }
+
         let gradientLayer = CAGradientLayer()
+        gradientLayer.name = UIView.gradientLayerName
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // top
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)   // bottom
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientLayer.frame = bounds
         gradientLayer.cornerRadius = layer.cornerRadius
-        
+
         layer.insertSublayer(gradientLayer, at: 0)
     }
-}
 
+    func updateGradientFrame() {
+        if let gradientLayer = layer.sublayers?.first(where: { $0.name == UIView.gradientLayerName }) as? CAGradientLayer {
+            gradientLayer.frame = bounds
+        }
+    }
+}
