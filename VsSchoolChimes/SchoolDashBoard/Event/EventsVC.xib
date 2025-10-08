@@ -354,7 +354,7 @@
                                             </subviews>
                                         </stackView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USC-8r-noB">
-                                            <rect key="frame" x="16" y="622.66666666666663" width="361" height="40"/>
+                                            <rect key="frame" x="46" y="622.66666666666663" width="301" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="ZWo-0q-9D6"/>
                                             </constraints>
@@ -362,7 +362,7 @@
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="NEXT">
                                                 <backgroundConfiguration key="background" cornerRadius="10">
-                                                    <color key="backgroundColor" name="ButtonColor"/>
+                                                    <color key="backgroundColor" name="PrimeryColor"/>
                                                 </backgroundConfiguration>
                                             </buttonConfiguration>
                                             <connections>
@@ -379,7 +379,7 @@
                                         <constraint firstItem="bbl-3A-gxw" firstAttribute="top" secondItem="uod-qN-r0q" secondAttribute="bottom" constant="20" id="7I9-qi-BwN"/>
                                         <constraint firstItem="Sba-ev-bA3" firstAttribute="trailing" secondItem="uod-qN-r0q" secondAttribute="trailing" id="7iA-pi-Ajd"/>
                                         <constraint firstItem="qPN-JB-uAa" firstAttribute="bottom" secondItem="uod-qN-r0q" secondAttribute="bottom" id="8y2-L0-uxf"/>
-                                        <constraint firstItem="USC-8r-noB" firstAttribute="leading" secondItem="oWA-hV-0pH" secondAttribute="leading" id="9Dg-tI-CaR"/>
+                                        <constraint firstItem="USC-8r-noB" firstAttribute="leading" secondItem="oWA-hV-0pH" secondAttribute="leading" constant="30" id="9Dg-tI-CaR"/>
                                         <constraint firstItem="Sba-ev-bA3" firstAttribute="bottom" secondItem="uod-qN-r0q" secondAttribute="bottom" id="9Ze-xO-104"/>
                                         <constraint firstItem="qPN-JB-uAa" firstAttribute="top" secondItem="uod-qN-r0q" secondAttribute="top" id="GoK-PH-K2l"/>
                                         <constraint firstAttribute="bottom" secondItem="USC-8r-noB" secondAttribute="bottom" constant="41" id="HgN-ft-KLX"/>
@@ -390,7 +390,7 @@
                                         <constraint firstItem="oWA-hV-0pH" firstAttribute="top" secondItem="udE-l3-IFJ" secondAttribute="bottom" constant="20" id="Pyp-wa-R74"/>
                                         <constraint firstItem="bxo-tE-Kbg" firstAttribute="top" secondItem="FYI-dc-NJq" secondAttribute="top" constant="20" id="Qhd-4Z-Bka"/>
                                         <constraint firstItem="TWB-aR-Gco" firstAttribute="top" secondItem="oWA-hV-0pH" secondAttribute="bottom" constant="10" id="S4v-UR-8gf"/>
-                                        <constraint firstItem="USC-8r-noB" firstAttribute="trailing" secondItem="oWA-hV-0pH" secondAttribute="trailing" id="gFg-gZ-mT9"/>
+                                        <constraint firstItem="USC-8r-noB" firstAttribute="trailing" secondItem="oWA-hV-0pH" secondAttribute="trailing" constant="-30" id="gFg-gZ-mT9"/>
                                         <constraint firstItem="Sba-ev-bA3" firstAttribute="leading" secondItem="uod-qN-r0q" secondAttribute="leading" id="lNs-XJ-SKU"/>
                                         <constraint firstItem="Sba-ev-bA3" firstAttribute="top" secondItem="uod-qN-r0q" secondAttribute="top" id="lda-b1-md3"/>
                                         <constraint firstItem="ljj-g1-KEH" firstAttribute="leading" secondItem="FYI-dc-NJq" secondAttribute="leading" constant="20" id="mU7-wt-hHu"/>
@@ -622,9 +622,6 @@
         <image name="video.bubble" catalog="system" width="128" height="110"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="ButtonColor">
-            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
