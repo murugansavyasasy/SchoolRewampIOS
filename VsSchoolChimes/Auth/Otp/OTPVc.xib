@@ -106,7 +106,7 @@
                                     <attributedString key="attributedText">
                                         <fragment content="Call Us ? ">
                                             <attributes>
-                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.0056743710301816463" green="0.41524839401245117" blue="0.99020665884017944" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="17" name="Helvetica-Bold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 <integer key="NSUnderline" value="1"/>
@@ -144,15 +144,17 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5r-Au-mkI">
-                    <rect key="frame" x="16" y="79" width="40" height="35"/>
+                    <rect key="frame" x="10" y="69" width="40" height="40"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="T23-w7-uht"/>
-                        <constraint firstAttribute="height" constant="35" id="w9Q-ty-v2i"/>
+                        <constraint firstAttribute="height" constant="40" id="w9Q-ty-v2i"/>
                     </constraints>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="chevron.backward" catalog="system">
                         <color key="titleColor" systemColor="labelColor"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                     </state>
                     <connections>
                         <action selector="BackBtn:" destination="-1" eventType="touchUpInside" id="Icp-jz-LuK"/>
@@ -165,8 +167,8 @@
                 <constraint firstItem="tNr-aW-rXT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="QB8-si-ovm"/>
                 <constraint firstAttribute="bottom" secondItem="tNr-aW-rXT" secondAttribute="bottom" id="QVm-2E-Kma"/>
                 <constraint firstItem="tNr-aW-rXT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Z11-D8-bSV"/>
-                <constraint firstItem="r5r-Au-mkI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="odd-gm-3Za"/>
-                <constraint firstItem="r5r-Au-mkI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="sef-Yr-gbk"/>
+                <constraint firstItem="r5r-Au-mkI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="odd-gm-3Za"/>
+                <constraint firstItem="r5r-Au-mkI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="sef-Yr-gbk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tNr-aW-rXT" secondAttribute="trailing" id="t3c-i4-VsU"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>

@@ -63,6 +63,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var archivedNoDataLbl: UILabel!
     
     
     var BtnId = 1
@@ -102,7 +103,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
         RegisterCell()
         
-        setupTableFooter()
+        //setupTableFooter()
         
         getCommunicationList()
       
@@ -164,7 +165,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
+        archivedNoDataLbl.isHidden = true
         NodataLbl.setFont(style: .title, size: 17)
+        archivedNoDataLbl.setFont(style: .title, size: 17)
     }
     
     //MARK: Cell registration
@@ -441,6 +444,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                             searchBtn.isHidden = true
                             NodataImage.isHidden = false
                             NodataLbl.isHidden = false
+                        }else {
+                            archivedNoDataLbl.text = SuccessMessage.message
+                            archivedNoDataLbl.isHidden = false
                         }
                     }
                 }
@@ -611,6 +617,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
             
+            cell.emergencyMessageBtn.isHidden = !(voiceData?.is_emergency ?? false)
             cell.sendbtn.isHidden = true
             cell.sentBtnHeight.constant = 0
             cell.sentBtnWidth.constant = 0
@@ -667,6 +674,63 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             }
         }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        if shouldShowFooter {
+            // Create a footer view
+            let footerView = UIView()
+            footerView.backgroundColor = .clear
+            
+            // Create a button instead of a label
+            let button = UIButton(type: .system)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.titleLabel?.textAlignment = .right
+            // Create underlined attributed text
+            let title = "See Archived Messages"
+            let attributedTitle = NSAttributedString(
+                string: title,
+                attributes: [
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
+                    .foregroundColor: UIColor.systemBlue,
+                    .font: UIFont.systemFont(ofSize: 16, weight: .medium)
+                ]
+            )
+            button.setAttributedTitle(attributedTitle, for: .normal)
+            
+            // Add target action
+            button.addTarget(self, action: #selector(seeArchivedMessagesTapped(_:)), for: .touchUpInside)
+            
+            // Add and constrain
+            footerView.addSubview(button)
+            NSLayoutConstraint.activate([
+                button.leadingAnchor.constraint(greaterThanOrEqualTo: footerView.leadingAnchor, constant: 16),
+                button.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -16),
+                button.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 8),
+                button.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -8)
+            ])
+            
+            return footerView
+        }else {
+            return UIView()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return shouldShowFooter ? 44 : 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
+        print("Archived messages tapped!")
+
+        GetArchiveCommunicationList()
+        
+        shouldShowFooter = false
+    }
+
 
    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel, let attributedText = label.attributedText else { return }

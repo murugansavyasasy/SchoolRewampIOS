@@ -34,6 +34,7 @@ class OTPVc: UIViewController {
     var AlertModal = CustomAlert()
     var pageType : Int?
     var otpContent:String?
+    var didnotReciveMessage: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +43,7 @@ class OTPVc: UIViewController {
         
         
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.layer.cornerRadius = BackBtn.frame.width / 2
         
         OtpContentLbl.setFont(style: .body, size: FontSize.BodySize)
         ResendLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -58,10 +60,13 @@ class OTPVc: UIViewController {
         if  pageType == screenType.isForgotPassword{
             
             OtpContentLbl.text =  otpContent
+            DidnotReciveOtpLbl.text = didnotReciveMessage
             
         }else{
-            OtpContentLbl.text = (validateMobileData.first?.more_info ?? "") + (
-                mobile_number ?? "") + "  "
+            OtpContentLbl.text = (validateMobileData.first?.message ?? "")
+            
+            DidnotReciveOtpLbl.text = (validateMobileData.first?.more_info ?? "")
+            //+ (mobile_number ?? "") + "  "
         }
         
         
@@ -172,6 +177,7 @@ class OTPVc: UIViewController {
             textField.layer.borderColor = UIColor.systemGray4.cgColor
             textField.layer.borderWidth = 1
             textField.layer.cornerRadius = 5
+            textField.addDoneButton()
         }
         otpTextField1.becomeFirstResponder()
     }
@@ -295,10 +301,7 @@ class OTPVc: UIViewController {
                             else if(UserDefaultFileManager
                                 .getUserDetails()?.is_password_updated == false){
                                 
-                                let vc = CreatePasswordVc(
-                                    nibName: nil,
-                                    bundle: nil
-                                )
+                                let vc = CreatePasswordVc(nibName: nil,bundle: nil)
                                 vc.modalPresentationStyle = .fullScreen
                                 vc.createNewPassword = true
                                 vc.mobile_number = mobileNumber
@@ -413,7 +416,7 @@ class OTPVc: UIViewController {
                         }else{
                             DispatchQueue.main.async {
                                 
-                                self.AlertModal.showAlert(title: "", message: successMessage.message ?? "", on: self)
+                                self.AlertModal.showAlert(title: AlertstringFile.Oops, message: successMessage.message ?? "", on: self)
                             }
                         }
                     }
@@ -458,7 +461,7 @@ class OTPVc: UIViewController {
                     } else {
                         DispatchQueue.main.async {
                             AlertModal.showAlert(
-                                title: "",
+                                title: AlertstringFile.Oops,
                                 message: response.message ?? "Something went wrong.",
                                 on: self
                             )
@@ -513,27 +516,65 @@ extension OTPVc : UITextFieldDelegate{
     }
     
     
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        // Allow backspace for first two fields and move focus to the previous field
+//        
+//        print("rrrrr")
+//        if string.isEmpty {
+//            if textField.tag == 0 /*|| textField.tag == 1*/ {
+//                return true // Allow backspace on first two fields
+//            } else {
+//                let previousTextField = otpFields[textField.tag - 1]
+//                
+//                DispatchQueue.main.async {
+//                    previousTextField.becomeFirstResponder()
+//                }
+//                
+//                return true
+//            }
+//        }
+//        
+//        // Allow only one character per field
+//        return textField.text?.count == 0
+//    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Allow backspace for first two fields and move focus to the previous field
-        
-        print("rrrrr")
+        // Detect paste (more than 1 character)
+        if string.count > 1 {
+            let characters = Array(string)
+            var index = 0
+
+            for field in otpFields {
+                if index < characters.count {
+                    field.text = String(characters[index])
+                } else {
+                    field.text = ""
+                }
+                index += 1
+            }
+
+            // Move focus to last filled field
+            let lastIndex = min(characters.count, otpFields.count - 1)
+            otpFields[lastIndex].becomeFirstResponder()
+
+            return false // Prevent default paste behavior
+        }
+
+        // Handle backspace
         if string.isEmpty {
-            if textField.tag == 0 /*|| textField.tag == 1*/ {
-                return true // Allow backspace on first two fields
-            } else {
+            if textField.tag > 0 {
                 let previousTextField = otpFields[textField.tag - 1]
-                
                 DispatchQueue.main.async {
                     previousTextField.becomeFirstResponder()
                 }
-                
-                return true
             }
+            return true
         }
-        
+
         // Allow only one character per field
         return textField.text?.count == 0
     }
+
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {

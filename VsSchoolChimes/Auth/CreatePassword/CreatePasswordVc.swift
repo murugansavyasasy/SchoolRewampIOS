@@ -69,7 +69,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     func setUpUI(){
-     
+        
+        BackBtn.layer.cornerRadius = BackBtn.frame.width / 2
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 //        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)

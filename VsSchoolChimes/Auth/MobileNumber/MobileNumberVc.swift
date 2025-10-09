@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class MobileNumberVc: UIViewController,UITextFieldDelegate {
  
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var LoginTitleLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var WelcomeLbl: UILabel!
@@ -20,11 +21,13 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var ContentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    
     var AlertModal = CustomAlert()
     var country_data : CountryData?
     var mobile_number_length : Int?
     var mobile_no_hint : String?
     var activeTextField: UITextField?
+    var isFromCountry = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +67,9 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
     }
     func setupUI() {
         
+        backBtn.isHidden = !isFromCountry
+        backBtn.layer.cornerRadius = backBtn.frame.width / 2
+        
         ContentView.layer.cornerRadius = 40
         ContentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
@@ -77,7 +83,7 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
 
         continueBtnName.layer.cornerRadius = 15
         continueBtnName.layer.masksToBounds = false
-        continueBtnName.backgroundColor = Colornames.auth_screen_color
+       // continueBtnName.backgroundColor = Colornames.auth_screen_color
         // Adding shadow for a popped-up effect
         continueBtnName.layer.shadowColor = UIColor.black.cgColor
         continueBtnName.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -143,10 +149,10 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
     func validateCredentials() {
         
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         guard mobile.count == country_data?.mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         
         validate_user()
@@ -212,7 +218,7 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
                             else {
                                 AlertModal
                                     .showAlert(
-                                        title: "",
+                                        title: AlertstringFile.Oops,
                                         message: response.message ?? "",
                                         on: self
                                     )
@@ -223,7 +229,7 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { [self] in
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -234,7 +240,7 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
                         print(error.localizedDescription)
                         AlertModal
                             .showAlert(
-                                title: "",
+                                title: AlertstringFile.Oops,
                                 message: error.localizedDescription,
                                 on: self
                             )
@@ -244,6 +250,10 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
         
     }
 
+    @IBAction func backAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
     
     
 }

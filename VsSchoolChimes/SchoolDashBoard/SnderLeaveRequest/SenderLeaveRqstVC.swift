@@ -136,6 +136,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
                     NodateLbl.text = Success.message
                     NodataImage.isHidden = !(allLeaveRecords?.isEmpty ?? false)
                     NodateLbl.isHidden = !(allLeaveRecords?.isEmpty ?? false)
+                    searchBtn.isHidden = allLeaveRecords?.isEmpty ?? false
                     leaveRequestTable.reloadData()
                 }
                 
@@ -145,6 +146,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
                     NodateLbl.text = error.localizedDescription
                     NodataImage.isHidden = false
                     NodateLbl.isHidden = false
+                    searchBtn.isHidden = true
                     print("Error: ",error.localizedDescription)
                 }
             }

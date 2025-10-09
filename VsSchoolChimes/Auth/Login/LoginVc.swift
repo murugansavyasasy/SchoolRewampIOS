@@ -33,6 +33,8 @@ class LoginVc: UIViewController {
     var country_data : CountryData?
     private var originalContentInset: UIEdgeInsets = .zero
     private var originalScrollIndicatorInsets: UIEdgeInsets = .zero
+    private var hasShownKeyboard = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,11 @@ class LoginVc: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        MobilTextFld.becomeFirstResponder() // ✅ Forces keyboard to appear faster
+        
+        self.view.layoutIfNeeded() // ✅ Make sure layout is up-to-date
+        DispatchQueue.main.async {
+            self.MobilTextFld.becomeFirstResponder()
+        }
     }
     
     deinit {
@@ -89,7 +95,7 @@ class LoginVc: UIViewController {
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
-        loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        //loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 2)
         loginBtnNm.layer.shadowOpacity = 0.2
@@ -119,7 +125,7 @@ class LoginVc: UIViewController {
             
             AlertModal
                 .showAlert(
-                    title: "",
+                    title: AlertstringFile.Oops,
                     message: AlertstringFile.Enter_valid_Mobile,
                     on: self
                 )
@@ -135,13 +141,13 @@ class LoginVc: UIViewController {
     
     func validateMobileAndPassword() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         guard mobile.count == country_data?.mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         guard let password = passTextFld.text, !password.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Invalid, on: self)
         }
         validate_user()
     }
@@ -288,7 +294,7 @@ class LoginVc: UIViewController {
                             else {
                                 AlertModal
                                     .showAlert(
-                                        title: "",
+                                        title: AlertstringFile.Oops,
                                         message: response.message ?? "",
                                         on: self
                                     )
@@ -303,7 +309,7 @@ class LoginVc: UIViewController {
                             }
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -350,7 +356,8 @@ class LoginVc: UIViewController {
                             vc.mobile_number = MobilTextFld.text
                             vc.pageType = screenType.isForgotPassword
                             vc.forgotpasswordData = successmessage.data ?? []
-                            vc.otpContent = successmessage.data?.first?.more_info ?? ""
+                            vc.otpContent = successmessage.data?.first?.forgot_otp_message ?? ""
+                            vc.didnotReciveMessage = successmessage.data?.first?.more_info ?? ""
                             present(vc, animated: true)
                             
                         }else {
@@ -358,7 +365,7 @@ class LoginVc: UIViewController {
                             DispatchQueue.main.async {
                                 self.AlertModal
                                     .showAlert(
-                                        title: "",
+                                        title: AlertstringFile.Oops,
                                         message: successmessage.message ?? "",
                                         on: self
                                     )
@@ -488,27 +495,55 @@ extension LoginVc: UITextFieldDelegate {
     //        scrollView.verticalScrollIndicatorInsets.bottom = 0
     //    }
     
-    
-    
     @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        
-        // Store the current insets only the first time
-        if originalContentInset == .zero {
-            originalContentInset = scrollView.contentInset
-            originalScrollIndicatorInsets = scrollView.verticalScrollIndicatorInsets
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
         }
-        
-        let bottomInset = keyboardFrame.height + 20 // padding
-        scrollView.contentInset.bottom = bottomInset
-        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+
+        // Determine which text field is active
+        guard let activeTextField = [MobilTextFld, passTextFld].first(where: { $0.isFirstResponder }) else {
+            return
+        }
+
+        // Convert the active text field’s frame to the main view’s coordinate space
+        let textFieldBottom = activeTextField.convert(activeTextField.bounds, to: self.view).maxY
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+
+        // Move view up only if text field is covered by keyboard
+        if textFieldBottom > keyboardTop {
+            let overlap = textFieldBottom - keyboardTop + 80 // Add some padding
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
+            }
+        }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        // Restore original insets
-        scrollView.contentInset.bottom = 0
-        scrollView.verticalScrollIndicatorInsets.bottom = 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
     }
+
+    
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+//        
+//        // Store the current insets only the first time
+//        if originalContentInset == .zero {
+//            originalContentInset = scrollView.contentInset
+//            originalScrollIndicatorInsets = scrollView.verticalScrollIndicatorInsets
+//        }
+//        
+//        let bottomInset = keyboardFrame.height + 20 // padding
+//        scrollView.contentInset.bottom = bottomInset
+//        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+//    }
+//    
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        // Restore original insets
+//        scrollView.contentInset.bottom = 0
+//        scrollView.verticalScrollIndicatorInsets.bottom = 0
+//    }
     
 }
 

@@ -92,6 +92,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     
     func SetpUI(){
         
+        backbtn.layer.cornerRadius = backbtn.frame.width / 2
+        
         PasswordBaseview.layer.borderWidth = 1
         PasswordBaseview.layer.borderColor = UIColor.clear.cgColor
         PasswordBaseview.layer.cornerRadius = 20
@@ -121,7 +123,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         } else {
             AlertModal
                 .showAlert(
-                    title: "",
+                    title: AlertstringFile.Oops,
                     message: AlertstringFile.Enter_valid_Mobile ,
                     on: self)
         }
@@ -140,7 +142,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         dismiss(animated: true)
     }
     func setupUI() {
-        validateBtnName.backgroundColor = Colornames.ButtonColor
+       
         validateBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         
         passwordTxtFld.delegate = self
@@ -153,7 +155,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         if passwordTxtFld.text == nil{
             AlertModal
                 .showAlert(
-                    title: "",
+                    title: AlertstringFile.Oops,
                     message: AlertstringFile.enter_valid_password ,
                     on: self)
         }else{
@@ -307,7 +309,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                 
                             } else {
                                 AlertModal.showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -318,7 +320,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { [self] in
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -353,7 +355,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                             let vc = OTPVc(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = mobile_number
-                            vc.otpContent = successmessage.data?.first?.more_info ?? ""
+                            vc.otpContent = successmessage.data?.first?.forgot_otp_message ?? ""
+                            vc.didnotReciveMessage = successmessage.data?.first?.more_info ?? ""
                             vc.pageType = screenType.isForgotPassword
                             vc.forgotpasswordData = successmessage.data ?? []
                             present(vc, animated: true)
@@ -365,7 +368,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { [self] in
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: successmessage.message ?? "",
                                     on: self
                                 )

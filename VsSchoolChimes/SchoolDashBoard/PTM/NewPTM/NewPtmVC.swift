@@ -134,6 +134,8 @@ class NewPtmVC: UIViewController, Datepicker {
                         if let todayGroups = slotData.today, !todayGroups.isEmpty {
                             let events = todayGroups.compactMap { $0.details }.flatMap { $0 }
                             self.sections.append(SectionData(title: PTMString.todayMeetings, events: events))
+                            let message = String(format:PTMString.meetingsToday,self.sections.first?.events.count ?? 0)
+                            self.MeetingCountLbl.text = message
                         }
                         
                         // Upcoming
@@ -148,8 +150,8 @@ class NewPtmVC: UIViewController, Datepicker {
                             self.sections.append(SectionData(title: PTMString.completedMeetings, events: events))
                         }
                        
-                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
-                        self.MeetingCountLbl.text = message
+//                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
+//                        self.MeetingCountLbl.text = message
                         //"You have " + String(slotData.today?.count ?? 0) + " Meetings Today"
                         
                         self.tv.reloadData()

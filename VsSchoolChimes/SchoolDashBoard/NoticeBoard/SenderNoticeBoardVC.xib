@@ -40,6 +40,7 @@
                 <outlet property="fromTitleDefLbl" destination="NeG-vr-MQS" id="QfQ-RJ-9E9"/>
                 <outlet property="fromdateBtn" destination="5pc-SO-2sQ" id="8IU-m8-C2T"/>
                 <outlet property="headerView" destination="8Ms-sF-UEC" id="E5t-Jl-52g"/>
+                <outlet property="menuNameLbl" destination="DpA-Mj-nuy" id="apl-ay-aCn"/>
                 <outlet property="scrollView" destination="Mjg-dr-V52" id="Tyf-ig-fpb"/>
                 <outlet property="textViewHeightConstraint" destination="1Qe-yj-s1D" id="R2g-Oa-IhM"/>
                 <outlet property="textview" destination="8RA-JR-UOR" id="FV0-ID-I6y"/>
@@ -56,28 +57,40 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ms-sF-UEC">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4GA-qr-8yI">
-                            <rect key="frame" x="10" y="69" width="363" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="35" id="qAq-Zo-Mcp"/>
-                            </constraints>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Assignment" image="chevron.left" catalog="system">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                            </state>
-                            <connections>
-                                <action selector="back:" destination="-1" eventType="touchUpInside" id="V4u-KW-ZB7"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="B8q-Cv-nfO">
+                            <rect key="frame" x="8" y="69" width="377" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4GA-qr-8yI">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="Sa3-ke-1yx"/>
+                                        <constraint firstAttribute="height" constant="35" id="qAq-Zo-Mcp"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="back:" destination="-1" eventType="touchUpInside" id="V4u-KW-ZB7"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpA-Mj-nuy">
+                                    <rect key="frame" x="35" y="7.3333333333333268" width="342" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" name="PrimeryColor"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="4GA-qr-8yI" secondAttribute="bottom" constant="20" id="Orc-or-uuU"/>
-                        <constraint firstItem="4GA-qr-8yI" firstAttribute="leading" secondItem="8Ms-sF-UEC" secondAttribute="leading" constant="10" id="kD8-bB-R7Y"/>
-                        <constraint firstAttribute="trailing" secondItem="4GA-qr-8yI" secondAttribute="trailing" constant="20" id="xaP-ML-AtH"/>
+                        <constraint firstItem="B8q-Cv-nfO" firstAttribute="leading" secondItem="8Ms-sF-UEC" secondAttribute="leading" constant="8" id="Buy-KX-LjN"/>
+                        <constraint firstAttribute="trailing" secondItem="B8q-Cv-nfO" secondAttribute="trailing" constant="8" id="Suy-jD-Ms6"/>
+                        <constraint firstAttribute="bottom" secondItem="B8q-Cv-nfO" secondAttribute="bottom" constant="20" id="UDL-7p-bjf"/>
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-dr-V52">
@@ -514,10 +527,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="4GA-qr-8yI" secondAttribute="top" constant="-10" id="5ml-K4-QO2"/>
                 <constraint firstItem="8Ms-sF-UEC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="BdP-a4-upw"/>
                 <constraint firstItem="Mjg-dr-V52" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Ouw-oK-sFw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Ms-sF-UEC" secondAttribute="trailing" id="UuP-VR-XJM"/>
+                <constraint firstItem="B8q-Cv-nfO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="XQS-Ea-74X"/>
                 <constraint firstItem="Mjg-dr-V52" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XgV-Tb-KCa"/>
                 <constraint firstItem="Mjg-dr-V52" firstAttribute="top" secondItem="8Ms-sF-UEC" secondAttribute="bottom" id="fKH-5n-8Pk"/>
                 <constraint firstItem="8Ms-sF-UEC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lKP-qR-IqN"/>

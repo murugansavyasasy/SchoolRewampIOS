@@ -177,6 +177,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             CauseImage.image = UIImage(systemName: "pencil")
         }
         
+        FromDatePickerView.isHidden = true
         ToDatePickerView.isHidden = true
     }
     
