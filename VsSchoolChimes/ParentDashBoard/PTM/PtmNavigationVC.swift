@@ -29,7 +29,7 @@ class PtmNavigationVC: UIViewController {
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         
-        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting, for: .normal)
+        scheduleMeetingBtn.setTitle("Book PTM Slots", for: .normal)
         yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
         
         scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)

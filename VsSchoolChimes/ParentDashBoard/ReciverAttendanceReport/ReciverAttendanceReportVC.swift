@@ -37,6 +37,7 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var holidaysDefLbl: UILabel!
     @IBOutlet weak var MenuTitleLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var noStatsLbl: UILabel!
     
     
     var childDetails = UserDefaultFileManager.get_child_Details()
@@ -75,6 +76,10 @@ class ReciverAttendanceReportVC: UIViewController {
         WeeklyView.layer.shadowOffset = CGSize(width: 0, height: 2)
         WeeklyView.layer.shadowRadius = 4
         WeeklyView.layer.masksToBounds = false
+        
+        noStatsLbl.isHidden = true
+        noStatsLbl.setFont(style: .body, size: 10)
+        noStatsLbl.textColor = .systemRed
         
         percentagesBaseView.layer.cornerRadius = 10
         percentagesBaseView.layer.borderWidth = 0.2
@@ -193,15 +198,17 @@ class ReciverAttendanceReportVC: UIViewController {
                     Set_Piechart_data()
                     
                     if success.status == false {
-                        
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        noStatsLbl.isHidden = false
+                        noStatsLbl.text = success.message
                     }
                     
                 case .failure(let error):
                     
-                    CustomAlert.showAlertWithOkAction(title: "Error", message: error.localizedDescription, on: self, okAction: {
-                        self.dismiss(animated: true)
-                    })
+                    noStatsLbl.isHidden = false
+                    noStatsLbl.text = error.localizedDescription
+//                    CustomAlert.showAlertWithOkAction(title: "Error", message: error.localizedDescription, on: self, okAction: {
+//                        self.dismiss(animated: true)
+//                    })
                 }
             }
         }
@@ -323,12 +330,16 @@ class ReciverAttendanceReportVC: UIViewController {
     }
     
     func Set_Piechart_data(){
-        guard let stats = studentStats?.first else { return }
+//        guard let stats = studentStats?.first else {
+//            return
+//        }
         
-        let attendancePercent = Double(stats.attendance_percentage?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
-        let absentDays = Double(stats.absent_days ?? 0)
-        let completedDays = Double(stats.completed_working_days ?? 0)
-        let totalDays = Double(stats.total_working_days ?? 1) // avoid divide by zero
+        let stats = studentStats?.first
+        
+        let attendancePercent = Double(stats?.attendance_percentage?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
+        let absentDays = Double(stats?.absent_days ?? 0)
+        let completedDays = Double(stats?.completed_working_days ?? 0)
+        let totalDays = Double(stats?.total_working_days ?? 1) // avoid divide by zero
         
         setProgress(
             on: AttendencePercentage,

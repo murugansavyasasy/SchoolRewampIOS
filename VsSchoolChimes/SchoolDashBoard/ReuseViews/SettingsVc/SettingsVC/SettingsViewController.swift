@@ -26,7 +26,9 @@ class SettingsViewController: UIViewController, BaktoHome {
                 menuname.faq,
                 menuname.contactUs,
                 menuname.termsAndConditions,
-                menuname.changeAppLanguage,menuname.faceID,
+                menuname.changeAppLanguage,
+                menuname.faceID,
+                "Change Password",
                 "What's new"
             ]
         ),
@@ -34,10 +36,9 @@ class SettingsViewController: UIViewController, BaktoHome {
     ]
     var section:[Section]?
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid","WhatNews"]),
+        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid", "lock.rotation","WhatNews"]),
         Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
     ]
-    
     var imagesArray: [UIImage] = []
     var delegate:BaktoHome?
     var passVale = 1
@@ -204,6 +205,11 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
             let vc = WhatsNewVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true)
+        }else if sections[indexPath.section].items[indexPath.row] == "Change Password" {
+            
+            let vc = CreatePasswordVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
         

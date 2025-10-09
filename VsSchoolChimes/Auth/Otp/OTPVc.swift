@@ -301,10 +301,7 @@ class OTPVc: UIViewController {
                             else if(UserDefaultFileManager
                                 .getUserDetails()?.is_password_updated == false){
                                 
-                                let vc = CreatePasswordVc(
-                                    nibName: nil,
-                                    bundle: nil
-                                )
+                                let vc = CreatePasswordVc(nibName: nil,bundle: nil)
                                 vc.modalPresentationStyle = .fullScreen
                                 vc.createNewPassword = true
                                 vc.mobile_number = mobileNumber
@@ -419,7 +416,7 @@ class OTPVc: UIViewController {
                         }else{
                             DispatchQueue.main.async {
                                 
-                                self.AlertModal.showAlert(title: "", message: successMessage.message ?? "", on: self)
+                                self.AlertModal.showAlert(title: AlertstringFile.Oops, message: successMessage.message ?? "", on: self)
                             }
                         }
                     }
@@ -464,7 +461,7 @@ class OTPVc: UIViewController {
                     } else {
                         DispatchQueue.main.async {
                             AlertModal.showAlert(
-                                title: "",
+                                title: AlertstringFile.Oops,
                                 message: response.message ?? "Something went wrong.",
                                 on: self
                             )
