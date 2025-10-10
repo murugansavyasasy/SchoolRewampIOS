@@ -63,6 +63,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var archivedNoDataLbl: UILabel!
     
     
     var BtnId = 1
@@ -102,7 +103,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
         RegisterCell()
         
-        setupTableFooter()
+        //setupTableFooter()
         
         getCommunicationList()
       
@@ -164,7 +165,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
+        archivedNoDataLbl.isHidden = true
         NodataLbl.setFont(style: .title, size: 17)
+        archivedNoDataLbl.setFont(style: .title, size: 17)
     }
     
     //MARK: Cell registration
@@ -322,39 +325,40 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     func getCommunicationList() {
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [self] (result : Result<CommunicationReciverResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [weak self] (result : Result<CommunicationReciverResponse,Error>) in
             
+            guard let self = self else {return}
             switch result {
                 
             case .success(let SuccessMessage):
                 
                 if SuccessMessage.status == true {
                     
-                    DispatchQueue.main.async { [self] in
+                    DispatchQueue.main.async {
                         
-                        TotalMessageList = SuccessMessage.data
-                        SearchMessages = TotalMessageList
-                        FilteredMessages = TotalMessageList
-                        NodataLbl.isHidden = true
-                        NodataImage.isHidden = true
-                        searchBtn.isHidden = false
+                        self.TotalMessageList = SuccessMessage.data
+                        self.SearchMessages = self.TotalMessageList
+                        self.FilteredMessages = self.TotalMessageList
+                        self.NodataLbl.isHidden = true
+                        self.NodataImage.isHidden = true
+                        self.searchBtn.isHidden = false
                         //SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
-                        tv.reloadData()
+                        self.tv.reloadData()
                     }
                     
                 }else {
                     
-                    DispatchQueue.main.async { [self] in
-                        TotalMessageList = []
-                        SearchMessages = TotalMessageList
-                        FilteredMessages = TotalMessageList
+                    DispatchQueue.main.async {
+                        self.TotalMessageList = []
+                        self.SearchMessages = self.TotalMessageList
+                        self.FilteredMessages = self.TotalMessageList
                        // SearchbarStack.isHidden = true
-                        NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
-                        NodataLbl.isHidden = false
-                        NodataImage.isHidden = false
-                        searchBtn.isHidden = true
-                        tv.isScrollEnabled = false
-                        tv.reloadData()
+                        self.NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
+                        self.NodataLbl.isHidden = false
+                        self.NodataImage.isHidden = false
+                        self.searchBtn.isHidden = true
+                        self.tv.isScrollEnabled = false
+                        self.tv.reloadData()
                     }
                 }
                 
@@ -369,7 +373,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     func GetArchiveCommunicationList() {
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list_archive, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [self] (result : Result<CommunicationReciverResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list_archive, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [weak self] (result : Result<CommunicationReciverResponse,Error>) in
+            
+            guard let self = self else {return}
             
             switch result {
                 
@@ -377,70 +383,73 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                 
                 if SuccessMessage.status == true {
                     
-                    DispatchQueue.main.async { [self] in
+                    DispatchQueue.main.async {
                         
-                        TotalMessageList?.append(contentsOf: SuccessMessage.data)
+                        self.TotalMessageList?.append(contentsOf: SuccessMessage.data)
                         
-                        if selectedIndex.row == 0{
+                        if self.selectedIndex.row == 0{
                             
-                            switch readStatus {
+                            switch self.readStatus {
                                 
                             case 0 :
-                                FilteredMessages = TotalMessageList
+                                self.FilteredMessages = self.TotalMessageList
                                 
                             case 1 :
-                                FilteredMessages = TotalMessageList?.readMessages()
+                                self.FilteredMessages = self.TotalMessageList?.readMessages()
                                 
                             case 2:
-                                FilteredMessages = TotalMessageList?.unreadMessages()
+                                self.FilteredMessages = self.TotalMessageList?.unreadMessages()
                                 
                             default:
-                                FilteredMessages = TotalMessageList
+                                self.FilteredMessages = self.TotalMessageList
                             }
                             
                         }else {
                             
-                            switch readStatus {
+                            switch self.readStatus {
                                 
                             case 0:
-                                FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
+                                self.FilteredMessages = self.TotalMessageList?.messages(ofType: self.Filters[ self.selectedIndex.row])
                                 
                             case 1:
-                                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[ selectedIndex.row])
+                                self.FilteredMessages = self.TotalMessageList?.readMessages(ofType: self.Filters[ self.selectedIndex.row])
                             case 2:
-                                FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[ selectedIndex.row])
+                                self.FilteredMessages = self.TotalMessageList?.unreadMessages(ofType: self.Filters[ self.selectedIndex.row])
                                 
                             default:
-                                FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
+                                self.FilteredMessages = self.TotalMessageList?.messages(ofType: self.Filters[ self.selectedIndex.row])
                             }
                             
                         }
                         
-                        SearchMessages = FilteredMessages
+                        self.SearchMessages = self.FilteredMessages
                         
                        // SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
-                        NodataLbl.isHidden = true
-                        NodataImage.isHidden = true
-                        tv.isHidden = false
-                        searchBtn.isHidden = false
-                        tv.isScrollEnabled = true
-                        tv.reloadData()
+                        self.NodataLbl.isHidden = true
+                        self.NodataImage.isHidden = true
+                        self.tv.isHidden = false
+                        self.searchBtn.isHidden = false
+                        self.tv.isScrollEnabled = true
+                        self.tv.reloadData()
                     }
                     
                 }else {
                     
-                    DispatchQueue.main.async { [self] in
+                    DispatchQueue.main.async {
                         
-                        tv.reloadData()
+                        self.tv.reloadData()
                         
-                        if TotalMessageList?.count == 0 {
+                        if self.TotalMessageList?.count == 0 {
                             //SearchbarStack.isHidden = true
-                            NodataLbl.text = SuccessMessage.message
+                            self.NodataLbl.text = SuccessMessage.message
                             //NodataLbl.text = "Something went wrong! Try again Later"
-                            tv.isHidden = true
-                            searchBtn.isHidden = true
-                            NodataImage.isHidden = false
-                            NodataLbl.isHidden = false
+                            self.tv.isHidden = true
+                            self.searchBtn.isHidden = true
+                            self.NodataImage.isHidden = false
+                            self.NodataLbl.isHidden = false
+                        }else {
+                            self.archivedNoDataLbl.text = SuccessMessage.message
+                            self.archivedNoDataLbl.isHidden = false
                         }
                     }
                 }
@@ -611,6 +620,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
             
+            cell.emergencyMessageBtn.isHidden = !(voiceData?.is_emergency ?? false)
             cell.sendbtn.isHidden = true
             cell.sentBtnHeight.constant = 0
             cell.sentBtnWidth.constant = 0
@@ -667,6 +677,63 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             }
         }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        if shouldShowFooter {
+            // Create a footer view
+            let footerView = UIView()
+            footerView.backgroundColor = .clear
+            
+            // Create a button instead of a label
+            let button = UIButton(type: .system)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.titleLabel?.textAlignment = .right
+            // Create underlined attributed text
+            let title = "See Archived Messages"
+            let attributedTitle = NSAttributedString(
+                string: title,
+                attributes: [
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
+                    .foregroundColor: UIColor.systemBlue,
+                    .font: UIFont.systemFont(ofSize: 16, weight: .medium)
+                ]
+            )
+            button.setAttributedTitle(attributedTitle, for: .normal)
+            
+            // Add target action
+            button.addTarget(self, action: #selector(seeArchivedMessagesTapped(_:)), for: .touchUpInside)
+            
+            // Add and constrain
+            footerView.addSubview(button)
+            NSLayoutConstraint.activate([
+                button.leadingAnchor.constraint(greaterThanOrEqualTo: footerView.leadingAnchor, constant: 16),
+                button.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -16),
+                button.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 8),
+                button.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -8)
+            ])
+            
+            return footerView
+        }else {
+            return UIView()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return shouldShowFooter ? 44 : 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
+        print("Archived messages tapped!")
+
+        GetArchiveCommunicationList()
+        
+        shouldShowFooter = false
+    }
+
 
    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel, let attributedText = label.attributedText else { return }

@@ -20,6 +20,8 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
     @IBOutlet weak var sendByLbl: UILabel!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
     @IBOutlet weak var cv: UICollectionView!
+    @IBOutlet weak var cellView: UIView!
+    
     var attachmentFiles: [FilePath]?
     var delegate:SelectedId?
     var edit:Bool?
@@ -28,7 +30,15 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
     private weak var parentTableView: UITableView?
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
+        
+//        cellView.layer.cornerRadius = 10
+//        cellView.layer.shadowColor = UIColor.black.cgColor
+//        cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        cellView.layer.shadowRadius = 5
+//        cellView.layer.shadowOpacity = 0.3
+        
         roundView.layer.cornerRadius = roundView.frame.width/2
         
         cv.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
@@ -113,8 +123,32 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         super.layoutSubviews()
         self.cv.collectionViewLayout.invalidateLayout()
         self.cv.layoutIfNeeded()
-        self.updateCollectionHeight()
+        //self.updateCollectionHeight()
     }
+
+//    func configureCell(with files: [FilePath]?,
+//                       title: String,
+//                       description: String,
+//                       date: String,
+//                       sendBy: String,
+//                       isunread: Bool,
+//                       parentTableView: UITableView) {
+//        
+//        self.titleLbl.text = title
+//        self.sendByLbl.text = sendBy
+//        self.dateLbl.text = date
+//        self.roundView.isHidden = !isunread
+//        self.attachmentFiles = files
+//        self.parentTableView = parentTableView
+//
+//        // Reload and force layout updates for collection view
+//        DispatchQueue.main.async {
+//            self.cv.reloadData()
+//            self.cv.collectionViewLayout.invalidateLayout()
+//            self.cv.layoutIfNeeded()
+//            self.updateCollectionHeight()
+//        }
+//    }
 
     func configureCell(with files: [FilePath]?,
                        title: String,
@@ -124,26 +158,25 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
                        isunread: Bool,
                        parentTableView: UITableView) {
         
-        self.titleLbl.text = title
-        self.sendByLbl.text = sendBy
-        self.dateLbl.text = date
-        self.roundView.isHidden = !isunread
-        self.attachmentFiles = files
+        titleLbl.text = title
+        sendByLbl.text = sendBy
+        dateLbl.text = date
+        roundView.isHidden = !isunread
+        attachmentFiles = files
         self.parentTableView = parentTableView
 
-        // Reload and force layout updates for collection view
+        cv.reloadData()
+        cv.setNeedsLayout()
+        cv.layoutIfNeeded()
+        
+        // 🔸 One delayed height adjustment (after reload is complete)
         DispatchQueue.main.async {
-            self.cv.reloadData()
-            self.cv.collectionViewLayout.invalidateLayout()
             self.cv.layoutIfNeeded()
             self.updateCollectionHeight()
         }
     }
 
 
-   
-
-      
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

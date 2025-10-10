@@ -37,6 +37,9 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
+    @IBOutlet weak var emergencyMessageBtn: UIButton!
+    
+    
     var playIndex: Int? = nil
     weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
     
@@ -54,7 +57,8 @@ class HistoryTC: UITableViewCell {
         datelbl.setFont(style: .body, size: FontSize.BodySize)
         contentlbl.setFont(style: .title, size: FontSize.TitleSize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
-        
+        emergencyMessageBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        emergencyMessageBtn.isHidden = true
         playerView.isHidden = true
         totaltime.isHidden = true
        // NewImageView.isHidden = true

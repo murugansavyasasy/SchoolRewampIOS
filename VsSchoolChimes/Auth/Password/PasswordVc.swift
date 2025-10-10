@@ -123,7 +123,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         } else {
             AlertModal
                 .showAlert(
-                    title: "Oops!",
+                    title: AlertstringFile.Oops,
                     message: AlertstringFile.Enter_valid_Mobile ,
                     on: self)
         }
@@ -142,7 +142,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         dismiss(animated: true)
     }
     func setupUI() {
-        validateBtnName.backgroundColor = Colornames.ButtonColor
+       
         validateBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         
         passwordTxtFld.delegate = self
@@ -155,7 +155,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         if passwordTxtFld.text == nil{
             AlertModal
                 .showAlert(
-                    title: "Oops!",
+                    title: AlertstringFile.Oops,
                     message: AlertstringFile.enter_valid_password ,
                     on: self)
         }else{
@@ -309,7 +309,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                 
                             } else {
                                 AlertModal.showAlert(
-                                    title: "Oops!",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -320,7 +320,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { [self] in
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -368,7 +368,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { [self] in
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: successmessage.message ?? "",
                                     on: self
                                 )

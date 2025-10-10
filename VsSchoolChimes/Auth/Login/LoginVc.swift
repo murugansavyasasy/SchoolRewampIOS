@@ -125,7 +125,7 @@ class LoginVc: UIViewController {
             
             AlertModal
                 .showAlert(
-                    title: "",
+                    title: AlertstringFile.Oops,
                     message: AlertstringFile.Enter_valid_Mobile,
                     on: self
                 )
@@ -141,13 +141,13 @@ class LoginVc: UIViewController {
     
     func validateMobileAndPassword() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         guard mobile.count == country_data?.mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         guard let password = passTextFld.text, !password.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+            return AlertModal.showAlert(title: AlertstringFile.Oops, message: AlertstringFile.Invalid, on: self)
         }
         validate_user()
     }
@@ -294,7 +294,7 @@ class LoginVc: UIViewController {
                             else {
                                 AlertModal
                                     .showAlert(
-                                        title: "",
+                                        title: AlertstringFile.Oops,
                                         message: response.message ?? "",
                                         on: self
                                     )
@@ -309,7 +309,7 @@ class LoginVc: UIViewController {
                             }
                             AlertModal
                                 .showAlert(
-                                    title: "",
+                                    title: AlertstringFile.Oops,
                                     message: response.message ?? "",
                                     on: self
                                 )
@@ -365,7 +365,7 @@ class LoginVc: UIViewController {
                             DispatchQueue.main.async {
                                 self.AlertModal
                                     .showAlert(
-                                        title: "",
+                                        title: AlertstringFile.Oops,
                                         message: successmessage.message ?? "",
                                         on: self
                                     )

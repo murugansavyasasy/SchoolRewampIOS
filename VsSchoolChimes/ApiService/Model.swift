@@ -1335,9 +1335,7 @@ struct ChatMessage: Codable {
     let answered_on: String?
     let ans_file_path: [MediaFile]?
     let chat_count: Int?
-    let my_question: Bool?
-    
-    
+    let change_answer: Bool?
 }
 struct MediaFile: Codable {
     let url: String

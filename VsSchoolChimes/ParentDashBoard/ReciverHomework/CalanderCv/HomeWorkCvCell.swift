@@ -13,15 +13,13 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)
     }
-    @IBOutlet weak var pieChartHeight: NSLayoutConstraint!
     @IBOutlet weak var homeWorkCompletImg: UIImageView!
     @IBOutlet weak var SubjectLbl: UILabel!
     @IBOutlet weak var stafNamLbl: UILabel!
-    @IBOutlet weak var pieChartWidth: NSLayoutConstraint!
-    @IBOutlet weak var PieChartTrailling: NSLayoutConstraint!
     @IBOutlet weak var roundview: UIView!
     @IBOutlet weak var threeDotBtn: UIButton!
-    @IBOutlet weak var pieChart: PieChartView!
+    @IBOutlet weak var newImage: UIImageView!
+    
     var delegate:SelectedId?
     var edit:Bool?
     var delete:Bool?
@@ -32,10 +30,10 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         roundview.layer.cornerRadius = roundview.frame.width/2
         contentView.layer.masksToBounds = true
         applyShadowAndCornerRadius(to: contentView)
-        setupPieChart()
+       // setupPieChart()
         
-        
-        
+        homeWorkCompletImg.isHidden = true
+        newImage.isHidden = true
     }
     
     @IBAction func threeDotBtnAction(_ sender: UIButton) {
@@ -79,14 +77,14 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         homeWorkCompletImg.isHidden = !(edit || delete)
     }
     
-    private func setupPieChart() {
-        pieChart.holeRadiusPercent = 0.9 // Adjust inner circle size
-        pieChart.transparentCircleRadiusPercent = 0.2
-        pieChart.drawEntryLabelsEnabled = false
-        pieChart.legend.enabled = false
-        pieChart.chartDescription.enabled = false
-        pieChart.holeColor = UIColor.white // Background of the hole
-       }
+//    private func setupPieChart() {
+//        pieChart.holeRadiusPercent = 0.9 // Adjust inner circle size
+//        pieChart.transparentCircleRadiusPercent = 0.2
+//        pieChart.drawEntryLabelsEnabled = false
+//        pieChart.legend.enabled = false
+//        pieChart.chartDescription.enabled = false
+//        pieChart.holeColor = UIColor.white // Background of the hole
+//       }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         // Ensure the popup style is maintained on iPhone
@@ -104,8 +102,8 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         progressDataSet.colors = [progressColor, UIColor.lightGray]
         progressDataSet.drawValuesEnabled = false
 
-        let pieData = PieChartData(dataSet: progressDataSet)
-        pieChart.data = pieData
+//        let pieData = PieChartData(dataSet: progressDataSet)
+//        pieChart.data = pieData
 
         // Display Percentage in the Center
             let percentageText = "\(Int(percentage))%"
@@ -117,8 +115,8 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
                 ]
             )
             
-        pieChart.centerAttributedText = attributedString
-        pieChart.centerTextRadiusPercent = 0.9
+//        pieChart.centerAttributedText = attributedString
+//        pieChart.centerTextRadiusPercent = 0.9
         
 //        if isAnimate{
 //            pieChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)

@@ -97,13 +97,16 @@ class AttachHistroyVC: UIViewController, SelectedId {
         searchBar.delegate = self
         searchBar.layer.cornerRadius = 5
         searchBar.backgroundImage = UIImage()
+        
+        tv.delegate = self
+        tv.dataSource = self
         tv.register(
                 UINib(nibName: "AttachTvHeader", bundle: nil),
                 forHeaderFooterViewReuseIdentifier: "AttachTvHeader"
             )
         tv.register(UINib(nibName: "ContentCell", bundle: nil), forCellReuseIdentifier: "ContentCell")
         
-        tv.estimatedRowHeight = 200
+        tv.estimatedRowHeight = 100
         tv.rowHeight = UITableView.automaticDimension
 
 //        fetchAttachments()
@@ -209,10 +212,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
                         
                         self.tv.isHidden = false
                         self.noDataLabel.isHidden = true
-                        
-
-                        self.tv.delegate = self
-                        self.tv.dataSource = self
                         self.tv.reloadData()
         
                     } else {
@@ -336,7 +335,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: "🗓️ " + displayText,
+                date: "Posted on : " + displayText,
                 sendBy:  "Posted by :  " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false,
                 parentTableView: tv
@@ -359,7 +358,6 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
             tableView.beginUpdates()
             tableView.endUpdates()
         }
-//        cell.layoutIfNeeded()
         return cell
     }
     

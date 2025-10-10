@@ -247,7 +247,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: "🗓️ " + displayText,
+                date: "Posted on : " + displayText,
                 sendBy:  "Posted by :  " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false,
                 parentTableView: tv
