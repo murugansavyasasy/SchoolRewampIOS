@@ -28,9 +28,10 @@ class SenderAssignmentTextViewController: UIViewController,
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var CustomDateLbl: UILabel!
-    @IBOutlet weak var customizedDateBtn: HalfColorButton!
-    @IBOutlet weak var DateBtn: UIButton!
+    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var dayLbl: UILabel!
+    @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var AddphotosLbl: UILabel!
     @IBOutlet weak var SubmissionDateLbl: UILabel!
     @IBOutlet weak var letterscountLbl: UILabel!
@@ -120,14 +121,12 @@ class SenderAssignmentTextViewController: UIViewController,
         titleLbl.applyRightTxt()
         SubmissionDateLbl.applyRightTxt()
         assignTitleTxtFld.applyRightTxt()
-        
-        // Date UI
-        customdate.dateFormat = "EEE d" // e.g., Tue 13
-        let customdatestring = customdate.string(from: Date())
-        setFormattedDate(customdatestring, label: CustomDateLbl)
-        
-        formatter.dateFormat = "EEE d MMM yyyy" // e.g., Tue 13 Aug 2025
-        DateBtn.setTitle(formatter.string(from: Date()), for: .normal)
+        dateView.layer.borderColor = UIColor.lightGray.cgColor
+        dateView.layer.borderWidth = 0.5
+        dateView.layer.cornerRadius = 8
+        dateBtn.layer.cornerRadius = 8
+        dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
+        setInitialButtonTitles(date:nil)
         
         // Gestures
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
@@ -142,39 +141,49 @@ class SenderAssignmentTextViewController: UIViewController,
         if let edit = editReport{
             fetchData(notice: edit)
         }
+        let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
+        dateView.isUserInteractionEnabled = true
+        dateView.addGestureRecognizer(dateTapGesture)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+    @objc private func selectDateTapped() {
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        present(vc, animated: false)
+    }
     // MARK: - Datepicker (protocol)
     func date(date: String) {
-        let inFmt = DateFormatter()
-        inFmt.locale = Locale(identifier: "en_US_POSIX")
-        inFmt.dateFormat = "dd MMM yy"
-        
-        guard let dayDate = inFmt.date(from: date) else {
-            DateBtn.setTitle(date, for: .normal)
-            setFormattedDate(date, label: CustomDateLbl)
-            return
-        }
-        
-        // Button format
-        let outButtonFmt = DateFormatter()
-        outButtonFmt.locale = Locale(identifier: "en_US_POSIX")
-        outButtonFmt.dateFormat = "EEE d MMM yyyy"
-        let buttonTitle = outButtonFmt.string(from: dayDate)
-        DateBtn.setTitle(buttonTitle, for: .normal)
-        
-        // Custom date label expects "EEE d"
-        let labelFmt = DateFormatter()
-        labelFmt.locale = Locale(identifier: "en_US_POSIX")
-        labelFmt.dateFormat = "EEE d"
-        let labelString = labelFmt.string(from: dayDate)
-        setFormattedDate(labelString, label: CustomDateLbl)
+        setInitialButtonTitles(date: date)
     }
-    
+    func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
+        let parser = DateFormatter()
+        parser.locale = Locale(identifier: "en_US_POSIX")
+        parser.dateFormat = inputFormat
+        let dateToUse: Date
+        if let dateString = dateString, let parsedDate = parser.date(from: dateString) {
+            dateToUse = parsedDate
+        } else {
+            dateToUse = Date()
+        }
+        let displayDateFormatter = DateFormatter()
+        displayDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayDateFormatter.dateFormat = "dd MMM yyyy"
+        let displayTimeFormatter = DateFormatter()
+        displayTimeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayTimeFormatter.timeStyle = .short
+        let dayFormatter = DateFormatter()
+        dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dayFormatter.dateFormat = "EEEE"
+        dateLbl.text = displayDateFormatter.string(from: dateToUse)
+        dayLbl.text = dayFormatter.string(from: dateToUse)
+    }
+
     // MARK: - DeleteImge (custom)
     func deleteImage(index: Int) {
         guard attachments.indices.contains(index) else { return }
@@ -212,14 +221,9 @@ class SenderAssignmentTextViewController: UIViewController,
         categoryDropDownView.layer.borderColor = UIColor.lightGray.cgColor
         categoryDropDownView.backgroundColor = .white
         
-        customizedDateBtn.layer.cornerRadius = 10
-        customizedDateBtn.layer.borderWidth = 1
-        customizedDateBtn.layer.borderColor = UIColor.gray.cgColor
-        
         // Fonts
         chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         cancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         AddphotosLbl.setFont(style: .title, size: FontSize.TitleSize)
         SubmissionDateLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -258,7 +262,11 @@ class SenderAssignmentTextViewController: UIViewController,
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = AssignmentReport(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     // MARK: - Fetch/Edit Data
     func fetchData(notice: Report?) {
         attachments.removeAll()
@@ -444,16 +452,6 @@ class SenderAssignmentTextViewController: UIViewController,
         
     }
     
-    // MARK: - Actions
-    @IBAction func DateBtnAct(_ sender: Any) {
-        let vc = DatePickerVC(nibName: nil, bundle: nil)
-        vc.dateSelection = 2
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        present(vc, animated: false)
-    }
-    
     @IBAction func cancel(_ sender: UIButton) {
         assignTitleTxtFld.text = ""
         contentTextView.text = ""
@@ -479,7 +477,7 @@ class SenderAssignmentTextViewController: UIViewController,
         }
         
         // Convert DateBtn title to request format if needed
-        let dateBtnTitle = DateBtn.titleLabel?.text ?? ""
+        let dateBtnTitle = dateLbl.text ?? ""
         let submissionDate = ConvertDateStringSmart(dateBtnTitle) // Kept as your helper
         
         var params: [String: Any] = [
@@ -549,40 +547,7 @@ class SenderAssignmentTextViewController: UIViewController,
         dropDown.show()
     }
     
-    // MARK: - Date label attributed text
-    func setFormattedDate(_ date: String, label: UILabel) {
-        // Expected "EEE d"  -> e.g., "Tue 13"
-        let components = date.split(separator: " ")
-        guard components.count >= 2 else {
-            label.text = date
-            return
-        }
-        
-        let weekday = String(components[0])
-        let day = String(components[1])
-        
-        let weekdayFont = UIFont.systemFont(ofSize: 12)
-        let dayFont = UIFont.boldSystemFont(ofSize: 22)
-        
-        let attributedText = NSMutableAttributedString()
-        attributedText.append(NSAttributedString(string: "\(weekday)\n", attributes: [
-            .font: weekdayFont,
-            .foregroundColor: UIColor.darkGray
-        ]))
-        attributedText.append(NSAttributedString(string: day, attributes: [
-            .font: dayFont,
-            .foregroundColor: UIColor.black
-        ]))
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle,
-                                    range: NSRange(location: 0, length: attributedText.length))
-        
-        label.attributedText = attributedText
-        label.numberOfLines = 0
-    }
-    
+   
     // MARK: - QLPreviewControllerDataSource
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
         return DocumentpreviewURL == nil ? 0 : 1

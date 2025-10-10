@@ -348,8 +348,8 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                 self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
                 self.view.layoutIfNeeded()
             }
-            cell.setNeedsLayout()
-            cell.layoutIfNeeded()
+            cell.contentView.setNeedsLayout()
+            cell.contentView.layoutIfNeeded()
             return cell
         }
     }

@@ -33,9 +33,8 @@ class AssignmentReport: UIViewController, SelectedId {
     
     // MARK: - IBOutlets
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var noDataStack: UIStackView!
     @IBOutlet weak var academicView: UIView!
     @IBOutlet weak var academicDropView: UIView!
@@ -166,16 +165,10 @@ class AssignmentReport: UIViewController, SelectedId {
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.addDoneButton()
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
-        backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
-        backBtn.imageView?.applyRTLFlip(language == "ar")
-
-        backBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName,
-                                      secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: academicView)
         academicView.layer.borderColor = UIColor.lightGray.cgColor
         academicView.layer.borderWidth = 0.5
-        createBtn.layer.cornerRadius = createBtn.frame.height / 2
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]

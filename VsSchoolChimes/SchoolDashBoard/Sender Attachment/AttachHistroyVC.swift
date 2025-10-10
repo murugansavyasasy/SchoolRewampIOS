@@ -33,7 +33,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
     
     @IBOutlet weak var schoolDropDownFullview: UIView!
     @IBOutlet weak var backBtnName: UIButton!
-    @IBOutlet weak var createFileBtn: UIButton!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -63,7 +62,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
     override func viewDidLoad() {
         super.viewDidLoad()
         localData.editToken = ""
-        createFileBtn.layer.cornerRadius = createFileBtn.frame.height / 2
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
