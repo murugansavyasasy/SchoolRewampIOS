@@ -183,7 +183,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                         timeStamp: formattedDateStatus(
                             from: message?.asked_on ?? ""
                         ) ,
-                        isSender: message?.my_question ?? false, studentName: ""
+                        isSender: message?.change_answer ?? false, studentName: ""
                     )
             }
             

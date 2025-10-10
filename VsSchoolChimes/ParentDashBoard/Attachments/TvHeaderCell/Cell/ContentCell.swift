@@ -33,11 +33,11 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         
         // Initialization code
         
-        cellView.layer.cornerRadius = 10
-        cellView.layer.shadowColor = UIColor.black.cgColor
-        cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cellView.layer.shadowRadius = 5
-        cellView.layer.shadowOpacity = 0.3
+//        cellView.layer.cornerRadius = 10
+//        cellView.layer.shadowColor = UIColor.black.cgColor
+//        cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        cellView.layer.shadowRadius = 5
+//        cellView.layer.shadowOpacity = 0.3
         
         roundView.layer.cornerRadius = roundView.frame.width/2
         

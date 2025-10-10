@@ -758,6 +758,8 @@
 		FA861C372E38ABA900859726 /* CertificateCv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA861C352E38ABA900859726 /* CertificateCv.xib */; };
 		FA99ED372DA6571800F6AF0E /* SeeMoreFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA99ED362DA6571800F6AF0E /* SeeMoreFooterView.xib */; };
 		FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */; };
+		FAA47BD92E97E714002C3B5C /* StaffChatTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA47BD72E97E714002C3B5C /* StaffChatTV.swift */; };
+		FAA47BDA2E97E714002C3B5C /* StaffChatTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA47BD82E97E714002C3B5C /* StaffChatTV.xib */; };
 		FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */; };
 		FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */; };
 		FAAC9F472E4B006600203F04 /* PtmCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAAC9F462E4B006600203F04 /* PtmCV.xib */; };
@@ -1670,6 +1672,8 @@
 		FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FA99ED362DA6571800F6AF0E /* SeeMoreFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeMoreFooterView.xib; sourceTree = "<group>"; };
 		FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreFooterView.swift; sourceTree = "<group>"; };
+		FAA47BD72E97E714002C3B5C /* StaffChatTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffChatTV.swift; sourceTree = "<group>"; };
+		FAA47BD82E97E714002C3B5C /* StaffChatTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffChatTV.xib; sourceTree = "<group>"; };
 		FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressCell.swift; sourceTree = "<group>"; };
 		FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressCell.xib; sourceTree = "<group>"; };
 		FAAC9F452E4B006600203F04 /* PtmCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtmCV.swift; sourceTree = "<group>"; };
@@ -2678,6 +2682,8 @@
 			children = (
 				84395FEC2D1002A900FC3242 /* ChatTVCell.swift */,
 				84395FED2D1002A900FC3242 /* ChatTVCell.xib */,
+				FAA47BD72E97E714002C3B5C /* StaffChatTV.swift */,
+				FAA47BD82E97E714002C3B5C /* StaffChatTV.xib */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -4717,6 +4723,7 @@
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				84769D272E7285BD008F521E /* AbsentStudentCVC.xib in Resources */,
+				FAA47BDA2E97E714002C3B5C /* StaffChatTV.xib in Resources */,
 				84DE949C2E53252E008E1BF4 /* SenderQuizVc.xib in Resources */,
 				843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
@@ -5095,6 +5102,7 @@
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* AddLocationHistory.swift in Sources */,
 				845988422DD61382007CDB23 /* EventTVC.swift in Sources */,
+				FAA47BD92E97E714002C3B5C /* StaffChatTV.swift in Sources */,
 				848CC17E2D8A999A00CD0255 /* CreatePasswordVc.swift in Sources */,
 				18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */,
 				84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */,
