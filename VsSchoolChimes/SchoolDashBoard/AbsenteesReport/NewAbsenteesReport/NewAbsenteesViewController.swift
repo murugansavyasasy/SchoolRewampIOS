@@ -212,7 +212,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                     class_id: cls.class_id ?? "",
                     section_name: section.section_name ?? "",
                     section_id: section.section_id ?? "",
-                    total_absentees: section.total_absentees ?? "", student_counts: cls.student_counts ?? ""
+                    total_absentees: section.total_absentees ?? "", student_counts: section.student_counts ?? ""
                 )
                 flatArray.append(item)
             }

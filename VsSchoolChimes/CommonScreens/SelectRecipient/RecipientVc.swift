@@ -72,7 +72,7 @@ class RecipientVc: UIViewController{
     var vimeoUploader: VimeoUploader?
     var Common_request_params: [String:Any] = [:]
     var sectionName:String?
-    
+    var levelDropDown: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -619,7 +619,7 @@ class RecipientVc: UIViewController{
     
     func selectLevelDropdown(){
         StdDropdown.anchorView = selectLevel
-        StdDropdown.dataSource = dropDownArray
+        StdDropdown.dataSource = levelDropDown
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectLevel.bounds.height)
         StdDropdown.direction = .bottom
         StdDropdown.show()
@@ -627,7 +627,7 @@ class RecipientVc: UIViewController{
             guard let self = self else { return }
             if let label = self.selectLevel.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = "Level \(item)"
-//                user_inputs.level = item
+                user_inputs.level = Int(item) ?? 1
             }
         }
     }
@@ -679,6 +679,15 @@ class RecipientVc: UIViewController{
                 label.text = item
                 subjectId = subjectDetails?[index].id ?? ""
                 speficBtnName.isHidden = true
+            }
+            
+            if Menu_id.staffSelectedMenuId == Menu_id.quiz{
+                
+                getQuizLevel(
+                    SubjectId: subjectId ?? "" ,
+                    ClassId: classID ?? "",
+                    SectionId: "0"
+                )
             }
         }
     }
@@ -1122,6 +1131,41 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func getQuizLevel(SubjectId:String,ClassId:String,SectionId:String){
+        levelDropDown.removeAll()
+        APIService.shared.makeApi(url: ServiceUrl.check_level , parameters: [
+            "class_id" : ClassId,
+            "subject_id" : SubjectId,
+            "section_id" : SectionId
+        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <checkQuizLevelSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        if let quizData = successMessage.data {
+                            for item in quizData {
+                                levelDropDown.append(String(item.level ?? 0))
+                            }
+                        }
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                        
+                        if let quizData = successMessage.data {
+                            for item in quizData {
+                                levelDropDown.append(String(item.level ?? 0))
+                            }
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        
+       
+    }
     func getSubjectListAPI(_ id:String){
         subjectList.removeAll()
         

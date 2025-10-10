@@ -9,11 +9,31 @@ import UIKit
 import DropDown
 
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
-    func markAsAbsent(AbsentStudent: [StudentDetails]) {
-        ""
-//        filterData = AbsentStudent
-//        tv.reloadData()
+    func markAsAbsent(AbsentStudent: [StudentDetails], CallAttendaceApi: Bool) {
+        if CallAttendaceApi{
+            user_inputs.all_present = "T"
+            filterData = AbsentStudent
+            studentsDetails = AbsentStudent
+            MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
+                print("Absent Studets: ", Student.name ?? "")
+                if let id =  Student.id{
+                    user_inputs.all_present = "F"
+                    return ["ID":id]
+                }
+                return nil
+            } ?? []
+            
+            self.markAttendaceApi()
+            
+        }else{
+            filterData = AbsentStudent
+            studentsDetails = AbsentStudent
+            tv.reloadData()
+        }
+        
     }
+
+   
 
     
     func markStudentAsAbsent(studentId: String) {
@@ -46,6 +66,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     @IBOutlet weak var confirmBtn: UIButton!
     
     var filterData : [StudentDetails]?
+    var abseentessData : [StudentDetails]?
     var studentsDetails: [StudentDetails]?
     var totalcount = 0
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -56,7 +77,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var dropDown = DropDown()
-    
+    var  MakeAbsentId: [[String: String]] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -135,6 +156,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                             return s
                         }
                         self.filterData = self.studentsDetails
+                        self.abseentessData = self.studentsDetails
                         self.PresentCountLbl.text = String(self.studentsDetails?.count ?? 0)
                         self.AbsentCountLbl.text = "0"   // 👈 none absent initially
                         self.tv.reloadData()
@@ -157,17 +179,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     func markAttendaceApi(){
 
-        user_inputs.all_present = "T"
-        let MakeAbsentId: [[String: String]] = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
-            print("Absent Studets: ", Student.name ?? "")
-            if let id =  Student.id{
-                user_inputs.all_present = "F"
-                return ["ID":id]
-            }
-            return nil
-        } ?? []
-        
-        
         APIService.shared
             .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
                 
@@ -255,6 +266,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
             studentsDetails?[originalIndex].isAbsent = status
             filterData?[index].isAbsent = status
+//            abseentessData?[index].isAbsent = status
             // Count of students marked as absent
             totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
             let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
@@ -273,6 +285,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             for i in 0..<(studentsDetails?.count ?? 0) {
                 studentsDetails?[i].isAbsent = !isSelectingAll
                 filterData?[i].isAbsent = !isSelectingAll
+                abseentessData?[i].isAbsent = !isSelectingAll
                 let indexPath = IndexPath(row: i, section: 0)
                 if let customCell = tv.cellForRow(at: indexPath) as? AttendenceTVC {
                     customCell.custSwitch.isOn = !isSelectingAll
@@ -299,22 +312,37 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     }
     
     @IBAction func submitAttendanceAct(_ sender: Any) {
+        user_inputs.all_present = "T"
+        MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
+            print("Absent Studets: ", Student.name ?? "")
+            if let id =  Student.id{
+                user_inputs.all_present = "F"
+                return ["ID":id]
+            }
+            return nil
+        } ?? []
         
-    
-        filterData = studentsDetails?.filter { $0.isAbsent == false }
-        let vc = absentPrivewVC(nibName: nil, bundle: nil)
-        vc.studentsDetails = filterData
-        vc.delegate = self
-        vc.modalPresentationStyle = .formSheet
-        present(vc, animated: true)
+        if MakeAbsentId.count == 0{
+            
+            let alert = CustomAlert()
+            alert.showAlertCancel(title:AlertstringFile.Mark_All_as_Presents, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
+                self.markAttendaceApi()
+            } onNo: {
+                
+            }
+        }else{
+            
+            let vc = absentPrivewVC(nibName: nil, bundle: nil)
+            vc.studentsDetails = studentsDetails
+            vc.delegate = self
+            vc.modalPresentationStyle = .formSheet
+            // ✅ Prevent drag-down dismiss
+            vc.isModalInPresentation = true
+            present(vc, animated: true)
+            
+        }
         
-//        let alert = CustomAlert()
-//        
-//        alert.showAlertCancel(title:AlertstringFile.Confirm, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
-//            self.markAttendaceApi()
-//        } onNo: {
-//            
-//        }
+        
 
     }
     

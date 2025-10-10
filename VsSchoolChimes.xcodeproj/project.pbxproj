@@ -546,6 +546,8 @@
 		84AB0F6A2E76F5ED001160AD /* StudentAttendanceVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB0F672E76F5ED001160AD /* StudentAttendanceVc.swift */; };
 		84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */; };
 		84AC7F102E3C8EED0022BD63 /* SideMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */; };
+		84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ADC9B72E98C3900092CCAD /* TargetCvCell.swift */; };
+		84ADC9BA2E98C3900092CCAD /* TargetCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84ADC9B82E98C3900092CCAD /* TargetCvCell.xib */; };
 		84B2C54F2E2224C900A69A1B /* ExamCatogoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C54D2E2224C900A69A1B /* ExamCatogoryCVC.swift */; };
 		84B2C5502E2224C900A69A1B /* ExamCatogoryCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2C54E2E2224C900A69A1B /* ExamCatogoryCVC.xib */; };
 		84B2C7192E2247F200A69A1B /* MarkListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C7172E2247F200A69A1B /* MarkListVC.swift */; };
@@ -1454,6 +1456,8 @@
 		84AB0F682E76F5ED001160AD /* StudentAttendanceVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentAttendanceVc.xib; sourceTree = "<group>"; };
 		84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
 		84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuVC.xib; sourceTree = "<group>"; };
+		84ADC9B72E98C3900092CCAD /* TargetCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetCvCell.swift; sourceTree = "<group>"; };
+		84ADC9B82E98C3900092CCAD /* TargetCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TargetCvCell.xib; sourceTree = "<group>"; };
 		84B2C54D2E2224C900A69A1B /* ExamCatogoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCatogoryCVC.swift; sourceTree = "<group>"; };
 		84B2C54E2E2224C900A69A1B /* ExamCatogoryCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamCatogoryCVC.xib; sourceTree = "<group>"; };
 		84B2C7172E2247F200A69A1B /* MarkListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkListVC.swift; sourceTree = "<group>"; };
@@ -3480,6 +3484,15 @@
 			path = newImage;
 			sourceTree = "<group>";
 		};
+		84ADC9B62E97EABD0092CCAD /* TargetsListCells */ = {
+			isa = PBXGroup;
+			children = (
+				84ADC9B72E98C3900092CCAD /* TargetCvCell.swift */,
+				84ADC9B82E98C3900092CCAD /* TargetCvCell.xib */,
+			);
+			path = TargetsListCells;
+			sourceTree = "<group>";
+		};
 		84B57EB72D142E2800E0EA29 /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -3639,6 +3652,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				84ADC9B62E97EABD0092CCAD /* TargetsListCells */,
 				845CF1202E81737E001B2147 /* What'sNewVC */,
 				8481087A2E164CFE004A0F87 /* VideoPreviewVC */,
 				8435EA152DE9C68B00F02CB9 /* VideoPickAndPlay */,
@@ -4636,6 +4650,7 @@
 				84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				84C499382E33AD52007BCB62 /* RiminderTimePicker.xib in Resources */,
+				84ADC9BA2E98C3900092CCAD /* TargetCvCell.xib in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				FAF43B672E02A12A00F28A16 /* LessonEditTV.xib in Resources */,
@@ -5315,6 +5330,7 @@
 				84235A172E1E287F002F2E1D /* LSWTaskTVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
 				84D1FF1C2D4CE00A003ACC04 /* ParentDashboardVc.swift in Sources */,
+				84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */,
 				843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */,
 				FA3B30022E2F8BD6003B6E6D /* TotalMarkTvCell.swift in Sources */,
 				8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */,
