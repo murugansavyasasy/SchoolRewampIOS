@@ -241,6 +241,7 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
         let notice = searchData[indexPath.item]
         cell.configure(with: notice)
         cell.editBtn.isHidden = true
+        cell.unreadIcon.isHidden = false
         cell.outerView.setShadow(cornerRadius: 8)
         if let files = notice.file_path {
             loadFiles(into: cell, files: files)

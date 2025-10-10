@@ -319,7 +319,7 @@ struct CommonStringFile{
     static let selectedDate = "Submission Date".translated()
     static let SelectCatagorie = "Select Catagorie".translated()
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
-    static let Add_attachment_optional = "Add attachment (Optional?)".translated()
+    static let Add_attachment_optional = "Add attachment (Optional)".translated()
     static let Recording_Time = "Recording Time (Optional?)".translated()
     static let Add_attachment = "Add attachment".translated()
     static let RTime = "Recording Time".translated()
@@ -353,7 +353,7 @@ struct CommonStringFile{
         """
     
     static let No_data_found = "No Data Found!".translated()
-    static let Notice_Display_Date_Range = "Notice Display Date Range"
+    static let Notice_Display_Date_Range = "Notice Active Period"
     static let all = "All".translated()
     static let edit = "Edit".translated()
 

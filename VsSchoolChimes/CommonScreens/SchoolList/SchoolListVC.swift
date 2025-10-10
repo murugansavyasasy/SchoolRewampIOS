@@ -48,7 +48,10 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        applyShadowAndCornerRadius(to: sendBtnName)
+        sendBtnName.backgroundColor = .primery
+        sendBtnName.layer.borderColor = UIColor.white.cgColor
+        sendBtnName.layer.borderWidth = 1
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
         
         setupRadioButton(button: allbtnName)

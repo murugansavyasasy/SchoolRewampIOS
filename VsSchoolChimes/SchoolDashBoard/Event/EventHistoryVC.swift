@@ -31,7 +31,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UILabel!
-    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
@@ -39,6 +38,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var historyTable: UITableView!
     var previousOffset: CGFloat = 0.0
+    var selectedIndex:Int?
     var allEventSections: [EventDisplaySection] = []
     var filteredSections: [EventDisplaySection] = []
     let transitionDelegate = TransitioningDelegate()
@@ -59,7 +59,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchBar.backgroundColor = .clear
         searchBar.delegate = self
         searchBar.addDoneButton()
-        createBtn.layer.cornerRadius = createBtn.frame.height / 2
         searchBar.searchTextField.addDoneButton()
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
@@ -100,12 +99,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             searchBar?.resignFirstResponder()
         }
     }
-    @IBAction func createAssignment(_ sender: UIButton) {
-//        let vc = NotificationCallVC()
-        let vc = EventsVC()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
     // MARK: - API Call
     func GetEvent() {
         if #available(iOS 15.0, *) {
@@ -130,17 +123,14 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     
                     if let section = response.data?.first {
                         // Only append if on_going is not empty
-                        if let onGoing = section.on_going, !onGoing.isEmpty {
-                            self.allEventSections.append(.featured(onGoing))
-                        }
-                        
-                        // Only append if categories is not empty
                         if var categories = section.categories, !categories.isEmpty {
                             let allCategory = EventCategory(id: nil, name: "All", url: "")
                             categories.insert(allCategory, at: 0)
                             self.allEventSections.append(.categories(categories))
                         }
-                        
+                        if let onGoing = section.on_going, !onGoing.isEmpty {
+                            self.allEventSections.append(.featured(onGoing))
+                        }
                         // Only append if up_coming is not empty
                         if let upcoming = section.up_coming, !upcoming.isEmpty {
                             self.allEventSections.append(.upcoming(upcoming))
@@ -319,13 +309,13 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         switch sectionData {
         case .featured(let events):
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
-            cell.config(category: nil, onGoing: events, type: false, index: 0)
+            cell.config(category: nil, onGoing: events, type: false, index: selectedIndex ?? 0)
             cell.pageController.numberOfPages = events.count
             return cell
             
         case .categories(let categories):
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
-            cell.config(category: categories, onGoing: nil, type: true, index: 0)
+            cell.config(category: categories, onGoing: nil, type: true, index: selectedIndex ?? 0)
             cell.delegate = self
             return cell
             
@@ -436,11 +426,20 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
 @available(iOS 14.0, *)
 extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
     
+//    func filterCatagories(name: String) {
+//        self.filteredSections = filterEventListsByTitle(searchText: name)
+//        self.historyTable.reloadData()
+//    }
     func filterCatagories(name: String) {
-        self.filteredSections = filterEventListsByTitle(searchText: name)
+        if name != "All"{
+            self.filteredSections = filterEventListsByTitle(searchText: name)
+        }else{
+            filteredSections = allEventSections
+            selectedIndex = 0
+        }
+        
         self.historyTable.reloadData()
     }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
@@ -482,32 +481,42 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
             self.historyTable.reloadData()
         }
     }
-    
     func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
-        var filtered: [EventDisplaySection] = []
+        var filteredSections: [EventDisplaySection] = []
         
-        let upcoming = allEventSections.compactMap { section -> [EventList]? in
-            if case .upcoming(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        for section in allEventSections {
+            switch section {
+            case .featured(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.featured(filteredEvents))
+                }
+            case .categories(let categories):
+                filteredSections.append(.categories(categories))
+                if let firstCategory = categories.first {
+                    if let index = categories.firstIndex(where: { $0.name?.lowercased() == searchText.lowercased() }) {
+                        selectedIndex = index
+                    } else {
+                        selectedIndex = 0
+                    }
+                } else {
+                    selectedIndex = 0
+                }
+                
+            case .upcoming(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.upcoming(filteredEvents))
+                }
+                
+            case .completed(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.completed(filteredEvents))
+                }
             }
-            return nil
-        }.flatMap { $0 }
-        
-        if !upcoming.isEmpty {
-            filtered.append(.upcoming(upcoming))
         }
         
-        let completed = allEventSections.compactMap { section -> [EventList]? in
-            if case .completed(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
-            }
-            return nil
-        }.flatMap { $0 }
-        
-        if !completed.isEmpty {
-            filtered.append(.completed(completed))
-        }
-        
-        return filtered
+        return filteredSections
     }
 }

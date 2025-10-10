@@ -180,11 +180,7 @@ class MenuRedirectHandler {
     }
     
     func senderEventNavigate(from viewController: UIViewController) {
-        let vc = EventHistoryVC(nibName: nil, bundle: nil)
-//        let vc = EventPageVC(nibName: nil, bundle: nil)
-//        vc.page1 = EventsVC(nibName: nil, bundle: nil)
-//        vc.page2 = EventHistoryVC(nibName: nil, bundle: nil)
-//        vc.titleLbl = CommonStringFile.CreateEvent.translated()
+        let vc = EventsVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

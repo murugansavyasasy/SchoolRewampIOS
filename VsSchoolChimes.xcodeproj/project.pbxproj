@@ -178,6 +178,8 @@
 		840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */; };
 		840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */; };
 		840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E44A82D1A85EC00D561E8 /* SenderLeaveTV.xib */; };
+		8411006C2E9662C600B17BD7 /* PriorityStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8411006A2E9662C600B17BD7 /* PriorityStudentTVC.swift */; };
+		8411006D2E9662C600B17BD7 /* PriorityStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8411006B2E9662C600B17BD7 /* PriorityStudentTVC.xib */; };
 		84127AC92E03C8F00092159D /* CVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA82E03C8F00092159D /* CVCell.swift */; };
 		84127ACA2E03C8F00092159D /* ActivateCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */; };
 		84127ACB2E03C8F00092159D /* AddCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA02E03C8F00092159D /* AddCoupenTVC.swift */; };
@@ -1074,6 +1076,8 @@
 		840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderLeaveRqstVC.xib; sourceTree = "<group>"; };
 		840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderLeaveTV.swift; sourceTree = "<group>"; };
 		840E44A82D1A85EC00D561E8 /* SenderLeaveTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderLeaveTV.xib; sourceTree = "<group>"; };
+		8411006A2E9662C600B17BD7 /* PriorityStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityStudentTVC.swift; sourceTree = "<group>"; };
+		8411006B2E9662C600B17BD7 /* PriorityStudentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PriorityStudentTVC.xib; sourceTree = "<group>"; };
 		84127A952E03C8F00092159D /* ClaimCouponVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimCouponVc.swift; sourceTree = "<group>"; };
 		84127A962E03C8F00092159D /* ClaimCouponVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClaimCouponVc.xib; sourceTree = "<group>"; };
 		84127A972E03C8F00092159D /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
@@ -2711,6 +2715,8 @@
 				8442A8642CDB787A0006068E /* PriorityVC.xib */,
 				FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */,
 				FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */,
+				8411006A2E9662C600B17BD7 /* PriorityStudentTVC.swift */,
+				8411006B2E9662C600B17BD7 /* PriorityStudentTVC.xib */,
 			);
 			path = Priority;
 			sourceTree = "<group>";
@@ -4393,6 +4399,7 @@
 				8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */,
 				8451EC932E24E55B00D6DBB4 /* CalanderDateCVC.xib in Resources */,
 				8451EC942E24E55B00D6DBB4 /* HolidayVC.xib in Resources */,
+				8411006D2E9662C600B17BD7 /* PriorityStudentTVC.xib in Resources */,
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
 				849757122D2BA575006A27FD /* Std_Grp_header.xib in Resources */,
 				FA82918C2E4379960051844E /* CountryTvcell.xib in Resources */,
@@ -4895,6 +4902,7 @@
 				18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */,
 				18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */,
 				18D7185A2D0D471A00E9EDA3 /* DailycollResp.swift in Sources */,
+				8411006C2E9662C600B17BD7 /* PriorityStudentTVC.swift in Sources */,
 				FA3E28D22E4DDE48008885A3 /* CreateMeetingVc.swift in Sources */,
 				18D7185B2D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift in Sources */,
 				8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */,

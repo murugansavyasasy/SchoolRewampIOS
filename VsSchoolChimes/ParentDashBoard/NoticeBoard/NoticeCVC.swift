@@ -26,6 +26,8 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
     
     
     // MARK: - IBOutlets
+  
+    @IBOutlet weak var unreadIcon: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var readStatusView: UIButton!
     @IBOutlet weak var reminderBtn: UIButton!

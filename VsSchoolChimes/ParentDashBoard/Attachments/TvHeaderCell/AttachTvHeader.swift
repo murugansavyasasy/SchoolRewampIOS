@@ -33,7 +33,6 @@ class AttachTvHeader: UITableViewHeaderFooterView, SelectedId, UIPopoverPresenta
     
     
     @IBAction func EditAndDeletBtn(_ sender: UIButton) {
-        
         let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
         popoverContentVC.delegate = self
         popoverContentVC.view.backgroundColor = .white

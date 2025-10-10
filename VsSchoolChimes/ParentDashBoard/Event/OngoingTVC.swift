@@ -103,6 +103,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                 cell.outerView.layer.borderWidth = 0
             }
             cell.iconheight.constant = categoryItem.url == "" ? 0:50
+            cell.titleLbl.font = categoryItem.url == "" ? UIFont.systemFont(ofSize: 14, weight: .medium):UIFont.systemFont(ofSize: 11, weight: .medium)
             cell.titleLbl.text = categoryItem.name ?? ""
             cell.iconImg.kf.setImage(with: URL(string: categoryItem.url ?? ""))
             return cell
