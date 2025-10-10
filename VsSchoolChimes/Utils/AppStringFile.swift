@@ -160,7 +160,8 @@ struct AlertstringFile{
     static let Failed = "Failed".translated()
     static let Are_you_sure_you_want_to_update_Lesson = "Are you sure you want to Update this Lesson Plan?".translated()
     static let Are_you_sure_you_want_to_Delete_Lesson = "Are you sure you want to Delete this Lesson Plan?".translated()
-    static let submitAttendanceConfirmation = "Are you sure you want to submit the attendance?".translated()
+    static let submitAttendanceConfirmation = "Are you sure you want to submit the attendance to mark all students as present?".translated()
+    static let Mark_All_as_Presents = "Mark All as Present".translated()
     static let Oops = "Oops!".translated()
     
 }

@@ -827,6 +827,7 @@ struct SectionWise: Codable {
     let section_id: String?
     let section_name: String?
     let total_absentees: String?
+    let student_counts: String?
 }
 
 
@@ -2419,6 +2420,21 @@ struct InvoiceItem: Codable {
 }
 
 
+struct targetSuc : Codable{
+    
+    var status : Bool?
+    var message : String?
+    var data : [targetDataDetails]?
+    
+}
+
+struct targetDataDetails : Codable{
+    var type : String?
+    var name: [String]?
+    
+}
+
+
 
 struct GlobalVariablesResponse: Codable {
     var status: Bool?
@@ -2459,3 +2475,12 @@ struct GlobalVariable: Codable {
     var fees_url: String?
 }
 
+struct checkQuizLevelSuc : Codable{
+    var status : Bool?
+    var message : String?
+    var data : [checkQuizLevelData]?
+}
+
+struct checkQuizLevelData : Codable{
+    var level : Int?
+}

@@ -486,8 +486,8 @@
                                                                                 <constraint firstAttribute="height" constant="30" id="07T-eD-swm"/>
                                                                             </constraints>
                                                                             <segments>
-                                                                                <segment title="F/N"/>
-                                                                                <segment title="A/N"/>
+                                                                                <segment title="FN"/>
+                                                                                <segment title="AN"/>
                                                                             </segments>
                                                                             <color key="selectedSegmentTintColor" systemColor="systemGreenColor"/>
                                                                             <connections>
