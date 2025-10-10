@@ -12,6 +12,7 @@ protocol call: AnyObject{
 }
 class QuizSubmisionTvCell: UITableViewCell {
 
+    @IBOutlet weak var imageViewWith: NSLayoutConstraint!
     @IBOutlet weak var profileImage: UIImageView!
     
     @IBOutlet weak var addmissionLbl: UILabel!
