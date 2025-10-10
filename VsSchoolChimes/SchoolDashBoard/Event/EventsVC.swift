@@ -99,9 +99,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
         timeView.layer.borderColor = UIColor.lightGray.cgColor
         timeView.layer.borderWidth = 0.5
-        
-        
-        
         eventTxt.delegate = self
         contentTxtView.delegate = self
         eventTxt.applyRightTxt()

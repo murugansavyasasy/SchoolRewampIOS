@@ -503,7 +503,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
         case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
         case 22: navigateOrSchoolList { MenuRedirect.senderMgmt(from: self) }
-        case 23: MenuRedirect.senderNoticeboardNavigate(from: self)
+        case 23: noticeBordHistory{ MenuRedirect.senderNoticeboardNavigate(from: self)} 
         case 24: MenuRedirect.senderOnlineNavigate(from: self)
         case 26: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
         case 27: navigateOrSchoolList { MenuRedirect.senderQuiz(from: self) }
@@ -529,7 +529,15 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             defaultAction()
         }
     }
-    
+    func noticeBordHistory(_ defaultAction: () -> Void) {
+        if !checkMutipleSchool() {
+            let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+             present(vc, animated: true)
+        } else {
+            defaultAction()
+        }
+    }
     func checkMutipleSchool() -> Bool {
         if staffDetailsCount?.count ?? 0 > 1 {
             switch staff_roll {
