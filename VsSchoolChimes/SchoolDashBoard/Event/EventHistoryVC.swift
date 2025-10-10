@@ -387,6 +387,8 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.titleString = event.title
         detailVC.descriptionString = event.description
         detailVC.postedBy = event.sent_by
+        detailVC.targetId = event.id
+        detailVC.EndUrl = ServiceUrl.event_target_details
         detailVC.subject_name = "Event".translated()
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview

@@ -13,6 +13,7 @@ protocol readStatusUpdate{
 }
 class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var yourTargetImageView: UIImageView!
     @IBOutlet weak var sendToInnerView: UIView!
     @IBOutlet weak var attachmentInnerView: UIView!
     @IBOutlet weak var targetFullView: UIView!
@@ -45,26 +46,10 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var delegate : readStatusUpdate?
     var is_unreadStatus : Bool?
     var buttonTitle:String?
-    var targetCvdata : [String] = ["Arjun",
-                                   "Divya",
-                                   "Kavin",
-                                   "Priya",
-                                   "Vignesh",
-                                   "Sneha",
-                                   "Rahul",
-                                   "Aishwarya",
-                                   "Sanjay",
-                                   "Meena",
-                                   "Harish",
-                                   "Lakshmi",
-                                   "Karthik",
-                                   "Nisha",
-                                   "Ravi",
-                                   "Swathi",
-                                   "Manoj",
-                                   "Deepika",
-                                   "Surya",
-                                   "Anitha"]
+    var targetCvdata : [String] = []
+    
+    var targetId : String?
+    var EndUrl : String?
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Reload collection view once the view has appeared and frame is set
@@ -118,8 +103,12 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         super.viewDidLoad()
         targetFullView.layer.cornerRadius = 10
         attachmentFullView.layer.cornerRadius = 10
+        attachmentFullView.isHidden = attachmetList?.count == 0
+//        attachmetList?.count ?? 0 ==
         setupUI()
         setupCollectionView()
+        
+        getTargetReport(EndUrl: EndUrl ?? "" , targetIdOrType: targetId ?? "")
     }
     
     private func setupUI() {
@@ -177,7 +166,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
 
         targetCv.collectionViewLayout = layout
-        reloadss()
+//        reloadss()
         // Configure flow layout
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
@@ -272,7 +261,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             url: EndUrl,
             parameters: ["id": targetIdOrType],
             type: ApitTypeSringFile.GET,
-            token: ""
+            token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -281,16 +270,17 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                     
                     if res.status == true{
                         self.targetCvdata = res.data?.first?.name ?? []
-                        self.targetCv.reloadData()
-                        self.targetCv.layoutIfNeeded()
-                        DispatchQueue.main.async {
-                            let contentHeight = self.targetCv.collectionViewLayout.collectionViewContentSize.height
-                            self.targetCvHeight.constant = contentHeight
+                        if res.data?.first?.type == "STANDARD"{
+                            self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             
-                            UIView.animate(withDuration: 0.3) {
-                                self.view.layoutIfNeeded()
-                            }
+                            self.yourTargetLbl.text = "Sent To Standard"
+                        }else if  res.data?.first?.type == "SCHOOL"{
+                            self.yourTargetLbl.text = "Sent To School"
+                            
+                        }else{
+                            
                         }
+                        self.reloadss()
                     }
                 case .failure(let err):
                    ""
@@ -366,7 +356,16 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 return UICollectionViewCell()
             }
             
-            cell.nameLbl.text = "👤 " + targetCvdata[indexPath.row]
+            
+            if yourTargetLbl.text == "Sent To Standard" {
+                cell.nameLbl.text = "🎓 " + targetCvdata[indexPath.row]
+            }else if yourTargetLbl.text == "Sent To School" {
+                cell.nameLbl.text = "🏫 " + targetCvdata[indexPath.row]
+            }
+            else{
+                cell.nameLbl.text = "👤 " + targetCvdata[indexPath.row]
+            }
+           
             
             return  cell
         }
