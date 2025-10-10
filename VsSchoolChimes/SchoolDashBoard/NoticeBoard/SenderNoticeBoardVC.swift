@@ -366,7 +366,11 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.present(vc, animated: false)
     }
-    
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     func setFormattedDate(_ date: String, label: UILabel) {
         let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
         let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number

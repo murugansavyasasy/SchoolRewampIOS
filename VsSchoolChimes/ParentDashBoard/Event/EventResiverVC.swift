@@ -44,7 +44,10 @@ class EventResiverVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if #available(iOS 15.0, *) {
+            tableview.sectionHeaderTopPadding = 0
+            tableview.tableFooterView = nil
+        }
         setupStudentInfo()
         setupUI()
         registerTableView()
@@ -372,6 +375,9 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
     }
 }
 

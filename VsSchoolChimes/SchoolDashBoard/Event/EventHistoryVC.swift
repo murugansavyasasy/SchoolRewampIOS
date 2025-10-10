@@ -63,6 +63,10 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        if #available(iOS 15.0, *) {
+            historyTable.sectionHeaderTopPadding = 0
+            historyTable.tableFooterView = nil
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -419,6 +423,9 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
     }
 }
 

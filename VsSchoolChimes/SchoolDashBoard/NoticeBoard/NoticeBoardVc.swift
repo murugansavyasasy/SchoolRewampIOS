@@ -44,7 +44,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     @IBOutlet weak var outerDropDownView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UILabel!
-    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var schoolName: UILabel!
     @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
@@ -143,7 +142,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         setupCollectionView()
         setupRefreshControl()
         setupLoader()
-        createBtn.layer.cornerRadius = createBtn.frame.height / 2
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -175,11 +173,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             searchBar.searchTextField.text = ""
             searchBar?.resignFirstResponder()
         }
-    }
-    @IBAction func createAssignment(_ sender: UIButton) {
-        let vc = SenderNoticeBoardVC()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     
     private func customizeSearchBar() {

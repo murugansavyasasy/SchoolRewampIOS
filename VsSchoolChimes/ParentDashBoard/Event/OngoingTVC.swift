@@ -94,18 +94,18 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
 
             // Shadow and border for selected cell
             if isSelected {
-                cell.outerView.setShadow(shadowColor: .blue, shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
-                cell.outerView.layer.borderColor = UIColor.systemBlue.cgColor
-                cell.outerView.layer.borderWidth = 2
+                cell.iconView.setShadow(shadowColor: .blue, shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
+                cell.iconView.layer.borderColor = UIColor.systemBlue.cgColor
+                cell.iconView.layer.borderWidth = 2
             } else {
-                cell.outerView.setShadow(shadowOpacity: 0)
-                cell.outerView.layer.borderColor = UIColor.clear.cgColor
-                cell.outerView.layer.borderWidth = 0
+                cell.iconView.setShadow(shadowOpacity: 0)
+                cell.iconView.layer.borderColor = UIColor.lightGray.cgColor
+                cell.iconView.layer.borderWidth = 1
             }
-            cell.iconheight.constant = categoryItem.url == "" ? 0:50
+//            cell.iconheight.constant = categoryItem.url == "" ? 0:50
             cell.titleLbl.font = categoryItem.url == "" ? UIFont.systemFont(ofSize: 14, weight: .medium):UIFont.systemFont(ofSize: 11, weight: .medium)
             cell.titleLbl.text = categoryItem.name ?? ""
-            cell.iconImg.kf.setImage(with: URL(string: categoryItem.url ?? ""))
+            cell.iconImg.kf.setImage(with: URL(string: categoryItem.url ?? ""),placeholder: UIImage(named: "ImagePdf"))
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OngoingCVC", for: indexPath) as? OngoingCVC,
@@ -202,11 +202,14 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         if type {
-            return CGSize(width: 100, height: 130)
+            return CGSize(width: 90, height: 130)
         } else {
             return CGSize(width: collectionView.frame.width, height: 210)
         }
     }
+
 }

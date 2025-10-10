@@ -126,7 +126,7 @@ class MenuRedirectHandler {
 //        vc.modalPresentationStyle = .fullScreen
 //        viewController.present(vc, animated: true)
         
-        let vc = SenderHomeWorkVC(nibName: nil, bundle: nil)
+        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
 //        vc.page1 = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
 //        vc.page2 = SenderHomeWorkVC(nibName: nil, bundle: nil)
 //        vc.titleLbl = "Notice Board".translated()
@@ -151,7 +151,7 @@ class MenuRedirectHandler {
     
     func senderNoticeboardNavigate(from viewController: UIViewController) {
 //        let vc = EventPageVC(nibName: nil, bundle: nil)
-        let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
 //        vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
 //        vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
 //
@@ -160,12 +160,6 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
-//    func senderPtmNavigate(from viewController: UIViewController) {
-//        let vc = StaffPtmViewController(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//        
-//    }
     func senderPtmNavigate(from viewController: UIViewController) {
         //let vc = StaffPtmViewController(nibName: nil, bundle: nil)
         let vc = NewPtmVC(nibName: nil, bundle: nil)
@@ -211,7 +205,7 @@ class MenuRedirectHandler {
 //        viewController.present(vc, animated: true)
     }
     func senderAssignmentNavigate(from viewController: UIViewController) {
-        let vc = AssignmentReport(nibName: nil, bundle: nil)
+        let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
 //        let vc = AssignmentPageVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -299,7 +293,7 @@ class MenuRedirectHandler {
     }
     func senderQuiz(from viewController: UIViewController) {
         
-        let vc = ReportsQuizVc(nibName: nil, bundle: nil)
+        let vc = SenderQuizVc(nibName: nil, bundle: nil)
 //        vc.page1 = SenderQuizVc(nibName: nil, bundle: nil)
 //        vc.page2 = ReportsQuizVc(nibName: nil, bundle: nil)
 //        vc.titleLbl = "Notice Board".translated()
@@ -329,7 +323,7 @@ class MenuRedirectHandler {
     }
     func senderAttachment(from viewController: UIViewController) {
         
-        let vc = AttachHistroyVC(nibName: nil, bundle: nil)
+        let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         

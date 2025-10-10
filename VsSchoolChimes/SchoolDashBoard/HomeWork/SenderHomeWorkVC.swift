@@ -34,10 +34,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             }
         }
     }
-    @IBOutlet weak var backBtnNm: UIButton!
-
-    @IBOutlet weak var createBtnName: UIButton!
-    
+    @IBOutlet weak var backLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
 
     @IBOutlet weak var designUseView: UIView!
@@ -128,15 +125,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     // MARK: - Setup
     private func setupViews() {
 //        applyShadowAndCornerRadius(to: dateView)
-        
-        backBtnNm
-            .configureAsBackButton(
-                firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? ""
-            )
-        
-        
-        createBtnName.layer.cornerRadius = createBtnName.frame.height / 2
+        backLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]

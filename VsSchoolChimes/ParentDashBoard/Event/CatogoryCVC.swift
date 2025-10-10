@@ -9,6 +9,7 @@ import UIKit
 
 class CatogoryCVC: UICollectionViewCell {
 
+    @IBOutlet weak var iconView: UIView!
     @IBOutlet weak var iconheight: NSLayoutConstraint!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
@@ -16,6 +17,7 @@ class CatogoryCVC: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        iconImg.layer.cornerRadius = 10
     }
 
 }
