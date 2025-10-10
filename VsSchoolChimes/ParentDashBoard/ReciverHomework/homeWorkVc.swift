@@ -107,23 +107,24 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             }
             
             cell.SubjectLbl.text = item.subject_name
-            cell.stafNamLbl.text = item.sent_by
+            cell.stafNamLbl.text = item.description//item.sent_by
             
             if item.is_unread == false{
-                let percentage = Double(50)
                 cell.roundview.isHidden = true
-                cell.setProgress(to: percentage)
+                cell.newImage.isHidden = true
+                cell.homeWorkCompletImg.isHidden = false
             }else{
-                let percentage = Double(0)
-                cell.setProgress(to: percentage)
-                cell.roundview.isHidden = false
+                cell.roundview.isHidden = true
+                cell.newImage.isHidden = false
+                cell.homeWorkCompletImg.isHidden = true
+                cell.homeWorkCompletImg.image = UIImage(named: "Pending")
+                //cell.homeWorkCompletImg.preferredSymbolConfiguration?() = .
             }
             
             if item.is_completed == true{
+                cell.newImage.isHidden = true
                 cell.homeWorkCompletImg.isHidden = false
-                cell.pieChartWidth.constant = 0
-                cell.PieChartTrailling.constant = -10
-                cell.pieChart.isHidden = true
+                cell.homeWorkCompletImg.image = UIImage(named: "complete_homework")
             }
             
             

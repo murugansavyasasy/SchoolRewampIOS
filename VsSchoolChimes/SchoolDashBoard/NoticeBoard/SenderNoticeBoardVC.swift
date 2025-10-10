@@ -263,17 +263,11 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     // MARK: - Setting Current Date as Initial Date
     func setInitialDate(_ fromDate: String?, _ toDate: String?) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"   // 🔑 match your string
-        
-        print("Standard format =", dateFormatter.dateFormat)
-        print("From date string =", fromDate ?? "nil")
-        print("To date string =", toDate ?? "nil")
-        
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         let currentDate = Date()
-        
-        // Parse or fallback
+        let futureDate = Calendar.current.date(byAdding: .day, value: 30, to: currentDate)!
         let startDate = (fromDate != nil ? dateFormatter.date(from: fromDate!) : nil) ?? currentDate
-        let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? currentDate
+        let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? futureDate
         
         // Update buttons with input format
         fromdateBtn.setTitle(dateFormatter.string(from: startDate), for: .normal)
@@ -305,14 +299,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     }
     
     func StyleAndTranslater(){
-        
-        //        //MARK: UI Changes
-        //        PopupView.layer.cornerRadius = 10
-        //        PopupView.layer.shadowColor = UIColor.black.cgColor
-        //        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        //        PopupView.layer.shadowRadius = 5
-        //        PopupView.layer.shadowOpacity = 0.3
-        
         calanderBtn.layer.borderWidth = 1 // Border width
         calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
         calanderBtn2.layer.borderWidth = 1 // Border width

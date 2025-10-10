@@ -48,14 +48,14 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var imgs = ["shiyam","StudImg","stuentimg 1"]
     var Sorting = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓"]
     var Gender = ["All","Male","Female","Others"]
-    var Filters = [CommonStringFile.getAllStudent.translated()]
+    var Filters = ["All students"]
     var studentList : [StudentData]?
     var filterStudent : [StudentData]?
     var sortedStudent : [StudentData]?
     let menuName = MenuStringFile()
     var classId:String?
     var sectionId:String?
-    var selection:String?
+   // var selection:String?
     var showSearch:Bool = false
     var academicId = 0
     override func viewDidLoad() {
@@ -182,31 +182,30 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         fillterDropdown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
-            switch item.translated(){
-            case CommonStringFile.getStanderd_Section.translated():
+            switch index{
+            case 0:
+                
+                getStanderd.isHidden = true
+                getStudentAPI()
+              
+            case 1:
                 
                 if sectionArray.first != "All" {
-                       sectionArray.insert("All", at: 0)
-                   }
+                    sectionArray.insert("All", at: 0)
+                }
                 sectionBtn.setTitle(sectionArray.first, for: .normal)
                 getStanderd.isHidden = false
                 sectionSelection.isHidden = false
                 classId = standardDetails?.first?.id
-                selection = CommonStringFile.getStanderd_Section.translated()
-                //getStudentAPI(class_id:classId,section_id:sectionId)
                 getStudentAPI(class_id:classId)
-            case CommonStringFile.getStanderd.translated():
-                getStanderd.isHidden = false
-                sectionSelection.isHidden = true
-                selection = CommonStringFile.getStanderd.translated()
-                getStudentAPI(class_id:classId)
+                
             default:
                 getStanderd.isHidden = true
                 getStudentAPI()
-                
             }
+            
             reportTable.reloadData()
-            self.filterBtn.setTitle(item.translated(), for: .normal)
+            //self.filterBtn.setTitle(item.translated(), for: .normal)
         }
     }
     @IBAction func selectCatagory(_ sender: UIButton) {
@@ -345,7 +344,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         standerdArray.removeAll()
                         standardDetails = successMessage.data
                         if Filters.count == 1{
-                            Filters.append(CommonStringFile.getStanderd_Section)
+                            Filters.append("Class & Section")
                         }
                         sectionsDetails = standardDetails?.first?.sections
                         standerdArray = standardDetails?.compactMap { $0.name } ?? []
@@ -354,10 +353,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         //sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
                         classId = standardDetails?.first?.id
                         sectionId = sectionsDetails?.first?.id
-                        classId = ""
-                        sectionId = ""
+//                        classId = ""
+//                        sectionId = ""
                         getStanderd.isHidden = true
-                        self.filterBtn.setTitle(CommonStringFile.getAllStudent.translated(), for: .normal)
+                        self.filterBtn.setTitle("All students", for: .normal)
                         getStudentAPI()
                     }
                 }else{
@@ -367,7 +366,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         studentList?.removeAll()
                         filterStudent?.removeAll()
                         getStanderd.isHidden = true
-                        self.filterBtn.setTitle(CommonStringFile.getAllStudent.translated(), for: .normal)
+                        self.filterBtn.setTitle("All students", for: .normal)
                         nodataImg.isHidden = false
                         nodataLbl.isHidden = false
                         nodataLbl.text = successMessage.message

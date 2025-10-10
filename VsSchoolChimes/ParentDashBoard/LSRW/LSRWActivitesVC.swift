@@ -164,7 +164,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             // Configure captions based on LSRW type
             switch type {
             case .reading, .listening:
-                captions += Array(repeating: .test, count: self.lsrw?.test?.count ?? 0)
+//                captions += Array(repeating: .test, count: self.lsrw?.test?.count ?? 0)
                 captions.append(.addAttachment)
             case .writing:
                 captions.append(.addAttachment)
@@ -205,9 +205,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         guard let type = lsrw?.activity_type else { return 0 }
         guard lsrw?.is_submitted == false else { return 1 }
         switch type {
-        case .listening:
-            return 2
-        case .speaking, .writing,.reading:
+        case .speaking, .writing,.reading,.listening:
             return 3
         case .unknown(_):
             return 1
@@ -460,7 +458,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    // MARK: - Upload Media (Images + Video + Docs)
     private func uploadMedia(
         file: Any,
         viewController: UIViewController,
@@ -473,10 +470,13 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         var iframeValue: String?
         var fileSizeValue: Int?
         var embedUrlValue: String?
+        var currentProgressValues: [Int: Double] = [:] // Track per file progress
 
         func updateAndCheckCompletion(total: Int) {
-            let progress = (Double(completed) / Double(total)) * 100
-            CircularProgressLoader.shared.updateProgress(to: progress)
+            // Calculate total progress from per file progress dictionary
+            let totalProgress = currentProgressValues.values.reduce(0, +) / Double(total)
+            CircularProgressLoader.shared.updateProgress(to: totalProgress * 100)
+
             if completed == total {
                 CircularProgressLoader.shared.hide()
                 completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
@@ -495,18 +495,23 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
 
-            for item in uploadableItems {
+            for (index, item) in uploadableItems.enumerated() {
+                currentProgressValues[index] = 0.0
+
                 if let image = item.image {
-                    // 🖼 Local image → upload to AWS
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
                         bucketPath: "uploads/images/",
                         bucketName: "schoolchimes-communication",
-                        progressHandler: nil
+                        progressHandler: { progress in
+                            currentProgressValues[index] = progress / 100
+                            updateAndCheckCompletion(total: total)
+                        }
                     ) { url in
                         if let uploadedURL = url {
                             uploadedURLs.append(uploadedURL)
                         }
+                        currentProgressValues[index] = 1.0
                         completed += 1
                         updateAndCheckCompletion(total: total)
                     }
@@ -515,15 +520,12 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                           let fileURL = URL(string: fileURLStr) {
 
                     if item.fileType.uppercased() == CommonStringFile.VIDEO {
-                        // 🎥 Handle Videos
                         if fileURLStr.contains("vimeo.com") {
-                            // Already Vimeo → just append
                             uploadedURLs.append(fileURLStr)
+                            currentProgressValues[index] = 1.0
                             completed += 1
                             updateAndCheckCompletion(total: total)
                         } else {
-                            // 🚀 Upload video (even AWS URLs) to Vimeo
-                            CircularProgressLoader.shared.show()
                             vimeoUploader = VimeoUploader(
                                 accessToken: YOUR_VIMEO_TOKEN,
                                 presentingViewController: viewController
@@ -533,7 +535,8 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                                 title: title,
                                 description: description,
                                 progress: { progress in
-                                    CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                                    currentProgressValues[index] = progress
+                                    updateAndCheckCompletion(total: total)
                                 },
                                 completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
                                     if let finalEmbedUrl = finalEmbedUrl {
@@ -543,6 +546,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                                     fileSizeValue = fileSize
                                     embedUrlValue = finalEmbedUrl
 
+                                    currentProgressValues[index] = 1.0
                                     completed += 1
                                     updateAndCheckCompletion(total: total)
                                 }
@@ -552,10 +556,10 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     } else {
                         if fileURLStr.lowercased().starts(with: "http") {
                             uploadedURLs.append(fileURLStr)
+                            currentProgressValues[index] = 1.0
                             completed += 1
                             updateAndCheckCompletion(total: total)
                         } else {
-                            // Local/Other file → upload to AWS
                             let path = item.fileType.uppercased() != CommonStringFile.IMAGE
                                 ? "uploads/Documents/"
                                 : "uploads/images/"
@@ -564,11 +568,15 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                                 file: fileURL,
                                 bucketPath: path,
                                 bucketName: "schoolchimes-communication",
-                                progressHandler: nil
+                                progressHandler: { progress in
+                                    currentProgressValues[index] = progress / 100
+                                    updateAndCheckCompletion(total: total)
+                                }
                             ) { url in
                                 if let uploadedURL = url {
                                     uploadedURLs.append(uploadedURL)
                                 }
+                                currentProgressValues[index] = 1.0
                                 completed += 1
                                 updateAndCheckCompletion(total: total)
                             }
@@ -577,6 +585,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
 
                 } else {
                     print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
+                    currentProgressValues[index] = 1.0
                     completed += 1
                     updateAndCheckCompletion(total: total)
                 }

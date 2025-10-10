@@ -317,16 +317,16 @@ class AddAttachmentTVC: UITableViewCell,
             }
         ]
         
-        switch task {
-        case .reading:
-            options.removeAll { ![.video].contains($0.type) }
-        case .listening, .writing:
-            options.removeAll { $0.type == .recording || $0.type == .audio }
-        case .speaking:
-            options.removeAll { ![.recording, .audio, .video].contains($0.type) }
-        default:
-            break
-        }
+//        switch task {
+//        case .reading:
+//            options.removeAll { ![.video].contains($0.type) }
+//        case .listening, .writing:
+//            options.removeAll { $0.type == .recording || $0.type == .audio }
+//        case .speaking:
+//            options.removeAll { ![.recording, .audio, .video].contains($0.type) }
+//        default:
+//            break
+//        }
         
         for option in options {
             alertController.addAction(UIAlertAction(title: option.title,style: .default,

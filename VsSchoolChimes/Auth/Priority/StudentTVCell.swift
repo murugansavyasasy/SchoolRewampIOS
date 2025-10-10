@@ -28,15 +28,21 @@ class StudentTVCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setupUI()
-//        applyGradient()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // Remove existing gradient layer and reapply
+        gradientLayer?.removeFromSuperlayer()
+        gradientLayer = nil
+        applyGradient()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // Gradient layer frame update to match the Cellview's bounds
+        // Update gradient layer frame to match Cellview's bounds
         gradientLayer?.frame = Cellview.bounds
         TopView.applyCustomCorners(topLeft: 0, topRight: 10, bottomLeft: 20, bottomRight: 0)
         BottomView.applyCustomCorners(topLeft: 0, topRight: 20, bottomLeft: 10, bottomRight: 0)
@@ -57,36 +63,49 @@ class StudentTVCell: UITableViewCell {
         StudentImage.layer.borderColor = UIColor.systemIndigo.withAlphaComponent(0.5).cgColor
     }
     
+    private func applyGradient() {
+        // Remove any existing gradient layer
+        gradientLayer?.removeFromSuperlayer()
+        
+        // Create new gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor(hex: "#1E3A8A").cgColor, UIColor(hex: "#3B82F6").cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientLayer.frame = Cellview.bounds
+        gradientLayer.cornerRadius = Cellview.layer.cornerRadius
+        gradientLayer.masksToBounds = true
+        
+        // Insert gradient layer
+        Cellview.layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Store reference to the gradient layer
+        self.gradientLayer = gradientLayer
+    }
 }
+
+// Extension for custom corner radius and shadow
 extension UIView {
     func applyCustomCorners(topLeft: CGFloat,
-                            topRight: CGFloat,
-                            bottomLeft: CGFloat,
-                            bottomRight: CGFloat) {
-        
+                           topRight: CGFloat,
+                           bottomLeft: CGFloat,
+                           bottomRight: CGFloat) {
         let path = UIBezierPath()
         let bounds = self.bounds
         
-        // Start from top-left
         path.move(to: CGPoint(x: bounds.minX + topLeft, y: bounds.minY))
-        
-        // Top edge
         path.addLine(to: CGPoint(x: bounds.maxX - topRight, y: bounds.minY))
         path.addArc(withCenter: CGPoint(x: bounds.maxX - topRight, y: bounds.minY + topRight),
                     radius: topRight,
                     startAngle: CGFloat(3 * Double.pi / 2),
                     endAngle: 0,
                     clockwise: true)
-        
-        // Right edge
         path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY - bottomRight))
         path.addArc(withCenter: CGPoint(x: bounds.maxX - bottomRight, y: bounds.maxY - bottomRight),
                     radius: bottomRight,
                     startAngle: 0,
                     endAngle: CGFloat(Double.pi / 2),
                     clockwise: true)
-        
-        // Bottom edge
         path.addLine(to: CGPoint(x: bounds.minX + bottomLeft, y: bounds.maxY))
         if bottomLeft > 0 {
             path.addArc(withCenter: CGPoint(x: bounds.minX + bottomLeft, y: bounds.maxY - bottomLeft),
@@ -97,8 +116,6 @@ extension UIView {
         } else {
             path.addLine(to: CGPoint(x: bounds.minX, y: bounds.maxY))
         }
-        
-        // Left edge
         path.addLine(to: CGPoint(x: bounds.minX, y: bounds.minY + topLeft))
         if topLeft > 0 {
             path.addArc(withCenter: CGPoint(x: bounds.minX + topLeft, y: bounds.minY + topLeft),

@@ -14,9 +14,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
     @IBOutlet weak var replyBtnStck: UIStackView!
     @IBOutlet weak var noRecordlbl: UILabel!
     @IBOutlet weak var replayStackView: UIStackView!
-   
     @IBOutlet weak var TextViewFullView: UIView!
-    
     @IBOutlet weak var studetnNameLbl: UILabel!
     @IBOutlet weak var MessgeTextview: UITextView!
     @IBOutlet weak var ReplyTextFild: UITextField!
@@ -26,6 +24,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var chatDataDetails : [ChatMessage]?
     var isChangeAns : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         replyFullview.layer.cornerRadius = 10
@@ -34,6 +33,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
         ViewAnimator.hideFade(TextViewFullView)
         let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
+        tableView.register(UINib(nibName: "StaffChatTV", bundle: nil), forCellReuseIdentifier: "StaffChatTV")
         ReplyTextFild.layer.cornerRadius = Colornames.CORadius5
         ReplyTextFild.layer.masksToBounds = true
         ReplyTextFild.layer.borderColor = UIColor.lightGray.cgColor
@@ -181,11 +181,11 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
              cell.imageStack.isHidden = true
              cell.messageLabel.isHidden = false
              cell.timeStampLbl.isHidden = false
-             cell
-                 .configure(
-                     with: message?.question ?? "", timeStamp: message?.asked_on ?? "",
-                     isSender: message?.my_question ?? false, studentName: message?.student_name ?? ""
-                 )
+//             cell
+//                 .configure(
+//                     with: message?.question ?? "", timeStamp: message?.asked_on ?? "",
+//                     isSender: message?.my_question ?? false, studentName: message?.student_name ?? ""
+//                 )
          }
          
          if message?.answer != "Not answered yet"{
@@ -288,8 +288,7 @@ class chatWithStudentVc: UIViewController, ChatTableViewCellDelegate,UITableView
  func getChat(){
      APIService.shared
          .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: ["section_id" : staffMembersData.section_id ?? "","subject_id":staffMembersData.subject_id ?? "","offset":0,"is_class_teacher":staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
-             result:Result <ChatMessageSuc,
-             Error>
+             result:Result <ChatMessageSuc,Error>
          ) in
              switch result {
              case .success(let successMessage):
