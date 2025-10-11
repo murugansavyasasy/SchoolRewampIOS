@@ -54,6 +54,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     @IBOutlet weak var menuNameLbl: UILabel!
     
     var staffdetails = UserDefaultFileManager.get_staff_Details()
+    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var Scholldetails = UserDefaultFileManager.getUserDetails()
     let transitionDelegate = TransitioningDelegate()
     // MARK: - Properties
@@ -63,17 +64,23 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     let alert = CustomAlert()
     let dropDown = DropDown()
     var schoolList:[String]?
+    var token : String?
     private var isLoading = false
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    var token : String?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchBar.searchTextField.addDoneButton()
-        
+        if let staffToken = staffdetails?.access_token {
+            let matchedSchoolName = school_details?
+                .first?
+                .school_name
+            token = staffToken
+            schoolName.text = matchedSchoolName ?? "School name not found"
+        }
         if checkMutipleSchool() {
             menuNameLbl.text = MenuStringFile.selectedMenuName
         } else {
@@ -85,18 +92,15 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
-            if let staffToken = staffdetails?.access_token {
-                let matchedSchoolName = school_details?
-                    .first?
-                    .school_name
-                token = staffToken
-                schoolName.text = matchedSchoolName ?? "School name not found"
-            }
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
-        }else{
+        } else {
+            let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
             outerDropDownView.isHidden = true
         }
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        schoolDropDown.setShadow(cornerRadius: 4)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
@@ -114,6 +118,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         }
         return false
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Get_Notice()
