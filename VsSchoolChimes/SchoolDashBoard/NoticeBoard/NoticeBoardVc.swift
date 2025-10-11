@@ -82,6 +82,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         }
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         schoolDropDown.setShadow(cornerRadius: 4)
+        
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
             if let staffToken = staffdetails?.access_token {
