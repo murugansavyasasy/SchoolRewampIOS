@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 @available(iOS 14.0, *)
 class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, SelectedId {
@@ -33,6 +34,8 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var schoolName: UILabel!
+    @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -43,6 +46,12 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     var filteredSections: [EventDisplaySection] = []
     let transitionDelegate = TransitioningDelegate()
     let alert = CustomAlert()
+    var Scholldetails = UserDefaultFileManager.getUserDetails()
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var schoolList:[String]?
+    var token : String?
+    let dropDown = DropDown()
     var delegate:EditObjectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +76,55 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             historyTable.sectionHeaderTopPadding = 0
             historyTable.tableFooterView = nil
         }
+        if let staffToken = staffdetails?.access_token {
+            let matchedSchoolName = school_details?
+                .first?
+                .school_name
+            token = staffToken
+            schoolName.text = matchedSchoolName ?? "School name not found"
+        }
+        if checkMutipleSchool() {
+            schoolDropDown.isHidden = false
+            schoolList = school_details?.compactMap { $0.school_name }
+            self.dropDown.dataSource = self.schoolList ?? []
+        } else {
+            schoolDropDown.isHidden = true
+            searchView.isHidden = true
+        }
+        schoolDropDown.setShadow(cornerRadius: 4)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
+        schoolDropDown.isUserInteractionEnabled = true
+        schoolDropDown.addGestureRecognizer(tapGesture)
+        
+        
+    }
+    @objc func catagoryTapped() {
+        print("Category View Tapped")
+        dropDown.anchorView = schoolDropDown
+        dropDown.show()
+        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+            schoolName.text = item
+            if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                token = selectedSchool.access_token
+                localData.editToken = selectedSchool.access_token
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    
+                }
+            }
+        }
+    }
+    func checkMutipleSchool() -> Bool {
+        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        if staffCount > 1 {
+            switch Scholldetails?.user_details?.staff_details?.first?.priority_level {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,7 +148,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
         searchBar?.isHidden = !sender.isSelected
-        searchView?.isHidden = !sender.isSelected
+        searchView?.isHidden = !sender.isSelected && schoolDropDown.isHidden
         if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {

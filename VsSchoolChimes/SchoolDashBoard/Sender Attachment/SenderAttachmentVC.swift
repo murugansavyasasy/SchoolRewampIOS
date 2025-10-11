@@ -111,10 +111,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         menuTitleLbl.text = "Create new " + MenuStringFile.selectedMenuName
         
-        if editId != ""{
-            
+        if let id = editId,id != ""{
             menuTitleLbl.text = "Update Existing " + MenuStringFile.selectedMenuName
-            
            setSelectedHomeWork(
             title:  Editattachment.title ?? "",
                 content: Editattachment.description ?? "",
