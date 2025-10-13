@@ -81,44 +81,34 @@ class LSRWVC: UIViewController, FilterDelegate {
 
             switch result {
             case .success(let response):
-                guard response.status == true, let firstData = response.data?.first else {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.lsrwTable.reloadData()
-                    }
-                    return
-                }
-
-                // Use main queue with weak self
+                let firstData = response.data?.first
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-
-                    self.dashboardData = firstData.overview ?? []
-                    self.activeTask = firstData.active ?? []
-                    self.completedTask = firstData.completed ?? []
-
+                    self.dashboardData = firstData?.overview ?? []
+                    self.activeTask = firstData?.active ?? []
+                    self.completedTask = firstData?.completed ?? []
                     self.recentTasks = []
-                    if !self.dashboardData.isEmpty {
-                        self.recentTasks.append(.overview(self.dashboardData))
-                    }
-                    self.recentTasks.append(.filterArray(self.filterArray))
-
+                    self.recentTasks.append(.overview(self.dashboardData))
                     if !self.activeTask.isEmpty {
                         self.recentTasks.append(.active(self.activeTask))
                     }
                     if !self.completedTask.isEmpty {
                         self.recentTasks.append(.completed(self.completedTask))
                     }
-
+                    if !self.activeTask.isEmpty || !self.completedTask.isEmpty {
+                        self.recentTasks.insert(.filterArray(self.filterArray), at: 1)
+                    }
                     self.filterTask = self.recentTasks
                     self.allTask = firstData
                     self.nodataImg.isHidden = !self.filterTask.isEmpty
                     self.lsrwTable.reloadData()
                 }
 
+
             case .failure(let error):
-                DispatchQueue.main.async { [weak self] in
+                DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
-                    self?.lsrwTable.reloadData()
+                    self.lsrwTable.reloadData()
                 }
             }
         }
@@ -128,6 +118,7 @@ class LSRWVC: UIViewController, FilterDelegate {
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
+
     // MARK: - FilterDelegate
     func selectedIndex(index: Int?) {
         guard let idx = index, idx >= 0, idx < filterArray.count else { return }
@@ -136,16 +127,14 @@ class LSRWVC: UIViewController, FilterDelegate {
 
         switch selectedFilter {
         case "All":
-            // Show all tasks
             filterTask = recentTasks
 
         case "Pending":
-            // Show only active tasks that are not submitted
             let pendingTasks = activeTask.filter { $0.is_submitted == false }
             filterTask = filterTask.map { section in
                 switch section {
                 case .active: return .active(pendingTasks)
-                case .completed: return .completed([]) // hide completed
+                case .completed: return .completed([])
                 default: return section
                 }
             }
@@ -153,14 +142,13 @@ class LSRWVC: UIViewController, FilterDelegate {
         case "Completed":
             filterTask = filterTask.map { section in
                 switch section {
-                case .active: return .active([]) // hide active
+                case .active: return .active([])
                 case .completed: return .completed(completedTask)
                 default: return section
                 }
             }
 
         default:
-            // Filter by activity type
             let filteredActive = activeTask.filter { $0.activity_type?.displayName == selectedFilter }
             let filteredCompleted = completedTask.filter { $0.activity_type?.displayName == selectedFilter }
 
@@ -175,7 +163,6 @@ class LSRWVC: UIViewController, FilterDelegate {
 
         lsrwTable.reloadData()
     }
-
 
     func navigate(index: Int?) {
         guard let index = index else { return }
@@ -207,12 +194,11 @@ class LSRWVC: UIViewController, FilterDelegate {
 extension LSRWVC: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filterTask.isEmpty ? 1 : filterTask.count
+        return max(1, filterTask.count)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard !filterTask.isEmpty else { return 0 }
-
         switch filterTask[section] {
         case .overview, .filterArray: return 1
         case .active(let tasks), .completed(let tasks): return tasks.count
@@ -268,15 +254,14 @@ extension LSRWVC: UITableViewDelegate {
     }
 }
 
-
 // MARK: - Custom Section Header with Button
 extension LSRWVC {
-    
+
     private func createNewTaskButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
-        button.setTitle("New Task", for: .normal)
+        button.setTitle(" New Task", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         button.backgroundColor = .systemBlue
@@ -284,29 +269,18 @@ extension LSRWVC {
         button.addTarget(self, action: #selector(newTaskTapped), for: .touchUpInside)
         return button
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard !filterTask.isEmpty else {
-            return nil
+        // ✅ Always show Dashboard Overview header when filterTask is empty
+        if filterTask.isEmpty && section == 0 {
+            return overviewHeaderView()
         }
-        
+
+        // ✅ Normal flow
         let sectionData = filterTask[section]
-        
-        // Check if section has data
-        switch sectionData {
-        case .overview(let overviewData):
-            guard !overviewData.isEmpty else { return nil }
-        case .filterArray(let filterData):
-            guard !filterData.isEmpty else { return nil }
-        case .active(let activeData):
-            guard !activeData.isEmpty else { return nil }
-        case .completed(let completedData):
-            guard !completedData.isEmpty else { return nil }
-        }
-        
         let headerView = UIView()
         headerView.backgroundColor = .white
-        
+
         let titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.textColor = .label
@@ -316,7 +290,7 @@ extension LSRWVC {
             titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
-        
+
         switch sectionData {
         case .overview:
             titleLabel.text = "Dashboard Overview"
@@ -336,19 +310,52 @@ extension LSRWVC {
         case .completed:
             titleLabel.text = "Completed Tasks"
         }
-        
+
         return headerView
     }
+
+    private func overviewHeaderView() -> UIView {
+        let headerView = UIView()
+        headerView.backgroundColor = .white
+
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        titleLabel.textColor = .label
+        titleLabel.text = "Dashboard Overview"
+        headerView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
+        ])
+
+        let newTaskButton = createNewTaskButton()
+        headerView.addSubview(newTaskButton)
+        newTaskButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            newTaskButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
+            newTaskButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            newTaskButton.widthAnchor.constraint(equalToConstant: 100),
+            newTaskButton.heightAnchor.constraint(equalToConstant: 34)
+        ])
+
+        return headerView
+    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard !filterTask.isEmpty else { return 0 }
+        if filterTask.isEmpty && section == 0 {
+            return 50
+        }
+
         switch filterTask[section] {
-        case .overview(let overviewData):
-            return overviewData.isEmpty ? 0 : 50
+        case .overview:
+            return 50
         case .active(let activeData):
             return activeData.isEmpty ? 0 : 40
         case .completed(let completedData):
             return completedData.isEmpty ? 0 : 40
-        default: return 0
+        default:
+            return 0
         }
     }
 
