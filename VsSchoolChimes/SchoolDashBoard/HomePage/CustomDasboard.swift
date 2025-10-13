@@ -502,7 +502,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         case 19: navigateOrSchoolList { MenuRedirect.senderLessonplanNavigate(from: self) }
         case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
         case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
-        case 22: navigateOrSchoolList { MenuRedirect.senderMgmt(from: self) }
+        case 22: MenuRedirect.senderMgmt(from: self)
         case 23: noticeBordHistory{ MenuRedirect.senderNoticeboardNavigate(from: self)} 
         case 24: MenuRedirect.senderOnlineNavigate(from: self)
         case 26: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }

@@ -83,6 +83,14 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         }
         if checkMutipleSchool() {
             menuNameLbl.text = MenuStringFile.selectedMenuName
+        } else {
+            let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
+        }
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        schoolDropDown.setShadow(cornerRadius: 4)
+        
+        if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
             schoolList = school_details?.compactMap { $0.school_name }
             self.dropDown.dataSource = self.schoolList ?? []
