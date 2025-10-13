@@ -175,6 +175,7 @@ struct ServiceUrl{
     static let fee_api_fee_details_student_invoice = "fee/api/fee-details/student-invoice"
     static let fee_api_fee_details_invoice_details = "fee/api/fee-details/invoice-details"
     static let lms_api_quiz_pick_from_qbank = "lms/api/quiz/pick-from-qbank"
+    static let comm_api_interaction_staff_ans_question = "comm/api/interaction/staff-ans-question"
 }
 
 struct localData{
@@ -458,36 +459,19 @@ func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, sha
 //}
 
 
-func formattedDateStatus(from selectedDateString: String) -> String {
+func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = false) -> String {
     let possibleFormats = [
         // Date only
-        "dd-MM-yyyy",
-        "yyyy-MM-dd",
-        "dd/MM/yyyy",
-        "MM/dd/yyyy",
-        "dd MMM yyyy",
-        "dd MMMM yyyy",
-        "yyyy/MM/dd",
-        "MMM dd, yyyy",
+        "dd-MM-yyyy", "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy",
+        "dd MMM yyyy", "dd MMMM yyyy", "yyyy/MM/dd", "MMM dd, yyyy",
         
-        // Date + Time (various formats)
-        "dd-MM-yyyy HH:mm",
-        "dd-MM-yyyy HH:mm:ss",
-        "dd-MM-yyyy hh:mm a",
-        "dd-MM-yyyy hh:mm:ss a",
-        "yyyy-MM-dd HH:mm",
-        "yyyy-MM-dd HH:mm:ss",
-        "yyyy-MM-dd hh:mm a",
-        "yyyy-MM-dd hh:mm:ss a",
-        "yyyy/MM/dd HH:mm:ss",
-        "MM/dd/yyyy HH:mm",
-        "MM/dd/yyyy hh:mm a",
-        "dd MMM yyyy HH:mm",
-        "dd MMM yyyy hh:mm a",
-        "dd MMMM yyyy HH:mm",
-        "dd MMMM yyyy hh:mm a",
-        "MMM dd, yyyy HH:mm",
-        "MMM dd, yyyy hh:mm a"
+        // Date + Time
+        "dd-MM-yyyy HH:mm", "dd-MM-yyyy HH:mm:ss", "dd-MM-yyyy hh:mm a", "dd-MM-yyyy hh:mm:ss a",
+        "yyyy-MM-dd HH:mm", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd hh:mm a", "yyyy-MM-dd hh:mm:ss a",
+        "yyyy/MM/dd HH:mm:ss", "MM/dd/yyyy HH:mm", "MM/dd/yyyy hh:mm a",
+        "dd MMM yyyy HH:mm", "dd MMM yyyy hh:mm a",
+        "dd MMMM yyyy HH:mm", "dd MMMM yyyy hh:mm a",
+        "MMM dd, yyyy HH:mm", "MMM dd, yyyy hh:mm a"
     ]
     
     let inputFormatter = DateFormatter()
@@ -503,16 +487,29 @@ func formattedDateStatus(from selectedDateString: String) -> String {
     }
     
     guard let date = selectedDate else { return selectedDateString }
+    
     let calendar = Calendar.current
     let today = Date()
     
+    let timeFormatter = DateFormatter()
+    timeFormatter.dateFormat = "h:mm a"
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd MMM yyyy"
+    
     if calendar.isDate(date, inSameDayAs: today) {
-        return "Today"
-    } else if calendar.isDate(date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today)!) {
-        return "Yesterday"
+        return isTimeNeeded
+            ? "Today \(timeFormatter.string(from: date))"
+            : "Today"
+    } else if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+              calendar.isDate(date, inSameDayAs: yesterday) {
+        return isTimeNeeded
+            ? "Yesterday \(timeFormatter.string(from: date))"
+            : "Yesterday"
     } else {
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "dd MMM yyyy"
-        return outputFormatter.string(from: date)
+        return isTimeNeeded
+            ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
+            : dateFormatter.string(from: date)
     }
 }
+
