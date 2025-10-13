@@ -151,6 +151,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="AcademicYearLbl" destination="5pd-WG-Gl2" id="R38-uP-hof"/>
                 <outlet property="BottomView" destination="0EC-Xs-sYr" id="9cn-Zr-dl0"/>

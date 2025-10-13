@@ -111,10 +111,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         menuTitleLbl.text = "Create new " + MenuStringFile.selectedMenuName
         
-        if editId != ""{
-            
+        if let id = editId,id != ""{
             menuTitleLbl.text = "Update Existing " + MenuStringFile.selectedMenuName
-            
            setSelectedHomeWork(
             title:  Editattachment.title ?? "",
                 content: Editattachment.description ?? "",
@@ -159,17 +157,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
 
         selectImgPdfview.imageCollectionview.reloadData()
     }
-    
-//    
-//    override func viewDidLayoutSubviews() {
-//        
-//        view.applyGradient(
-//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
-//    }
-//    
     deinit {
         // Remove observers
         NotificationCenter.default.removeObserver(self)
@@ -218,10 +205,11 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
 
-    
-   
-    
-    
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = AttachHistroyVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     
     func imageSelection(){
         

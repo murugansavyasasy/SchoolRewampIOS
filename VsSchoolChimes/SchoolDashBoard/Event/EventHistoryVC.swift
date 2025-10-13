@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 @available(iOS 14.0, *)
 class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, SelectedId {
@@ -31,18 +32,26 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UILabel!
-    @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var schoolName: UILabel!
+    @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var historyTable: UITableView!
     var previousOffset: CGFloat = 0.0
+    var selectedIndex:Int?
     var allEventSections: [EventDisplaySection] = []
     var filteredSections: [EventDisplaySection] = []
     let transitionDelegate = TransitioningDelegate()
     let alert = CustomAlert()
+    var Scholldetails = UserDefaultFileManager.getUserDetails()
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var schoolList:[String]?
+    var token : String?
+    let dropDown = DropDown()
     var delegate:EditObjectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +68,63 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         searchBar.backgroundColor = .clear
         searchBar.delegate = self
         searchBar.addDoneButton()
-        createBtn.layer.cornerRadius = createBtn.frame.height / 2
         searchBar.searchTextField.addDoneButton()
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        if #available(iOS 15.0, *) {
+            historyTable.sectionHeaderTopPadding = 0
+            historyTable.tableFooterView = nil
+        }
+        if let staffToken = staffdetails?.access_token {
+            let matchedSchoolName = school_details?
+                .first?
+                .school_name
+            token = staffToken
+            schoolName.text = matchedSchoolName ?? "School name not found"
+        }
+        if checkMutipleSchool() {
+            schoolDropDown.isHidden = false
+            schoolList = school_details?.compactMap { $0.school_name }
+            self.dropDown.dataSource = self.schoolList ?? []
+        } else {
+            schoolDropDown.isHidden = true
+            searchView.isHidden = true
+        }
+        schoolDropDown.setShadow(cornerRadius: 4)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
+        schoolDropDown.isUserInteractionEnabled = true
+        schoolDropDown.addGestureRecognizer(tapGesture)
+        
+        
+    }
+    @objc func catagoryTapped() {
+        print("Category View Tapped")
+        dropDown.anchorView = schoolDropDown
+        dropDown.show()
+        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+            schoolName.text = item
+            if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                token = selectedSchool.access_token
+                localData.editToken = selectedSchool.access_token
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    
+                }
+            }
+        }
+    }
+    func checkMutipleSchool() -> Bool {
+        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        if staffCount > 1 {
+            switch Scholldetails?.user_details?.staff_details?.first?.priority_level {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -87,7 +148,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
         searchBar?.isHidden = !sender.isSelected
-        searchView?.isHidden = !sender.isSelected
+        searchView?.isHidden = !sender.isSelected && schoolDropDown.isHidden
         if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {
@@ -99,12 +160,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             searchBar.searchTextField.text = ""
             searchBar?.resignFirstResponder()
         }
-    }
-    @IBAction func createAssignment(_ sender: UIButton) {
-//        let vc = NotificationCallVC()
-        let vc = EventsVC()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
     // MARK: - API Call
     func GetEvent() {
@@ -130,17 +185,14 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     
                     if let section = response.data?.first {
                         // Only append if on_going is not empty
-                        if let onGoing = section.on_going, !onGoing.isEmpty {
-                            self.allEventSections.append(.featured(onGoing))
-                        }
-                        
-                        // Only append if categories is not empty
                         if var categories = section.categories, !categories.isEmpty {
                             let allCategory = EventCategory(id: nil, name: "All", url: "")
                             categories.insert(allCategory, at: 0)
                             self.allEventSections.append(.categories(categories))
                         }
-                        
+                        if let onGoing = section.on_going, !onGoing.isEmpty {
+                            self.allEventSections.append(.featured(onGoing))
+                        }
                         // Only append if up_coming is not empty
                         if let upcoming = section.up_coming, !upcoming.isEmpty {
                             self.allEventSections.append(.upcoming(upcoming))
@@ -319,13 +371,13 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         switch sectionData {
         case .featured(let events):
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
-            cell.config(category: nil, onGoing: events, type: false, index: 0)
+            cell.config(category: nil, onGoing: events, type: false, index: selectedIndex ?? 0)
             cell.pageController.numberOfPages = events.count
             return cell
             
         case .categories(let categories):
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
-            cell.config(category: categories, onGoing: nil, type: true, index: 0)
+            cell.config(category: categories, onGoing: nil, type: true, index: selectedIndex ?? 0)
             cell.delegate = self
             return cell
             
@@ -393,6 +445,8 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.titleString = event.title
         detailVC.descriptionString = event.description
         detailVC.postedBy = event.sent_by
+        detailVC.targetId = event.id
+        detailVC.EndUrl = ServiceUrl.event_target_details
         detailVC.subject_name = "Event".translated()
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
@@ -430,17 +484,29 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
 }
 
 // MARK: - UISearchBarDelegate
 @available(iOS 14.0, *)
 extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
     
+//    func filterCatagories(name: String) {
+//        self.filteredSections = filterEventListsByTitle(searchText: name)
+//        self.historyTable.reloadData()
+//    }
     func filterCatagories(name: String) {
-        self.filteredSections = filterEventListsByTitle(searchText: name)
+        if name != "All"{
+            self.filteredSections = filterEventListsByTitle(searchText: name)
+        }else{
+            filteredSections = allEventSections
+            selectedIndex = 0
+        }
+        
         self.historyTable.reloadData()
     }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
@@ -482,32 +548,42 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
             self.historyTable.reloadData()
         }
     }
-    
     func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
-        var filtered: [EventDisplaySection] = []
+        var filteredSections: [EventDisplaySection] = []
         
-        let upcoming = allEventSections.compactMap { section -> [EventList]? in
-            if case .upcoming(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        for section in allEventSections {
+            switch section {
+            case .featured(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.featured(filteredEvents))
+                }
+            case .categories(let categories):
+                filteredSections.append(.categories(categories))
+                if let firstCategory = categories.first {
+                    if let index = categories.firstIndex(where: { $0.name?.lowercased() == searchText.lowercased() }) {
+                        selectedIndex = index
+                    } else {
+                        selectedIndex = 0
+                    }
+                } else {
+                    selectedIndex = 0
+                }
+                
+            case .upcoming(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.upcoming(filteredEvents))
+                }
+                
+            case .completed(let events):
+                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased()) }
+                if !filteredEvents.isEmpty {
+                    filteredSections.append(.completed(filteredEvents))
+                }
             }
-            return nil
-        }.flatMap { $0 }
-        
-        if !upcoming.isEmpty {
-            filtered.append(.upcoming(upcoming))
         }
         
-        let completed = allEventSections.compactMap { section -> [EventList]? in
-            if case .completed(let events) = section {
-                return events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
-            }
-            return nil
-        }.flatMap { $0 }
-        
-        if !completed.isEmpty {
-            filtered.append(.completed(completed))
-        }
-        
-        return filtered
+        return filteredSections
     }
 }

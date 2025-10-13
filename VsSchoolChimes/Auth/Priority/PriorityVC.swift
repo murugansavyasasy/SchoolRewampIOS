@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class PriorityVC: UIViewController {
     
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var ProceedInstructionLbl: UILabel!
     @IBOutlet weak var TeacherParentlbl: UILabel!
     @IBOutlet weak var ChooseRoleLabel: UILabel!
@@ -53,12 +54,12 @@ class PriorityVC: UIViewController {
         tableview.register(nib1, forCellReuseIdentifier: CellConfingName.SchoolTVCell)
         
         let nib2 = UINib(nibName: CellConfingName.StudentTVCell, bundle: nil)
+        let nib3 = UINib(nibName: CellConfingName.PriorityStudentTVC, bundle: nil)
         tableview.register(nib2, forCellReuseIdentifier: CellConfingName.StudentTVCell)
-        
+        tableview.register(nib3, forCellReuseIdentifier: CellConfingName.PriorityStudentTVC)
         tableview.delegate = self
         tableview.dataSource = self
-        tableview.reloadData()
-    
+        tableview.layoutIfNeeded()
     }
 
     override func viewDidLayoutSubviews() {
@@ -71,9 +72,9 @@ class PriorityVC: UIViewController {
         
        //MARK: UI Changes
        NextButtonView.layer.cornerRadius = 18
-       priorityview.layer.cornerRadius = 20
-       teacherButton.layer.cornerRadius = 20
-       ParentButton.layer.cornerRadius = 20
+       priorityview.setShadow()
+       teacherButton.layer.cornerRadius = 10
+       ParentButton.layer.cornerRadius = 10
        ParentButton.setTitleColor(.black, for:.normal)
       
        
@@ -153,7 +154,9 @@ class PriorityVC: UIViewController {
         // Apply gradient based on login_astype
         if teacherVisible {
             if login_astype == 1 {
-                gradientcolours(button: teacherButton, colours: [UIColor.blue.cgColor, UIColor.systemTeal.cgColor])
+                let hexColors = ["#1E3A8A", "#3B82F6"]
+                let cgColors = hexColors.map { UIColor(hex: $0.replacingOccurrences(of: "#", with: "")).cgColor }
+                gradientcolours(button: teacherButton, colours: cgColors)
                 teacherButton.setTitleColor(.white, for: .normal)
             } else {
                 gradientcolours(button: teacherButton, colours: [UIColor.clear.cgColor, UIColor.clear.cgColor])
@@ -163,7 +166,10 @@ class PriorityVC: UIViewController {
         
         if parentVisible {
             if login_astype == 2 {
-                gradientcolours(button: ParentButton, colours: [UIColor.blue.cgColor, UIColor.systemTeal.cgColor])
+                // Convert hex strings to CGColor
+                let hexColors = ["#1E3A8A", "#3B82F6"]
+                let cgColors = hexColors.map { UIColor(hex: $0.replacingOccurrences(of: "#", with: "")).cgColor }
+                gradientcolours(button: ParentButton, colours: cgColors)
                 ParentButton.setTitleColor(.white, for: .normal)
             } else {
                 gradientcolours(button: ParentButton, colours: [UIColor.clear.cgColor, UIColor.clear.cgColor])
@@ -185,18 +191,13 @@ class PriorityVC: UIViewController {
         
         if staff_role == PriorityType.is_staff{
             NextButtonView.isHidden = true
+            bottomView.isHidden = true
             ProceedInstructionLbl.isHidden = true
         }else{
             NextButtonView.isHidden = false
+            bottomView.isHidden = false
             ProceedInstructionLbl.isHidden = false
         }
-        
-//        gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-//        teacherButton.setTitleColor(.white, for:.normal)
-//        
-//        
-//        gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-//        ParentButton.setTitleColor(.black, for:.normal)
         apply_gradients()
         login_astype = 1
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
@@ -205,51 +206,40 @@ class PriorityVC: UIViewController {
     
     
     @IBAction func ParentAct(_ sender: Any) {
-        
-       
-            NextButtonView.isHidden = true
+        NextButtonView.isHidden = true
+        bottomView.isHidden = true
         ProceedInstructionLbl.isHidden = true
-       
         TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Parent"
-        
-//        gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-//        ParentButton.setTitleColor(.white, for:.normal)
-//        
-//        //teacherButton.backgroundColor = .clear
-//        
-//        
-//        gradientcolours(button: teacherButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-//        teacherButton.setTitleColor(.black, for:.normal)
-        
         apply_gradients()
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
     }
     
-    
-    func gradientcolours(button : UIButton,colours : [CGColor]){
-        
-        
+    func gradientcolours(button: UIView, colours: [CGColor]) {
+        // Remove old gradient layers
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
-        // Create and configure the gradient layer
+
+        // Create new gradient
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colours
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = button.bounds
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.cornerRadius = button.layer.cornerRadius
-        
-        // Insert the gradient layer into the button's layer
+        gradientLayer.masksToBounds = true
+        gradientLayer.frame = button.bounds
+
+        // Insert gradient
         button.layer.insertSublayer(gradientLayer, at: 0)
         
+        // Update layout to ensure proper rendering
+        button.setNeedsLayout()
+        button.layoutIfNeeded()
     }
+
+
     
     @IBAction func NextAction(_ sender: Any) {
-        
-       
-        
         if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
             UserDefaultFileManager.saveStaffDetails(data: data)}
         
@@ -328,43 +318,41 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             
         } else {
         
-            let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.StudentTVCell, for: indexPath) as! StudentTVCell
+            let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.PriorityStudentTVC, for: indexPath) as! PriorityStudentTVC
             
 //            cell.TopView.backgroundColor = colour1
 //            cell.StudentImage.image = image
             //cell.imgview.image = UIImage(named: childDetails?[indexPath.row].school_logo_url ?? "")
             cell.NameLbl.text = childDetails?[indexPath.row].name
             cell.RollNo.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
-            cell.AcademicYearLbl.text = CommonStringFile.Academic_Year + " : " + (childDetails?[indexPath.row].academic_year_name ?? "")
+//            cell.AcademicYearLbl.text = CommonStringFile.Academic_Year + " : " + (childDetails?[indexPath.row].academic_year_name ?? "")
                       
             cell.ClassLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
             cell.SchoolNameLbl.text = childDetails?[indexPath.row].school_name
             cell.bloodLbl.text = childDetails?[indexPath.row].blood_group
             cell.StudentImage.kf.setImage(with: URL(string: childDetails?[indexPath.row].profile ?? ""),placeholder: UIImage(systemName: "person.fill"))
-//            if (childDetails?[indexPath.row].school_name_regional == ""){
-//                cell.RegionalSchoolName.isHidden = true
-//            }else {
-//                cell.RegionalSchoolName.text = childDetails?[indexPath.row].school_name_regional
-//                cell.RegionalSchoolName.isHidden = false
-//            }
-           
+            if #available(iOS 15.0, *) {
+                let gradientSets: [[CGColor]] = [
+                    [UIColor.systemBlue.cgColor, UIColor.systemTeal.cgColor],
+                    [UIColor.systemPurple.cgColor, UIColor.systemPink.cgColor],
+                    [UIColor.systemOrange.cgColor, UIColor.systemRed.cgColor],
+                    [UIColor.systemGreen.cgColor, UIColor.systemMint.cgColor],
+                    [UIColor.systemIndigo.cgColor, UIColor.systemBlue.cgColor]
+                ]
+                let gradientColors = gradientSets[indexPath.row % gradientSets.count]
+                cell.applyGradient(with: gradientColors)
+            }
+               
             cell.SchoolAdressLbl.text = childDetails?[indexPath.row].school_city ?? ""
-//           
-//                       if indexPath.row == 8{
-//                           cell.StudentImage.image = ImageName.person_circle
-//                       }
-//           
-//                       if let color1 = colour1, let color2 = colour2 {
-//                           cell.setGradientColors([color2.cgColor, color1.cgColor])
-//                       }
             DispatchQueue.main.async {
                 self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
                 self.view.layoutIfNeeded()
             }
+            cell.contentView.setNeedsLayout()
+            cell.contentView.layoutIfNeeded()
             return cell
         }
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if login_astype  == 2 {

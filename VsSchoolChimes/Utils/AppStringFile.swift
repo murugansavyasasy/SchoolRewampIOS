@@ -160,7 +160,8 @@ struct AlertstringFile{
     static let Failed = "Failed".translated()
     static let Are_you_sure_you_want_to_update_Lesson = "Are you sure you want to Update this Lesson Plan?".translated()
     static let Are_you_sure_you_want_to_Delete_Lesson = "Are you sure you want to Delete this Lesson Plan?".translated()
-    static let submitAttendanceConfirmation = "Are you sure you want to submit the attendance?".translated()
+    static let submitAttendanceConfirmation = "Are you sure you want to submit the attendance to mark all students as present?".translated()
+    static let Mark_All_as_Presents = "Mark All as Present".translated()
     static let Oops = "Oops!".translated()
     
 }
@@ -319,7 +320,7 @@ struct CommonStringFile{
     static let selectedDate = "Submission Date".translated()
     static let SelectCatagorie = "Select Catagorie".translated()
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
-    static let Add_attachment_optional = "Add attachment (Optional?)".translated()
+    static let Add_attachment_optional = "Add attachment (Optional)".translated()
     static let Recording_Time = "Recording Time (Optional?)".translated()
     static let Add_attachment = "Add attachment".translated()
     static let RTime = "Recording Time".translated()
@@ -353,7 +354,7 @@ struct CommonStringFile{
         """
     
     static let No_data_found = "No Data Found!".translated()
-    static let Notice_Display_Date_Range = "Notice Display Date Range"
+    static let Notice_Display_Date_Range = "Notice Active Period"
     static let all = "All".translated()
     static let edit = "Edit".translated()
 

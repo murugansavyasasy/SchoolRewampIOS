@@ -67,7 +67,11 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         
         dismiss(animated: true)
     }
-    
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = ReportsQuizVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     @IBAction func checkboxAct(){
         
         IsChecked.toggle()

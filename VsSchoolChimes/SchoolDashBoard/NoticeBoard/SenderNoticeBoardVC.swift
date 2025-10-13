@@ -20,62 +20,51 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     func date(date: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = standardDateFormat
-        let DayDate = dateFormatter.date(from: date)!
-        // Change to output format
-        dateFormatter.dateFormat = DateFormatString.Day_and_date
-        let outputDateString = dateFormatter.string(from: DayDate)
-        
-        if dateSelection == true{
-            fromdateBtn.setTitle(date, for: .normal)
-            setFormattedDate(outputDateString, label: fromDateLbl)
-            NewFromdateLbl.setFormattedDate(from: DayDate)
-            // Check if To Date is set and valid
-            if let toText = NewToDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
+        guard let dayDate = dateFormatter.date(from: date) else { return }
+
+        // ✅ Desired output format: 10 Oct 2025
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        let outputDateString = dateFormatter.string(from: dayDate)
+
+        if dateSelection == true {
+            fromDateLbl.text = outputDateString
+            // Optional: Compare with toDateLbl if needed
+            if let toText = toDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                 let labelFormatter = DateFormatter()
-                labelFormatter.dateFormat = DateFormatString.Date_Day_month_year
+                labelFormatter.dateFormat = "dd MMM yyyy"
                 if let toDate = labelFormatter.date(from: toText) {
-                    if DayDate > toDate {
-                        NewToDateLbl.setFormattedDate(from: DayDate)
+                    if dayDate > toDate {
+                        toDateLbl.text = outputDateString
                     }
                 }
             }
-            
-        }else{
-            todateBtn.setTitle(date, for: .normal)
-            setFormattedDate(outputDateString, label: toDateLbl)
-            NewToDateLbl.setFormattedDate(from: DayDate)
+        } else {
+            toDateLbl.text = outputDateString
         }
     }
+
+    
+    @IBOutlet weak var FromLbl: UILabel!
+    @IBOutlet weak var ToLbl: UILabel!
+    @IBOutlet weak var fromDateLbl: UILabel!
+    @IBOutlet weak var toDateLbl: UILabel!
+    @IBOutlet weak var dateOuterView: UIView!
+    @IBOutlet weak var FromDateView: UIView!
+    @IBOutlet weak var toDateView: UIView!
     
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var DisplayRangeLbl: UILabel!
-    @IBOutlet weak var ToLbl: UILabel!
-    @IBOutlet weak var FromLbl: UILabel!
-    @IBOutlet weak var NewToDateLbl: UILabel!
-    @IBOutlet weak var NewFromdateLbl: UILabel!
-    @IBOutlet weak var TodateTop: UIView!
-    @IBOutlet weak var FromDateTop: UIView!
-    @IBOutlet weak var ToDateView: UIView!
-    @IBOutlet weak var FromDateView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var TittleDefLbl: UILabel!
     @IBOutlet weak var DescriptionDefLbl: UILabel!
     @IBOutlet weak var DescriptionLettersCount: UILabel!
-    @IBOutlet weak var calanderBtn: HalfColorButton!
-    @IBOutlet weak var calanderBtn2: HalfColorButton!
-    @IBOutlet weak var fromdateBtn: UIButton!
-    @IBOutlet weak var todateBtn: UIButton!
-    @IBOutlet weak var fromDateLbl: UILabel!
-    @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var Attachmentview: ImageSelection!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var addPhotoLbl: UILabel!
-    @IBOutlet weak var ToTittleDefLbl: UILabel!
-    @IBOutlet weak var fromTitleDefLbl: UILabel!
     @IBOutlet weak var TitleTextfield: UITextField!
     @IBOutlet weak var TextfieldCharCountLbl: UILabel!
     @IBOutlet weak var NextBtn: UIButton!
@@ -102,11 +91,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         super.viewDidLoad()
         StyleAndTranslater()
         FromDateView.layer.cornerRadius = 8
-        ToDateView.layer.cornerRadius = 8
-        FromDateTop.layer.cornerRadius = 8
-        TodateTop.layer.cornerRadius = 8
-        FromDateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
-        TodateTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -117,23 +101,25 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToLbl.setFont(style: .title, size: FontSize.TitleSize)
         
-        FromDateView.layer.cornerRadius = 10
-        FromDateView.layer.shadowColor = UIColor.black.cgColor
-        FromDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        FromDateView.layer.shadowRadius = 5
-        FromDateView.layer.shadowOpacity = 0.3
+        dateOuterView.layer.borderColor = UIColor.lightGray.cgColor
+        dateOuterView.layer.borderWidth = 0.5
+        dateOuterView.layer.cornerRadius = 8
         
-        ToDateView.layer.cornerRadius = 10
-        ToDateView.layer.shadowColor = UIColor.black.cgColor
-        ToDateView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        ToDateView.layer.shadowRadius = 5
-        ToDateView.layer.shadowOpacity = 0.3
+        FromDateView.layer.borderColor = UIColor.lightGray.cgColor
+        FromDateView.layer.borderWidth = 0.5
+        FromDateView.layer.cornerRadius = 8
+        FromDateView.layer.borderWidth = 0.5
+        
+        toDateView.layer.borderColor = UIColor.lightGray.cgColor
+        toDateView.layer.borderWidth = 0.5
+        toDateView.layer.cornerRadius = 8
+        toDateView.layer.borderWidth = 0.5
         
         let DateGesture = UITapGestureRecognizer(target: self, action: #selector(fromDate))
         FromDateView.addGestureRecognizer(DateGesture)
         
         let ToDateGesture = UITapGestureRecognizer(target: self, action: #selector(toDate))
-        ToDateView.addGestureRecognizer(ToDateGesture)
+        toDateView.addGestureRecognizer(ToDateGesture)
         
         setInitialDate("", "")
         setupPlaceholder()
@@ -251,7 +237,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                         VideoURl: data
                     )
                 )
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             Attachmentview.imageCollectionview.reloadData()
         }
     }
@@ -263,31 +248,23 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     // MARK: - Setting Current Date as Initial Date
     func setInitialDate(_ fromDate: String?, _ toDate: String?) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"   // 🔑 match your string
-        
-        print("Standard format =", dateFormatter.dateFormat)
-        print("From date string =", fromDate ?? "nil")
-        print("To date string =", toDate ?? "nil")
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         
         let currentDate = Date()
+        let futureDate = Calendar.current.date(byAdding: .day, value: 30, to: currentDate)!
         
-        // Parse or fallback
         let startDate = (fromDate != nil ? dateFormatter.date(from: fromDate!) : nil) ?? currentDate
-        let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? currentDate
+        let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? futureDate
         
-        // Update buttons with input format
-        fromdateBtn.setTitle(dateFormatter.string(from: startDate), for: .normal)
-        todateBtn.setTitle(dateFormatter.string(from: endDate), for: .normal)
-        
-        // Update labels with custom format
-        dateFormatter.dateFormat = DateFormatString.Day_and_date
-        setFormattedDate(dateFormatter.string(from: startDate), label: fromDateLbl)
-        setFormattedDate(dateFormatter.string(from: endDate), label: toDateLbl)
-        
-        // Update your custom labels
-        NewFromdateLbl.setFormattedDate(from: startDate)
-        NewToDateLbl.setFormattedDate(from: endDate)
+        let displayFormatter = DateFormatter()
+        displayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayFormatter.dateFormat = "dd MMM yyyy"
+        let fromDisplay = displayFormatter.string(from: startDate)
+        let toDisplay = displayFormatter.string(from: endDate)
+        fromDateLbl.text = fromDisplay
+        toDateLbl.text = toDisplay
     }
+
 
     func setupPlaceholder() {
         placeholderLabel = UILabel()
@@ -306,18 +283,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     func StyleAndTranslater(){
         
-        //        //MARK: UI Changes
-        //        PopupView.layer.cornerRadius = 10
-        //        PopupView.layer.shadowColor = UIColor.black.cgColor
-        //        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        //        PopupView.layer.shadowRadius = 5
-        //        PopupView.layer.shadowOpacity = 0.3
-        
-        calanderBtn.layer.borderWidth = 1 // Border width
-        calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
-        calanderBtn2.layer.borderWidth = 1 // Border width
-        calanderBtn2.layer.borderColor = UIColor.gray.cgColor // Border color
-        
         textview.layer.cornerRadius = 10
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.gray.cgColor
@@ -325,13 +290,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         NextBtn.layer.cornerRadius = 10
         
         //MARK: Label Font
-        ToTittleDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        fromTitleDefLbl.setFont(style: .body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
-        ToTittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        fromTitleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        todateBtn.setTitleFont(style: .body, size: 12)
-        fromdateBtn.setTitleFont(style: .body, size: 12)
         DescriptionLettersCount.setFont(style: .body, size: FontSize.BodySize)
         TextfieldCharCountLbl.setFont(style: .body, size: FontSize.BodySize)
         NextBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
@@ -367,7 +326,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dateFormatter.dateFormat = DateFormatString.StandardFormat
         
         // Set minimum to fromDate
-        if let fromDateString = fromdateBtn.titleLabel?.text,
+        if let fromDateString = fromDateLbl.text,
            let fromDate = dateFormatter.date(from: fromDateString) {
             vc.minimumDate = fromDate
         } else {
@@ -380,7 +339,11 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.present(vc, animated: false)
     }
-    
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     func setFormattedDate(_ date: String, label: UILabel) {
         let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
         let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
@@ -431,8 +394,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         //        assignmentResquestStringKey.title = TitleTextfield.text ?? ""
         //        assignmentResquestStringKey.description = textview.text
-        user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
-        user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
+        user_inputs.FromDate = ConvertDateStringSmart(fromDateLbl.text ?? "")
+        user_inputs.ToDate = ConvertDateStringSmart(toDateLbl.text ?? "")
         user_inputs.SelectedUrls = attachments
         user_inputs.VideoPath = selectedVideoURL
         var params: [String: Any] = [

@@ -33,7 +33,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
     
     @IBOutlet weak var schoolDropDownFullview: UIView!
     @IBOutlet weak var backBtnName: UIButton!
-    @IBOutlet weak var createFileBtn: UIButton!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -63,7 +62,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
     override func viewDidLoad() {
         super.viewDidLoad()
         localData.editToken = ""
-        createFileBtn.layer.cornerRadius = createFileBtn.frame.height / 2
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -77,17 +75,23 @@ class AttachHistroyVC: UIViewController, SelectedId {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
         }
-        if school_details?.count ?? 0 > 1 {
-            schoolDropDownFullview.isHidden = false
+        
+        if staffdetails?.priority_level == PriorityType.is_staff {
+            schoolDropDownFullview.isHidden = true
+        }else{
+            if school_details?.count ?? 0 > 1 {
+                
+                schoolDropDownFullview.isHidden = false
                 let matchedSchoolName = school_details?
                     .first?
                     .school_name
                 schoolName.text = matchedSchoolName ?? "School name not found"
-            
-            schoolList = school_details?.compactMap { $0.school_name }
-            self.dropDown.dataSource = self.schoolList ?? []
-        }else{
-            schoolDropDownFullview.isHidden = true
+                
+                schoolList = school_details?.compactMap { $0.school_name }
+                self.dropDown.dataSource = self.schoolList ?? []
+            }else{
+                schoolDropDownFullview.isHidden = true
+            }
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
@@ -128,19 +132,24 @@ class AttachHistroyVC: UIViewController, SelectedId {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
        
-        let enteredSchoolName = schoolName.text ?? "" // உன் compare செய்யும் school name
-        if let matchedStaff = school_details?.first(
-        where: {
-            ($0.school_name)?.caseInsensitiveCompare(
-        enteredSchoolName
-    ) == .orderedSame
-            }),
-           let accessToken = matchedStaff.access_token {
+        if staffdetails?.priority_level == PriorityType.is_staff {
+            localData.editToken = staffdetails?.access_token ?? ""
+            
+        }else{
+            let enteredSchoolName = schoolName.text ?? "" // உன் compare செய்யும் school name
+            if let matchedStaff = school_details?.first(
+                where: {
+                    ($0.school_name)?.caseInsensitiveCompare(
+                        enteredSchoolName
+                    ) == .orderedSame
+                }),
+               let accessToken = matchedStaff.access_token {
                 print("Matched access token: \(accessToken)")
-            localData.editToken = accessToken
+                localData.editToken = accessToken
             } else {
                 print("No matching school name found.")
             }
+        }
         fetchAttachments()
     }
     @objc func catagoryTapped() {

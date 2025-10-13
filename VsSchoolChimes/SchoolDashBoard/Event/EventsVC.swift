@@ -19,21 +19,9 @@ protocol DeleteImge{
 class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
     func date(date: String) {
-        
-        // Change to output format
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yy"
-        let DayDate = dateFormatter.date(from: date)!
-        // Change to output format
-        dateFormatter.dateFormat = "EEE dd"
-        let outputDateString = dateFormatter.string(from: DayDate)
-        
-        if dateSelection == true{
-            todate.setTitle(date, for: .normal)
-            setFormattedDate(outputDateString, label: toDateLbl)
-            
-        }
+        setInitialButtonTitles(date: date)
     }
+
     
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -51,28 +39,30 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var costomView: ImageSelection!
     @IBOutlet weak var contentTxtView: UITextView!
-    @IBOutlet weak var calander2Btn: HalfColorButton!
     @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var TxtOuterview: UIView!
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var eventDeatail: UILabel!
     @IBOutlet weak var addPhotoLbl: UILabel!
-    @IBOutlet weak var todate: UIButton!
+    @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var nextBtn: UIButton!
-    @IBOutlet weak var toDateLbl: UILabel!
+    @IBOutlet weak var viewHisrtoryBtn: UIButton!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var Totime: UIButton!
     @IBOutlet weak var catagoryDropDownView: UIView!
     @IBOutlet weak var selectedCatagoryImg: UIImageView!
+    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var dateSelectionView: UIView!
+    @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var selecctedCatagory: UILabel!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var backBtn: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var dayLbl: UILabel!
+    @IBOutlet weak var timeBtn: UIButton!
+    
     var placeholderLabel: UILabel!
-    var activeButton: UIButton?
     var timePicker: UIDatePicker!
-    var datePicker: UIDatePicker!
-    var doneButton: UIButton!
     var doneButton2: UIButton!
     var time = "Jan\n15"
     var dateSelection = false
@@ -99,8 +89,16 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        backBtn.configureAsBackButton(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        backBtn.configureAsBackTitle(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
+        dateView.layer.borderColor = UIColor.lightGray.cgColor
+        dateView.layer.borderWidth = 0.5
+        dateView.layer.cornerRadius = 8
+        dateBtn.layer.cornerRadius = 8
+        timeView.layer.cornerRadius = 8
+        dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
+        timeView.layer.borderColor = UIColor.lightGray.cgColor
+        timeView.layer.borderWidth = 0.5
         eventTxt.delegate = self
         contentTxtView.delegate = self
         eventTxt.applyRightTxt()
@@ -111,12 +109,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         contentCount.applyRightTxt()
         eventDeatail.applyRightTxt()
         addPhotoLbl.applyRightTxt()
-        toDateLbl.applyRightTxt()
         fromLbl.applyRightTxt()
         eventTxt.applyRightTxt()
         StyleAndTranslate()
         setupTimePicker()
-        setInitialButtonTitles()
+        setInitialButtonTitles(date:nil)
         registerCell()
         setupPlaceholder()
         placeTxt.addDoneButton()
@@ -143,7 +140,31 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         if let edit = editReport{
             fetchData(eventList: edit)
         }
+//        let title = "View History"
+//        let attributedString = NSAttributedString(
+//            string: title,
+//            attributes: [
+//                .underlineStyle: NSUnderlineStyle.single.rawValue,
+//                .foregroundColor: UIColor.systemBlue // optional – color
+//            ]
+//        )
+//        viewHisrtoryBtn.setAttributedTitle(attributedString, for: .normal)
+//        viewHisrtoryBtn.layer.cornerRadius = 10
+        viewHisrtoryBtn.setShadow()
+        let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
+        dateSelectionView.isUserInteractionEnabled = true
+        dateSelectionView.addGestureRecognizer(dateTapGesture)
     }
+    @objc private func selectDateTapped() {
+        dateSelection = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         get_CatagoryListApi()
@@ -299,37 +320,34 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             
         }
     }
-    
-    
-    
-    //MARK: BUTTON TITLE CURRANT TIME
-    func setInitialButtonTitles() {
+
+    func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
+        let parser = DateFormatter()
+        parser.locale = Locale(identifier: "en_US_POSIX")
+        parser.dateFormat = inputFormat
+        let dateToUse: Date
+        if let dateString = dateString, let parsedDate = parser.date(from: dateString) {
+            dateToUse = parsedDate
+        } else {
+            dateToUse = Date()
+        }
+        let displayDateFormatter = DateFormatter()
+        displayDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayDateFormatter.dateFormat = "dd MMM yyyy"
+        let displayTimeFormatter = DateFormatter()
+        displayTimeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayTimeFormatter.timeStyle = .short
+        let dayFormatter = DateFormatter()
+        dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dayFormatter.dateFormat = "EEEE"
+        dateLbl.text = displayDateFormatter.string(from: dateToUse)
+        timeBtn.setTitle(displayTimeFormatter.string(from: dateToUse), for: .normal)
+        dayLbl.text = dayFormatter.string(from: dateToUse)
         
-        // Set the date format (e.g., "Tue 3 Dec 2024")
-        dateFormatter.dateFormat = "dd MMM yyyy"
-        
-        // Set the time format (e.g., "4:30 PM")
-        timeFormatter.timeStyle = .short
-        
-        // Get the current date and time
-        let currentDate = Date() // Current date and time
-        let nextHourTime = Calendar.current.date(byAdding: .hour, value: 0, to: currentDate) ?? currentDate
-        
-        let formattedDate = dateFormatter.string(from: currentDate)   // "Tue 3 Dec 2024"
-        let formattedTime = timeFormatter.string(from: nextHourTime)
-        
-        dateFormatter.dateFormat = "EEE d"
-        let customDate = dateFormatter.string(from: currentDate)
-        setFormattedDate(customDate, label: toDateLbl)
-        Totime.setTitle(formattedTime, for: .normal)
-        todate.setTitle(formattedDate, for: .normal)
-        todate.applyRightButton()
-        Totime.applyRightButton()
-        contentCount.applyRightTxt()
-        contentCount.applyRightTxt()
-        contentCount.applyRightTxt()
         contentCount.applyRightTxt()
     }
+
+
     
     func StyleAndTranslate(){
         
@@ -338,15 +356,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         TxtOuterview.layer.borderWidth = 0.5
         TxtOuterview.layer.borderColor = UIColor.black.cgColor
         catagoryDropDownView.setShadow(cornerRadius: 8)
-        calander2Btn.layer.borderWidth = 1 // Border width
-        calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
-        calander2Btn.layer.cornerRadius = 10
         fromLbl.setFont(style: .title, size: FontSize.TitleSize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
         tittleCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         contentCount.setFont(style: .body, size: FontSize.BodySize)
-        Totime.setTitleFont(style: .body, size: 12)
-        todate.setTitleFont(style: .body, size: 12)
         placeLbl.setRequiredText(CommonStringFile.Venue.translated())
         EventTtleLbl.setRequiredText(CommonStringFile.Title.translated())
         selectCatagoriesTitle.setRequiredText(CommonStringFile.SelectCatagorie.translated())
@@ -444,24 +458,18 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @objc func selectedTime() {
         let timeFormatter = DateFormatter()
         timeFormatter.timeStyle = .short
-        let selectedTime = timePicker.date // Selected time from timePicker
-        
+        let selectedTime = timePicker.date
         let formattedTime = timeFormatter.string(from: selectedTime)
         
         if dateSelection == true{
-            Totime.setTitle(formattedTime, for: .normal)
+            timeBtn.setTitle(formattedTime, for: .normal)
         }
-        // Hide the picker and Done button after selection
         timePicker.isHidden = true
         doneButton2.isHidden = true
-        activeButton = nil
     }
     
     
     func showTimePicker(for button: UIButton, date: Bool) {
-        activeButton = button // Track which button is being updated
-        
-        // Position the time picker or date picker below the button
         let buttonFrame = button.convert(button.bounds, to: self.view)
         // Show the time picker
         timePicker.isHidden = false
@@ -469,48 +477,19 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
         let pickerYPosition = buttonFrame.minY - 210
         timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
-        
-        // Set appearance for timePicker
         timePicker.backgroundColor = .white
         timePicker.layer.shadowColor = UIColor.black.cgColor
         timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
         timePicker.layer.shadowRadius = 5
         timePicker.layer.shadowOpacity = 0.3
         timePicker.layer.cornerRadius = 20
-        
-        // Position the Done button at the bottom-right of the picker
         doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
-        
-        // Add timePicker to the view (ensure it’s in the view hierarchy)
         self.view.addSubview(timePicker)
         self.view.addSubview(doneButton2)
-    }
-    
-    @IBAction func datepicker(_ sender: UIButton) {
-        dateSelection = false
-        let vc = DatePickerVC(nibName: nil, bundle: nil)
-        vc.dateSelection = 2
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
-    }
-    @IBAction func Timepicker(_ sender: UIButton) {
-        showTimePicker(for: sender, date: false)
-        dateSelection = false
     }
     @IBAction func ToTimeBtn(_ sender: UIButton) {
         showTimePicker(for: sender, date: false)
         dateSelection = true
-    }
-    @IBAction func toDate(_ sender: UIButton) {
-        dateSelection = true
-        let vc = DatePickerVC(nibName: nil, bundle: nil)
-        vc.dateSelection = 2
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
     }
     @IBAction func chooseSchool(_ sender: UIButton) {
         
@@ -518,12 +497,12 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            let date = convertDate(todate.titleLabel?.text ?? "")
+            let date = convertDate(dateLbl?.text ?? "")
             var params: [String: Any] = [
                 assignmentResquestStringKey.title: eventTxt.text ?? "",
                 assignmentResquestStringKey.description: contentTxtView.text ?? "",
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
-                assignmentResquestStringKey.event_time: Totime.titleLabel?.text ?? "",
+                assignmentResquestStringKey.event_time: timeBtn.titleLabel?.text ?? "",
                 assignmentResquestStringKey.event_date:date ?? "",
                 assignmentResquestStringKey.category:selecctedCatagory.text ?? ""
             ]
@@ -579,6 +558,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
     }
     
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = EventHistoryVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -588,12 +572,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
 //MARK: Collectionview Delegate Functions
 @available(iOS 14.0, *)
 extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
+        return 1 + attachments.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -716,8 +697,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             
         }else {
             let attachment = attachments[indexPath.item - 1]
-//            attachment
-//            let isImage = fileType == CommonStringFile.IMAGE
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             imageVC.attachment = attachments
             imageVC.subjectName = "Event"
@@ -726,51 +705,11 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             imageVC.type = attachment.fileType
             imageVC.modalPresentationStyle = .fullScreen
             present(imageVC, animated: true)
-//
-//            switch attachment.fileType {
-//            case CommonStringFile.IMAGE:
-//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                
-//                if let img = attachment.image {
-//                    vc.img = img
-//                } else if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
-//                    vc.selectedFileURL = url
-//                }
-//                
-//                vc.type = CommonStringFile.IMAGE
-//                present(vc, animated: true)
-//                
-//            case CommonStringFile.pdf:
-//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                
-//                if let urlStr = attachment.imageURL, let url = URL(string: urlStr) {
-//                    vc.selectedFileURL = url
-//                }
-//                
-//                vc.type = CommonStringFile.pdf
-//                present(vc, animated: true)
-//                
-//            case CommonStringFile.VIDEO:
-//                if let videoURL = attachment.VideoURl {
-//                    let player = AVPlayer(url: videoURL)
-//                    let playerViewController = AVPlayerViewController()
-//                    playerViewController.player = player
-//                    present(playerViewController, animated: true) {
-//                        player.play()
-//                    }
-//                }
-//                
-//            default:
-//                break
-//            }
         }
     }
     
     // MARK: File Attachments Actions
     func selectImages() {
-//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared
                 .presentPicker(
@@ -786,7 +725,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         
     }
     func openCamera(){
-//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
@@ -796,7 +734,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
     }
     func selectPDF() {
-//        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
             PhotoPickerManager.shared.limiSelection = 10 - attachments.count
@@ -829,20 +766,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
         
     }
-    
-    //    func pickVideoFromGallery() {
-    //        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-    //            let imagePickerController = UIImagePickerController()
-    //            imagePickerController.delegate = self
-    //            imagePickerController.sourceType = .photoLibrary
-    //            imagePickerController.mediaTypes = ["public.movie"] // Only show videos
-    //            imagePickerController.allowsEditing = true // Optional: allows users to edit video
-    //
-    //            present(imagePickerController, animated: true, completion: nil)
-    //        } else {
-    //            print("Photo library not available.")
-    //        }
-    //    }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)
@@ -889,39 +812,19 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        //        if updatedText.count <= 500 {
-        //            contentCount.text = "\(updatedText.count) / 500" // Update the character count label
-        return true // Allow the change
-        //        } else {
-        //            let alert = CustomAlert()
-        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-        //            //            contentTxtView.isEditable = false // Optionally disable editing
-        //            return false // Reject the change
-        //        }
+        return true
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-        
-        //        if updatedText.count <= 50 {
-        //            tittleCountLbl.text = "\(updatedText.count) / 50"
-        //            return true
-        //        } else {
-        //            let alert = CustomAlert()
-        //            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
-        //            return false
-        //        }
         return true
     }
     
     
     func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
-        
+        placeholderLabel.isHidden = !textView.text.isEmpty
         let size = textView.contentSize
-        
-        // Check if the content exceeds the initial height
         if size.height > initialHeight {
             // Update the height constraint based on content size
             let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
@@ -932,16 +835,12 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        
-        // Scroll to make the UITextView visible
         scrollToView(textView)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            
-            // Adjust the scroll view content inset
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
             scrollView.scrollIndicatorInsets = scrollView.contentInset
             scrollToView(contentTxtView)
@@ -955,7 +854,6 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
     }
     
     func scrollToView(_ view: UIView) {
-        // Calculate the frame of the view relative to the UIScrollView
         let rect = view.convert(view.bounds, to: scrollView)
         scrollView.scrollRectToVisible(rect, animated: true)
     }

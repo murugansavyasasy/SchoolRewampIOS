@@ -120,7 +120,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         dismiss(animated: true)
     }
-    
+    @IBAction func viewHistory(_ sender: UIButton) {
+        let vc = SenderHomeWorkVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
+    }
     func setSelectedHomeWork(
         title:String,
         content:String,
@@ -585,29 +589,13 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         
         // Compute the new text length
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        
-        //        if newText.count <= 500 {
-        //            wordsCountLbl.text = "\(newText.count) / 500" // Update the character count label
-        return true // Allow the change
-        //        } else {
-        //            let alert = CustomAlert()
-        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-        //            return false // Reject the change
-        //        }
+        return true
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Current text
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        
-        //        if newText.count <= 50 {
-        //            titleCountLbl.text = "\(newText.count) / 50" // Update count label
         return true
-        //        } else {
-        //            let alert = CustomAlert()
-        //            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-        //            return false
-        //        }
     }
     
     
