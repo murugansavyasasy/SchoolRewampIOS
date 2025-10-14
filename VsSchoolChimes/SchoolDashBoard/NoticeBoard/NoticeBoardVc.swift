@@ -79,7 +79,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 .first?
                 .school_name
             token = staffToken
-            schoolName.text = matchedSchoolName ?? "School name not found"
+            schoolName.text = "All"
         }
         if checkMutipleSchool() {
             menuNameLbl.text = MenuStringFile.selectedMenuName
@@ -130,14 +130,29 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
-            if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-                token = selectedSchool.access_token
-                localData.editToken = selectedSchool.access_token
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.Get_Notice()
+            
+            if item == "All"{
+                filterUsingSchoolId("All")
+            }else{
+                if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                    token = selectedSchool.access_token
+                    localData.editToken = selectedSchool.access_token
+                    filterUsingSchoolId(selectedSchool.school_id ?? "")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        //                    self.Get_Notice()
+                    }
                 }
             }
         }
+    }
+    
+    func filterUsingSchoolId(_ schoolId: String) {
+        if schoolId == "All" {
+            searchData = allNotices
+        } else {
+            searchData = allNotices.filter { $0.school_id == schoolId }
+        }
+        collectionView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -72,7 +72,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kdq-su-jJh">
-                    <rect key="frame" x="0.0" y="179.33333333333331" width="393" height="604.66666666666674"/>
+                    <rect key="frame" x="0.0" y="179.33333333333326" width="393" height="604.66666666666652"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGk-in-s5r">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="1493.3333333333333"/>
@@ -219,8 +219,8 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="3du-gQ-0dt">
                                                                     <rect key="frame" x="5" y="14.999999999999986" width="343" height="242.66666666666663"/>
                                                                     <subviews>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graduationcap.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dfa-ZR-DoS">
-                                                                            <rect key="frame" x="0.0" y="107.33333333333348" width="30" height="32"/>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dfa-ZR-DoS">
+                                                                            <rect key="frame" x="0.0" y="108.00000000000016" width="30" height="28.000000000000014"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="30" id="Ltu-2K-zZu"/>
                                                                                 <constraint firstAttribute="height" constant="30" id="vQy-77-wiK"/>
@@ -353,9 +353,9 @@ Submit your chart and explanation in a file folder neatly arranged.jhbwrfyuvwurf
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="graduationcap.fill" catalog="system" width="128" height="108"/>
         <image name="hand.thumbsup" catalog="system" width="123" height="128"/>
         <image name="paperclip" catalog="system" width="121" height="128"/>
+        <image name="person.2.fill" catalog="system" width="128" height="86"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
