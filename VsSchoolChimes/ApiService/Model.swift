@@ -1327,19 +1327,20 @@ struct ChatMessageSuc: Codable {
 }
 
 struct ChatMessage: Codable {
-    let question_id: String?
+    let id: String?
     let question: String?
     let student_id: String?
     let student_name: String?
-    let asked_on: String?
+    let created_on: String?
     let ques_file_path: [MediaFile]?
     let reply_type: String?
     let answer: String?
-    let answered_on: String?
+    let answer_on: String?
     let ans_file_path: [MediaFile]?
     let chat_count: Int?
     let change_answer: Bool?
 }
+
 struct MediaFile: Codable {
     let url: String
     let type: String  // Example: "IMAGE", "PDF", etc.
@@ -1370,30 +1371,47 @@ struct MessageSucResp: Codable {
 }
 
 
+struct StaffAnswerResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [AnswerData]?
+}
 
-
+struct AnswerData: Codable {
+    let question_id: String?
+    let answer: String?
+    let answer_on: String?
+    let reply_type: String?
+    let created_on: String?
+    let file_path: [MediaFile]?
+}
 
 struct ManagemantMessageData: Codable {
     var type: String?
     var id: String?
     var header_id: String?
-    var sent_by: String?
-    var role: String?
     var title: String?
+    var description: String?
     var content: String?
     var file_path: [FilePath]?
-    var file_size: String?
     var iframe: String?
-    var description: String?
+    var file_size: String?
+    var thumbnail: String?
     var date: String?
     var time: String?
     var sender_info: String?
+    var sent_by: String?
+    var role: String?
+    var school_id: String?
+    var school_name: String?
     var is_unread: Bool?
     var is_archive: Bool?
     var is_emergency: Bool?
-    var order_date: String?
     var duration: Int?
-    var isExpand:Bool?
+    
+    // Local-only fields (not part of API)
+    var order_date: String?
+    var isExpand: Bool?
 }
 
 //MARK: CLASS TIMETABLE

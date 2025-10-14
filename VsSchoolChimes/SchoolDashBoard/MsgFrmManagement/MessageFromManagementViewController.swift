@@ -10,6 +10,7 @@ protocol ReadUpadesManagemant{
 }
 
 import UIKit
+import DropDown
 
 @available(iOS 14.0, *)
 class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, viewAttachments {
@@ -22,33 +23,33 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         }
         
         vc.file_path = SearchData?[sender.tag].file_path
-      present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
         
         
-       
+        
         
         if SearchData?[sender.tag].type == "VOICE"{
             ReadStatusUpdate(
                 type: "MGMT_MSG_VOICE",
-                detail_id: SearchData?[sender.tag].header_id ?? ""
+                detail_id: SearchData?[sender.tag].id ?? ""
             )
         }else if SearchData?[sender.tag].type == "TEXT"{
             
             ReadStatusUpdate(
                 type: "MGMT_MSG_TEXT",
-                detail_id: SearchData?[sender.tag].header_id ?? ""
+                detail_id: SearchData?[sender.tag].id ?? ""
             )
         }else if SearchData?[sender.tag].type == "ATTACHMENT"{
             
             ReadStatusUpdate(
                 type: "MGMT_MSG_ATTACHMENT",
-                detail_id: SearchData?[sender.tag].header_id ?? ""
+                detail_id: SearchData?[sender.tag].id ?? ""
             )
         }
         
         
     }
-
+    
     
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
@@ -59,19 +60,25 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var schoolDropDown: UIView!
+    @IBOutlet weak var schoolName: UILabel!
     
     let staffDetails = UserDefaultFileManager.get_staff_Details()
+    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var messageData: [ManagemantMessageData]?
     var SearchData: [ManagemantMessageData]?
     var dateFormatter = DateFormatter()
     var shouldShowFooter = true
     var playIndex :Int?
     var readIndex: Int?
+    var dropDown = DropDown()
+    var searchText = ""
+    var selectedSchoolId:String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+        //        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         menuNameLbl.text = MenuStringFile.selectedMenuName
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         BackBtn.applyBackButton()
@@ -87,12 +94,15 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         SearchBar.backgroundImage = UIImage()
         SearchBar.delegate = self
         
+        schoolDropDown.setShadow(cornerRadius: 4)
+        schoolDropDown.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchoolDropDownAct)))
+        schoolDropDown.isUserInteractionEnabled = true
+        
         FilterCV.isHidden = true
         NoDataLbl.isHidden = true
         NoDataImage.isHidden = true
         
         Cell_Registration()
-       
         
         tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
         tv.dataSource = self
@@ -101,10 +111,10 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         Get_messages()
     }
     
-
+    
     
     func Cell_Registration() {
-
+        
         tv.register(UINib(nibName: "MsgTvCell", bundle: nil), forCellReuseIdentifier: "MsgTvCell")
     }
     
@@ -253,6 +263,32 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         }
     }
     
+    @IBAction func SchoolDropDownAct() {
+        guard let schoolDetails = school_details else { return }
+
+        let schoolNames = ["All"] + schoolDetails.compactMap { $0.school_name }
+
+        dropDown.dataSource = schoolNames
+        dropDown.anchorView = schoolDropDown
+        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
+        dropDown.show()
+        
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            
+            self.schoolName.text = item
+            
+            if index == 0 {
+                self.selectedSchoolId = nil
+            } else {
+                self.selectedSchoolId = schoolDetails[index - 1].school_id
+            }
+            
+            self.filterMessages()
+        }
+    }
+
+    
     @IBAction func backAct() {
         dismiss(animated: true)
     }
@@ -270,14 +306,57 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             SearchBar.resignFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             SearchBar.searchTextField.text = ""
-            SearchData = messageData
-            NoDataImage.isHidden = !(SearchData?.isEmpty ?? false)
-            NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-            NoDataLbl.text = CommonStringFile.No_data_found
-            tv.reloadData()
+            searchText = ""
+            filterMessages()
         }
     }
     
+    func filterMessages() {
+        
+        guard let allMessages = messageData else {
+            SearchData = []
+            updateNoDataUI()
+            return
+        }
+        
+        SearchData = allMessages.filter { message in
+            var matchesSchool = true
+            var matchesSearch = true
+            
+            //School filter
+            if let schoolId = selectedSchoolId, schoolId != "All", !schoolId.isEmpty {
+                matchesSchool = (message.school_id == schoolId)
+            }
+            
+            //Search filter
+            if !searchText.isEmpty {
+                let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                let dateString = dateFormatter.convertDate(message.date ?? "")?.lowercased()
+                
+                matchesSearch =
+                dateString?.contains(query) == true ||
+                message.title?.lowercased().contains(query) == true ||
+                message.description?.lowercased().contains(query) == true ||
+                message.content?.lowercased().contains(query) == true ||
+                message.sender_info?.lowercased().contains(query) == true ||
+                message.sent_by?.lowercased().contains(query) == true
+            }
+            
+            return matchesSchool && matchesSearch
+        }
+        
+        updateNoDataUI()
+        tv.reloadData()
+        
+    }
+    
+    func updateNoDataUI() {
+        let isEmpty = (SearchData?.isEmpty ?? true)
+        NoDataImage.isHidden = !isEmpty
+        NoDataLbl.isHidden = !isEmpty
+        NoDataLbl.text = CommonStringFile.No_data_found
+    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SearchData?.count ?? 0
@@ -325,7 +404,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         
         return "\(first)\(last)".uppercased()
     }
-
+    
     
     func addBlurEffect() {
         let blurEffect = UIBlurEffect(style: .dark)
@@ -336,14 +415,14 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         view.addSubview(blurView)
     }
     
-
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }
     
-   
+    
     
     
 }
@@ -353,22 +432,8 @@ extension MessageFromManagementViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if searchText.isEmpty{
-            SearchData = messageData
-        }else {
-            SearchData = messageData?.filter{ message in
-                let date = dateFormatter.convertDate(message.date ?? "")?.lowercased()
-                return date?.contains(searchText.lowercased()) ?? false ||
-                message.title?.lowercased().contains(searchText.lowercased()) ?? false ||
-                message.description?.lowercased().contains(searchText.lowercased()) ?? false ||
-                message.content?.lowercased().contains(searchText.lowercased()) ?? false
-            }
-        }
-        
-        NoDataImage.isHidden = !(SearchData?.isEmpty ?? false)
-        NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-        NoDataLbl.text = CommonStringFile.No_data_found
-        tv.reloadData()
+        self.searchText = searchText
+        filterMessages()
     }
 }
 
@@ -382,11 +447,11 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
     func didTapExpand(in cell: TextHistoryTVCell) {
         guard let indexPath = tv.indexPath(for: cell) else { return }
         guard var message = SearchData?[indexPath.row] else { return }
-
+        
         // Toggle state
         message.isExpand = !(message.isExpand ?? false)
         SearchData?[indexPath.row] = message
-
+        
         // API Call (on first view)
         if message.is_unread == true {
             if message.is_archive == true {
@@ -397,7 +462,7 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
             SearchData?[indexPath.row].is_unread = false
             cell.NewImageView.isHidden = true
         }
-
+        
         // Reload cell for layout changes
         tv.beginUpdates()
         tv.reloadRows(at: [indexPath], with: .automatic)
@@ -415,17 +480,17 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
     
     func reload(index: Int) {
         
-            if let currentIndex = playIndex, currentIndex != index {
-                let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-                if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
-                    previousCell.updatePlayState(isPlaying: false, url: nil)
-                }
+        if let currentIndex = playIndex, currentIndex != index {
+            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
+                previousCell.updatePlayState(isPlaying: false, url: nil)
             }
-            
+        }
+        
         playIndex = (playIndex == index) ? nil : index
         var currentmessage: ManagemantMessageData?
         
-
+        
         currentmessage = SearchData?[index]
         
         if currentmessage?.is_unread == true {
@@ -444,6 +509,6 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
             }
         }
         
-            tv.reloadData()
+        tv.reloadData()
     }
 }

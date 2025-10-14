@@ -19,6 +19,8 @@
                 <outlet property="SearchBar" destination="PCj-Kb-lFm" id="nvA-mS-GYP"/>
                 <outlet property="headerView" destination="iZJ-VS-4TR" id="Prd-t7-Fn4"/>
                 <outlet property="menuNameLbl" destination="8VJ-R6-zNV" id="kCv-LA-jyq"/>
+                <outlet property="schoolDropDown" destination="TPi-r0-tVN" id="MrU-NW-J6J"/>
+                <outlet property="schoolName" destination="Lym-HH-Rw3" id="CUo-ly-n8i"/>
                 <outlet property="searchBtn" destination="dLA-U8-9sJ" id="8Cm-c2-x6O"/>
                 <outlet property="tv" destination="wv6-yC-4JQ" id="GZm-F9-SQf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -87,14 +89,43 @@
                     <rect key="frame" x="0.0" y="134" width="393" height="684"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-yC-4JQ">
-                            <rect key="frame" x="8" y="372" width="377" height="312"/>
+                            <rect key="frame" x="8" y="447" width="377" height="237"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jmw-IZ-mSt">
-                            <rect key="frame" x="0.0" y="8" width="393" height="364"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="jmw-IZ-mSt">
+                            <rect key="frame" x="0.0" y="8" width="393" height="439"/>
                             <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TPi-r0-tVN">
+                                    <rect key="frame" x="15" y="0.0" width="363" height="50"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lym-HH-Rw3">
+                                            <rect key="frame" x="10" y="10" width="343" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88s-GQ-ZUr">
+                                            <rect key="frame" x="333" y="15" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="618-hb-b6m"/>
+                                                <constraint firstAttribute="width" constant="20" id="Nfg-xW-EzK"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                            <state key="normal" image="down-arrow"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="88s-GQ-ZUr" secondAttribute="trailing" constant="10" id="LF2-fg-IWl"/>
+                                        <constraint firstItem="Lym-HH-Rw3" firstAttribute="leading" secondItem="TPi-r0-tVN" secondAttribute="leading" constant="10" id="MuL-XO-QsG"/>
+                                        <constraint firstItem="88s-GQ-ZUr" firstAttribute="centerY" secondItem="Lym-HH-Rw3" secondAttribute="centerY" id="ccS-bV-AlT"/>
+                                        <constraint firstAttribute="bottom" secondItem="Lym-HH-Rw3" secondAttribute="bottom" constant="10" id="hMY-5J-tkX"/>
+                                        <constraint firstAttribute="trailing" secondItem="Lym-HH-Rw3" secondAttribute="trailing" constant="10" id="o8k-6M-FcI"/>
+                                        <constraint firstItem="Lym-HH-Rw3" firstAttribute="top" secondItem="TPi-r0-tVN" secondAttribute="top" constant="10" id="q82-SG-bBb"/>
+                                    </constraints>
+                                </view>
                                 <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="PCj-Kb-lFm">
-                                    <rect key="frame" x="10" y="0.0" width="373" height="40"/>
+                                    <rect key="frame" x="10" y="65" width="373" height="40"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="ZVj-bN-Lt7"/>
@@ -102,7 +133,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Jvm-lz-PHa">
-                                    <rect key="frame" x="15" y="45" width="363" height="40"/>
+                                    <rect key="frame" x="15" y="112.66666666666666" width="363" height="40"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="fDb-kx-DPa"/>
@@ -115,13 +146,13 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="ont-D0-WGZ">
-                                    <rect key="frame" x="0.0" y="50" width="393" height="280"/>
+                                    <rect key="frame" x="0.0" y="120" width="393" height="280"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="280" id="i8r-09-enh"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58g-Aa-tzM">
-                                    <rect key="frame" x="50" y="340" width="293" height="24"/>
+                                    <rect key="frame" x="50" y="415" width="293" height="24"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -131,7 +162,9 @@
                                 <constraint firstItem="PCj-Kb-lFm" firstAttribute="leading" secondItem="jmw-IZ-mSt" secondAttribute="leading" constant="10" id="3GN-1q-CPw"/>
                                 <constraint firstAttribute="trailing" secondItem="58g-Aa-tzM" secondAttribute="trailing" constant="50" id="3xe-G2-dRh"/>
                                 <constraint firstItem="Jvm-lz-PHa" firstAttribute="leading" secondItem="jmw-IZ-mSt" secondAttribute="leading" constant="15" id="IDx-fn-KV4"/>
+                                <constraint firstItem="TPi-r0-tVN" firstAttribute="leading" secondItem="jmw-IZ-mSt" secondAttribute="leading" constant="15" id="JXN-BB-ECc"/>
                                 <constraint firstItem="58g-Aa-tzM" firstAttribute="leading" secondItem="jmw-IZ-mSt" secondAttribute="leading" constant="50" id="ZrE-1i-7ng"/>
+                                <constraint firstAttribute="trailing" secondItem="TPi-r0-tVN" secondAttribute="trailing" constant="15" id="mt8-XR-8Rt"/>
                                 <constraint firstAttribute="trailing" secondItem="PCj-Kb-lFm" secondAttribute="trailing" constant="10" id="rRn-fo-EVf"/>
                                 <constraint firstAttribute="trailing" secondItem="Jvm-lz-PHa" secondAttribute="trailing" constant="15" id="yOp-7t-2np"/>
                             </constraints>
@@ -167,6 +200,7 @@
     <resources>
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="down-arrow" width="512" height="512"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

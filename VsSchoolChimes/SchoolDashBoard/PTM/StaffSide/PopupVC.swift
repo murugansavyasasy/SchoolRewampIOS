@@ -15,11 +15,19 @@ class PopupVC: UIViewController {
     @IBOutlet weak var deleteStack: UIStackView!
     @IBOutlet weak var cancelStack: UIStackView!
     @IBOutlet weak var reopenStack: UIStackView!
+    @IBOutlet weak var replyStack: UIStackView!
+    @IBOutlet weak var BlockStack: UIStackView!
+    @IBOutlet weak var replyBtn: UIButton!
+    
+    
     var ptm:Bool = false
+    var Chat:Bool = false
     var delegate: SelectedId?
     var edit:Bool?
     var delete:Bool?
     var selectedId:String?
+    var reply_Btn_title = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        if ptm{
@@ -41,10 +49,35 @@ class PopupVC: UIViewController {
 //                editStack.isHidden = !edit
 //            }
 //        }
-        editStack.isHidden   = ptm ? true             : !(edit ?? false)
-        deleteStack.isHidden = ptm ? true             : !(delete ?? false)
-        cancelStack.isHidden = ptm ? !(delete ?? false) : true
-        reopenStack.isHidden = ptm ? !(edit ?? false)   : true
+        
+        if ptm{
+            editStack.isHidden = true
+            deleteStack.isHidden = true
+            BlockStack.isHidden = true
+            replyStack.isHidden = true
+            cancelStack.isHidden = !(delete ?? false)
+            reopenStack.isHidden = !(edit ?? false)
+        }else if Chat{
+            editStack.isHidden = true
+            deleteStack.isHidden = true
+            cancelStack.isHidden = true
+            reopenStack.isHidden = true
+            replyStack.isHidden = false
+            BlockStack.isHidden = false
+            replyBtn.setTitle(reply_Btn_title, for: .normal)
+        }else{
+            editStack.isHidden = true
+            deleteStack.isHidden = true
+            replyStack.isHidden = true
+            BlockStack.isHidden = true
+            editStack.isHidden = !(edit ?? false)
+            BlockStack.isHidden = !(delete ?? false)
+        }
+        
+//        editStack.isHidden   = ptm ? true             : !(edit ?? false)
+//        deleteStack.isHidden = ptm ? true             : !(delete ?? false)
+//        cancelStack.isHidden = ptm ? !(delete ?? false) : true
+//        reopenStack.isHidden = ptm ? !(edit ?? false)   : true
 
     }
     init(edit: Bool = false, delete: Bool = false, selectedId: String?) {
@@ -73,4 +106,16 @@ class PopupVC: UIViewController {
         delegate?.selectId(id: selectedId ?? "", edit: true)
         dismiss(animated: true)
     }
+    
+    @IBAction func replyBtn(_ sender: UIButton) {
+        
+        delegate?.selectId(id: selectedId, edit: true)
+        dismiss(animated: true)
+    }
+    
+    @IBAction func blockAct(_ sender: UIButton) {
+        delegate?.selectId(id: selectedId ?? "", edit: false)
+        dismiss(animated: true)
+    }
+    
 }
