@@ -34,6 +34,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     var attachmetList: [FilePath]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    let staffDetails = UserDefaultFileManager.get_staff_Details()
     var titleString: String?
     var descriptionString: String?
     var postedBy: String?
@@ -265,7 +266,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             url: EndUrl,
             parameters: ["id": targetIdOrType],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {

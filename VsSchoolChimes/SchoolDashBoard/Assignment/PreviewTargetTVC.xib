@@ -92,6 +92,12 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="targetCv" destination="fye-Az-1l5" id="7os-Rz-NQr"/>
+                <outlet property="targetCvHeight" destination="jPz-FY-uj9" id="uR4-7C-Daa"/>
+                <outlet property="yourTargetImageView" destination="6X4-Ow-Mvg" id="e7u-5m-jow"/>
+                <outlet property="yourTargetLbl" destination="1qY-tl-yBE" id="izg-fP-v2S"/>
+            </connections>
             <point key="canvasLocation" x="287.02290076335879" y="126.40845070422536"/>
         </tableViewCell>
     </objects>

@@ -2455,6 +2455,20 @@ struct targetDataDetails : Codable{
     
 }
 
+struct targetSucResp : Codable{
+    
+    var status : Bool?
+    var message : String?
+    var data : [targetDataDetailsResp]?
+}
+
+struct targetDataDetailsResp : Codable{
+    var name : String?
+    var role:  String?
+//    var class : String?
+    var section : String?
+    var mobile : String?
+}
 
 
 struct GlobalVariablesResponse: Codable {
