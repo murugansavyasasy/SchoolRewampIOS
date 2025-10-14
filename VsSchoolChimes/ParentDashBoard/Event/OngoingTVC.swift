@@ -74,6 +74,8 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                        detailVC.attachmetList = notice.file_path
                        detailVC.selectedDate = notice.date
                        detailVC.titleString = notice.title
+                       detailVC.targetId = notice.id
+                       detailVC.EndUrl = ServiceUrl.event_target_details
                        detailVC.descriptionString = notice.description
                        detailVC.subject_name = "Event".translated()
                        detailVC.postedBy = notice.sent_by

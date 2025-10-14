@@ -608,6 +608,7 @@ struct Notice: Codable {
     let sent_by: String?
     let can_edit: Bool?
     let can_delete: Bool?
+    let school_id: String?
 }
 
 //MARK: Attendence
@@ -679,6 +680,7 @@ struct EventList: Codable {
     let title: String
     let category: String
     let description: String
+    let school_id: String
     let date: String
     let time: String
     let venue: String

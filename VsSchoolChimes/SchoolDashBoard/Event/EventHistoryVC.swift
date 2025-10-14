@@ -53,6 +53,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     var token : String?
     let dropDown = DropDown()
     var delegate:EditObjectDelegate?
+    var SchoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn.configureAsBackTitle(firstLine: "Event History", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
@@ -81,11 +82,12 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                 .first?
                 .school_name
             token = staffToken
-            schoolName.text = matchedSchoolName ?? "School name not found"
+            schoolName.text = "All"
         }
         if checkMutipleSchool() {
             schoolDropDown.isHidden = false
             schoolList = school_details?.compactMap { $0.school_name }
+            schoolList?.insert("All", at: 0)
             self.dropDown.dataSource = self.schoolList ?? []
         } else {
             schoolDropDown.isHidden = true
@@ -105,15 +107,49 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
-            if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-                token = selectedSchool.access_token
-                localData.editToken = selectedSchool.access_token
+            
+            if item == "All" {
+                filterUsingSchoolId("All")
+            }else{
+                if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                    token = selectedSchool.access_token
+                    localData.editToken = selectedSchool.access_token
+                    filterUsingSchoolId(selectedSchool.school_id ?? "All")
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     
                 }
             }
+            
+        }
         }
     }
+    
+    
+    func filterUsingSchoolId(_ schoolId: String) {
+        print("schoolIdschoolId",schoolId)
+        if schoolId == "All" {
+            filteredSections = allEventSections
+        } else {
+            filteredSections = allEventSections.compactMap { section in
+                switch section {
+                case .featured(let events):
+                    let filtered = events.filter { $0.school_id == schoolId }
+                    return filtered.isEmpty ? nil : .featured(filtered)
+                case .categories(let categories):
+                    return .categories(categories)
+                case .upcoming(let events):
+                    let filtered = events.filter { $0.school_id == schoolId }
+                    return filtered.isEmpty ? nil : .upcoming(filtered)
+                case .completed(let events):
+                    let filtered = events.filter { $0.school_id == schoolId }
+                    return filtered.isEmpty ? nil : .completed(filtered)
+                }
+            }
+        }
+        historyTable.reloadData()
+    }
+
     func checkMutipleSchool() -> Bool {
         let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
         if staffCount > 1 {
