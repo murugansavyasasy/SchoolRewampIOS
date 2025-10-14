@@ -158,6 +158,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         let vc = EditLessonVC(nibName: nil, bundle: nil)
                         vc.EditData = success.data ?? []
+                        vc.particular_Id = id
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                     }

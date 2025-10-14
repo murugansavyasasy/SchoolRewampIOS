@@ -2505,3 +2505,18 @@ struct checkQuizLevelSuc : Codable{
 struct checkQuizLevelData : Codable{
     var level : Int?
 }
+// MARK: - API Models
+struct UpdateResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [UpdateItem]?
+}
+
+struct UpdateItem: Codable {
+    let id: Int?
+    let name: String?
+    let description: String?
+    let app_redirect_link: String?
+    let video_link: String?
+    let downloadable_image: String?
+}
