@@ -13,15 +13,15 @@ import Kingfisher
 class WhatsNewVc: UIViewController {
 
     // MARK: - IBOutlets
+    @IBOutlet weak var updateLbl: UILabel!
+    @IBOutlet weak var whatsnewLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var headerView: UIView!
-
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var headerView: AnimatedGradientView!
     @IBOutlet weak var skipNextBtn: UIButton!
     @IBOutlet weak var skipPreviousBtn: UIButton!
     @IBOutlet weak var NextIconBtn: UIButton!
     @IBOutlet weak var PreviousIconBtn: UIButton!
-
     @IBOutlet weak var pageViewController: UIPageControl!
     @IBOutlet weak var tryItnowBtn: UIButton!
 
@@ -38,12 +38,16 @@ class WhatsNewVc: UIViewController {
     }
 
     private func setupUI() {
-        // CollectionView
+        // CollectionView Setup
         collectionView.register(UINib(nibName: "WhatsNewCVC", bundle: nil), forCellWithReuseIdentifier: "WhatsNewCVC")
         collectionView.delegate = self
         collectionView.dataSource = self
-
-        // Header View
+        
+        // Back Button Setup
+        backBtn.layer.cornerRadius = backBtn.frame.width / 2
+        updateLbl.layer.cornerRadius = updateLbl.frame.height / 2
+            updateLbl.layer.masksToBounds = true
+        // Header View Setup - Animated Gradient Banner
         headerView.layer.cornerRadius = 20
         headerView.layer.shadowColor = UIColor.black.cgColor
         headerView.layer.shadowOpacity = 0.15
@@ -52,15 +56,11 @@ class WhatsNewVc: UIViewController {
         headerView.layer.masksToBounds = false
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
-        // Buttons
+        // Try It Now Button Setup
         tryItnowBtn.layer.cornerRadius = tryItnowBtn.layer.frame.height / 2
         setupButtonGradient(tryItnowBtn)
 
-        // Default Image
-        imageView.kf.setImage(with: URL(string: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//F5CB9561-8D48-492A-BEED-445BD479F5C6.jpg"))
-        imageView.layer.cornerRadius = 10
-
-        // Initial visibility for buttons
+        // Initial visibility for navigation buttons
         skipPreviousBtn.isHidden = true
         PreviousIconBtn.isHidden = true
         skipNextBtn.isHidden = true
@@ -110,14 +110,9 @@ class WhatsNewVc: UIViewController {
         pageViewController.currentPage = currentIndex
 
         // Update button visibility
-        skipNextBtn.isHidden = (currentIndex == total - 1)
-        NextIconBtn.isHidden = (currentIndex == total - 1)
-        skipPreviousBtn.isHidden = false
-        PreviousIconBtn.isHidden = false
-
+        updateNavigationButtonVisibility()
         playVideoInVisibleCell()
     }
-
 
     @IBAction func skipPrevious(_ sender: UIButton) {
         guard currentIndex > 0 else { return }
@@ -128,16 +123,24 @@ class WhatsNewVc: UIViewController {
         pageViewController.currentPage = currentIndex
 
         // Update button visibility
-        skipPreviousBtn.isHidden = (currentIndex == 0)
-        PreviousIconBtn.isHidden = (currentIndex == 0)
-        skipNextBtn.isHidden = false
-        NextIconBtn.isHidden = false
+        updateNavigationButtonVisibility()
         playVideoInVisibleCell()
     }
 
-
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
+    }
+
+    // MARK: - Helper Methods
+    private func updateNavigationButtonVisibility() {
+        let total = data?.count ?? 0
+        let isFirstPage = (currentIndex == 0)
+        let isLastPage = (currentIndex == total - 1)
+
+        skipPreviousBtn.isHidden = isFirstPage
+        PreviousIconBtn.isHidden = isFirstPage
+        skipNextBtn.isHidden = isLastPage
+        NextIconBtn.isHidden = isLastPage
     }
 
     // MARK: - API
@@ -159,8 +162,9 @@ class WhatsNewVc: UIViewController {
                     if success.status ?? false {
                         self.data = success.data
                         self.pageViewController.numberOfPages = self.data?.count ?? 0
-                        self.skipNextBtn.isHidden = (self.data?.count ?? 0) <= 1
-                        self.NextIconBtn.isHidden = (self.data?.count ?? 0) <= 1
+                        let hasMultipleItems = (self.data?.count ?? 0) > 1
+                        self.skipNextBtn.isHidden = !hasMultipleItems
+                        self.NextIconBtn.isHidden = !hasMultipleItems
                         self.collectionView.reloadData()
                     }
                 case .failure(let error):
@@ -192,12 +196,8 @@ extension WhatsNewVc: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         currentIndex = page
         pageViewController.currentPage = page
-
-        skipPreviousBtn.isHidden = (currentIndex == 0)
-        PreviousIconBtn.isHidden = (currentIndex == 0)
-        skipNextBtn.isHidden = (currentIndex == (data?.count ?? 0) - 1)
-        NextIconBtn.isHidden = (currentIndex == (data?.count ?? 0) - 1)
-
+        
+        updateNavigationButtonVisibility()
         playVideoInVisibleCell()
     }
 
@@ -224,3 +224,146 @@ extension WhatsNewVc: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         }
     }
 }
+
+// MARK: - Animated Gradient View (Banner Style)
+class AnimatedGradientView: UIView {
+    private let gradientLayer = CAGradientLayer()
+    private var displayLink: CADisplayLink?
+    private var animationProgress: CGFloat = 0
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+    
+    private func setupView() {
+        layer.cornerRadius = 12
+        clipsToBounds = true
+        
+        setupGradientLayer()
+        startAnimatingGradient()
+    }
+    
+    private func setupGradientLayer() {
+        // Galaxy Universe Stars banner - Deep space colors
+        gradientLayer.colors = [
+            UIColor(hex: "#0A0E27").cgColor,      // Deep dark blue
+            UIColor(hex: "#1A0F3D").cgColor,      // Dark purple
+            UIColor(hex: "#2D1B4E").cgColor,      // Royal purple
+            UIColor(hex: "#1F4788").cgColor,      // Deep blue
+            UIColor(hex: "#0F2B5C").cgColor,      // Navy blue
+            UIColor(hex: "#1A0F3D").cgColor,      // Dark purple
+            UIColor(hex: "#0A0E27").cgColor       // Back to deep blue (loop)
+        ]
+        
+        gradientLayer.locations = [0, 0.16, 0.33, 0.5, 0.66, 0.83, 1]
+        gradientLayer.startPoint = CGPoint(x: -0.5, y: -0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.5, y: 1.5)
+        
+        layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Add star particles effect
+        addStarParticles()
+    }
+    
+    private func addStarParticles() {
+        // Create star emitter effect
+        let emitterLayer = CAEmitterLayer()
+        emitterLayer.emitterPosition = CGPoint(x: bounds.midX, y: bounds.midY)
+        emitterLayer.emitterShape = .circle
+        emitterLayer.emitterSize = CGSize(width: 300, height: 300)
+        emitterLayer.renderMode = .additive
+        
+        // Create star cell
+        let cell = CAEmitterCell()
+        cell.birthRate = 15
+        cell.lifetime = 3
+        cell.scale = 0.002
+        cell.alphaSpeed = -0.33
+        cell.velocity = 50
+        cell.yAcceleration = 10
+        cell.emissionRange = .pi * 2
+        
+        // Create star image
+        if let starImage = createStarImage() {
+            cell.contents = starImage.cgImage
+        }
+        
+        emitterLayer.emitterCells = [cell]
+        layer.addSublayer(emitterLayer)
+    }
+    
+    private func createStarImage() -> UIImage? {
+        let size = CGSize(width: 4, height: 4)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIColor.white.setFill()
+        UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    private func startAnimatingGradient() {
+        displayLink = CADisplayLink(
+            target: self,
+            selector: #selector(updateGradient)
+        )
+        displayLink?.preferredFramesPerSecond = 60
+        displayLink?.add(to: .main, forMode: .common)
+    }
+    
+    @objc private func updateGradient() {
+        animationProgress += 0.005  // Slow, cosmic speed
+        if animationProgress > 1 {
+            animationProgress = 0
+        }
+        
+        // Create cosmic swirling effect
+        let rotationX = sin(animationProgress * CGFloat.pi * 2) * 0.7
+        let rotationY = cos(animationProgress * CGFloat.pi * 2) * 0.7
+        
+        gradientLayer.startPoint = CGPoint(
+            x: 0.5 + rotationX,
+            y: 0.5 + rotationY
+        )
+        
+        gradientLayer.endPoint = CGPoint(
+            x: 0.5 - rotationX,
+            y: 0.5 - rotationY
+        )
+        
+        // Animate color positions for cosmic shifts
+        let offset = animationProgress
+        let locations: [NSNumber] = [
+            NSNumber(value: offset),
+            NSNumber(value: offset + 0.16),
+            NSNumber(value: offset + 0.33),
+            NSNumber(value: offset + 0.5),
+            NSNumber(value: offset + 0.66),
+            NSNumber(value: offset + 0.83),
+            NSNumber(value: offset + 1)
+        ]
+        
+        gradientLayer.locations = locations
+    }
+    
+    func stopAnimating() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+    
+    deinit {
+        stopAnimating()
+    }
+}
+
