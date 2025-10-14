@@ -80,6 +80,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 .school_name
             token = staffToken
             schoolName.text = "All"
+            
         }
         if checkMutipleSchool() {
             menuNameLbl.text = MenuStringFile.selectedMenuName
@@ -93,6 +94,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         if school_details?.count ?? 0 > 1 {
             schoolDropDown.isHidden = false
             schoolList = school_details?.compactMap { $0.school_name }
+            schoolList?.insert("All", at: 0)
             self.dropDown.dataSource = self.schoolList ?? []
         } else {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
