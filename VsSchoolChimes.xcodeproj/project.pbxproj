@@ -573,6 +573,8 @@
 		84BB5EB42D1133AA00AD0C87 /* ExamsListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB12D1133AA00AD0C87 /* ExamsListTVCell.swift */; };
 		84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EB62D11467700AD0C87 /* SchedulePopupVC.xib */; };
 		84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB52D11467700AD0C87 /* SchedulePopupVC.swift */; };
+		84BCE7DF2E9E1868002C8068 /* PreviewTargetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */; };
+		84BCE7E02E9E1868002C8068 /* PreviewTargetTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE7DE2E9E1868002C8068 /* PreviewTargetTVC.xib */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C3A1EE2E66AD41002E7506 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
@@ -1487,6 +1489,8 @@
 		84BB5EB22D1133AA00AD0C87 /* ExamsListTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamsListTVCell.xib; sourceTree = "<group>"; };
 		84BB5EB52D11467700AD0C87 /* SchedulePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePopupVC.swift; sourceTree = "<group>"; };
 		84BB5EB62D11467700AD0C87 /* SchedulePopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchedulePopupVC.xib; sourceTree = "<group>"; };
+		84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTargetTVC.swift; sourceTree = "<group>"; };
+		84BCE7DE2E9E1868002C8068 /* PreviewTargetTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewTargetTVC.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgTvCell.swift; sourceTree = "<group>"; };
@@ -3155,6 +3159,8 @@
 				845F217C2E45D9C40078AF69 /* AttachmentCVC.xib */,
 				845F217F2E4601810078AF69 /* AssignmentsearchTVC.swift */,
 				845F21802E4601810078AF69 /* AssignmentsearchTVC.xib */,
+				84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */,
+				84BCE7DE2E9E1868002C8068 /* PreviewTargetTVC.xib */,
 			);
 			path = Assignment;
 			sourceTree = "<group>";
@@ -4522,6 +4528,7 @@
 				FAAF79922DFBE3E000227DCC /* Poppins-Regular.ttf in Resources */,
 				849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */,
 				84017F752E446DB4006CB477 /* certificateReqVc.xib in Resources */,
+				84BCE7E02E9E1868002C8068 /* PreviewTargetTVC.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				FA48A6982E754AA7004E10C7 /* QuizSubmisionTvCell.xib in Resources */,
 				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
@@ -5066,6 +5073,7 @@
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
+				84BCE7DF2E9E1868002C8068 /* PreviewTargetTVC.swift in Sources */,
 				84127AC92E03C8F00092159D /* CVCell.swift in Sources */,
 				84127ACA2E03C8F00092159D /* ActivateCoupenTVC.swift in Sources */,
 				84127ACB2E03C8F00092159D /* AddCoupenTVC.swift in Sources */,

@@ -496,6 +496,7 @@ struct Attachment: Codable {
     var can_edit: Bool?
     var can_delete: Bool?
     var isExpanded: Bool?
+    var school_id: String?
 }
 
 struct AttachmentFilePath: Codable {

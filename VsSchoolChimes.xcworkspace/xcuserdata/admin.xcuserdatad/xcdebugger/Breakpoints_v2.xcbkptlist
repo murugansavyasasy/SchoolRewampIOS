@@ -480,8 +480,8 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/Sender Attachment/AttachHistroyVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "AttachmentDelete(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -531,7 +531,7 @@
             startingLineNumber = "132"
             endingLineNumber = "132"
             landmarkName = "filterUsingSchoolId(_:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
