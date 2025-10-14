@@ -991,11 +991,12 @@ struct LessonEditData: Codable {
     let field_id: String?
     var value: String?
     let field_type: String?
+    let field_name: String?
     let field_data: [String]?
     let is_disable: Bool?
 }
 
-
+ 
 
 // MARK: Packet Modal
 //

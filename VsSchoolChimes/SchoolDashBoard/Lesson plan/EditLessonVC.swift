@@ -17,12 +17,12 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var BottomView: UIView!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
-    var EditData: [LessonEditData]?
+    var     EditData: [LessonEditData]?
     var particular_Id : String?
     var ReqestType: String?
     var editedFields: [String: String] = [:]
     let alert = CustomAlert()
-    
+    var isCreate = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +37,11 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         UpdateBtn.layer.cornerRadius = 10
         CancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         UpdateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        if isCreate{
+            UpdateBtn.setTitle("Create", for: .normal)
+        }else{
+            UpdateBtn.setTitle("Update", for: .normal)
+        }
         Tableview.showsVerticalScrollIndicator = false
         Tableview.showsHorizontalScrollIndicator = false
         
@@ -45,10 +50,8 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         let nib = UINib(nibName: "LessonEditTV", bundle: nil)
         Tableview.register(nib, forCellReuseIdentifier: "LessonEditTV")
-        
         Tableview.delegate = self
         Tableview.dataSource = self
-        Get_Edit_Details()
     }
     
     func addTopBorderAndShadow(to view: UIView) {
@@ -146,11 +149,12 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let converted = editedFields.map { (key, value) in
             return ["field_id": key, "value": value]
         }
-        
-        let param : [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.key_value_data:converted]
-        
+        let LessonPlanid = isCreate ? LessonPlanStringFile.section_subject_id : LessonPlanStringFile.particular_id
+        let type = isCreate ? ApitTypeSringFile.POST : ApitTypeSringFile.PUT
+        let baseUrl = isCreate ? ServiceUrl.lms_api_lesson_plan_add : ServiceUrl.lms_api_lesson_plan_update
+        let param : [String: Any] = [LessonPlanid: particular_Id ?? "",LessonPlanStringFile.key_value_data:converted]
         APIService.shared
-            .makeApi(url: ServiceUrl.lms_api_lesson_plan_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") {[weak self] (
+            .makeApi(url:baseUrl, parameters: param, type: type, token: staffDetails?.access_token ?? "") {[weak self] (
                 result: Result<CommonApiSuc,
                 Error>
             ) in
@@ -194,9 +198,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBAction func UpdateAct(_ sender: Any) {
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_update_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-            
-            self.LessonPlan_Update_Api()
-            
+                self.LessonPlan_Update_Api()
         }, onNo: {
             
         })
@@ -225,7 +227,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         cell.onEdit = { [weak self] fieldID, newValue in
             self?.editedFields[fieldID] = newValue
-            print("editedFields: ", self?.editedFields ?? [:]) // ✅ Move print here
+            print("editedFields: ", self?.editedFields ?? [:])
         }
         
         return cell
