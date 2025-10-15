@@ -916,7 +916,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                     
                     
                     if (staffDetailsCount?.count ?? 0) > 1 {
-                        self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                        self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                         
                     } else {
                         self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)

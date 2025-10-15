@@ -575,6 +575,12 @@
 		84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB52D11467700AD0C87 /* SchedulePopupVC.swift */; };
 		84BCE7DF2E9E1868002C8068 /* PreviewTargetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */; };
 		84BCE7E02E9E1868002C8068 /* PreviewTargetTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE7DE2E9E1868002C8068 /* PreviewTargetTVC.xib */; };
+		84BCE90F2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
+		84BCE9102E9E3AB6002C8068 /* SchoolStrengthCvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE90E2E9E3AB6002C8068 /* SchoolStrengthCvcell.xib */; };
+		84BCE9132E9E4D24002C8068 /* SummerizeTvCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE9112E9E4D24002C8068 /* SummerizeTvCel.swift */; };
+		84BCE9142E9E4D24002C8068 /* SummerizeTvCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE9122E9E4D24002C8068 /* SummerizeTvCel.xib */; };
+		84BCE9172E9E5270002C8068 /* GenderDistriTvcel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE9152E9E5270002C8068 /* GenderDistriTvcel.swift */; };
+		84BCE9182E9E5270002C8068 /* GenderDistriTvcel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE9162E9E5270002C8068 /* GenderDistriTvcel.xib */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C3A1EE2E66AD41002E7506 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
@@ -1491,6 +1497,12 @@
 		84BB5EB62D11467700AD0C87 /* SchedulePopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchedulePopupVC.xib; sourceTree = "<group>"; };
 		84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTargetTVC.swift; sourceTree = "<group>"; };
 		84BCE7DE2E9E1868002C8068 /* PreviewTargetTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewTargetTVC.xib; sourceTree = "<group>"; };
+		84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolStrengthCvcell.swift; sourceTree = "<group>"; };
+		84BCE90E2E9E3AB6002C8068 /* SchoolStrengthCvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchoolStrengthCvcell.xib; sourceTree = "<group>"; };
+		84BCE9112E9E4D24002C8068 /* SummerizeTvCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummerizeTvCel.swift; sourceTree = "<group>"; };
+		84BCE9122E9E4D24002C8068 /* SummerizeTvCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SummerizeTvCel.xib; sourceTree = "<group>"; };
+		84BCE9152E9E5270002C8068 /* GenderDistriTvcel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderDistriTvcel.swift; sourceTree = "<group>"; };
+		84BCE9162E9E5270002C8068 /* GenderDistriTvcel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenderDistriTvcel.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgTvCell.swift; sourceTree = "<group>"; };
@@ -3107,6 +3119,7 @@
 		849AD0322D1A841C002DEC07 /* SchoolStrength */ = {
 			isa = PBXGroup;
 			children = (
+				84BCE90C2E9E3A79002C8068 /* SchoolStregthCvCell */,
 				849AD02E2D1A841C002DEC07 /* SchoolStrengthVC.swift */,
 				849AD02F2D1A841C002DEC07 /* SchoolStrengthVC.xib */,
 				849AD0302D1A841C002DEC07 /* StrengthTvCell.swift */,
@@ -3115,6 +3128,10 @@
 				84D85FEF2DE5815200633784 /* SectionStregnthCVC.xib */,
 				84D85FF22DE5967A00633784 /* SectionStregnthTVC.swift */,
 				84D85FF32DE5967A00633784 /* SectionStregnthTVC.xib */,
+				84BCE9112E9E4D24002C8068 /* SummerizeTvCel.swift */,
+				84BCE9122E9E4D24002C8068 /* SummerizeTvCel.xib */,
+				84BCE9152E9E5270002C8068 /* GenderDistriTvcel.swift */,
+				84BCE9162E9E5270002C8068 /* GenderDistriTvcel.xib */,
 			);
 			path = SchoolStrength;
 			sourceTree = "<group>";
@@ -3566,6 +3583,15 @@
 				845FED3E2D129A0D0090296B /* ExamCreatVC.xib */,
 			);
 			path = "Schedule Exam";
+			sourceTree = "<group>";
+		};
+		84BCE90C2E9E3A79002C8068 /* SchoolStregthCvCell */ = {
+			isa = PBXGroup;
+			children = (
+				84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */,
+				84BCE90E2E9E3AB6002C8068 /* SchoolStrengthCvcell.xib */,
+			);
+			path = SchoolStregthCvCell;
 			sourceTree = "<group>";
 		};
 		84C00E6A2CF6D79000E34A83 /* TermsAndCondition */ = {
@@ -4510,6 +4536,7 @@
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8466E83E2D6ED0CB004F4EFC /* PopupVC.xib in Resources */,
 				FAD4D7302E606449007A3FC0 /* PtmParentVC.xib in Resources */,
+				84BCE9182E9E5270002C8068 /* GenderDistriTvcel.xib in Resources */,
 				843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */,
 				84017C012E4082D8006CB477 /* AttachCommonPage.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
@@ -4601,6 +4628,7 @@
 				18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */,
 				18926D332D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib in Resources */,
 				849970CA2CF8752400800B07 /* HistoryTC.xib in Resources */,
+				84BCE9142E9E4D24002C8068 /* SummerizeTvCel.xib in Resources */,
 				84FBAA842E3B7EC100A3FC31 /* CustomDasboard.xib in Resources */,
 				FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */,
 				84079FF72D15A7B000D6DF04 /* NavigationVC.xib in Resources */,
@@ -4694,6 +4722,7 @@
 				18D718642D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib in Resources */,
 				18D718652D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib in Resources */,
 				843014B92E72841000E97D11 /* AbsentStudentListVC.xib in Resources */,
+				84BCE9102E9E3AB6002C8068 /* SchoolStrengthCvcell.xib in Resources */,
 				18D718662D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib in Resources */,
 				18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */,
 				18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */,
@@ -4973,12 +5002,14 @@
 				840177E92E3B2CE0006CB477 /* ContentCell.swift in Sources */,
 				18926C532D02DE81002BBB97 /* LsrwListShowViewController.swift in Sources */,
 				18926C542D02DE81002BBB97 /* SubmitResponseForSkillModal.swift in Sources */,
+				84BCE9172E9E5270002C8068 /* GenderDistriTvcel.swift in Sources */,
 				844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */,
 				FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */,
 				FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */,
 				843F9A2D2DAF71FF00215973 /* SenderHomeWorkVC.swift in Sources */,
 				84017F862E44B1BD006CB477 /* CertificatePreviewVc.swift in Sources */,
 				FAFF9DD42D6C7B7A00498368 /* SltoCreationViewController.swift in Sources */,
+				84BCE9132E9E4D24002C8068 /* SummerizeTvCel.swift in Sources */,
 				FAFF9DD52D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift in Sources */,
 				FAFF9DD62D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift in Sources */,
 				FAFF9DD72D6C7B7A00498368 /* SubjectListForStudentResponse.swift in Sources */,
@@ -5001,6 +5032,7 @@
 				FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */,
 				FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */,
 				FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */,
+				84BCE90F2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift in Sources */,
 				FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */,
 				FAFF9DE32D6C7B7A00498368 /* SlotHistoryForParentResponse.swift in Sources */,
 				FAFF9DE42D6C7B7A00498368 /* SubjectListForStudentRequest.swift in Sources */,

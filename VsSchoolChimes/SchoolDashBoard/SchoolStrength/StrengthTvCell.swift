@@ -10,31 +10,35 @@ import Charts
 
 class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var standardLbl: UILabel!
+    @IBOutlet weak var viewDetailsBtnName: UIButton!
+    @IBOutlet weak var standardFullview: UIView!
     @IBOutlet weak var girlsCountLbl: UILabel!
     @IBOutlet weak var boysCountLbl: UILabel!
-    @IBOutlet weak var StandardBtn: UIButton!
+  
     @IBOutlet weak var sectionCollertionView: UICollectionView!
-    @IBOutlet weak var dropdownImgview: UIImageView!
+   
     @IBOutlet weak var countLbl: UILabel!
-    @IBOutlet weak var countView: UIView!
+   
     @IBOutlet weak var barchartHeight: NSLayoutConstraint!
     @IBOutlet weak var cellview: UIView!
-    @IBOutlet weak var StandardView: UIView!
+   
     var sections: [SectionList]?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        standardFullview.setShadow(cornerRadius:5)
+        viewDetailsBtnName.layer.cornerRadius = 5
         // Initial UI Setup
         barchartHeight.constant = 0
         countLbl.setFont(style: .body, size: FontSize.BodySize)
         boysCountLbl.setFont(style: .body, size: FontSize.BodySize)
         girlsCountLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
-        
-        StandardView.layer.cornerRadius = 10
+//        StandardBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+//        
+//        StandardView.layer.cornerRadius = 10
         cellview.layer.cornerRadius = 10
-        countView.layer.cornerRadius = 10
+//        countView.layer.cornerRadius = 10
         
         sectionCollertionView.delegate = self
         sectionCollertionView.dataSource = self
