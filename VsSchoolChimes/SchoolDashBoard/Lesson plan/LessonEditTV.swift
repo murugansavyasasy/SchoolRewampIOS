@@ -66,7 +66,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
         
         NameLbl.text = "\(edit.name ?? "") :"
         currentFieldType = edit.field_type ?? ""
-        fieldID = edit.field_id ?? ""
+        fieldID = edit.field_id ?? edit.id ?? ""
         originalValue = edit.value ?? ""
 
             switch edit.field_type {
@@ -79,8 +79,8 @@ class LessonEditTV: UITableViewCell, Datepicker {
                 DropDownView.isHidden = false
                 dateBtn.isHidden = true
                 dropDownBtn.isHidden = false
-                DropdownField.text = edit.value
-                DropdownLbl.text = edit.value
+                DropdownField.text = edit.value ?? "Select Value"
+                DropdownLbl.text = edit.value ?? "Select Value"
                 DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
                 DropdownField.isEnabled = !(edit.is_disable ?? false)
                 DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
@@ -165,7 +165,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
 
        // MARK: - Datepicker delegate method
        func date(date: String) {
-           DropdownField.text = date
+           DropdownLbl.text = date
            if date != originalValue {
                let convertedDate = convertDate(date) ?? ""
                onEdit?(fieldID, convertedDate)

@@ -11,6 +11,7 @@ import UIKit
 @available(iOS 15.0, *)
 class LessonPlanVC: UIViewController {
     
+
     @IBOutlet weak var MenuNameLbl: UILabel!
     @IBOutlet weak var searchIconBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
@@ -167,7 +168,7 @@ class LessonPlanVC: UIViewController {
         ReqestType = LessonPlanStringFile.allclass
         lesson_plan_staff_report_Api()
     }
-    
+  
     @IBAction func MyClassAct(_ sender: Any) {
         addUnderline(to: MyClassBtn, unselectedButton: AllClassBtn)
         ReqestType = LessonPlanStringFile.myclass
@@ -227,7 +228,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         
         guard let lesson = SearchData?[indexPath.row] else { return }
         
-        if lesson.total_items != "0"{
+//        if lesson.total_items != "0"{
             let vc = ViewLessonVC(nibName: nil, bundle: nil)
             vc.Reqest_Type = ReqestType
             vc.SubjectId = lesson.section_subject_id
@@ -235,7 +236,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
             vc.modalPresentationStyle = .fullScreen
             
             present(vc, animated: true)
-        }
+//        }
     }
     
     @objc func ViewbtnAct(_ sender: UIButton) {

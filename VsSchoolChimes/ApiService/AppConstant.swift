@@ -110,7 +110,9 @@ struct ServiceUrl{
     static let lms_api_lesson_plan_staff_report = "lms/api/lesson-plan/staff-report"
     static let lms_api_lesson_plan_view = "lms/api/lesson-plan/view"
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"
+    static let lms_api_lesson_plan_get_data_for_add = "lms/api/lesson-plan/get-data-for-add"
     static let lms_api_lesson_plan_update = "lms/api/lesson-plan/update"
+    static let lms_api_lesson_plan_add = "lms/api/lesson-plan/add"
     static let lms_api_lesson_plan_delete = "lms/api/lesson-plan/delete"
     // MARK: PAUKET API URL
     static let activate_coupon = "activate_coupon"
@@ -179,6 +181,7 @@ struct ServiceUrl{
     static let fee_api_fee_details_invoice_details = "fee/api/fee-details/invoice-details"
     static let lms_api_quiz_pick_from_qbank = "lms/api/quiz/pick-from-qbank"
     static let comm_api_interaction_staff_ans_question = "comm/api/interaction/staff-ans-question"
+    static let dashboard_api_dashboard_new_updates = "dashboard/api/dashboard/new-updates"
 }
 
 struct localData{

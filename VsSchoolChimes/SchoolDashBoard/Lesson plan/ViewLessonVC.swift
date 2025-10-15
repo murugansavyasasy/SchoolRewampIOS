@@ -11,13 +11,7 @@ import UIKit
 class ViewLessonVC: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                let vc = EditLessonVC(nibName: nil, bundle: nil)
-                vc.particular_Id = id
-                vc.ReqestType  = self.Reqest_Type
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
-            }
+            Get_Edit_Details(id: id ?? "", reqestType: self.Reqest_Type ?? "")
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_Delete_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
@@ -29,6 +23,8 @@ class ViewLessonVC: UIViewController, SelectedId {
             }
         }
     }
+
+    @IBOutlet weak var creteBtn: UIButton!
     @IBOutlet weak var BAckBtn: UIButton!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var NoDataImg: UIImageView!
@@ -54,7 +50,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                 firstLine: MenuStringFile.LessonPlan,
                 secondLine: staffDetails?.school_name ?? ""
             )
-        
+        creteBtn.setShadow(cornerRadius: creteBtn.frame.width/2)
         NoDataImg.isHidden = true
         NoDataLbl.isHidden = true
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
@@ -133,7 +129,46 @@ class ViewLessonVC: UIViewController, SelectedId {
             }
         }
     }
-    
+    func Get_Edit_Details(id:String,reqestType:String) {
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
+        
+        let param: [String: Any] = [
+            LessonPlanStringFile.particular_id: id,
+            LessonPlanStringFile.request_type: reqestType
+        ]
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit,
+            parameters: param,
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<LessonEditResponse, Error>) in
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                if #available(iOS 15.0, *) {
+                    self.hideActivityLoader()
+                }
+                
+                switch result {
+                case .success(let success):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        let vc = EditLessonVC(nibName: nil, bundle: nil)
+                        vc.EditData = success.data ?? []
+                        vc.particular_Id = id
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                    
+                case .failure(let error):
+                    print("API Error:", error.localizedDescription)
+                }
+            }
+        }
+    }
     func Delete_LessonPlan_Api(particularID: String){
         
         APIService.shared
@@ -171,7 +206,36 @@ class ViewLessonVC: UIViewController, SelectedId {
         
         dismiss(animated: true)
     }
-    
+    @IBAction func createLessonPlan(_ sender: UIButton) {
+        let param: [String: Any] = [
+            LessonPlanStringFile.request_type: Reqest_Type ?? ""]
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.lms_api_lesson_plan_get_data_for_add,
+            parameters: param,
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<LessonEditResponse, Error>) in
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch result {
+                case .success(let success):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        let vc = EditLessonVC(nibName: nil, bundle: nil)
+                        vc.EditData = success.data ?? []
+                        vc.particular_Id = self.SubjectId ?? ""
+                        vc.isCreate = true
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                    
+                case .failure(let error):
+                    print("API Error:", error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
 @available(iOS 14.0, *)

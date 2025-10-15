@@ -98,7 +98,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
         
-        
     }
     @objc func catagoryTapped() {
         print("Category View Tapped")
