@@ -18,20 +18,20 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var totalduraionLbl: UILabel!
     @IBOutlet weak var AudioFullView: UIView!
     @IBOutlet weak var scrlView: UIScrollView!
-    
     @IBOutlet weak var reasonImgView: UIImageView!
     @IBOutlet weak var reasonDfltLbl: UILabel!
     @IBOutlet weak var voiceTitle: UILabel!
     @IBOutlet weak var reasonLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
-    var player: AVPlayer?
-       var playerItem: AVPlayerItem?
-       var timer: Timer?
-
-       @IBOutlet weak var playButton: UIButton!
-       @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var slider: UISlider!
+    
     var file_path: [FilePath]?
     var MsgFromManagmentData = ManagemantMessageData()
+    var player: AVPlayer?
+    var playerItem: AVPlayerItem?
+    var timer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,11 +52,18 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         cv.delegate = self
         cv.dataSource = self
        
-        
-        if MsgFromManagmentData.content  != ""{
-            
+        if MsgFromManagmentData.type == "ATTACHMENT"{
+            AudioFullView.isHidden = true
+            cv.isHidden = false
+        }else if MsgFromManagmentData.type == "VOICE"{
+            AudioFullView.isHidden = false
+            cv.isHidden = true
             setupAudio()
+        }else{
+            AudioFullView.isHidden = true
+            cv.isHidden = true
         }
+
         reasonLbl.isHidden = MsgFromManagmentData.description?.isEmpty ?? true
         reasonDfltLbl.isHidden = reasonLbl.isHidden
         reasonImgView.isHidden = reasonLbl.isHidden

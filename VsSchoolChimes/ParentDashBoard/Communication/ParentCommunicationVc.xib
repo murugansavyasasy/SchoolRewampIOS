@@ -25,7 +25,6 @@
                 <outlet property="SearchbarStack" destination="XBM-BP-zIF" id="TBJ-fs-gm9"/>
                 <outlet property="TitleLbl" destination="lVZ-Mz-UA9" id="0Be-p0-1dS"/>
                 <outlet property="UnreadBtn" destination="oah-Cx-55a" id="Eg0-8j-guU"/>
-                <outlet property="archivedNoDataLbl" destination="46P-Gh-YGV" id="gIt-FO-S5U"/>
                 <outlet property="backBtn" destination="Rve-lW-nuS" id="WfH-82-laS"/>
                 <outlet property="menuNameLbl" destination="LiK-KX-e40" id="IpT-eu-HLQ"/>
                 <outlet property="searchBtn" destination="3Au-Qi-CGq" id="37P-Nf-dSL"/>
@@ -200,7 +199,7 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-QE-Mgk">
-                            <rect key="frame" x="0.0" y="189" width="393" height="282"/>
+                            <rect key="frame" x="0.0" y="189" width="393" height="306"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Ssk-lI-qh0">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="280"/>
@@ -209,7 +208,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEA-A6-7Qc">
-                                    <rect key="frame" x="50" y="282" width="293" height="0.0"/>
+                                    <rect key="frame" x="50" y="282" width="293" height="24"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -221,23 +220,15 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eRX-Xs-h49">
-                            <rect key="frame" x="0.0" y="471" width="393" height="223"/>
+                            <rect key="frame" x="0.0" y="495" width="393" height="199"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0aZ-ZG-7aL">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="199"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46P-Gh-YGV">
-                                    <rect key="frame" x="25" y="207" width="343" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="46P-Gh-YGV" secondAttribute="trailing" constant="25" id="Y2s-Un-R5N"/>
                                 <constraint firstItem="0aZ-ZG-7aL" firstAttribute="leading" secondItem="eRX-Xs-h49" secondAttribute="leading" id="a5Q-0c-kJq"/>
-                                <constraint firstItem="46P-Gh-YGV" firstAttribute="leading" secondItem="eRX-Xs-h49" secondAttribute="leading" constant="25" id="bU0-rA-yXc"/>
                                 <constraint firstAttribute="trailing" secondItem="0aZ-ZG-7aL" secondAttribute="trailing" id="w6g-Pa-GVA"/>
                             </constraints>
                         </stackView>
