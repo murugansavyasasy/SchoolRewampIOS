@@ -110,6 +110,9 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         searchBar.backgroundImage = UIImage()
         searchStack.isHidden = true
         
+        tv.showsVerticalScrollIndicator = false
+        tv.showsHorizontalScrollIndicator = false
+        
         tv.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
         tv.delegate = self
         tv.dataSource = self
@@ -443,16 +446,24 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
         cell.nameLbl.text = filterData?[indexPath.row].name
-        cell.rollNo.isHidden = true
+       // cell.rollNo.isHidden = true
         cell.admissionlbl.text = "ADMIS No: " +  (
             filterData?[indexPath.row].admission_no ?? ""
         )
         if filterData?[indexPath.row].roll_no != ""{
-            cell.rollNo.isHidden = false
-            cell.rollNo.setTitle(filterData?[indexPath.row].roll_no, for: .normal)
+//            cell.rollNo.isHidden = false
+//            cell.rollNo.setTitle(filterData?[indexPath.row].roll_no, for: .normal)
         }
         
-        cell.rollNo.isHidden = filterData?[indexPath.row].roll_no?.isEmpty ?? false
+        if indexPath.row == 2 || indexPath.row == 3{
+            cell.OnLateBtn.isHidden = true
+            cell.AttendanceBtn.backgroundColor = .systemRed
+            cell.AttendanceBtn.setTitle("A", for: .normal)
+//            cell.attendanceStack.isHidden = true
+//            cell.separatorView.isHidden = true
+        }
+        
+      //  cell.rollNo.isHidden = filterData?[indexPath.row].roll_no?.isEmpty ?? false
         cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
         cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
         cell.phnBtn.tag = indexPath.row
@@ -467,3 +478,24 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
     
+//extension AttendanceMarkingVC: studentAttenance {
+
+//    func didTapPresent(studentID: String) {
+//        updateStudent(withID: studentID) { $0.attendanceStatus = "P" }
+//    }
+//
+//    func didTapAbsent(studentID: String) {
+//        updateStudent(withID: studentID) { $0.attendanceStatus = "A" }
+//    }
+//
+//    func didTapLate(studentID: String) {
+//        updateStudent(withID: studentID) { $0.isLate.toggle() }
+//    }
+//
+//    private func updateStudent(withID id: String, _ update: (inout Student) -> Void) {
+//        if let index = students.firstIndex(where: { $0.studentID == id }) {
+//            update(&students[index])
+//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+//        }
+//    }
+//}

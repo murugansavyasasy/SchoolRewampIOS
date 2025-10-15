@@ -17,7 +17,7 @@
                 <outlet property="PreviousIconBtn" destination="0Yl-jh-Yfr" id="bFn-dp-5mx"/>
                 <outlet property="backBtn" destination="q5G-XV-8zO" id="eq5-VP-s8m"/>
                 <outlet property="collectionView" destination="30M-OV-qMR" id="Wqg-aN-3g9"/>
-                <outlet property="headerView" destination="sAG-UU-jXr" id="wYi-gV-kk1"/>
+                <outlet property="headerView" destination="sAG-UU-jXr" id="uru-Mb-IVL"/>
                 <outlet property="pageViewController" destination="J8h-0J-9vE" id="jCq-Ic-kfT"/>
                 <outlet property="skipNextBtn" destination="h5H-ZO-TKN" id="RrA-Tt-wta"/>
                 <outlet property="skipPreviousBtn" destination="l88-Hk-1YF" id="0rf-y4-9AQ"/>
@@ -32,7 +32,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAG-UU-jXr" customClass="AnimatedGradientView" customModule="School_Chimes" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAG-UU-jXr">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="154.33333333333334"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pCt-NF-3gB">
