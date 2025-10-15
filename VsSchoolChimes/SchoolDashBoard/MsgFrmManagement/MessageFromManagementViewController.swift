@@ -16,17 +16,43 @@ import DropDown
 class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, viewAttachments {
     func viewAttachment(sender: UIButton) {
         
-        let vc = MsgViewVC()
-        vc.modalPresentationStyle = .formSheet
-        if let data = SearchData?[sender.tag]{
-            vc.MsgFromManagmentData = data
+        let popoverContentVC = MsgViewVC()
+        popoverContentVC.modalPresentationStyle = .popover
+
+        if let data = SearchData?[sender.tag] {
+            popoverContentVC.MsgFromManagmentData = data
+            popoverContentVC.file_path = data.file_path
         }
+
+        // Set popover size — full width minus side padding, height based on content
+        let paddingX: CGFloat = 20
+        let width = view.frame.width - (paddingX * 2)
+        let height = popoverContentVC.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+
+        popoverContentVC.preferredContentSize = CGSize(width: width, height: height)
+
+        // Center the popover in the middle of the screen
+        let originX = (view.frame.width - width) / 2
+        let originY = (view.frame.height - height) / 2
+        let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
+
+        if let popover = popoverContentVC.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.sourceRect = sourceRect
+            popover.permittedArrowDirections = []  // no arrow
+            popover.delegate = self
+        }
+
+        present(popoverContentVC, animated: true, completion: nil)
+
         
-        vc.file_path = SearchData?[sender.tag].file_path
-        present(vc, animated: true, completion: nil)
-        
-        
-        
+//        let vc = MsgViewVC()
+//        vc.modalPresentationStyle = .formSheet
+//        if let data = SearchData?[sender.tag]{
+//            vc.MsgFromManagmentData = data
+//        }
+//        vc.file_path = SearchData?[sender.tag].file_path
+//        present(vc, animated: true, completion: nil)
         
         if SearchData?[sender.tag].type == "VOICE"{
             ReadStatusUpdate(
@@ -510,5 +536,12 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
         }
         
         tv.reloadData()
+    }
+}
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Return .none to keep it as popover on iPhone
+        return .none
     }
 }

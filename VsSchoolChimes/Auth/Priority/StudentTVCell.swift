@@ -25,7 +25,7 @@ class StudentTVCell: UITableViewCell {
     @IBOutlet weak var innerView: UIView!
     
     private var gradientLayer: CAGradientLayer?
-    
+    private var gradientColors: [CGColor] = []
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -43,9 +43,12 @@ class StudentTVCell: UITableViewCell {
         super.layoutSubviews()
         
         // Update gradient layer frame to match Cellview's bounds
-        gradientLayer?.frame = Cellview.bounds
-        TopView.applyCustomCorners(topLeft: 0, topRight: 10, bottomLeft: 20, bottomRight: 0)
-        BottomView.applyCustomCorners(topLeft: 0, topRight: 20, bottomLeft: 10, bottomRight: 0)
+        DispatchQueue.main.async {
+            self.applyGradient()
+            self.TopView.applyCustomCorners(topLeft: 0, topRight: 10, bottomLeft: 20, bottomRight: 0)
+            self.BottomView.applyCustomCorners(topLeft: 0, topRight: 20, bottomLeft: 10, bottomRight: 0)
+        }
+        
     }
     
     private func setupUI() {
@@ -64,9 +67,10 @@ class StudentTVCell: UITableViewCell {
     }
     
     private func applyGradient() {
-        // Remove any existing gradient layer
-        gradientLayer?.removeFromSuperlayer()
+        guard gradientColors.isEmpty == false else { return }
         
+        // Remove existing gradient layers if any
+        Cellview.layer.sublayers?.removeAll { $0 is CAGradientLayer }
         // Create new gradient layer
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor(hex: "#1E3A8A").cgColor, UIColor(hex: "#3B82F6").cgColor]
@@ -74,13 +78,9 @@ class StudentTVCell: UITableViewCell {
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.frame = Cellview.bounds
         gradientLayer.cornerRadius = Cellview.layer.cornerRadius
-        gradientLayer.masksToBounds = true
         
         // Insert gradient layer
         Cellview.layer.insertSublayer(gradientLayer, at: 0)
-        
-        // Store reference to the gradient layer
-        self.gradientLayer = gradientLayer
     }
 }
 

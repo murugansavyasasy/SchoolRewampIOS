@@ -452,36 +452,6 @@
             endingLineNumber = "268"
             landmarkName = "AttachmentDelete(id:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "727549AF-16E8-479F-A509-91258C5FAD45 - 1ee301f253bbcc35"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "School_Chimes.AttachHistroyVC.AttachmentDelete(id: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Sender%20Attachment/AttachHistroyVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "269"
-                  endingLineNumber = "269">
-               </Location>
-               <Location
-                  uuid = "727549AF-16E8-479F-A509-91258C5FAD45 - e69bccce9792fb39"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in School_Chimes.AttachHistroyVC.AttachmentDelete(id: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Sender%20Attachment/AttachHistroyVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "270"
-                  endingLineNumber = "270">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -567,16 +537,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EB72BBAA-E279-48BD-9273-1F2F3D528246"
+            uuid = "74F457E2-1D6B-40D7-B41B-3B8B2C260C91"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolStrength/SummerizeTvCel.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/MsgFrmManagement/MessageFromManagementViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "viewAttachment(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
