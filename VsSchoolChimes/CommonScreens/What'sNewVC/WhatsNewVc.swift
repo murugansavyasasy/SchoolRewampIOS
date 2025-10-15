@@ -17,7 +17,8 @@ class WhatsNewVc: UIViewController {
     @IBOutlet weak var whatsnewLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var headerView: AnimatedGradientView!
+//    @IBOutlet weak var headerView: AnimatedGradientView!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var skipNextBtn: UIButton!
     @IBOutlet weak var skipPreviousBtn: UIButton!
     @IBOutlet weak var NextIconBtn: UIButton!

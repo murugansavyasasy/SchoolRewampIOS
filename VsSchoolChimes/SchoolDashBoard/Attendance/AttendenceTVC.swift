@@ -4,6 +4,13 @@ protocol Attendence{
     func statusUpdate(status:Bool,index:Int)
 }
 
+protocol studentAttenance: AnyObject{
+    
+    func didAbsentOrPresentTapped(studentId:String, IsPresent:Bool)
+    func didLateTapped(studentId:String, IsLate:Bool)
+    func didOnDutyTapped(studentId:String, OnDuty:Bool)
+}
+
 class AttendenceTVC: UITableViewCell, Attendence {
     
     func statusUpdate(status: Bool, index: Int) {
@@ -16,37 +23,48 @@ class AttendenceTVC: UITableViewCell, Attendence {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var customSwitchContainer: UIView!
     @IBOutlet weak var nameLbl: UILabel!
-    @IBOutlet weak var rollNo: UIButton!
+//    @IBOutlet weak var rollNo: UIButton!
     @IBOutlet weak var presentLbl: UILabel!
     @IBOutlet weak var absentLbl: UILabel!
+    @IBOutlet weak var ODSwitch: UISwitch!
+    @IBOutlet weak var AttendanceBtn: UIButton!
+    @IBOutlet weak var OnLateBtn: UIButton!
+    @IBOutlet weak var attendanceStack: UIStackView!
+    @IBOutlet weak var separatorView: UIView!
+    
     var custSwitch: CustomSwitch1!
     var delegate: Attendence?
+    var studentId: String?
+    //weak var delegate: studentAttenance?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        AttendanceBtn.layer.cornerRadius = AttendanceBtn.frame.width / 2
+        ODSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         // Initialize and configure the custom switch
         custSwitch = CustomSwitch1()
         custSwitch.delegate = self
-        rollNo.layer.backgroundColor = UIColor(red: 189/255, green: 230/255, blue: 254/255, alpha: 1).cgColor
-        rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
+//        rollNo.layer.backgroundColor = UIColor(red: 189/255, green: 230/255, blue: 254/255, alpha: 1).cgColor
+//        rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
         admissionlbl.setFont(style: .body, size: FontSize.BodySize)
-        rollNo.translatesAutoresizingMaskIntoConstraints = false
-        rollNo.titleLabel?.adjustsFontSizeToFitWidth = true
-        rollNo.titleLabel?.minimumScaleFactor = 0.5
-        rollNo.titleLabel?.numberOfLines = 1
-        rollNo.titleLabel?.lineBreakMode = .byClipping
-        rollNo.layer.cornerRadius = 8
+//        rollNo.translatesAutoresizingMaskIntoConstraints = false
+//        rollNo.titleLabel?.adjustsFontSizeToFitWidth = true
+//        rollNo.titleLabel?.minimumScaleFactor = 0.5
+//        rollNo.titleLabel?.numberOfLines = 1
+//        rollNo.titleLabel?.lineBreakMode = .byClipping
+//        rollNo.layer.cornerRadius = 8
         presentLbl.setFont(style: .body, size: FontSize.BodySize)
         absentLbl.setFont(style: .body, size: FontSize.BodySize)
-        rollNo.setTitleFont(style: .body, size: FontSize.BodySize)
+//        rollNo.setTitleFont(style: .body, size: FontSize.BodySize)
         phnBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         absentLbl.text = CommonStringFile.Absent.translated()
         presentLbl.text = CommonStringFile.Present.translated()
         presentLbl.textColor = Colornames.AprovedClr
         absentLbl.textColor = .red
-        rollNo.titleLabel?.numberOfLines = 0
-        rollNo.titleLabel?.textAlignment = .center
+//        rollNo.titleLabel?.numberOfLines = 0
+//        rollNo.titleLabel?.textAlignment = .center
 
         // Add the custom switch to the container view
         customSwitchContainer.addSubview(custSwitch)
@@ -63,6 +81,25 @@ class AttendenceTVC: UITableViewCell, Attendence {
         // Dynamically set the frame of the custom switch to match the container view
         custSwitch.frame = customSwitchContainer.bounds
     }
+    
+//    @IBAction func presentButtonTapped(_ sender: UIButton) {
+//        if let id = studentId {
+//                delegate?.didTapPresent(studentID: id)
+//            }
+//        }
+//
+//        @IBAction func absentButtonTapped(_ sender: UIButton) {
+//            if let id = studentId {
+//                delegate?.didTapAbsent(studentID: id)
+//            }
+//        }
+//
+//        @IBAction func lateButtonTapped(_ sender: UIButton) {
+//            if let id = studentId {
+//                delegate?.didTapLate(studentID: id)
+//            }
+//        }
+    
     @IBAction func phnBtn(_ sender: UIButton) {
         let phoneNumber = sender.titleLabel?.text ?? "1234567890" // Replace with the phone number you want
         if let phoneURL = URL(string: "tel://\(phoneNumber)"),

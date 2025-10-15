@@ -63,7 +63,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var TitleLbl: UILabel!
-    @IBOutlet weak var archivedNoDataLbl: UILabel!
     
     
     var BtnId = 1
@@ -74,6 +73,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     var passValue = 0
     var count = 5
     var shouldShowFooter = true
+    var shouldShowFooterLabel = false
+    var ArchiveMessage = ""
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var TotalMessageList : [CommunicationReciverData]?
     var FilteredMessages : [CommunicationReciverData]?
@@ -165,9 +166,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
-        archivedNoDataLbl.isHidden = true
         NodataLbl.setFont(style: .title, size: 17)
-        archivedNoDataLbl.setFont(style: .title, size: 17)
+        
     }
     
     //MARK: Cell registration
@@ -427,6 +427,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                        // SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         self.NodataLbl.isHidden = true
                         self.NodataImage.isHidden = true
+                        self.shouldShowFooterLabel = false
                         self.tv.isHidden = false
                         self.searchBtn.isHidden = false
                         self.tv.isScrollEnabled = true
@@ -442,14 +443,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         if self.TotalMessageList?.count == 0 {
                             //SearchbarStack.isHidden = true
                             self.NodataLbl.text = SuccessMessage.message
-                            //NodataLbl.text = "Something went wrong! Try again Later"
+                            self.shouldShowFooterLabel = false
                             self.tv.isHidden = true
                             self.searchBtn.isHidden = true
                             self.NodataImage.isHidden = false
                             self.NodataLbl.isHidden = false
                         }else {
-                            self.archivedNoDataLbl.text = SuccessMessage.message
-                            self.archivedNoDataLbl.isHidden = false
+                            self.ArchiveMessage = SuccessMessage.message
+                            self.shouldShowFooterLabel = true
                         }
                     }
                 }
@@ -458,6 +459,20 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                 
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
+                    self.tv.reloadData()
+                    
+                    if self.TotalMessageList?.count == 0 {
+                        //SearchbarStack.isHidden = true
+                        self.NodataLbl.text = error.localizedDescription
+                        //NodataLbl.text = "Something went wrong! Try again Later"
+                        self.tv.isHidden = true
+                        self.searchBtn.isHidden = true
+                        self.NodataImage.isHidden = false
+                        self.NodataLbl.isHidden = false
+                    }else {
+                        self.ArchiveMessage = error.localizedDescription
+                        self.shouldShowFooterLabel = true
+                    }
                 }
             }
         }
@@ -679,10 +694,10 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
+        let footerView = UIView()
+        footerView.backgroundColor = .clear
+        
         if shouldShowFooter {
-            // Create a footer view
-            let footerView = UIView()
-            footerView.backgroundColor = .clear
             
             // Create a button instead of a label
             let button = UIButton(type: .system)
@@ -712,14 +727,36 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 button.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -8)
             ])
             
-            return footerView
-        }else {
-            return UIView()
+        }else if shouldShowFooterLabel{
+            
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = ArchiveMessage
+            label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+            label.textColor = .black
+            label.textAlignment = .center
+            label.numberOfLines = 0
+            
+            footerView.addSubview(label)
+            
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
+                label.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
+                label.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 20),
+                label.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -20),
+                label.centerXAnchor.constraint(equalTo: footerView.centerXAnchor)
+            ])
         }
+        
+        return footerView
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return shouldShowFooter ? 44 : 0.01
+        return (shouldShowFooter || shouldShowFooterLabel) ? UITableView.automaticDimension : 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        return 44
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

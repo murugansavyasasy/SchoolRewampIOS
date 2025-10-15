@@ -14,6 +14,8 @@ import DropDown
 
 @available(iOS 14.0, *)
 class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, viewAttachments {
+    
+    
     func viewAttachment(sender: UIButton) {
         
         let popoverContentVC = MsgViewVC()
@@ -44,15 +46,6 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         }
 
         present(popoverContentVC, animated: true, completion: nil)
-
-        
-//        let vc = MsgViewVC()
-//        vc.modalPresentationStyle = .formSheet
-//        if let data = SearchData?[sender.tag]{
-//            vc.MsgFromManagmentData = data
-//        }
-//        vc.file_path = SearchData?[sender.tag].file_path
-//        present(vc, animated: true, completion: nil)
         
         if SearchData?[sender.tag].type == "VOICE"{
             ReadStatusUpdate(
@@ -74,7 +67,37 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         }
         
         
+        guard let data = SearchData?[sender.tag] else { return }
+
+        let vc = MsgViewVC()
+        vc.modalPresentationStyle = .formSheet
+        vc.MsgFromManagmentData = data
+        vc.file_path = data.file_path
+        present(vc, animated: true, completion: nil)
+
+        // Determine message type for ReadStatusUpdate
+        var messageType: String?
+
+        switch data.type {
+        case "VOICE":
+            messageType = "VOICE"
+        case "TEXT":
+            messageType = "TEXT"
+        case "ATTACHMENT":
+            messageType = "ATTACHMENT"
+        default:
+            break
+        }
+
+        guard let type = messageType else { return }
+
+        if data.is_archive == true {
+            ReadStatusUpdateArchive(type: type, detail_id: data.id ?? "")
+        }else{
+            ReadStatusUpdate(type: type, detail_id: data.id ?? "")
+        }
     }
+
     
     
     @IBOutlet weak var menuNameLbl: UILabel!
@@ -89,12 +112,15 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var schoolName: UILabel!
     
+    
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var messageData: [ManagemantMessageData]?
     var SearchData: [ManagemantMessageData]?
     var dateFormatter = DateFormatter()
     var shouldShowFooter = true
+    var shouldShowFooterLabel = false
+    var archiveMessage = ""
     var playIndex :Int?
     var readIndex: Int?
     var dropDown = DropDown()
@@ -124,6 +150,14 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         schoolDropDown.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchoolDropDownAct)))
         schoolDropDown.isUserInteractionEnabled = true
         
+       if checkMutipleSchool() {
+            
+           schoolDropDown.isHidden = false
+       }else{
+           schoolDropDown.isHidden = true
+           
+       }
+        
         FilterCV.isHidden = true
         NoDataLbl.isHidden = true
         NoDataImage.isHidden = true
@@ -137,7 +171,23 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         Get_messages()
     }
     
-    
+    func checkMutipleSchool() -> Bool{
+        
+        if school_details?.count ?? 0 > 1 {
+            
+            switch school_details?.first?.priority_level{
+                
+            case PriorityType.is_principal,PriorityType.is_grouphead, PriorityType.is_admin :
+                
+                return true
+                
+            default:
+                return false
+            }
+        }
+        
+        return false
+    }
     
     func Cell_Registration() {
         
@@ -178,28 +228,48 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     
     func get_messages_archive() {
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_msg_from_management_get_messages_staff_archive, parameters: [:], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[self] (result: Result<MessageFromManagementResp,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_msg_from_management_get_messages_staff_archive, parameters: [:], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[weak self] (result: Result<MessageFromManagementResp,Error>) in
             
-            switch result{
-                
-            case .success(let success):
-                DispatchQueue.main.async { [self] in
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                switch result{
                     
-                    messageData?.append(contentsOf: success.data ?? [])
-                    SearchData = messageData
+                case .success(let success):
                     
-                    NoDataLbl.text = success.message
-                    NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
-                    NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
-                    tv.reloadData()
-                }
-                
-            case .failure(let error):
-                DispatchQueue.main.async { [self] in
+                    if success.status == true {
+                        self.messageData?.append(contentsOf: success.data ?? [])
+                        self.SearchData = self.messageData
+                        self.NoDataLbl.text = success.message
+                        self.shouldShowFooterLabel = false
+                        self.filterMessages()
+                    }else {
+                        
+                        if self.messageData?.count == 0{
+                            
+                            self.NoDataImage.isHidden = false
+                            self.NoDataLbl.isHidden = false
+                            self.NoDataLbl.text = success.message
+                        }else{
+                            self.archiveMessage = success.message ?? ""
+                            self.shouldShowFooterLabel = true
+                        }
+                       
+                    }
                     
-                    NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
-                    NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
-                    NoDataLbl.text = error.localizedDescription
+                    
+                case .failure(let error):
+                    
+                    if self.messageData?.count == 0{
+                        
+                        self.NoDataImage.isHidden = false
+                        self.NoDataLbl.isHidden = false
+                        self.shouldShowFooterLabel = false
+                        self.NoDataLbl.text = error.localizedDescription
+                    }else{
+                        self.archiveMessage = error.localizedDescription
+                        self.shouldShowFooterLabel = true
+                    }
                 }
             }
         }
@@ -448,7 +518,81 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         return UITableView.automaticDimension
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        // Create a footer view
+        let footerView = UIView()
+        footerView.backgroundColor = .clear
+        
+        if shouldShowFooter {
+           
+            // Create a button instead of a label
+            let button = UIButton(type: .system)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.titleLabel?.textAlignment = .right
+            // Create underlined attributed text
+            let title = "See Archived Messages"
+            let attributedTitle = NSAttributedString(
+                string: title,
+                attributes: [
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
+                    .foregroundColor: UIColor.systemBlue,
+                    .font: UIFont.systemFont(ofSize: 16, weight: .medium)
+                ]
+            )
+            button.setAttributedTitle(attributedTitle, for: .normal)
+            
+            // Add target action
+            button.addTarget(self, action: #selector(seeArchivedMessagesTapped(_:)), for: .touchUpInside)
+            
+            // Add and constrain
+            footerView.addSubview(button)
+            NSLayoutConstraint.activate([
+                button.leadingAnchor.constraint(greaterThanOrEqualTo: footerView.leadingAnchor, constant: 16),
+                button.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -16),
+                button.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 8),
+                button.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -8)
+            ])
+            
+        }else if shouldShowFooterLabel{
+            
+            let label = UILabel()
+            
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = archiveMessage
+            label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+            label.textColor = .black
+            label.textAlignment = .center
+            label.numberOfLines = 0
+            
+            footerView.addSubview(label)
+            
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
+                label.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
+                label.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 20),
+                label.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -20),
+                label.centerXAnchor.constraint(equalTo: footerView.centerXAnchor)
+            ])
+        }
+        return footerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return shouldShowFooter ? 44 : 0.01
+    }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
+        print("Archived messages tapped!")
+
+        get_messages_archive()
+        
+        shouldShowFooter = false
+    }
     
     
 }
