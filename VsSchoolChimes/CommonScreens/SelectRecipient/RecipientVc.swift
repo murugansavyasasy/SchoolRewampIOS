@@ -1469,7 +1469,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     
                 case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
                     if (staffDetailsCount?.count ?? 0) > 1 {
-                        self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                     } else {
                         self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                     }

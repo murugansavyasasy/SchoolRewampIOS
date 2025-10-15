@@ -126,18 +126,49 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     private func setupGradientBackground() {
-        let layer = CAGradientLayer()
-        layer.colors = [
-            UIColor(red: 0.31, green: 0.58, blue: 0.98, alpha: 1.0).cgColor , // #667eea
-            UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0).cgColor,  // #764ba2
-            UIColor(red: 0.18, green: 0.42, blue: 0.85, alpha: 1.0).cgColor
-        ]
+        // 1. Remove old gradient if exists
+        gradientLayer?.removeFromSuperlayer()
+        
+        // 2. Define your hex colors
+        let hexColors = ["#1E3A8A", "#3B82F6"] // deep blue to light blue
+        let cgColors = hexColors.map {
+            UIColor(hex: $0.replacingOccurrences(of: "#", with: "")).cgColor
+        }
 
-        layer.startPoint = CGPoint(x: 0, y: 0)
-        layer.endPoint = CGPoint(x: 1, y: 1)
-        layer.frame = gradientView.bounds
-        gradientView.layer.insertSublayer(layer, at: 0)
-        gradientLayer = layer
+        // 3. Create gradient layer
+        let gradient = CAGradientLayer()
+        gradient.colors = cgColors
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = gradientView.bounds
+        gradientView.layer.insertSublayer(gradient, at: 0)
+        gradientLayer = gradient
+
+        // 4. Add blur effect for glassy look ✨
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.isUserInteractionEnabled = false
+        blurView.layer.cornerRadius = 20
+        blurView.clipsToBounds = true
+
+        gradientView.insertSubview(blurView, at: 0)
+
+        NSLayoutConstraint.activate([
+            blurView.topAnchor.constraint(equalTo: gradientView.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: gradientView.bottomAnchor),
+            blurView.leadingAnchor.constraint(equalTo: gradientView.leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: gradientView.trailingAnchor)
+        ])
+
+        // 5. Border & shadow for frosted glass effect
+        gradientView.layer.cornerRadius = 20
+        gradientView.layer.borderWidth = 1
+        gradientView.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        gradientView.layer.shadowColor = UIColor.black.cgColor
+        gradientView.layer.shadowOpacity = 0.15
+        gradientView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        gradientView.layer.shadowRadius = 10
     }
     
     private func setupBellIcon() {

@@ -26,7 +26,7 @@ class SchoolStrengthVC: UIViewController {
     var acodemicId: Int?
     var chartSet = false
     let acidamicdrops = DropDown()
-
+    var displayArray : [StrengthDisplayModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,8 +42,10 @@ class SchoolStrengthVC: UIViewController {
         let nib1 = UINib(nibName: CellConfingName.SectionStregnthTVC, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
         Tv.register(nib1, forCellReuseIdentifier: CellConfingName.SectionStregnthTVC)
-        Tv.delegate = self
-        Tv.dataSource = self
+        Tv.register(UINib(nibName: "SummerizeTvCel", bundle: nil), forCellReuseIdentifier: "SummerizeTvCel")
+        Tv.register(UINib(nibName: "GenderDistriTvcel", bundle: nil), forCellReuseIdentifier: "GenderDistriTvcel")
+        
+      
         Tv.estimatedRowHeight = 100
         Tv.rowHeight = UITableView.automaticDimension
 
@@ -53,6 +55,30 @@ class SchoolStrengthVC: UIViewController {
         if localData.accidamic_year_data?.data?.isEmpty == false {
             getacadmicYr()
         }
+    }
+
+    
+    func createStrengthList(from data: SchoolStrength) -> [StrengthDisplayModel] {
+        var list: [StrengthDisplayModel] = []
+        
+        let totalStudent = Int(data.total_student_strength ?? "0") ?? 0
+        let totalStaff = Int(data.total_staff_strength ?? "0") ?? 0
+        let total = totalStudent + totalStaff
+
+ 
+        list
+            .append(
+                StrengthDisplayModel(
+                    count: totalStudent,
+                    name: "Staff",
+                    previousYear: 10,
+                    Girl: Int(data.total_girls_strength ?? "0") ?? 0
+                )
+            )
+        list.append(StrengthDisplayModel(count: totalStaff, name: "Students", previousYear: 12,Girl: Int(data.total_girls_strength ?? "0") ?? 0))
+        list.append(StrengthDisplayModel(count: total, name: "Total", previousYear: 8,Girl: Int(data.total_girls_strength ?? "0") ?? 0))
+        
+        return list
     }
 
     func UIupdate() {
@@ -84,6 +110,7 @@ class SchoolStrengthVC: UIViewController {
     }
 
     func Get_School_Strength() {
+        displayArray.removeAll()
         APIService.shared.makeApi(
             url: ServiceUrl.admin_api_get_school_strength,
             parameters: [COMMON_PARAMETER.academic_year_id: acodemicId ?? 0],
@@ -94,8 +121,15 @@ class SchoolStrengthVC: UIViewController {
 
             switch result {
             case .success(let response):
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     self.SchoolStrength = response.data
+                    if let firstData = response.data?.first {
+                        let strengthList = self.createStrengthList(from: firstData)
+                        
+                        // இங்கே உங்க chart / progress update function க்கு pass பண்ணலாம்
+                        print("✅ Strength List:", strengthList)
+                        self.displayArray = strengthList
+                    }
                     self.selectedIndexPath = nil
                     self.chartSet = false
 
@@ -103,6 +137,8 @@ class SchoolStrengthVC: UIViewController {
                     self.norecordLbl.text = response.message
                     self.norecordLbl.isHidden = hasData
                     self.norecordImg.isHidden = hasData
+                    self.Tv.delegate = self
+                    self.Tv.dataSource = self
                     self.Tv.reloadData()
                     if hasData {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
@@ -123,36 +159,60 @@ class SchoolStrengthVC: UIViewController {
 extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return (SchoolStrength?.isEmpty ?? true) ? 1 : 2
+//        return (SchoolStrength?.isEmpty ?? true) ? 1 : 2
+        
+        return 3
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? SchoolStrength?.count ?? 0 : (SchoolStrength?.first?.standards?.count ?? 0)
+//        return section == 0 ? SchoolStrength?.count ?? 0 : (SchoolStrength?.first?.standards?.count ?? 0)
+        
+        if section == 0 {
+            
+            return 1
+        }else if section == 1 {
+            return 1
+        }else{
+            
+            return SchoolStrength?.first?.standards?.count ?? 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SectionStregnthTVC, for: indexPath) as? SectionStregnthTVC else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SummerizeTvCel", for: indexPath) as? SummerizeTvCel else {
                 return UITableViewCell()
             }
-            if !chartSet {
-                cell.schoolStrength = SchoolStrength?.first
-            }
-            applyShadowAndCornerRadius(to: cell.outerView)
+            
+            
+            cell.dispalyArray = displayArray
+//            if !chartSet {
+//                cell.schoolStrength = SchoolStrength?.first
+//            }
+//            applyShadowAndCornerRadius(to: cell.outerView)
             return cell
 
-        } else {
+        }
+        else if indexPath.section == 1 {
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "GenderDistriTvcel", for: indexPath) as? GenderDistriTvcel else {
+                return UITableViewCell()
+            }
+            
+            return cell
+        }
+        else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StrengthTvCell, for: indexPath) as? StrengthTvCell,
                   let standard = SchoolStrength?.first?.standards?[indexPath.row] else {
                 return UITableViewCell()
             }
 
             cell.configure(standard.sections)
-            cell.StandardBtn.setTitle(standard.name, for: .normal)
+            cell.standardLbl.text = " Standard  " + (standard.name ?? "")
             cell.boysCountLbl.text = "Boys : \(standard.boys_count ?? 0)"
             cell.girlsCountLbl.text = "Girls : \(standard.girls_count ?? 0)"
-            cell.countLbl.text = "Total: \(standard.total_students ?? "")"
+            cell.countLbl.text = "Total Students: \(standard.total_students ?? "")"
 
             let isExpanded = (indexPath == selectedIndexPath)
             cell.barchartHeight.constant = isExpanded ? cell.sectionCollertionView.collectionViewLayout.collectionViewContentSize.height : 0
@@ -169,7 +229,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section != 1  ||  indexPath.section != 0 {
             selectedIndexPath = (selectedIndexPath == indexPath) ? nil : indexPath
             chartSet = true
             tableView.reloadData()
@@ -177,6 +237,21 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        switch indexPath.section{
+        case 0 : return 190
+        case 1 :  return 150
+        default:
+            return UITableView.automaticDimension
+        }
+        
     }
+    
+    
+}
+
+struct StrengthDisplayModel {
+    var count: Int
+    var name: String
+    var previousYear: Int
+    var Girl : Int
 }

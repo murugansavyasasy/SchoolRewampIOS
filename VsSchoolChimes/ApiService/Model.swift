@@ -496,6 +496,7 @@ struct Attachment: Codable {
     var can_edit: Bool?
     var can_delete: Bool?
     var isExpanded: Bool?
+    var school_id: String?
 }
 
 struct AttachmentFilePath: Codable {
@@ -608,6 +609,7 @@ struct Notice: Codable {
     let sent_by: String?
     let can_edit: Bool?
     let can_delete: Bool?
+    let school_id: String?
 }
 
 //MARK: Attendence
@@ -679,6 +681,7 @@ struct EventList: Codable {
     let title: String
     let category: String
     let description: String
+    let school_id: String
     let date: String
     let time: String
     let venue: String
@@ -991,11 +994,12 @@ struct LessonEditData: Codable {
     let field_id: String?
     var value: String?
     let field_type: String?
+    let field_name: String?
     let field_data: [String]?
     let is_disable: Bool?
 }
 
-
+ 
 
 // MARK: Packet Modal
 //
@@ -2452,6 +2456,20 @@ struct targetDataDetails : Codable{
     
 }
 
+struct targetSucResp : Codable{
+    
+    var status : Bool?
+    var message : String?
+    var data : [targetDataDetailsResp]?
+}
+
+struct targetDataDetailsResp : Codable{
+    var name : String?
+    var role:  String?
+//    var class : String?
+    var section : String?
+    var mobile : String?
+}
 
 
 struct GlobalVariablesResponse: Codable {
@@ -2501,4 +2519,19 @@ struct checkQuizLevelSuc : Codable{
 
 struct checkQuizLevelData : Codable{
     var level : Int?
+}
+// MARK: - API Models
+struct UpdateResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [UpdateItem]?
+}
+
+struct UpdateItem: Codable {
+    let id: Int?
+    let name: String?
+    let description: String?
+    let app_redirect_link: String?
+    let video_link: String?
+    let downloadable_image: String?
 }

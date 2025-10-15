@@ -34,6 +34,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     var attachmetList: [FilePath]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    let staffDetails = UserDefaultFileManager.get_staff_Details()
     var titleString: String?
     var descriptionString: String?
     var postedBy: String?
@@ -107,8 +108,12 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
 //        attachmetList?.count ?? 0 ==
         setupUI()
         setupCollectionView()
-        
-        getTargetReport(EndUrl: EndUrl ?? "" , targetIdOrType: targetId ?? "")
+        if EndUrl == "" || EndUrl == nil {
+            targetFullView.isHidden = true
+        }else{
+            targetFullView.isHidden = false
+            getTargetReport(EndUrl: EndUrl ?? "" , targetIdOrType: targetId ?? "")
+        }
     }
     
     private func setupUI() {
@@ -261,7 +266,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             url: EndUrl,
             parameters: ["id": targetIdOrType],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -272,14 +277,15 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                         self.targetCvdata = res.data?.first?.name ?? []
                         if res.data?.first?.type == "STANDARD"{
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
-                            
                             self.yourTargetLbl.text = "Sent To Standard"
                         }else if  res.data?.first?.type == "SCHOOL"{
                             self.yourTargetLbl.text = "Sent To School"
                             
-                        }else{
-                            
+                        } else if  res.data?.first?.type == "GROUP"{
+                            self.yourTargetLbl.text = "Sent To Group"
+                            self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                         }
+                        
                         self.reloadss()
                     }
                 case .failure(let err):

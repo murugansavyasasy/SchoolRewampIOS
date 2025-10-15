@@ -86,7 +86,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" name="HomeWorkClr"/>
                                 <constraints>
                                     <constraint firstItem="04i-nA-H0W" firstAttribute="top" secondItem="BtS-OX-fjT" secondAttribute="bottom" constant="25" id="5EB-Xd-RGz"/>
                                     <constraint firstItem="7A9-73-mkB" firstAttribute="top" secondItem="04i-nA-H0W" secondAttribute="bottom" constant="40" id="5YQ-iV-N1g"/>
@@ -201,9 +200,6 @@
     </scenes>
     <resources>
         <image name="education-1-960x752-removebg-preview" width="564" height="442"/>
-        <namedColor name="HomeWorkClr">
-            <color red="0.3919999897480011" green="0.40400001406669617" blue="0.82400000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="pending">
             <color red="0.94900000095367432" green="0.57599997520446777" blue="0.22400000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

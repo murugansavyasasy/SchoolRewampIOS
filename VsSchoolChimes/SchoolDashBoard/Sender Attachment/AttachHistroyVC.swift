@@ -58,7 +58,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     var schoolList:[String]?
     let alert = CustomAlert()
     var Scholldetails = UserDefaultFileManager.getUserDetails()
-
+    let transitionDelegate = TransitioningDelegate()
     override func viewDidLoad() {
         super.viewDidLoad()
         localData.editToken = ""
@@ -85,9 +85,10 @@ class AttachHistroyVC: UIViewController, SelectedId {
                 let matchedSchoolName = school_details?
                     .first?
                     .school_name
-                schoolName.text = matchedSchoolName ?? "School name not found"
+                schoolName.text = "All"
                 
                 schoolList = school_details?.compactMap { $0.school_name }
+                schoolList?.insert("All", at: 0)
                 self.dropDown.dataSource = self.schoolList ?? []
             }else{
                 schoolDropDownFullview.isHidden = true
@@ -159,14 +160,26 @@ class AttachHistroyVC: UIViewController, SelectedId {
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
-            if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-             
-                localData.editToken = selectedSchool.access_token
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.fetchAttachments()
+            if item == "All"{
+                filterUsingSchoolId("All")
+            }else{
+                if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                    filterUsingSchoolId(selectedSchool.school_id ?? "")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        //                    self.Get_Notice()
+                    }
                 }
             }
         }
+    }
+    
+    func filterUsingSchoolId(_ schoolId: String) {
+        if schoolId == "All" {
+            filteredAttachments = attachmentData
+        } else {
+            filteredAttachments = attachmentData.filter { $0.school_id == schoolId }
+        }
+        tv.reloadData()
     }
     func Attachments(withId AttachmentId: String) -> Attachment? {
         return filteredAttachments?.first(where: { $0.id == AttachmentId })
@@ -202,7 +215,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
             url: ServiceUrl.comm_api_attachment_report,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: localData.editToken ?? ""
+            token: staffdetails?.access_token ?? ""
         ) { [weak self] (result: Result<AttachmentsResponse, Error>) in
             
             guard let self = self else { return }
@@ -370,6 +383,30 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         return cell
     }
     
+//    func tableView(
+//        _ tableView: UITableView,
+//        didSelectRowAt indexPath: IndexPath
+//    ) {
+//        guard let attach = filteredAttachments?[indexPath.row],
+//              let cell = tableView.cellForRow(at: indexPath) else { return }
+//        
+//        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
+//        
+//        let detailVC = PrivewVc()
+//        detailVC.attachmetList = attach.file_path
+//        detailVC.selectedDate = attach.date
+//        detailVC.titleString = attach.title
+//        detailVC.descriptionString = attach.description
+//        detailVC.postedBy = attach.sent_by
+//        detailVC.targetId = attach.id
+//        detailVC.EndUrl = ServiceUrl.attachment_target_details
+//        detailVC.subject_name = MenuStringFile.selectedMenuName.translated()
+//        detailVC.modalPresentationStyle = .custom
+//        transitionDelegate.originFrame = cellFrameInSuperview
+//        detailVC.transitioningDelegate = transitionDelegate
+//        
+//        present(detailVC, animated: true)
+//    }
 
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

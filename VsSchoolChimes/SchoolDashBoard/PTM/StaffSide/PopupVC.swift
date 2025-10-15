@@ -66,12 +66,12 @@ class PopupVC: UIViewController {
             BlockStack.isHidden = false
             replyBtn.setTitle(reply_Btn_title, for: .normal)
         }else{
-            editStack.isHidden = true
-            deleteStack.isHidden = true
+            reopenStack.isHidden = true
+            cancelStack.isHidden = true
             replyStack.isHidden = true
             BlockStack.isHidden = true
             editStack.isHidden = !(edit ?? false)
-            BlockStack.isHidden = !(delete ?? false)
+            deleteStack.isHidden = !(delete ?? false)
         }
         
 //        editStack.isHidden   = ptm ? true             : !(edit ?? false)

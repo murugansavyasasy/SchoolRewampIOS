@@ -67,15 +67,6 @@
                                             <action selector="edit:" destination="gTV-IL-0wX" eventType="touchUpInside" id="3Dk-yG-cq7"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGb-Zk-Yxe">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="42Y-l4-Gsc"/>
-                                            <constraint firstAttribute="height" constant="30" id="VXX-om-wc1"/>
-                                        </constraints>
-                                        <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="unreadImg"/>
-                                    </button>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWv-eW-6n1">
@@ -237,7 +228,6 @@
                 <outlet property="reminderBtn" destination="ACg-KN-TIZ" id="0wo-O9-BqU"/>
                 <outlet property="timeBtn" destination="3Dr-lP-gUq" id="h4o-ak-6DI"/>
                 <outlet property="titleLbl" destination="WEI-zA-4Rk" id="CZY-9d-Ei2"/>
-                <outlet property="unreadIcon" destination="NGb-Zk-Yxe" id="Avs-7M-w95"/>
             </connections>
             <point key="canvasLocation" x="256.48854961832058" y="104.5774647887324"/>
         </collectionViewCell>
@@ -247,7 +237,6 @@
         <image name="bell.and.waves.left.and.right.fill" catalog="system" width="128" height="77"/>
         <image name="text.document.fill" catalog="system" width="115" height="128"/>
         <image name="three-dot" width="32" height="32"/>
-        <image name="unreadImg" width="140" height="140"/>
         <namedColor name="Clr">
             <color red="0.92900002002716064" green="0.92900002002716064" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -255,10 +244,10 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tableCellGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

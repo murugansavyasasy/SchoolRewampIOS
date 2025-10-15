@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -18,6 +19,7 @@
                 <outlet property="NoDataLbl" destination="U6W-aT-YQR" id="KzT-9w-Xy6"/>
                 <outlet property="SearchBar" destination="4bt-n2-Tdm" id="BQG-L6-Tah"/>
                 <outlet property="TableView" destination="8P0-Gz-HKh" id="SC9-Cw-BJV"/>
+                <outlet property="creteBtn" destination="2d4-FK-rSJ" id="leX-lM-Dpl"/>
                 <outlet property="menuNameLbl" destination="Vms-HN-nE6" id="w98-l8-U5J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -91,6 +93,23 @@
                         <constraint firstItem="nn2-oz-2G4" firstAttribute="leading" secondItem="5nH-gv-uwe" secondAttribute="leading" id="oD7-ZQ-lXb"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d4-FK-rSJ">
+                    <rect key="frame" x="323" y="738" width="50" height="50"/>
+                    <color key="backgroundColor" name="PrimeryColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Unq-Po-UrY"/>
+                        <constraint firstAttribute="width" constant="50" id="gzv-3l-kl3"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal">
+                        <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="27" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="createLessonPlan:" destination="-1" eventType="touchUpInside" id="A8l-R1-roO"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wCT-RH-3hr" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
                     <subviews>
@@ -133,6 +152,8 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="2d4-FK-rSJ" secondAttribute="bottom" constant="30" id="41J-YS-Og7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2d4-FK-rSJ" secondAttribute="trailing" constant="20" id="5hI-dc-6tl"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wCT-RH-3hr" secondAttribute="trailing" id="App-Gr-Z74"/>
                 <constraint firstItem="wCT-RH-3hr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Cfy-6C-xum"/>
                 <constraint firstItem="5nH-gv-uwe" firstAttribute="top" secondItem="wCT-RH-3hr" secondAttribute="bottom" constant="10" id="Gyt-9G-QGR"/>
@@ -148,8 +169,12 @@
     <resources>
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
