@@ -19,7 +19,7 @@ class PriorityStudentTVC: UITableViewCell {
     @IBOutlet weak var innerView: UIView!
     
     private var gradientLayer: CAGradientLayer?
-    
+    private var gradientColors: [CGColor] = []
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -35,6 +35,9 @@ class PriorityStudentTVC: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer?.frame = Cellview.bounds
+        DispatchQueue.main.async {
+            self.applyGradient()
+        }
     }
     
     private func setupUI() {
@@ -48,23 +51,22 @@ class PriorityStudentTVC: UITableViewCell {
         innerView.layer.borderWidth = 1
         innerView.layer.borderColor = UIColor.systemIndigo.withAlphaComponent(0.5).cgColor
     }
-    
-    func applyGradient(with colors: [CGColor]) {
-        // Remove any existing gradient layer
-        gradientLayer?.removeFromSuperlayer()
-        
+    func setGradientColors(_ colors: [CGColor]) {
+        gradientColors = colors
+        applyGradient()
+    }
+    func applyGradient() {
+        guard gradientColors.isEmpty == false else { return }
+        Cellview.layer.sublayers?.removeAll { $0 is CAGradientLayer }
         // Create new gradient layer
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors
+        gradientLayer.colors = gradientColors
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.frame = Cellview.bounds
         gradientLayer.cornerRadius = Cellview.layer.cornerRadius
         gradientLayer.masksToBounds = true
         Cellview.layer.insertSublayer(gradientLayer, at: 0)
-        self.gradientLayer = gradientLayer
-        Cellview.setNeedsLayout()
-        Cellview.layoutIfNeeded()
     }
 }
 

@@ -204,6 +204,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }else if sections[indexPath.section].items[indexPath.row] == "What's new"{
             
             let vc = WhatsNewVc(nibName: nil, bundle: nil)
+            vc.isStaff = passVale == 1
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
         }else if sections[indexPath.section].items[indexPath.row] == "Change Password" {

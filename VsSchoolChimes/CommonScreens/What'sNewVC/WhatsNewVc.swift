@@ -29,8 +29,9 @@ class WhatsNewVc: UIViewController {
     // MARK: - Properties
     var data: [UpdateItem]?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var chaildDetails = UserDefaultFileManager.get_child_Details()
     var currentIndex = 0
-
+    var isStaff = false
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,12 +148,13 @@ class WhatsNewVc: UIViewController {
     // MARK: - API
     func whatsNew_Api() {
         if #available(iOS 15.0, *) { showActivityLoader() }
-
+        let token = isStaff ? staffDetails?.access_token ?? "" : chaildDetails?.access_token ?? ""
+        let roll = isStaff ? staffDetails?.priority_level ?? "" : "parent"
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_dashboard_new_updates,
-            parameters: ["role_type": staffDetails?.priority_level ?? ""],
+            parameters: ["role_type": roll],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: token
         ) { [weak self] (result: Result<UpdateResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }

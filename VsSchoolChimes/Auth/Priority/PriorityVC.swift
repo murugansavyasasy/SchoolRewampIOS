@@ -340,7 +340,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                     [UIColor.systemIndigo.cgColor, UIColor.systemBlue.cgColor]
                 ]
                 let gradientColors = gradientSets[indexPath.row % gradientSets.count]
-                cell.applyGradient(with: gradientColors)
+                cell.setGradientColors(gradientColors)
             }
                
             cell.SchoolAdressLbl.text = childDetails?[indexPath.row].school_city ?? ""

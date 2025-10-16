@@ -8,7 +8,7 @@
 import UIKit
 
 class PreviewTargetTVC: UITableViewCell {
-
+    
     @IBOutlet weak var yourTargetLbl: UILabel!
     @IBOutlet weak var yourTargetImageView: UIImageView!
     @IBOutlet weak var targetCvHeight: NSLayoutConstraint!
@@ -29,16 +29,10 @@ class PreviewTargetTVC: UITableViewCell {
         layout.minimumInteritemSpacing = 2  // Horizontal gap
         layout.minimumLineSpacing = 2      // Vertical gap
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-
+        
         targetCv.collectionViewLayout = layout
         
         getTargetReport(EndUrl: EndUrl ?? "", targetIdOrType: targetId ?? "", TargetType: TargetType ?? "")
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }
@@ -57,10 +51,7 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
         }
         
         if TargetType == "5" || TargetType == "6" {
-//            if yourTargetLbl.text == "Sent To Student" {
-                cell.nameLbl.text = "🎓 " + (speficTargetData[indexPath.row].name ?? "")
-//            }
-            
+            cell.nameLbl.text = "🎓 " + (speficTargetData[indexPath.row].name ?? "")
         }else{
             if yourTargetLbl.text == "Sent To Standard" {
                 cell.nameLbl.text = "🎓 " + targetCvdata[indexPath.row]
@@ -110,7 +101,7 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
                         self.reloadss()
                     }
                 case .failure(let err):
-                   ""
+                    ""
                     
                 }
             }
@@ -142,17 +133,16 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
                         self.reloadss()
                     }
                 case .failure(let err):
-                   ""
+                    ""
                     
                 }
             }
         }
     }
-
+    
     func reloadss(){
         
         targetCv.reloadData()
-        
         targetCv.layoutIfNeeded()
         DispatchQueue.main.async {
             self.targetCvHeight.constant = self.targetCv.collectionViewLayout.collectionViewContentSize.height
