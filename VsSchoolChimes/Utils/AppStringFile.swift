@@ -281,7 +281,7 @@ struct CommonStringFile{
     static let AddPhotos = "Add Photos".translated()
     static let EventDetails = "Event Details".translated()
     static let EventTitle = "Event Title".translated()
-    static let Optional = "(Optional?)".translated()
+    static let Optional = "(Optional)".translated()
     static let AddPhotos1 = "Add Photos1".translated()
     static let egChennai = "egChennai".translated()
     static let egYogaEvent = "egYogaEvent".translated()

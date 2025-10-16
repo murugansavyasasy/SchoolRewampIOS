@@ -138,7 +138,8 @@ class WhatsNewVc: UIViewController {
         let total = data?.count ?? 0
         let isFirstPage = (currentIndex == 0)
         let isLastPage = (currentIndex == total - 1)
-
+        let item = data?[currentIndex]
+        tryItnowBtn.isHidden = (item?.app_redirect_link ?? "").isEmpty
         skipPreviousBtn.isHidden = isFirstPage
         PreviousIconBtn.isHidden = isFirstPage
         skipNextBtn.isHidden = isLastPage
@@ -199,7 +200,7 @@ extension WhatsNewVc: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         currentIndex = page
         pageViewController.currentPage = page
-        
+       
         updateNavigationButtonVisibility()
         playVideoInVisibleCell()
     }
@@ -213,7 +214,6 @@ extension WhatsNewVc: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         guard let visibleIndexPath = collectionView.indexPathsForVisibleItems.first,
               let cell = collectionView.cellForItem(at: visibleIndexPath) as? WhatsNewCVC,
               let item = data?[visibleIndexPath.row] else { return }
-
         if let videoLink = item.video_link, !videoLink.isEmpty {
             cell.playVideo()
         } else {
