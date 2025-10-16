@@ -44,7 +44,7 @@ class WhatsNewCVC: UICollectionViewCell {
         attributedString.append(NSAttributedString(string: titleText, attributes: titleAttributes))
         let descriptionAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 14, weight: .medium),
-            .foregroundColor: UIColor.secondaryLabel
+            .foregroundColor: UIColor.label
         ]
         attributedString.append(NSAttributedString(string: descriptionText, attributes: descriptionAttributes))
         tittleLbl.attributedText = attributedString

@@ -20,31 +20,29 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         
         let popoverContentVC = MsgViewVC()
         popoverContentVC.modalPresentationStyle = .popover
-
-        if let data = SearchData?[sender.tag] {
-            popoverContentVC.MsgFromManagmentData = data
-            popoverContentVC.file_path = data.file_path
-        }
-
+        guard let data = SearchData?[sender.tag] else { return }
+        popoverContentVC.MsgFromManagmentData = data
+        popoverContentVC.file_path = data.file_path
+        
         // Set popover size — full width minus side padding, height based on content
         let paddingX: CGFloat = 20
         let width = view.frame.width - (paddingX * 2)
         let height = popoverContentVC.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-
+        
         popoverContentVC.preferredContentSize = CGSize(width: width, height: height)
-
+        
         // Center the popover in the middle of the screen
         let originX = (view.frame.width - width) / 2
         let originY = (view.frame.height - height) / 2
         let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
-
+        
         if let popover = popoverContentVC.popoverPresentationController {
             popover.sourceView = self.view
             popover.sourceRect = sourceRect
             popover.permittedArrowDirections = []  // no arrow
             popover.delegate = self
         }
-
+        
         present(popoverContentVC, animated: true, completion: nil)
         
         if SearchData?[sender.tag].type == "VOICE"{
@@ -66,18 +64,9 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             )
         }
         
-        
-        guard let data = SearchData?[sender.tag] else { return }
-
-        let vc = MsgViewVC()
-        vc.modalPresentationStyle = .formSheet
-        vc.MsgFromManagmentData = data
-        vc.file_path = data.file_path
-        present(vc, animated: true, completion: nil)
-
         // Determine message type for ReadStatusUpdate
         var messageType: String?
-
+        
         switch data.type {
         case "VOICE":
             messageType = "VOICE"
@@ -88,16 +77,16 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         default:
             break
         }
-
+        
         guard let type = messageType else { return }
-
+        
         if data.is_archive == true {
             ReadStatusUpdateArchive(type: type, detail_id: data.id ?? "")
         }else{
             ReadStatusUpdate(type: type, detail_id: data.id ?? "")
         }
     }
-
+    
     
     
     @IBOutlet weak var menuNameLbl: UILabel!
@@ -150,13 +139,13 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         schoolDropDown.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchoolDropDownAct)))
         schoolDropDown.isUserInteractionEnabled = true
         
-       if checkMutipleSchool() {
+        if checkMutipleSchool() {
             
-           schoolDropDown.isHidden = false
-       }else{
-           schoolDropDown.isHidden = true
-           
-       }
+            schoolDropDown.isHidden = false
+        }else{
+            schoolDropDown.isHidden = true
+            
+        }
         
         FilterCV.isHidden = true
         NoDataLbl.isHidden = true
@@ -254,7 +243,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
                             self.archiveMessage = success.message ?? ""
                             self.shouldShowFooterLabel = true
                         }
-                       
+                        
                     }
                     
                     
@@ -361,9 +350,9 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     
     @IBAction func SchoolDropDownAct() {
         guard let schoolDetails = school_details else { return }
-
+        
         let schoolNames = ["All"] + schoolDetails.compactMap { $0.school_name }
-
+        
         dropDown.dataSource = schoolNames
         dropDown.anchorView = schoolDropDown
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
@@ -383,7 +372,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
             self.filterMessages()
         }
     }
-
+    
     
     @IBAction func backAct() {
         dismiss(animated: true)
@@ -452,7 +441,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         NoDataLbl.isHidden = !isEmpty
         NoDataLbl.text = CommonStringFile.No_data_found
     }
-
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SearchData?.count ?? 0
@@ -525,7 +514,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         footerView.backgroundColor = .clear
         
         if shouldShowFooter {
-           
+            
             // Create a button instead of a label
             let button = UIButton(type: .system)
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -577,7 +566,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         }
         return footerView
     }
-
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return shouldShowFooter ? 44 : 0.01
     }
@@ -588,7 +577,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     
     @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
         print("Archived messages tapped!")
-
+        
         get_messages_archive()
         
         shouldShowFooter = false
