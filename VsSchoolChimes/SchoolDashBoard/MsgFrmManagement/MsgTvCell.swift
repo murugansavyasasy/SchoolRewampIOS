@@ -6,10 +6,6 @@
 //
 
 import UIKit
-protocol viewAttachments {
-    
-    func viewAttachment(sender : UIButton)
-}
 class MsgTvCell: UITableViewCell {
 
     @IBOutlet weak var alphbetLbl: UILabel!
@@ -23,7 +19,7 @@ class MsgTvCell: UITableViewCell {
     @IBOutlet weak var alphbetView: UIView!
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var viewBtn: UIButton!
-    var delegate : viewAttachments?
+    var delegate : ViewAttachments?
     
     override func awakeFromNib() {
         super.awakeFromNib()

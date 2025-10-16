@@ -22,28 +22,37 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dateFormatter.dateFormat = standardDateFormat
         guard let dayDate = dateFormatter.date(from: date) else { return }
 
-        // ✅ Desired output format: 10 Oct 2025
+        // ✅ Convert to desired date format: 10 Oct 2025
         dateFormatter.dateFormat = "dd MMM yyyy"
         let outputDateString = dateFormatter.string(from: dayDate)
+        
+        // ✅ Get the day name (e.g. Monday, Tuesday)
+        let dayNameFormatter = DateFormatter()
+        dayNameFormatter.dateFormat = "EEEE"  // Full day name
+        let dayName = dayNameFormatter.string(from: dayDate)
 
         if dateSelection == true {
             fromDateLbl.text = outputDateString
-            // Optional: Compare with toDateLbl if needed
+            fromeDayLbl.text = dayName
             if let toText = toDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                 let labelFormatter = DateFormatter()
                 labelFormatter.dateFormat = "dd MMM yyyy"
                 if let toDate = labelFormatter.date(from: toText) {
                     if dayDate > toDate {
                         toDateLbl.text = outputDateString
+                        toDayLbl.text = dayName
                     }
                 }
             }
         } else {
             toDateLbl.text = outputDateString
+            toDayLbl.text = dayName
         }
     }
 
     
+    @IBOutlet weak var fromeDayLbl: UILabel!
+    @IBOutlet weak var toDayLbl: UILabel!
     @IBOutlet weak var FromLbl: UILabel!
     @IBOutlet weak var ToLbl: UILabel!
     @IBOutlet weak var fromDateLbl: UILabel!
@@ -101,9 +110,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToLbl.setFont(style: .title, size: FontSize.TitleSize)
         
-        dateOuterView.layer.borderColor = UIColor.lightGray.cgColor
-        dateOuterView.layer.borderWidth = 0.5
-        dateOuterView.layer.cornerRadius = 8
+//        dateOuterView.layer.borderColor = UIColor.lightGray.cgColor
+//        dateOuterView.layer.borderWidth = 0.5
+//        dateOuterView.layer.cornerRadius = 8
         
         FromDateView.layer.borderColor = UIColor.lightGray.cgColor
         FromDateView.layer.borderWidth = 0.5
@@ -256,14 +265,27 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         let startDate = (fromDate != nil ? dateFormatter.date(from: fromDate!) : nil) ?? currentDate
         let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? futureDate
         
+        // 📅 Date display formatter
         let displayFormatter = DateFormatter()
         displayFormatter.locale = Locale(identifier: "en_US_POSIX")
         displayFormatter.dateFormat = "dd MMM yyyy"
         let fromDisplay = displayFormatter.string(from: startDate)
         let toDisplay = displayFormatter.string(from: endDate)
+        
+        // 🗓 Day name formatter
+        let dayNameFormatter = DateFormatter()
+        dayNameFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dayNameFormatter.dateFormat = "EEEE"
+        let fromDay = dayNameFormatter.string(from: startDate)
+        let toDay = dayNameFormatter.string(from: endDate)
+        
+        // ✅ Set labels
         fromDateLbl.text = fromDisplay
+        fromeDayLbl.text = fromDay
         toDateLbl.text = toDisplay
+        toDayLbl.text = toDay
     }
+
 
 
     func setupPlaceholder() {

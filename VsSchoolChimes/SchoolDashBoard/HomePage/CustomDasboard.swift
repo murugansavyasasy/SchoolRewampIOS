@@ -107,6 +107,9 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         hideSideMenu()
         if let vc = viewController {
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
+                if let settingsVC = vc as? SettingsViewController {
+                    settingsVC.passVale = 1
+                }
                 self.navigationController?.pushViewController(vc, animated: true)
             } else if vc is LogoutViewController {
                 let userDefaults = UserDefaults.standard

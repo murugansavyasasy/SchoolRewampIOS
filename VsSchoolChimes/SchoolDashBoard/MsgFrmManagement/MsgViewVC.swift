@@ -17,7 +17,10 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var reminingLbl: UILabel!
     @IBOutlet weak var totalduraionLbl: UILabel!
     @IBOutlet weak var AudioFullView: UIView!
-    @IBOutlet weak var scrlView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView!
+
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var reasonImgView: UIImageView!
     @IBOutlet weak var reasonDfltLbl: UILabel!
     @IBOutlet weak var voiceTitle: UILabel!
@@ -31,20 +34,17 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
     var timer: Timer?
-    
+    var delegate : ViewAttachments?
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
-        
+        backBtn.layer.cornerRadius = backBtn.frame.width/2
         cv.isHidden = file_path?.count == 0
         AudioFullView.isHidden = file_path?.count != 0
         pageControls.isHidden = file_path?.count == 1 || file_path?.count == 0
         
         pageControls.numberOfPages = file_path?.count ?? 0
         pageControls.currentPage = 0
-        scrlView.layer.cornerRadius = 15
         cv.register(
                 UINib(nibName: "MsgVoiceCvCell", bundle: nil),
                 forCellWithReuseIdentifier: "MsgVoiceCvCell"
@@ -55,13 +55,16 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         if MsgFromManagmentData.type == "ATTACHMENT"{
             AudioFullView.isHidden = true
             cv.isHidden = false
+            separatorView.isHidden = false
         }else if MsgFromManagmentData.type == "VOICE"{
             AudioFullView.isHidden = false
+            separatorView.isHidden = false
             cv.isHidden = true
             setupAudio()
         }else{
             AudioFullView.isHidden = true
             cv.isHidden = true
+            separatorView.isHidden = true
         }
 
         reasonLbl.isHidden = MsgFromManagmentData.description?.isEmpty ?? true
@@ -79,9 +82,9 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
             typeLbl.text = "Voice"
         }
     }
-
+    
     @IBAction func backBtnAct(_ sender: Any) {
-        
+        delegate?.dismiss(true)
         dismiss(animated: true)
     }
     func setupAudio() {

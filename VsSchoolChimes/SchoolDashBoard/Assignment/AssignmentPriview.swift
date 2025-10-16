@@ -103,11 +103,10 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         assignmentTable.register(UINib(nibName: "AssignmentDetailTVC", bundle: nil), forCellReuseIdentifier: "AssignmentDetailTVC")
         assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
         assignmentTable.register(UINib(nibName: "AssignmentsearchTVC", bundle: nil), forCellReuseIdentifier: "AssignmentsearchTVC")
+        assignmentTable.register(UINib(nibName: "PreviewTargetTVC", bundle: nil), forCellReuseIdentifier: "PreviewTargetTVC")
         // Keyboard observers
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
         assignmentTable.delegate = self
         assignmentTable.dataSource = self
         assignmentTable.tableFooterView = UIView()
@@ -177,14 +176,14 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     }
     // MARK: - TableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return reciver ? 1 : 3
+        return reciver ? 1 : 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if reciver {
             return 1
         }else{
-            if section == 2 {
+            if section == 3 {
                 return filterAssignment.count
             } else {
                 return  1
@@ -193,9 +192,8 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.section == 0 {
-            // Assignment Details
+        switch indexPath.section {
+                case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentDetailTVC", for: indexPath) as? AssignmentDetailTVC else {
                 return UITableViewCell()
             }
@@ -204,9 +202,13 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             }
             cell.delegate = self
             return cell
+                case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PreviewTargetTVC", for: indexPath) as? PreviewTargetTVC else {
+                return UITableViewCell()
+            }
             
-        } else if indexPath.section == 1{
-            // Assignment Details
+            return cell
+                case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {
                 return UITableViewCell()
             }
@@ -218,8 +220,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             )
             cell.delegate = self
             return cell
-        }else{
-            // Submitted Student
+                case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
                 return UITableViewCell()
             }
@@ -279,7 +280,9 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             
             return cell
-        }
+                default:
+                    return UITableViewCell()
+                }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Only handle tap for Section 2 (submitted students list)
