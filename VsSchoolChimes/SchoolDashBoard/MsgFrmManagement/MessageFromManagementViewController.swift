@@ -5,90 +5,24 @@
 //  Created by Apple on 12/17/24.
 //
 
-protocol ReadUpadesManagemant{
-    func readStatusManagement(attachment:ManagemantMessageData)
-}
-
 import UIKit
 import DropDown
 
+// MARK: - Protocols
+protocol ReadUpdatesManagement: AnyObject {
+    func readStatusManagement(attachment: ManagemantMessageData)
+}
+
+protocol ViewAttachments: AnyObject {
+    func viewAttachment(sender: UIButton)
+    func dismiss( _: Bool)
+}
+
+// MARK: - MessageFromManagementViewController
 @available(iOS 14.0, *)
-class MessageFromManagementViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, viewAttachments {
+class MessageFromManagementViewController: UIViewController {
     
-    
-    func viewAttachment(sender: UIButton) {
-        
-        let popoverContentVC = MsgViewVC()
-        popoverContentVC.modalPresentationStyle = .popover
-        guard let data = SearchData?[sender.tag] else { return }
-        popoverContentVC.MsgFromManagmentData = data
-        popoverContentVC.file_path = data.file_path
-        
-        // Set popover size — full width minus side padding, height based on content
-        let paddingX: CGFloat = 20
-        let width = view.frame.width - (paddingX * 2)
-        let height = popoverContentVC.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        
-        popoverContentVC.preferredContentSize = CGSize(width: width, height: height)
-        
-        // Center the popover in the middle of the screen
-        let originX = (view.frame.width - width) / 2
-        let originY = (view.frame.height - height) / 2
-        let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
-        
-        if let popover = popoverContentVC.popoverPresentationController {
-            popover.sourceView = self.view
-            popover.sourceRect = sourceRect
-            popover.permittedArrowDirections = []  // no arrow
-            popover.delegate = self
-        }
-        
-        present(popoverContentVC, animated: true, completion: nil)
-        
-        if SearchData?[sender.tag].type == "VOICE"{
-            ReadStatusUpdate(
-                type: "MGMT_MSG_VOICE",
-                detail_id: SearchData?[sender.tag].id ?? ""
-            )
-        }else if SearchData?[sender.tag].type == "TEXT"{
-            
-            ReadStatusUpdate(
-                type: "MGMT_MSG_TEXT",
-                detail_id: SearchData?[sender.tag].id ?? ""
-            )
-        }else if SearchData?[sender.tag].type == "ATTACHMENT"{
-            
-            ReadStatusUpdate(
-                type: "MGMT_MSG_ATTACHMENT",
-                detail_id: SearchData?[sender.tag].id ?? ""
-            )
-        }
-        
-        // Determine message type for ReadStatusUpdate
-        var messageType: String?
-        
-        switch data.type {
-        case "VOICE":
-            messageType = "VOICE"
-        case "TEXT":
-            messageType = "TEXT"
-        case "ATTACHMENT":
-            messageType = "ATTACHMENT"
-        default:
-            break
-        }
-        
-        guard let type = messageType else { return }
-        
-        if data.is_archive == true {
-            ReadStatusUpdateArchive(type: type, detail_id: data.id ?? "")
-        }else{
-            ReadStatusUpdate(type: type, detail_id: data.id ?? "")
-        }
-    }
-    
-    
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tv: UITableView!
@@ -101,25 +35,35 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var schoolName: UILabel!
     
-    
+    // MARK: - Properties
+    private var popoverOverlayView: UIView?
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    var messageData: [ManagemantMessageData]?
-    var SearchData: [ManagemantMessageData]?
-    var dateFormatter = DateFormatter()
-    var shouldShowFooter = true
-    var shouldShowFooterLabel = false
-    var archiveMessage = ""
-    var playIndex :Int?
-    var readIndex: Int?
-    var dropDown = DropDown()
-    var searchText = ""
-    var selectedSchoolId:String? = nil
+    private var messageData: [ManagemantMessageData] = []
+    private var filteredData: [ManagemantMessageData] = []
+    private let dateFormatter = DateFormatter()
     
+    private var shouldShowFooter = true
+    private var shouldShowFooterLabel = false
+    private var archiveMessage = ""
+    private var playIndex: Int?
+    
+    private let dropDown = DropDown()
+    private var searchText = ""
+    private var selectedSchoolId: String?
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+        setupUI()
+        setupTableView()
+        setupSearchBar()
+        setupSchoolDropDown()
+        fetchMessages()
+    }
+    
+    // MARK: - Setup Methods
+    private func setupUI() {
         menuNameLbl.text = MenuStringFile.selectedMenuName
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         BackBtn.applyBackButton()
@@ -129,515 +73,482 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
+        FilterCV.isHidden = true
+        updateNoDataUI(isEmpty: true)
+    }
+    
+    private func setupTableView() {
+        tv.register(UINib(nibName: "MsgTvCell", bundle: nil),
+                   forCellReuseIdentifier: "MsgTvCell")
+        tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil),
+                   forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
+        tv.dataSource = self
+        tv.delegate = self
+        tv.rowHeight = UITableView.automaticDimension
+        tv.estimatedRowHeight = 100
+    }
+    
+    private func setupSearchBar() {
         SearchBar.isHidden = true
         SearchBar.searchTextField.addDoneButton()
         SearchBar.placeholder = CommonStringFile.Search
         SearchBar.backgroundImage = UIImage()
         SearchBar.delegate = self
-        
+    }
+    
+    private func setupSchoolDropDown() {
         schoolDropDown.setShadow(cornerRadius: 4)
-        schoolDropDown.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SchoolDropDownAct)))
+        schoolDropDown.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(showSchoolDropDown))
+        )
         schoolDropDown.isUserInteractionEnabled = true
-        
-        if checkMutipleSchool() {
-            
-            schoolDropDown.isHidden = false
-        }else{
-            schoolDropDown.isHidden = true
-            
-        }
-        
-        FilterCV.isHidden = true
-        NoDataLbl.isHidden = true
-        NoDataImage.isHidden = true
-        
-        Cell_Registration()
-        
-        tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
-        tv.dataSource = self
-        tv.delegate = self
-        
-        Get_messages()
+        schoolDropDown.isHidden = !hasMultipleSchools()
     }
     
-    func checkMutipleSchool() -> Bool{
+    // MARK: - Business Logic
+    private func hasMultipleSchools() -> Bool {
+        guard let details = school_details, details.count > 1 else { return false }
         
-        if school_details?.count ?? 0 > 1 {
-            
-            switch school_details?.first?.priority_level{
-                
-            case PriorityType.is_principal,PriorityType.is_grouphead, PriorityType.is_admin :
-                
-                return true
-                
-            default:
-                return false
-            }
-        }
-        
-        return false
-    }
-    
-    func Cell_Registration() {
-        
-        tv.register(UINib(nibName: "MsgTvCell", bundle: nil), forCellReuseIdentifier: "MsgTvCell")
-    }
-    
-    //MARK: Get Message Data Api call
-    
-    func Get_messages() {
-        
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_msg_from_management_get_messages_staff, parameters: [:], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[self] (result: Result<MessageFromManagementResp,Error>) in
-            
-            switch result{
-                
-            case .success(let success):
-                DispatchQueue.main.async { [self] in
-                    
-                    messageData = success.data
-                    SearchData = messageData
-                    
-                    NoDataLbl.text = success.message
-                    NoDataImage.isHidden = !(messageData?.isEmpty ?? false)
-                    NoDataLbl.isHidden = !(messageData?.isEmpty ?? false)
-                    tv.reloadData()
-                }
-                
-            case .failure(let error):
-                DispatchQueue.main.async { [self] in
-                    
-                    NoDataImage.isHidden = false
-                    NoDataLbl.isHidden = false
-                    NoDataLbl.text = error.localizedDescription
-                    tv.reloadData()
-                }
-            }
+        switch details.first?.priority_level {
+        case PriorityType.is_principal,
+             PriorityType.is_grouphead,
+             PriorityType.is_admin:
+            return true
+        default:
+            return false
         }
     }
     
-    func get_messages_archive() {
+    private func filterMessages() {
+        filteredData = messageData.filter { message in
+            let matchesSchool = selectedSchoolId == nil || message.school_id == selectedSchoolId
+            let matchesSearch = searchText.isEmpty || matchesSearchQuery(message)
+            return matchesSchool && matchesSearch
+        }
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_msg_from_management_get_messages_staff_archive, parameters: [:], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[weak self] (result: Result<MessageFromManagementResp,Error>) in
-            
-            guard let self = self else {return}
-            
-            DispatchQueue.main.async {
-                switch result{
-                    
-                case .success(let success):
-                    
-                    if success.status == true {
-                        self.messageData?.append(contentsOf: success.data ?? [])
-                        self.SearchData = self.messageData
-                        self.NoDataLbl.text = success.message
-                        self.shouldShowFooterLabel = false
-                        self.filterMessages()
-                    }else {
-                        
-                        if self.messageData?.count == 0{
-                            
-                            self.NoDataImage.isHidden = false
-                            self.NoDataLbl.isHidden = false
-                            self.NoDataLbl.text = success.message
-                        }else{
-                            self.archiveMessage = success.message ?? ""
-                            self.shouldShowFooterLabel = true
-                        }
-                        
-                    }
-                    
-                    
-                case .failure(let error):
-                    
-                    if self.messageData?.count == 0{
-                        
-                        self.NoDataImage.isHidden = false
-                        self.NoDataLbl.isHidden = false
-                        self.shouldShowFooterLabel = false
-                        self.NoDataLbl.text = error.localizedDescription
-                    }else{
-                        self.archiveMessage = error.localizedDescription
-                        self.shouldShowFooterLabel = true
-                    }
-                }
-            }
+        updateNoDataUI(isEmpty: filteredData.isEmpty)
+        tv.reloadData()
+    }
+    
+    private func matchesSearchQuery(_ message: ManagemantMessageData) -> Bool {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let searchableFields = [
+            dateFormatter.convertDate(message.date ?? ""),
+            message.title,
+            message.description,
+            message.content,
+            message.sender_info,
+            message.sent_by
+        ].compactMap { $0?.lowercased() }
+        
+        return searchableFields.contains { $0.contains(query) }
+    }
+    
+    private func updateNoDataUI(isEmpty: Bool) {
+        NoDataImage.isHidden = !isEmpty
+        NoDataLbl.isHidden = !isEmpty
+        if isEmpty {
+            NoDataLbl.text = CommonStringFile.No_data_found
         }
     }
     
-    func ReadStatusUpdate(type: String,detail_id: String) {
+    // MARK: - API Calls
+    private func fetchMessages() {
+        let token = staffDetails?.access_token ?? ""
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: staffDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
-            
-            switch result {
-                
-                
-            case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
-                    
-                    DispatchQueue.main.async { [self] in
-                        
-                        SearchData = SearchData?.map { message in
-                            
-                            var updated = message
-                            if message.id == detail_id{
-                                updated.is_unread = false
-                            }
-                            return updated
-                        }
-                        
-                        tv.reloadData()
-                    }
-                    
-                }else {
-                    
-                    DispatchQueue.main.async {
-                        
-                        print(SuccessMessage.message)
-                    }
-                }
-                
-            case .failure(let error):
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
-            }
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_msg_from_management_get_messages_staff,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: token
+        ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
+            self?.handleMessagesResponse(result)
         }
     }
     
-    
-    func ReadStatusUpdateArchive(type: String,detail_id: String){
+    private func fetchArchivedMessages() {
+        let token = staffDetails?.access_token ?? ""
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: staffDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
-            
-            switch result {
-                
-                
-            case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
-                    
-                    DispatchQueue.main.async { [self] in
-                        SearchData = SearchData?.map { message in
-                            
-                            var updated = message
-                            if message.id == detail_id{
-                                updated.is_unread = false
-                            }
-                            return updated
-                        }
-                        
-                        tv.reloadData()
-                    }
-                    
-                }else {
-                    
-                    DispatchQueue.main.async {
-                        
-                        print(SuccessMessage.message)
-                    }
-                }
-                
-            case .failure(let error):
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
-            }
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_msg_from_management_get_messages_staff_archive,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: token
+        ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
+            self?.handleArchivedMessagesResponse(result)
         }
     }
     
-    @IBAction func SchoolDropDownAct() {
-        guard let schoolDetails = school_details else { return }
+    private func updateReadStatus(type: String, detailId: String, isArchived: Bool) {
+        let url = isArchived ?
+            ServiceUrl.comm_communication_read_status_update_archive :
+            ServiceUrl.comm_communication_read_status_update
         
-        let schoolNames = ["All"] + schoolDetails.compactMap { $0.school_name }
+        let parameters = [
+            ReadStatusUpdateStringFile.type: type,
+            ReadStatusUpdateStringFile.detail_id: detailId
+        ]
         
-        dropDown.dataSource = schoolNames
-        dropDown.anchorView = schoolDropDown
-        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
-        dropDown.show()
-        
-        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+        APIService.shared.makeApi(
+            url: url,
+            parameters: parameters,
+            type: ApitTypeSringFile.POST,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<ReadStatusResponse, Error>) in
+            self?.handleReadStatusResponse(result, detailId: detailId)
+        }
+    }
+    
+    // MARK: - Response Handlers
+    private func handleMessagesResponse(_ result: Result<MessageFromManagementResp, Error>) {
+        DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            self.schoolName.text = item
-            
-            if index == 0 {
-                self.selectedSchoolId = nil
-            } else {
-                self.selectedSchoolId = schoolDetails[index - 1].school_id
+            switch result {
+            case .success(let response):
+                self.messageData = response.data ?? []
+                self.filteredData = self.messageData
+                self.updateNoDataUI(isEmpty: self.messageData.isEmpty)
+                if self.messageData.isEmpty {
+                    self.NoDataLbl.text = response.message
+                }
+                
+            case .failure(let error):
+                self.updateNoDataUI(isEmpty: true)
+                self.NoDataLbl.text = error.localizedDescription
             }
             
-            self.filterMessages()
+            self.tv.reloadData()
         }
     }
     
+    private func handleArchivedMessagesResponse(_ result: Result<MessageFromManagementResp, Error>) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                if response.status == true {
+                    self.messageData.append(contentsOf: response.data ?? [])
+                    self.shouldShowFooterLabel = false
+                    self.filterMessages()
+                } else {
+                    self.handleEmptyArchive(message: response.message ?? "")
+                }
+                
+            case .failure(let error):
+                self.handleEmptyArchive(message: error.localizedDescription)
+            }
+            
+            self.shouldShowFooter = false
+            self.tv.reloadData()
+        }
+    }
     
-    @IBAction func backAct() {
+    private func handleEmptyArchive(message: String) {
+        if messageData.isEmpty {
+            updateNoDataUI(isEmpty: true)
+            NoDataLbl.text = message
+        } else {
+            archiveMessage = message
+            shouldShowFooterLabel = true
+        }
+    }
+    
+    private func handleReadStatusResponse(_ result: Result<ReadStatusResponse, Error>, detailId: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            if case .success(let response) = result, response.status == true {
+                self.updateMessageReadStatus(detailId: detailId)
+            }
+        }
+    }
+    
+    private func updateMessageReadStatus(detailId: String) {
+        for (index, message) in filteredData.enumerated() where message.id == detailId {
+            filteredData[index].is_unread = false
+        }
+        tv.reloadData()
+    }
+    
+    // MARK: - Helper Methods
+    private func shortName(from name: String) -> String {
+        let trimmed = name.replacingOccurrences(of: " ", with: "")
+        guard let first = trimmed.first, let last = trimmed.last else { return "" }
+        return "\(first)\(last)".uppercased()
+    }
+    
+    private func formattedDateStatus(from dateString: String) -> String {
+        return dateFormatter.convertDate(dateString) ?? ""
+    }
+    
+    // MARK: - Actions
+    @IBAction private func backAct() {
         dismiss(animated: true)
     }
     
-    @IBAction func searchBtnAct(_ sender: UIButton) {
-        
+    @IBAction private func searchBtnAct(_ sender: UIButton) {
         sender.isSelected.toggle()
         
-        if sender.isSelected{
-            SearchBar.isHidden = false
+        let imageName = sender.isSelected ?
+            "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: imageName), for: .normal)
+        
+        SearchBar.isHidden = !sender.isSelected
+        
+        if sender.isSelected {
             SearchBar.becomeFirstResponder()
-            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
-        }else{
-            SearchBar.isHidden = true
+        } else {
             SearchBar.resignFirstResponder()
-            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             SearchBar.searchTextField.text = ""
             searchText = ""
             filterMessages()
         }
     }
     
-    func filterMessages() {
+    @objc private func showSchoolDropDown() {
+        guard let details = school_details else { return }
         
-        guard let allMessages = messageData else {
-            SearchData = []
-            updateNoDataUI()
-            return
+        let schoolNames = ["All"] + details.compactMap { $0.school_name }
+        
+        dropDown.dataSource = schoolNames
+        dropDown.anchorView = schoolDropDown
+        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
+        
+        dropDown.selectionAction = { [weak self] (index, item) in
+            self?.handleSchoolSelection(index: index, item: item, schoolDetails: details)
         }
         
-        SearchData = allMessages.filter { message in
-            var matchesSchool = true
-            var matchesSearch = true
-            
-            //School filter
-            if let schoolId = selectedSchoolId, schoolId != "All", !schoolId.isEmpty {
-                matchesSchool = (message.school_id == schoolId)
-            }
-            
-            //Search filter
-            if !searchText.isEmpty {
-                let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-                let dateString = dateFormatter.convertDate(message.date ?? "")?.lowercased()
-                
-                matchesSearch =
-                dateString?.contains(query) == true ||
-                message.title?.lowercased().contains(query) == true ||
-                message.description?.lowercased().contains(query) == true ||
-                message.content?.lowercased().contains(query) == true ||
-                message.sender_info?.lowercased().contains(query) == true ||
-                message.sent_by?.lowercased().contains(query) == true
-            }
-            
-            return matchesSchool && matchesSearch
-        }
-        
-        updateNoDataUI()
-        tv.reloadData()
-        
+        dropDown.show()
     }
     
-    func updateNoDataUI() {
-        let isEmpty = (SearchData?.isEmpty ?? true)
-        NoDataImage.isHidden = !isEmpty
-        NoDataLbl.isHidden = !isEmpty
-        NoDataLbl.text = CommonStringFile.No_data_found
+    private func handleSchoolSelection(index: Int, item: String, schoolDetails: [StaffDetails]) {
+        schoolName.text = item
+        selectedSchoolId = index == 0 ? nil : schoolDetails[index - 1].school_id
+        filterMessages()
     }
     
+    @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
+        fetchArchivedMessages()
+    }
+}
+
+// MARK: - UITableViewDataSource
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchData?.count ?? 0
+        return filteredData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MsgTvCell") as? MsgTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MsgTvCell", for: indexPath) as? MsgTvCell else {
             return UITableViewCell()
         }
         
-        let displayText = formattedDateStatus(
-            from: SearchData?[indexPath.row].date ?? ""
-        )
-        cell.senderNamelbl.text = SearchData?[indexPath.row].sent_by ?? ""
-        cell.timeAndDateLbl.text = (displayText) + ("  " + (SearchData?[indexPath.row].time ?? ""))
-        cell.viewBtn.tag = indexPath.row
-        
-        cell.descrptionLb.isHidden = SearchData?[indexPath.row].description == "" ? true : false
-        
-        cell.descrptionLb.text = SearchData?[indexPath.row].description ?? ""
-        cell.delegate = self
-        cell.alphbetLbl.text = shortName(
-            from: SearchData?[indexPath.row].sent_by ?? ""
-        )
-        cell.titleLbl.text = SearchData?[indexPath.row].title ?? ""
-        cell.readView.isHidden = SearchData?[indexPath.row].is_unread ?? false ? false : true
-        cell.rollBtn
-            .setTitle(
-                SearchData?[indexPath.row].role?.capitalized,
-                for: .normal
-            )
+        let message = filteredData[indexPath.row]
+        configureCell(cell, with: message, at: indexPath.row)
         return cell
-        
     }
     
-    
-    func shortName(from name: String) -> String {
-        // remove spaces
-        let trimmed = name.replacingOccurrences(of: " ", with: "")
+    private func configureCell(_ cell: MsgTvCell, with message: ManagemantMessageData, at index: Int) {
+        let displayText = formattedDateStatus(from: message.date ?? "")
         
-        guard let first = trimmed.first, let last = trimmed.last else {
-            return ""
-        }
-        
-        return "\(first)\(last)".uppercased()
+        cell.senderNamelbl.text = message.sent_by
+        cell.timeAndDateLbl.text = "\(displayText)  \(message.time ?? "")"
+        cell.titleLbl.text = message.title
+        cell.descrptionLb.text = message.description
+        cell.descrptionLb.isHidden = message.description?.isEmpty ?? true
+        cell.alphbetLbl.text = shortName(from: message.sent_by ?? "")
+        cell.readView.isHidden = !(message.is_unread ?? false)
+        cell.rollBtn.setTitle(message.role?.capitalized, for: .normal)
+        cell.viewBtn.tag = index
+        cell.delegate = self
     }
-    
-    
-    func addBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = view.bounds
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.tag = 999
-        view.addSubview(blurView)
-    }
-    
-    
+}
+
+// MARK: - UITableViewDelegate
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
-        // Create a footer view
         let footerView = UIView()
         footerView.backgroundColor = .clear
         
         if shouldShowFooter {
-            
-            // Create a button instead of a label
-            let button = UIButton(type: .system)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.titleLabel?.textAlignment = .right
-            // Create underlined attributed text
-            let title = "See Archived Messages"
-            let attributedTitle = NSAttributedString(
-                string: title,
-                attributes: [
-                    .underlineStyle: NSUnderlineStyle.single.rawValue,
-                    .foregroundColor: UIColor.systemBlue,
-                    .font: UIFont.systemFont(ofSize: 16, weight: .medium)
-                ]
-            )
-            button.setAttributedTitle(attributedTitle, for: .normal)
-            
-            // Add target action
-            button.addTarget(self, action: #selector(seeArchivedMessagesTapped(_:)), for: .touchUpInside)
-            
-            // Add and constrain
-            footerView.addSubview(button)
-            NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(greaterThanOrEqualTo: footerView.leadingAnchor, constant: 16),
-                button.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -16),
-                button.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 8),
-                button.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -8)
-            ])
-            
-        }else if shouldShowFooterLabel{
-            
-            let label = UILabel()
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = archiveMessage
-            label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-            label.textColor = .black
-            label.textAlignment = .center
-            label.numberOfLines = 0
-            
-            footerView.addSubview(label)
-            
-            NSLayoutConstraint.activate([
-                label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
-                label.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
-                label.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 20),
-                label.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -20),
-                label.centerXAnchor.constraint(equalTo: footerView.centerXAnchor)
-            ])
+            addArchiveButton(to: footerView)
+        } else if shouldShowFooterLabel {
+            addArchiveLabel(to: footerView)
         }
+        
         return footerView
     }
     
+    private func addArchiveButton(to view: UIView) {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        let attributedTitle = NSAttributedString(
+            string: "See Archived Messages",
+            attributes: [
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
+                .foregroundColor: UIColor.systemBlue,
+                .font: UIFont.systemFont(ofSize: 16, weight: .medium)
+            ]
+        )
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.addTarget(self, action: #selector(seeArchivedMessagesTapped(_:)), for: .touchUpInside)
+        
+        view.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            button.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
+        ])
+    }
+    
+    private func addArchiveLabel(to view: UIView) {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = archiveMessage
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        ])
+    }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return shouldShowFooter ? 44 : 0.01
+        return (shouldShowFooter || shouldShowFooterLabel) ? UITableView.automaticDimension : 0.01
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.01
     }
-    
-    @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
-        print("Archived messages tapped!")
-        
-        get_messages_archive()
-        
-        shouldShowFooter = false
-    }
-    
-    
 }
 
+// MARK: - UISearchBarDelegate
 @available(iOS 14.0, *)
 extension MessageFromManagementViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         self.searchText = searchText
         filterMessages()
     }
 }
 
+// MARK: - ViewAttachments
 @available(iOS 14.0, *)
-extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpadesManagemant, reloadDelegate {
-    func deleteDelegate(index: Int) {
-        
+extension MessageFromManagementViewController: ViewAttachments {
+    func dismiss(_: Bool) {
+        removePopoverOverlay()
     }
     
+    
+    func viewAttachment(sender: UIButton) {
+        guard sender.tag < filteredData.count else { return }
+        let message = filteredData[sender.tag]
+        
+        presentPopover(with: message)
+        updateReadStatusIfNeeded(for: message)
+    }
+    
+    private func presentPopover(with message: ManagemantMessageData) {
+        let popoverVC = MsgViewVC()
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.MsgFromManagmentData = message
+        popoverVC.file_path = message.file_path
+        popoverVC.delegate = self
+        
+        popoverVC.loadViewIfNeeded()
+        popoverVC.view.layoutIfNeeded()
+        
+        let scrollContentHeight = popoverVC.scrollView.contentSize.height
+        let paddingX: CGFloat = 20
+        let width = view.frame.width - (paddingX * 2)
+        let height = min(scrollContentHeight, view.frame.height)
+        
+        popoverVC.preferredContentSize = CGSize(width: width, height: height)
+        
+        let originX = (view.frame.width - width) / 2
+        let originY = (view.frame.height - height) / 2
+        let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
+        
+        addPopoverOverlay()
+        
+        if let popover = popoverVC.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.backgroundColor = .white
+            popover.sourceRect = sourceRect
+            popover.permittedArrowDirections = []
+            popover.delegate = self
+        }
+        
+        present(popoverVC, animated: true)
+    }
+    
+    private func updateReadStatusIfNeeded(for message: ManagemantMessageData) {
+        guard let type = message.type, let id = message.id else { return }
+        updateReadStatus(type: type, detailId: id, isArchived: message.is_archive ?? false)
+    }
+}
+
+// MARK: - TextExpandCellDelegate
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: TextExpandCellDelegate {
     
     func didTapExpand(in cell: TextHistoryTVCell) {
         guard let indexPath = tv.indexPath(for: cell) else { return }
-        guard var message = SearchData?[indexPath.row] else { return }
+        guard indexPath.row < filteredData.count else { return }
         
-        // Toggle state
+        var message = filteredData[indexPath.row]
         message.isExpand = !(message.isExpand ?? false)
-        SearchData?[indexPath.row] = message
+        filteredData[indexPath.row] = message
         
-        // API Call (on first view)
-        if message.is_unread == true {
-            if message.is_archive == true {
-                ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
-            } else {
-                ReadStatusUpdate(type: message.type ?? "", detail_id: message.id ?? "")
-            }
-            SearchData?[indexPath.row].is_unread = false
+        if message.is_unread == true, let type = message.type, let id = message.id {
+            updateReadStatus(type: type, detailId: id, isArchived: message.is_archive ?? false)
+            filteredData[indexPath.row].is_unread = false
             cell.NewImageView.isHidden = true
         }
         
-        // Reload cell for layout changes
-        tv.beginUpdates()
-        tv.reloadRows(at: [indexPath], with: .automatic)
-        tv.endUpdates()
+        tv.performBatchUpdates({
+            tv.reloadRows(at: [indexPath], with: .automatic)
+        }, completion: nil)
     }
+}
+
+// MARK: - ReadUpadesManagemant
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: ReadUpdatesManagement {
     
     func readStatusManagement(attachment: ManagemantMessageData) {
-        
-        if attachment.is_archive == true {
-            ReadStatusUpdateArchive(type: attachment.type ?? "", detail_id: attachment.id ?? "")
-        } else {
-            ReadStatusUpdate(type: attachment.type ?? "", detail_id: attachment.id ?? "")
-        }
+        guard let type = attachment.type, let id = attachment.id else { return }
+        updateReadStatus(type: type, detailId: id, isArchived: attachment.is_archive ?? false)
+    }
+}
+
+// MARK: - ReloadDelegate
+@available(iOS 14.0, *)
+extension MessageFromManagementViewController: reloadDelegate {
+    
+    func deleteDelegate(index: Int) {
+        // Implementation for delete if needed
     }
     
     func reload(index: Int) {
+        guard index < filteredData.count else { return }
         
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)
@@ -647,34 +558,63 @@ extension MessageFromManagementViewController: TextExpandCellDelegate, ReadUpade
         }
         
         playIndex = (playIndex == index) ? nil : index
-        var currentmessage: ManagemantMessageData?
+        var message = filteredData[index]
         
-        
-        currentmessage = SearchData?[index]
-        
-        if currentmessage?.is_unread == true {
-            
-            if currentmessage?.is_archive ?? false {
-                ReadStatusUpdateArchive(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
-            }else {
-                
-                ReadStatusUpdate(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
-            }
-            
-            currentmessage?.is_unread = false
-            
-            if let PlayingMessage = currentmessage{
-                SearchData?[index] = PlayingMessage
-            }
+        if message.is_unread == true, let type = message.type, let id = message.id {
+            updateReadStatus(type: type, detailId: id, isArchived: message.is_archive ?? false)
+            message.is_unread = false
+            filteredData[index] = message
         }
         
         tv.reloadData()
     }
 }
 @available(iOS 14.0, *)
+extension MessageFromManagementViewController {
+    
+    private func addPopoverOverlay() {
+        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+
+        let overlay = UIView(frame: window.bounds)
+        overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlay.alpha = 0
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopoverOverlay))
+        overlay.addGestureRecognizer(tapGesture)
+
+        window.addSubview(overlay)
+        popoverOverlayView = overlay
+
+        UIView.animate(withDuration: 0.2) {
+            overlay.alpha = 1
+        }
+    }
+
+    @objc private func dismissPopoverOverlay() {
+        removePopoverOverlay()
+        dismiss(animated: true)
+    }
+
+    private func removePopoverOverlay() {
+        guard let overlay = popoverOverlayView else { return }
+
+        UIView.animate(withDuration: 0.2, animations: {
+            overlay.alpha = 0
+        }, completion: { _ in
+            overlay.removeFromSuperview()
+            self.popoverOverlayView = nil
+        })
+    }
+}
+
+@available(iOS 14.0, *)
 extension MessageFromManagementViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        // Return .none to keep it as popover on iPhone
         return .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        removePopoverOverlay()
     }
 }

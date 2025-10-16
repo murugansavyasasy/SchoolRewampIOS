@@ -19,18 +19,14 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     var attachment:Attachment?
     var ManagementData:ManagemantMessageData?
     var delegate:ReadUpades?
-    var ManagementDelegate:ReadUpadesManagemant?
+    var ManagementDelegate:ReadUpdatesManagement?
     private var docController: UIDocumentInteractionController?
     override func awakeFromNib() {
         super.awakeFromNib()
         dateLbl.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        outerView.layer.shadowRadius = 5
-        outerView.layer.shadowOpacity = 0.3
-        outerView.layer.cornerRadius = 20
+        outerView.setShadow()
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
