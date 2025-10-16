@@ -57,4 +57,18 @@ class SchoolStrengthCvcell: UICollectionViewCell {
         fullview.layoutIfNeeded()
     }
 
+    func updateProgress(absentees: String, total: String) {
+        // String → Float convert
+        let absentCount = Float(absentees) ?? 0
+        let totalCount = Float(total) ?? 1  // avoid divide by zero
+        
+        let progressValue = absentCount / totalCount
+        
+        progressbar.setProgress(progressValue, animated: true)   // 0.0 to 1.0 range
+        
+        
+        // Optional: progress color change
+//        progress.progressTintColor =
+//        progress.trackTintColor = .systemGreen
+    }
 }

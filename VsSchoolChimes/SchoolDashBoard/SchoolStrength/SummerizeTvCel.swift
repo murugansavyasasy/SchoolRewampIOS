@@ -59,7 +59,14 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         
         cell.OverAllcountLbl.text = "\(dispalyArray[indexPath.row].count)"
         cell.roles.text = dispalyArray[indexPath.row].name
-        cell.girlCount.text = String(dispalyArray[indexPath.row].Girl)
+        cell.girlCount.text =  "girls " +  String(dispalyArray[indexPath.row].Girl)
+        
+        cell
+            .updateProgress(
+                absentees: String(dispalyArray[indexPath.row].count),
+                total: String(dispalyArray[indexPath.row].Girl)
+            )
+        
 //        cell.progressbar.setProgress(<#T##progress: Float##Float#>, animated: true)
 //        let girlRatio = Float(girlCount) / Float(total)
         
