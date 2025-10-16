@@ -2535,3 +2535,17 @@ struct UpdateItem: Codable {
     let video_link: String?
     let downloadable_image: String?
 }
+
+struct AttendanceStudentListResponse : Codable{
+    let status:Bool?
+    let message:String?
+    let data:[AttendanceStudentListData]?
+}
+
+struct AttendanceStudentListData: Codable{
+    let id: String?
+    let name: String?
+    let admission_no: String?
+    let roll_no: String?
+    let att_type: String?
+}

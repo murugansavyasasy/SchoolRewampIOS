@@ -78,6 +78,10 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var dropDown = DropDown()
     var  MakeAbsentId: [[String: String]] = []
+    
+    var student_List: [AttendanceStudentListData]?
+    var Filtered_stuent_Listt: [AttendanceStudentListData]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -116,7 +120,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         tv.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
         tv.delegate = self
         tv.dataSource = self
-        
+        Get_student_List_Api()
         recipient_get_student_list(selected_sectionId: Int(selected_sectionID) ?? 0, academic_year_id: selectedAcadimicYearId ?? 0)
     }
 
@@ -135,6 +139,43 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         searchBar.placeholder = CommonStringFile.Search.translated()
         //filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
     }
+    
+    func Get_student_List_Api(){
+        
+        let param: [String:Any] = [
+            MarkAttendenceStringFile.section_id: user_inputs.section_id,
+            MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date,
+        ]
+        
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_list, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<AttendanceStudentListResponse, Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true {
+                        self.student_List = success.data
+                        self.Filtered_stuent_Listt = self.student_List
+                        self.tv.reloadData()
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
     
     func recipient_get_student_list(selected_sectionId: Int,academic_year_id:Int){
         
@@ -440,30 +481,55 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
 extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterData?.count ?? 0
+        return Filtered_stuent_Listt?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
-        cell.nameLbl.text = filterData?[indexPath.row].name
-       // cell.rollNo.isHidden = true
-        cell.admissionlbl.text = "ADMIS No: " +  (
-            filterData?[indexPath.row].admission_no ?? ""
-        )
-        if filterData?[indexPath.row].roll_no != ""{
-//            cell.rollNo.isHidden = false
-//            cell.rollNo.setTitle(filterData?[indexPath.row].roll_no, for: .normal)
-        }
         
-        if indexPath.row == 2 || indexPath.row == 3{
-            cell.OnLateBtn.isHidden = true
+        let student_data = Filtered_stuent_Listt?[indexPath.row]
+        
+        cell.nameLbl.text = student_data?.name
+        cell.admissionlbl.text = "ADMIS No: " + (student_data?.admission_no ?? "")
+        cell.rollNoLbl.text = "Roll No: " + (student_data?.roll_no ?? "")
+        
+        switch student_data?.att_type{
+            
+        case "PRESENT":
+            cell.AttendanceBtn.backgroundColor = .systemGreen
+            cell.AttendanceBtn.setTitle("P", for: .normal)
+            cell.OnLateBtn.isHidden = false
+            cell.OnLateBtn.setImage(UIImage(systemName: "square"), for: .normal)
+            cell.ODSwitch.isOn = false
+            
+        case "ABSENT":
             cell.AttendanceBtn.backgroundColor = .systemRed
             cell.AttendanceBtn.setTitle("A", for: .normal)
-//            cell.attendanceStack.isHidden = true
-//            cell.separatorView.isHidden = true
+            cell.OnLateBtn.isHidden = true
+            cell.ODSwitch.isOn = false
+            
+        case "LATECOMER":
+            cell.AttendanceBtn.backgroundColor = .systemGreen
+            cell.AttendanceBtn.setTitle("P", for: .normal)
+            cell.OnLateBtn.isHidden = false
+            cell.OnLateBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+            cell.ODSwitch.isOn = false
+            
+        case "OD":
+            cell.AttendanceBtn.backgroundColor = .systemYellow
+            cell.AttendanceBtn.setTitle("OD", for: .normal)
+            cell.OnLateBtn.isHidden = true
+            cell.ODSwitch.isOn = true
+            
+        default:
+            
+            cell.AttendanceBtn.backgroundColor = .systemGreen
+            cell.AttendanceBtn.setTitle("P", for: .normal)
+            cell.OnLateBtn.isHidden = false
+            cell.OnLateBtn.setImage(UIImage(systemName: "square"), for: .normal)
+            cell.ODSwitch.isOn = false
         }
         
-      //  cell.rollNo.isHidden = filterData?[indexPath.row].roll_no?.isEmpty ?? false
         cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
         cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
         cell.phnBtn.tag = indexPath.row
@@ -478,24 +544,17 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
     
-//extension AttendanceMarkingVC: studentAttenance {
-
-//    func didTapPresent(studentID: String) {
-//        updateStudent(withID: studentID) { $0.attendanceStatus = "P" }
-//    }
-//
-//    func didTapAbsent(studentID: String) {
-//        updateStudent(withID: studentID) { $0.attendanceStatus = "A" }
-//    }
-//
-//    func didTapLate(studentID: String) {
-//        updateStudent(withID: studentID) { $0.isLate.toggle() }
-//    }
-//
-//    private func updateStudent(withID id: String, _ update: (inout Student) -> Void) {
-//        if let index = students.firstIndex(where: { $0.studentID == id }) {
-//            update(&students[index])
-//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-//        }
-//    }
-//}
+extension AttendanceMarkingVC: studentAttenance {
+    func didTapLate(for id: String) {
+        
+    }
+    
+    func didTapPresentAbsent(for id: String) {
+        <#code#>
+    }
+    
+    func didToggleOD(for id: String, isOn: Bool) {
+        <#code#>
+    }
+    
+}
