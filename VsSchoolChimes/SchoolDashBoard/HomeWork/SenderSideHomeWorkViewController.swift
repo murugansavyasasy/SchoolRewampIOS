@@ -92,7 +92,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         ComposeHomeworkView.alpha = 1
         imageSelection()
         
-        if editId != "" {
+        if let editId = editId,editId != "" {
             BackBtnNm
                 .configureAsBackButton(
                     firstLine: "Update Existing " + MenuStringFile.selectedMenuName,

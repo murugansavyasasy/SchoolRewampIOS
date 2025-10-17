@@ -22,20 +22,20 @@
                         <rect key="frame" x="16" y="10" width="325" height="198"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LPy-Nq-A0z">
-                                <rect key="frame" x="250" y="-40" width="80" height="100"/>
+                                <rect key="frame" x="290" y="0.0" width="35" height="35"/>
                                 <subviews>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="APM-Mw-GRr">
-                                        <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-image" translatesAutoresizingMaskIntoConstraints="NO" id="APM-Mw-GRr">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                     </imageView>
                                 </subviews>
                                 <color key="tintColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstItem="APM-Mw-GRr" firstAttribute="top" secondItem="LPy-Nq-A0z" secondAttribute="top" id="2YE-Pv-GNW"/>
                                     <constraint firstAttribute="bottom" secondItem="APM-Mw-GRr" secondAttribute="bottom" id="CWh-Tq-Lrh"/>
-                                    <constraint firstAttribute="width" constant="80" id="Ysd-Iq-hAK"/>
+                                    <constraint firstAttribute="width" constant="35" id="Ysd-Iq-hAK"/>
                                     <constraint firstItem="APM-Mw-GRr" firstAttribute="leading" secondItem="LPy-Nq-A0z" secondAttribute="leading" id="ZlP-JL-d5t"/>
                                     <constraint firstAttribute="trailing" secondItem="APM-Mw-GRr" secondAttribute="trailing" id="njm-Sa-sHf"/>
-                                    <constraint firstAttribute="height" constant="100" id="sws-S1-7KW"/>
+                                    <constraint firstAttribute="height" constant="35" id="sws-S1-7KW"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VeT-11-d93">
@@ -152,8 +152,8 @@
                             <constraint firstAttribute="trailing" secondItem="VeT-11-d93" secondAttribute="trailing" constant="16" id="mWQ-9R-z2a"/>
                             <constraint firstItem="9DJ-hg-2W6" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="bottom" constant="2" id="mya-He-VqS"/>
                             <constraint firstItem="9DJ-hg-2W6" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="65" id="s0R-vl-LY4"/>
-                            <constraint firstItem="LPy-Nq-A0z" firstAttribute="top" secondItem="hlg-O2-bJ6" secondAttribute="top" constant="-40" id="sq8-qc-4g6"/>
-                            <constraint firstAttribute="trailing" secondItem="LPy-Nq-A0z" secondAttribute="trailing" constant="-5" id="t0H-yO-OiB"/>
+                            <constraint firstItem="LPy-Nq-A0z" firstAttribute="top" secondItem="hlg-O2-bJ6" secondAttribute="top" id="sq8-qc-4g6"/>
+                            <constraint firstAttribute="trailing" secondItem="LPy-Nq-A0z" secondAttribute="trailing" id="t0H-yO-OiB"/>
                             <constraint firstAttribute="bottom" secondItem="QJu-7a-u55" secondAttribute="bottom" constant="6" id="zc7-lt-tfC"/>
                         </constraints>
                     </view>
@@ -187,7 +187,7 @@
     </objects>
     <resources>
         <image name="light.beacon.max.fill" catalog="system" width="128" height="102"/>
-        <image name="newimg" width="498" height="501"/>
+        <image name="new-image" width="512" height="512"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="play-button" width="75" height="75"/>
         <systemColor name="linkColor">
