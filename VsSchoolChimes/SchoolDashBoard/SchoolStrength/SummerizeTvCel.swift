@@ -60,22 +60,37 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         cell.OverAllcountLbl.text = "\(dispalyArray[indexPath.row].count)"
         cell.roles.text = dispalyArray[indexPath.row].name
         cell.girlCount.text =  "girls " +  String(dispalyArray[indexPath.row].Girl)
+        cell.boyCountLbl.text =  "Boys " +  String(
+              dispalyArray[indexPath.row].count - dispalyArray[indexPath.row].Girl
+        )
+        
+        if dispalyArray[indexPath.row].name == "Staff"{
+            cell.Icons.image = UIImage(named: "teachers")
+            cell.Icons.tintColor = .aproved
+        }else if dispalyArray[indexPath.row].name == "Students"{
+            cell.Icons.image = UIImage(
+                systemName: "person.2.fill")
+            cell.Icons.tintColor = .link.withAlphaComponent(0.5)
+        }else if dispalyArray[indexPath.row].name == "Total"{
+            cell.Icons.image = UIImage(named: "School Needs")
+            cell.Icons.tintColor = .button
+        }
+        
         
         cell
             .updateProgress(
-                absentees: String(dispalyArray[indexPath.row].count),
-                total: String(dispalyArray[indexPath.row].Girl)
+                absentees: String(dispalyArray[indexPath.row].Girl),
+                total: String(dispalyArray[indexPath.row].count)
             )
         
-//        cell.progressbar.setProgress(<#T##progress: Float##Float#>, animated: true)
-//        let girlRatio = Float(girlCount) / Float(total)
+
         
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: 190, height: 140)
+        return CGSize(width: 190, height: 150)
     }
     
 }

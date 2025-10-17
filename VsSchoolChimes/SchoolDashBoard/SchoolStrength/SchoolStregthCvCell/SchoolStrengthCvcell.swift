@@ -9,7 +9,9 @@ import UIKit
 
 class SchoolStrengthCvcell: UICollectionViewCell {
 
+    @IBOutlet weak var boyCountLbl: UILabel!
     @IBOutlet weak var progressbar: UIProgressView!
+    @IBOutlet weak var progressContainer: UIView!
     @IBOutlet weak var girlCount: UILabel!
     @IBOutlet weak var lastYearLbl: UILabel!
     @IBOutlet weak var roles: UILabel!
@@ -71,4 +73,37 @@ class SchoolStrengthCvcell: UICollectionViewCell {
 //        progress.progressTintColor =
 //        progress.trackTintColor = .systemGreen
     }
+    
+    
+    
+//    func setupProgressView() {
+//        let total = boysCount + girlsCount + staffCount
+//        guard total > 0 else { return }
+//
+//        // Clear previous views if reloaded
+//        progressContainer.subviews.forEach { $0.removeFromSuperview() }
+//
+//        let containerWidth = progressContainer.frame.width
+//        let containerHeight = progressContainer.frame.height
+//
+//        let boysWidth = CGFloat(Double(boysCount) / Double(total)) * containerWidth
+//        let girlsWidth = CGFloat(Double(girlsCount) / Double(total)) * containerWidth
+//        let staffWidth = CGFloat(Double(staffCount) / Double(total)) * containerWidth
+//
+//        let boysView = UIView(frame: CGRect(x: 0, y: 0, width: boysWidth, height: containerHeight))
+//        progressbar.backgroundColor = .systemBlue
+//
+//        let girlsView = UIView(frame: CGRect(x: boysWidth, y: 0, width: girlsWidth, height: containerHeight))
+//        girlsView.backgroundColor = .systemPink
+//
+//        let staffView = UIView(frame: CGRect(x: boysWidth + girlsWidth, y: 0, width: staffWidth, height: containerHeight))
+//        staffView.backgroundColor = .systemGreen
+//
+//        progressContainer.addSubview(boysView)
+//        progressContainer.addSubview(girlsView)
+//        progressContainer.addSubview(staffView)
+//
+//        progressContainer.layer.cornerRadius = containerHeight / 2
+//        progressContainer.clipsToBounds = true
+//    }
 }

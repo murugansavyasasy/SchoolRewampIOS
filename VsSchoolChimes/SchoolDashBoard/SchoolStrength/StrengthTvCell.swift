@@ -10,6 +10,8 @@ import Charts
 
 class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var femaleImgView: UIImageView!
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var standardLbl: UILabel!
     @IBOutlet weak var viewDetailsBtnName: UIButton!
     @IBOutlet weak var standardFullview: UIView!
@@ -24,7 +26,8 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     @IBOutlet weak var cellview: UIView!
    
     var sections: [SectionList]?
-    
+    var boycount : String?
+    var girlscount : String?
     override func awakeFromNib() {
         super.awakeFromNib()
         standardFullview.setShadow(cornerRadius:5)
@@ -34,17 +37,35 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         countLbl.setFont(style: .body, size: FontSize.BodySize)
         boysCountLbl.setFont(style: .body, size: FontSize.BodySize)
         girlsCountLbl.setFont(style: .body, size: FontSize.BodySize)
-//        StandardBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
-//        
-//        StandardView.layer.cornerRadius = 10
         cellview.layer.cornerRadius = 10
-//        countView.layer.cornerRadius = 10
-        
         sectionCollertionView.delegate = self
         sectionCollertionView.dataSource = self
         sectionCollertionView.register(UINib(nibName: "SectionStregnthCVC", bundle: nil), forCellWithReuseIdentifier: "SectionStregnthCVC")
+        
+        
+//        updateProgress(
+//            boys: boycount ?? "",
+//            girls: girlscount ?? "")
     }
 
+
+
+    func updateProgress(boys: String, girls: String) {
+        
+        let boysCount = Int(boys) ?? 0
+           let girlsCount = Int(girls) ?? 0
+           let total = boysCount + girlsCount
+           guard total > 0 else { return }
+
+           // Calculate percentage (0.0 to 1.0)
+           let boysPercent = Float(boysCount) / Float(total)
+           let girlsPercent = Float(girlsCount) / Float(total)
+
+           // Update ProgressView
+        progressView.setProgress(boysPercent, animated: true)
+          
+    }
+    
     func configure(_ sections: [SectionList]?) {
         self.sections = sections
         sectionCollertionView.reloadData()
@@ -61,19 +82,19 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         }
         
         cell.layer.cornerRadius = 10
-        cell.standardName.text = section.name
+        cell.standardName.text = "Section " + (section.name ?? "")
         cell.standardName.setFont(style: .body, size: FontSize.TitleSize)
         
         // Boys
         setTwoPartAttributedText(label: cell.boysCountLbl,
-                                 firstText: "👦 Boys : ",
+                                 firstText: "Boys : ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.boys_count ?? 0)",
                                  secondColor: .black)
         
         // Girls
         setTwoPartAttributedText(label: cell.girlsCountLbl,
-                                 firstText: "👧 Girls: ",
+                                 firstText: "Girls: ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.girls_count ?? 0)",
                                  secondColor: .black)
@@ -86,7 +107,7 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
                                  secondColor: .black)
         
         // Student Count Button Title
-        let title = "\(section.total_students ?? "") Students"
+        let title =  "Total Students " + "\(section.total_students ?? "")"
         let font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let textWidth = (title as NSString).size(withAttributes: attributes).width
