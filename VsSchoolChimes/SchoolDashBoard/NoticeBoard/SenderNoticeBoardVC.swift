@@ -321,7 +321,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         TittleDefLbl.setRequiredText(CommonStringFile.Title.translated())
         DescriptionDefLbl.setRequiredText(CommonStringFile.Description.translated())
-        addPhotoLbl.text = CommonStringFile.Add_attachment_optional.translated()
         TitleTextfield.placeholder = CommonStringFile.Title.translated()
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }

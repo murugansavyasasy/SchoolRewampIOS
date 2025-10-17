@@ -28,7 +28,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEF-Ac-Bkr">
                     <rect key="frame" x="0.0" y="104" width="393" height="748"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noRecords" translatesAutoresizingMaskIntoConstraints="NO" id="4Ha-MN-8LI">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lsrwNodata" translatesAutoresizingMaskIntoConstraints="NO" id="4Ha-MN-8LI">
                             <rect key="frame" x="30" y="199" width="333" height="350"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="350" id="YMo-b8-ghh"/>
@@ -78,14 +78,15 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoI-Qv-XXd">
+                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoI-Qv-XXd">
                                     <rect key="frame" x="84.333333333333314" y="5" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="69s-92-6P1"/>
                                         <constraint firstAttribute="width" constant="20" id="b1V-yW-hYM"/>
                                     </constraints>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="down-arrow"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="6" maxX="2.2250738585072014e-308" maxY="5"/>
+                                    <state key="normal" image="arrowtriangle.down.fill" catalog="system"/>
                                 </button>
                             </subviews>
                             <constraints>
@@ -118,9 +119,9 @@
         </view>
     </objects>
     <resources>
+        <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="down-arrow" width="512" height="512"/>
-        <image name="noRecords" width="1000" height="1000"/>
+        <image name="lsrwNodata" width="1159" height="772.32000732421875"/>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

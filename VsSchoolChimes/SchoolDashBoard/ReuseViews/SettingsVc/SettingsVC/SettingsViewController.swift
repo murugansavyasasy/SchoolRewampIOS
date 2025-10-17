@@ -36,7 +36,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     ]
     var section:[Section]?
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid", "lock.rotation","WhatNews"]),
+        Image(title: "GENERAL", Imageitems: ["bell", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid", "lock.rotation","WhatNews"]),
         Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
     ]
     var imagesArray: [UIImage] = []

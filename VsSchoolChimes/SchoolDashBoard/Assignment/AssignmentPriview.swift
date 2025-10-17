@@ -286,12 +286,10 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Only handle tap for Section 2 (submitted students list)
-        guard indexPath.section == 2,
+        guard indexPath.section == 3,
               indexPath.row < filterAssignment.count else { return }
         
         let selectedStudent = filterAssignment[indexPath.row]
-        
-        // If NOT submitted, show alert instead of opening details
         if selectedStudent.submit_status == "NOTSUBMITTED" {
             let alert = UIAlertController(
                 title: "No Submission",
