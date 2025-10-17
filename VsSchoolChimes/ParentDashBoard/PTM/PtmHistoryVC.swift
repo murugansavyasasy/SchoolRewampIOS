@@ -248,7 +248,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         cell.MeetingNameLbl.text = slot?.purpose
         cell.staffNameLbl.text = "with "  + (slot?.staff_name ?? "")
-        cell.subjectLbl.text = slot?.subject_name
+        cell.subjectLbl.text = slot?.subject_name?.first
         cell.dateBtn.setTitle(slot?.date, for: .normal)
         cell.TimeBtn.setTitle(slot?.time, for: .normal)
         let duration = String(slot?.duration ?? 0) + " min"
@@ -328,7 +328,7 @@ extension PtmHistoryVC: UISearchBarDelegate{
                 let filteredSlots = section.slots.filter { slot in
                     (slot.purpose?.lowercased().contains(query) ?? false) ||
                     (slot.staff_name?.lowercased().contains(query) ?? false) ||
-                    (slot.subject_name?.lowercased().contains(query) ?? false) ||
+                    (slot.subject_name?.first?.lowercased().contains(query) ?? false) ||
                     (slot.status?.lowercased().contains(query) ?? false) ||
                     (slot.date?.convertToTargetDateFormat()?.lowercased().contains(query) ?? false) ||
                     (slot.time?.lowercased().contains(query) ?? false)

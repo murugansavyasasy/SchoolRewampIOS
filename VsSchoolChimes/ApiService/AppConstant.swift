@@ -182,6 +182,7 @@ struct ServiceUrl{
     static let lms_api_quiz_pick_from_qbank = "lms/api/quiz/pick-from-qbank"
     static let comm_api_interaction_staff_ans_question = "comm/api/interaction/staff-ans-question"
     static let dashboard_api_dashboard_new_updates = "dashboard/api/dashboard/new-updates"
+    static let stud_attd_api_attendance_student_list = "stud-attd/api/attendance/student-list"
 }
 
 struct localData{

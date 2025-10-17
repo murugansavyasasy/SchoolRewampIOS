@@ -305,4 +305,5 @@ class PTMRequestStringFile{
     static let slot_ids = "slot_ids"
     static let cancelled_reason = "cancelled_reason"
     static let slot_id = "slot_id"
+    static let is_management = "is_management"
 }
