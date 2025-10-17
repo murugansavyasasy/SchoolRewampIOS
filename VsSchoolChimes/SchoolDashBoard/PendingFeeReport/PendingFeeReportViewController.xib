@@ -97,7 +97,7 @@
                                 </stackView>
                             </subviews>
                         </stackView>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-gc-der">
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noFeePending" translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-gc-der">
                             <rect key="frame" x="10" y="72" width="373" height="300"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="U9I-au-sRc"/>
@@ -268,10 +268,10 @@
         </view>
     </objects>
     <resources>
-        <image name="NoMessage" width="650" height="512"/>
         <image name="Pending" width="21.333333969116211" height="21.333333969116211"/>
         <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="noFeePending" width="3000" height="3000"/>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

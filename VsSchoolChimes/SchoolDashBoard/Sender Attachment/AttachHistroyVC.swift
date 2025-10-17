@@ -35,6 +35,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     @IBOutlet weak var backBtnName: UIButton!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var noDataLabel: UILabel!
+    @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var schoolName: UILabel!
@@ -226,27 +227,15 @@ class AttachHistroyVC: UIViewController, SelectedId {
                 
                 switch result {
                 case .success(let response):
-                    if response.status == true {
-                        //                        self.hideView(ishide: true)
                         self.attachmentData = response.data ?? []
                         self.filteredAttachments = response.data
                         self.SearchAttachments = response.data
-                        
-                        self.tv.isHidden = false
-                        self.noDataLabel.isHidden = true
+                    self.noDataLabel.isHidden = !(response.data?.isEmpty ?? false)
+                    self.noDataImg.isHidden = !(response.data?.isEmpty ?? false)
                         self.tv.reloadData()
-        
-                    } else {
-//                                                self.hideView(ishide: false)
-                        self.noDataLabel.text = response.message
-                        self.tv.isHidden = true
-                        self.noDataLabel.isHidden = false
-                    }
                     
                 case .failure(_):
-            
                     self.noDataLabel.text = "Something went wrong"
-                    self.tv.isHidden = true
                     self.noDataLabel.isHidden = false
                 }
             }
@@ -307,37 +296,32 @@ class AttachHistroyVC: UIViewController, SelectedId {
         )
     }
     
-    
-    
     func removeAttachment(withId attachmentId: String) {
-        // Find the index of the row to remove
-        if let index = filteredAttachments?.firstIndex(where: { $0.id == attachmentId }) {
-            
-            // Remove the item from arrays
-            filteredAttachments?.remove(at: index)
-            attachmentData.removeAll(where: { $0.id == attachmentId })
-            SearchAttachments?.removeAll(where: { $0.id == attachmentId })
-            
-            // If no data left
-            if filteredAttachments?.isEmpty ?? true {
-                noDataLabel.isHidden = false
-                noDataLabel.text = "There are no attachments posted yet."
-                tv.isHidden = true
-            } else {
-                noDataLabel.isHidden = true
-                tv.isHidden = false
-            }
-            
-            // Animate row deletion properly
-            tv.beginUpdates()
-            tv.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-            tv.endUpdates()
+        guard let index = filteredAttachments?.firstIndex(where: { $0.id == attachmentId }) else {
+            return
+        }
+        
+        // Update data sources
+        filteredAttachments?.remove(at: index)
+        attachmentData.removeAll(where: { $0.id == attachmentId })
+        SearchAttachments?.removeAll(where: { $0.id == attachmentId })
+        
+        // Animate row deletion
+        tv.beginUpdates()
+        tv.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+        tv.endUpdates()
+        
+        // Handle empty state after deletion
+        let isEmpty = filteredAttachments?.isEmpty ?? true
+        if isEmpty {
+            noDataLabel.isHidden = false
+            noDataImg.isHidden = false
+            noDataLabel.text = "There are no attachments posted yet."
+        } else {
+            noDataLabel.isHidden = true
+            noDataImg.isHidden = true
         }
     }
-
-
-
-    
 }
 
 extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
@@ -414,31 +398,29 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
     }
     
     private func filterAttachments(with searchText: String) {
-        if searchText.isEmpty {
-            self.filteredAttachments = self.attachmentData
+        let lowerSearch = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if lowerSearch.isEmpty {
+            filteredAttachments = attachmentData
         } else {
-            self.filteredAttachments = self.attachmentData.filter { item in
-                let titleMatch = item.title?.lowercased().contains(searchText.lowercased()) ?? false
-                let descriptionMatch = item.description?.lowercased().contains(searchText.lowercased()) ?? false
+            filteredAttachments = attachmentData.filter { item in
+                let titleMatch = item.title?.lowercased().contains(lowerSearch) ?? false
+                let descriptionMatch = item.description?.lowercased().contains(lowerSearch) ?? false
                 return titleMatch || descriptionMatch
             }
         }
         
         UIView.performWithoutAnimation {
-            self.tv.reloadData()
-            self.tv.layoutIfNeeded()
+            tv.reloadData()
+            tv.layoutIfNeeded()
         }
 
-        
-        if self.filteredAttachments?.isEmpty ?? true {
-            self.noDataLabel.isHidden = false
-            self.noDataLabel.text = "No Attachment Found"
-            
-            self.tv.isHidden = true
-        } else {
-            self.noDataLabel.isHidden = true
-            self.tv.isHidden = false
-        }
+        // Handle empty state
+        let isEmpty = filteredAttachments?.isEmpty ?? true
+        noDataLabel.isHidden = !isEmpty
+        noDataImg.isHidden = !isEmpty
+        noDataLabel.text = isEmpty ? "No Attachment Found" : ""
     }
+
 
 }
