@@ -1707,7 +1707,7 @@ struct EventData: Codable {
     var staff_id: String?
     var staff_name: String?
     var event_name: String?
-    var subject_name: String?
+   // var subject_name: String?
     var start_time: String?
     var end_time: String?
     var slots: [StudentSlot]?
@@ -1720,7 +1720,7 @@ struct StudentSlot: Codable {
     let is_booked: Bool?
     let staff_id: String?
     let staff_name: String?
-    let subject_name: String?
+    let subject_name: [String]?
     let event_name: String?
     let event_mode: String?
     let event_link: String?
@@ -1764,7 +1764,7 @@ struct BookedSlotItem: Codable {
     var event_link: String?
     var staff_id: String?
     var staff_name: String?
-    var subject_name: String?
+    var subject_name: [String]?
     var duration: Int?
     var staff_mobile_no: String?
 }
