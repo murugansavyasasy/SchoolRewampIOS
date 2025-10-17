@@ -56,7 +56,7 @@ class AttendenceTVC: UITableViewCell, Attendence {
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
         admissionlbl.setFont(style: .body, size: FontSize.BodySize)
         rollNoLbl.setFont(style: .body, size: FontSize.BodySize)
-        onDutyDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        onDutyDefLbl.setFont(style: .body, size: 10)
 //        rollNo.translatesAutoresizingMaskIntoConstraints = false
 //        rollNo.titleLabel?.adjustsFontSizeToFitWidth = true
 //        rollNo.titleLabel?.minimumScaleFactor = 0.5

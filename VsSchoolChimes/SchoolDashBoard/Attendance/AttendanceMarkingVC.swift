@@ -9,6 +9,7 @@ import UIKit
 import DropDown
 
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
+    
     func markAsAbsent(AbsentStudent: [StudentDetails], CallAttendaceApi: Bool) {
         if CallAttendaceApi{
             user_inputs.all_present = "T"
@@ -32,9 +33,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         }
         
     }
-
-   
-
     
     func markStudentAsAbsent(studentId: String) {
         filterData = filterData?.map { student in
@@ -47,6 +45,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
         tv.reloadData()
     }
+    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var rollNoLbl: UILabel!
@@ -81,12 +80,14 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     var student_List: [AttendanceStudentListData]?
     var Filtered_stuent_Listt: [AttendanceStudentListData]?
+    var searchQuery: String = ""
+    var selectedSort = CommonStringFile.NameASC
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         StyleAndTranslater()
-        
         let standard = StandardString + " - " + SectionString
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: standard)
         
@@ -322,31 +323,43 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     }
     
     @IBAction func selectAllAct(_ sender: UIButton) {
-        sender.isSelected.toggle()
         
-        // Update data model to mark all students as present/absent
-        let isSelectingAll = sender.isSelected
-            for i in 0..<(studentsDetails?.count ?? 0) {
-                studentsDetails?[i].isAbsent = !isSelectingAll
-                filterData?[i].isAbsent = !isSelectingAll
-                abseentessData?[i].isAbsent = !isSelectingAll
-                let indexPath = IndexPath(row: i, section: 0)
-                if let customCell = tv.cellForRow(at: indexPath) as? AttendenceTVC {
-                    customCell.custSwitch.isOn = !isSelectingAll
-                    customCell.hideLbl(isAbsent: !isSelectingAll)
-                }
+//        sender.isSelected.toggle()
+//        
+//        // Update data model to mark all students as present/absent
+//        let isSelectingAll = sender.isSelected
+//            for i in 0..<(studentsDetails?.count ?? 0) {
+//                studentsDetails?[i].isAbsent = !isSelectingAll
+//                filterData?[i].isAbsent = !isSelectingAll
+//                abseentessData?[i].isAbsent = !isSelectingAll
+//                let indexPath = IndexPath(row: i, section: 0)
+//                if let customCell = tv.cellForRow(at: indexPath) as? AttendenceTVC {
+//                    customCell.custSwitch.isOn = !isSelectingAll
+//                    customCell.hideLbl(isAbsent: !isSelectingAll)
+//                }
+//            }
+//            // Update select all button image and total count
+//            if isSelectingAll {
+//                selectAllBtn.setImage(ImageName.checkmark, for: .normal)
+//                totalcount = studentsDetails?.count ?? 0
+//                AbsentCountLbl.text = String(totalcount)
+//                PresentCountLbl.text = "0"
+//            } else {
+//                selectAllBtn.setImage(ImageName.square, for: .normal)
+//                totalcount = 0
+//                PresentCountLbl.text = String(studentsDetails?.count ?? 0 )
+//                AbsentCountLbl.text = String(totalcount)
+//            }
+        
+        let isAllAbsent = student_List?.allSatisfy {
+                ($0.att_type?.uppercased() ?? "") == "ABSENT"
             }
-            // Update select all button image and total count
-            if isSelectingAll {
-                selectAllBtn.setImage(ImageName.checkmark, for: .normal)
-                totalcount = studentsDetails?.count ?? 0
-                AbsentCountLbl.text = String(totalcount)
-                PresentCountLbl.text = "0"
+            
+           if isAllAbsent == true {
+                print("✅ All Absent")
+               selectAllBtn.setImage(ImageName.checkmark, for: .normal)
             } else {
-                selectAllBtn.setImage(ImageName.square, for: .normal)
-                totalcount = 0
-                PresentCountLbl.text = String(studentsDetails?.count ?? 0 )
-                AbsentCountLbl.text = String(totalcount)
+                print("⚠️ Some Present or OD/late")
             }
         }
     
@@ -356,6 +369,17 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     }
     
     @IBAction func submitAttendanceAct(_ sender: Any) {
+        
+        let isAllPresent = student_List?.allSatisfy {
+                ($0.att_type?.uppercased() ?? "") == "PRESENT"
+            }
+            
+           if isAllPresent == true {
+                print("✅ All present")
+            } else {
+                print("⚠️ Some absent or OD/late")
+            }
+        
         user_inputs.all_present = "T"
         MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
             print("Absent Studets: ", Student.name ?? "")
@@ -390,6 +414,42 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
 
     }
     
+    func applyFilterAndSort() {
+        
+        var result = student_List ?? []
+
+        if !searchQuery.isEmpty {
+            let query = searchQuery.lowercased()
+            result = result.filter { student in
+                (student.name?.lowercased().contains(query) ?? false) ||
+                (student.roll_no?.lowercased().contains(query) ?? false) ||
+                (student.admission_no?.lowercased().contains(query) ?? false)
+            }
+        }
+
+            switch selectedSort {
+            case CommonStringFile.RollNoASC:
+                result.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
+            case CommonStringFile.RollNoDESC:
+                result.sort { ($0.roll_no ?? "") > ($1.roll_no ?? "") }
+            case CommonStringFile.NameASC:
+                result.sort { ($0.name ?? "") < ($1.name ?? "") }
+            case CommonStringFile.NameDESC:
+                result.sort { ($0.name ?? "") > ($1.name ?? "") }
+            case CommonStringFile.AdmissionNoASC:
+                result.sort { ($0.admission_no ?? "") < ($1.admission_no ?? "") }
+            case CommonStringFile.AdmissionNoDESC:
+                result.sort { ($0.admission_no ?? "") > ($1.admission_no ?? "") }
+            default:
+                break
+            }
+        
+        // 4️⃣ Update the filtered data source
+        Filtered_stuent_Listt = result
+        tv.reloadData()
+    }
+
+    
     @IBAction func searchBtnCilck(_ sender: UIButton) {
         sender.isSelected.toggle()
         searchStack.isHidden = !sender.isSelected
@@ -405,77 +465,26 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         dropDown.direction = .bottom
         
         dropDown.show()
-        dropDown.selectionAction = { [self] (index: Int, item: String) in
+        
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
-            switch item{
-            case CommonStringFile.RollNoASC:
-                let sortedByRollNumber = studentsDetails?.sorted {
-                    $0.roll_no ?? "" < $1.roll_no ?? ""
-                }
-                filterData = sortedByRollNumber
-            case CommonStringFile.RollNoDESC:
-                let sortedByName = studentsDetails?.sorted {
-                    $0.roll_no ?? "" > $1.roll_no ?? ""
-                }
-                filterData = sortedByName
-            case CommonStringFile.NameASC:
-                let sortedByName = studentsDetails?.sorted {
-                    $0.name?.localizedCompare($1.name ?? "") == .orderedAscending
-                }
-                filterData = sortedByName
-            case CommonStringFile.NameDESC:
-                let sortedByName = studentsDetails?.sorted {
-                    $0.name ?? "" > $1.name ?? ""
-                }
-                filterData = sortedByName
-            case CommonStringFile.Absent:
-                
-                filterData = studentsDetails?.sorted {
-                    !($0.isAbsent ?? false) && ($1.isAbsent != nil)
-                }
-            case CommonStringFile.Present:
-                filterData = studentsDetails?.sorted {
-                    $0.isAbsent ?? false && !(
-                        $1.isAbsent ?? false
-                    ) // Absent students first
-                }
-            case CommonStringFile.AdmissionNoASC:
-                let sortedByAdmission = studentsDetails?.sorted {
-                    $0.admission_no ?? "" < $1.admission_no ?? ""
-                }
-                filterData = sortedByAdmission
-            case CommonStringFile.AdmissionNoDESC:
-                let sortByAdmision = studentsDetails?.sorted {
-                    $0.admission_no ?? "" > $1.admission_no ?? ""
-                }
-                filterData = sortByAdmision
-                
-            default:
-                filterData = studentsDetails
-                
-            }
-            tv.reloadData()
-            self.filterBtn.setTitle(item.translated(), for: .normal)
+            // Save selected sort
+            self.selectedSort =  item
+            
+            applyFilterAndSort()
         }
         
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let query = searchText.lowercased()
-        if query.isEmpty {
-            filterData = studentsDetails
-            selectAllBtn.isHidden = false
-        } else {
-            filterData = studentsDetails?.filter { student in
-                return student.name?.lowercased().contains(query) ?? false ||
-                student.roll_no?.lowercased().contains(query) ?? false ||
-                student.admission_no?.lowercased().contains(query) ?? false
-            }
-            selectAllBtn.isHidden = true
-        }
-        tv.reloadData()
+        searchQuery = searchText
+        applyFilterAndSort()
+        
+        selectAllBtn.isHidden = !searchText.isEmpty
     }
+
 }
 
 extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
@@ -530,11 +539,12 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
             cell.ODSwitch.isOn = false
         }
         
-        cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
-        cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
-        cell.phnBtn.tag = indexPath.row
-        cell.phnBtn.isHidden = true
-        cell.custSwitch.index = indexPath.row
+//        cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
+//        cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
+//        cell.phnBtn.tag = indexPath.row
+//        cell.phnBtn.isHidden = true
+//        cell.custSwitch.index = indexPath.row
+        cell.studentId = student_data?.id
         cell.delegate = self
         return cell
     }
@@ -545,16 +555,72 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
 }
     
 extension AttendanceMarkingVC: studentAttenance {
+
+    func didTapPresentAbsent(for id: String) {
+        
+        guard let filteredList = Filtered_stuent_Listt,
+              let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
+        
+        let currentType = filteredList[filterIndex].att_type
+
+            let newType: String
+            if currentType == "ABSENT" || currentType == "OD" {
+                newType = "PRESENT"
+            } else if currentType == "PRESENT" || currentType == "LATECOMER" {
+                newType = "ABSENT"
+            } else {
+                newType = "PRESENT"
+            }
+        
+        Filtered_stuent_Listt?[filterIndex].att_type = newType
+        
+        if let mainList = student_List,
+           let index = mainList.firstIndex(where: { $0.id == id }) {
+            student_List?[index].att_type = newType
+        }
+        
+        tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
+    }
+    
+
     func didTapLate(for id: String) {
         
+        guard let filteredList = Filtered_stuent_Listt,
+              let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
+
+        let currentType = filteredList[filterIndex].att_type
+        let newType: String
+        
+        if currentType == "LATECOMER"{
+             newType = "PRESENT"
+        }else{
+            newType = "LATECOMER"
+        }
+
+        Filtered_stuent_Listt?[filterIndex].att_type = newType
+       
+        if let mainList = student_List,
+           let index = mainList.firstIndex(where: { $0.id == id }) {
+            student_List?[index].att_type = newType
+        }
+
+        tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }
-    
-    func didTapPresentAbsent(for id: String) {
-        <#code#>
-    }
-    
+
     func didToggleOD(for id: String, isOn: Bool) {
-        <#code#>
+        
+        guard let filteredList = Filtered_stuent_Listt,
+              let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
+
+        let newType = isOn ? "OD" : "PRESENT"
+        
+        Filtered_stuent_Listt?[filterIndex].att_type = newType
+
+        if let mainList = student_List,
+           let index = mainList.firstIndex(where: { $0.id == id }) {
+            student_List?[index].att_type = newType
+        }
+
+        tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }
-    
 }

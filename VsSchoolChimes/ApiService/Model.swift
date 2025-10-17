@@ -2547,5 +2547,5 @@ struct AttendanceStudentListData: Codable{
     let name: String?
     let admission_no: String?
     let roll_no: String?
-    let att_type: String?
+    var att_type: String?
 }
