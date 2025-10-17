@@ -29,9 +29,10 @@ class MsgTvCell: UITableViewCell {
         viewBtn.layer.borderColor = UIColor.systemBlue
             .withAlphaComponent(0.6).cgColor
         alphbetView.layer.cornerRadius = alphbetView.frame.height/2
-        fullview.layer.cornerRadius = 10
+//        fullview.layer.cornerRadius = 10
+        fullview.setShadow()
         rollBtn.layer.cornerRadius = 5
-        readView.layer.cornerRadius = readView.frame.width/2
+//        readView.layer.cornerRadius = readView.frame.width/2
     }
 
     @IBAction func viewBtnAct(_ sender: UIButton) {

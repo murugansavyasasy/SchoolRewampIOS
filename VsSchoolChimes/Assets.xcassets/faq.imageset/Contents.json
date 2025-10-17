@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "NohomeWork.png",
+      "filename" : "faq.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "NohomeWork@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "NohomeWork@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

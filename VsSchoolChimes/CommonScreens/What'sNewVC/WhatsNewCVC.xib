@@ -21,8 +21,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfX-s6-8oi">
                         <rect key="frame" x="0.0" y="0.0" width="431" height="650"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aUj-k4-Ate">
-                                <rect key="frame" x="0.0" y="0.0" width="431" height="600"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="aUj-k4-Ate">
+                                <rect key="frame" x="0.0" y="0.0" width="431" height="960.33333333333337"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kmr-gp-0dJ">
                                         <rect key="frame" x="0.0" y="0.0" width="431" height="300"/>
@@ -34,23 +34,47 @@
                                         <rect key="frame" x="0.0" y="300" width="431" height="300"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cH0-V7-s3b">
+                                        <rect key="frame" x="0.0" y="600" width="431" height="360.33333333333326"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CMI-S7-ba5">
+                                                <rect key="frame" x="10" y="10" width="411" height="330.33333333333331"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lesson Plan Tracker" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avg-m4-F3U" customClass="TopAlignedLabel" customModule="School_Chimes" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="411" height="30.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XGr-PB-R64">
+                                                        <rect key="frame" x="0.0" y="30.333333333333371" width="411" height="300"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="300" id="UaI-cX-TeV"/>
+                                                        </constraints>
+                                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                        <color key="textColor" systemColor="labelColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="CMI-S7-ba5" secondAttribute="trailing" constant="10" id="FEf-hH-3oo"/>
+                                            <constraint firstItem="CMI-S7-ba5" firstAttribute="leading" secondItem="cH0-V7-s3b" secondAttribute="leading" constant="10" id="LCC-R1-M93"/>
+                                            <constraint firstAttribute="bottom" secondItem="CMI-S7-ba5" secondAttribute="bottom" constant="20" id="isY-WP-FX1"/>
+                                            <constraint firstItem="CMI-S7-ba5" firstAttribute="top" secondItem="cH0-V7-s3b" secondAttribute="top" constant="10" id="kla-co-3xq"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lesson Plan Tracker" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avg-m4-F3U" customClass="TopAlignedLabel" customModule="School_Chimes" customModuleProvider="target">
-                                <rect key="frame" x="20" y="610" width="391" height="20"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="aUj-k4-Ate" secondAttribute="trailing" id="0g6-Qb-Z2A"/>
-                            <constraint firstAttribute="trailing" secondItem="avg-m4-F3U" secondAttribute="trailing" constant="20" symbolic="YES" id="Bhg-80-Y2D"/>
-                            <constraint firstAttribute="bottom" secondItem="avg-m4-F3U" secondAttribute="bottom" constant="20" id="Mt1-3o-BLY"/>
                             <constraint firstItem="aUj-k4-Ate" firstAttribute="top" secondItem="XfX-s6-8oi" secondAttribute="top" id="TEy-et-Eud"/>
-                            <constraint firstItem="avg-m4-F3U" firstAttribute="leading" secondItem="XfX-s6-8oi" secondAttribute="leading" constant="20" symbolic="YES" id="UPF-Ec-SmZ"/>
-                            <constraint firstItem="avg-m4-F3U" firstAttribute="top" secondItem="aUj-k4-Ate" secondAttribute="bottom" constant="10" id="jnF-Kn-YX5"/>
                             <constraint firstItem="aUj-k4-Ate" firstAttribute="leading" secondItem="XfX-s6-8oi" secondAttribute="leading" id="kbm-Vs-l68"/>
                         </constraints>
                     </view>
@@ -65,6 +89,8 @@
             </constraints>
             <size key="customSize" width="431" height="551"/>
             <connections>
+                <outlet property="descriptionHeight" destination="UaI-cX-TeV" id="WsC-W0-raJ"/>
+                <outlet property="descriptionTxt" destination="XGr-PB-R64" id="N6n-Os-d1Z"/>
                 <outlet property="imgView" destination="kmr-gp-0dJ" id="4Oz-Jd-O46"/>
                 <outlet property="tittleLbl" destination="avg-m4-F3U" id="dUh-NL-vfQ"/>
                 <outlet property="videoView" destination="Rtv-Px-dCR" id="pTF-TK-MPF"/>
@@ -73,6 +99,9 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
