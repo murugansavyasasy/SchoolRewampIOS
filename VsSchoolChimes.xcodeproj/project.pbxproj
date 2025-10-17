@@ -581,6 +581,8 @@
 		84BCE9142E9E4D24002C8068 /* SummerizeTvCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE9122E9E4D24002C8068 /* SummerizeTvCel.xib */; };
 		84BCE9172E9E5270002C8068 /* GenderDistriTvcel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE9152E9E5270002C8068 /* GenderDistriTvcel.swift */; };
 		84BCE9182E9E5270002C8068 /* GenderDistriTvcel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE9162E9E5270002C8068 /* GenderDistriTvcel.xib */; };
+		84BCE91F2EA12654002C8068 /* LblTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE91D2EA12654002C8068 /* LblTvCell.swift */; };
+		84BCE9202EA12654002C8068 /* LblTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BCE91E2EA12654002C8068 /* LblTvCell.xib */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C3A1EE2E66AD41002E7506 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
@@ -1503,6 +1505,8 @@
 		84BCE9122E9E4D24002C8068 /* SummerizeTvCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SummerizeTvCel.xib; sourceTree = "<group>"; };
 		84BCE9152E9E5270002C8068 /* GenderDistriTvcel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderDistriTvcel.swift; sourceTree = "<group>"; };
 		84BCE9162E9E5270002C8068 /* GenderDistriTvcel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenderDistriTvcel.xib; sourceTree = "<group>"; };
+		84BCE91D2EA12654002C8068 /* LblTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LblTvCell.swift; sourceTree = "<group>"; };
+		84BCE91E2EA12654002C8068 /* LblTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LblTvCell.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgTvCell.swift; sourceTree = "<group>"; };
@@ -3132,6 +3136,8 @@
 				84BCE9122E9E4D24002C8068 /* SummerizeTvCel.xib */,
 				84BCE9152E9E5270002C8068 /* GenderDistriTvcel.swift */,
 				84BCE9162E9E5270002C8068 /* GenderDistriTvcel.xib */,
+				84BCE91D2EA12654002C8068 /* LblTvCell.swift */,
+				84BCE91E2EA12654002C8068 /* LblTvCell.xib */,
 			);
 			path = SchoolStrength;
 			sourceTree = "<group>";
@@ -4734,6 +4740,7 @@
 				840177E82E3B2CE0006CB477 /* ContentCell.xib in Resources */,
 				84CE676A2E4232610019128B /* AssignmentTVC.xib in Resources */,
 				84017F852E44B1BD006CB477 /* CertificatePreviewVc.xib in Resources */,
+				84BCE9202EA12654002C8068 /* LblTvCell.xib in Resources */,
 				FA28FC462E01349700647A76 /* LessonViewTvCell.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
 				8451ECF92E25076300D6DBB4 /* ViewProgressVC.xib in Resources */,
@@ -5385,6 +5392,7 @@
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
 				84235A172E1E287F002F2E1D /* LSWTaskTVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
+				84BCE91F2EA12654002C8068 /* LblTvCell.swift in Sources */,
 				84D1FF1C2D4CE00A003ACC04 /* ParentDashboardVc.swift in Sources */,
 				84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */,
 				843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */,
