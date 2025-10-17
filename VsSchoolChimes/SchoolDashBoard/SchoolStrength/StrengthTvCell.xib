@@ -48,16 +48,18 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class : 10 B" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgF-7s-e6N">
                                                                 <rect key="frame" x="0.0" y="49.333333333333329" width="170" height="14.333333333333336"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="textColor" red="0.23899999259999999" green="0.5099999905" blue="0.92900002000000004" alpha="0.78000000000000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lxM-eg-HLr">
                                                                 <rect key="frame" x="0.0" y="69.666666666666671" width="170" height="4"/>
+                                                                <color key="progressTintColor" red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="0.781494140625" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="trackTintColor" red="1" green="0.57647058823529407" blue="0.75294117647058822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </progressView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Girls" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQt-95-QUx">
                                                                 <rect key="frame" x="0.0" y="79.666666666666671" width="170" height="14.333333333333329"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="textColor" red="1" green="0.57647058819999997" blue="0.75294117650000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -78,34 +80,38 @@
                                                 </state>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Wvk-82-A2y">
-                                                <rect key="frame" x="204" y="66" width="92" height="20"/>
+                                                <rect key="frame" x="244" y="66" width="44" height="20"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fwt-Ns-TN1">
-                                                        <rect key="frame" x="0.0" y="1.6666666666666661" width="20" height="18"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="males" translatesAutoresizingMaskIntoConstraints="NO" id="fwt-Ns-TN1">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                        <color key="tintColor" red="0.23921568627450979" green="0.50980392156862742" blue="0.92941176470588238" alpha="0.78000000000000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="1AL-rL-G0k"/>
                                                             <constraint firstAttribute="height" constant="20" id="qeI-oi-M5g"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="T5V-L9-gRW">
-                                                        <rect key="frame" x="24" y="1.6666666666666661" width="20" height="18"/>
+                                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="males" translatesAutoresizingMaskIntoConstraints="NO" id="5p2-xo-kap">
+                                                        <rect key="frame" x="22" y="0.0" width="20" height="20"/>
+                                                        <color key="tintColor" red="0.23899999259999999" green="0.5099999905" blue="0.92900002000000004" alpha="0.78000000000000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="NFV-wS-9NT"/>
-                                                            <constraint firstAttribute="height" constant="20" id="i04-lY-qEB"/>
+                                                            <constraint firstAttribute="height" constant="20" id="UyV-ay-wYs"/>
+                                                            <constraint firstAttribute="width" constant="20" id="V7v-PI-gDi"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vJD-GI-9Ys">
-                                                        <rect key="frame" x="48" y="1.6666666666666661" width="20" height="18"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="females" translatesAutoresizingMaskIntoConstraints="NO" id="vJD-GI-9Ys">
+                                                        <rect key="frame" x="24" y="0.0" width="20" height="20"/>
+                                                        <color key="tintColor" red="1" green="0.57647058823529407" blue="0.75294117647058822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="SZF-oX-byU"/>
                                                             <constraint firstAttribute="height" constant="20" id="aP8-sW-K38"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ftn-xf-oyp">
-                                                        <rect key="frame" x="72" y="1.6666666666666661" width="20" height="18"/>
+                                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="males" translatesAutoresizingMaskIntoConstraints="NO" id="2e1-bh-Ub5">
+                                                        <rect key="frame" x="44" y="0.0" width="20" height="20"/>
+                                                        <color key="tintColor" red="0.23899999259999999" green="0.5099999905" blue="0.92900002000000004" alpha="0.78000000000000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="AOK-ho-77f"/>
-                                                            <constraint firstAttribute="height" constant="20" id="Z6u-oc-dn2"/>
+                                                            <constraint firstAttribute="height" constant="20" id="8yr-XY-xB7"/>
+                                                            <constraint firstAttribute="width" constant="20" id="YcG-jQ-NOe"/>
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
@@ -117,7 +123,7 @@
                                             <constraint firstItem="Wvk-82-A2y" firstAttribute="top" secondItem="BHP-6G-1LL" secondAttribute="bottom" constant="30" id="51X-tm-uJ2"/>
                                             <constraint firstItem="zgx-iV-g0d" firstAttribute="top" secondItem="rsJ-fB-8Ge" secondAttribute="top" constant="8" id="8PU-L9-Dif"/>
                                             <constraint firstAttribute="trailing" secondItem="BHP-6G-1LL" secondAttribute="trailing" constant="5" id="BJZ-4f-1Bt"/>
-                                            <constraint firstAttribute="trailing" secondItem="Wvk-82-A2y" secondAttribute="trailing" constant="2" id="Hts-Mv-USP"/>
+                                            <constraint firstAttribute="trailing" secondItem="Wvk-82-A2y" secondAttribute="trailing" constant="10" id="Hts-Mv-USP"/>
                                             <constraint firstAttribute="trailing" secondItem="zgx-iV-g0d" secondAttribute="trailing" constant="120" id="caW-bK-cj0"/>
                                             <constraint firstAttribute="height" constant="120" id="mmq-6h-jcW"/>
                                             <constraint firstItem="zgx-iV-g0d" firstAttribute="leading" secondItem="rsJ-fB-8Ge" secondAttribute="leading" constant="8" id="wjp-PX-PIv"/>
@@ -161,7 +167,9 @@
                 <outlet property="boysCountLbl" destination="SgF-7s-e6N" id="kt9-yT-mBO"/>
                 <outlet property="cellview" destination="Fv7-Bq-GnT" id="4iR-t9-rFY"/>
                 <outlet property="countLbl" destination="cx6-id-w6f" id="Kbf-yc-0wr"/>
+                <outlet property="femaleImgView" destination="vJD-GI-9Ys" id="YeG-GA-ezK"/>
                 <outlet property="girlsCountLbl" destination="cQt-95-QUx" id="DQA-Im-Ebk"/>
+                <outlet property="progressView" destination="lxM-eg-HLr" id="pZe-kO-Ts0"/>
                 <outlet property="sectionCollertionView" destination="GMt-WI-yQo" id="NHu-rO-qLp"/>
                 <outlet property="standardFullview" destination="rsJ-fB-8Ge" id="TM2-mE-OY4"/>
                 <outlet property="standardLbl" destination="7bp-k9-jWa" id="SDP-BB-PUI"/>
@@ -171,7 +179,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="person.2.fill" catalog="system" width="128" height="86"/>
+        <image name="females" width="1792" height="1792"/>
+        <image name="males" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

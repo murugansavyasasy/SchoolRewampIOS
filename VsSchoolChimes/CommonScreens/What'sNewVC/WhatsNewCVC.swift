@@ -11,6 +11,8 @@ import AVFoundation
 
 class WhatsNewCVC: UICollectionViewCell {
 
+    @IBOutlet weak var descriptionTxt: UITextView!
+    @IBOutlet weak var descriptionHeight: NSLayoutConstraint!
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var tittleLbl: TopAlignedLabel!
     @IBOutlet weak var imgView: UIImageView!
@@ -25,39 +27,42 @@ class WhatsNewCVC: UICollectionViewCell {
         imgView.clipsToBounds = true
         videoView.layer.cornerRadius = 8
         videoView.clipsToBounds = true
+        descriptionTxt.isScrollEnabled = false
+        descriptionTxt.isUserInteractionEnabled = false
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         stopVideo()
+        tittleLbl.text = nil
+        descriptionTxt.text = nil
+        imgView.image = nil
     }
 
     func configure(with item: UpdateItem) {
         // Title + Description
-        let titleText = (item.name ?? "") + "\n\n"
-        let descriptionText = item.description ?? ""
-        let attributedString = NSMutableAttributedString()
-        let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 17),
-            .foregroundColor: UIColor.label
-        ]
-        attributedString.append(NSAttributedString(string: titleText, attributes: titleAttributes))
-        let descriptionAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
-            .foregroundColor: UIColor.label
-        ]
-        attributedString.append(NSAttributedString(string: descriptionText, attributes: descriptionAttributes))
-        tittleLbl.attributedText = attributedString
-        tittleLbl.numberOfLines = 0
+        tittleLbl.text = item.name ?? ""
+        descriptionTxt.text = item.description ?? ""
+        
+        // 👇 Adjust textView height based on content
+        let size = CGSize(width: descriptionTxt.frame.width, height: .infinity)
+        let estimatedSize = descriptionTxt.sizeThatFits(size)
+        descriptionHeight.constant = estimatedSize.height
 
         // Video or Image
-        if let link = item.video_link, !link.isEmpty, let url = URL(string: link) {
+        if let link = item.video_link,
+           !link.isEmpty,
+           let url = URL(string: link) {
             videoURL = url
             imgView.isHidden = true
             videoView.isHidden = false
             setupPlayerIfNeeded()
         } else {
-            imgView.kf.setImage(with: URL(string: item.downloadable_image ?? ""))
+            if let imgURL = URL(string: item.downloadable_image ?? "") {
+                imgView.kf.setImage(with: imgURL)
+            } else {
+                imgView.image = nil
+            }
             imgView.isHidden = false
             videoView.isHidden = true
             videoURL = nil
@@ -67,17 +72,22 @@ class WhatsNewCVC: UICollectionViewCell {
 
     private func setupPlayerIfNeeded() {
         guard player == nil, let url = videoURL else { return }
-        player = AVPlayer(url: url)
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
         playerLayer = AVPlayerLayer(player: player)
         playerLayer?.frame = videoView.bounds
         playerLayer?.videoGravity = .resizeAspectFill
+        
         if let layer = playerLayer {
             videoView.layer.addSublayer(layer)
         }
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(loopVideo),
-                                               name: .AVPlayerItemDidPlayToEndTime,
-                                               object: player?.currentItem)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(loopVideo),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem
+        )
     }
 
     @objc private func loopVideo() {
@@ -88,6 +98,11 @@ class WhatsNewCVC: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         playerLayer?.frame = videoView.bounds
+        
+        // 👇 Update text view height on layout change (e.g. rotation)
+        let size = CGSize(width: descriptionTxt.frame.width, height: .infinity)
+        let estimatedSize = descriptionTxt.sizeThatFits(size)
+        descriptionHeight.constant = estimatedSize.height
     }
 
     // MARK: - Public control methods
@@ -109,7 +124,7 @@ class WhatsNewCVC: UICollectionViewCell {
     }
 }
 
-// Top-aligned UILabel
+// MARK: - Top-aligned UILabel
 class TopAlignedLabel: UILabel {
     override func drawText(in rect: CGRect) {
         let textRect = super.textRect(forBounds: rect, limitedToNumberOfLines: numberOfLines)
@@ -119,7 +134,8 @@ class TopAlignedLabel: UILabel {
                                   height: textRect.height))
     }
 
-    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+    override func textRect(forBounds bounds: CGRect,
+                           limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         var textRect = super.textRect(forBounds: bounds, limitedToNumberOfLines: numberOfLines)
         textRect.origin.y = bounds.origin.y
         return textRect

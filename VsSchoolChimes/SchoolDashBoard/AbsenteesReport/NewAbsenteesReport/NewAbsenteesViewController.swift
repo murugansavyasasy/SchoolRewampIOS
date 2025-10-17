@@ -339,19 +339,23 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
     
     
     func updateProgress(absentees: String, total: String) {
-        // String → Float convert
+        
+        
+        
         let absentCount = Float(absentees) ?? 0
         let totalCount = Float(total) ?? 1  // avoid divide by zero
         
+//        print("absentss",absent)
+//        print("total",total)
         let progressValue = absentCount / totalCount
-        
-        progres.setProgress(progressValue, animated: true)   // 0.0 to 1.0 range
-        
+        progres.setProgress(progressValue, animated: true)
         
         // Optional: progress color change
-        progres.progressTintColor = .systemRed
-        progres.trackTintColor = .systemGreen
+//        progres.progressTintColor = .systemRed
+//        progres.trackTintColor = .systemGreen
     }
+
+
     
 
 }
@@ -569,19 +573,31 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
     func getAbsenteeInfo(for selectedDate: String) -> (totalAbsentees: Int, studentCounts: Int)? {
         guard let absentData = absentData else { return nil }
         
+        // Find the matching date entry
         if let matchedDate = absentData.first(where: { $0.date == selectedDate }),
-           let firstClass = matchedDate.class_wise?.first {
+           let classWiseList = matchedDate.class_wise {
             
-            let totalStu = Int(firstClass.student_counts ?? "0") ?? 0
-            let totalAbs = Int(firstClass.total_absentees ?? "0") ?? 0
+            var totalAbs = 0
+            var totalStu = 0
+            
+            // Loop through all classes and sections
+            for classItem in classWiseList {
+                if let sectionList = classItem.section_wise {
+                    for section in sectionList {
+                        let abs = Int(section.total_absentees ?? "0") ?? 0
+                        let stu = Int(section.student_counts ?? "0") ?? 0
+                        totalAbs += abs
+                        totalStu += stu
+                    }
+                }
+            }
             
             return (totalAbs, totalStu)
         }
         
-        
-        
         return nil
     }
+
 
    
 

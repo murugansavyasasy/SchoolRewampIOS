@@ -103,7 +103,7 @@
                                         <outlet property="delegate" destination="-1" id="wQN-Rc-Hfb"/>
                                     </connections>
                                 </searchBar>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="PT8-8r-tte">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noFiles" translatesAutoresizingMaskIntoConstraints="NO" id="PT8-8r-tte">
                                     <rect key="frame" x="0.0" y="83.666666666666657" width="393" height="280"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="280" id="XpH-DS-911"/>
@@ -115,7 +115,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nsR-Jj-DY8">
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nsR-Jj-DY8">
                                     <rect key="frame" x="10" y="393.66666666666663" width="373" height="270.33333333333337"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
@@ -159,9 +159,9 @@
         </view>
     </objects>
     <resources>
-        <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="noFiles" width="1920" height="1080"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

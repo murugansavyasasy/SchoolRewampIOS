@@ -85,7 +85,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQz-wK-DCk">
                     <rect key="frame" x="0.0" y="129" width="393" height="689"/>
                     <subviews>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noRecords" translatesAutoresizingMaskIntoConstraints="NO" id="bWN-zH-ICo">
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noEvents" translatesAutoresizingMaskIntoConstraints="NO" id="bWN-zH-ICo">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="LUm-ou-ACl"/>
@@ -158,7 +158,7 @@
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
-        <image name="noRecords" width="1000" height="1000"/>
+        <image name="noEvents" width="1159" height="771"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
