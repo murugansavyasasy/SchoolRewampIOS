@@ -494,7 +494,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         cell.configure(with: event.slots ?? [], parentTableView: tv)
         cell.TitleLbl.text = event.event_name
         cell.StaffNameLbl.text = event.staff_name
-        cell.subjectLbl.text = " "//event.subject_name
+        let subjects = (event.slots?.first?.subject_name?.isEmpty ?? false) ? " " : event.slots?.first?.subject_name?.joined(separator: ", ")
+        cell.subjectLbl.text = subjects
         cell.MeetingTypeBtn.setTitle(event.slots?.first?.event_mode, for: .normal)
         if let name = event.staff_name, let firstChar = name.first {
             cell.initialBtn.setTitle(String(firstChar), for: .normal)
