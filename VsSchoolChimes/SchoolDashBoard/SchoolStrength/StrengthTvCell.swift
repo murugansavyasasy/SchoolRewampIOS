@@ -94,14 +94,14 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         
         // Girls
         setTwoPartAttributedText(label: cell.girlsCountLbl,
-                                 firstText: "Girls: ",
+                                 firstText: "Girls : ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.girls_count ?? 0)",
                                  secondColor: .black)
 
         // Others
         setTwoPartAttributedText(label: cell.otersCountLbl,
-                                 firstText: "  Others: ",
+                                 firstText: "Unspecified : ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.other_count ?? 0)",
                                  secondColor: .black)

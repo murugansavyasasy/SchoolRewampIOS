@@ -137,8 +137,8 @@ class SchoolStrengthVC: UIViewController {
                     }
                     self.selectedIndexPath = nil
                     self.chartSet = false
-                    self.totalBoys = response.data?.first?.total_boys_strength ?? "0"
-                    self.totalgirls = response.data?.first?.total_girls_strength ?? "0"
+                    self.totalBoys = response.data?.first?.total_student_strength ?? "0"
+                    self.totalgirls = response.data?.first?.total_staff_strength ?? "0"
                     let hasData = !(response.data?.isEmpty ?? true)
                     self.norecordLbl.text = response.message
                     self.norecordLbl.isHidden = hasData
