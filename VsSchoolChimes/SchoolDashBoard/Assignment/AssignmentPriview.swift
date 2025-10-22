@@ -50,7 +50,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                 ($0.section?.localizedCaseInsensitiveContains(searchText) ?? false)
             }
         }
-        assignmentTable.reloadSections(IndexSet(integer: 2), with: .automatic)
+        assignmentTable.reloadSections(IndexSet(integer: 3), with: .automatic)
     }
     
     // MARK: - IBOutlets
