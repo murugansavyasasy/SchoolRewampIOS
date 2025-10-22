@@ -46,8 +46,8 @@ class GenderDistriTvcel: UITableViewCell {
         let boysPercentage = (Double(boys) / Double(total)) * 100
         let girlsPercentage = (Double(girls) / Double(total)) * 100
 
-        boysLbl.text = "\(boys) Boys (\(String(format: "%.1f", boysPercentage))%)"
-        girlsLbl.text = "\(girls) Girls (\(String(format: "%.1f", girlsPercentage))%)"
+        boysLbl.text = "\(boys) Staffs (\(String(format: "%.1f", boysPercentage))%)"
+        girlsLbl.text = "\(girls) Students (\(String(format: "%.1f", girlsPercentage))%)"
     }
    
     func updateProgress(absentees: String, total: String) {

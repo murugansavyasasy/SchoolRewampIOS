@@ -223,7 +223,11 @@ extension UIViewController {
                 animationView.widthAnchor.constraint(equalToConstant: 120),
                 animationView.heightAnchor.constraint(equalToConstant: 120)
             ])
-            
+            let tapView = UITapGestureRecognizer(
+                target: self,
+                action: #selector(self.didHide)
+            )
+            bg.addGestureRecognizer(tapView)
             animationView.play()
             window.addSubview(bg)
             window.bringSubviewToFront(bg)
@@ -235,7 +239,9 @@ extension UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + maxDuration, execute: workItem)
         }
     }
-    
+    @objc func didHide(){
+        hideActivityLoader()
+    }
     /// Hide loader manually
     func hideActivityLoader() {
         DispatchQueue.main.async {

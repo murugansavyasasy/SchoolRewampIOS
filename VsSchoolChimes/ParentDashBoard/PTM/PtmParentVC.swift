@@ -36,6 +36,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var EventDate = ""
     var subjectId = "0"
     var classteacherId = "0"
+    var isManagement = false
     let alert = CustomAlert()
     let dropDown = DropDown()
     var childVc : PtmHistoryVC?
@@ -138,11 +139,13 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             
             switch index {
             case 0:
-                self.subjectId = "0"; self.classteacherId = "0"
+                self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = false
             case 1:
-                self.subjectId = "0"; self.classteacherId = self.subjectList[index - 1].id ?? ""
+                self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = true
+            case 2:
+                self.subjectId = "0"; self.classteacherId = self.subjectList[index - 1].id ?? ""; self.isManagement = false
             default:
-                self.classteacherId = "0"; self.subjectId = self.subjectList[index - 1].id ?? ""
+                self.classteacherId = "0"; self.subjectId = self.subjectList[index - 1].id ?? "" ; self.isManagement = false
             }
             self.getSlotsApi()
         }
@@ -180,7 +183,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let param : [String:Any] = [
             PTMRequestStringFile.event_date:EventDate,
             PTMRequestStringFile.subject_id:subjectId,
-            PTMRequestStringFile.class_teacher_id: classteacherId
+            PTMRequestStringFile.class_teacher_id: classteacherId,
+            PTMRequestStringFile.is_management: isManagement
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_teacherwise_slots_availability_for_student,
@@ -490,7 +494,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         cell.configure(with: event.slots ?? [], parentTableView: tv)
         cell.TitleLbl.text = event.event_name
         cell.StaffNameLbl.text = event.staff_name
-        cell.subjectLbl.text = event.subject_name
+        let subjects = (event.slots?.first?.subject_name?.isEmpty ?? false) ? " " : event.slots?.first?.subject_name?.joined(separator: ", ")
+        cell.subjectLbl.text = subjects
         cell.MeetingTypeBtn.setTitle(event.slots?.first?.event_mode, for: .normal)
         if let name = event.staff_name, let firstChar = name.first {
             cell.initialBtn.setTitle(String(firstChar), for: .normal)

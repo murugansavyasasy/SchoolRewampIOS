@@ -22,7 +22,7 @@
                         <rect key="frame" x="10" y="10" width="300" height="119"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3Q-YF-EDT">
-                                <rect key="frame" x="10" y="7.9999999999999982" width="37.666666666666664" height="20.333333333333329"/>
+                                <rect key="frame" x="10" y="7.9999999999999982" width="150" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -78,7 +78,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqf-xi-bRe">
-                                <rect key="frame" x="185" y="8" width="110" height="25"/>
+                                <rect key="frame" x="170" y="8" width="125" height="25"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYr-FP-LIZ">
                                         <rect key="frame" x="0.0" y="0.0" width="90" height="25"/>
@@ -90,10 +90,10 @@
                                         <state key="normal" title="status"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQs-cY-T18">
-                                        <rect key="frame" x="90" y="0.0" width="20" height="25"/>
+                                        <rect key="frame" x="90" y="3" width="35" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="Bbg-ib-lEi"/>
-                                            <constraint firstAttribute="height" constant="25" id="WlY-Xw-RJR"/>
+                                            <constraint firstAttribute="width" constant="35" id="Bbg-ib-lEi"/>
+                                            <constraint firstAttribute="height" constant="35" id="WlY-Xw-RJR"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -153,6 +153,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="HLD-cn-oa0" firstAttribute="top" secondItem="F3Q-YF-EDT" secondAttribute="bottom" constant="5" id="4H0-95-Zbk"/>
+                            <constraint firstItem="cqf-xi-bRe" firstAttribute="leading" secondItem="F3Q-YF-EDT" secondAttribute="trailing" constant="10" id="Eha-Zs-zSn"/>
                             <constraint firstItem="Hmk-m3-p2L" firstAttribute="top" secondItem="cqf-xi-bRe" secondAttribute="bottom" constant="8" id="FUf-Ru-35K"/>
                             <constraint firstItem="F3Q-YF-EDT" firstAttribute="top" secondItem="fGi-FT-UIN" secondAttribute="top" constant="8" id="HW4-io-7VQ"/>
                             <constraint firstItem="F3Q-YF-EDT" firstAttribute="leading" secondItem="fGi-FT-UIN" secondAttribute="leading" constant="10" id="J67-dh-bTP"/>

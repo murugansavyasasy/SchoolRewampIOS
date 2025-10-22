@@ -6,24 +6,27 @@ protocol Attendence{
 
 protocol studentAttenance: AnyObject{
     
-    func didAbsentOrPresentTapped(studentId:String, IsPresent:Bool)
-    func didLateTapped(studentId:String, IsLate:Bool)
-    func didOnDutyTapped(studentId:String, OnDuty:Bool)
+    func didTapPresentAbsent(for id: String)
+    func didTapLate(for id: String)
+    func didToggleOD(for id: String, isOn: Bool)
 }
 
 class AttendenceTVC: UITableViewCell, Attendence {
-    
     func statusUpdate(status: Bool, index: Int) {
-        delegate?.statusUpdate(status: status, index: index)
-        hideLbl(isAbsent: status)
+        ""
     }
     
+    
+//    func statusUpdate(status: Bool, index: Int) {
+//        delegate?.statusUpdate(status: status, index: index)
+//        hideLbl(isAbsent: status)
+//    }
+//    
     @IBOutlet weak var admissionlbl: UILabel!
     @IBOutlet weak var phnBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var customSwitchContainer: UIView!
     @IBOutlet weak var nameLbl: UILabel!
-//    @IBOutlet weak var rollNo: UIButton!
     @IBOutlet weak var presentLbl: UILabel!
     @IBOutlet weak var absentLbl: UILabel!
     @IBOutlet weak var ODSwitch: UISwitch!
@@ -31,11 +34,14 @@ class AttendenceTVC: UITableViewCell, Attendence {
     @IBOutlet weak var OnLateBtn: UIButton!
     @IBOutlet weak var attendanceStack: UIStackView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var rollNoLbl: UILabel!
+    @IBOutlet weak var onDutyDefLbl: UILabel!
+    
     
     var custSwitch: CustomSwitch1!
-    var delegate: Attendence?
+   // var delegate: Attendence?
     var studentId: String?
-    //weak var delegate: studentAttenance?
+    weak var delegate: studentAttenance?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +55,8 @@ class AttendenceTVC: UITableViewCell, Attendence {
 //        rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
         admissionlbl.setFont(style: .body, size: FontSize.BodySize)
+        rollNoLbl.setFont(style: .body, size: FontSize.BodySize)
+        onDutyDefLbl.setFont(style: .body, size: 10)
 //        rollNo.translatesAutoresizingMaskIntoConstraints = false
 //        rollNo.titleLabel?.adjustsFontSizeToFitWidth = true
 //        rollNo.titleLabel?.minimumScaleFactor = 0.5
@@ -71,10 +79,12 @@ class AttendenceTVC: UITableViewCell, Attendence {
         
         
     }
+    
     func hideLbl(isAbsent:Bool){
             absentLbl.isHidden = isAbsent
             presentLbl.isHidden = !isAbsent
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -82,23 +92,24 @@ class AttendenceTVC: UITableViewCell, Attendence {
         custSwitch.frame = customSwitchContainer.bounds
     }
     
-//    @IBAction func presentButtonTapped(_ sender: UIButton) {
-//        if let id = studentId {
-//                delegate?.didTapPresent(studentID: id)
-//            }
-//        }
-//
-//        @IBAction func absentButtonTapped(_ sender: UIButton) {
-//            if let id = studentId {
-//                delegate?.didTapAbsent(studentID: id)
-//            }
-//        }
-//
-//        @IBAction func lateButtonTapped(_ sender: UIButton) {
-//            if let id = studentId {
-//                delegate?.didTapLate(studentID: id)
-//            }
-//        }
+    @IBAction func presentButtonTapped(_ sender: UIButton) {
+        if let id = studentId {
+            delegate?.didTapPresentAbsent(for: id)
+        }
+    }
+    
+    @IBAction func lateButtonTapped(_ sender: UIButton) {
+        if let id = studentId {
+            delegate?.didTapLate(for: id)
+        }
+    }
+    
+    @IBAction func OdSwitchAct(_ sender: UISwitch) {
+        
+        if let id = studentId {
+            delegate?.didToggleOD(for: id, isOn: sender.isOn)
+        }
+    }
     
     @IBAction func phnBtn(_ sender: UIButton) {
         let phoneNumber = sender.titleLabel?.text ?? "1234567890" // Replace with the phone number you want

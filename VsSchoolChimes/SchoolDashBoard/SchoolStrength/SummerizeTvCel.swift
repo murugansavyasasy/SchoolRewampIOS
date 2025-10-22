@@ -66,14 +66,36 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         
         if dispalyArray[indexPath.row].name == "Staff"{
             cell.Icons.image = UIImage(named: "teachers")
+            cell.girlCount.text =  "Male " +  String(dispalyArray[indexPath.row].Girl)
+            cell.boyCountLbl.text =  "Female " +  String(
+                  dispalyArray[indexPath.row].count - dispalyArray[indexPath.row].Girl
+            )
+            cell.progressbar.progressTintColor = .maleClr
+            cell.progressbar.trackTintColor = .femaleClr
             cell.Icons.tintColor = .aproved
         }else if dispalyArray[indexPath.row].name == "Students"{
             cell.Icons.image = UIImage(
                 systemName: "person.2.fill")
             cell.Icons.tintColor = .link.withAlphaComponent(0.5)
+            cell.girlCount.text =  "girls " +  String(dispalyArray[indexPath.row].Girl)
+            cell.boyCountLbl.text =  "Boys " +  String(
+                  dispalyArray[indexPath.row].count - dispalyArray[indexPath.row].Girl)
+            cell.progressbar.progressTintColor = .maleClr
+            cell.progressbar.trackTintColor = .femaleClr
+            
         }else if dispalyArray[indexPath.row].name == "Total"{
+            
+            cell.progressbar.progressTintColor = .aproved.withAlphaComponent(0.7)
+            cell.progressbar.trackTintColor = .primery
+                .withAlphaComponent(0.7)
             cell.Icons.image = UIImage(named: "School Needs")
             cell.Icons.tintColor = .button
+            cell.girlCount.text =  "Students " +  String(
+                dispalyArray[indexPath.row].count
+            )
+            cell.boyCountLbl.text =  "Staffs " +  String(
+                  dispalyArray[indexPath.row].count - dispalyArray[indexPath.row].Girl
+            )
         }
         
         
