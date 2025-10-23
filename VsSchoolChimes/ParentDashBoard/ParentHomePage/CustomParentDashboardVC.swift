@@ -70,25 +70,44 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     var sideMenu: SideMenuVC?
     var dimmedView: UIView?
     var delegate: backNavigation?
-    
+    var comeFormNotification : Bool = false
+    var messageId : String?
+    var menuId : String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Register cells
-        recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
-        MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
-        setupEdgeGesture()
-        // Delegates and DataSources
-        recentActiveMenuCollection.delegate = self
-        recentActiveMenuCollection.dataSource = self
-        MenuCollection.delegate = self
-        MenuCollection.dataSource = self
         
-        setupHeaderView()
-        setupLabels()
-        setupProfileImage()
-        Global_variabel()
+      
+            
+            // Register cells
+            recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
+            MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
+            setupEdgeGesture()
+            // Delegates and DataSources
+            recentActiveMenuCollection.delegate = self
+            recentActiveMenuCollection.dataSource = self
+            MenuCollection.delegate = self
+            MenuCollection.dataSource = self
+            setupHeaderView()
+            setupLabels()
+            setupProfileImage()
+            Global_variabel()
+        
+        handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
+    }
+    
+    init(
+        comefromNotification: Bool = false,
+        menuId : String = "" ,
+        messageId : String = "") {
+            self.comeFormNotification = comefromNotification
+            self.menuId = menuId
+            self.messageId = messageId
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     
@@ -392,7 +411,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         Menu_id.staffSelectedMenuId = menuItem ?? 0
         MenuStringFile.selectedMenuName = menuName
         guard let menuId = menuItem else { return }
+        handleMenuSelection(menuId: menuId, messageId: "")
+    }
 
+    private func handleMenuSelection(menuId: Int, messageId : String) {
         switch menuId {
         case 2:  MenuRedirect.receiverAssignmentNavigate(from: self)
         case 4:  MenuRedirect.receiverAttendancereport(from: self)
@@ -411,13 +433,15 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 26: MenuRedirect.receiverPtmNavigate(from: self)
         case 27: MenuRedirect.QuizExam(from: self)
         case 28: MenuRedirect.LeaveRquest(from: self)
-        case 30:MenuRedirect.senderImportantInfoNavigate(from: self)
+        case 30: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
-        case 39: MenuRedirect.receiverAttachment(from: self, notificationId: "")
+        case 39: MenuRedirect.receiverAttachment(from: self, notificationId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
         default: break
         }
     }
+
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView == recentActiveMenuCollection {
             let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }

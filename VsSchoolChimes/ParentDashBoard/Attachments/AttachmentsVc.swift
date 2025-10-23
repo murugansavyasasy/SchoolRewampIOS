@@ -55,8 +55,18 @@ class AttachmentsVc: UIViewController {
     }
     
     @IBAction func back(_ sender: Any) {
-        
-        dismiss(animated: true)
+//        if clickedMessageId == "" || clickedMessageId == nil{
+            dismiss(animated: true)
+//        }else{
+//            if #available(iOS 14.0, *) {
+//                let vc = TapBarVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                vc.login_astype = 2
+//                present(vc, animated: true)
+////                dismiss(animated: true)
+//            }
+//        }
+       
     }
     
     @IBAction func searchBtnCilck(_ sender: UIButton) {
@@ -259,7 +269,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         if let messageId = clickedMessageId,
            !messageId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             scrollToHeaderMessageId(messageId)
-            clickedMessageId = nil
+//            clickedMessageId = nil
         }
     }
     
