@@ -228,19 +228,19 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             
           
             cell.configure(standard.sections)
-            cell.updateProgress(boys: String(standard.boys_count ?? 0), girls: String(standard.girls_count ?? 0))
+            cell.updateProgress(boys: standard.boys_count ?? "0", girls: standard.girls_count ?? "0")
 //            cell.boycount = String(standard.boys_count ?? 0)
 //            cell.girlscount = String(standard.girls_count ?? 0)
             cell.standardLbl.text = "Standard  " + (standard.name ?? "")
-            cell.boysCountLbl.text = "Boys : \(standard.boys_count ?? 0)"
-            cell.girlsCountLbl.text = "Girls : \(standard.girls_count ?? 0)"
+            cell.boysCountLbl.text = "Boys : \(standard.boys_count ?? "")"
+            cell.girlsCountLbl.text = "Girls : \(standard.girls_count ?? "")"
             cell.countLbl.text = "Total Students: \(standard.total_students ?? "")"
 
-            if standard.girls_count == 0{
+            if standard.girls_count == "0"{
                 cell.femaleImgView.image = UIImage(named: "males")
                 cell.femaleImgView.tintColor = .maleClr
             }
-            if standard.boys_count  == 0{
+            if standard.boys_count  == "0"{
                 cell.femaleImgView.image = UIImage(named: "females")
                 cell.femaleImgView.tintColor = .femaleClr
             }

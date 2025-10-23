@@ -17,7 +17,6 @@ class PreviewTargetTVC: UITableViewCell {
     var speficTargetData : [targetDataDetailsResp] = []
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var targetId : String?
-    var EndUrl : String?
     var TargetType : String?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,15 +25,20 @@ class PreviewTargetTVC: UITableViewCell {
         targetCv.delegate = self
         targetCv.dataSource = self
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 2  // Horizontal gap
-        layout.minimumLineSpacing = 2      // Vertical gap
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        
         targetCv.collectionViewLayout = layout
-        
-        getTargetReport(EndUrl: EndUrl ?? "", targetIdOrType: targetId ?? "", TargetType: TargetType ?? "")
     }
-    
+    func confic(TargetType:String,id:String){
+        self.TargetType = TargetType
+        self.targetId = id
+        if TargetType != "5" || TargetType != "6" {
+            getTargetReport(targetIdOrType: targetId ?? "", TargetType: TargetType)
+        }else{
+            getSpeficTargetReport(targetIdOrType: targetId ?? "", TargetType: TargetType)
+        }
+    }
 }
 extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -49,7 +53,6 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TargetCvCell", for: indexPath) as? TargetCvCell else {
             return UICollectionViewCell()
         }
-        
         if TargetType == "5" || TargetType == "6" {
             cell.nameLbl.text = "🎓 " + (speficTargetData[indexPath.row].name ?? "")
         }else{
@@ -57,24 +60,17 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
                 cell.nameLbl.text = "🎓 " + targetCvdata[indexPath.row]
             }else if yourTargetLbl.text == "Sent To School" {
                 cell.nameLbl.text = "🏫 " + targetCvdata[indexPath.row]
-            }
-            else{
+            }else{
                 cell.nameLbl.text = "👤 " + targetCvdata[indexPath.row]
             }
         }
-        
         return  cell
     }
     
     
-    func getTargetReport(
-        EndUrl : String ,
-        targetIdOrType : String,
-        TargetType:String
-    ) {
-        
+    func getTargetReport(targetIdOrType : String,TargetType:String) {
         APIService.shared.makeApi(
-            url: EndUrl,
+            url: ServiceUrl.comm_api_assignment_target_details,
             parameters: ["id": targetIdOrType, "target_type":TargetType ],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
@@ -83,9 +79,7 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
-                    
                     if res.status == true{
-                        
                         self.targetCvdata = res.data?.first?.name ?? []
                         if res.data?.first?.type == "STANDARD"{
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
@@ -97,26 +91,19 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
                             self.yourTargetLbl.text = "Sent To Group"
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                         }
-                        
                         self.reloadss()
                     }
                 case .failure(let err):
-                    ""
-                    
+                    print(err.localizedDescription)
                 }
             }
         }
     }
     
     
-    func getSpeficTargetReport(
-        EndUrl : String ,
-        targetIdOrType : String,
-        TargetType:String
-    ) {
-        
+    func getSpeficTargetReport(targetIdOrType : String,TargetType:String) {
         APIService.shared.makeApi(
-            url: EndUrl,
+            url: ServiceUrl.comm_api_assignment_target_details,
             parameters: ["id": targetIdOrType, "target_type":TargetType ],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
@@ -125,7 +112,6 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
-                    
                     if res.status == true{
                         self.speficTargetData = res.data ?? []
                         self.yourTargetLbl.text  = "Studet"
@@ -133,15 +119,13 @@ extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource
                         self.reloadss()
                     }
                 case .failure(let err):
-                    ""
+                    print(err.localizedDescription)
                     
                 }
             }
         }
     }
-    
     func reloadss(){
-        
         targetCv.reloadData()
         targetCv.layoutIfNeeded()
         DispatchQueue.main.async {

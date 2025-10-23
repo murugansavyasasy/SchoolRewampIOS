@@ -206,6 +206,7 @@ class LSRWSubmisionListVC: UIViewController,
         }
     }
     
+    // MARK: - Header View
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
@@ -219,42 +220,64 @@ class LSRWSubmisionListVC: UIViewController,
             for: indexPath
         )
         header.subviews.forEach { $0.removeFromSuperview() }
-        
+
         var yOffset: CGFloat = 0
-        
-        // Add description label only for the first header
-        if indexPath.section == 0 {
-            let descriptionLabel = UILabel(frame: CGRect(x: 16, y: yOffset,
-                                                         width: collectionView.frame.width - 32,
-                                                         height: 20))
+
+        // Description label (first section only)
+        if indexPath.section == 0, let text = titleSting, !text.isEmpty {
+            let descriptionLabel = UILabel()
             descriptionLabel.font = UIFont.systemFont(ofSize: 14)
             descriptionLabel.textColor = .darkGray
-            descriptionLabel.text = titleSting ?? ""
+            descriptionLabel.numberOfLines = 0
+            descriptionLabel.lineBreakMode = .byWordWrapping
+            descriptionLabel.text = text
+
+            let maxWidth = collectionView.frame.width - 32
+            let descriptionSize = descriptionLabel.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+            descriptionLabel.frame = CGRect(x: 16, y: yOffset, width: maxWidth, height: descriptionSize.height)
             header.addSubview(descriptionLabel)
-            
-            yOffset += 22 // spacing between description and title
+
+            yOffset += descriptionSize.height + 8
         }
+
+        // Title label
         let titleLabel = UILabel(frame: CGRect(x: 16, y: yOffset,
                                                width: collectionView.frame.width - 32,
                                                height: 30))
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
-        
         switch filterSection[indexPath.section] {
         case .videos: titleLabel.text = "📹 Videos"
         case .audios: titleLabel.text = "🎵 Audios"
         case .images: titleLabel.text = "🖼 Images & Docs"
         }
         header.addSubview(titleLabel)
+
         return header
     }
 
-    
+    // MARK: - Dynamic Header Height
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 40)
+        var height: CGFloat = 30 // for title label
+
+        if section == 0, let text = titleSting, !text.isEmpty {
+            let label = UILabel()
+            label.font = UIFont.systemFont(ofSize: 14)
+            label.numberOfLines = 0
+            label.lineBreakMode = .byWordWrapping
+            label.text = text
+
+            let maxWidth = collectionView.frame.width - 32
+            let size = label.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+            height += size.height + 8
+        }
+
+        return CGSize(width: collectionView.frame.width, height: height)
     }
+
+
     
     // MARK: - FlowLayout
     func collectionView(_ collectionView: UICollectionView,

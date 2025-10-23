@@ -89,21 +89,21 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         setTwoPartAttributedText(label: cell.boysCountLbl,
                                  firstText: "Boys : ",
                                  firstColor: .darkGray,
-                                 secondText: "\(section.boys_count ?? 0)",
+                                 secondText: "\(section.boys_count ?? "")",
                                  secondColor: .black)
         
         // Girls
         setTwoPartAttributedText(label: cell.girlsCountLbl,
                                  firstText: "Girls : ",
                                  firstColor: .darkGray,
-                                 secondText: "\(section.girls_count ?? 0)",
+                                 secondText: "\(section.girls_count ?? "")",
                                  secondColor: .black)
 
         // Others
         setTwoPartAttributedText(label: cell.otersCountLbl,
                                  firstText: "Unspecified : ",
                                  firstColor: .darkGray,
-                                 secondText: "\(section.other_count ?? 0)",
+                                 secondText: "\(section.other_count ?? "")",
                                  secondColor: .black)
         
         // Student Count Button Title

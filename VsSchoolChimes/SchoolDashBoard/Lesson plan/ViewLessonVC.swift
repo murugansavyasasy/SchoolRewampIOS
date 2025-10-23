@@ -327,7 +327,6 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     }
     
     func LessonFilter(Status:Int){
-        
         if Status == 0{
             FilteredData = ViewLessonData
         }else{

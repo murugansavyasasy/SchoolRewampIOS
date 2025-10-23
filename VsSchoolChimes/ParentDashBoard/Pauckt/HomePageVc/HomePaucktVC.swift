@@ -7,6 +7,7 @@ class HomePaucktVC: UIViewController
     @IBOutlet weak var AllCouponsLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TotalcoinsFullView: UIView!
+    @IBOutlet weak var headerView: UIView!
     
     @IBOutlet weak var totalCoinsLbl: UILabel!
     @IBOutlet weak var couponsCV: UICollectionView!
@@ -36,33 +37,35 @@ class HomePaucktVC: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        
+        headerView.layer.cornerRadius = 20
+        headerView.layer.masksToBounds = true
+        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
                 searchTextField.inputAccessoryView = getDoneToolbar()
             }
-        couponsCV.backgroundColor = .clear
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [
-            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 1.0).cgColor,
-            UIColor.white.cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientLayer.frame = couponsCV.bounds
-        
-        let backgroundView = UIView(frame: couponsCV.bounds)
-        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
-        gradientLayer.frame = UIScreen.main.bounds
-        view.layer.insertSublayer(gradientLayer, at: 0)
-        couponsCV.backgroundView = backgroundView
-        
+//        couponsCV.backgroundColor = .clear
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [
+//            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 1.0).cgColor,
+//            UIColor.white.cgColor
+//        ]
+//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+//        gradientLayer.frame = couponsCV.bounds
+//        
+//        let backgroundView = UIView(frame: couponsCV.bounds)
+//        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+//        gradientLayer.frame = UIScreen.main.bounds
+//        view.layer.insertSublayer(gradientLayer, at: 0)
+//        couponsCV.backgroundView = backgroundView
+//        
         TotalcoinsFullView.layer.cornerRadius = 12
         TotalcoinsFullView.layer.shadowColor = UIColor.black.cgColor
         TotalcoinsFullView.layer.shadowOpacity = 0.1
         TotalcoinsFullView.layer.shadowOffset = CGSize(width: 0, height: 2)
         TotalcoinsFullView.layer.shadowRadius = 4
-        
+//        
         Get_Categories()
 //        BackBtn.setTitleFont(style: .secondary, size: 15)
         totalCoinsLbl.setFont(style: .title, size: 17)
@@ -98,6 +101,17 @@ class HomePaucktVC: UIViewController
 
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+            searchBar?.isHidden = !sender.isSelected
+            if sender.isSelected {
+                searchBar?.becomeFirstResponder()
+            } else {
+                searchBar?.resignFirstResponder()
+            }
     }
     func setupCollectionView() {
         

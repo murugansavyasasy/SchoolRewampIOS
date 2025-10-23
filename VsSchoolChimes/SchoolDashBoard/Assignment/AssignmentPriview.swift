@@ -50,7 +50,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                 ($0.section?.localizedCaseInsensitiveContains(searchText) ?? false)
             }
         }
-        assignmentTable.reloadSections(IndexSet(integer: 2), with: .automatic)
+        assignmentTable.reloadSections(IndexSet(integer: 3), with: .automatic)
     }
     
     // MARK: - IBOutlets
@@ -206,7 +206,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PreviewTargetTVC", for: indexPath) as? PreviewTargetTVC else {
                 return UITableViewCell()
             }
-            
+            cell.confic(TargetType: data?.target_type ?? "", id: data?.id ?? "")
             return cell
                 case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {

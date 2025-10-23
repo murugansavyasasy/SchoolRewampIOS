@@ -8,6 +8,7 @@
 import UIKit
 import AVFAudio
 import AVFoundation
+import MediaPlayer
 
 class NotificationCallVC: UIViewController {
     
@@ -29,16 +30,41 @@ class NotificationCallVC: UIViewController {
     @IBOutlet var leftArrowBtns: [UIButton]!
     
     // MARK: - Properties
-    private var gradientLayer: CAGradientLayer!
-    private var animation: CABasicAnimation!
+    private var gradientLayer: CAGradientLayer?
     private var originalCenter: CGPoint = .zero
     private var isDragging = false
     
-    private var callTimer: Timer?
     private var audioTimer: Timer?
-    private var callDuration: Int = 0
-    var voiceUrl: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7043/2025-09-268/RecordedAudio.m4a"
+    private var ringtoneTimeoutTimer: Timer?
+    private var vibrationTimer: Timer?
+    
+    var voiceUrl: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7045/2025-09-266/RecordedAudio.m4a"
+    var ringTone: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7043/2025-10-23/Communication_20251023_161939.wav"
+    
     private var audioPlayer: AVAudioPlayer?
+    private var ringtonePlayer: AVAudioPlayer?
+    private var volumeObserver: NSKeyValueObservation?
+    
+    // Cache for downloaded audio to reduce I/O
+    private static var audioCache: NSCache<NSString, NSData> = {
+        let cache = NSCache<NSString, NSData>()
+        cache.countLimit = 10 // Store up to 10 audio files
+        cache.totalCostLimit = 50 * 1024 * 1024 // 50MB max
+        return cache
+    }()
+    
+    private enum CallState {
+        case ringing
+        case connecting
+        case active
+        case ended
+    }
+    
+    private var callState: CallState = .ringing {
+        didSet {
+            handleCallStateChange()
+        }
+    }
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -55,17 +81,23 @@ class NotificationCallVC: UIViewController {
         cutCallBtn.layer.cornerRadius = cutCallBtn.frame.width / 2
         cutCallBtn.alpha = 0
         speakerBtn.alpha = 0
-        configureAudioSession()
-        playDefaultRingtone()
+        
+        configureAudioSessionForRingtone()
+        
+        if let url = URL(string: ringTone) {
+            playRingtone(from: url)
+        }
+        
+        setupVolumeObserver()
+        setupPowerButtonObserver()
     }
 
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gradientLayer?.frame = slideLabel.bounds
         originalCenter = draggableButton.center
         
-        if ((draggableButton.layer.animationKeys()?.contains("buttonBounce")) == nil) ?? true {
+        if draggableButton.layer.animation(forKey: "buttonBounce") == nil {
             addPulsatingRingAnimation()
             startChevronAnimation()
         }
@@ -73,41 +105,199 @@ class NotificationCallVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        stopAllAnimations()
-        stopTimers()
+        cleanup()
     }
-    private func playDefaultRingtone() {
-        // Path to the default iPhone ringtone
-        let ringtonePath = "/System/Library/Audio/UISounds/Ringers/Opening.m4r"
-        let ringtoneURL = URL(fileURLWithPath: ringtonePath)
-        
+    
+    // MARK: - Volume & Power Button Observers
+    private func setupVolumeObserver() {
         do {
-            // Configure audio session
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
-            
-            // Create and configure audio player
-            audioPlayer = try AVAudioPlayer(contentsOf: ringtoneURL)
-            audioPlayer?.numberOfLoops = -1  // Loop indefinitely like a real call
-            audioPlayer?.play()
-            
-            // Auto dismiss after a few rings (adjust timing as needed)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                self.audioPlayer?.stop()
-                self.dismiss(animated: true)
-            }
         } catch {
-            print("Failed to play ringtone: \(error)")
+            print("Failed to activate audio session: \(error)")
+        }
+        
+        // Observe system volume changes
+        volumeObserver = AVAudioSession.sharedInstance().observe(\.outputVolume, options: [.new]) { [weak self] _, change in
+            guard let self = self else { return }
+            
+            // Only mute ringtone when volume button is pressed during ringing state
+            if self.callState == .ringing, self.ringtonePlayer?.isPlaying == true {
+                DispatchQueue.main.async {
+                    self.muteRingtone()
+                }
+            }
         }
     }
-
+    
+    private func setupPowerButtonObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appWillResignActive),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func appWillResignActive() {
+        // When user presses power button
+        switch callState {
+        case .ringing:
+            print("🔴 Power button pressed - declining call")
+            declineCallAction()
+        case .active:
+            print("🔴 Power button pressed - ending call")
+            cutCallAction()
+        default:
+            break
+        }
+    }
+    
+    private func muteRingtone() {
+        guard ringtonePlayer?.isPlaying == true else { return }
+        
+        stopVibration()
+        ringtonePlayer?.stop()
+        ringtonePlayer = nil
+        ringtoneTimeoutTimer?.invalidate()
+        ringtoneTimeoutTimer = nil
+        
+        print("📵 Ringtone muted via volume button")
+    }
+    
     // MARK: - Audio Session Configuration
-    private func configureAudioSession() {
+    private func configureAudioSessionForRingtone() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("Audio session setup failed: \(error.localizedDescription)")
+        }
+    }
+    
+    private func configureAudioSessionForCall() {
+        do {
+            // Switch to playAndRecord with voiceChat mode for earpiece routing
+            try AVAudioSession.sharedInstance().setCategory(
+                .playAndRecord,
+                mode: .voiceChat,
+                options: [.allowBluetooth, .allowBluetoothA2DP]
+            )
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            
+            // Explicitly route to earpiece (receiver)
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+            
+            print("🎧 Audio routed to earpiece")
+        } catch {
+            print("⚠️ Failed to configure audio session for call: \(error.localizedDescription)")
+        }
+    }
+    
+    private func playRingtone(from url: URL) {
+        let cacheKey = url.absoluteString as NSString
+        
+        // Check cache first
+        if let cachedData = Self.audioCache.object(forKey: cacheKey) {
+            print("📦 Using cached ringtone")
+            playRingtoneData(cachedData as Data)
+            return
+        }
+        
+        // Download if not cached
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Failed to download ringtone: \(error)")
+                DispatchQueue.main.async {
+                    self.playSystemDefaultTone()
+                }
+                return
+            }
+            
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    self.playSystemDefaultTone()
+                }
+                return
+            }
+            
+            // Cache the downloaded data
+            Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
+            
+            DispatchQueue.main.async {
+                self.playRingtoneData(data)
+            }
+        }
+        task.resume()
+    }
+    
+    private func playRingtoneData(_ data: Data) {
+        do {
+            self.ringtonePlayer = try AVAudioPlayer(data: data)
+            self.ringtonePlayer?.numberOfLoops = -1
+            self.ringtonePlayer?.prepareToPlay()
+            self.ringtonePlayer?.play()
+            
+            self.startVibration()
+            
+            // Stop after 30 seconds if not answered
+            self.ringtoneTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { [weak self] _ in
+                self?.handleRingtoneTimeout()
+            }
+        } catch {
+            print("Failed to play ringtone: \(error)")
+            self.playSystemDefaultTone()
+        }
+    }
+    
+    private func handleRingtoneTimeout() {
+        guard callState == .ringing else { return }
+        
+        stopVibration()
+        ringtonePlayer?.stop()
+        ringtonePlayer = nil
+        
+        dismissCallScreen()
+    }
+    
+    private func playSystemDefaultTone() {
+        AudioServicesPlaySystemSound(1005)
+        startVibration()
+        
+        ringtoneTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
+            self?.handleRingtoneTimeout()
+        }
+    }
+    
+    private func startVibration() {
+        stopVibration()
+        
+        // Immediate vibration
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
+        vibrationTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
+    }
+
+    private func stopVibration() {
+        vibrationTimer?.invalidate()
+        vibrationTimer = nil
+    }
+    
+    // MARK: - Call State Management
+    private func handleCallStateChange() {
+        switch callState {
+        case .ringing:
+            break // Initial state
+        case .connecting:
+            nameLbl.text = "School Chimes"
+            durationLbl.text = "Connecting..."
+        case .active:
+            setupAudioPlayer()
+        case .ended:
+            cleanup()
         }
     }
     
@@ -134,7 +324,6 @@ class NotificationCallVC: UIViewController {
         logoImg.layer.shadowRadius = 25
         logoImg.layer.masksToBounds = false
         
-        // Add subtle pulse to logo
         addLogoPulseAnimation()
         
         // Swipe view with glassmorphism effect
@@ -144,7 +333,6 @@ class NotificationCallVC: UIViewController {
         swipeView.layer.borderWidth = 1.5
         swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
         
-        // Add shadow to swipe view
         swipeView.layer.shadowColor = UIColor.black.cgColor
         swipeView.layer.shadowOpacity = 0.3
         swipeView.layer.shadowOffset = CGSize(width: 0, height: 10)
@@ -166,22 +354,9 @@ class NotificationCallVC: UIViewController {
         draggableButton.layer.shadowOffset = CGSize(width: 0, height: 8)
         draggableButton.layer.shadowRadius = 20
         
-        // Add inner shadow effect to button
-        let innerShadow = CALayer()
-        innerShadow.frame = draggableButton.bounds
-        innerShadow.cornerRadius = draggableButton.frame.width / 2
-        innerShadow.shadowColor = UIColor.black.cgColor
-        innerShadow.shadowOffset = CGSize(width: 0, height: 2)
-        innerShadow.shadowOpacity = 0.1
-        innerShadow.shadowRadius = 3
-        
-        // Answer and decline buttons styling (center arrows - always visible)
         answerCallImg.tintColor = UIColor.systemGreen
-        answerCallImg.alpha = 1.0
         declineCallImg.tintColor = UIColor.systemRed
-        declineCallImg.alpha = 1.0
         
-        // Cut call button styling
         cutCallBtn.backgroundColor = UIColor.systemRed
         cutCallBtn.tintColor = .white
         cutCallBtn.layer.shadowColor = UIColor.systemRed.cgColor
@@ -189,12 +364,14 @@ class NotificationCallVC: UIViewController {
         cutCallBtn.layer.shadowOffset = CGSize(width: 0, height: 4)
         cutCallBtn.layer.shadowRadius = 12
         
-        // Speaker button styling
         speakerBtn.backgroundColor = UIColor.white.withAlphaComponent(0.15)
         speakerBtn.tintColor = .white
         speakerBtn.layer.cornerRadius = speakerBtn.frame.width / 2
         speakerBtn.layer.borderWidth = 1
         speakerBtn.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+        
+        cutCallBtn.addTarget(self, action: #selector(cutCallAction), for: .touchUpInside)
+        speakerBtn.addTarget(self, action: #selector(toggleSpeaker), for: .touchUpInside)
     }
     
     private func setupCallerInfo() {
@@ -236,53 +413,31 @@ class NotificationCallVC: UIViewController {
     
     // MARK: - Button Animation Setup
     private func addPulsatingRingAnimation() {
-        // Add iPhone-style side-to-side bounce animation
         addButtonBounceAnimation()
     }
     
-    // MARK: - iPhone Call Button Bounce Animation
     private func addButtonBounceAnimation() {
-        // Create a subtle side-to-side movement animation
         let bounceAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        
-        // Define the bounce path: center -> right -> center -> left -> center
         bounceAnimation.values = [0, 8, 0, -8, 0]
         bounceAnimation.keyTimes = [0, 0.25, 0.5, 0.75, 1.0]
-        
-        // Use ease-in-out for smooth, natural movement
-        bounceAnimation.timingFunctions = [
-            CAMediaTimingFunction(name: .easeInEaseOut),
-            CAMediaTimingFunction(name: .easeInEaseOut),
-            CAMediaTimingFunction(name: .easeInEaseOut),
-            CAMediaTimingFunction(name: .easeInEaseOut)
-        ]
-        
+        bounceAnimation.timingFunctions = Array(repeating: CAMediaTimingFunction(name: .easeInEaseOut), count: 4)
         bounceAnimation.duration = 2.0
         bounceAnimation.repeatCount = .infinity
         bounceAnimation.isRemovedOnCompletion = false
-        
         draggableButton.layer.add(bounceAnimation, forKey: "buttonBounce")
         
-        // Add a subtle scale pulse to emphasize the interactive nature
         let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
         scaleAnimation.values = [1.0, 1.05, 1.0, 1.05, 1.0]
         scaleAnimation.keyTimes = [0, 0.25, 0.5, 0.75, 1.0]
-        scaleAnimation.timingFunctions = [
-            CAMediaTimingFunction(name: .easeInEaseOut),
-            CAMediaTimingFunction(name: .easeInEaseOut),
-            CAMediaTimingFunction(name: .easeInEaseOut),
-            CAMediaTimingFunction(name: .easeInEaseOut)
-        ]
+        scaleAnimation.timingFunctions = Array(repeating: CAMediaTimingFunction(name: .easeInEaseOut), count: 4)
         scaleAnimation.duration = 2.0
         scaleAnimation.repeatCount = .infinity
         scaleAnimation.isRemovedOnCompletion = false
-        
         draggableButton.layer.add(scaleAnimation, forKey: "buttonScale")
     }
     
     // MARK: - Synchronized Arrow Animation
     private func startChevronAnimation() {
-        // Animate both sides simultaneously with matching timing
         animateArrowSet(rightArrowBtns, direction: .right)
         animateArrowSet(leftArrowBtns, direction: .left)
     }
@@ -298,7 +453,6 @@ class NotificationCallVC: UIViewController {
             arrow.alpha = 0.0
             let delay = Double(index) * 0.12
             
-            // Fade + slight movement animation
             UIView.animate(withDuration: 0.5,
                            delay: delay,
                            options: [.repeat, .autoreverse, .curveEaseInOut],
@@ -327,26 +481,27 @@ class NotificationCallVC: UIViewController {
         slideLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         slideLabel.textColor = UIColor.white.withAlphaComponent(0.9)
         
-        gradientLayer = CAGradientLayer()
-        gradientLayer.frame = slideLabel.bounds
-        gradientLayer.colors = [
+        let gradient = CAGradientLayer()
+        gradient.frame = slideLabel.bounds
+        gradient.colors = [
             UIColor.clear.cgColor,
             UIColor.white.cgColor,
             UIColor.clear.cgColor
         ]
-        gradientLayer.locations = [0.0, 0.5, 1.0]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        gradient.locations = [0.0, 0.5, 1.0]
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
         
-        animation = CABasicAnimation(keyPath: "locations")
+        let animation = CABasicAnimation(keyPath: "locations")
         animation.fromValue = [-0.5, 0.0, 0.5]
         animation.toValue = [0.5, 1.0, 1.5]
         animation.duration = 2.5
         animation.repeatCount = .infinity
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
-        gradientLayer.add(animation, forKey: "slideAnimation")
-        slideLabel.layer.mask = gradientLayer
+        gradient.add(animation, forKey: "slideAnimation")
+        slideLabel.layer.mask = gradient
+        gradientLayer = gradient
     }
     
     // MARK: - Swipe Gesture
@@ -363,11 +518,9 @@ class NotificationCallVC: UIViewController {
         switch gesture.state {
         case .began:
             isDragging = true
-            // Stop bounce animation when user starts dragging
             draggableButton.layer.removeAnimation(forKey: "buttonBounce")
             draggableButton.layer.removeAnimation(forKey: "buttonScale")
             
-            // Hide arrow indicators during swipe
             UIView.animate(withDuration: 0.2) {
                 self.draggableButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                 self.rightIndicationStack.alpha = 0
@@ -380,34 +533,23 @@ class NotificationCallVC: UIViewController {
             let maxX = swipeView.frame.width - buttonSize / 2 - 15
             draggableButton.center.x = max(minX, min(maxX, newX))
             
-            // Visual feedback based on direction
             let offset = draggableButton.center.x - originalCenter.x
             let progress = min(abs(offset) / maxSwipe, 1.0)
             
             if offset > 0 {
-                // Swiping right - turn green
                 let greenColor = UIColor.systemGreen.withAlphaComponent(0.3 * progress)
                 swipeView.backgroundColor = greenColor
                 swipeView.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.5 * progress).cgColor
-                
-                // Keep center arrows visible, fade the opposite one slightly
                 answerCallImg.alpha = 1.0
                 declineCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
             } else if offset < 0 {
-                // Swiping left - turn red
                 let redColor = UIColor.systemRed.withAlphaComponent(0.3 * progress)
                 swipeView.backgroundColor = redColor
                 swipeView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.5 * progress).cgColor
-                
-                // Keep center arrows visible, fade the opposite one slightly
                 declineCallImg.alpha = 1.0
                 answerCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
             } else {
-                // At center - reset to default
-                swipeView.backgroundColor = UIColor.white.withAlphaComponent(0.08)
-                swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
-                answerCallImg.alpha = 1.0
-                declineCallImg.alpha = 1.0
+                resetSwipeViewColors()
             }
             
         case .ended, .cancelled:
@@ -432,34 +574,40 @@ class NotificationCallVC: UIViewController {
         }
     }
     
+    private func resetSwipeViewColors() {
+        swipeView.backgroundColor = UIColor.white.withAlphaComponent(0.08)
+        swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
+        answerCallImg.alpha = 1.0
+        declineCallImg.alpha = 1.0
+    }
+    
     private func resetSwipeView() {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseOut) {
             self.draggableButton.center = self.originalCenter
-            self.answerCallImg.alpha = 0.8
-            self.declineCallImg.alpha = 0.8
-            
-            // Reset swipe view color to default
-            self.swipeView.backgroundColor = UIColor.white.withAlphaComponent(0.08)
-            self.swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
-            
-            // Show arrow indicators again
+            self.resetSwipeViewColors()
             self.rightIndicationStack.alpha = 1.0
             self.leftIndicationStack.alpha = 1.0
         } completion: { _ in
-            // Restart bounce animation after reset
             self.addButtonBounceAnimation()
         }
     }
     
     // MARK: - Actions
     private func answerCallAction() {
-        stopAllAnimations()
+        guard callState == .ringing else { return }
         
-        // Haptic feedback
+        stopAllAnimations()
+        stopVibration()
+        ringtonePlayer?.stop()
+        ringtonePlayer = nil
+        ringtoneTimeoutTimer?.invalidate()
+        ringtoneTimeoutTimer = nil
+        
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
         
-        // Smooth transition animation
+        callState = .connecting
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.draggableButton.center.x = self.swipeView.frame.width - self.draggableButton.frame.width / 2 - 15
             self.draggableButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -472,13 +620,20 @@ class NotificationCallVC: UIViewController {
     }
     
     private func declineCallAction() {
-        stopAllAnimations()
+        guard callState == .ringing else { return }
         
-        // Haptic feedback
+        stopAllAnimations()
+        stopVibration()
+        ringtonePlayer?.stop()
+        ringtonePlayer = nil
+        ringtoneTimeoutTimer?.invalidate()
+        ringtoneTimeoutTimer = nil
+        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
         
-        // Smooth transition animation
+        callState = .ended
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.draggableButton.center.x = self.draggableButton.frame.width / 2 + 15
             self.draggableButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -492,7 +647,9 @@ class NotificationCallVC: UIViewController {
     
     // MARK: - Call Handling
     private func navigateToCallScreen() {
-        // Animate to active call UI
+        // Configure audio session for call (earpiece routing)
+        configureAudioSessionForCall()
+        
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             self.swipeView.alpha = 0
             self.swipeView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -513,23 +670,21 @@ class NotificationCallVC: UIViewController {
                 self.speakerBtn.transform = .identity
             }
             
-            self.nameLbl.text = "School Chimes"
-            self.durationLbl.text = "Connecting..."
-            self.setupAudioPlayer()
-            self.cutCallBtn.addTarget(self, action: #selector(self.cutCallAction), for: .touchUpInside)
-            self.speakerBtn.addTarget(self, action: #selector(self.toggleSpeaker), for: .touchUpInside)
+            self.callState = .active
         }
     }
     
     @objc private func cutCallAction() {
-        // Haptic feedback
+        guard callState == .active else { return }
+        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
+        
+        callState = .ended
         
         UIView.animate(withDuration: 0.3) {
             self.cutCallBtn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         } completion: { _ in
-            self.stopTimers()
             self.dismissCallScreen()
         }
     }
@@ -552,45 +707,101 @@ class NotificationCallVC: UIViewController {
         
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.overrideOutputAudioPort(speakerBtn.isSelected ? .speaker : .none)
+            
+            if speakerBtn.isSelected {
+                try session.overrideOutputAudioPort(.speaker)
+                print("🔈 Speaker ON")
+            } else {
+                try session.overrideOutputAudioPort(.none)
+                print("🔇 Speaker OFF (earpiece)")
+            }
         } catch {
-            print("Failed to toggle speaker: \(error.localizedDescription)")
+            print("⚠️ Failed to toggle speaker: \(error.localizedDescription)")
         }
     }
-    
+
     private func dismissCallScreen() {
-        stopTimers()
-        audioPlayer?.stop()
-        audioPlayer = nil
+        cleanup()
         
         UIView.animate(withDuration: 0.4, animations: {
             self.view.alpha = 0
             self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         }) { _ in
-            self.dismiss(animated: false)
-        }
-    }
-    // MARK: - Audio Player
-    private func setupAudioPlayer() {
-        guard let url = URL(string: voiceUrl) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error { print("Download error: \(error)"); return }
-            guard let data = data else { return }
-            
-            DispatchQueue.main.async {
-                do {
-                    self.audioPlayer = try AVAudioPlayer(data: data)
-                    self.audioPlayer?.delegate = self
-                    self.audioPlayer?.prepareToPlay()
-                    self.audioPlayer?.play()
-                    
-                    self.startAudioTimer()
-                } catch {
-                    print("Audio setup failed: \(error)")
+            self.dismiss(animated: false) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    exit(0)
                 }
             }
-        }.resume()
+        }
+    }
+    
+    // MARK: - Audio Player
+    private func setupAudioPlayer() {
+        guard let url = URL(string: voiceUrl) else {
+            print("⚠️ Invalid voice URL")
+            handleAudioPlaybackError()
+            return
+        }
+        
+        let cacheKey = url.absoluteString as NSString
+        
+        // Check cache first
+        if let cachedData = Self.audioCache.object(forKey: cacheKey) {
+            print("📦 Using cached voice message")
+            playAudioData(cachedData as Data)
+            return
+        }
+        
+        // Download if not cached
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Download error: \(error)")
+                DispatchQueue.main.async {
+                    self.handleAudioPlaybackError()
+                }
+                return
+            }
+            
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    self.handleAudioPlaybackError()
+                }
+                return
+            }
+            
+            // Cache the downloaded data
+            Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
+            
+            DispatchQueue.main.async {
+                self.playAudioData(data)
+            }
+        }
+        task.resume()
+    }
+    
+    private func playAudioData(_ data: Data) {
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: data)
+            self.audioPlayer?.delegate = self
+            self.audioPlayer?.prepareToPlay()
+            self.audioPlayer?.play()
+            
+            self.startAudioTimer()
+            print("✅ Audio playing through earpiece")
+        } catch {
+            print("Audio setup failed: \(error)")
+            self.handleAudioPlaybackError()
+        }
+    }
+    
+    private func handleAudioPlaybackError() {
+        durationLbl.text = "Audio unavailable"
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.dismissCallScreen()
+        }
     }
     
     // MARK: - Timer
@@ -598,17 +809,31 @@ class NotificationCallVC: UIViewController {
         audioTimer?.invalidate()
         audioTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self, let player = self.audioPlayer else { return }
+            
+            // Current time
             let current = Int(player.currentTime)
-            let minutes = current / 60
-            let seconds = current % 60
-            self.durationLbl.text = "Connected\n\n\(String(format: "%02d:%02d", minutes, seconds))"
+            let currentMinutes = current / 60
+            let currentSeconds = current % 60
+            
+            // Total duration
+            let total = Int(player.duration)
+            let totalMinutes = total / 60
+            let totalSeconds = total % 60
+            
+            // Format: "Connected\n\n00:45 / 03:20"
+            self.durationLbl.text = String(format: "Connected\n\n%02d:%02d / %02d:%02d",
+                                          currentMinutes, currentSeconds,
+                                          totalMinutes, totalSeconds)
         }
     }
-    private func stopTimers() {
+    
+    private func stopAllTimers() {
         audioTimer?.invalidate()
         audioTimer = nil
-        callTimer?.invalidate()
-        callTimer = nil
+        ringtoneTimeoutTimer?.invalidate()
+        ringtoneTimeoutTimer = nil
+        vibrationTimer?.invalidate()
+        vibrationTimer = nil
     }
     
     private func stopAllAnimations() {
@@ -618,13 +843,35 @@ class NotificationCallVC: UIViewController {
         logoImg.layer.removeAnimation(forKey: "logoPulse")
         logoImg.layer.removeAnimation(forKey: "shadowPulse")
         slideLabel.layer.mask = nil
+        gradientLayer = nil
+    }
+    
+    // MARK: - Cleanup
+    private func cleanup() {
+        stopAllAnimations()
+        stopAllTimers()
+        stopVibration()
+        
+        audioPlayer?.stop()
+        audioPlayer = nil
+        
+        ringtonePlayer?.stop()
+        ringtonePlayer = nil
+        
+        volumeObserver?.invalidate()
+        volumeObserver = nil
+        
+        NotificationCenter.default.removeObserver(self)
+        
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("Failed to deactivate audio session: \(error)")
+        }
     }
     
     deinit {
-        stopAllAnimations()
-        stopTimers()
-        audioPlayer?.stop()
-        audioPlayer = nil
+        cleanup()
         print("NotificationCallVC deinitialized")
     }
 }
@@ -632,10 +879,15 @@ class NotificationCallVC: UIViewController {
 // MARK: - AVAudioPlayerDelegate
 extension NotificationCallVC: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        guard player == audioPlayer else { return }
+        
         DispatchQueue.main.async {
-            self.durationLbl.text = "Call ended"
+            if flag {
+                self.durationLbl.text = "Call ended"
+            } else {
+                self.durationLbl.text = "Call ended"
+            }
             
-            // Auto dismiss after 2 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.dismissCallScreen()
             }
@@ -643,9 +895,12 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        guard player == audioPlayer else { return }
+        
         print("Audio decode error: \(error?.localizedDescription ?? "Unknown error")")
         DispatchQueue.main.async {
             self.durationLbl.text = "Audio error"
+            self.handleAudioPlaybackError()
         }
     }
 }

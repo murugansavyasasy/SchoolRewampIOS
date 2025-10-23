@@ -237,20 +237,36 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             present(vc, animated: false)
         } else {
             // Check if we can pop from navigation stack
-            if let navController = self.navigationController,
-               navController.viewControllers.count > 1 {
-                navController.popViewController(animated: true)
-            } else if let presentingVC = self.presentingViewController {
-                // If this controller was presented modally, dismiss it
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                // If neither, pop to root
-                self.navigationController?.popToRootViewController(animated: true)
-            }
+//            if let navController = self.navigationController,
+//               navController.viewControllers.count > 1 {
+//                navController.popViewController(animated: true)
+//            } else if let presentingVC = self.presentingViewController {
+//                // If this controller was presented modally, dismiss it
+//                self.dismiss(animated: true, completion: nil)
+//            } else {
+//                // If neither, pop to root
+//                self.navigationController?.popToRootViewController(animated: true)
+//            }
+            
+           
+            if let presentedVC = self.presentedViewController {
+                    presentedVC.dismiss(animated: false) { [weak self] in
+                        self?.presentPriorityVC()
+                    }
+                } else {
+                    presentPriorityVC()
+                }
+            
         }
     }
 
     
+    
+    private func presentPriorityVC() {
+        let vc = PriorityVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
     func switchProfile() {
         selectViewController(fourthVCNav)
         tabBar.selectedItem = tabBar.items?[3]
@@ -262,10 +278,18 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     var languages: String!
     var login_astype: Int?
     var languageCode: String!
+    var comfromNotification : Bool = false
+    var messageId : String?
+    var menuId : String?
     var profile: Bool = false
     // MARK: - Navigation Wrapped Controllers
     private lazy var firstVCNav = UINavigationController(rootViewController: CustomDasboard())
-    private lazy var parentVCNav = UINavigationController(rootViewController: CustomParentDashboardVC())
+    private lazy var parentVCNav = UINavigationController(
+        rootViewController: CustomParentDashboardVC(
+            comefromNotification: comfromNotification,
+            menuId: menuId ?? "", messageId: messageId ?? ""
+        )
+    )
     private lazy var secondVCNav = UINavigationController(rootViewController: HelpVc())
     private lazy var thirdVCNav = UINavigationController(rootViewController: SettingsViewController())
     private lazy var fourthVCNav = UINavigationController(rootViewController: UpdateProfileVC(isStudent: login_astype == 2))
@@ -296,6 +320,7 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     private func setupInitialViewController() {
         if login_astype == 2 {
             selectViewController(parentVCNav)
+            
             tabBar.selectedItem = tabBar.items?[0]
         } else if login_astype == 1 {
             selectViewController(firstVCNav)

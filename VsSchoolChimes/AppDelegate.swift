@@ -11,36 +11,27 @@ import FirebaseMessaging
 import AWSCore
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,MessagingDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
     
     
     var DeviceToken : String?
     var window: UIWindow?
     var languages : String!
-    
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         NetworkMonitor.shared.startMonitoring()
         FirebaseApp.configure()
-        
         UNUserNotificationCenter.current().delegate = self
-        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            
             print("Permission granted: \(granted)")
-            
         }
-        
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APSouth1, identityPoolId: AwsCredentials.CognitoPoolID)//3-2
-        let configuration = AWSServiceConfiguration(region: .APSouth1, credentialsProvider: credentialsProvider)
-        AWSServiceManager.default().defaultServiceConfiguration = configuration
         
         return true
     }
-    
-    
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(String(describing: fcmToken))")
@@ -70,119 +61,102 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
-    
-    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        
-        // Called when the user discards a scene session.
-        
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-        
+    
     }
-    
-    
-    
-    
-    
-    //    MARK: NOTIFICATION LANDING
-    
-    private func handleNotification(userInfo: [AnyHashable: Any]) {
-        if let redirectDetails = userInfo["gcm.notification.redirect_details"] as? String {
-            
-            if let data = redirectDetails.data(using: .utf8),
-               
-                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               
-                let pageLink = json["page_link"] as? String {
-                
-                let noti = json["target_id"] as? Int
-                
-                print("pageLinkssss",pageLink)
-                
-                NotificationCenter.default.post(name: NSNotification.Name("NavigateToPageLink"), object: pageLink)
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    
-    // MARK: PUSH NOTIFICATION
+ 
+}
+
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("will Presentfvfevfevefvefwill Presentfvfevfevefvef")
-        // Create a custom notification banner (example)
-        let message = notification.request.content.body
+    
         completionHandler([.alert,.sound]) // Use .badge and .banner based on your need
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter,didReceive response: UNNotificationResponse) async {
-        let userInfo = response.notification.request.content.userInfo
-        print("didReceivedidReceivedidReceive",userInfo)
+ 
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
         
-    }
-    
-    
-//    func application(_ application: UIApplication,
-//                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-//                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//
-//        if let menuId = userInfo["menu_id"] as? String,
-//           let messageId = userInfo["message_id"] as? String {
-//            NotificationCenter.default.post(name: .notificationTapped,
-//                                            object: nil,
-//                                            userInfo: ["menu_id": menuId, "message_id": messageId])
-//        }
-//
-//        completionHandler(.newData)
-//    }
-    
-    func application(_ application: UIApplication,didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
+        defer { completionHandler() } // Always call completionHandler at the end
         
-        if let wavURLString = userInfo["wav_url"] as? String, let wavURL = URL(string: wavURLString) {
-            print("WAV File URL: \(wavURL)")
-            // Navigate to the specific view controller
-        }
-        print("didReceiveRemoteNotification",userInfo)
-        return UIBackgroundFetchResult.newData
-    }
-    
-    
-    
-    func getCurrentViewController() -> UIViewController? {
-        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
-            var currentController: UIViewController! = rootController
-            while( currentController.presentedViewController != nil ) {
-                currentController = currentController.presentedViewController
+        guard let rootVC = UIApplication.shared.windows.first?.rootViewController else { return }
+        
+        // ✅ Check Login
+        guard let login = UserDefaultFileManager.getLoginCredentials(),
+              !login.mobile_number.isEmpty,
+              !login.pwd.isEmpty else {
+            if #available(iOS 14.0, *) {
+                presentLogin(from: rootVC)
             }
-            return currentController
+            return
         }
-        return nil
-    }
-    
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            print("Permission: \(granted)")
+        
+        // ✅ Extract Notification Data
+        let userInfo = response.notification.request.content.userInfo
+        let type = userInfo["type"] as? String
+        if type == "normal"{
+            guard let menuId = userInfo["menu_id"] as? String,
+                  let instituteId = userInfo["institute_id"] as? String,
+                  let childId = userInfo["receiver_id"] as? String else { return }
+            
+            guard let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
+            
+            
+            if #available(iOS 14.0, *) {
+                handleNavigation(
+                    instituteId: instituteId,
+                    childId: childId,
+                    childDetails: childDetails,
+                    menuID: menuId,
+                    from: rootVC
+                )
+            }
+        }else if type == "call"{
+            let vc = NotificationCallVC()
+            vc.modalPresentationStyle = .fullScreen
+            rootVC.present(vc, animated: true)
         }
-        UIApplication.shared.registerForRemoteNotifications()
     }
+
+    @available(iOS 14.0, *)
+    // MARK: - Handle Login
+    private func presentLogin(from rootVC: UIViewController) {
+        let loginVC = LoginVc(nibName: nil, bundle: nil)
+        loginVC.modalPresentationStyle = .fullScreen
+        rootVC.present(loginVC, animated: true)
+    }
+
+    // MARK: - Handle Navigation to tapbar(homePage)
+    @available(iOS 14.0, *)
+    private func handleNavigation(
+        instituteId: String,
+        childId: String,
+        childDetails: [ChildDetails],
+        menuID : String,
+        from rootVC: UIViewController
+    ) {
+        // Filter matching children
+        let matchingChildren = childDetails.filter { $0.school_id == instituteId && $0.child_id == childId }
+        
+        if let firstChild = matchingChildren.first {
+            UserDefaultFileManager.saveChildDetails(data: firstChild)
+        }
+        
+        let vc = TapBarVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.login_astype = 2
+        vc.comfromNotification = true
+        vc.menuId = menuID
+        vc.messageId = instituteId
+        
+        rootVC.present(vc, animated: true)
+    }
+
     
 }
-
-//MARK: -  UNUserNotificationCenterDelegate
-
-@available(iOS 10, *)
-
-func userNotificationCenter(_ center: UNUserNotificationCenter,didReceive response: UNNotificationResponse,withCompletionHandler completionHandler: @escaping () -> Void) {
-    completionHandler()
-}
-
-
-
 
 
 // MARK: Ios Home Wallpapper Widets

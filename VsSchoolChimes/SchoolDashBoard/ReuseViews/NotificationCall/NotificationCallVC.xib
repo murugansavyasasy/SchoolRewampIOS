@@ -115,7 +115,7 @@
                                                         <constraint firstAttribute="width" constant="20" id="XqJ-Un-pNF"/>
                                                         <constraint firstAttribute="height" constant="30" id="tZr-LH-JDu"/>
                                                     </constraints>
-                                                    <color key="tintColor" name="Aproved"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal">
                                                         <imageReference key="image" image="chevron.right" catalog="system" symbolScale="large"/>
@@ -124,7 +124,7 @@
                                                 </button>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKu-ri-tVc">
                                                     <rect key="frame" x="20" y="0.0" width="13.333333333333336" height="30"/>
-                                                    <color key="tintColor" name="Aproved"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal">
                                                         <imageReference key="image" image="chevron.right" catalog="system" symbolScale="medium"/>
@@ -133,7 +133,7 @@
                                                 </button>
                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ur5-4g-Wag">
                                                     <rect key="frame" x="33.333333333333343" y="0.0" width="10.333333333333336" height="30"/>
-                                                    <color key="tintColor" name="Aproved"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal">
                                                         <imageReference key="image" image="chevron.right" catalog="system" symbolScale="small"/>
@@ -200,7 +200,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="AON-vG-7Kn">
-                            <rect key="frame" x="156.66666666666666" y="655" width="119.99999999999997" height="60"/>
+                            <rect key="frame" x="156.66666666666666" y="655" width="124.99999999999997" height="60"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuC-1v-Dom">
                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -216,10 +216,10 @@
                                     </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmT-Ue-N0H">
-                                    <rect key="frame" x="90" y="15" width="30" height="30"/>
+                                    <rect key="frame" x="90" y="12.666666666666629" width="35" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="Ivo-Yt-KhK"/>
-                                        <constraint firstAttribute="height" constant="30" id="QwD-v4-ZVx"/>
+                                        <constraint firstAttribute="width" constant="35" id="Ivo-Yt-KhK"/>
+                                        <constraint firstAttribute="height" constant="35" id="QwD-v4-ZVx"/>
                                     </constraints>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="speaker.wave.2.fill" catalog="system"/>
@@ -261,14 +261,14 @@
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="school_chimes 2" width="454" height="410"/>
         <image name="speaker.wave.2.fill" catalog="system" width="128" height="88"/>
-        <namedColor name="Aproved">
-            <color red="0.059000000357627869" green="0.30199998617172241" blue="0.059000000357627869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Red1">
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

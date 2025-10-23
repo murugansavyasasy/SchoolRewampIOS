@@ -153,10 +153,12 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                 let (timeAgo, dateString) = submittedDate
                 cell.assignmentTitle.text = titleName
                 cell.subjectName.text = subject
-                cell.date.text = dateString
+//                cell.date.text = dateString
                 cell.FilesUrl = data.file_path
-                cell.timeLeft.text = "Submited: \(timeAgo)"
+//                cell.timeLeft.text = "Submited: \(timeAgo)"
+                cell.timeLeft.text = "Submited: \(data.submitted_on?.convertToTargetDateFormat() ?? "")"
                 cell.descriptionLbl.text = data.description
+                cell.loadFiles(into: cell, files: data.file_path ?? [])
             }
             return cell
         }else{
