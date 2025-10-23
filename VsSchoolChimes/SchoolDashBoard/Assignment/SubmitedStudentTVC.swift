@@ -14,12 +14,14 @@ class SubmitedStudentTVC: UITableViewCell {
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var standerdScection: UILabel!
     @IBOutlet weak var submitDate: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         initialBtn.setShadow(cornerRadius: initialBtn.frame.width/2)
 //       x5 applyShadowAndCornerRadius(to: outerView)
     }
+    
     func setLabelWithIcon(label: UILabel, iconName: String, text: String) {
         // Create attachment for the icon
         let attachment = NSTextAttachment()
@@ -51,4 +53,7 @@ class SubmitedStudentTVC: UITableViewCell {
         label.attributedText = finalString
     }
 
+    
+    @IBAction func BtnAct(_ sender: UIButton) {
+    }
 }

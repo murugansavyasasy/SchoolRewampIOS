@@ -1329,19 +1329,58 @@ struct ChatMessageSuc: Codable {
 }
 
 struct ChatMessage: Codable {
-    let id: String?
+    let question_id: String?
     let question: String?
     let student_id: String?
     let student_name: String?
-    let created_on: String?
-    let ques_file_path: [MediaFile]?
+    let asked_on: String?
+    let quesfilepath: [MediaFile]?
     let reply_type: String?
     let answer: String?
-    let answer_on: String?
-    let ans_file_path: [MediaFile]?
+    let answered_on: String?
+    let ansfilepath: [MediaFile]?
     let chat_count: Int?
-    let change_answer: Bool?
+    let my_question: Bool?
 }
+
+struct StaffChatResponse: Codable {
+    
+    var status : Bool?
+    var message: String?
+    var data :[StaffChatMessage]?
+}
+
+struct StaffChatMessage: Codable {
+    
+        var id: String?
+        var question: String?
+        var student_id: String?
+        var student_name: String?
+        var is_blocked: Bool?
+        var reason: String?
+        var created_on: String?
+        var chat_count: Int?
+        var ques_file_path: [String]?
+        var answer: String?
+        var answer_on: String?
+        var change_answer: Bool?
+        var ans_file_path: [String]?
+        var reply_type: String?
+}
+
+struct BlockedStudentsResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [BlockedStudent]?
+}
+
+struct BlockedStudent: Codable {
+    var id: String?
+    var name: String?
+    var gender: String?
+    var blocked_on: String?
+}
+
 
 struct MediaFile: Codable {
     let url: String

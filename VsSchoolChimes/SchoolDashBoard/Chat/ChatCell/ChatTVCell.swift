@@ -12,26 +12,52 @@ protocol ChatTableViewCellDelegate: AnyObject {
 }
 class ChatTVCell: UITableViewCell {
 
-    @IBOutlet weak var studentName: UILabel!
     @IBOutlet weak var sendByStack: UIStackView!
     @IBOutlet weak var imageview: UIImageView!
     @IBOutlet weak var imageStack: UIStackView!
     @IBOutlet weak var timeStampLbl: UILabel!
     @IBOutlet weak var bubbleView: UIView!
-       @IBOutlet weak var messageLabel: UILabel!
-       
-       @IBOutlet weak var bubbleLeadingConstraint: NSLayoutConstraint!
-       @IBOutlet weak var bubbleTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var answerBubbleView: UIView!
+    @IBOutlet weak var myQuestionView: UIStackView!
+    @IBOutlet weak var answerView: UIStackView!
+    @IBOutlet weak var othersQuestionstack: UIStackView!
+    @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var answerLbl: UILabel!
+    @IBOutlet weak var anseredOnLbl: UILabel!
+    @IBOutlet weak var othersQuestionLbl: UILabel!
+    @IBOutlet weak var othersQuestionView: UIView!
+    
+    
+//    @IBOutlet weak var bubbleLeadingConstraint: NSLayoutConstraint!
+    //@IBOutlet weak var bubbleTrailingConstraint: NSLayoutConstraint!
        
        weak var delegate: ChatTableViewCellDelegate?
        private var panGestureRecognizer: UIPanGestureRecognizer!
        private var originalCenter: CGPoint = .zero
+    
     var studName : String?
        override func awakeFromNib() {
            super.awakeFromNib()
-           setupGesture()
+          // setupGesture()
            bubbleView.layer.cornerRadius = 15
            bubbleView.clipsToBounds = true
+           bubbleView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
+           
+           answerBubbleView.layer.cornerRadius = 15
+           answerBubbleView.clipsToBounds = true
+           answerBubbleView.backgroundColor = .systemGray5
+           
+           othersQuestionView.layer.cornerRadius = 10
+           othersQuestionView.backgroundColor = .systemGray6
+           
+           messageLabel.setFont(style: .body, size: FontSize.BodySize)
+           timeStampLbl.setFont(style: .body, size: 11)
+           
+           othersQuestionLbl.setFont(style: .body, size: 11)
+           studentNameLbl.setFont(style: .body, size: 11)
+           answerLbl.setFont(style: .body, size: FontSize.BodySize)
+           anseredOnLbl.setFont(style: .body, size: 11)
        }
        
     
@@ -44,50 +70,82 @@ class ChatTVCell: UITableViewCell {
                 )
         }
     }
-    func configure(with message: String, timeStamp: String, isSender: Bool,studentName:String) {
+//    func configure(with message: String, timeStamp: String, isSender: Bool,studentName:String) {
+//        messageLabel.text = message
+//        timeStampLbl.text = timeStamp
+//            self.studName = studentName
+//        let totalLength = message.count + timeStamp.count
+//
+//        // Optional: adjust based on total character count
+//        var leadingConstant: CGFloat = 130
+//        let trailingConstant: CGFloat = 16
+//
+//        if totalLength <= 20 {
+//            leadingConstant = 200
+//        } else if totalLength <= 40 {
+//            leadingConstant = 150
+//        } else {
+//            leadingConstant = 100
+//        }
+//
+//        if isSender {
+////            cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+//            bubbleView.backgroundColor = .parentClr.withAlphaComponent(0.2)
+//            bubbleTrailingConstraint.constant = trailingConstant
+//            bubbleLeadingConstraint.constant = leadingConstant
+//        } else {
+//            bubbleView.backgroundColor = .systemGray4.withAlphaComponent(0.2)
+//            bubbleTrailingConstraint.constant = leadingConstant
+//            bubbleLeadingConstraint.constant = trailingConstant
+//        }
+//
+//        // Common shadow styling
+////        bubbleView.layer.shadowOpacity = 2
+////        bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
+////        bubbleView.layer.shadowRadius = 1
+////        bubbleView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+//
+//        // Only receiver (e.g. staff) allows swipe gesture
+//        //panGestureRecognizer.isEnabled = !isSender
+//    }
+
+    
+    func configure(with message: String, timeStamp: String, isSender: Bool, studentName: String) {
         messageLabel.text = message
         timeStampLbl.text = timeStamp
-            self.studName = studentName
-        let totalLength = message.count + timeStamp.count
-
-        // Optional: adjust based on total character count
-        var leadingConstant: CGFloat = 130
-        let trailingConstant: CGFloat = 16
-
-        if totalLength <= 20 {
-            leadingConstant = 200
-        } else if totalLength <= 40 {
-            leadingConstant = 150
-        } else {
-            leadingConstant = 100
-        }
-
-        if isSender {
-//            cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
-            bubbleView.backgroundColor = .parentClr.withAlphaComponent(0.2)
-            bubbleTrailingConstraint.constant = trailingConstant
-            bubbleLeadingConstraint.constant = leadingConstant
-        } else {
-            bubbleView.backgroundColor = .systemGray4.withAlphaComponent(0.2)
-            bubbleTrailingConstraint.constant = leadingConstant
-            bubbleLeadingConstraint.constant = trailingConstant
-        }
-
-        // Common shadow styling
-//        bubbleView.layer.shadowOpacity = 2
-//        bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
-//        bubbleView.layer.shadowRadius = 1
-//        bubbleView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-
-        // Only receiver (e.g. staff) allows swipe gesture
-        panGestureRecognizer.isEnabled = !isSender
+        self.studName = studentName
+        
+        // Basic UI styling
+        bubbleView.layer.cornerRadius = 15
+//        bubbleView.clipsToBounds = true
+//        
+//        // Update constraints dynamically
+//        if isSender {
+//            // SENDER (You) -> Align Right
+////            bubbleTrailingConstraint.isActive = true
+////            bubbleLeadingConstraint.isActive = false
+//            
+//            bubbleView.backgroundColor = UIColor(named: "parentClr")?.withAlphaComponent(0.2) ?? UIColor.systemBlue.withAlphaComponent(0.2)
+//            messageLabel.textColor = .black
+//            sendByStack.alignment = .trailing
+//        } else {
+//            // RECEIVER (Others) -> Align Left
+////            bubbleTrailingConstraint.isActive = false
+////            bubbleLeadingConstraint.isActive = true
+//            
+//            bubbleView.backgroundColor = UIColor.systemGray4.withAlphaComponent(0.2)
+//            messageLabel.textColor = .black
+//            sendByStack.alignment = .leading
+//        }
+//        
+//        layoutIfNeeded() // refresh layout immediately
     }
 
        
        private func setupGesture() {
-           panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-           bubbleView.addGestureRecognizer(panGestureRecognizer)
-           bubbleView.isUserInteractionEnabled = true
+//           panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+//           bubbleView.addGestureRecognizer(panGestureRecognizer)
+//           bubbleView.isUserInteractionEnabled = true
        }
        
        @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {

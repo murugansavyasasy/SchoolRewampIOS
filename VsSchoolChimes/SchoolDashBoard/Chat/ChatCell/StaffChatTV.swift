@@ -29,6 +29,7 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
     var delegate:SelectedId?
     var selectedId:String?
     var is_change_answer:Bool?
+    var is_blocked:Bool?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,11 +51,12 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         // Configure the view for the selected state
     }
     
-    func edit(edit:Bool,delete:Bool,selectedId:String,isChangeAnswer:Bool){
+    func edit(edit:Bool,delete:Bool,selectedId:String,isChangeAnswer:Bool,isBlock:Bool){
         self.selectedId = selectedId
         self.delete = delete
         self.edit = edit
         self.is_change_answer = isChangeAnswer
+        self.is_blocked = isBlock
         optionBtn.isHidden = !(edit || delete)
     }
     
@@ -65,6 +67,7 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         popoverContentVC.ptm = false
         popoverContentVC.Chat = true
         popoverContentVC.reply_Btn_title = is_change_answer ?? false ? "Update answer" : "Answer"
+        popoverContentVC.Block_Btn_title = is_blocked ?? false ? "Unblock" : "Block"
         let width = is_change_answer ?? false ? 180 : 120
         popoverContentVC.preferredContentSize = CGSize(width: width, height: 60)
         popoverContentVC.modalPresentationStyle = .popover
