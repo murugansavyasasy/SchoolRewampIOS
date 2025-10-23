@@ -169,9 +169,6 @@ class AssignmentReport: UIViewController, SelectedId {
         applyShadowAndCornerRadius(to: academicView)
         academicView.layer.borderColor = UIColor.lightGray.cgColor
         academicView.layer.borderWidth = 0.5
-        headerView.layer.cornerRadius = 20
-        headerView.layer.masksToBounds = true
-        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         academicDropView.layer.cornerRadius = 10
         academicDropView.layer.borderWidth = 1
         academicDropView.layer.borderColor = UIColor.white.cgColor

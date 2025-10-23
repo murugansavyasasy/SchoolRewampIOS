@@ -1229,6 +1229,10 @@ struct Report: Codable {
     let subject: String?
     let date: String?
     let time: String?
+    let school_id: String?
+    let school_name: String?
+    let recipient_type: String?
+    let target_type: String?
     let created_date: String?
     let created_time: String?
     let progress: Float?

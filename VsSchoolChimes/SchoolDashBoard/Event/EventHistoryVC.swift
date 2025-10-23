@@ -579,6 +579,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
             }
             let hasData = !self.filteredSections.isEmpty
             self.noDataLbl.isHidden = hasData
+            self.noDataLbl.text = "Search Data Not Found"
             self.nodataImg.isHidden = hasData
             self.historyTable.reloadData()
         }
