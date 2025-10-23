@@ -120,7 +120,7 @@ struct ChildDetails: Codable {
     let profile: String?
     let roll_number: String?
     let display_message: String?
-    let access_token: String?
+    var  access_token: String?
     let school_id: String?
     let address: String?
     let class_id: Int?
@@ -770,21 +770,21 @@ struct SchoolStrength: Codable {
 struct Standard: Codable {
     let id: String?
     let name: String?
-    let level: Int?
-    let boys_count: Int?
-    let girls_count: Int?
-    let other_count: Int?
+    let level: String?
+    let boys_count: String?
+    let girls_count: String?
+    let other_count: String?
     let total_students: String?
     let sections: [SectionList]?
 }
 
 struct SectionList: Codable {
     let name: String?
-    let level: Int?
+    let level: String?
     let id: String?
-    let boys_count: Int?
-    let girls_count: Int?
-    let other_count: Int?
+    let boys_count: String?
+    let girls_count: String?
+    let other_count: String?
     let total_students: String?
 }
 

@@ -178,8 +178,10 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
             
         ]
         
+        print("video body " , body)
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
+        print("videooo upload",request)
         URLSession.shared.dataTask(with: request) {
             data,
             response,
