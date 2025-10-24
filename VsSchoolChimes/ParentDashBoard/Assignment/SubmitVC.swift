@@ -9,7 +9,8 @@ import UIKit
 
 @available(iOS 14.0, *)
 
-class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, UITextViewDelegate, VideoPickerManagerDelegate  {
+class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, UITextViewDelegate  {
+    
     
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -53,7 +54,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         studentNameLbl.configureAsBackTitle(firstLine: studentName, secondLine: Standard)
         NameLbl.text = "Submit " + MenuStringFile.selectedMenuName
         setupUI()
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
         imageSelection()
         
         titleTxt.delegate = self
@@ -67,7 +67,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         NameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
         DescriptionTextview.addDoneButton()
-       
+        
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
@@ -136,35 +136,35 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
                 description: DescriptionTextview.text ?? ""
             ) { [weak self] urls, iframe, fileSize, embedUrl in
                 guard let self = self else { return }
-
+                
                 var uploadedFiles: [[String: String]] = []
                 for urlString in urls {
                     guard let url = URL(string: urlString) else {
                         print("❌ Invalid URL: \(urlString)")
                         continue
                     }
-
+                    
                     let ext = url.pathExtension.lowercased()
                     var type = ""
                     if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
-                            type = CommonStringFile.IMAGE
-                        } else if urlString.contains("vimeo.com") {
-                            type = CommonStringFile.VIDEO
-                        } else {
-                            type = ext.uppercased()
-                        }
+                        type = CommonStringFile.IMAGE
+                    } else if urlString.contains("vimeo.com") {
+                        type = CommonStringFile.VIDEO
+                    } else {
+                        type = ext.uppercased()
+                    }
                     uploadedFiles.append([
                         CommonStringFile.url: urlString,
                         CommonStringFile.type: type
                     ])
                 }
-
+                
                 let iframeValue = iframe ?? ""
                 let fileSizeStr = fileSize != nil ? "\(fileSize!)" : ""
-
+                
                 sendAttachment(with: uploadedFiles, iframe: "", file_size: "")
             }
-                
+            
         }else {
             DispatchQueue.main.async {
                 self.alert.showAlert(
@@ -198,40 +198,49 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         dismiss(animated: true)
     }
     
+    func openCamera(){
+        let remaining = 10 - attachments.count
+        if remaining > 0 {
+            let limit = max(remaining , 0)
+            if limit > 0 {
+                PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+            } else {
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+    }
+    
     // MARK: File Attachments Actions
     func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
-            
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-        
-    }
-    func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if img.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
+        let remaining = 10 - attachments.count
+        if remaining > 0 {
+            let limit = max(remaining , 0)
+            if limit > 0 {
+                PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: limit), from: self)
+            } else {
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            }
+        } else {
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
+    
+    
     func selectPDF() {
-        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
-        if pdf.count != 5{
+        let remaining = 10 - attachments.count
+        if remaining > 0 {
+            PhotoPickerManager.shared.limiSelection = remaining
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
-        }else{
-            
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        } else {
+            CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
+    
+    
     func imageSelection(){
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
@@ -296,29 +305,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         
     }
     
-
-    // MARK: - Delegate Methods
-    func videoPickerManager(didPickVideo url: URL) {
-        if #available(iOS 15.0, *) {
-            self.hideActivityLoader()
-        }
-        attachments.removeAll()
-        selectImgPdfview.isHidden = true
-        collectionViewHeght.constant = 0
-        selectedVideoURL = url
-    }
-    
-    func videoPickerManagerDidCloseVideo() {
-        if #available(iOS 15.0, *) {
-            self.hideActivityLoader()
-        }
-        selectedVideoURL = nil
-        selectImgPdfview.isHidden = false
-        collectionViewHeght.constant = 120
-        selectImgPdfview.imageCollectionview.reloadData()
-    }
-    
-    
     func textViewDidChange(_ textView: UITextView) {
         if textView == DescriptionTextview {
             adjustTextViewHeights()
@@ -352,7 +338,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.AttachmentCVCell,
@@ -384,12 +370,10 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 cell.imageViews.image = nil
             }
             
-            // Assuming you have an array of UIImage from selected files
-            
             
             // Set collection view height dynamically
             let totalItems = attachments.count
-            collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
+            collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             
             return cell
         }
@@ -455,7 +439,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         var iframeValue: String?
         var fileSizeValue: Int?
         var embedUrlValue: String?
-
+        
         func updateAndCheckCompletion(total: Int) {
             let progress = (Double(completed) / Double(total)) * 100
             CircularProgressLoader.shared.updateProgress(to: progress)
@@ -464,7 +448,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
             }
         }
-
+        
         switch file {
         case let attachments as [AttachmentItem]:
             let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
@@ -473,10 +457,10 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 completion([], nil, nil, nil)
                 return
             }
-
+            
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            
             for item in uploadableItems {
                 if let image = item.image {
                     // 🖼 Local image → upload to AWS
@@ -492,10 +476,10 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                         completed += 1
                         updateAndCheckCompletion(total: total)
                     }
-
+                    
                 } else if let fileURLStr = item.imageURL,
                           let fileURL = URL(string: fileURLStr) {
-
+                    
                     if item.fileType.uppercased() == CommonStringFile.VIDEO {
                         // 🎥 Handle Videos
                         if fileURLStr.contains("vimeo.com") {
@@ -524,13 +508,13 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                                     iframeValue = iframeHTML
                                     fileSizeValue = fileSize
                                     embedUrlValue = finalEmbedUrl
-
+                                    
                                     completed += 1
                                     updateAndCheckCompletion(total: total)
                                 }
                             )
                         }
-
+                        
                     } else {
                         if fileURLStr.lowercased().starts(with: "http") {
                             uploadedURLs.append(fileURLStr)
@@ -539,9 +523,9 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                         } else {
                             // Local/Other file → upload to AWS
                             let path = item.fileType.uppercased() != CommonStringFile.IMAGE
-                                ? "uploads/Documents/"
-                                : "uploads/images/"
-
+                            ? "uploads/Documents/"
+                            : "uploads/images/"
+                            
                             AWSUploadManager.shared.uploadFileToAWS(
                                 file: fileURL,
                                 bucketPath: path,
@@ -556,21 +540,21 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                             }
                         }
                     }
-
+                    
                 } else {
                     print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
                     completed += 1
                     updateAndCheckCompletion(total: total)
                 }
             }
-
+            
         default:
             print("❌ Unsupported file type")
             completion([], nil, nil, nil)
         }
     }
-
-
+    
+    
     
     func sendAttachment(with uploadedFiles: [[String: String]],iframe:String,file_size:String) {
         DispatchQueue.main.async { [weak self] in
@@ -585,10 +569,10 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             ]
             let baseURL = (submitBtn.currentTitle == "Update")
             ? ServiceUrl.comm_api_assignment_update_submission
-                :ServiceUrl.comm_api_assignment_submit_assignment
+            :ServiceUrl.comm_api_assignment_submit_assignment
             let type = (submitBtn.currentTitle == "Update")
             ? ApitTypeSringFile.PUT
-                :ApitTypeSringFile.POST
+            :ApitTypeSringFile.POST
             APIService.shared.makeApi(
                 url: baseURL,
                 parameters: parameters,
@@ -618,21 +602,11 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func gotoDashboard(){
         self.dismiss(animated: false, completion: nil)
     }
-    
-    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Current text in the UITextView
         let currentText = textView.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-//        
-//        if newText.count <= 500 {
-//            descriptionCountLbl.text = "\(newText.count) / 500" // Update the character count label
-            return true // Allow the change
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            return false // Reject the change
-//        }
+        return true
     }
     
 }
