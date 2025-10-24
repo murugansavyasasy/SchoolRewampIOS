@@ -15,6 +15,8 @@ class SubmitedStudentTVC: UITableViewCell {
     @IBOutlet weak var standerdScection: UILabel!
     @IBOutlet weak var submitDate: UILabel!
     
+    var onBlock: (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -55,5 +57,6 @@ class SubmitedStudentTVC: UITableViewCell {
 
     
     @IBAction func BtnAct(_ sender: UIButton) {
+        onBlock?()
     }
 }

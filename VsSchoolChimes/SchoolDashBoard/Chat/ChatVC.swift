@@ -16,10 +16,13 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     @IBOutlet weak var teacherLbl: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var TextViewFullView: UIView!
-    
     @IBOutlet weak var MessgeTextview: UITextView!
     @IBOutlet weak var ReplyTextFild: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var blockedBtn: UIButton!
+    @IBOutlet weak var blockedLbl: UILabel!
+    @IBOutlet weak var blockedView: UIView!
+    
        var getValue = 1
        private var messages: [(text: String, isSender: Bool)] = [
            ("Hello!", true),
@@ -37,9 +40,24 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     
        override func viewDidLoad() {
            super.viewDidLoad()
+           
            profileImage.layer.cornerRadius = profileImage.frame.size.width/2
            teacherLbl.text = staffMembersData.name
            subjectLbl.text = staffMembersData.subject_name
+           blockedView.isHidden = true
+           
+           if staffMembersData.is_blocked == true {
+               blockedView.isHidden = false
+               TextViewFullView.isHidden = true
+           }else{
+               blockedView.isHidden = true
+               TextViewFullView.isHidden = false
+           }
+           
+           blockedBtn.layer.cornerRadius = 10
+           blockedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+           blockedLbl.setFont(style: .body, size: FontSize.BodySize)
+           
            MessgeTextview.addDoneButton()
            let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
            tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
