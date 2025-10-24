@@ -577,9 +577,8 @@ func getFileIconName(for fileURL: URL) -> String {
         return "video (1)"  // 🔄 Fallback icon
     }
 }
+
 extension String {
-    
-    
     func convertToTargetDateFormat(inputFormat: String? = nil) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -592,9 +591,11 @@ extension String {
             "d MMM yyyy",
             "dd MMM yyyy",
             "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd hh:mm:ss a",
+            "dd-MM-yyyy hh:mm a",
+            "dd-MM-yyyy hh:mm:ss a",
             "MMM d, yyyy",
-            "EEE, d MMM yyyy",
-            "dd-MM-yyyy hh:mm a"
+            "EEE, d MMM yyyy"
         ]
         
         if let inputFormat = inputFormat {

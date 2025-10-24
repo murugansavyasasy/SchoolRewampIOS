@@ -192,7 +192,19 @@ class NotificationCallVC: UIViewController {
             print("⚠️ Failed to configure audio session for call: \(error.localizedDescription)")
         }
     }
-    
+    private func isPhoneInSilentMode() -> Bool {
+        let session = AVAudioSession.sharedInstance()
+        
+        do {
+            try session.setCategory(.ambient, mode: .default)
+            try session.setActive(true)
+            
+            return session.outputVolume == 0
+        } catch {
+            print("Failed to check silent mode: \(error)")
+            return false
+        }
+    }
     private func playRingtone(from url: URL) {
         let cacheKey = url.absoluteString as NSString
         
@@ -233,7 +245,16 @@ class NotificationCallVC: UIViewController {
     }
     
     private func playRingtoneData(_ data: Data) {
+        guard !isPhoneInSilentMode() else {
+            print("📴 Phone is silent – not playing ringtone")
+            return
+        }
+
         do {
+            // Use .playback so it can play even in silent if you want
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voiceChat)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
             self.ringtonePlayer = try AVAudioPlayer(data: data)
             self.ringtonePlayer?.numberOfLoops = -1
             self.ringtonePlayer?.prepareToPlay()
@@ -241,7 +262,7 @@ class NotificationCallVC: UIViewController {
             
             self.startVibration()
             
-            // Stop after 30 seconds if not answered
+            // Stop after 30 seconds
             self.ringtoneTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { [weak self] _ in
                 self?.handleRingtoneTimeout()
             }
@@ -250,6 +271,7 @@ class NotificationCallVC: UIViewController {
             self.playSystemDefaultTone()
         }
     }
+
     
     private func handleRingtoneTimeout() {
         guard callState == .ringing else { return }
