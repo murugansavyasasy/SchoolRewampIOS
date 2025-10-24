@@ -50,7 +50,7 @@
                 <outlet property="inpersonBtn" destination="Pgw-Om-Z0c" id="5Ky-5I-ioo"/>
                 <outlet property="linkStack" destination="0SP-5o-6ea" id="7Xq-Rj-mec"/>
                 <outlet property="meetingLinkDefLbl" destination="uSO-LJ-taT" id="7ag-17-rGy"/>
-                <outlet property="meetingLinkTextfield" destination="8At-E5-bZe" id="237-Dd-DnN"/>
+                <outlet property="meetingLinkTextfield" destination="8At-E5-bZe" id="hBz-sY-Pfo"/>
                 <outlet property="minutesDefLbl" destination="0Jt-L4-gzi" id="DRa-TL-M5h"/>
                 <outlet property="mobileStack" destination="Zsh-f6-ChA" id="RO7-23-61V"/>
                 <outlet property="mobileTextfield" destination="VlO-ME-sOZ" id="rMB-3S-U7q"/>
@@ -245,7 +245,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste meeting link" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8At-E5-bZe">
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste meeting link" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8At-E5-bZe" customClass="PasteOnlyTextField" customModule="School_Chimes" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="22.333333333333371" width="347" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="kaJ-3F-Eyw"/>

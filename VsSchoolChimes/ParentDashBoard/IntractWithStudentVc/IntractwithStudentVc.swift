@@ -16,14 +16,24 @@ class IntractwithStudentVc: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var blockListTV: UITableView!
+    @IBOutlet weak var blockListDefLbl: UILabel!
+    @IBOutlet weak var popupContainerView: UIView!
+    @IBOutlet weak var popupView: UIView!
     
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var getStandardDetails:[StaffMember]?
     var filteredData:[StaffMember]?
     var isSearching = false
+    var BlockList: [BlockedStudent]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        popupContainerView.isHidden = true
+        popupContainerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
+        popupView.layer.cornerRadius = 10
         
         backBtn.configureAsBackTitle(firstLine: " Intract With Student",
                                       secondLine: StaffDetails?.school_name ?? "")
@@ -36,110 +46,12 @@ class IntractwithStudentVc: UIViewController {
         searchBar.barTintColor = .white
         searchBar.searchTextField.backgroundColor = .white
         getStaff()
+        
+        blockListTV.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
+        blockListTV.delegate = self
+        blockListTV.dataSource = self
     }
     
-    @IBAction func backBtn(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    @IBAction func search(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
-        
-        searchView.isHidden = !sender.isSelected
-        if sender.isSelected {
-            searchBar.becomeFirstResponder()
-        } else {
-            view.endEditing(true)
-            searchBar.text = ""
-            filteredData = getStandardDetails
-            noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
-            imgView.isHidden = !(filteredData?.isEmpty ?? true)
-            noDataFoundLbl.text = CommonStringFile.No_data_found
-            tv.reloadData()
-        }
-    }
-}
-
-extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CellConfingName.interactTvcell,
-            for: indexPath
-        ) as? interactTvcell else {
-            return UITableViewCell()
-        }
-        
-        cell.selectionStyle = .none
-        let datas = filteredData?[indexPath.row]
-        
-        if let datas = datas {
-            cell.nameLbl.text = datas.subject_name ?? ""
-            cell.subjectLbl.text = "Class - \(datas.name ?? "") (\(datas.section_name ?? ""))"
-            
-            // Unread count handling
-            let unreadCount = datas.unread_count ?? 0
-            cell.unReadCountBtn.isHidden = unreadCount == 0
-            cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
-            
-            cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
-            
-            // Last update time
-            if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
-                let (timeAgo, _) = submittedDate
-                cell.lastUpdateTimeLbl.text = timeAgo
-                cell.lastUpdateTimeLbl.isHidden = timeAgo == "Invalid time"
-                cell.iconBtn.isHidden = timeAgo == "Invalid time"
-            } else {
-                cell.lastUpdateTimeLbl.isHidden = true
-                cell.iconBtn.isHidden = true
-            }
-            
-            cell.userImg.image = UIImage(systemName: "person.3.sequence.fill")
-            cell.userImg.isHidden = true
-            cell.userBtn.isHidden = false
-            if let name = datas.subject_name, !name.isEmpty {
-                let firstTwo = String(name.prefix(2)).uppercased()
-                cell.userBtn.setTitle(firstTwo, for: .normal)
-            } else {
-                cell.userBtn.setTitle("-", for: .normal) // fallback if empty
-            }
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = chatWithStudentVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        let datas = isSearching ? filteredData?[indexPath.row] : getStandardDetails?[indexPath.row]
-        if let data = datas{
-            vc.staffMembersData =  data
-        }
-        
-        present(vc, animated: true)
-    }
-}
-
-// ✅ UISearchBar Delegate
-extension IntractwithStudentVc: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            filteredData = getStandardDetails
-        } else {
-            filteredData = getStandardDetails?.filter {
-                $0.subject_name?.localizedCaseInsensitiveContains(searchText) == true ||
-                $0.name?.localizedCaseInsensitiveContains(searchText) == true
-            }
-        }
-        noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
-        imgView.isHidden = !(filteredData?.isEmpty ?? true)
-        tv.reloadData()
-    }
     func getStaff(){
         APIService.shared
             .makeApi(url: ServiceUrl.interaction_classes_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? ""){ [self] (
@@ -175,5 +87,186 @@ extension IntractwithStudentVc: UISearchBarDelegate {
                     print(error.localizedDescription)
                 }
             }
+    }
+    
+    func get_blockList_Api(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_blocked_students, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[weak self] (result:Result<BlockedStudentsResponse,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    self.BlockList = success.data
+                    
+                    if self.BlockList?.isEmpty == true{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {}
+                    }else{
+                        self.showPopup()
+                        self.blockListTV.reloadData()
+                    }
+                    
+                case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {}
+                }
+            }
+        }
+    }
+    
+    @IBAction func backBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    @IBAction func blockListAct(_ sender: Any) {
+        
+        get_blockList_Api()
+    }
+    
+    @IBAction func popupDismissAct(_ sender: Any) {
+        
+        hidePopup()
+    }
+    
+    func showPopup() {
+        popupContainerView.alpha = 0
+        popupContainerView.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.popupContainerView.alpha = 1
+        }
+    }
+
+    func hidePopup() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.popupContainerView.alpha = 0
+        }) { _ in
+            self.popupContainerView.isHidden = true
+        }
+    }
+    
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        
+        searchView.isHidden = !sender.isSelected
+        if sender.isSelected {
+            searchBar.becomeFirstResponder()
+        } else {
+            view.endEditing(true)
+            searchBar.text = ""
+            filteredData = getStandardDetails
+            noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
+            imgView.isHidden = !(filteredData?.isEmpty ?? true)
+            noDataFoundLbl.text = CommonStringFile.No_data_found
+            tv.reloadData()
+        }
+    }
+}
+
+extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == tv {
+            return filteredData?.count ?? 0
+        }else{
+            return BlockList?.count ?? 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if tableView == tv {
+            
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellConfingName.interactTvcell,
+                for: indexPath
+            ) as? interactTvcell else {
+                return UITableViewCell()
+            }
+            
+            cell.selectionStyle = .none
+            let datas = filteredData?[indexPath.row]
+            
+            if let datas = datas {
+                cell.nameLbl.text = datas.subject_name ?? ""
+                cell.subjectLbl.text = "Class - \(datas.name ?? "") (\(datas.section_name ?? ""))"
+                
+                // Unread count handling
+                let unreadCount = datas.unread_count ?? 0
+                cell.unReadCountBtn.isHidden = unreadCount == 0
+                cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
+                
+                cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
+                
+                // Last update time
+                if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
+                    let (timeAgo, _) = submittedDate
+                    cell.lastUpdateTimeLbl.text = timeAgo
+                    cell.lastUpdateTimeLbl.isHidden = timeAgo == "Invalid time"
+                    cell.iconBtn.isHidden = timeAgo == "Invalid time"
+                } else {
+                    cell.lastUpdateTimeLbl.isHidden = true
+                    cell.iconBtn.isHidden = true
+                }
+                
+                cell.userImg.image = UIImage(systemName: "person.3.sequence.fill")
+                cell.userImg.isHidden = true
+                cell.userBtn.isHidden = false
+                if let name = datas.subject_name, !name.isEmpty {
+                    let firstTwo = String(name.prefix(2)).uppercased()
+                    cell.userBtn.setTitle(firstTwo, for: .normal)
+                } else {
+                    cell.userBtn.setTitle("-", for: .normal) // fallback if empty
+                }
+            }
+            return cell
+        }else {
+            
+            let cell = blockListTV.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as! SubmitedStudentTVC
+            
+            let student = BlockList?[indexPath.row]
+            
+            cell.studentNameLbl.text = student?.name
+            cell.submitDate.text = "Blocked on: " + (student?.blocked_on ?? "")
+            cell.statusView.layer.cornerRadius = 10
+            cell.statusView.backgroundColor = .systemBlue
+            cell.statusView.setTitleColor(.white, for: .normal)
+            cell.statusView.setTitle("Unblock", for: .normal)
+            
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == tv{
+            let vc = chatWithStudentVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            let datas = isSearching ? filteredData?[indexPath.row] : getStandardDetails?[indexPath.row]
+            if let data = datas{
+                vc.staffMembersData =  data
+            }
+            
+            present(vc, animated: true)
+        }
+    }
+}
+
+// ✅ UISearchBar Delegate
+extension IntractwithStudentVc: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredData = getStandardDetails
+        } else {
+            filteredData = getStandardDetails?.filter {
+                $0.subject_name?.localizedCaseInsensitiveContains(searchText) == true ||
+                $0.name?.localizedCaseInsensitiveContains(searchText) == true
+            }
+        }
+        noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
+        imgView.isHidden = !(filteredData?.isEmpty ?? true)
+        tv.reloadData()
     }
 }

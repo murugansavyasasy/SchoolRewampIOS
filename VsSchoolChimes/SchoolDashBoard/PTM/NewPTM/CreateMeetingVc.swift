@@ -30,7 +30,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var EnterMobileDefLbl: UILabel!
     @IBOutlet weak var mobileTextfield: UITextField!
     @IBOutlet weak var meetingLinkDefLbl: UILabel!
-    @IBOutlet weak var meetingLinkTextfield: UITextField!
+    @IBOutlet weak var meetingLinkTextfield: PasteOnlyTextField!
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var mobileStack: UIStackView!
     @IBOutlet weak var linkStack: UIStackView!
@@ -422,25 +422,38 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     }
 
     
-    func textField(_ textField: UITextField,
-                       shouldChangeCharactersIn range: NSRange,
-                       replacementString string: String) -> Bool {
-        if textField == self.meetingLinkTextfield {
-                return false  // block typing
-            }
-            return true  // allow other text fields normally
-        }
-
-        // Allow only paste for THIS text field
-        override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-            if meetingLinkTextfield.isFirstResponder {
-                if action == #selector(UIResponderStandardEditActions.paste(_:)) {
-                    return true
-                }
-                return false
-            }
-            return super.canPerformAction(action, withSender: sender)
-        }
+//    // Disable typing manually
+//        func textField(_ textField: UITextField,
+//                       shouldChangeCharactersIn range: NSRange,
+//                       replacementString string: String) -> Bool {
+//            if textField == meetingLinkTextfield {
+//                return false // block typing entirely
+//            }
+//            return true
+//        }
+//
+//        // Allow only paste action
+//        override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+//            if meetingLinkTextfield.isFirstResponder {
+//                if action == #selector(UIResponderStandardEditActions.paste(_:)) {
+//                    return true
+//                } else {
+//                    return false
+//                }
+//            }
+//            return super.canPerformAction(action, withSender: sender)
+//        }
+//
+//        // Handle paste action
+//        override func paste(_ sender: Any?) {
+//            if meetingLinkTextfield.isFirstResponder {
+//                if let pastedString = UIPasteboard.general.string {
+//                    meetingLinkTextfield.text = pastedString.trimmingCharacters(in: .whitespacesAndNewlines)
+//                }
+//            } else {
+//                super.paste(sender)
+//            }
+//        }
     
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         return monthPosition == .current
@@ -1331,5 +1344,66 @@ class LabeledStepper: UIControl {
         // Disable – only at minimum
         decreaseButton.isEnabled = value > minimumValue
         decreaseButton.alpha = decreaseButton.isEnabled ? 1.0 : 0.5
+    }
+}
+
+import UIKit
+
+class PasteOnlyTextField: UITextField {
+
+    override var inputView: UIView? {
+        get { return UIView() } // disable keyboard
+        set { }
+    }
+
+    override func shouldChangeText(in range: UITextRange, replacementText text: String) -> Bool {
+        return false // block typing
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(UIResponderStandardEditActions.paste(_:))
+    }
+
+    override func paste(_ sender: Any?) {
+        guard var pasted = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !pasted.isEmpty else { return }
+
+        // Auto-add https:// if missing
+        if !pasted.lowercased().hasPrefix("http") {
+            pasted = "https://" + pasted
+        }
+
+        // Validate URL
+        if let url = URL(string: pasted),
+           let host = url.host,
+           host.contains("."),
+           !isPrivateIP(host) {
+
+            super.text = pasted
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        } else {
+            super.text = ""
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            print("❌ Rejected non-public URL: \(pasted)")
+        }
+    }
+
+    // Detect private IPs
+    private func isPrivateIP(_ host: String) -> Bool {
+        // Check if host is IPv4
+        let parts = host.split(separator: ".").compactMap { UInt8($0) }
+        if parts.count == 4 {
+            let first = parts[0]
+            let second = parts[1]
+            // 10.0.0.0/8
+            if first == 10 { return true }
+            // 172.16.0.0/12
+            if first == 172 && second >= 16 && second <= 31 { return true }
+            // 192.168.0.0/16
+            if first == 192 && second == 168 { return true }
+            // 127.x.x.x loopback
+            if first == 127 { return true }
+        }
+        return false
     }
 }

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopupVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="BlockBtn" destination="xK6-Lc-Jwp" id="SH8-5V-YSH"/>
                 <outlet property="BlockStack" destination="EVa-KK-fSh" id="3Kk-Tl-KcS"/>
                 <outlet property="cancelStack" destination="5Kl-hj-T0G" id="VzI-D3-Kay"/>
                 <outlet property="deleteStack" destination="1AK-W0-YqF" id="7LB-Hn-h2q"/>

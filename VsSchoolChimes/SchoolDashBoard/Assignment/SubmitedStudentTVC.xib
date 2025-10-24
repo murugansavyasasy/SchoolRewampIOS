@@ -11,18 +11,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="98" id="KGk-i7-Jjw" customClass="SubmitedStudentTVC" customModule="School_Chimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="356" height="98"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="SubmitedStudentTVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="356" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="356" height="98"/>
+                <rect key="frame" x="0.0" y="0.0" width="356" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jKD-yh-rP9">
-                        <rect key="frame" x="10" y="5" width="336" height="83"/>
+                        <rect key="frame" x="10" y="5" width="336" height="85"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Re-fu-CbC">
-                                <rect key="frame" x="10" y="21.666666666666671" width="40" height="40"/>
+                                <rect key="frame" x="10" y="22.666666666666671" width="40" height="40"/>
                                 <color key="backgroundColor" red="0.035294117649999998" green="0.098039215690000001" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="EkO-oG-OWD"/>
@@ -34,7 +34,7 @@
                                 <state key="normal" title="C"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="oEh-Wv-Obg">
-                                <rect key="frame" x="60" y="10" width="266" height="63"/>
+                                <rect key="frame" x="60" y="10" width="266" height="65"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Chandhru V" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7v-C6-w08">
                                         <rect key="frame" x="0.0" y="0.0" width="266" height="17"/>
@@ -43,7 +43,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="ede-KI-xVg">
-                                        <rect key="frame" x="0.0" y="18" width="266" height="30"/>
+                                        <rect key="frame" x="0.0" y="19" width="266" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;I - B&quot;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQH-pO-jqm">
                                                 <rect key="frame" x="0.0" y="6.9999999999999991" width="37.666666666666664" height="15.666666666666664"/>
@@ -60,11 +60,14 @@
                                                 <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="2"/>
                                                 <state key="normal" title="Pending" image="checkmark.circle.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="BtnAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jBv-NN-hFt"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Submitted: Mon, 11" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8m-iW-bk0">
-                                        <rect key="frame" x="0.0" y="48.666666666666664" width="266" height="14.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="50.666666666666671" width="266" height="14.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -101,7 +104,7 @@
                 <outlet property="studentNameLbl" destination="f7v-C6-w08" id="CGq-kz-Ue4"/>
                 <outlet property="submitDate" destination="K8m-iW-bk0" id="RIL-bA-t4d"/>
             </connections>
-            <point key="canvasLocation" x="-134.35114503816794" y="86.619718309859152"/>
+            <point key="canvasLocation" x="-134.35114503816794" y="40.845070422535215"/>
         </tableViewCell>
     </objects>
     <resources>

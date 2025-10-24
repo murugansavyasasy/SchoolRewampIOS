@@ -34,6 +34,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     var staffMembersData = StaffMember()
     var childDetails = UserDefaultFileManager.get_child_Details()
     var chatDataDetails : [ChatMessage]?
+    
        override func viewDidLoad() {
            super.viewDidLoad()
            profileImage.layer.cornerRadius = profileImage.frame.size.width/2
@@ -59,6 +60,8 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            
            ReplyTextFild.delegate = self
            
+           tableView.showsVerticalScrollIndicator = false
+           tableView.showsHorizontalScrollIndicator = false
            
            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
                NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -149,6 +152,28 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         let message = chatDataDetails?[indexPath.row]
         
         
+        if message?.my_question == false{
+            cell.myQuestionView.isHidden = true
+            cell.othersQuestionView.isHidden = false
+            cell.studentNameLbl.isHidden = false
+            cell.othersQuestionLbl.text = message?.question
+            cell.studentNameLbl.text = "Asked by ~ \(message?.student_name ?? "")"
+           
+        }else{
+            cell.myQuestionView.isHidden = false
+            cell.othersQuestionView.isHidden = true
+            cell.studentNameLbl.isHidden = true
+            cell.messageLabel.text = message?.question
+            cell.timeStampLbl.text = message?.asked_on
+        }
+        
+        if message?.answered_on?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+            cell.answerView.isHidden = true
+        }else{
+            
+            cell.answerLbl.text = message?.answer
+            cell.anseredOnLbl.text = message?.answered_on
+        }
         
 //        if message?.ans_file_path?.count == 0 {
 //            if message?.answer != "Not answered yet"{
@@ -172,36 +197,36 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         
         
         
-        if message?.ques_file_path?.count == 0 {
-            if message?.question != ""{
-                cell.imageStack.isHidden = true
-                cell.messageLabel.isHidden = false
-                cell.timeStampLbl.isHidden = false
-                cell
-                    .configure(
-                        with: message?.question ?? "",
-                        timeStamp: formattedDateStatus(
-                            from: message?.created_on ?? ""
-                        ) ,
-                        isSender: message?.change_answer ?? false, studentName: ""
-                    )
-            }
+//        if message?.ques_file_path?.count == 0 {
+//            if message?.question != ""{
+//                cell.imageStack.isHidden = true
+//                cell.messageLabel.isHidden = false
+//                cell.timeStampLbl.isHidden = false
+//                cell
+//                    .configure(
+//                        with: message?.question ?? "",
+//                        timeStamp: formattedDateStatus(
+//                            from: message?.created_on ?? ""
+//                        ) ,
+//                        isSender: true, studentName: ""
+//                    )
+//            }
             
-            if message?.answer != "Not answered yet"{
-                
-                cell
-                    .configure(
-                        with: message?.answer ?? "", timeStamp: message?.answer_on ?? "",
-                        isSender: false, studentName: ""
-                    )
-            }
-        }else{
-            
-            cell.messageLabel.isHidden = true
-            cell.timeStampLbl.isHidden = true
-            cell.imageStack.isHidden = false
-            cell.imageConficure(with:message?.ques_file_path?.first?.url )
-        }
+//            if message?.answer != "Not answered yet"{
+//                
+//                cell
+//                    .configure(
+//                        with: message?.answer ?? "", timeStamp: message?.answer_on ?? "",
+//                        isSender: true, studentName: ""
+//                    )
+//            }
+//        }else{
+//            
+//            cell.messageLabel.isHidden = true
+//            cell.timeStampLbl.isHidden = true
+//            cell.imageStack.isHidden = false
+//            cell.imageConficure(with:message?.ques_file_path?.first?.url)
+//        }
         cell.delegate = self
         return cell
     }
@@ -299,8 +324,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     func getStaff(){
         APIService.shared
             .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: ["staff_id" : staffMembersData.id ?? "","subject_id":staffMembersData.subject_id ?? "","offset":0,"is_class_teacher":staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
-                result:Result <ChatMessageSuc,
-                Error>
+                result:Result <ChatMessageSuc,Error>
             ) in
                 switch result {
                 case .success(let successMessage):

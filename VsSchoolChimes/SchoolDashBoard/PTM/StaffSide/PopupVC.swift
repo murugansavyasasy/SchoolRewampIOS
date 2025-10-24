@@ -18,6 +18,7 @@ class PopupVC: UIViewController {
     @IBOutlet weak var replyStack: UIStackView!
     @IBOutlet weak var BlockStack: UIStackView!
     @IBOutlet weak var replyBtn: UIButton!
+    @IBOutlet weak var BlockBtn: UIButton!
     
     
     var ptm:Bool = false
@@ -27,6 +28,7 @@ class PopupVC: UIViewController {
     var delete:Bool?
     var selectedId:String?
     var reply_Btn_title = ""
+    var Block_Btn_title = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +67,7 @@ class PopupVC: UIViewController {
             replyStack.isHidden = false
             BlockStack.isHidden = false
             replyBtn.setTitle(reply_Btn_title, for: .normal)
+            BlockBtn.setTitle(Block_Btn_title, for: .normal)
         }else{
             reopenStack.isHidden = true
             cancelStack.isHidden = true
