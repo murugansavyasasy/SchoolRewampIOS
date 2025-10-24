@@ -564,17 +564,21 @@ func getFileIconName(for fileURL: URL) -> String {
 
     switch ext {
     case "jpg", "jpeg", "png", "gif", "heic", "heif", "webp":
-        return "image"              // 🖼 Your image icon name
+        return "image"
+    case "txt":
+        return  "txt-file"
+    case "rtf":
+        return "rtf-file"
     case "pdf":
-        return "pdf (1)"            // 📄 Your PDF icon name
+        return "pdf (1)"
     case "doc", "docx":
-        return "microsoft-word"     // 📃 Word icon
+        return "microsoft-word"
     case "xls", "xlsx":
-        return "exel"               // 📊 Excel icon
+        return "exel"
     case "ppt", "pptx":
-        return "ppt"                // 📽 PowerPoint icon
+        return "ppt"
     default:
-        return "video (1)"  // 🔄 Fallback icon
+        return "video (1)"
     }
 }
 

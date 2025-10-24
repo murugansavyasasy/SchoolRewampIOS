@@ -55,9 +55,6 @@ class ImageShowVc: UIViewController {
         cv.register(UINib(nibName: CellConfingName.ImageShowCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageShowCVCell)
         cv.register(UINib(nibName: CellConfingName.VideoPlayerCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.VideoPlayerCVC)
         
-        downloadUrl = fileURL.first?.url
-        fileType = fileURL.first?.type
-        
         pageController.numberOfPages = attachment?.count ?? fileURL.count
     }
     
@@ -72,6 +69,8 @@ class ImageShowVc: UIViewController {
             if let index = self.index, index < count {
                 let indexPath = IndexPath(item: index, section: 0)
                 self.cv.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+                self.downloadUrl = self.fileURL[index].url
+                self.fileType = self.fileURL[index].type
                 self.pageController.currentPage = index
             }
         }
