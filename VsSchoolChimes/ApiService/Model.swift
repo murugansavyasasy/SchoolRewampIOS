@@ -1295,12 +1295,13 @@ struct StaffListResponse: Codable {
 struct StaffMember: Codable {
     let id: String?
     let name: String?
+    let is_blocked: Bool?
     let profile: String?
     let subject_id: String?
     let subject_name: String?
     let is_assigned: Bool?
     let is_class_teacher: Bool?
-    let unread_count: Int?
+    var unread_count: Int?
     let last_msg_time: String?
     let last_msg: String?
     let section_id: String?
@@ -1308,6 +1309,7 @@ struct StaffMember: Codable {
     init() {
         self.id = nil
         self.name = nil
+        self.is_blocked = nil
         self.profile = ""
         self.subject_id = nil
         self.subject_name = nil

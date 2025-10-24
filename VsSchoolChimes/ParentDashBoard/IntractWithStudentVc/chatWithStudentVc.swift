@@ -185,6 +185,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                     if success.status == true {
                         
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
+                            self.getChat()
                             self.hidePopup()
                         }
                     }else{
@@ -480,7 +481,15 @@ extension chatWithStudentVc: UITableViewDelegate,UITableViewDataSource,ChatTable
             if let message = chatDataDetails?.first(where: { $0.id == id }) {
                 selectedMessage = message
             }
-            showPopup()
+            
+           if selectedMessage?.is_blocked == true{
+                
+                self.Block_Api()
+                
+            }else{
+                showPopup()
+            }
+            
         }
     }
 }
