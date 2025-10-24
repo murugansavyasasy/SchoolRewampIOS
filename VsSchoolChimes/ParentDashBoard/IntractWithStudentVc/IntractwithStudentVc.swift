@@ -26,7 +26,6 @@ class IntractwithStudentVc: UIViewController {
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var getStandardDetails:[StaffMember]?
     var filteredData:[StaffMember]?
-    var isSearching = false
     var BlockList: [BlockedStudent]?
     
     override func viewDidLoad() {
@@ -173,7 +172,7 @@ class IntractwithStudentVc: UIViewController {
         }
     }
     
-    func readStatusApi(sectionId:String,index:Int){
+    func readStatusApi(sectionId:String, completion: (()->Void)? = nil){
         
         let param : [String:Any] = [
             "type" : "STAFFCHAT",
@@ -192,23 +191,20 @@ class IntractwithStudentVc: UIViewController {
                     if success.status == true{
                         
                         if let index = self.getStandardDetails?.firstIndex(where: {$0.section_id == sectionId}) {
-                            
                             self.getStandardDetails?[index].unread_count = 0
-                            if self.isSearching == false{
-                                self.tv.reloadRows(at: [IndexPath(row: index, section: 0)], with: UITableView.RowAnimation.automatic)
-                            }
                         }
                         
                         if let filterIndex = self.filteredData?.firstIndex(where: {$0.section_id == sectionId}) {
                             self.filteredData?[filterIndex].unread_count = 0
-                            if self.isSearching{
                                 self.tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: UITableView.RowAnimation.automatic)
-                            }
                         }
                     }
                     
+                    completion?()
+                    
                 case .failure(let failure):
                     print(failure.localizedDescription)
+                    completion?()
                 }
             }
         }
@@ -346,22 +342,28 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == tv{
-            
-            let datas = isSearching ? filteredData?[indexPath.row] : getStandardDetails?[indexPath.row]
-            
-            if (datas?.unread_count ?? 0) > 0{
-                readStatusApi(sectionId: datas?.section_id ?? "", index: indexPath.row)
+        if tableView == tv {
+            let datas = filteredData?[indexPath.row]
+            guard let data = datas else { return }
+
+            if (data.unread_count ?? 0) > 0 {
+                readStatusApi(sectionId: data.section_id ?? "") { [weak self] in
+                    guard let self = self else { return }
+                    self.openChat(with: data)
+                }
+            } else {
+                openChat(with: data)
             }
-            
-            let vc = chatWithStudentVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            if let data = datas{
-                vc.staffMembersData =  data
-            }
-            present(vc, animated: true)
         }
     }
+
+    private func openChat(with data: StaffMember) {
+        let vc = chatWithStudentVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.staffMembersData = data
+        present(vc, animated: true)
+    }
+
 }
 
 // ✅ UISearchBar Delegate
