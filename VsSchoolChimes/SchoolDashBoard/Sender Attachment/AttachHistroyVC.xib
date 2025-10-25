@@ -76,7 +76,7 @@
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                             </state>
                                             <connections>
-                                                <action selector="searchBtnCilck:" destination="-1" eventType="touchUpInside" id="XkS-dH-GCL"/>
+                                                <action selector="searchBtnCilck:" destination="-1" eventType="touchUpInside" id="Qk0-zZ-0Sp"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -90,10 +90,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Twd-id-6oO">
-                    <rect key="frame" x="0.0" y="132" width="393" height="720"/>
+                    <rect key="frame" x="0.0" y="124" width="393" height="728"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="uif-k0-yZm">
-                            <rect key="frame" x="10" y="10.000000000000004" width="373" height="60.333333333333343"/>
+                            <rect key="frame" x="10" y="9.9999999999999929" width="373" height="119.33333333333331"/>
                             <subviews>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8Q-Um-4rJ">
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="0.0"/>
@@ -142,15 +142,14 @@
                                         <constraint firstAttribute="trailing" secondItem="3sZ-Zr-uCJ" secondAttribute="trailing" constant="10" id="Xx4-xM-V4x"/>
                                     </constraints>
                                 </view>
-                                <searchBar hidden="YES" contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-6Q-fEf">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="0.0"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-6Q-fEf">
+                                    <rect key="frame" x="0.0" y="63.333333333333343" width="373" height="56"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                             </subviews>
                         </stackView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fv-5w-KxL">
-                            <rect key="frame" x="10" y="510" width="373" height="30"/>
+                            <rect key="frame" x="10" y="514" width="373" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="31T-Yb-iqN"/>
                             </constraints>
@@ -159,13 +158,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noFiles" translatesAutoresizingMaskIntoConstraints="NO" id="i4i-5d-HhI">
-                            <rect key="frame" x="10" y="220" width="373" height="280"/>
+                            <rect key="frame" x="10" y="224" width="373" height="280"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="280" id="nnW-Ca-uZV"/>
                             </constraints>
                         </imageView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="JkR-Od-5Vw">
-                            <rect key="frame" x="0.0" y="75.333333333333314" width="393" height="644.66666666666674"/>
+                            <rect key="frame" x="0.0" y="134.33333333333331" width="393" height="593.66666666666674"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
@@ -198,7 +197,7 @@
                 <constraint firstItem="NPX-Sk-Vtj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="5" id="hB1-ET-auu"/>
                 <constraint firstAttribute="bottom" secondItem="Twd-id-6oO" secondAttribute="bottom" id="ihe-K3-5pr"/>
                 <constraint firstItem="Twd-id-6oO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kAc-nS-UDE"/>
-                <constraint firstItem="Twd-id-6oO" firstAttribute="top" secondItem="WcX-SR-bw1" secondAttribute="bottom" constant="8" symbolic="YES" id="mTM-tG-YVw"/>
+                <constraint firstItem="Twd-id-6oO" firstAttribute="top" secondItem="WcX-SR-bw1" secondAttribute="bottom" id="mTM-tG-YVw"/>
                 <constraint firstItem="Twd-id-6oO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="sW9-uJ-SRt"/>
             </constraints>
             <point key="canvasLocation" x="124.42748091603053" y="20.422535211267608"/>
