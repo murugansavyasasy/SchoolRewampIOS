@@ -97,7 +97,6 @@
                                 </label>
                                 <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="aPe-Xy-alW">
                                     <rect key="frame" x="10" y="24.666666666666657" width="373" height="56"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
                                         <outlet property="delegate" destination="-1" id="wQN-Rc-Hfb"/>

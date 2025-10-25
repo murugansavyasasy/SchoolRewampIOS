@@ -42,10 +42,11 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var submittedProgressStack: UIStackView!
     @IBOutlet weak var subCatogoriesStack: UIStackView!
+    @IBOutlet weak var spaceLbl: UILabel!
     @IBOutlet weak var submitBtnStack: UIStackView!
+    @IBOutlet weak var attachmentStack: UIStackView!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var mysubmitBtn: UIButton!
-    @IBOutlet weak var completedBtn: UIButton!
     @IBOutlet weak var img1: UIImageView!
     @IBOutlet weak var img2: UIImageView!
     @IBOutlet weak var img3: UIImageView!
@@ -120,6 +121,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     // MARK: - UI Setup
     func setupUI() {
         [img1, img2, img3, imgCount].forEach { $0?.isHidden = true }
+        attachmentStack.isHidden = true
         [img1, img2, img3].forEach {
             if let view = $0 {
                 setBorderAndCornerRadius(for: view, cornerRadius: view.frame.width / 2)
@@ -127,9 +129,8 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         }
         imgCount.layer.cornerRadius = imgCount.frame.width / 2
         readVieaw.layer.cornerRadius = readVieaw.frame.width/2
-        completedBtn.layer.cornerRadius = 6
         submitBtn.layer.cornerRadius = 6
-        mysubmitBtn.layer.cornerRadius = 10
+        mysubmitBtn.layer.cornerRadius = 6
         outerView.setShadow()
         outerView.backgroundColor = .systemBackground
         outerView.layer.cornerRadius = 12
@@ -176,12 +177,15 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func loadFiles(into cell: AssignmentTVC, files: [FilePath]) {
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
         cell.imgCount.isHidden = true
-
+        cell.spaceLbl.isHidden = true
+        attachmentStack.isHidden = true
         for (index, file) in files.prefix(3).enumerated() {
             guard let urlString = file.url, let url = URL(string: urlString) else { continue }
             let imageViews = [cell.img1, cell.img2, cell.img3]
             let imageView = imageViews[index]
             imageView?.isHidden = false
+            spaceLbl?.isHidden = false
+            attachmentStack?.isHidden = false
             
             if file.type?.lowercased() != "image" {
                 imageView?.image = UIImage(named: getFileIconName(for: url)) ?? UIImage(systemName: "doc.fill")
