@@ -437,6 +437,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReciverEventTVC", for: indexPath) as! ReciverEventTVC
             cell.titleLbl.text = event.title
             cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
+            cell.outerView.backgroundColor = UIColor(hex: "#012E40")
             cell.placeLbl.text = event.venue
             cell.descriptionLbl.text = event.description
             cell.date = event.date
@@ -444,7 +445,6 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.edit(edit: event.can_edit ?? false, delete:  event.can_delete ?? false, selectedId: event.id ?? "")
 //            cell.reminderBtn.isHidden = true
-            cell.outerView.backgroundColor = .black
             loadFiles(into: cell, files: event.file_path)
             cell.attacmentView.isHidden = event.file_path.count ==  0
             return cell
