@@ -420,6 +420,18 @@ class RecipientVc: UIViewController{
                     
                     Common_request_params.removeAll()
                     
+//                    "SEND_VOICE"
+//                    "SEND_TEXT"
+//                    "SEND_ATTACHMENT"
+//                    "SEND_HOMEWORK"
+//                    "SEND_ASSIGNMENT"
+//                    "SEND_VIDEO"
+//                    "SEND_ATTENDANCE"
+//                    "SEND_MEETING"
+//                    "EDIT_LESSONPLAN"
+//                    "SEND_EXAM"
+//                    "MARK_ATTENDANCE"
+//                    "SEND_PTM"
                     if user_inputs.clearTempData(){
                         let parms = [  "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
                                        "activity": "VIEW_ASSIGNMENT",
