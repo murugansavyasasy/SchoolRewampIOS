@@ -29,6 +29,7 @@ class SchoolStrengthVC: UIViewController {
     var displayArray : [StrengthDisplayModel] = []
     var totalBoys : String?
     var totalgirls : String?
+    var previousData : Previous?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,21 +68,37 @@ class SchoolStrengthVC: UIViewController {
         let totalStudent = Int(data.total_student_strength ?? "0") ?? 0
         let totalStaff = Int(data.total_staff_strength ?? "0") ?? 0
         let total = totalStudent + totalStaff
-
+        let totalPreviousYear = Int(previousData?.total_student_strength ?? "0") ?? 0 + (
+            Int(previousData?.total_staff_strength ?? "0") ?? 0
+        )
         
         
-        list.append(StrengthDisplayModel(count: totalStaff, name: "Students", previousYear: 12,Girl: Int(data.total_girls_strength ?? "0") ?? 0))
+        list.append(StrengthDisplayModel(count: total, name: "Total", previousYear: totalPreviousYear,Girl: Int(data.total_girls_strength ?? "0") ?? 0))
+        
+        list
+            .append(
+                StrengthDisplayModel(
+                    count: totalStaff,
+                    name: "Students",
+                    previousYear: Int(
+                        previousData?.total_student_strength ?? ""
+                    ) ?? 0,
+                    Girl: Int(data.total_girls_strength ?? "0") ?? 0
+                )
+            )
         
         list
             .append(
                 StrengthDisplayModel(
                     count: totalStudent,
                     name: "Staff",
-                    previousYear: 10,
+                    previousYear: Int(
+                        previousData?.total_staff_strength ?? ""
+                    ) ?? 0,
                     Girl: Int(data.total_girls_strength ?? "0") ?? 0
                 )
             )
-        list.append(StrengthDisplayModel(count: total, name: "Total", previousYear: 8,Girl: Int(data.total_girls_strength ?? "0") ?? 0))
+       
         
         return list
     }

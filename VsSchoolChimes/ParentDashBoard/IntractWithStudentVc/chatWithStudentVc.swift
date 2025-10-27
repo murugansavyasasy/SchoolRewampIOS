@@ -105,6 +105,9 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                             chatDataDetails = successMessage.data?
                                 .reversed() ?? []
                             tableView.reloadData()
+                            DispatchQueue.main.async {
+                                self.scrollToBottom()
+                            }
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
@@ -199,6 +202,17 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                 }
             }
         }
+    }
+    
+    func scrollToBottom() {
+        let lastSection = tableView.numberOfSections - 1
+        guard lastSection >= 0 else { return }
+
+        let lastRow = tableView.numberOfRows(inSection: lastSection) - 1
+        guard lastRow >= 0 else { return }
+
+        let indexPath = IndexPath(row: lastRow, section: lastSection)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
     
  @objc func keyboardWillShow(notification: NSNotification) {

@@ -9,6 +9,7 @@ import UIKit
 
 class SchoolStrengthCvcell: UICollectionViewCell {
 
+    @IBOutlet weak var arrowImage: UIImageView!
     @IBOutlet weak var boyCountLbl: UILabel!
     @IBOutlet weak var progressbar: UIProgressView!
     @IBOutlet weak var progressContainer: UIView!

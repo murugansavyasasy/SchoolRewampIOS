@@ -101,8 +101,9 @@ class AttachHistroyVC: UIViewController, SelectedId {
 //        localData.editToken = staffdetails?.access_token
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
-        searchBar.layer.cornerRadius = 5
         searchBar.backgroundImage = UIImage()
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.isHidden = true
         
         tv.delegate = self
         tv.dataSource = self
@@ -190,12 +191,24 @@ class AttachHistroyVC: UIViewController, SelectedId {
         dismiss(animated: true)
     }
    
-    @IBAction func searchBtnCilck(_ sender: Any) {
+    @IBAction func searchBtnCilck(_ sender: UIButton) {
         
-        search.toggle()
-        searchBar.isHidden = search
+        sender.isSelected.toggle()
         
-       
+        if sender.isSelected{
+            
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            
+            searchBar.isHidden = true
+            searchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            filteredAttachments = attachmentData
+            tv.reloadData()
+        }
     }
     
     @available(iOS 14.0, *)

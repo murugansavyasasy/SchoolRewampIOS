@@ -155,8 +155,8 @@
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7SA-t7-RVH">
-                                                <rect key="frame" x="94.666666666666671" y="2.9999999999999893" width="15" height="14.666666666666668"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slachImg" translatesAutoresizingMaskIntoConstraints="NO" id="7SA-t7-RVH">
+                                                <rect key="frame" x="94.666666666666671" y="2.6666666666666572" width="15" height="15"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="96D-uV-iMo"/>
@@ -202,6 +202,7 @@
             <connections>
                 <outlet property="Icons" destination="2E4-5d-nAF" id="LzJ-XC-IQe"/>
                 <outlet property="OverAllcountLbl" destination="iGm-5C-FvA" id="h2t-bq-u1f"/>
+                <outlet property="arrowImage" destination="7SA-t7-RVH" id="qF4-g9-74D"/>
                 <outlet property="boyCountLbl" destination="3X4-wn-l3C" id="Vdc-8N-ecG"/>
                 <outlet property="fullview" destination="xfs-Ah-5Kb" id="gSu-bn-9mh"/>
                 <outlet property="girlCount" destination="0Ty-cv-cr1" id="a87-t3-eWg"/>
@@ -213,10 +214,10 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="arrowshape.up" catalog="system" width="123" height="128"/>
         <image name="females" width="1792" height="1792"/>
         <image name="males" width="24" height="24"/>
         <image name="person.2.fill" catalog="system" width="128" height="86"/>
+        <image name="slachImg" width="30" height="30"/>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

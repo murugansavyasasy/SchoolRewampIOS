@@ -54,7 +54,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                TextViewFullView.isHidden = false
            }
            
-           blockedBtn.layer.cornerRadius = 10
+           //blockedBtn.layer.cornerRadius = 10
            blockedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            blockedLbl.setFont(style: .body, size: FontSize.BodySize)
            
@@ -73,8 +73,8 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            TextViewFullView.layer.masksToBounds = true
            TextViewFullView.layer.borderColor = UIColor.lightGray.cgColor
            TextViewFullView.layer.borderWidth = 0.5
-           let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-           tableView.addGestureRecognizer(longPressGesture)
+//           let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+//           tableView.addGestureRecognizer(longPressGesture)
            
            ReplyTextFild.delegate = self
            
@@ -91,7 +91,17 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            getStaff()
        }
     
-    
+    func scrollToBottom() {
+        let lastSection = tableView.numberOfSections - 1
+        guard lastSection >= 0 else { return }
+
+        let lastRow = tableView.numberOfRows(inSection: lastSection) - 1
+        guard lastRow >= 0 else { return }
+
+        let indexPath = IndexPath(row: lastRow, section: lastSection)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -182,7 +192,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
             cell.othersQuestionView.isHidden = true
             cell.studentNameLbl.isHidden = true
             cell.messageLabel.text = message?.question
-            cell.timeStampLbl.text = message?.asked_on
+            cell.timeStampLbl.text = formattedDateStatus(from: message?.asked_on ?? "", isTimeNeeded: true)
         }
         
         if message?.answered_on?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
@@ -190,7 +200,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         }else{
             
             cell.answerLbl.text = message?.answer
-            cell.anseredOnLbl.text = message?.answered_on
+            cell.anseredOnLbl.text = formattedDateStatus(from: message?.answered_on ?? "", isTimeNeeded: true)
         }
         
 //        if message?.ans_file_path?.count == 0 {
@@ -352,6 +362,9 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                             chatDataDetails = successMessage.data?
                                 .reversed() ?? []
                             tableView.reloadData()
+                            DispatchQueue.main.async {
+                                self.scrollToBottom()
+                            }
                         }
                     }else{
                         DispatchQueue.main.async { [self] in

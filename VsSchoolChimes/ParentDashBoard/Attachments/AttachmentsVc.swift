@@ -72,16 +72,20 @@ class AttachmentsVc: UIViewController {
     @IBAction func searchBtnCilck(_ sender: UIButton) {
         
         sender.isSelected.toggle()
-        searchBar.isHidden = !sender.isSelected
-        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
-        if sender.isSelected {
+        
+        if sender.isSelected{
+            
+            searchBar.isHidden = false
             searchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
         }else{
+            
+            searchBar.isHidden = true
+            searchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             searchBar.searchTextField.text = ""
-            //            filteredAttachments = attachmentHeaders
+            filteredAttachments = attachmentData
             tv.reloadData()
-            view.endEditing(true)
         }
     }
     
