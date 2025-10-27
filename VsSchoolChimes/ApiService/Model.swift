@@ -678,20 +678,20 @@ struct EventCategory: Codable {
 }
 struct EventList: Codable {
     let id :String?
-    let title: String
-    let category: String
-    let description: String
-    let school_id: String
-    let date: String
-    let time: String
-    let venue: String
-    let iframe: String
-    let file_size: String
-    let thumbnail: String
+    let title: String?
+    let category: String?
+    let description: String?
+    let school_id: String?
+    let date: String?
+    let time: String?
+    let venue: String?
+    let iframe: String?
+    let file_size: String?
+    let thumbnail: String?
     let sent_by: String?
     let can_edit: Bool?
     let can_delete: Bool?
-    let file_path: [FilePath]
+    let file_path: [FilePath]?
 }
 struct PendingReportsResponse: Codable {
     let status: Bool?
@@ -758,7 +758,9 @@ struct SchoolStrengthResponse: Codable {
     let data: [SchoolStrength]?
 }
 
+
 struct SchoolStrength: Codable {
+    let previous : Previous?
     let total_student_strength: String?
     let total_staff_strength: String?
     let total_boys_strength: String?
@@ -767,6 +769,17 @@ struct SchoolStrength: Codable {
     let standards: [Standard]?
 }
 
+ struct Previous: Codable {
+    let total_student_strength: String?
+    let total_male_staffs_strength: String?
+    let total_female_staffs_strength: String?
+    let total_other_staffs_strength: String?
+    let total_boys_strength: String?
+    let total_girls_strength: String?
+    let total_others_strength: String?
+    let total_staff_strength: String?
+     
+}
 struct Standard: Codable {
     let id: String?
     let name: String?

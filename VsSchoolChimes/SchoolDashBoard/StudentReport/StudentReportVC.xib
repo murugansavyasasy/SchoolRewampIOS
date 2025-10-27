@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StudentReportVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StudentReportVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -155,6 +155,23 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vgc-2J-IHk">
                     <rect key="frame" x="0.0" y="457.66666666666674" width="393" height="360.33333333333326"/>
                     <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="W2L-EH-LeT">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="320.33333333333331"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noCountry" translatesAutoresizingMaskIntoConstraints="NO" id="LF6-MT-ekX">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="KDr-LK-0Ch"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjU-PY-nfu">
+                                    <rect key="frame" x="0.0" y="299.99999999999994" width="393" height="20.333333333333314"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fIZ-YU-F4B">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="360.33333333333331"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -163,7 +180,10 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="fIZ-YU-F4B" firstAttribute="top" secondItem="Vgc-2J-IHk" secondAttribute="top" id="4ix-iE-EGJ"/>
+                        <constraint firstItem="W2L-EH-LeT" firstAttribute="leading" secondItem="fIZ-YU-F4B" secondAttribute="leading" id="Lbz-vR-IOz"/>
+                        <constraint firstItem="W2L-EH-LeT" firstAttribute="top" secondItem="fIZ-YU-F4B" secondAttribute="top" id="OyL-7C-qGA"/>
                         <constraint firstAttribute="bottom" secondItem="fIZ-YU-F4B" secondAttribute="bottom" id="YEt-BV-jCz"/>
+                        <constraint firstItem="W2L-EH-LeT" firstAttribute="trailing" secondItem="fIZ-YU-F4B" secondAttribute="trailing" id="ay8-Ba-n3M"/>
                         <constraint firstItem="fIZ-YU-F4B" firstAttribute="leading" secondItem="Vgc-2J-IHk" secondAttribute="leading" id="xfn-ii-Bft"/>
                         <constraint firstAttribute="trailing" secondItem="fIZ-YU-F4B" secondAttribute="trailing" id="xor-C7-fDY"/>
                     </constraints>
@@ -189,6 +209,7 @@
     </objects>
     <resources>
         <image name="down-arrow" width="512" height="512"/>
+        <image name="noCountry" width="2800" height="1900"/>
         <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

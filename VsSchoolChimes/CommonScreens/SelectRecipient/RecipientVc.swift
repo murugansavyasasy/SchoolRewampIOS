@@ -318,14 +318,8 @@ class RecipientVc: UIViewController{
             "subject_id": subjectId ?? "",
             "class_id": classID ?? ""
         ]
-        
-        
-        
         var finalParams = params
             finalParams.merge(Common_request_params ?? [:]) { (_, new) in new }
-
-       
-        
         APIService.shared
             .makeApi(url: ServiceUrl.quiz_create_quiz, parameters: finalParams
                 
@@ -419,12 +413,22 @@ class RecipientVc: UIViewController{
                 ) { [self] in
                     
                     Common_request_params.removeAll()
-                    
+                    var activity = ""
+                    switch Menu_id.staffSelectedMenuId{
+                    case Menu_id.AttachmentMenuId:
+                        return activity = "SEND_ATTACHMENT"
+                    case Menu_id.homeWorkMenuId:
+                        return activity = "SEND_HOMEWORK"
+                    case Menu_id.isAssaignment:
+                        return activity = "SEND_ASSIGNMENT"
+                    default:
+                        return activity = ""
+                    }
                     if user_inputs.clearTempData(){
-                        let parms = [  "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                       "activity": "VIEW_ASSIGNMENT",
-                                       "user_type": 1,
-                                       "menu_id": 2]
+                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                       "activity": activity,
+                                       "user_type": 2,
+                                      "menu_id": Menu_id.staffSelectedMenuId]
                         paketApiCall(params:parms)
                     }
                     
@@ -1340,7 +1344,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.gotoDashboard()
+                                    if user_inputs.clearTempData(){
+                                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                                       "activity": "SEND_TEXT",
+                                                       "user_type": 2,
+                                                      "menu_id": Menu_id.communicationMenuId]
+                                        self.paketApiCall(params:parms)
+                                    }
                                     
                                 }
                             
@@ -1408,9 +1418,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
-                                    
-                                    
-                                    gotoDashboard()
+                                    if user_inputs.clearTempData(){
+                                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                                       "activity": "SEND_VOICE",
+                                                       "user_type": 2,
+                                                      "menu_id": Menu_id.communicationMenuId]
+                                        self.paketApiCall(params:parms)
+                                    }
                                 }
                             
                         }

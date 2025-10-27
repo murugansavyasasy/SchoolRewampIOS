@@ -176,6 +176,27 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         }
         
     }
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    self.dismiss(animated: true)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.dismiss(animated: true)
+                }
+            }
+        }
+    }
     func convertSize(_ sizeInBytes: Int) -> String {
         let kb = 1024.0
         let mb = kb * 1024
@@ -588,7 +609,13 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                             message: response.message,
                             on: self
                         ) {
-                            self.gotoDashboard()
+                            if user_inputs.clearTempData(){
+                                let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                              "activity": "SUBMIT_ASSIGNMENT",
+                                              "user_type": 1,
+                                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                self.paketApiCall(params:parms)
+                            }
                         }
                     }
                 case .failure(let error):
