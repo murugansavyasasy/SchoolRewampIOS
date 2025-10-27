@@ -17,8 +17,9 @@ class CertificatePreviewVc: UIViewController {
     @IBOutlet weak var certificateTypeLbl: UILabel!
     @IBOutlet weak var reasonLbl: UILabel!
     @IBOutlet weak var webview: WKWebView!
-  
     @IBOutlet weak var fullview: UIView!
+    @IBOutlet weak var pendingMessageLbl: UILabel!
+    
     var certificate = CertificateRequest()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,7 @@ class CertificatePreviewVc: UIViewController {
         reasonLbl.text = certificate.reason
         fullview.layer.cornerRadius = 8
         
-        
+        pendingMessageLbl.text = certificate.status
         
         if let issuedOn = certificate.issued_on, !issuedOn.isEmpty {
             certificatedDateView.isHidden = false

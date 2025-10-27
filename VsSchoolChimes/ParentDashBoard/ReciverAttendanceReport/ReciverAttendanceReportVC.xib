@@ -509,6 +509,7 @@
                         <constraint firstAttribute="trailing" secondItem="wM0-hj-deR" secondAttribute="trailing" id="goE-SG-WXD"/>
                         <constraint firstItem="tP1-Fq-Xno" firstAttribute="leading" secondItem="bej-tn-ch4" secondAttribute="leading" constant="35" id="hSx-Fs-UU0"/>
                         <constraint firstAttribute="trailing" secondItem="tP1-Fq-Xno" secondAttribute="trailing" constant="35" id="qcu-2Q-Z8z"/>
+                        <constraint firstItem="voa-cS-Hrw" firstAttribute="width" secondItem="tP1-Fq-Xno" secondAttribute="width" id="wdB-V2-YpG"/>
                     </constraints>
                 </view>
             </subviews>

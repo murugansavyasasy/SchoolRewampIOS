@@ -48,6 +48,7 @@ class BookedSlotTV: UITableViewCell {
         statusBtn.layer.cornerRadius = 8
         cancelBtn.layer.cornerRadius = cancelBtn.frame.height / 2
         callBtn.layer.cornerRadius = callBtn.frame.height / 2
+        JoinBtn.layer.cornerRadius = JoinBtn.frame.height / 2
         
         DateDefLbl.text = PTMString.date
         timeDefLbl.text = PTMString.time
@@ -65,6 +66,7 @@ class BookedSlotTV: UITableViewCell {
         statusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         cancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         callBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        JoinBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         callBtn.isHidden = true
         JoinBtn.isHidden = true
