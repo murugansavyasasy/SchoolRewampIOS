@@ -18,6 +18,13 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             updatedHomework.is_unread = false
             updatedHomework.is_completed = isCompletedStatus
             FilterHomeWorkList[index] = updatedHomework
+            if user_inputs.clearTempData(){
+                let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                              "activity": "HOMEWORK",
+                              "user_type": 1,
+                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                paketApiCall(params:parms)
+            }
             bottomCV.reloadData()
         }
     }
@@ -317,7 +324,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 
                 switch result {
                 case .success(let response):
-                    
                     self.allHomeworkData = response.data ?? []
                     let today = self.getCurrentDateString()
                     let filteredHomework = self.filterHomeworkGroupByDate(
@@ -352,7 +358,25 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             }
         }
     }
-    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response): break
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
     func scrollToToday(in collectionView: UICollectionView, with items: [CalendarItem]) {
         let calendar = Calendar.current
         let today = Date()

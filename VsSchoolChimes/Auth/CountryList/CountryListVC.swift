@@ -11,6 +11,8 @@ import SDWebImage   // Use this instead of Kingfisher
 
 class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    @IBOutlet weak var naDataImg: UIImageView!
+    @IBOutlet weak var naDataLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var newBottomview: UIView!

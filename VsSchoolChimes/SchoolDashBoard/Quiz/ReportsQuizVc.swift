@@ -44,6 +44,8 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
     let images = ["Quiz1", "Quiz2", "Quiz3"]
     @IBOutlet weak var academicDropView: UIView!
     @IBOutlet weak var backLbl: UILabel!
+    @IBOutlet weak var noDataImg: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()

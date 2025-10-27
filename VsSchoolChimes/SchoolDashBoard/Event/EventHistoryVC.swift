@@ -420,7 +420,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             let event = events[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReciverEventTVC", for: indexPath) as! ReciverEventTVC
             cell.titleLbl.text = event.title
-            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
+            cell.dateLbl.text = "\(event.category ?? "")  \(event.time ?? "") - \(event.date?.convertToTargetDateFormat() ?? "")"
             cell.placeLbl.text = event.venue
             cell.descriptionLbl.text = event.description
             cell.date = event.date
@@ -429,14 +429,14 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
 //            cell.reminderBtn.isHidden = false
             cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
-            loadFiles(into: cell, files: event.file_path)
-            cell.attacmentView.isHidden = event.file_path.count ==  0
+            loadFiles(into: cell, files: event.file_path ?? [])
+            cell.attacmentView.isHidden = event.file_path?.count ==  0
             return cell
         case .completed(let events):
             let event = events[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReciverEventTVC", for: indexPath) as! ReciverEventTVC
             cell.titleLbl.text = event.title
-            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
+            cell.dateLbl.text = "\(event.category ?? "")  \(event.time ?? "") - \(event.date?.convertToTargetDateFormat() ?? "")"
             cell.outerView.backgroundColor = UIColor(hex: "#012E40")
             cell.placeLbl.text = event.venue
             cell.descriptionLbl.text = event.description
@@ -445,8 +445,8 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.edit(edit: event.can_edit ?? false, delete:  event.can_delete ?? false, selectedId: event.id ?? "")
 //            cell.reminderBtn.isHidden = true
-            loadFiles(into: cell, files: event.file_path)
-            cell.attacmentView.isHidden = event.file_path.count ==  0
+            loadFiles(into: cell, files: event.file_path ?? [])
+            cell.attacmentView.isHidden = event.file_path?.count ==  0
             return cell
         }
     }
@@ -554,24 +554,28 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
                 self.filteredSections = self.allEventSections.compactMap { section in
                     switch section {
                     case .featured(let events):
-                        let matched = events.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+                        let matched = events.filter {
+                            $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
+                        }
                         return matched.isEmpty ? nil : .featured(matched)
                         
                     case .categories(let categories):
-                        let matched = categories.filter { $0.name?.localizedCaseInsensitiveContains(searchText) ?? false }
+                        let matched = categories.filter {
+                            $0.name?.localizedCaseInsensitiveContains(searchText) ?? false
+                        }
                         return matched.isEmpty ? nil : .categories(matched)
                         
                     case .upcoming(let events):
                         let matched = events.filter {
-                            $0.title.localizedCaseInsensitiveContains(searchText) ||
-                            $0.description.localizedCaseInsensitiveContains(searchText)
+                            ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                            ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
                         return matched.isEmpty ? nil : .upcoming(matched)
                         
                     case .completed(let events):
                         let matched = events.filter {
-                            $0.title.localizedCaseInsensitiveContains(searchText) ||
-                            $0.description.localizedCaseInsensitiveContains(searchText)
+                            ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                            ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
                         return matched.isEmpty ? nil : .completed(matched)
                     }
@@ -586,34 +590,43 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
     }
     func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
         var filteredSections: [EventDisplaySection] = []
+        let lowercasedSearchText = searchText.lowercased()
         
         for section in allEventSections {
             switch section {
             case .featured(let events):
-                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+                let filteredEvents = events.filter {
+                    ($0.title?.lowercased().contains(lowercasedSearchText) ?? false) ||
+                    ($0.category?.lowercased().contains(lowercasedSearchText) ?? false)
+                }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.featured(filteredEvents))
                 }
+                
             case .categories(let categories):
                 filteredSections.append(.categories(categories))
-                if let firstCategory = categories.first {
-                    if let index = categories.firstIndex(where: { $0.name?.lowercased() == searchText.lowercased() }) {
-                        selectedIndex = index
-                    } else {
-                        selectedIndex = 0
-                    }
+                if let index = categories.firstIndex(where: {
+                    $0.name?.lowercased() == lowercasedSearchText
+                }) {
+                    selectedIndex = index
                 } else {
                     selectedIndex = 0
                 }
                 
             case .upcoming(let events):
-                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+                let filteredEvents = events.filter {
+                    ($0.title?.lowercased().contains(lowercasedSearchText) ?? false) ||
+                    ($0.category?.lowercased().contains(lowercasedSearchText) ?? false)
+                }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.upcoming(filteredEvents))
                 }
                 
             case .completed(let events):
-                let filteredEvents = events.filter { $0.title.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased()) }
+                let filteredEvents = events.filter {
+                    ($0.title?.lowercased().contains(lowercasedSearchText) ?? false) ||
+                    ($0.category?.lowercased().contains(lowercasedSearchText) ?? false)
+                }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.completed(filteredEvents))
                 }

@@ -173,40 +173,47 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
-    func fetchData(eventList:EventList?){
+    func fetchData(eventList: EventList?) {
         attachments.removeAll()
-        if let eventList = eventList{
-            placeTxt.text = eventList.venue
-            eventTxt.text = eventList.title
-            contentTxtView.text = eventList.description
-            placeholderLabel.isHidden = !contentTxtView.text.isEmpty
-                let imageItems: [AttachmentItem] = eventList.file_path.map { file in
+        
+        if let eventList = eventList {
+            placeTxt.text = eventList.venue ?? ""
+            eventTxt.text = eventList.title ?? ""
+            contentTxtView.text = eventList.description ?? ""
+            placeholderLabel.isHidden = !(contentTxtView.text?.isEmpty ?? true)
+            
+            if let filePaths = eventList.file_path {
+                let imageItems: [AttachmentItem] = filePaths.compactMap { file in
+                    guard let url = file.url else { return nil }
                     let type = file.type?.lowercased() ?? ""
                     return AttachmentItem(
                         image: nil,
-                        imageURL: type != "video" ? file.url : nil,
+                        imageURL: type != "video" ? url : nil,
                         fileType: type,
-                        VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+                        VideoURl: type == "video" ? URL(string: url) : nil
                     )
                 }
-
                 attachments = imageItems
-        
+            }
+            
             costomView.imageCollectionview.reloadData()
             editId = eventList.id
-            if let event = self.eventListRespons?.first(where: { $0.name == eventList.category }) {
+            
+            if let category = eventList.category,
+               let event = self.eventListRespons?.first(where: { $0.name == category }) {
                 self.selecctedCatagory.text = event.name
-                self.selectedCatagoryImg.kf.setImage(with: URL(string: event.url ?? ""))
-                
+                if let urlString = event.url, let url = URL(string: urlString) {
+                    self.selectedCatagoryImg.kf.setImage(with: url)
+                }
             }
             
             nextBtn.setTitle("Update", for: .normal)
             updateTextViewHeight(contentTxtView)
-        }else{
+        } else {
             placeTxt.text = ""
             eventTxt.text = ""
             contentTxtView.text = ""
-            placeholderLabel.isHidden = !contentTxtView.text.isEmpty
+            placeholderLabel.isHidden = true
             attachments.removeAll()
             costomView.imageCollectionview.reloadData()
             editId = nil

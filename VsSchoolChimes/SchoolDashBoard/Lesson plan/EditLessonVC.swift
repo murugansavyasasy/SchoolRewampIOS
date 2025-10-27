@@ -128,7 +128,13 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 switch result {
                     
                 case .success(let success):
-                    
+                    if user_inputs.clearTempData(){
+                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                       "activity": "EDIT_LESSONPLAN",
+                                       "user_type": 1,
+                                       "menu_id": 2]
+                        paketApiCall(params:parms)
+                    }
                     self.EditData = success.data ?? []
                     self.Tableview.reloadData()
                     
@@ -170,9 +176,14 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 switch result {
                     
                 case .success(let Success):
-                    
                     if Success.status == true {
-                        
+                        if user_inputs.clearTempData(){
+                            let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                           "activity": "EDIT_LESSONPLAN",
+                                           "user_type": 1,
+                                          "menu_id": Menu_id.staffSelectedMenuId]
+                            paketApiCall(params:parms)
+                        }
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: Success.message ?? "", on: self, okAction: {
                             self.dismiss(animated: true)
                         })
@@ -188,7 +199,25 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         }
     }
-    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response): break
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
     
     @IBAction func CancelAct(_ sender: Any) {
         

@@ -11,7 +11,8 @@ import UIKit
 class NotificationViewController: UIViewController {
     
     @IBOutlet weak var searchbar: UISearchBar!
-    
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
