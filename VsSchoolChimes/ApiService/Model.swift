@@ -2607,3 +2607,15 @@ struct AttendanceStudentListData: Codable{
     let roll_no: String?
     var att_type: String?
 }
+// MARK: - FAQ Models
+struct FAQResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SchoolQA]?
+}
+
+struct SchoolQA: Codable {
+    let id: String?
+    let question: String?
+    let answer: [String]?
+}

@@ -379,27 +379,25 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             onOk: {
                   
             APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
-                
                 DispatchQueue.main.async { [weak self] in
-                    
                     guard let self = self else {return}
-                    
                     switch result{
-                        
                     case .success(let success):
-                        
                         if success.status == true{
-                            
                             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
-                                self.dismiss(animated: true)
+                                    if user_inputs.clearTempData(){
+                                        let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                                      "activity": "APPLY_LEAVE",
+                                                      "user_type": 1,
+                                                      "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                        self.paketApiCall(params:parms)
+                                }
                             }
                         }else {
-                            
                             alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                         }
                         
                     case .failure(let error):
-                        
                         alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                     }
                 }
@@ -411,7 +409,32 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         }
         )
     }
-    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    self.dismiss(animated: true)
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                case .failure(let error):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
+                    self.dismiss(animated: true)
+                }
+            }
+        }
+    }
     func updateLeave(){
         
         let LeaveFrom = ConvertDateStringSmart(FromDateBtn.titleLabel?.text)

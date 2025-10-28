@@ -59,7 +59,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             detailVC.modalPresentationStyle = .custom
             transitionDelegate.originFrame = cellFrameInSuperview
             detailVC.transitioningDelegate = transitionDelegate
-            
             present(detailVC, animated: true)
             
         }else{
@@ -233,7 +232,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         cv.reloadData()
         
         scrollToToday(in: cv, with: calendarItems)
-        
         GetHomeWorkReport()
         
     }
@@ -370,9 +368,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 guard let self = self else { return }
 
                 switch result {
-                case .success(let response): break
+                case .success(let response):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
                 }
             }
         }
