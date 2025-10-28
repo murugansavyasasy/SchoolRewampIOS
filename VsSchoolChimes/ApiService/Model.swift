@@ -497,6 +497,7 @@ struct Attachment: Codable {
     var can_delete: Bool?
     var isExpanded: Bool?
     var school_id: String?
+    var target_type: String?
 }
 
 struct AttachmentFilePath: Codable {
@@ -2510,24 +2511,22 @@ struct targetSuc : Codable{
 
 struct targetDataDetails : Codable{
     var type : String?
-    var name: [String]?
+    var name: [targetInfoData]?
     
 }
 
-struct targetSucResp : Codable{
-    
-    var status : Bool?
-    var message : String?
-    var data : [targetDataDetailsResp]?
-}
-
-struct targetDataDetailsResp : Codable{
+struct targetInfoData : Codable{
     var name : String?
     var role:  String?
-//    var class : String?
     var section : String?
+    var standard : String?
     var mobile : String?
+    var className : String?
+    var groupName : String?
+    var institudeName : String?
+    var std_sec : [String]?
 }
+
 
 
 struct GlobalVariablesResponse: Codable {

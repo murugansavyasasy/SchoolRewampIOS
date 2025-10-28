@@ -47,10 +47,13 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var delegate : readStatusUpdate?
     var is_unreadStatus : Bool?
     var buttonTitle:String?
-    var targetCvdata : [String] = []
+    var targetCvdata : [targetInfoData] = []
     
     var targetId : String?
     var EndUrl : String?
+    var isStandardSection : Bool = false
+    var standarSenction : [String] = []
+    var params : [String : Any] = [:]
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Reload collection view once the view has appeared and frame is set
@@ -112,7 +115,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             targetFullView.isHidden = true
         }else{
             targetFullView.isHidden = false
-            getTargetReport(EndUrl: EndUrl ?? "" , targetIdOrType: targetId ?? "")
+            getTargetReport(EndUrl: EndUrl ?? "", params: params)
         }
     }
     
@@ -165,13 +168,13 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         cv.dataSource = self
         targetCv.delegate = self
         targetCv.dataSource = self
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 2  // Horizontal gap
-        layout.minimumLineSpacing = 2      // Vertical gap
-        layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-
+    
+        let layout = LeftAlignedFlowLayout()
+        layout.minimumInteritemSpacing = 10 // Customize spacing between items
+        layout.minimumLineSpacing = 10 // Customize line spacing
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
         targetCv.collectionViewLayout = layout
-//        reloadss()
+
         // Configure flow layout
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
@@ -260,11 +263,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
-    func getTargetReport(EndUrl : String , targetIdOrType : String) {
+    func getTargetReport(EndUrl : String ,params:[String:Any]) {
         
         APIService.shared.makeApi(
             url: EndUrl,
-            parameters: ["id": targetIdOrType],
+            parameters: params,
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<targetSuc, Error>) in
@@ -275,6 +278,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                     
                     if res.status == true{
                         self.targetCvdata = res.data?.first?.name ?? []
+                        self.isStandardSection = false
                         if res.data?.first?.type == "STANDARD"{
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             self.yourTargetLbl.text = "Sent To Standard"
@@ -284,18 +288,26 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                         } else if  res.data?.first?.type == "GROUP"{
                             self.yourTargetLbl.text = "Sent To Group"
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        }else if  res.data?.first?.type == "STUDENT"{
+                            self.yourTargetLbl.text = "Sent To Students"
+                            self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        }else if  res.data?.first?.type == "SECTION"{
+                            self.yourTargetLbl.text = "Sent To Standard/Section"
+                            self.isStandardSection = true
+                            self.standarSenction = res.data?.first?.name?.first?.std_sec ?? []
+                            self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        }else if  res.data?.first?.type == "STAFF"{
+                            self.yourTargetLbl.text = "Sent To Staff"
+                            self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                         }
-                        
                         self.reloadss()
                     }
                 case .failure(let err):
-                   ""
-                    
+                    print(err.localizedDescription)
                 }
             }
         }
     }
-    
     
     func reloadCollectionAndUpdateHeight() {
         cv.reloadData()
@@ -319,7 +331,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         case cv:
             return attachmetList?.count ?? 0
         case targetCv:
-            return targetCvdata.count
+            if isStandardSection{
+                return standarSenction.count
+            }else{
+                return targetCvdata.count
+            }
         default:
             return  4
         }
@@ -364,13 +380,30 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             
             
             if yourTargetLbl.text == "Sent To Standard" {
-                cell.nameLbl.text = "🎓 " + targetCvdata[indexPath.row]
-            }else if yourTargetLbl.text == "Sent To School" {
-                cell.nameLbl.text = "🏫 " + targetCvdata[indexPath.row]
+                cell.nameLbl.text = "🎓 " + (
+                    targetCvdata[indexPath.row].standard ?? ""
+                )
+                       }else if yourTargetLbl.text == "Sent To School" {
+                           cell.nameLbl.text = "🏫 " + (
+                            targetCvdata[indexPath.row].institudeName ?? ""
+                           )
+                       }
+            else if yourTargetLbl.text == "Sent To Groups"{
+                
+                cell.nameLbl.text = "🏫 " + (
+                    targetCvdata[indexPath.row].groupName ?? ""
+                )
             }
-            else{
-                cell.nameLbl.text = "👤 " + targetCvdata[indexPath.row]
+            else if yourTargetLbl.text == "Sent To Staff" || yourTargetLbl.text == "Sent To Students"  {
+                
+                cell.nameLbl.text = "👤 " + (
+                    targetCvdata[indexPath.row].name ?? ""
+                )
             }
+            else if yourTargetLbl.text == "Sent To Standard/Section"{
+                cell.nameLbl.text = "👤 " + standarSenction[indexPath.row]
+                       }
+            
            
             
             return  cell
@@ -425,12 +458,31 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             
         }else{
 //
-            let name = targetCvdata[indexPath.item]
-               let displayName = (name.contains("IV") || name.contains("V") || name.contains("X")) ? "🏫 \(name)" : "👤 \(name)"
-               let font = UIFont.systemFont(ofSize: 14, weight: .medium)
-               let textWidth = displayName.size(withAttributes: [.font: font]).width + 30 // padding
-               return CGSize(width: textWidth, height: 35)
-            
+           
+            if isStandardSection{
+                
+                let titleString = standarSenction[indexPath.item]
+                let font = UIFont.systemFont(ofSize: 14) // Customize as needed
+                let titleWidth = titleString.size(
+                    withAttributes: [NSAttributedString.Key.font: font]
+                ).width
+                return CGSize(width: titleWidth + 40, height: 40) // Add padding if needed
+                
+            }else{
+                
+                let item = targetCvdata[indexPath.item]
+
+                let titleString =
+                    !(item.name?.isEmpty ?? true) ? item.name! :
+                    !(item.className?.isEmpty ?? true) ? item.className! :
+                !(item.institudeName?.isEmpty ?? true) ? item.institudeName! :
+                    !(item.groupName?.isEmpty ?? true) ? item.groupName! :
+                    "Unknown"
+
+                let font = UIFont.systemFont(ofSize: 14)
+                let titleWidth = titleString.size(withAttributes: [NSAttributedString.Key.font: font]).width
+                return CGSize(width: titleWidth + 70, height: 40)
+            }
         }
     }
     
@@ -447,30 +499,38 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        
+        
         if  collectionView == cv{
             return 0
-        }else{
-            
+        }
+        else{
             return 8
         }
+        
     }
 }
 
-//extension PrivewVc: UITableViewDelegate,UITableViewDataSource{
-//    
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 5
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-//
-//    
-//    
-//}
-
+class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let attributes = super.layoutAttributesForElements(in: rect)
+        var leftMargin = sectionInset.left
+        var maxY: CGFloat = -1.0
+        
+        attributes?.forEach { layoutAttribute in
+            if layoutAttribute.representedElementCategory == .cell {
+                if layoutAttribute.frame.origin.y >= maxY {
+                    leftMargin = sectionInset.left
+                }
+                
+                layoutAttribute.frame.origin.x = leftMargin
+                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+                maxY = max(layoutAttribute.frame.maxY, maxY)
+            }
+        }
+        return attributes
+    }
+}
 extension UIView {
     func applyTopToWhiteGradient(topColor: UIColor, heightRatio: CGFloat = 0.3) {
         let gradient = CAGradientLayer()

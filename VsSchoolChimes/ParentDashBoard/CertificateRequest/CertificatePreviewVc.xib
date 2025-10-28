@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <accessibilityOverrides/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -346,7 +347,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" alignment="lastBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="v8f-3w-5K7">
-                        <rect key="frame" x="110.99999999999999" y="383" width="49.666666666666671" height="34.333333333333314"/>
+                        <rect key="frame" x="110.99999999999997" y="383" width="49.666666666666657" height="34.333333333333314"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oE2-kK-L89">
                                 <rect key="frame" x="0.0" y="0.0" width="49.666666666666664" height="34.333333333333336"/>

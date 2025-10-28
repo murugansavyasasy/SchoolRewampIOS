@@ -52,8 +52,6 @@
 		18926D332D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D1D2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib */; };
 		18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */; };
 		18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */; };
-		189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99802CE3794A00FE98A5 /* NotificationService.swift */; };
 		189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */; };
 		189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */; };
 		18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BAF3E62CE8BF0900517441 /* PhotoPickManager.swift */; };
@@ -881,13 +879,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		189E99672CE35F6C00FE98A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84A5BE362C19719700E32496 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 189E99612CE35F6C00FE98A5;
-			remoteInfo = ImageNotificationService;
-		};
 		84A5BE552C19719A00E32496 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84A5BE362C19719700E32496 /* Project object */;
@@ -911,7 +902,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -965,7 +955,6 @@
 		18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantInfoViewController.swift; sourceTree = "<group>"; };
 		18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantInfoViewController.xib; sourceTree = "<group>"; };
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
-		189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideImagePdfViewController.swift; sourceTree = "<group>"; };
@@ -1828,13 +1817,6 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		189E995F2CE35F6C00FE98A5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8441886B2CC8E18B006483C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3302,7 +3284,6 @@
 				84A5BE542C19719A00E32496 /* VsSchoolChimesTests.xctest */,
 				84A5BE5E2C19719A00E32496 /* VsSchoolChimesUITests.xctest */,
 				8441886E2CC8E18B006483C3 /* Models.framework */,
-				189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4219,25 +4200,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		189E99612CE35F6C00FE98A5 /* ImageNotificationService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 189E996B2CE35F6C00FE98A5 /* Build configuration list for PBXNativeTarget "ImageNotificationService" */;
-			buildPhases = (
-				189E995E2CE35F6C00FE98A5 /* Sources */,
-				189E995F2CE35F6C00FE98A5 /* Frameworks */,
-				189E99602CE35F6C00FE98A5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ImageNotificationService;
-			packageProductDependencies = (
-			);
-			productName = ImageNotificationService;
-			productReference = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		8441886D2CC8E18B006483C3 /* Models */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 844188752CC8E18B006483C3 /* Build configuration list for PBXNativeTarget "Models" */;
@@ -4272,7 +4234,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				189E99682CE35F6C00FE98A5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				840540952D701A5200D0CA60 /* TrakingDriver */,
@@ -4352,9 +4313,6 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
-					189E99612CE35F6C00FE98A5 = {
-						CreatedOnToolsVersion = 16.1;
-					};
 					8441886D2CC8E18B006483C3 = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -4398,19 +4356,11 @@
 				84A5BE532C19719A00E32496 /* VsSchoolChimesTests */,
 				84A5BE5D2C19719A00E32496 /* VsSchoolChimesUITests */,
 				8441886D2CC8E18B006483C3 /* Models */,
-				189E99612CE35F6C00FE98A5 /* ImageNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		189E99602CE35F6C00FE98A5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8441886C2CC8E18B006483C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4934,14 +4884,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		189E995E2CE35F6C00FE98A5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8441886A2CC8E18B006483C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5452,11 +5394,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		189E99682CE35F6C00FE98A5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 189E99612CE35F6C00FE98A5 /* ImageNotificationService */;
-			targetProxy = 189E99672CE35F6C00FE98A5 /* PBXContainerItemProxy */;
-		};
 		84A5BE562C19719A00E32496 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84A5BE3D2C19719700E32496 /* School Chimes */;
@@ -5507,60 +5444,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		189E996C2CE35F6C00FE98A5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VPA36TGVRS;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageNotificationService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ImageNotificationService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isss.schoolchimes.ImageNotificationServices;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		189E996D2CE35F6C00FE98A5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VPA36TGVRS;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageNotificationService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ImageNotificationService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isss.schoolchimes.ImageNotificationServices;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		844188762CC8E18B006483C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5919,15 +5802,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		189E996B2CE35F6C00FE98A5 /* Build configuration list for PBXNativeTarget "ImageNotificationService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				189E996C2CE35F6C00FE98A5 /* Debug */,
-				189E996D2CE35F6C00FE98A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		844188752CC8E18B006483C3 /* Build configuration list for PBXNativeTarget "Models" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

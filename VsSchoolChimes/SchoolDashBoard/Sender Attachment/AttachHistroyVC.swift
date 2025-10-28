@@ -380,30 +380,33 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         return cell
     }
     
-//    func tableView(
-//        _ tableView: UITableView,
-//        didSelectRowAt indexPath: IndexPath
-//    ) {
-//        guard let attach = filteredAttachments?[indexPath.row],
-//              let cell = tableView.cellForRow(at: indexPath) else { return }
-//        
-//        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
-//        
-//        let detailVC = PrivewVc()
-//        detailVC.attachmetList = attach.file_path
-//        detailVC.selectedDate = attach.date
-//        detailVC.titleString = attach.title
-//        detailVC.descriptionString = attach.description
-//        detailVC.postedBy = attach.sent_by
-//        detailVC.targetId = attach.id
-//        detailVC.EndUrl = ServiceUrl.attachment_target_details
-//        detailVC.subject_name = MenuStringFile.selectedMenuName.translated()
-//        detailVC.modalPresentationStyle = .custom
-//        transitionDelegate.originFrame = cellFrameInSuperview
-//        detailVC.transitioningDelegate = transitionDelegate
-//        
-//        present(detailVC, animated: true)
-//    }
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        guard let attach = filteredAttachments?[indexPath.row],
+              let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
+        
+        let detailVC = PrivewVc()
+        detailVC.attachmetList = attach.file_path
+        detailVC.selectedDate = attach.date
+        detailVC.titleString = attach.title
+        detailVC.descriptionString = attach.description
+        detailVC.postedBy = attach.sent_by
+        detailVC.params = [
+            "id": attach.id ?? "",
+            "target_type" : attach.target_type ?? ""
+        ]
+        detailVC.EndUrl = ServiceUrl.attachment_target_details
+        detailVC.subject_name = MenuStringFile.selectedMenuName.translated()
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
+    }
 
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

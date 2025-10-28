@@ -425,11 +425,9 @@ class RecipientVc: UIViewController{
 //                    "SEND_ATTACHMENT"
 //                    "SEND_HOMEWORK"
 //                    "SEND_ASSIGNMENT"
-//                    "SEND_VIDEO"
-//                    "SEND_ATTENDANCE"
 //                    "SEND_MEETING"
 //                    "EDIT_LESSONPLAN"
-//                    "SEND_EXAM"
+//
 //                    "MARK_ATTENDANCE"
 //                    "SEND_PTM"
                     if user_inputs.clearTempData(){
