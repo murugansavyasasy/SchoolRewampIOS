@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CountryListVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="backBtn" destination="fjg-g3-zoD" id="FHk-L8-aBG"/>
+                <outlet property="naDataImg" destination="70P-uK-DGi" id="v8B-0G-pwP"/>
+                <outlet property="naDataLbl" destination="ylp-1Y-WpW" id="KdW-mR-xnk"/>
                 <outlet property="newBottomview" destination="Lx3-fE-Mec" id="OOO-cp-3uW"/>
                 <outlet property="newNextBtn" destination="gG8-Dm-wsW" id="eud-bY-hQw"/>
                 <outlet property="searchBar" destination="JoL-sb-hcI" id="x9Z-s7-lCF"/>
@@ -56,6 +58,23 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lx3-fE-Mec">
                             <rect key="frame" x="0.0" y="226.66666666666669" width="393" height="625.33333333333326"/>
                             <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="92W-sQ-hUc">
+                                    <rect key="frame" x="0.0" y="20" width="393" height="320.33333333333331"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noCountry" translatesAutoresizingMaskIntoConstraints="NO" id="70P-uK-DGi">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="300" id="fXT-DM-QXi"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylp-1Y-WpW">
+                                            <rect key="frame" x="0.0" y="300" width="393" height="20.333333333333314"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hMN-y5-Wh5">
                                     <rect key="frame" x="0.0" y="20" width="393" height="436.33333333333331"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -113,9 +132,12 @@
                                 <constraint firstAttribute="trailing" secondItem="dDd-lN-ktV" secondAttribute="trailing" constant="15" id="BbQ-2g-O7Y"/>
                                 <constraint firstItem="gG8-Dm-wsW" firstAttribute="leading" secondItem="Lx3-fE-Mec" secondAttribute="leading" constant="16" id="PUe-RE-IF8"/>
                                 <constraint firstItem="dDd-lN-ktV" firstAttribute="top" secondItem="hMN-y5-Wh5" secondAttribute="bottom" constant="20" id="Tq2-Ox-52V"/>
+                                <constraint firstItem="92W-sQ-hUc" firstAttribute="top" secondItem="hMN-y5-Wh5" secondAttribute="top" id="YoS-oK-1mh"/>
                                 <constraint firstAttribute="trailing" secondItem="hMN-y5-Wh5" secondAttribute="trailing" id="cPe-fS-164"/>
+                                <constraint firstItem="92W-sQ-hUc" firstAttribute="leading" secondItem="hMN-y5-Wh5" secondAttribute="leading" id="eX3-mF-SBN"/>
                                 <constraint firstItem="dDd-lN-ktV" firstAttribute="leading" secondItem="Lx3-fE-Mec" secondAttribute="leading" constant="25" id="qhH-7F-apx"/>
                                 <constraint firstItem="hMN-y5-Wh5" firstAttribute="top" secondItem="Lx3-fE-Mec" secondAttribute="top" constant="20" id="uWI-NA-wN6"/>
+                                <constraint firstItem="92W-sQ-hUc" firstAttribute="trailing" secondItem="hMN-y5-Wh5" secondAttribute="trailing" id="woL-96-H16"/>
                             </constraints>
                         </view>
                         <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JoL-sb-hcI">
@@ -209,17 +231,18 @@
         <image name="CheckCircle" width="42.666667938232422" height="42.666667938232422"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="noCountry" width="2800" height="1900"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

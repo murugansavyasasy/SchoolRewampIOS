@@ -24,7 +24,7 @@
                         <rect key="frame" x="10" y="10" width="428" height="243"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0h0-GQ-Kzk">
-                                <rect key="frame" x="10" y="9.9999999999999982" width="368" height="19.333333333333329"/>
+                                <rect key="frame" x="10" y="9.9999999999999982" width="42.333333333333336" height="19.333333333333329"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -36,10 +36,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RKl-fw-742">
-                                <rect key="frame" x="388" y="3" width="35" height="40"/>
+                                <rect key="frame" x="62.333333333333371" y="3" width="360.66666666666663" height="0.0"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-c4-x7P">
-                                        <rect key="frame" x="-29" y="7.6666666666666679" width="25" height="25.000000000000004"/>
+                                        <rect key="frame" x="360.66666666666669" y="7.6666666666666679" width="25" height="25.000000000000004"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="4e4-JJ-pQ9"/>
                                             <constraint firstAttribute="height" constant="25" id="nd0-ql-tDg"/>
@@ -51,8 +51,8 @@
                                             <action selector="reminder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qXr-X1-e8F"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
-                                        <rect key="frame" x="0.0" y="0.0" width="35" height="40"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOb-CL-mcg">
+                                        <rect key="frame" x="360.66666666666669" y="0.0" width="35" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="OZV-vV-YCz"/>
                                             <constraint firstAttribute="width" constant="35" id="kel-Vv-QbZ"/>
@@ -247,7 +247,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

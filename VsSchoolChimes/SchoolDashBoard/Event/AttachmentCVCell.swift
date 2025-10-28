@@ -8,6 +8,8 @@ class AttachmentCVCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         outerView.layer.cornerRadius = 10
+        outerView.layer.borderWidth = 0.5
+        outerView.layer.borderColor = UIColor.darkGray.cgColor
         outerView.clipsToBounds = true // Ensures the content respects the corner radius
 //        outerView.backgroundColor = .blue.withAlphaComponent(0.2)
     }

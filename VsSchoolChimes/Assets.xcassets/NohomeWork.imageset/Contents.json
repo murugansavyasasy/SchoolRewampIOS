@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "school-supplies.svg",
+      "filename" : "architect-table.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "school-supplies 1.svg",
+      "filename" : "architect-table 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "school-supplies 2.svg",
+      "filename" : "architect-table 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

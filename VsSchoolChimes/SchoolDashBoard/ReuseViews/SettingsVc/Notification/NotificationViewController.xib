@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="ZUH-7j-Gnk" id="DOh-Pf-Es4"/>
+                <outlet property="noDataImg" destination="03r-fP-nq6" id="TAs-0Y-fID"/>
+                <outlet property="noDataLbl" destination="hcz-oV-rxO" id="Pva-XR-blz"/>
                 <outlet property="outerView" destination="9od-LZ-gxA" id="KSp-ma-Z7i"/>
                 <outlet property="searchbar" destination="9ed-UR-7vR" id="efi-CM-BeT"/>
                 <outlet property="tableview" destination="pvA-xg-oDV" id="1l7-J9-Yqn"/>
@@ -26,11 +27,28 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9od-LZ-gxA">
-                    <rect key="frame" x="0.0" y="174" width="393" height="610"/>
+                    <rect key="frame" x="0.0" y="115" width="393" height="703"/>
                     <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9JX-cL-woB">
+                            <rect key="frame" x="0.0" y="5" width="393" height="320.33333333333331"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noNotification" translatesAutoresizingMaskIntoConstraints="NO" id="03r-fP-nq6">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="dtw-j6-pos"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcz-oV-rxO">
+                                    <rect key="frame" x="0.0" y="300" width="393" height="20.333333333333314"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pvA-xg-oDV">
-                            <rect key="frame" x="0.0" y="5" width="393" height="605"/>
-                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            <rect key="frame" x="0.0" y="5" width="393" height="698"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="9ed-UR-7vR">
                             <rect key="frame" x="0.0" y="5" width="393" height="0.0"/>
@@ -48,8 +66,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="pvA-xg-oDV" secondAttribute="trailing" id="8kz-P4-gp1"/>
+                        <constraint firstItem="9JX-cL-woB" firstAttribute="leading" secondItem="pvA-xg-oDV" secondAttribute="leading" id="DiH-7z-pSR"/>
                         <constraint firstAttribute="bottom" secondItem="pvA-xg-oDV" secondAttribute="bottom" id="TQQ-Ir-ejC"/>
+                        <constraint firstItem="9JX-cL-woB" firstAttribute="trailing" secondItem="pvA-xg-oDV" secondAttribute="trailing" id="X0o-uQ-fVe"/>
                         <constraint firstItem="9ed-UR-7vR" firstAttribute="leading" secondItem="9od-LZ-gxA" secondAttribute="leading" id="XVk-xE-7lc"/>
+                        <constraint firstItem="9JX-cL-woB" firstAttribute="top" secondItem="pvA-xg-oDV" secondAttribute="top" id="cvx-R6-qwg"/>
                         <constraint firstItem="pvA-xg-oDV" firstAttribute="leading" secondItem="9od-LZ-gxA" secondAttribute="leading" id="pAo-it-vID"/>
                         <constraint firstAttribute="trailing" secondItem="9ed-UR-7vR" secondAttribute="trailing" id="qSR-Dn-ZLK"/>
                         <constraint firstItem="pvA-xg-oDV" firstAttribute="top" secondItem="9ed-UR-7vR" secondAttribute="bottom" id="voC-Pi-3Ck"/>
@@ -57,7 +78,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOa-gl-bqa">
-                    <rect key="frame" x="0.0" y="118" width="393" height="51"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="51"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZUH-7j-Gnk">
                             <rect key="frame" x="10" y="8" width="373" height="35"/>
@@ -99,11 +120,9 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="noNotification" width="5000" height="5000"/>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

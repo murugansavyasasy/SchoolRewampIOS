@@ -53,7 +53,7 @@ class SlotCV: UICollectionViewCell {
             } else if slot.is_conflictDisabled ?? false {
                 cellView.backgroundColor = .systemGray6
                 label.textColor = .black
-                statusLbl.textColor = .black
+                statusLbl.textColor = .systemOrange
                 statusLbl.text = "Time Conflict"
                 isUserInteractionEnabled = false
             } else {

@@ -220,6 +220,7 @@ class MarkAttendenceStringFile {
     static var session_type = "session_type"
     static var attendance_date = "attendance_date"
     static var student_id = "student_id"
+    static var student_details = "student_details"
 }
 
 class AbsenteesReportStringFile {

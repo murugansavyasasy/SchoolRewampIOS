@@ -465,15 +465,31 @@ class ReciverAttendanceReportVC: UIViewController {
         popoverBackgroundView = backgroundView
 
         // Create the popover
+        // Calculate position relative to the button
+        // Convert button frame into backgroundView’s coordinate space
+        let buttonFrameInBackground = WeekStatusDefBtn.convert(WeekStatusDefBtn.bounds, to: backgroundView)
+
+        let popupWidth: CGFloat = 180
+        let popupHeight: CGFloat = 180
+        let padding: CGFloat = 8
+
+        // Position popup to the right of the button with 8pt padding
+        let popupX = buttonFrameInBackground.maxX + padding
+        // Align vertically centered with the button
+        let popupY = buttonFrameInBackground.midY - popupHeight / 2
+
         let popup = PopoverView()
         popup.arrowDirection = .left
-        popup.arrowPosition = 50
-        popup.frame = CGRect(x: WeekStatusDefBtn.frame.maxX - 110,
-                             y: WeekStatusDefBtn.frame.maxY + 50,
-                             width: 180,
-                             height: 180)
-        backgroundView.addSubview(popup) // Add to backgroundView, not view
+        popup.arrowPosition = popupHeight / 2   // arrow vertically centered
+        popup.frame = CGRect(x: popupX,
+                             y: popupY,
+                             width: popupWidth,
+                             height: popupHeight)
+
+        backgroundView.addSubview(popup)
         popover = popup
+
+
     }
 
     @objc func dismissPopover() {

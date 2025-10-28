@@ -114,12 +114,12 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                   let event = onGoing?[indexPath.item] else {
                 return UICollectionViewCell()
             }
-            cell.dateLbl.text = "\(event.category)  \(event.time) - \(event.date.convertToTargetDateFormat() ?? "")"
+            cell.dateLbl.text = "\(event.category ?? "")  \(event.time ?? "") - \(event.date?.convertToTargetDateFormat() ?? "")"
             cell.placeLbl.text = event.venue
             cell.titleLbl.text = event.title
             cell.descriptionLbl.text = event.description
-            loadFiles(into: cell, files: event.file_path)
-            cell.attacmentView.isHidden = event.file_path.count ==  0
+            loadFiles(into: cell, files: event.file_path ?? [])
+            cell.attacmentView.isHidden = event.file_path?.count ==  0
             return cell
         }
     }
