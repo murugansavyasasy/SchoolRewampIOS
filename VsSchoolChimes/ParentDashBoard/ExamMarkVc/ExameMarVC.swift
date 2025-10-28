@@ -62,7 +62,15 @@ class ExameMarVC: UIViewController {
                     self.NoDataLbl.text = response.message
                     
                     self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
-                    
+                    if response.status == true{
+                        if user_inputs.clearTempData(){
+                            let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                          "activity": "VIEW_EXAM_SCHUDLE",
+                                          "user_type": 1,
+                                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                            self.paketApiCall(params:parms)
+                        }
+                    }
                 case .failure(let error):
                     print("API Error:", error)
                     self.examList = []
@@ -76,7 +84,30 @@ class ExameMarVC: UIViewController {
             }
         }
     }
-    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                case .failure(let error):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
+                }
+            }
+        }
+    }
     func markListApi(exam_id: String) {
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_get_progress_card,
@@ -93,6 +124,13 @@ class ExameMarVC: UIViewController {
                     
                     if success.status == true {
                         self.view_ProgressCard(url: success.data?.first ?? "")
+                        if user_inputs.clearTempData(){
+                                let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                              "activity": "VIEW_EXAM_MARK",
+                                              "user_type": 1,
+                                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                self.paketApiCall(params:parms)
+                        }
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
                         }

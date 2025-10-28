@@ -167,7 +167,15 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                     self.noDataImg.isHidden = !self.searchData.isEmpty
                     self.updateCounts()
                     self.collectionView.reloadData()
-                    
+                    if successResponse.status == true{
+                        if user_inputs.clearTempData(){
+                            let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                          "activity": "VIEW_NOTICE_BOARD",
+                                          "user_type": 1,
+                                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                            self.paketApiCall(params:parms)
+                        }
+                    }
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
                 }
@@ -175,6 +183,29 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         }
     }
     
+        func paketApiCall(params:[String:Any]){
+            APIService.shared.makeApi(
+                url: ServiceUrl.dashboard_api_pauket_add_points,
+                parameters: params,
+                type: ApitTypeSringFile.POST,
+                token: childDetails?.access_token ?? ""
+            ) { [weak self] (result: Result<EventResponse, Error>) in
+                DispatchQueue.main.async {
+
+                    guard let self = self else { return }
+
+                    switch result {
+                    case .success(let response): if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                    case .failure(let error):
+                        if let window = UIApplication.shared.windows.first {
+                            window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                        }
+                    }
+                }
+            }
+        }
     // MARK: - SearchBar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {

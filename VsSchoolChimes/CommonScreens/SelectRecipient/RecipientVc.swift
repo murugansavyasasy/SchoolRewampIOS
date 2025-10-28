@@ -367,7 +367,8 @@ class RecipientVc: UIViewController{
             }
         
     }
-    func paketApiCall(params:[String:Any]){
+
+    func paketApiCall(params:[String:Any]) {
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
@@ -375,20 +376,26 @@ class RecipientVc: UIViewController{
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-
                 guard let self = self else { return }
 
                 switch result {
                 case .success(let response):
                     self.gotoDashboard()
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                    
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.gotoDashboard()
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
                 }
             }
         }
     }
-    
+
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
         url baseURL: String,
@@ -414,24 +421,26 @@ class RecipientVc: UIViewController{
                     
                     Common_request_params.removeAll()
                     var activity = ""
-                    switch Menu_id.staffSelectedMenuId{
+                    switch Menu_id.staffSelectedMenuId {
                     case Menu_id.AttachmentMenuId:
-                        return activity = "SEND_ATTACHMENT"
+                        activity = "SEND_ATTACHMENT"
                     case Menu_id.homeWorkMenuId:
-                        return activity = "SEND_HOMEWORK"
+                        activity = "SEND_HOMEWORK"
                     case Menu_id.isAssaignment:
-                        return activity = "SEND_ASSIGNMENT"
+                        activity = "SEND_ASSIGNMENT"
                     default:
-                        return activity = ""
+                        activity = ""
                     }
-                    if user_inputs.clearTempData(){
-                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                       "activity": activity,
-                                       "user_type": 2,
-                                      "menu_id": Menu_id.staffSelectedMenuId]
-                        paketApiCall(params:parms)
+
+                    if user_inputs.clearTempData() {
+                        let params: [String: Any] = [
+                            "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                            "activity": activity,
+                            "user_type": 2,
+                            "menu_id": Menu_id.staffSelectedMenuId
+                        ]
+                        paketApiCall(params: params)
                     }
-                    
                 }
             }
         }

@@ -7,16 +7,17 @@
 
 import UIKit
 
-class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
+class FAQTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var ArrowImgview: UIImageView!
+    @IBOutlet weak var ArrowImgview: UIButton!
     @IBOutlet weak var AnswerLbl: UILabel!
     @IBOutlet weak var QuestionLabel: UILabel!
     @IBOutlet weak var cellView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
+        // Styling
         cellView.layer.cornerRadius = Colornames.CORadius10
         cellView.layer.shadowColor = UIColor.black.cgColor
         cellView.layer.shadowOpacity = 0.5
@@ -28,23 +29,28 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
         
         QuestionLabel.setFont(style: .title, size: FontSize.TitleSize)
         AnswerLbl.setFont(style: .body, size: FontSize.BodySize)
+        AnswerLbl.numberOfLines = 0
         AnswerLbl.isHidden = true
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    func configure(question: String?, answers: [String]?, isSelected: Bool) {
+        QuestionLabel.text = question
+        AnswerLbl.isHidden = !isSelected
         
-//        if selected == true{
-//            AnswerLbl.isHidden = false
-//        }else{
-//            AnswerLbl.isHidden = true
-//        }
-      
+        guard let answers = answers else {
+            AnswerLbl.text = nil
+            return
+        }
+        
+        // 🟢 Create bullet-point list
+        let bullet = "🔹 "
+        let bulletText = answers.map { "\(bullet)\($0)" }.joined(separator: "\n")
+        AnswerLbl.text = bulletText
     }
     
     func toggleLabelVisibility(isSelected: Bool) {
         AnswerLbl.isHidden = !isSelected
-        }
-    
-    
+        let image = isSelected ? UIImage(systemName: "arrowtriangle.up.fill"): UIImage(systemName: "arrowtriangle.down.fill")
+        ArrowImgview.setImage(image, for: .normal)
+    }
 }

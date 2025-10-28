@@ -186,6 +186,7 @@ struct ServiceUrl{
     static let comm_api_interaction_block_student = "comm/api/interaction/block-student"
     static let comm_api_interaction_blocked_students = "comm/api/interaction/blocked-students"
     static let comm_api_assignment_target_details = "comm/api/assignment/target-details"
+    static let dashboard_api_dashboard_faqs = "dashboard/api/dashboard/faqs"
 }
 
 struct localData{
