@@ -40,10 +40,10 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCe-6N-wja">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="689"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeH-be-May">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="868.33333333333337"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="798.33333333333337"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Y3E-F9-3KB">
                                             <rect key="frame" x="10" y="8" width="373" height="120"/>
@@ -59,7 +59,7 @@
                                             </collectionViewFlowLayout>
                                         </collectionView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="yrI-MY-QfI">
-                                            <rect key="frame" x="0.0" y="143" width="393" height="710.33333333333337"/>
+                                            <rect key="frame" x="0.0" y="143" width="393" height="655.33333333333337"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0DH-ks-0xN">
                                                     <rect key="frame" x="15" y="0.0" width="363" height="40"/>
@@ -109,23 +109,8 @@
                                                         <constraint firstAttribute="height" constant="300" id="z25-Zr-agT"/>
                                                     </constraints>
                                                 </tableView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJE-vc-daH">
-                                                    <rect key="frame" x="15" y="670.33333333333337" width="363" height="40"/>
-                                                    <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="fI7-Jf-qVt"/>
-                                                    </constraints>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Book Slot">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="BookSlotsAct:" destination="-1" eventType="touchUpInside" id="02I-7p-wgt"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="CJE-vc-daH" secondAttribute="trailing" constant="15" id="0Pt-oR-epO"/>
                                                 <constraint firstItem="dGE-iT-PVI" firstAttribute="leading" secondItem="yrI-MY-QfI" secondAttribute="leading" constant="30" id="1pb-YZ-V21"/>
                                                 <constraint firstAttribute="trailing" secondItem="0DH-ks-0xN" secondAttribute="trailing" constant="15" id="2pP-QD-8ra"/>
                                                 <constraint firstItem="1HG-RA-AJh" firstAttribute="leading" secondItem="yrI-MY-QfI" secondAttribute="leading" id="71X-5q-8L2"/>
@@ -133,7 +118,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="dGE-iT-PVI" secondAttribute="trailing" constant="30" id="N3e-or-Vac"/>
                                                 <constraint firstItem="Jyn-jl-4VP" firstAttribute="leading" secondItem="yrI-MY-QfI" secondAttribute="leading" id="Nvu-qI-5I8"/>
                                                 <constraint firstAttribute="trailing" secondItem="1HG-RA-AJh" secondAttribute="trailing" id="Sf6-QN-izc"/>
-                                                <constraint firstItem="CJE-vc-daH" firstAttribute="leading" secondItem="yrI-MY-QfI" secondAttribute="leading" constant="15" id="ZAA-2y-Sx2"/>
                                                 <constraint firstAttribute="trailing" secondItem="Jyn-jl-4VP" secondAttribute="trailing" id="eoH-Zz-bh5"/>
                                             </constraints>
                                         </stackView>
@@ -142,7 +126,7 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="yrI-MY-QfI" secondAttribute="trailing" id="0Il-fG-OT9"/>
                                         <constraint firstItem="yrI-MY-QfI" firstAttribute="leading" secondItem="xeH-be-May" secondAttribute="leading" id="KQd-Ce-BhD"/>
-                                        <constraint firstAttribute="bottom" secondItem="yrI-MY-QfI" secondAttribute="bottom" constant="15" id="Neq-CX-mUc"/>
+                                        <constraint firstAttribute="bottom" secondItem="yrI-MY-QfI" secondAttribute="bottom" id="Neq-CX-mUc"/>
                                         <constraint firstItem="Y3E-F9-3KB" firstAttribute="top" secondItem="xeH-be-May" secondAttribute="top" constant="8" id="Nxk-LB-QFZ"/>
                                         <constraint firstItem="Y3E-F9-3KB" firstAttribute="leading" secondItem="xeH-be-May" secondAttribute="leading" constant="10" id="WRb-Vg-cFK"/>
                                         <constraint firstItem="yrI-MY-QfI" firstAttribute="top" secondItem="Y3E-F9-3KB" secondAttribute="bottom" constant="15" id="fw2-YP-GrO"/>
@@ -158,11 +142,28 @@
                                 <constraint firstAttribute="trailing" secondItem="xeH-be-May" secondAttribute="trailing" id="JZH-By-XdT"/>
                             </constraints>
                         </scrollView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJE-vc-daH">
+                            <rect key="frame" x="15" y="704" width="363" height="40"/>
+                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="fI7-Jf-qVt"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Book Slot">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="BookSlotsAct:" destination="-1" eventType="touchUpInside" id="02I-7p-wgt"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
+                        <constraint firstItem="CJE-vc-daH" firstAttribute="leading" secondItem="n5m-gf-JVi" secondAttribute="leading" constant="15" id="6fp-p1-FyL"/>
                         <constraint firstItem="LCe-6N-wja" firstAttribute="leading" secondItem="n5m-gf-JVi" secondAttribute="leading" id="CUj-KI-iIj"/>
-                        <constraint firstAttribute="bottom" secondItem="LCe-6N-wja" secondAttribute="bottom" id="Exo-lh-V5T"/>
+                        <constraint firstItem="CJE-vc-daH" firstAttribute="top" secondItem="LCe-6N-wja" secondAttribute="bottom" constant="15" id="HYE-iB-mjK"/>
+                        <constraint firstAttribute="bottom" secondItem="CJE-vc-daH" secondAttribute="bottom" constant="15" id="Zwr-m5-EOf"/>
+                        <constraint firstAttribute="trailing" secondItem="CJE-vc-daH" secondAttribute="trailing" constant="15" id="a9a-QS-bAt"/>
                         <constraint firstAttribute="trailing" secondItem="LCe-6N-wja" secondAttribute="trailing" id="iJ1-wO-C1O"/>
                         <constraint firstItem="LCe-6N-wja" firstAttribute="top" secondItem="n5m-gf-JVi" secondAttribute="top" id="q25-hQ-kMC"/>
                     </constraints>
