@@ -137,12 +137,12 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             guard let self = self else { return }
             subjectLbl.text = item
             
-            switch index {
-            case 0:
+            switch item {
+            case PTMString.allSubjects:
                 self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = false
-            case 1:
+            case "Management":
                 self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = true
-            case 2:
+            case "Class Teacher":
                 self.subjectId = "0"; self.classteacherId = self.subjectList[index - 1].id ?? ""; self.isManagement = false
             default:
                 self.classteacherId = "0"; self.subjectId = self.subjectList[index - 1].id ?? "" ; self.isManagement = false
