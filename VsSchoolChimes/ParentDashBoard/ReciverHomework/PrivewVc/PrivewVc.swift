@@ -51,7 +51,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     var targetId : String?
     var EndUrl : String?
-    var isStandardSection : Bool = false
+    var isStaffAndStudent : Bool = false
     var standarSenction : [String] = []
     var params : [String : Any] = [:]
     override func viewDidAppear(_ animated: Bool) {
@@ -265,39 +265,37 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func getTargetReport(EndUrl : String ,params:[String:Any]) {
         
-        APIService.shared.makeApi(
-            url: EndUrl,
-            parameters: params,
-            type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
-        ) { [weak self] (result: Result<targetSuc, Error>) in
+        APIService.shared.makeApi(url: EndUrl,parameters: params,type: ApitTypeSringFile.GET,token: staffDetails?.access_token ?? "") {[weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
                     
                     if res.status == true{
-                        self.targetCvdata = res.data?.first?.name ?? []
-                        self.isStandardSection = false
-                        if res.data?.first?.type == "STANDARD"{
+                        self.yourTargetLbl.text = res.data?.first?.type
+                        self.isStaffAndStudent = true
+                        if res.data?.first?.type == "Message sent to STANDARD"{
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
-                            self.yourTargetLbl.text = "Sent To Standard"
-                        }else if  res.data?.first?.type == "SCHOOL"{
-                            self.yourTargetLbl.text = "Sent To School"
+                            self.standarSenction = res.data?.first?.name?.first?.standard ?? []
+                        }else if  res.data?.first?.type == "Message sent to SCHOOL"{
                             
-                        } else if  res.data?.first?.type == "GROUP"{
-                            self.yourTargetLbl.text = "Sent To Group"
+                            self.standarSenction = res.data?.first?.name?.first?.institute ?? []
+//
+                        } else if  res.data?.first?.type == "Message sent to GROUP"{
+//                            
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
-                        }else if  res.data?.first?.type == "STUDENT"{
-                            self.yourTargetLbl.text = "Sent To Students"
+                            self.standarSenction = res.data?.first?.name?.first?.group ?? []
+                        }else if  res.data?.first?.type == "Message sent to STUDENTS"{
+                            self.isStaffAndStudent = false
+                            self.targetCvdata = res.data?.first?.name ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
-                        }else if  res.data?.first?.type == "SECTION"{
-                            self.yourTargetLbl.text = "Sent To Standard/Section"
-                            self.isStandardSection = true
-                            self.standarSenction = res.data?.first?.name?.first?.std_sec ?? []
+                        }else if  res.data?.first?.type == "Message sent to SECTION"{
+                   self.standarSenction = res.data?.first?.name?.first?.section ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
-                        }else if  res.data?.first?.type == "STAFF"{
-                            self.yourTargetLbl.text = "Sent To Staff"
+                            
+                        }else if  res.data?.first?.type == "Message sent to STAFF"{
+                            self.isStaffAndStudent = false
+                            self.targetCvdata = res.data?.first?.name ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                         }
                         self.reloadss()
@@ -331,7 +329,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         case cv:
             return attachmetList?.count ?? 0
         case targetCv:
-            if isStandardSection{
+            if isStaffAndStudent{
                 return standarSenction.count
             }else{
                 return targetCvdata.count
@@ -377,35 +375,15 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TargetCvCell", for: indexPath) as? TargetCvCell else {
                 return UICollectionViewCell()
             }
-            
-            
-            if yourTargetLbl.text == "Sent To Standard" {
-                cell.nameLbl.text = "🎓 " + (
-                    targetCvdata[indexPath.row].standard ?? ""
-                )
-                       }else if yourTargetLbl.text == "Sent To School" {
-                           cell.nameLbl.text = "🏫 " + (
-                            targetCvdata[indexPath.row].institudeName ?? ""
-                           )
-                       }
-            else if yourTargetLbl.text == "Sent To Groups"{
+     
+            if isStaffAndStudent{
+                cell.nameLbl.text = standarSenction[indexPath.row]
                 
-                cell.nameLbl.text = "🏫 " + (
-                    targetCvdata[indexPath.row].groupName ?? ""
-                )
-            }
-            else if yourTargetLbl.text == "Sent To Staff" || yourTargetLbl.text == "Sent To Students"  {
+            }else{
                 
-                cell.nameLbl.text = "👤 " + (
-                    targetCvdata[indexPath.row].name ?? ""
-                )
+                cell.nameLbl.text =  targetCvdata[indexPath.row].name ?? ""
             }
-            else if yourTargetLbl.text == "Sent To Standard/Section"{
-                cell.nameLbl.text = "👤 " + standarSenction[indexPath.row]
-                       }
-            
-           
-            
+      
             return  cell
         }
     }
@@ -459,29 +437,27 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }else{
 //
            
-            if isStandardSection{
+            if isStaffAndStudent{
                 
                 let titleString = standarSenction[indexPath.item]
                 let font = UIFont.systemFont(ofSize: 14) // Customize as needed
                 let titleWidth = titleString.size(
                     withAttributes: [NSAttributedString.Key.font: font]
                 ).width
-                return CGSize(width: titleWidth + 40, height: 40) // Add padding if needed
+                return CGSize(width: titleWidth + 70, height: 40) // Add padding if needed
                 
             }else{
                 
                 let item = targetCvdata[indexPath.item]
 
-                let titleString =
-                    !(item.name?.isEmpty ?? true) ? item.name! :
-                    !(item.className?.isEmpty ?? true) ? item.className! :
-                !(item.institudeName?.isEmpty ?? true) ? item.institudeName! :
-                    !(item.groupName?.isEmpty ?? true) ? item.groupName! :
-                    "Unknown"
+                let titleString = item.name
+                   
 
                 let font = UIFont.systemFont(ofSize: 14)
-                let titleWidth = titleString.size(withAttributes: [NSAttributedString.Key.font: font]).width
-                return CGSize(width: titleWidth + 70, height: 40)
+                let titleWidth = titleString?.size(
+                    withAttributes: [NSAttributedString.Key.font: font]
+                ).width
+                return CGSize(width: (titleWidth ?? 0) + 70, height: 40)
             }
         }
     }

@@ -2501,6 +2501,30 @@ struct InvoiceItem: Codable {
 }
 
 
+
+
+// MARK: - Root model
+struct TargetDetailsResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [TargetDetail]?
+}
+
+// MARK: - Data model
+struct TargetDetail: Codable {
+    let type: String?
+    let name: [TargetName]?
+}
+
+// MARK: - Name model
+struct TargetName: Codable {
+    var institute : [String]?
+    var standard : [String]?
+    var group_name : [String]?
+    var sections : [String]?
+    var name : String?
+}
+
 struct targetSuc : Codable{
     
     var status : Bool?
@@ -2516,15 +2540,16 @@ struct targetDataDetails : Codable{
 }
 
 struct targetInfoData : Codable{
+    var institute : [String]?
+    var standard : [String]?
+    var group : [String]?
+    var section : [String]?
     var name : String?
     var role:  String?
-    var section : String?
-    var standard : String?
+    var sec : String?
+    var std : String?
     var mobile : String?
-    var className : String?
-    var groupName : String?
-    var institudeName : String?
-    var std_sec : [String]?
+    
 }
 
 
