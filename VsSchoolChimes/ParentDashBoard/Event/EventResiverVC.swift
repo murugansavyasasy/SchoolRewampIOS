@@ -124,6 +124,15 @@ class EventResiverVC: UIViewController {
                 
                 switch result {
                 case .success(let response):
+                    if response.status == true{
+                        if user_inputs.clearTempData(){
+                            let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                          "activity": "VIEW_EVENTS",
+                                          "user_type": 1,
+                                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                            self.paketApiCall(params:parms)
+                        }
+                    }
                     self.allEventSections = []
                     if let firstSection = response.data?.first {
                         if !(firstSection.categories?.isEmpty ?? false) {
@@ -162,6 +171,30 @@ class EventResiverVC: UIViewController {
                     self.searchbar.isHidden = true
                     if #available(iOS 15.0, *) {
                         self.hideActivityLoader()
+                    }
+                }
+            }
+        }
+    }
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                case .failure(let error):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
                     }
                 }
             }

@@ -7,44 +7,60 @@
 
 import UIKit
 protocol markeAsAbsent : AnyObject {
-    func markAsAbsent(AbsentStudent:[StudentDetails],CallAttendaceApi : Bool)
+    func markAsAbsent(AbsentStudent:[AttendanceStudentListData],CallAttendaceApi : Bool)
 }
 
 class absentPrivewVC: UIViewController, call {
     func callMobileNumber(indexPath: Int) {
         
-        let student = abseentessData?[indexPath]
-            if let id = student?.id {
-                removeAbsentStudent(studentId: id)
-            }
+        removeAbsentStudent(index: indexPath)
     }
 
-    func removeAbsentStudent(studentId: String) {
-        // 1️⃣ absenteesData la irundhu remove pannu
-        if let index = abseentessData?.firstIndex(where: { $0.id == studentId }) {
-            abseentessData?.remove(at: index)
-        }
+    func removeAbsentStudent(index: Int) {
         
-        // 2️⃣ studentsDetails la isAbsent = false update pannu
-        if let index = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
-            studentsDetails?[index].isAbsent = true
-        }
-
-        absentStudentLbl.text = "👨🏻‍🎓 Absent Students (\(abseentessData?.count ?? 0))"
-        if abseentessData?.count == 0{
-            noAbsLbl.isHidden  = false
-            noAbsImage.isHidden  = false
-            absentPreviewTableView.isHidden = true
-            
-        }else{
-            noAbsLbl.isHidden  = true
-            noAbsImage.isHidden  = true
-            absentPreviewTableView.isHidden = false
-            
-            absentPreviewTableView.reloadData()
-        }
-     
+        guard index < Filtered_StudentList?.count ?? 0 else {return}
         
+        let removeStudent = Filtered_StudentList?[index]
+        
+        if let mainIndex = StudentList?.firstIndex(where: {$0.id == removeStudent?.id}) {
+            
+            var components = StudentList?[mainIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+            
+            if user_inputs.attendance_type == "H"{
+                
+                if user_inputs.session_type == "FH"{
+                    components[0] = "P"
+                }else{
+                    if components.count>1 {
+                        components[1] = "P"
+                    }
+                }
+            }else{
+                components[0] = "P"
+            }
+            
+            StudentList?[mainIndex].att_status = components.joined(separator: "/")
+            
+            Filtered_StudentList?.remove(at: index)
+            tableview.reloadData()
+            if Filtered_StudentList?.isEmpty == true{
+                if Filter_Value == "A"{
+                    noAbsLbl.text = "No Absent Students"
+                }else if Filter_Value == "P~"{
+                    noAbsLbl.text = "No Late Students"
+                }else{
+                    noAbsLbl.text = "No OD Students"
+                }
+                noAbsImage.isHidden = false
+                noAbsLbl.isHidden = false
+              //  tableview.isHidden = true
+            }else{
+                noAbsImage.isHidden = true
+                noAbsLbl.isHidden = true
+               // tableview.isHidden = false
+            }
+            getAttendanceCounts()
+        }
     }
 
     @IBOutlet weak var noAbsLbl: UILabel!
@@ -53,36 +69,167 @@ class absentPrivewVC: UIViewController, call {
     @IBOutlet weak var markBtnName: UIButton!
     @IBOutlet weak var cancelBtnName: UIButton!
     @IBOutlet weak var notesView: UIView!
-    @IBOutlet var absentPreviewTableView: UITableView!
-    var abseentessData: [StudentDetails]?
-    var studentsDetails: [StudentDetails]?
+    @IBOutlet var tableview: UITableView!
     @IBOutlet weak var fullview: UIView!
+    @IBOutlet weak var AbsentBtn: UIButton!
+    @IBOutlet weak var LateBtn: UIButton!
+    @IBOutlet weak var ODBtn: UIButton!
+    
+    
     var delegate:markeAsAbsent?
+    var StudentList:[AttendanceStudentListData]?
+    var Filtered_StudentList:[AttendanceStudentListData]?
+    var Filter_Value = "A"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         fullview.layer.cornerRadius = 10
         notesView.layer.cornerRadius = 10
         notesView.layer.borderWidth = 1
-        notesView.layer.borderColor = UIColor.black
-            .withAlphaComponent(0.5).cgColor
-        absentPreviewTableView.register(UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
-        abseentessData = studentsDetails?.filter { $0.isAbsent == false }
+        notesView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
         
+        tableview.register(UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
         
-        absentStudentLbl.text = "👨🏻‍🎓 Absent Students (\(abseentessData?.count ?? 0))"
-        absentPreviewTableView.delegate = self
-        absentPreviewTableView.dataSource = self
-        absentPreviewTableView.reloadData()
+       // absentStudentLbl.text = "👨🏻‍🎓 Absent Students (\(abseentessData?.count ?? 0))"
+        
+        addUnderline(to: AbsentBtn, unSelectedBtn: [LateBtn,ODBtn])
+        getAttendanceCounts()
+        Apply_filter()
+        
+        tableview.delegate = self
+        tableview.dataSource = self
+        tableview.reloadData()
         markBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         cancelBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
     }
 
+    func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
+        ([selectedButton] + unSelectedBtn).forEach { button in
+            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            button.tintColor = .black
+        }
+        selectedButton.tintColor = .systemBlue
+        let underline = UIView()
+        underline.tag = 999
+        underline.backgroundColor = .systemBlue
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        selectedButton.addSubview(underline)
 
+        NSLayoutConstraint.activate([
+            underline.heightAnchor.constraint(equalToConstant: 2),
+            underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
+            underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
+        ])
+    }
+    
+    func Apply_filter(){
+        
+        Filtered_StudentList = StudentList?.filter{ student in
+            
+            let components = student.att_status?.split(separator: "/").map(String.init) ?? []
+            var value = ""
+            
+            if user_inputs.session_type == "FH"{
+                value = components.first ?? ""
+            }else{
+                value = (components.count > 1 ? components[1] : components.first) ?? ""
+            }
+            return value == Filter_Value
+        }
+        
+        if Filtered_StudentList?.isEmpty == true{
+            if Filter_Value == "A"{
+                noAbsLbl.text = "No Absent Students"
+            }else if Filter_Value == "P~"{
+                noAbsLbl.text = "No Late Students"
+            }else{
+                noAbsLbl.text = "No OD Students"
+            }
+            DispatchQueue.main.async {
+                self.noAbsImage.isHidden = false
+                self.noAbsLbl.isHidden = false
+            }
+        }else{
+            noAbsImage.isHidden = true
+            noAbsLbl.isHidden = true
+        }
+        
+        tableview.reloadData()
+    }
+    
+    func getAttendanceCounts() /*-> (present: Int, absent: Int, od: Int)*/ {
+        // Safely unwrap your global array
+        guard let students = StudentList else {
+            return //(0, 0, 0)
+        }
+        
+        // Transform each student into their spl_attendance_type
+        let statuses: [String] = students.map { student in
+            let components = student.att_status?.split(separator: "/").map(String.init) ?? []
+            var value = ""
+            
+            // Determine session value
+            if user_inputs.session_type == "FH" {
+                value = components.first ?? ""
+            } else if user_inputs.session_type == "SH" {
+                value = components.count > 1 ? components[1] : (components.first ?? "")
+            } else {
+                // fallback for full day
+                value = components.first ?? ""
+            }
+            
+            // Normalize to one of: PRESENT, ABSENT, OD
+            switch value {
+            case "OD":
+                return "OD"
+            case "A":
+                return "ABSENT"
+            case "P~":
+                return "Late"
+            default:
+                return "PRESENT"
+            }
+        }
+        
+        // Count occurrences
+        let LateCount = statuses.filter { $0 == "Late" }.count
+        let absentCount = statuses.filter { $0 == "ABSENT" }.count
+        let odCount = statuses.filter { $0 == "OD" }.count
+        
+       let absentTitle = "\("Absent") (\(String(absentCount)))"
+       let OdTitle = "\("OD") (\(String(odCount)))"
+       let LateTitle = "\("Late") (\(String(LateCount)))"
+        
+        AbsentBtn.setTitle(absentTitle, for: .normal)
+        LateBtn.setTitle(LateTitle, for: .normal)
+        ODBtn.setTitle(OdTitle, for: .normal)
+        
+    }
+    
+    @IBAction func AbsentBtnAct(_ sender: UIButton) {
+        addUnderline(to: AbsentBtn, unSelectedBtn: [LateBtn,ODBtn])
+        Filter_Value = "A"
+        Apply_filter()
+    }
+    
+    @IBAction func OdBtnAct(_ sender: UIButton) {
+        addUnderline(to: ODBtn, unSelectedBtn: [LateBtn,AbsentBtn])
+        Filter_Value = "OD"
+        Apply_filter()
+    }
+    
+    @IBAction func LateBtnAct(_ sender: UIButton) {
+        addUnderline(to: LateBtn, unSelectedBtn: [AbsentBtn,ODBtn])
+        Filter_Value = "P~"
+        Apply_filter()
+    }
+    
     @IBAction func canselBtnAct(_ sender: UIButton) {
         delegate?
             .markAsAbsent(
-                AbsentStudent: studentsDetails ?? [],
+                AbsentStudent: StudentList ?? [],
                 CallAttendaceApi: false
             )
         dismiss(animated: true)
@@ -92,31 +239,18 @@ class absentPrivewVC: UIViewController, call {
         
         delegate?
             .markAsAbsent(
-                AbsentStudent: studentsDetails ?? [],
+                AbsentStudent: StudentList ?? [],
                 CallAttendaceApi: true
             )
         
         dismiss(animated: true)
         
     }
-    
-//    func removestudent(withId studentId: String) {
-//        // Remove from filtered list
-//        studentsDetails = studentsDetails?.filter { $0.id != studentId }
-//        abseentessData = studentsDetails
-//       
-//        print("filteredStudentfilteredStudent",abseentessData)
-//        if studentsDetails?.count == 0{
-//            delegate?.markAsAbsent(AbsentStudent: abseentessData ?? [])
-//            dismiss(animated: true)
-//        }
-//        absentPreviewTableView.reloadData()
-//    }
-
 }
+
 extension absentPrivewVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return abseentessData?.count ?? 0
+        return Filtered_StudentList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,7 +259,7 @@ extension absentPrivewVC:UITableViewDelegate,UITableViewDataSource{
             return UITableViewCell()
         }
         
-        let data = abseentessData?[indexPath.row]
+        let data = Filtered_StudentList?[indexPath.row]
 //        cell.cellView.layer.cornerRadius = 10
         cell.imageViewWith.constant = 0
         cell.cellView.setShadow()
