@@ -30,7 +30,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     private var isLoading = false
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-    var 
+//    var 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
