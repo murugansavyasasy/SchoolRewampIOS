@@ -117,15 +117,18 @@ class AttachmentsVc: UIViewController {
                     self.noDataImage.isHidden = !isEmpty
                     self.noDataLabel.isHidden = !isEmpty
                     self.noDataLabel.text = response.message
-                    
-                    if !isEmpty{
-                        if self.clickedMessageId != ""{
-                            self.loadDataAndScrollIfNeeded()
-                        }
-                    }
-                    
                     self.tv.reloadData()
                     
+                    if !isEmpty{
+                        
+                        if self.clickedMessageId != ""{
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                self.scrollToClickedMessage()
+                            }
+
+                        }
+                    }
+                   
                     
                 case .failure(let error):
                     self.searchBtn.isHidden = true
@@ -137,6 +140,30 @@ class AttachmentsVc: UIViewController {
         }
     }
     
+    private func scrollToClickedMessage() {
+        guard let id = clickedMessageId,
+              let index = filteredAttachments?.firstIndex(where: { $0.header_id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = tv.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
+                }
+            }
+        }
+    }
+
     private func fetchAttachments_Archive() {
         if #available(iOS 15.0, *) {
             showActivityLoader()
@@ -242,76 +269,8 @@ class AttachmentsVc: UIViewController {
 }
 
 extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
-    
-    
-    
-    func scrollToHeaderMessageId(_ messageId: String) {
-        // 1. Find section index where header.id == messageId
-        
-        
-        if let targetSection = filteredAttachments?.firstIndex(
-            where: { "\($0.id ?? "")" == messageId
-            }) {
-            
-            // 2. Scroll after layout is ready
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.tv.scrollToRow(
-                    at: IndexPath(row: 0, section: targetSection),
-                    at: .middle,
-                    animated: true
-                )
-            }
-        } else {
-            print("⚠️ Message ID \(messageId) not found in attachmentHeaders")
-        }
-    }
-    
-    func loadDataAndScrollIfNeeded() {
-        // API Call → update attachmentHeaders → reloadData
-        tv.reloadData()
-        
-        if let messageId = clickedMessageId,
-           !messageId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            scrollToHeaderMessageId(messageId)
-//            clickedMessageId = nil
-        }
-    }
-    
-    //    func tableView(_ tableView: UITableView,
-    //                   viewForHeaderInSection section: Int) -> UIView? {
-    //        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.AttachTvHeader) as? AttachTvHeader else { return nil }
-    //
-    //        header.configure(with: attachmentHeaders[section])
-    //
-    //        header.discretpionLbl
-    //            .setupExpandable(
-    //                text: attachmentHeaders[section].description ?? "",
-    //                isExpanded: attachmentHeaders[section].isExpanded)
-    //
-    //
-    //        header.discretpionLbl.onExpandableTap = { [weak self] in
-    //            guard let self = self else { return }
-    //
-    //            let newValue = !header.discretpionLbl.isExpanded
-    //            header.discretpionLbl.isExpanded = newValue
-    //            self.attachmentHeaders[section].isExpanded = newValue
-    //
-    //                         if self.attachmentHeaders[section].is_unread == true {
-    //                             self.ReadStatusUpdate(
-    //                                 type: "ATTACHMENT",
-    //                                 detail_id: self.attachmentHeaders[section].id ?? "")
-    //                         }
-    //
-    //            tableView.beginUpdates()
-    //            tableView.endUpdates()
-    //        }
-    //
-    //        header.layoutIfNeeded()
-    //
-    //        return header
-    //    }
-    //
-    
+
+ 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredAttachments?.count ?? 0
     }
