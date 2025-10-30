@@ -431,6 +431,7 @@ struct CommunicationReciverResponse: Codable {
 struct CommunicationReciverData: Codable {
     let type: String
     let id: String
+    let header_id: String
     let content: String
     let title: String
     let date: String

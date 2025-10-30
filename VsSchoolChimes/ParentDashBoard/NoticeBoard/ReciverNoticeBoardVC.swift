@@ -30,7 +30,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     private var isLoading = false
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-//    var 
+    var clickedMessageId: String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,9 +180,14 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                     
                     self.collectionView.reloadData()
                     DispatchQueue.main.async {
-                        if let index = self.searchData.firstIndex(where: { $0.id == "1675" }) {
-                            let indexPath = IndexPath(item: index, section: 0)
-                            self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+                        if self.clickedMessageId != "" {
+                            if let index = self.searchData.firstIndex(
+                                where: { $0.id == self.clickedMessageId
+                                }) {
+                                let indexPath = IndexPath(item: index, section: 0)
+                                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+                            }
+                            
                         }
                     }
                     if successResponse.status == true{

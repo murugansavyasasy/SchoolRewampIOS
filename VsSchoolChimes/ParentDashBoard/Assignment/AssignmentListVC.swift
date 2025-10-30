@@ -30,7 +30,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
     let today = Date()
     let transitionDelegate = TransitioningDelegate()
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    
+    var clickedMessageId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         let Name = studentDetails?.name ?? ""
@@ -73,15 +73,25 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                             self?.noRecordImg.isHidden = !isEmpty
                             self?.searchBtn.isHidden = isEmpty
                             self?.listTable.reloadData()
+                    
+                    if !isEmpty{
+                        if self?.clickedMessageId != ""{
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                self?.scrollToClickedMessage()
+                            }
+                        }
+                    }
+                    
                     if response.status == true{
                         if user_inputs.clearTempData(){
                             let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
                                           "activity": "VIEW_ASSIGNMENT",
                                           "user_type": 1,
                                           "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
-                            self?.paketApiCall(params:parms)
+                                self?.paketApiCall(params:parms)
                         }
                     }
+                    
                 case .failure(let error):
                     self?.nodataLbl.isHidden = false
                     self?.noRecordImg.isHidden = false
@@ -91,6 +101,29 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
                 }
                 if #available(iOS 15.0, *) {
                     self?.hideActivityLoader()
+                }
+            }
+        }
+    }
+    private func scrollToClickedMessage() {
+        guard let id = clickedMessageId,
+              let index = filteredData?.firstIndex(where: { $0.header_id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        listTable.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = listTable.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
                 }
             }
         }

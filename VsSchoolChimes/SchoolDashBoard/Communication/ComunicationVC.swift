@@ -1124,7 +1124,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         recordingTimer?.invalidate()
         recordingTimer = nil
         btnplay.setImage(ImageName.playbutton, for: .normal)
-        if let urls = URL(string: AudioPlayUrl!){
+        if let urls = URL(string: AudioPlayUrl ?? ""){
             // Calculate total recording duration and set Timinglbl
             if let startTime = recordingStartTime {
                 let duration = Date().timeIntervalSince(startTime)
