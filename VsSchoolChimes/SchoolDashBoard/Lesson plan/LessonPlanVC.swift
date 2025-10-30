@@ -105,7 +105,6 @@ class LessonPlanVC: UIViewController {
                 switch result{
                     
                 case .success(let success):
-                    
                     self.LessonPlanData = success.data
                     self.SearchData = LessonPlanData
                     self.NodataLbl.text = success.status ? CommonStringFile.No_data_found : success.message

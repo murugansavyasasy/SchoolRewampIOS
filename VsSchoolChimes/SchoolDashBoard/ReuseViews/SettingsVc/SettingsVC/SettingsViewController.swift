@@ -142,7 +142,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }else if  sections[indexPath.section].items[indexPath.row] == menuname.notifications{
             
             let vc = NotificationViewController(nibName: nil, bundle: nil)
-            vc.passValue = passVale
+            vc.token = passVale == 1 ? UserDefaultFileManager.get_staff_Details()?.access_token ?? "" : UserDefaultFileManager.get_child_Details()?.access_token ?? ""
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             

@@ -110,8 +110,9 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             searchBar.searchTextField.text = ""
             FilterHomeWorkList = homeWorkList
-            noDataFound.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
-            nodataFoundLbl.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
+            let isListEmpty = FilterHomeWorkList?.isEmpty ?? true
+            noDataFound.isHidden = !isListEmpty
+            nodataFoundLbl.isHidden = !isListEmpty
             Cv.reloadData()
         }
     }
@@ -557,8 +558,9 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
                 $0.description?.lowercased().contains(lower) == true
             }
         }
-        noDataFound.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
-        nodataFoundLbl.isHidden = !(FilterHomeWorkList?.isEmpty ?? false)
+        let isListEmpty = FilterHomeWorkList?.isEmpty ?? true
+        noDataFound.isHidden = !isListEmpty
+        nodataFoundLbl.isHidden = !isListEmpty
         nodataFoundLbl.text = CommonStringFile.No_data_found
         Cv.reloadData()
     }

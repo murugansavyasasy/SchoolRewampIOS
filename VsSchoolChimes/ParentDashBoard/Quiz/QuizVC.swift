@@ -88,7 +88,7 @@ class QuizVC: UIViewController {
             }
         }
     }
-    
+ 
     func StyleAndTranslate(){
         
         //MARK: UI Changes

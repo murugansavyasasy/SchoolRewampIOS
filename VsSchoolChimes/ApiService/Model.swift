@@ -1968,7 +1968,7 @@ struct notificationSuc : Codable{
 struct notificationData : Codable{
     let menu_id : Int?
     let menu_name : String?
-    let details : [notificationDetails]?
+    var details : [notificationDetails]?
     
 }
 
