@@ -700,6 +700,8 @@
 		84F0466F2D1D5ED600C686BD /* MarkAttendenceCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0466C2D1D5ED600C686BD /* MarkAttendenceCV.swift */; };
 		84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */; };
 		84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */; };
+		84F90FD92EB241A3005CF3A4 /* ReportAttCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F90FD72EB241A3005CF3A4 /* ReportAttCell.swift */; };
+		84F90FDA2EB241A3005CF3A4 /* ReportAttCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F90FD82EB241A3005CF3A4 /* ReportAttCell.xib */; };
 		84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F911862DB0C13F001A6408 /* bubbleview.swift */; };
 		84F9118B2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */; };
 		84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */; };
@@ -1615,6 +1617,8 @@
 		84F0466C2D1D5ED600C686BD /* MarkAttendenceCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAttendenceCV.swift; sourceTree = "<group>"; };
 		84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSelection.xib; sourceTree = "<group>"; };
 		84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
+		84F90FD72EB241A3005CF3A4 /* ReportAttCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAttCell.swift; sourceTree = "<group>"; };
+		84F90FD82EB241A3005CF3A4 /* ReportAttCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportAttCell.xib; sourceTree = "<group>"; };
 		84F911862DB0C13F001A6408 /* bubbleview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bubbleview.swift; sourceTree = "<group>"; };
 		84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyInfoPopoverVCViewController.swift; sourceTree = "<group>"; };
 		84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmergencyInfoPopoverVCViewController.xib; sourceTree = "<group>"; };
@@ -3137,6 +3141,8 @@
 				84AB0F682E76F5ED001160AD /* StudentAttendanceVc.xib */,
 				8450D0062E9639A1008D57D9 /* absentPrivewVC.swift */,
 				8450D0072E9639A1008D57D9 /* absentPrivewVC.xib */,
+				84F90FD72EB241A3005CF3A4 /* ReportAttCell.swift */,
+				84F90FD82EB241A3005CF3A4 /* ReportAttCell.xib */,
 			);
 			path = "Mark Attendence";
 			sourceTree = "<group>";
@@ -4385,6 +4391,7 @@
 				FAD8BDA52E66BE6C00C7CD53 /* PtmHistoryVC.xib in Resources */,
 				FA2A3FBB2DB0CABB0000AF55 /* SenderAttachmentVC.xib in Resources */,
 				18D718B62D0D477900E9EDA3 /* LocationTableViewCell.xib in Resources */,
+				84F90FDA2EB241A3005CF3A4 /* ReportAttCell.xib in Resources */,
 				18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */,
 				84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */,
 				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
@@ -4952,6 +4959,7 @@
 				18926C532D02DE81002BBB97 /* LsrwListShowViewController.swift in Sources */,
 				18926C542D02DE81002BBB97 /* SubmitResponseForSkillModal.swift in Sources */,
 				84BCE9172E9E5270002C8068 /* GenderDistriTvcel.swift in Sources */,
+				84F90FD92EB241A3005CF3A4 /* ReportAttCell.swift in Sources */,
 				844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */,
 				FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */,
 				FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */,

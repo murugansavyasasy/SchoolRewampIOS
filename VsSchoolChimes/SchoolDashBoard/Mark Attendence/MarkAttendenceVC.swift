@@ -12,6 +12,10 @@ import FSCalendar
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController {
     
+    @IBOutlet weak var LatePresentageLbl: UILabel!
+    @IBOutlet weak var ODperesentageLbl: UILabel!
+    @IBOutlet weak var absentPresentageLbl: UILabel!
+    @IBOutlet weak var PresentPresentageLbl: UILabel!
     @IBOutlet weak var notTakenView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtnName: UIButton!
@@ -119,8 +123,8 @@ class MarkAttendenceVC: UIViewController {
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
         TV.register(
-                UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil),
-                forCellReuseIdentifier: CellConfingName.ClassTableViewCell
+                UINib(nibName: "ReportAttCell", bundle: nil),
+                forCellReuseIdentifier: "ReportAttCell"
             )
 
     }
@@ -589,47 +593,7 @@ class MarkAttendenceVC: UIViewController {
                         ) * 100 : 0
                         
                     
-                        
-                        presentPeretageLbl.text = "\(presentPercentage.rounded(.down))%"
-                        absentPersentage.text = "\(absentPercentage.rounded(.down))%"
-                        
-                        print("presentPeretageLbl","\(presentPercentage.rounded(.down))%")
-                        print("absentPersentage","\(absentPercentage.rounded(.down))%")
-                        
-                        if Int(presentPercentage.rounded(.down)) == 100 {
-                            
-                            graphDownImg.image = UIImage(named: "slachImg")
-                            graphUpImg.image = UIImage(named: "presentGraps")
-                            graphUpImg.tintColor = .green
-                            graphDownImg.tintColor = .primery
-//                            absent
-                            
-                        } else if  Int(absentPercentage.rounded(.down)) == 100 {
-                            
-                            graphUpImg.image = UIImage(named: "slachImg")
-                            graphUpImg.tintColor = .primery
-                            graphDownImg.image = UIImage(named: "presentGraps")
-                            graphDownImg.tintColor = .red
-                            
-                        }else if Int(presentPercentage.rounded(.down)) == Int(absentPercentage.rounded(.down)) {
-                            graphDownImg.image = UIImage(named: "slachImg")
-                            graphUpImg.image = UIImage(named: "slachImg")
-                            graphUpImg.tintColor = .systemYellow
-                            graphDownImg.tintColor = .systemYellow
-                            
-                        } else if Int(presentPercentage.rounded(.down)) < Int(absentPercentage.rounded(.down)) {
-                            graphDownImg.image = UIImage(named: "presentGraps")
-                            graphDownImg.tintColor = .red
-                            graphUpImg.image = UIImage(named: "AbsentGraph")
-                            graphUpImg.tintColor = .green
-                            
-                        } else if Int(presentPercentage.rounded(.down)) > Int(absentPercentage.rounded(.down)) {
-                            graphDownImg.image = UIImage(named: "AbsentGraph")
-                            graphDownImg.tintColor = .red
-                            graphUpImg.image = UIImage(named: "presentGraps")
-                            graphUpImg.tintColor = .green
-                            
-                        }
+                        updateAttendancePercentages()
                         
                         
                         // ✅ Table reload
@@ -661,6 +625,87 @@ class MarkAttendenceVC: UIViewController {
         }
     }
     
+    func updateAttendancePercentages() {
+        guard let data = FilteredReport else { return }
+
+        var total = Double(data.count)
+        var present = 0.0
+        var absent = 0.0
+        var od = 0.0
+        var late = 0.0
+
+        for item in data {
+            guard let status = item.att_status else { continue }
+            let parts = status.components(separatedBy: "/")
+
+            if parts.count == 2 {
+                let first = parts[0]
+                let second = parts[1]
+
+                // 1️⃣ Case: second half missing ("P/-")
+                if second == "-" {
+                    switch first {
+                    case "P":
+                        present += 1.0
+                    case "A":
+                        absent += 1.0
+                    case "OD":
+                        od += 1.0
+                    case "P~":
+                        late += 1.0
+                    default:
+                        break
+                    }
+
+                // 2️⃣ Case: first half missing ("-/P")
+                } else if first == "-" {
+                    switch second {
+                    case "P":
+                        present += 1.0
+                    case "A":
+                        absent += 1.0
+                    case "OD":
+                        od += 1.0
+                    case "P~":
+                        late += 1.0
+                    default:
+                        break
+                    }
+
+                // 3️⃣ Normal half-day logic (each half 0.5)
+                } else {
+                    for part in parts {
+                        switch part {
+                        case "P":
+                            present += 0.5
+                        case "A":
+                            absent += 0.5
+                        case "OD":
+                            od += 0.5
+                        case "P~":
+                            late += 0.5
+                        default:
+                            break
+                        }
+                    }
+                }
+            }
+        }
+
+        // Convert to percentage
+        let presentPercent = (present / total) * 100
+        let absentPercent = (absent / total) * 100
+        let odPercent = (od / total) * 100
+        let latePercent = (late / total) * 100
+
+        // Update UI labels
+        PresentPresentageLbl.text = String(format: "%.1f%%", presentPercent)
+        absentPresentageLbl.text = String(format: "%.1f%%", absentPercent)
+        ODperesentageLbl.text = String(format: "%.1f%%", odPercent)
+        LatePresentageLbl.text = String(format: "%.1f%%", latePercent)
+    }
+
+    
 }
 
 @available(iOS 14.0, *)
@@ -672,22 +717,60 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.ClassTableViewCell, for: indexPath) as! QuizSubmisionTvCell
+        let cell = TV.dequeueReusableCell(withIdentifier: "ReportAttCell", for: indexPath) as! ReportAttCell
         
         
-        cell.nameLbl.text = FilteredReport?[indexPath.row].student_name
-        cell.classLbl.text = "admission no : " + (FilteredReport?[indexPath.row].admission_no ?? "")
-        if FilteredReport?[indexPath.row].att_status == "P"{
-            cell.StatusBtn.setTitle("Present", for: .normal)
-            cell.StatusBtn.backgroundColor = .systemGreen
-        }else{
-            cell.StatusBtn.setTitle("Absent", for: .normal)
-            cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.8)
+        cell.StudentLbl.text = FilteredReport?[indexPath.row].student_name
+        cell.admissionLbl.text = "admission no : " + (
+            FilteredReport?[indexPath.row].admission_no ?? ""
+        )
+        
+        if let attStatus = FilteredReport?[indexPath.row].att_status {
+            let parts = attStatus.components(separatedBy: "/")
+            
+            // Expecting formats like "P/A", "OD/OD", "P~/P", etc.
+            if parts.count == 2 {
+                let fnInfo = getStatusInfo(for: parts[0])
+                let anInfo = getStatusInfo(for: parts[1])
+                
+                cell.FnBtnName.setTitle(fnInfo.0, for: .normal)
+                cell.FnBtnName.backgroundColor = fnInfo.1
+                
+                cell.AnBtnName.setTitle(anInfo.0, for: .normal)
+                cell.AnBtnName.backgroundColor = anInfo.1
+            } else {
+                // Fallback if format is unexpected
+                cell.FnBtnName.setTitle("-", for: .normal)
+                cell.FnBtnName.backgroundColor = .lightGray
+                cell.AnBtnName.setTitle("-", for: .normal)
+                cell.AnBtnName.backgroundColor = .lightGray
+            }
         }
         
         
         return cell
     }
+    
+    
+    // Helper function to map code -> (Title, Color)
+    func getStatusInfo(for status: String) -> (String, UIColor) {
+        switch status {
+        case "P":
+            return ("P", .systemGreen)
+        case "A":
+            return ("A", .error)
+        case "OD":
+            return ("OD", .systemBlue)
+        case "P~":
+            return ("LA", .button)
+        default:
+            return ("-", .lightGray)
+        }
+    }
+
+    // Inside cellForRowAt:
+   
+
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
