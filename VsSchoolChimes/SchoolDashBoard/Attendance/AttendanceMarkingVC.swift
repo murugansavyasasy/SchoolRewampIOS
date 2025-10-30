@@ -10,25 +10,36 @@ import DropDown
 
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
     
-    func markAsAbsent(AbsentStudent: [StudentDetails], CallAttendaceApi: Bool) {
-        if CallAttendaceApi{
-            user_inputs.all_present = "T"
-            filterData = AbsentStudent
-            studentsDetails = AbsentStudent
-            MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
-                print("Absent Studets: ", Student.name ?? "")
-                if let id =  Student.id{
-                    user_inputs.all_present = "F"
-                    return ["ID":id]
-                }
-                return nil
-            } ?? []
+    func markAsAbsent(AbsentStudent: [AttendanceStudentListData], CallAttendaceApi: Bool) {
+//        if CallAttendaceApi{
+//            user_inputs.all_present = "T"
+//            filterData = AbsentStudent
+//            studentsDetails = AbsentStudent
+//            MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
+//                print("Absent Studets: ", Student.name ?? "")
+//                if let id =  Student.id{
+//                    user_inputs.all_present = "F"
+//                    return ["ID":id]
+//                }
+//                return nil
+//            } ?? []
+//            
+//            self.markAttendaceApi()
+//            
+//        }else{
+//            filterData = AbsentStudent
+//            studentsDetails = AbsentStudent
+//            tv.reloadData()
+//        }
+        
+        if CallAttendaceApi {
             
             self.markAttendaceApi()
             
-        }else{
-            filterData = AbsentStudent
-            studentsDetails = AbsentStudent
+        }else {
+            student_List = AbsentStudent
+            Filtered_stuent_Listt = student_List
+            getAttendanceCounts()
             tv.reloadData()
         }
         
@@ -155,7 +166,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         let param: [String:Any] = [
             MarkAttendenceStringFile.section_id: user_inputs.section_id,
             MarkAttendenceStringFile.class_id: user_inputs.class_id,
-            MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date,
+            MarkAttendenceStringFile.date: user_inputs.attendance_date,
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_list, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<AttendanceStudentListResponse, Error>) in
@@ -395,49 +406,51 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     @IBAction func submitAttendanceAct(_ sender: Any) {
 
-        let isAllPresent = student_List?.allSatisfy {
-                ($0.att_type?.uppercased() ?? "") == "PRESENT"
-            }
-            
-           if isAllPresent == true {
-                print("✅ All present")
-            } else {
-                print("⚠️ Some absent or OD/late")
-            }
-        
-        user_inputs.all_present = "T"
-        MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
-            print("Absent Studets: ", Student.name ?? "")
-            if let id =  Student.id{
-                user_inputs.all_present = "F"
-                return ["ID":id]
-            }
-            return nil
-        } ?? []
-        
-        if MakeAbsentId.count == 0{
+        if areAllStudentsPresent(){
             
             let alert = CustomAlert()
             alert.showAlertCancel(title:AlertstringFile.Mark_All_as_Presents, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
                 self.markAttendaceApi()
-            } onNo: {
-                
-            }
+            } onNo: {}
+            
         }else{
             
             let vc = absentPrivewVC(nibName: nil, bundle: nil)
-            vc.studentsDetails = studentsDetails
+            vc.StudentList = self.student_List
             vc.delegate = self
             vc.modalPresentationStyle = .formSheet
             // ✅ Prevent drag-down dismiss
             vc.isModalInPresentation = true
             present(vc, animated: true)
-            
         }
         
-        
-
     }
+
+    func areAllStudentsPresent() -> Bool {
+        guard let students = Filtered_stuent_Listt else { return false }
+
+        return students.allSatisfy { student in
+            let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+            var value = ""
+
+            // Check correct session value
+            if user_inputs.attendance_type == "H" {
+                if user_inputs.session_type == "FH" {
+                    value = components.first ?? ""
+                } else {
+                    value = components.count > 1 ? components[1] : (components.first ?? "")
+                }
+            } else {
+                // For full day — both sessions must be "P"
+                return components.allSatisfy { $0 == "P" || $0 == "P~" }
+            }
+
+            // For half day — this session must be "P" or "P~"
+            return value == "P" || value == "P~"
+        }
+    }
+
+    
     
     func getSpecialAttendanceType(for student: AttendanceStudentListData) -> [String: String] {
         let components = student.att_status?.split(separator: "/").map(String.init) ?? []

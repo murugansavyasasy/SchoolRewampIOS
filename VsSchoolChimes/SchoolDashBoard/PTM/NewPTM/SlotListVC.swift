@@ -16,7 +16,6 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         }
     }
     
-
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var nameLbl: UILabel!
@@ -168,34 +167,32 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             let imageUrl = URL(string: slot?.profile_url ?? "")
             cell.profileImage.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "interactProfile"))
             
-            if MeetingStatus == PTMString.completedMeetings{
-                cell.optionsBtn.isHidden = true
-            }else if MeetingStatus == PTMString.todayMeetings{
+            if slot?.can_cancel == true{
                 
-                cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
-                
-            }else{
-                
-                if slot?.is_booked ?? false{
-                    cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? "")
+                if slot?.is_cancelled ?? false{
+                    cell.edit(edit:true,delete:false,selectedId:slot?.slot_id ?? "")
                 }else {
                     cell.edit(edit:false,delete:true,selectedId:slot?.slot_id ?? "")
                 }
                 
-                if slot?.is_cancelled ?? false{
-                    cell.edit(edit:true,delete:false,selectedId:slot?.slot_id ?? "")
+                if MeetingStatus == PTMString.completedMeetings{
+                    cell.optionsBtn.isHidden = true
                 }
+                
+                if MeetingStatus == PTMString.todayMeetings{
+                    cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
+                }
+                
                 cell.delegate = self
                 
-                cell.optionsBtn.isHidden = !(slot?.can_cancel ?? false)
+            }else {
+                cell.optionsBtn.isHidden = true
             }
             
             
-            //cell.edit(edit:true,delete:true,selectedId:slot?.slot_id ?? ""
-            
             if slot?.is_booked == true {
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
-                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                let title = (MeetingStatus == PTMString.completedMeetings) ? "Completed" : "Booked"
                 cell.StatusBtn.setTitle(title, for: .normal)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
                 cell.StatusBtn.setTitleColor(.aproved, for: .normal)
@@ -218,7 +215,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             
             if slot?.status == "Expired" {
                 
-                cell.optionsBtn.isHidden = true
+              //  cell.optionsBtn.isHidden = true
                 cell.StatusBtn.backgroundColor = .systemGray5.withAlphaComponent(1)
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
                 cell.StatusBtn.setTitle("Expired", for: .normal)

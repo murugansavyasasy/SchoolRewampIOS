@@ -497,6 +497,7 @@ struct Attachment: Codable {
     var can_delete: Bool?
     var isExpanded: Bool?
     var school_id: String?
+    var target_type: String?
 }
 
 struct AttachmentFilePath: Codable {
@@ -2500,6 +2501,30 @@ struct InvoiceItem: Codable {
 }
 
 
+
+
+// MARK: - Root model
+struct TargetDetailsResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [TargetDetail]?
+}
+
+// MARK: - Data model
+struct TargetDetail: Codable {
+    let type: String?
+    let name: [TargetName]?
+}
+
+// MARK: - Name model
+struct TargetName: Codable {
+    var institute : [String]?
+    var standard : [String]?
+    var group_name : [String]?
+    var sections : [String]?
+    var name : String?
+}
+
 struct targetSuc : Codable{
     
     var status : Bool?
@@ -2510,24 +2535,23 @@ struct targetSuc : Codable{
 
 struct targetDataDetails : Codable{
     var type : String?
-    var name: [String]?
+    var name: [targetInfoData]?
     
 }
 
-struct targetSucResp : Codable{
-    
-    var status : Bool?
-    var message : String?
-    var data : [targetDataDetailsResp]?
-}
-
-struct targetDataDetailsResp : Codable{
+struct targetInfoData : Codable{
+    var institute : [String]?
+    var standard : [String]?
+    var group : [String]?
+    var section : [String]?
     var name : String?
     var role:  String?
-//    var class : String?
-    var section : String?
+    var sec : String?
+    var std : String?
     var mobile : String?
+    
 }
+
 
 
 struct GlobalVariablesResponse: Codable {
