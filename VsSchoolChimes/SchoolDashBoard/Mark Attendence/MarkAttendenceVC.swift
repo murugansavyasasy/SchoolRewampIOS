@@ -19,6 +19,7 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var notTakenView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtnName: UIButton!
+    @IBOutlet weak var QuickStatus: UIButton!
     @IBOutlet weak var graphDownImg: UIImageView!
     @IBOutlet weak var graphUpImg: UIImageView!
     @IBOutlet weak var dateDayLbl: UILabel!
@@ -83,7 +84,9 @@ class MarkAttendenceVC: UIViewController {
     var StandardId = ""
     var selectedDate = ""
     var alert = CustomAlert()
+    var popover: PopoverView?
     var IsMarkAttendaceSelected : Bool = true
+    var popoverBackgroundView: UIView?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -244,7 +247,57 @@ class MarkAttendenceVC: UIViewController {
         
        
     }
-    
+        
+    @IBAction func InfoBtnAct(_ sender: UIButton) {
+    if let existing = popover {
+            existing.removeFromSuperview()
+            popover = nil
+
+            popoverBackgroundView?.removeFromSuperview()
+            popoverBackgroundView = nil
+            return
+        }
+
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.backgroundColor = UIColor.clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopover))
+        backgroundView.addGestureRecognizer(tapGesture)
+        view.addSubview(backgroundView)
+        popoverBackgroundView = backgroundView
+        let buttonFrameInBackground = QuickStatus.convert(QuickStatus.bounds, to: backgroundView)
+
+        let popupWidth: CGFloat = 180
+        let popupHeight: CGFloat = 180
+        let padding: CGFloat = 8
+        let popupX = buttonFrameInBackground.maxX + padding
+        // Align vertically centered with the button
+        let popupY = buttonFrameInBackground.midY - popupHeight / 2
+
+        let popup = PopoverView()
+        popup.arrowDirection = .left
+        popup.arrowPosition = popupHeight / 2
+        popup.frame = CGRect(x: popupX,
+                             y: popupY,
+                             width: popupWidth,
+                             height: popupHeight)
+        popup.configureButtons(with: [
+            ("circle",AttendanceString.notTaken, .red),
+            ("checkmark.circle.fill", AttendanceString.present, .systemGreen),
+            ("circle.lefthalf.filled", AttendanceString.firstHalf, .systemBlue),
+            ("circle.righthalf.filled", AttendanceString.secondHalf, .systemBlue),
+            ("a.circle.fill", AttendanceString.absent, .systemRed),
+            ("h.circle.fill", AttendanceString.holiday, .systemPink)
+        ])
+        backgroundView.addSubview(popup)
+        popover = popup
+    }
+    @objc func dismissPopover() {
+        popover?.removeFromSuperview()
+        popover = nil
+
+        popoverBackgroundView?.removeFromSuperview()
+        popoverBackgroundView = nil
+    }
     func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
         // Remove underline from both buttons
         [selectedButton, unselectedButton].forEach { button in
