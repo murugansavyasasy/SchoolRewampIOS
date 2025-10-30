@@ -456,40 +456,38 @@ class ReciverAttendanceReportVC: UIViewController {
             return
         }
 
-        // Create full-screen transparent view to detect taps outside
         let backgroundView = UIView(frame: view.bounds)
         backgroundView.backgroundColor = UIColor.clear
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopover))
         backgroundView.addGestureRecognizer(tapGesture)
         view.addSubview(backgroundView)
         popoverBackgroundView = backgroundView
-
-        // Create the popover
-        // Calculate position relative to the button
-        // Convert button frame into backgroundView’s coordinate space
         let buttonFrameInBackground = WeekStatusDefBtn.convert(WeekStatusDefBtn.bounds, to: backgroundView)
 
         let popupWidth: CGFloat = 180
         let popupHeight: CGFloat = 180
         let padding: CGFloat = 8
-
-        // Position popup to the right of the button with 8pt padding
         let popupX = buttonFrameInBackground.maxX + padding
         // Align vertically centered with the button
         let popupY = buttonFrameInBackground.midY - popupHeight / 2
 
         let popup = PopoverView()
         popup.arrowDirection = .left
-        popup.arrowPosition = popupHeight / 2   // arrow vertically centered
+        popup.arrowPosition = popupHeight / 2 
         popup.frame = CGRect(x: popupX,
                              y: popupY,
                              width: popupWidth,
                              height: popupHeight)
-
+        popup.configureButtons(with: [
+            ("circle",AttendanceString.notTaken, .red),
+            ("checkmark.circle.fill", AttendanceString.present, .systemGreen),
+            ("circle.lefthalf.filled", AttendanceString.firstHalf, .systemBlue),
+            ("circle.righthalf.filled", AttendanceString.secondHalf, .systemBlue),
+            ("a.circle.fill", AttendanceString.absent, .systemRed),
+            ("h.circle.fill", AttendanceString.holiday, .systemPink)
+        ])
         backgroundView.addSubview(popup)
         popover = popup
-
-
     }
 
     @objc func dismissPopover() {
@@ -546,7 +544,6 @@ class PopoverView: UIView {
     enum ArrowDirection {
         case top
         case left
-        // You can add more: right, bottom if needed
     }
 
     // MARK: - Configurable Properties
@@ -584,17 +581,15 @@ class PopoverView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: arrowDirection == .left ? arrowSize.width + 15 : 15),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
         ])
+    }
 
-        let buttonData: [(symbol: String, title: String, color: UIColor)] = [
-            ("circle", AttendanceString.notTaken, .red),
-            ("checkmark.circle.fill", AttendanceString.present, .backGroundClr),
-            ("circle.lefthalf.filled", AttendanceString.firstHalf, .backGroundClr),
-            ("circle.righthalf.filled", AttendanceString.secondHalf, .backGroundClr),
-            ("a.circle.fill", AttendanceString.absent, .systemRed),
-            ("h.circle.fill", AttendanceString.holiday, .systemPink)
-        ]
-
-        for (symbol, title, color) in buttonData {
+    // MARK: - Public Method: Set Buttons
+    func configureButtons(with data: [(symbol: String, title: String, color: UIColor)]) {
+        // Remove old buttons (if any)
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        // Add new ones
+        for (symbol, title, color) in data {
             let button = UIButton(type: .system)
             button.setTitle(" \(title)", for: .normal)
             button.setImage(UIImage(systemName: symbol), for: .normal)
