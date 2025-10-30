@@ -41,6 +41,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateCounts()
+
     }
     
     private func setupView() {
@@ -139,7 +140,17 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
-        searchBar.isHidden = !sender.isSelected
+        searchBar?.isHidden = !sender.isSelected
+        if sender.isSelected {
+            searchBar?.becomeFirstResponder()
+        } else {
+            searchData = allNotices
+            self.noDataImg.isHidden = !self.searchData.isEmpty
+            self.noDataImg.isHidden = !self.searchData.isEmpty
+            collectionView.reloadData()
+            searchBar.searchTextField.text = ""
+            searchBar?.resignFirstResponder()
+        }
     }
     
     @IBAction func backBtn(_ sender: UIButton) {
@@ -166,7 +177,14 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                     self.searchData = self.allNotices
                     self.noDataImg.isHidden = !self.searchData.isEmpty
                     self.updateCounts()
+                    
                     self.collectionView.reloadData()
+                    DispatchQueue.main.async {
+                        if let index = self.searchData.firstIndex(where: { $0.id == "1675" }) {
+                            let indexPath = IndexPath(item: index, section: 0)
+                            self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+                        }
+                    }
                     if successResponse.status == true{
                         if user_inputs.clearTempData(){
                             let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",

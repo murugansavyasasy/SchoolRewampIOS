@@ -190,7 +190,6 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             searchBar?.becomeFirstResponder()
         } else {
             searchData = allNotices
-            self.noDataLbl.isHidden = !self.searchData.isEmpty
             self.noDataImg.isHidden = !self.searchData.isEmpty
             collectionView.reloadData()
             searchBar.searchTextField.text = ""
