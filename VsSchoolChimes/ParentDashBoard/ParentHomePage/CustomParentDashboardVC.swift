@@ -312,6 +312,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     @IBAction func notificationBtn(_ sender: UIButton) {
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.token = childDetails?.access_token ?? ""
+        vc.isParent = true
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

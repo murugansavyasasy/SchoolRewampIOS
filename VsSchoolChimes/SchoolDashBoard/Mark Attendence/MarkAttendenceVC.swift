@@ -84,9 +84,7 @@ class MarkAttendenceVC: UIViewController {
     var StandardId = ""
     var selectedDate = ""
     var alert = CustomAlert()
-    var popover: PopoverView?
     var IsMarkAttendaceSelected : Bool = true
-    var popoverBackgroundView: UIView?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -249,55 +247,20 @@ class MarkAttendenceVC: UIViewController {
     }
         
     @IBAction func InfoBtnAct(_ sender: UIButton) {
-    if let existing = popover {
-            existing.removeFromSuperview()
-            popover = nil
-
-            popoverBackgroundView?.removeFromSuperview()
-            popoverBackgroundView = nil
-            return
-        }
-
-        let backgroundView = UIView(frame: view.bounds)
-        backgroundView.backgroundColor = UIColor.clear
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopover))
-        backgroundView.addGestureRecognizer(tapGesture)
-        view.addSubview(backgroundView)
-        popoverBackgroundView = backgroundView
-        let buttonFrameInBackground = QuickStatus.convert(QuickStatus.bounds, to: backgroundView)
-
-        let popupWidth: CGFloat = 180
-        let popupHeight: CGFloat = 180
-        let padding: CGFloat = 8
-        let popupX = buttonFrameInBackground.maxX + padding
-        // Align vertically centered with the button
-        let popupY = buttonFrameInBackground.midY - popupHeight / 2
-
-        let popup = PopoverView()
-        popup.arrowDirection = .left
-        popup.arrowPosition = popupHeight / 2
-        popup.frame = CGRect(x: popupX,
-                             y: popupY,
-                             width: popupWidth,
-                             height: popupHeight)
-        popup.configureButtons(with: [
-            ("circle",AttendanceString.notTaken, .red),
-            ("checkmark.circle.fill", AttendanceString.present, .systemGreen),
-            ("circle.lefthalf.filled", AttendanceString.firstHalf, .systemBlue),
-            ("circle.righthalf.filled", AttendanceString.secondHalf, .systemBlue),
-            ("a.circle.fill", AttendanceString.absent, .systemRed),
-            ("h.circle.fill", AttendanceString.holiday, .systemPink)
-        ])
-        backgroundView.addSubview(popup)
-        popover = popup
+        let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
+            
+            popoverVC.configureButtons(with: [
+                ("P", "Present", .systemGreen),
+                ("A", "Absent", .systemRed),
+                ("OD", "On Duty", .systemBlue),
+                ("LA", "Late", .systemOrange),
+                ("-", "Not Taken", .systemGray)
+            ], type: .badge)
+            
+            showPopover(from: sender, contentVC: popoverVC)
     }
-    @objc func dismissPopover() {
-        popover?.removeFromSuperview()
-        popover = nil
 
-        popoverBackgroundView?.removeFromSuperview()
-        popoverBackgroundView = nil
-    }
+   
     func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
         // Remove underline from both buttons
         [selectedButton, unselectedButton].forEach { button in
@@ -925,4 +888,30 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
     }
 
 
+}
+@available(iOS 14.0, *)
+extension MarkAttendenceVC: UIPopoverPresentationControllerDelegate {
+    func showPopover(from sender: UIView, contentVC: UIViewController) {
+        contentVC.modalPresentationStyle = .popover
+        contentVC.preferredContentSize = CGSize(width: 180, height: 170)
+        
+        if let popover = contentVC.popoverPresentationController {
+            popover.sourceView = sender
+            popover.sourceRect = sender.bounds
+            popover.permittedArrowDirections = .left
+            popover.delegate = self
+            popover.backgroundColor = .white
+        }
+
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            contentVC.modalPresentationStyle = .overFullScreen
+            contentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
+        }
+
+        present(contentVC, animated: true)
+    }
+
+    public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
 }

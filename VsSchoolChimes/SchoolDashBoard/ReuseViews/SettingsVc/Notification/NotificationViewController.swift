@@ -11,7 +11,7 @@ import UIKit
 class NotificationViewController: UIViewController {
     
     // MARK: - Outlets
-    @IBOutlet weak var clearAllBtn: UIButton!
+    
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
@@ -27,7 +27,7 @@ class NotificationViewController: UIViewController {
     var tvheadernotidata: [notificationData] = []
     var allNotifications: [notificationData] = [] // For search
     var token: String = ""
-    
+    var isParent = false
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class NotificationViewController: UIViewController {
     // MARK: - Setup UI
     private func setupUI() {
         BackBtn.setTitle(MenuTapbar.shared.Notifications, for: .normal)
-        
+       
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
@@ -54,12 +54,14 @@ class NotificationViewController: UIViewController {
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.layer.cornerRadius = 8
         searchBar.searchTextField.backgroundColor = .white
+        tableview.showsVerticalScrollIndicator = false
+        tableview.showsHorizontalScrollIndicator = false
+        searchBar.backgroundColor = .white
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
         searchBar.placeholder = "Search"
         searchBar.delegate = self
-        searchBar.isHidden = true
-        
+        searchBar.searchTextField.addDoneButton()
         tableview.delegate = self
         tableview.dataSource = self
     }
@@ -76,20 +78,7 @@ class NotificationViewController: UIViewController {
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
     }
-    
-    // MARK: - Clear All
-    @IBAction func clearAllMessage(_ sender: UIButton) {
-        guard !tvheadernotidata.isEmpty else { return }
-        
-        let alert = UIAlertController(title: "Clear All Notifications",
-                                      message: "Are you sure you want to delete all notifications?",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
-            self.clearAllNotifications()
-        }))
-        self.present(alert, animated: true)
-    }
+
     
     private func clearAllNotifications() {
         let allIds = tvheadernotidata.flatMap { $0.details?.compactMap { $0.id } ?? [] }
@@ -117,12 +106,12 @@ class NotificationViewController: UIViewController {
         sender.setImage(UIImage(systemName: icon), for: .normal)
         
         if sender.isSelected {
-            searchBar.isHidden = false
+            searchView.isHidden = false
             searchBar.becomeFirstResponder()
         } else {
             searchBar.text = ""
             searchBar.resignFirstResponder()
-            searchBar.isHidden = true
+            searchView.isHidden = true
             tvheadernotidata = allNotifications
             tableview.reloadData()
             noDataImg.isHidden = !tvheadernotidata.isEmpty
@@ -149,16 +138,29 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "NotiTvheader") as? NotiTvheader else {
             return nil
         }
-        
+        header.clearAllBtn.isHidden = section != 0
+        header.clearAllBtn.addTarget(self, action: #selector(clearBtnTapped), for: .touchUpInside)
         let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
         header.MenuImage.image = UIImage(named: filteredItems.first?.name ?? "")
         header.menuNameLbl.text = tvheadernotidata[section].menu_name
         return header
     }
-    
+    @objc func clearBtnTapped() {
+        guard !tvheadernotidata.isEmpty else { return }
+        
+        let alert = UIAlertController(title: "Clear All Notifications",
+                                      message: "Are you sure you want to delete all notifications?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
+            self.clearAllNotifications()
+        }))
+        self.present(alert, animated: true)
+    }
+
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
+        return section != 0 ? 45 : 60
     }
     
     func tableView(_ tableView: UITableView,
@@ -236,33 +238,34 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         if let menuName = tvheadernotidata.first(where: { $0.menu_id == menuItem })?.menu_name {
             MenuStringFile.selectedMenuName = menuName
         }
-        
-        switch menuItem {
-        case 2:  MenuRedirect.receiverAssignmentNavigate(from: self)
-        case 4:  MenuRedirect.receiverAttendancereport(from: self)
-        case 5:  MenuRedirect.receiverCertificateRequest(from: self)
-        case 6:  MenuRedirect.receiverclassTimeTable(from: self)
-        case 7:  MenuRedirect.receiverCommunicationNavigate(from: self)
-        case 9:  MenuRedirect.receiverEvent(from: self)
-        case 10: MenuRedirect.resiverExamMark(from: self)
-        case 12: MenuRedirect.receiverFeeDetails(from: self)
-        case 15: MenuRedirect.receiverHomework(from: self)
-        case 16: MenuRedirect.receiverchat(from: self)
-        case 20: MenuRedirect.receiverLsrwNavigate(from: self)
-        case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self)
-        case 24: MenuRedirect.receiverOnlineNavigate(from: self)
-        case 25: MenuRedirect.receiverFeeDetails(from: self)
-        case 26: MenuRedirect.receiverPtmNavigate(from: self)
-        case 27: MenuRedirect.QuizExam(from: self)
-        case 28: MenuRedirect.LeaveRquest(from: self)
-        case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
-        case 39:
-            MenuRedirect.receiverAttachment(
-                from: self,
-                notificationId: tvheadernotidata[indexPath.section].details?[indexPath.row].header_id ?? ""
-            )
-        case 40: MenuRedirect.receiverPauckt(from: self)
-        default: break
+        if isParent{
+            switch menuItem {
+            case 2:  MenuRedirect.receiverAssignmentNavigate(from: self)
+            case 4:  MenuRedirect.receiverAttendancereport(from: self)
+            case 5:  MenuRedirect.receiverCertificateRequest(from: self)
+            case 6:  MenuRedirect.receiverclassTimeTable(from: self)
+            case 7:  MenuRedirect.receiverCommunicationNavigate(from: self)
+            case 9:  MenuRedirect.receiverEvent(from: self)
+            case 10: MenuRedirect.resiverExamMark(from: self)
+            case 12: MenuRedirect.receiverFeeDetails(from: self)
+            case 15: MenuRedirect.receiverHomework(from: self)
+            case 16: MenuRedirect.receiverchat(from: self)
+            case 20: MenuRedirect.receiverLsrwNavigate(from: self)
+            case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self)
+            case 24: MenuRedirect.receiverOnlineNavigate(from: self)
+            case 25: MenuRedirect.receiverFeeDetails(from: self)
+            case 26: MenuRedirect.receiverPtmNavigate(from: self)
+            case 27: MenuRedirect.QuizExam(from: self)
+            case 28: MenuRedirect.LeaveRquest(from: self)
+            case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
+            case 39:
+                MenuRedirect.receiverAttachment(
+                    from: self,
+                    notificationId: tvheadernotidata[indexPath.section].details?[indexPath.row].header_id ?? ""
+                )
+            case 40: MenuRedirect.receiverPauckt(from: self)
+            default: break
+            }
         }
     }
     
@@ -290,14 +293,12 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
                     self.noDataImg.isHidden = !isEmpty
                     self.noDataLbl.isHidden = !isEmpty
                     self.noDataLbl.text = response.message ?? ""
-                    self.searchView.isHidden = isEmpty
                     self.searchBtn.isHidden = isEmpty
                     
                 case .failure(let error):
                     self.noDataImg.isHidden = false
                     self.noDataLbl.isHidden = false
                     self.noDataLbl.text = error.localizedDescription
-                    self.searchView.isHidden = true
                     self.searchBtn.isHidden = true
                 }
             }
@@ -335,6 +336,9 @@ extension NotificationViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             tvheadernotidata = allNotifications
+            noDataImg.isHidden = !tvheadernotidata.isEmpty
+            noDataLbl.isHidden = !tvheadernotidata.isEmpty
+            noDataLbl.text = "Search Data not Found"
             tableview.reloadData()
             return
         }
