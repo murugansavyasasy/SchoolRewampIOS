@@ -87,7 +87,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     var readStatus = 0  //All = 0, read = 1, unread = 2
     
     var showfilter = false
-
+    var clickedMessageId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -329,7 +329,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             
             guard let self = self else {return}
             switch result {
-                
+//                "FN : fornoon  /    AN : afternoon "
             case .success(let SuccessMessage):
                 
                 if SuccessMessage.status == true {
@@ -344,6 +344,13 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         self.searchBtn.isHidden = false
                         //SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         self.tv.reloadData()
+                        
+                            if self.clickedMessageId != ""{
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    self.scrollToClickedMessage()
+                                }
+                            }
+                        
                     }
                     
                 }else {
@@ -371,6 +378,29 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         }
     }
     
+    private func scrollToClickedMessage() {
+        guard let id = clickedMessageId,
+              let index = FilteredMessages?.firstIndex(where: { $0.header_id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = tv.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
+                }
+            }
+        }
+    }
     func GetArchiveCommunicationList() {
         
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_list_archive, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [weak self] (result : Result<CommunicationReciverResponse,Error>) in

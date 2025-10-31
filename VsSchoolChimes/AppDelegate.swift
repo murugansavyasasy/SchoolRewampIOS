@@ -99,22 +99,26 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         let type = userInfo["type"] as? String
         if type == "normal"{
-            guard let menuId = userInfo["menu_id"] as? String,
-                  let instituteId = userInfo["institute_id"] as? String,
-                  let childId = userInfo["receiver_id"] as? String ,
-                  let headerid = userInfo["header_id"] as? String else { return }
+            let loginAs = userInfo["receiver_type"] as? String
             
-            guard let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
-            
-            
-            if #available(iOS 14.0, *) {
-                handleNavigation(
-                    instituteId: instituteId,
-                    childId: childId,
-                    childDetails: childDetails,
-                    menuID: menuId, header_id: headerid,
-                    from: rootVC
-                )
+            if loginAs == "student"{
+                guard let menuId = userInfo["menu_id"] as? String,
+                      let instituteId = userInfo["institute_id"] as? String,
+                      let childId = userInfo["receiver_id"] as? String ,
+                      let headerid = userInfo["header_id"] as? String else { return }
+                
+                guard let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
+                
+                
+                if #available(iOS 14.0, *) {
+                    handleNavigation(
+                        instituteId: instituteId,
+                        childId: childId,
+                        childDetails: childDetails,
+                        menuID: menuId, header_id: headerid, logintype: 2,
+                        from: rootVC
+                    )
+                }
             }
         }else if type == "call"{
             let vc = NotificationCallVC()
@@ -139,6 +143,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         childDetails: [ChildDetails],
         menuID : String,
         header_id : String,
+        logintype : Int,
         from rootVC: UIViewController
     ) {
         // Filter matching children
@@ -150,7 +155,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         let vc = TapBarVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        vc.login_astype = 2
+        vc.login_astype = logintype
         vc.comfromNotification = true
         vc.menuId = menuID
         vc.messageId = header_id

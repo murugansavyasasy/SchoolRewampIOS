@@ -644,7 +644,7 @@ class MarkAttendenceVC: UIViewController {
     func updateAttendancePercentages() {
         guard let data = FilteredReport else { return }
 
-        var total = Double(data.count)
+        let total = Double(data.count)
         var present = 0.0
         var absent = 0.0
         var od = 0.0
