@@ -62,7 +62,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
     var menu_details: [MenuDetail] = []
-    
+    var refreshCount = false
     var childDetailscount = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var childDetails = UserDefaultFileManager.get_child_Details()
     
@@ -114,7 +114,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        get_dashboard_details()
+        if self.refreshCount{  self.get_MenuCount()
+        }else{
+            get_dashboard_details()
+        }
     }
 
     
@@ -146,6 +149,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.menu_details = details.menus ?? []
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
+                        self.refreshCount = true
                         self.recentActiveMenuCollection.isHidden = (details.frequently_used?.isEmpty ?? true)
                         self.pagecontroller.isHidden = (details.frequently_used?.count ?? 0) < 2
                         self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0

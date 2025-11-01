@@ -21,6 +21,7 @@ extension ImageShowVc: UIPopoverPresentationControllerDelegate {
 
 class ImageShowVc: UIViewController {
     
+    @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var pdfView: WKWebView!
     @IBOutlet weak var textView: UITextView!
@@ -69,8 +70,15 @@ class ImageShowVc: UIViewController {
             if let index = self.index, index < count {
                 let indexPath = IndexPath(item: index, section: 0)
                 self.cv.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-                self.downloadUrl = self.fileURL[index].url
-                self.fileType = self.fileURL[index].type
+                if let attachment = self.attachment{
+                    self.saveBtn.isHidden = true
+                }else{
+                    self.downloadUrl = self.fileURL[index].url
+                    self.fileType = self.fileURL[index].type
+                    self.saveBtn.isHidden = false
+                }
+                   
+                
                 self.pageController.currentPage = index
             }
         }

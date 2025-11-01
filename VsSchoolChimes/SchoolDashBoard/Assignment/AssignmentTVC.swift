@@ -387,17 +387,6 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         return spacer
     }
     
-    // MARK: - File Icon Mapping
-    func getFileIconName(for url: URL) -> String {
-        switch url.pathExtension.lowercased() {
-        case "pdf": return "pdf_icon"
-        case "doc","docx": return "word_icon"
-        case "xls","xlsx": return "excel_icon"
-        case "ppt","pptx": return "ppt_icon"
-        default: return "doc.fill"
-        }
-    }
-    
     // MARK: - Keep Popup Style
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle { return .none }
 }

@@ -657,8 +657,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                     //
                 }
                 alertController.addAction(galleryAction)
-                
-                //             PDF option
                 let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
                     selectPDF()
                 }
