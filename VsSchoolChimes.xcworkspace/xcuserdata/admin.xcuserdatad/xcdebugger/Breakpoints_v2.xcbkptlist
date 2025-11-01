@@ -176,8 +176,8 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Pauckt/HomePageVc/HomePaucktVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "Get_campians(parameter:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -329,32 +329,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "957E5CB7-AD3C-4665-BC56-B9FF33A95BAF"
+            uuid = "E6406C19-452E-4522-B0A0-B414281FED1E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/AttendanceReportVc.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
+            landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "879DEB58-A928-4A11-841E-76FC7FEDEABD"
+            uuid = "6E62BDA5-ADDD-42F2-A1AD-9BEB16695486"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Auth/Splash/SplashViewController.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
-            landmarkName = "validateUser()"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
+            landmarkName = "tableView(_:viewForHeaderInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -384,8 +384,8 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/Sender Attachment/AttachHistroyVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
             landmarkName = "AttachmentDelete(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -402,7 +402,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
             endingLineNumber = "118"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkName = "addUnderline(to:unSelectedBtn:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -418,55 +418,87 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "64"
             endingLineNumber = "64"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "removeAbsentStudent(index:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C2406DD4-1292-47FA-B43A-2726E3EB3A38"
+            uuid = "927A00A6-8A4A-4171-8328-C3C61CA265B3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Sender Attachment/SenderAttachmentVC.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Event/EventHistoryVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "setSelectedHomeWork(title:content:imageUrls:editId:)"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "filterUsingSchoolId(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "92ECCA25-2BE0-4AC7-A1BC-FC0045A39B85"
+            uuid = "1B34B822-4F6D-4BFA-B147-82079CE9E7C9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/AbsenteesReport/NewAbsenteesReport/NewAbsenteesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "GetEvent()"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
+            landmarkName = "updateProgress(absentees:total:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BEE851B4-88EC-431E-A31D-A6E1B70B4E33"
+            uuid = "B3F3E685-9914-48DF-88BD-D40DC6CFCE56"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Quiz/QuizVC.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/AbsenteesReport/NewAbsenteesReport/NewAbsenteesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "Get_Quiz()"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
+            landmarkName = "updateProgress(absentees:total:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7781E3C4-2C35-47FA-851E-76D4ACF4016F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolStrength/StrengthTvCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "updateProgress(boys:girls:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE2B3289-E824-4A5E-9417-F6091ED05BC4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolStrength/StrengthTvCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "updateProgress(boys:girls:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -171,9 +171,10 @@ class AttachHistroyVC: UIViewController, SelectedId {
             if item == "All"{
                 filterSchoolId = "All"
                 filterUsingSchoolId("All")
-                
+                searchBar.text = ""
             }else{
                 if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                    searchBar.text = ""
                     filterSchoolId = selectedSchool.school_id ?? ""
                     filterUsingSchoolId(selectedSchool.school_id ?? "")
                     

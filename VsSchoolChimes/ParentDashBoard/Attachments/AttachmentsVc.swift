@@ -30,7 +30,7 @@ class AttachmentsVc: UIViewController {
     var shouldShowFooter = true
     var shouldShowFooterLabel = false
     var ArchiveMessage = ""
-    
+    let transitionDelegate = TransitioningDelegate()
     override func viewDidLoad() {
         super.viewDidLoad()
         TitleLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
@@ -380,6 +380,29 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         return footerView
     }
     
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        guard let attach = filteredAttachments?[indexPath.row],
+              let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
+        
+        let detailVC = PrivewVc()
+        detailVC.attachmetList = attach.file_path
+        detailVC.selectedDate = attach.date
+        detailVC.titleString = attach.title
+        detailVC.descriptionString = attach.description
+        detailVC.postedBy = attach.sent_by
+        detailVC.subject_name = MenuStringFile.selectedMenuName.translated()
+        detailVC.modalPresentationStyle = .custom
+        transitionDelegate.originFrame = cellFrameInSuperview
+        detailVC.transitioningDelegate = transitionDelegate
+        
+        present(detailVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return (shouldShowFooter || shouldShowFooterLabel) ? UITableView.automaticDimension : 0.01
     }
@@ -394,7 +417,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
     
     @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
         print("Archived messages tapped!")
-        
+        searchBar.text = ""
         fetchAttachments_Archive()
         
         shouldShowFooter = false
@@ -424,11 +447,13 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         
         if self.filteredAttachments?.isEmpty ?? true {
             self.noDataLabel.isHidden = false
+            self.noDataImage.isHidden = false
             self.noDataLabel.text = "No Attachment Found"
             
             
         } else {
             self.noDataLabel.isHidden = true
+            self.noDataImage.isHidden = true
             
         }
     }
