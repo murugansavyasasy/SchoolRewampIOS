@@ -232,11 +232,10 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBAction func UpdateAct(_ sender: Any) {
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_update_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-                self.LessonPlan_Update_Api()
+            self.LessonPlan_Update_Api()
         }, onNo: {
             
         })
-        
         
     }
     

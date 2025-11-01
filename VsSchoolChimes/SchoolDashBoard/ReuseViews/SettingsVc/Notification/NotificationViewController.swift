@@ -56,7 +56,7 @@ class NotificationViewController: UIViewController {
         searchBar.searchTextField.backgroundColor = .white
         tableview.showsVerticalScrollIndicator = false
         tableview.showsHorizontalScrollIndicator = false
-        searchBar.backgroundColor = .white
+        searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
         searchBar.placeholder = "Search"
