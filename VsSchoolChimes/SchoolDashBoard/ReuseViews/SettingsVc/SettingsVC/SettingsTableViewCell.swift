@@ -19,7 +19,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         faceIdSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-        nameLbl.setFont(style: .body, size: 15)
+        nameLbl.setFont(style: .body, size: 13)
         faceIdSwitch.isOn = BiometricAuthentication.shared.isBiometricEnabledInApp()
 
     }

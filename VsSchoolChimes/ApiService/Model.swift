@@ -2592,6 +2592,15 @@ struct GlobalVariable: Codable {
     var ebooks_url: String?
     var market_place_url: String?
     var fees_url: String?
+    var v_card_numbers: String?
+    var contact_display_name: String?
+    var contact_alert_title: String?
+    var contact_alert_content: String?
+    var support_email: String?
+    var support_contact: String?
+    var privacy_policy: String?
+    var about_the_app: String?
+    var how_to_use: String?
 }
 
 struct checkQuizLevelSuc : Codable{

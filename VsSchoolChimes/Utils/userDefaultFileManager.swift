@@ -9,9 +9,6 @@ import Foundation
 
 
 struct UserDefaultFileManager {
-    
-    
-    
     static let countryKey = "country_data"
     static let  mobileNumber = "mobile_number"
     static let  password = "password"

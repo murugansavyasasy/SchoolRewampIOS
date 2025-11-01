@@ -54,6 +54,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     var dimmedView: UIView?
     var delegate: backNavigation?
     let transitionDelegate = TransitioningDelegate()
+    var refreshCount = false
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +94,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         getacadmicYr {
-            self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
+            if self.refreshCount{
+                self.get_MenuCount()
+            }else{
+                self.get_dashboard_details(token: self.staffDetails?.access_token ?? "")
+            }
         }
     }
     
@@ -143,6 +148,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus
+                        self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()

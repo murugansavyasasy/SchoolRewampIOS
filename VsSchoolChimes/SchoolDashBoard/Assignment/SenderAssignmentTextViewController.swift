@@ -21,7 +21,6 @@ class SenderAssignmentTextViewController: UIViewController,
                                           DeleteImge,
                                           Datepicker,
                                           UIPopoverPresentationControllerDelegate,
-                                          VideoPickerManagerDelegate,
                                           QLPreviewControllerDataSource {
     
     // MARK: - IBOutlets
@@ -101,8 +100,6 @@ class SenderAssignmentTextViewController: UIViewController,
         StyleAndTranslater()
         setupPlaceholderIfNeeded()
         contentTextView.delegate = self
-        
-        videoPicker = VideoPickerManager(presenter: self, delegate: self)
         
         // Observers
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
@@ -306,45 +303,7 @@ class SenderAssignmentTextViewController: UIViewController,
         updateCollectionHeight()
     }
     
-    // MARK: - Video
-    @IBAction func chooseVideoTapped(_ sender: UIButton) { videoPicker?.pickVideo() }
-    
-    func pickVideoFromGallery() { videoPicker?.pickVideo() }
-    
-    func videoPickerManager(didPickVideo url: URL) {
-        selectedVideoURL = url
-        
-        thumbnailImage = generateThumbnail(for: url)
-        if let thumbnail = thumbnailImage {
-            thumbnailImageView.image = thumbnail
-            user_inputs.thumbNail = thumbnail
-        }
-        
-        // Hide images collection when video selected
-        selectImgPdfview.isHidden = true
-        collectionViewHeght.constant = 0
-        chooseRecipientsBtn.isHidden = false
-    }
-    
-    func videoPickerManagerDidCloseVideo() {
-        selectedVideoURL = nil
-        selectImgPdfview.isHidden = false
-        updateCollectionHeight()
-        selectImgPdfview.imageCollectionview.reloadData()
-    }
-    
-    func generateThumbnail(for url: URL) -> UIImage? {
-        let asset = AVAsset(url: url)
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        do {
-            let cgImage = try generator.copyCGImage(at: .zero, actualTime: nil)
-            return UIImage(cgImage: cgImage)
-        } catch {
-            print("Error generating thumbnail: \(error)")
-            return nil
-        }
-    }
+  
     
     // MARK: - Image / PDF selection
     func imageSelection(){
@@ -375,7 +334,6 @@ class SenderAssignmentTextViewController: UIViewController,
             selectImgPdfview.imageCollectionview.reloadData()
         }
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
-            // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.VIDEO
             attachments
                 .append(
@@ -392,7 +350,6 @@ class SenderAssignmentTextViewController: UIViewController,
     
     // MARK: File Attachments Actions
     func selectImages() {
-//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared
                 .presentPicker(
@@ -408,7 +365,6 @@ class SenderAssignmentTextViewController: UIViewController,
         
     }
     func openCamera(){
-//        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
@@ -418,7 +374,6 @@ class SenderAssignmentTextViewController: UIViewController,
         }
     }
     func selectPDF() {
-//        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
         if attachments.count != 10{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
             PhotoPickerManager.shared.limiSelection = 10 - attachments.count
@@ -597,17 +552,6 @@ class SenderAssignmentTextViewController: UIViewController,
         view.layoutIfNeeded()
     }
     
-    func getFileIconName(for url: URL) -> String {
-        let ext = url.pathExtension.lowercased()
-        switch ext {
-        case "pdf": return "pdf_icon"
-        case "doc", "docx": return "doc_icon"
-        case "xls", "xlsx": return "xls_icon"
-        case "ppt", "pptx": return "ppt_icon"
-        case "mp4", "mov", "m4v": return "video_icon"
-        default: return "file_icon"
-        }
-    }
 }
 
 // MARK: - CollectionView
@@ -691,7 +635,7 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
                 self?.selectPDF()
             })
             alertController.addAction(UIAlertAction(title: "Video", style: .default) { [weak self] _ in
-                self?.pickVideoFromGallery()
+                self?.VideoPick()
             })
             alertController.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil))
             

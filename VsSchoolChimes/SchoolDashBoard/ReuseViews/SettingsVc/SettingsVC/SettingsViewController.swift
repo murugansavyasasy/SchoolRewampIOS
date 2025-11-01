@@ -34,8 +34,7 @@ class SettingsViewController: UIViewController, BaktoHome {
             title: "Account & Security",
             items: [
                 "Change Password",
-                menuname.faceID,
-                menuname.logout
+                menuname.faceID
             ]
         ),
         Section(
@@ -54,7 +53,6 @@ class SettingsViewController: UIViewController, BaktoHome {
                 "Privacy Policy",
                 "About the App",
                 "How to Use?",
-                "Version",
                 "What's new"
             ]
         ),
@@ -62,7 +60,9 @@ class SettingsViewController: UIViewController, BaktoHome {
             title: "Feedback",
             items: [
                 menuname.reportABug,
-                menuname.feedback
+                menuname.feedback,
+                "App Version",
+                menuname.logout
             ]
         )
     ]
@@ -70,27 +70,27 @@ class SettingsViewController: UIViewController, BaktoHome {
     // MARK: - Image Data
     let Images: [Image] = [
         Image(title: "Account & Security", Imageitems: [
-            "lock.rotation",       // Change Password
-            "faceid",              // Face ID
-            "iphone.and.arrow.forward" // Logout
+            "lock.rotation",
+            "faceid"
         ]),
         Image(title: "Preference", Imageitems: [
-            "bell",                // Notifications
-            "character.bubble.ja"  // Language
+            "bell",
+            "character.bubble.ja"
         ]),
         Image(title: "Support & Information", Imageitems: [
-            "person.crop.circle.badge.questionmark.fill", // FAQ
-            "phone.arrow.up.right.circle.fill",           // Contact Us
-            "chart.line.uptrend.xyaxis",                  // Terms
-            "shield.lefthalf.filled",                     // Privacy
-            "info.circle.fill",                           // About App
-            "questionmark.circle",                        // How to Use
-            "number.square.fill",                         // Version
+            "person.crop.circle.badge.questionmark.fill",
+            "phone.arrow.up.right.circle.fill",
+            "chart.line.uptrend.xyaxis",
+            "shield.lefthalf.filled",
+            "info.circle.fill",
+            "questionmark.circle",
             "WhatNews"
         ]),
         Image(title: "Feedback", Imageitems: [
-            "questionmark.diamond.fill", // Report a Bug
-            "paperplane.fill"            // Feedback
+            "questionmark.diamond.fill",
+            "paperplane.fill",
+            "number.square.fill",
+            "iphone.and.arrow.forward"
         ])
     ]
     
@@ -174,9 +174,12 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.imgView.tintColor = .black
         }
         
-        if item == "Version" {
+        if item == "App Version" {
             cell.versionLbl.isHidden = false
-            cell.versionLbl.text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+               let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+                cell.versionLbl.text = "\(version) (\(build))"
+            }
             cell.arrowImg.isHidden = true
             cell.faceIdSwitch.isHidden = true
         } else {
@@ -193,7 +196,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = sections[indexPath.section].items[indexPath.row]
-        
         switch selectedItem {
         case menuname.contactUs:
             let vc = ContactUsVc()
@@ -201,10 +203,29 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
+        case "Privacy Policy":
+            let vc = TermsAndCondVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "Privacy Policy"
+            vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
+            present(vc, animated: true)
+        case "About the App":
+            let vc = TermsAndCondVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "About the App"
+            vc.url = UserDefaultFileManager.get_globalSelection()?.about_the_app
+            present(vc, animated: true)
+        case "How to Use?":
+            let vc = TermsAndCondVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "How to Use?"
+            vc.url = UserDefaultFileManager.get_globalSelection()?.how_to_use
+            present(vc, animated: true)
         case menuname.notifications:
             let vc = NotificationViewController()
             vc.token = passVale == 1 ? UserDefaultFileManager.get_staff_Details()?.access_token ?? "" :
                                        UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            vc.isParent = passVale == 2
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
@@ -236,10 +257,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             vc.modalPresentationStyle = .overFullScreen
             vc.delegate = self
             present(vc, animated: true)
-            
         case menuname.termsAndConditions:
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "Terms & Conditions"
+            vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
             present(vc, animated: true)
             
         case "What's new":

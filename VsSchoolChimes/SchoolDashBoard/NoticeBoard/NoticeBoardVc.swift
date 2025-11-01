@@ -163,7 +163,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     private func setupView() {
         customizeSearchBar()
         setupCollectionView()
-        setupRefreshControl()
+//        setupRefreshControl()
         setupLoader()
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
@@ -221,10 +221,10 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         collectionView.register(UINib(nibName: "NoticeCVC", bundle: nil), forCellWithReuseIdentifier: "NoticeCVC")
     }
     
-    private func setupRefreshControl() {
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
-    }
+//    private func setupRefreshControl() {
+//        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+//        collectionView.refreshControl = refreshControl
+//    }
     
     private func showLoadingState() {
         activityIndicator.startAnimating()
@@ -242,12 +242,12 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         return formatter.string(from: Date())
     }
     
-    @objc private func refreshData() {
-        Get_Notice()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.refreshControl.endRefreshing()
-        }
-    }
+//    @objc private func refreshData() {
+//        Get_Notice()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            self.refreshControl.endRefreshing()
+//        }
+//    }
     
     func Get_Notice() {
         showLoadingState()
