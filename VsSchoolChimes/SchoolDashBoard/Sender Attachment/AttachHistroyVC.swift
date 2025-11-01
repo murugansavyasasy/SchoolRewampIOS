@@ -60,6 +60,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     let alert = CustomAlert()
     var Scholldetails = UserDefaultFileManager.getUserDetails()
     let transitionDelegate = TransitioningDelegate()
+    var filterSchoolId: String? = "All"
     override func viewDidLoad() {
         super.viewDidLoad()
         localData.editToken = ""
@@ -98,12 +99,17 @@ class AttachHistroyVC: UIViewController, SelectedId {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
-//        localData.editToken = staffdetails?.access_token
-        searchBar.searchTextField.addDoneButton()
-        searchBar.delegate = self
-        searchBar.backgroundImage = UIImage()
-        searchBar.placeholder = CommonStringFile.Search
+        
         searchBar.isHidden = true
+        searchBar.searchTextField.addDoneButton()
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.backgroundImage = UIImage()
+        searchBar.searchTextField.layer.cornerRadius = 8
+        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.placeholder =  CommonStringFile.Search
+        searchBar.delegate = self
         
         tv.delegate = self
         tv.dataSource = self
@@ -163,13 +169,14 @@ class AttachHistroyVC: UIViewController, SelectedId {
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
             if item == "All"{
+                filterSchoolId = "All"
                 filterUsingSchoolId("All")
+                
             }else{
                 if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+                    filterSchoolId = selectedSchool.school_id ?? ""
                     filterUsingSchoolId(selectedSchool.school_id ?? "")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        //                    self.Get_Notice()
-                    }
+                    
                 }
             }
         }
@@ -196,18 +203,21 @@ class AttachHistroyVC: UIViewController, SelectedId {
         sender.isSelected.toggle()
         
         if sender.isSelected{
-            
+            filterUsingSchoolId(filterSchoolId ?? "")
             searchBar.isHidden = false
             searchBar.becomeFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
         }else{
             
             searchBar.isHidden = true
+            noDataLabel.isHidden = true
+            noDataImg.isHidden = true
             searchBar.resignFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             searchBar.searchTextField.text = ""
-            filteredAttachments = attachmentData
-            tv.reloadData()
+            filterUsingSchoolId(filterSchoolId ?? "")
+           
+            
         }
     }
     
@@ -273,7 +283,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
                     url: ServiceUrl.comm_api_attachment_delete,
                     parameters: ["id": attachmentId],
                     type: ApitTypeSringFile.PUT,
-                    token: localData.editToken ?? ""
+                    token: self.staffdetails?.access_token ?? ""
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }
@@ -413,25 +423,38 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         filterAttachments(with: searchText)
     }
     
+    
     private func filterAttachments(with searchText: String) {
         let lowerSearch = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        let selectedSchoolId = filterSchoolId ?? "All"
         
-        if lowerSearch.isEmpty {
-            filteredAttachments = attachmentData
-        } else {
-            filteredAttachments = attachmentData.filter { item in
+        // Step 1: Start from full data
+        var results = attachmentData
+        
+        // Step 2: Apply school filter
+        if selectedSchoolId != "All" {
+            results = results.filter { $0.school_id == selectedSchoolId }
+        }
+        
+        // Step 3: Apply text search if needed
+        if !lowerSearch.isEmpty {
+            results = results.filter { item in
                 let titleMatch = item.title?.lowercased().contains(lowerSearch) ?? false
                 let descriptionMatch = item.description?.lowercased().contains(lowerSearch) ?? false
                 return titleMatch || descriptionMatch
             }
         }
         
+        // Step 4: Update filtered data
+        filteredAttachments = results
+        
+        // Step 5: Reload table safely without animation
         UIView.performWithoutAnimation {
             tv.reloadData()
             tv.layoutIfNeeded()
         }
-
-        // Handle empty state
+        
+        // Step 6: Empty state handling
         let isEmpty = filteredAttachments?.isEmpty ?? true
         noDataLabel.isHidden = !isEmpty
         noDataImg.isHidden = !isEmpty
@@ -439,4 +462,8 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
     }
 
 
+
 }
+
+
+

@@ -1149,7 +1149,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         APIService.shared.makeApi(url: ServiceUrl.check_level , parameters: [
             "class_id" : ClassId,
             "subject_id" : SubjectId,
-            "section_id" : SectionId
+//            "section_id" : SectionId
         ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <checkQuizLevelSuc,Error>) in
             switch result {
             case .success(let successMessage):

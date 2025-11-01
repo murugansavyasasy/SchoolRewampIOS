@@ -142,7 +142,7 @@
                                         <constraint firstAttribute="trailing" secondItem="3sZ-Zr-uCJ" secondAttribute="trailing" constant="10" id="Xx4-xM-V4x"/>
                                     </constraints>
                                 </view>
-                                <searchBar hidden="YES" contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-6Q-fEf">
+                                <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="hcq-6Q-fEf">
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="0.0"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <textInputTraits key="textInputTraits"/>

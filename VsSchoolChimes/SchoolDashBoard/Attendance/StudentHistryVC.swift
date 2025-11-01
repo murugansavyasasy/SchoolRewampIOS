@@ -27,25 +27,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBOutlet weak var SearchStack: UIStackView!
     @IBOutlet weak var BackBtn: UIButton!
-//    @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
-//    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var search: UISearchBar!
-//    @IBOutlet weak var statusLbl: UILabel!
-//    @IBOutlet weak var rollNoLbl: UILabel!
-//    @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var filterBtn: UIButton!
     @IBOutlet weak var sendbtnName: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     @IBOutlet weak var TopView: UIView!
-//    @IBOutlet weak var PresentCountView: UIView!
-//    @IBOutlet weak var AbsentCountView: UIView!
-//    @IBOutlet weak var PresentCountLbl: UILabel!
-//    @IBOutlet weak var AbsentCountLbl: UILabel!
-//    @IBOutlet weak var PresentDefLbl: UILabel!
-//    @IBOutlet weak var AbsentDefLbl: UILabel!
-    
-    
     var switchCell = 1
     var dropDown = DropDown()
     
@@ -85,43 +72,30 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         StyleAndTranslater()
         BackBtn.applyBackButton()
         search.searchTextField.addDoneButton()
-        
+        search.searchTextField.borderStyle = .none
+        search.backgroundImage = UIImage()
+        search.searchTextField.layer.cornerRadius = 8
+        search.searchTextField.backgroundColor = .systemGray5
+        search.layer.cornerRadius = 8
+        search.searchTextField.layer.masksToBounds = true
+        search.placeholder = "Search"
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
-//        PresentCountView.layer.cornerRadius = 5
-//        PresentCountView.layer.borderWidth = 0.3
-//        PresentCountView.layer.borderColor = UIColor.systemGray4.cgColor
-//        
-//        AbsentCountView.layer.cornerRadius = 5
-//        AbsentCountView.layer.borderWidth = 0.3
-//        AbsentCountView.layer.borderColor = UIColor.systemGray4.cgColor
-        
+             
         SearchStack.isHidden = true
-        
-//        PresentCountLbl.setFont(style: .title, size: 25)
-//        AbsentCountLbl.setFont(style: .title, size: 25)
-//        PresentDefLbl.setFont(style: .body, size: FontSize.BodySize)
-//        AbsentDefLbl.setFont(style: .body, size: FontSize.BodySize)
-        
+                
         selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         sendbtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         
         let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
         BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         
-//        if isAttandanceMarkingScreen == false{
-//            HeaderviewHeight.constant = 0
-//            headerView.isHidden = true
-//            
-//        }else{
-            
+        
             filterBtn.isHidden = true
             selectAllBtn.setImage(ImageName.square, for: .normal)
             selectAllBtn.semanticContentAttribute = .forceRightToLeft
             filterBtn.isUserInteractionEnabled = true
             
-       // }
         
         registerCell()
         recipient_get_student_list(
@@ -129,11 +103,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             academic_year_id: selectedAcadimicYearId ?? 0
         )
         search.delegate = self
-//        headerView.layer.cornerRadius = 5
-//        headerView.layer.borderWidth = 0.5
-//        headerView.layer.borderColor = UIColor.systemGray4.cgColor
-        // Do any additional setup after loading the view.
-        
+  
     }
     
     override func viewDidLayoutSubviews() {
@@ -145,20 +115,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     func StyleAndTranslater() {
-        
-        //MARK: Label And Button Font Style
-//        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
         filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
-        //MARK: Translation
-//        rollNoLbl.text = CommonStringFile.RollNo.translated()
-//        nameLbl.text = CommonStringFile.Name.translated()
-//        statusLbl.text = CommonStringFile.Status.translated()
         search.placeholder = CommonStringFile.Search.translated()
-        //filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
-        
     }
     
     func registerCell(){
@@ -241,29 +199,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             if isSelectingAll {
                 selectAllBtn.setImage(ImageName.checkmark, for: .normal)
                 totalcount = studentsDetails?.count ?? 0
-//                AbsentCountLbl.text = String(totalcount)
-//                PresentCountLbl.text = "0"
             } else {
                 selectAllBtn.setImage(ImageName.square, for: .normal)
                 totalcount = 0
-//                PresentCountLbl.text = String(studentsDetails?.count ?? 0 )
-//                AbsentCountLbl.text = String(totalcount)
-            }
+         }
         }
         else{
             isSelectAllEnabled.toggle()
             for i in 0..<(studentsDetails?.count ?? 0) {
-//                let indexPath = IndexPath(row: i, section: 0)
-//                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
-//                    if isSelectAllEnabled {
-//
-//                        customCell.CheckBoxImgview.image = ImageName.checkedSquares
-////                        selected_student.append(studentsDetails?[i].id ?? "" )
-//                    } else {
-//                        customCell.CheckBoxImgview.image = ImageName.uncheckedSquares
-////                        selected_student.removeAll()
-//                    }
-//                }
                 studentsDetails?[i].isSelect = isSelectAllEnabled
                 filterData?[i].isSelect = isSelectAllEnabled
                 
@@ -284,9 +227,24 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     
-    @IBAction func SearchAct(_ sender: Any) {
+    @IBAction func SearchAct(_ sender: UIButton) {
         
         SearchStack.isHidden.toggle()
+        
+        
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        SearchStack?.isHidden = !sender.isSelected
+        if sender.isSelected {
+            SearchStack?.becomeFirstResponder()
+        } else {
+            filterData = studentsDetails
+//            self.noDataImg.isHidden = !self.searchData.isEmpty
+            historyTable.reloadData()
+            search.searchTextField.text = ""
+            search?.resignFirstResponder()
+        }
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -334,7 +292,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                 count: studentsDetails?.count ?? 0
                             )
                             filterData = studentsDetails
-                           // PresentCountLbl.text = String(studentsDetails?.count ?? 0)
                             historyTable.reloadData()
                         }
                     }else{
@@ -354,19 +311,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
         
-       
-        if Menu_id.attendance == Menu_id.staffSelectedMenuId {
-            selected_student = studentsDetails?
-                .filter { $0.isAbsent == false}
-                .compactMap { $0.id } ?? []
-            alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
-                self.markAttendaceApi()
-            } onNo: {
-                
-            }
-
-            
-        }else{
             selected_student = studentsDetails?
                 .filter { $0.isSelect == true }
                 .compactMap { $0.id } ?? []
@@ -392,11 +336,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     subjectId: ""
                 )
                 
-                
             default:
                 print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
             }
-        }
     }
     
     
