@@ -43,6 +43,11 @@ class LessonPlanVC: UIViewController {
         searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
+        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.delegate = self
+        
         let menuName = MenuStringFile.LessonPlan
         MenuNameLbl.configureAsBackTitle(firstLine: menuName, secondLine: staffDetails?.school_name ?? "")
         searchBar.isHidden = true

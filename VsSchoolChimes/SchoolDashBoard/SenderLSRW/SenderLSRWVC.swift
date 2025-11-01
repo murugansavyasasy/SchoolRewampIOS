@@ -252,35 +252,62 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     }
     
     @IBAction func selectRecipient(_ sender: UIButton) {
-        guard let title = TitleTxtfield.text, !title.isEmpty,
-              let description = DetailsTxtview.text, !description.isEmpty,
-              description != CommonStringFile.Description else {
+        
+        // Validate title field
+        guard let title = TitleTxtfield.text, !title.isEmpty else {
             alert.showAlert(
-                title: "",
-                message: AlertstringFile.enter_title_description,
+                title: "Missing Field",
+                message: "Please enter the Title.",
                 on: self
             )
             return
         }
         
+        // Validate description field
+        guard let description = DetailsTxtview.text,
+              !description.isEmpty,
+              description != CommonStringFile.Description else {
+            alert.showAlert(
+                title: "Missing Field",
+                message: "Please enter the Description.",
+                on: self
+            )
+            return
+        }
+        
+        // Validate date field
+        guard let dateText = dateLbl.text,
+              !dateText.isEmpty,
+              let dateString = convertDate(dateText),
+              !dateString.isEmpty else {
+            alert.showAlert(
+                title: "Missing Field",
+                message: "Please select a Submission Date.",
+                on: self
+            )
+            return
+        }
+        
+        // Save attachments & video paths
         user_inputs.SelectedUrls = attachments
         user_inputs.VideoPath = selectedVideoURL
-        let dateString = convertDate(dateLbl.text ?? "")
-
+        
+        // Proceed with API parameters
         let params: [String: Any] = [
             assignmentResquestStringKey.title: title,
             assignmentResquestStringKey.description: description,
-            assignmentResquestStringKey.submission_date: dateString ?? "",
+            assignmentResquestStringKey.submission_date: dateString,
             assignmentResquestStringKey.activity_type: taskTypes[selectedTaskIndex].0,
         ]
-
         
+        // Navigate to Recipient screen
         let vc = RecipientVc(nibName: nil, bundle: nil)
         vc.ScreenType = Menu_id.homeWorkMenuId
         vc.Common_request_params = params
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
+
 
     
     private func startRecording() {

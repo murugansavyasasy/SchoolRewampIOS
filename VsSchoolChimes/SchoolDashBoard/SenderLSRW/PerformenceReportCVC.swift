@@ -11,6 +11,7 @@ class PerformenceReportCVC: UICollectionViewCell {
 
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     private var weeklyReport: [PerformanceReport] = []
@@ -36,9 +37,11 @@ class PerformenceReportCVC: UICollectionViewCell {
         if let weekly = weeklyReport {
             self.weeklyReport = weekly
             self.isWeekly = true
+            noDataLbl.isHidden = weekly.count != 0
         } else if let top = topPerformance {
             self.topPerformance = top
             self.isWeekly = false
+            noDataLbl.isHidden = top.count != 0
         }
         tableView.reloadData()
     }

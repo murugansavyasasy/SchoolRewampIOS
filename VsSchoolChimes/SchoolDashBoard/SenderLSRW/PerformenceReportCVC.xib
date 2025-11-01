@@ -29,8 +29,14 @@
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="JAM-st-u0J">
                                 <rect key="frame" x="10" y="32" width="294" height="186"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topper list not available" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddu-AC-Azu">
+                                <rect key="frame" x="10" y="103" width="294" height="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -38,9 +44,12 @@
                             <constraint firstItem="AP0-qH-4aw" firstAttribute="top" secondItem="mXK-UQ-sqN" secondAttribute="top" constant="10" id="Lvs-OB-PCW"/>
                             <constraint firstAttribute="trailing" secondItem="AP0-qH-4aw" secondAttribute="trailing" constant="5" id="QCb-MJ-ZYm"/>
                             <constraint firstAttribute="trailing" secondItem="JAM-st-u0J" secondAttribute="trailing" constant="10" id="Sa8-40-pPu"/>
+                            <constraint firstItem="ddu-AC-Azu" firstAttribute="centerY" secondItem="mXK-UQ-sqN" secondAttribute="centerY" id="WVN-Xr-HzK"/>
+                            <constraint firstItem="ddu-AC-Azu" firstAttribute="trailing" secondItem="JAM-st-u0J" secondAttribute="trailing" id="dfp-uq-kmi"/>
                             <constraint firstItem="JAM-st-u0J" firstAttribute="leading" secondItem="mXK-UQ-sqN" secondAttribute="leading" constant="10" id="jCQ-Cy-9VU"/>
                             <constraint firstAttribute="bottom" secondItem="JAM-st-u0J" secondAttribute="bottom" constant="5" id="lIj-mV-tKh"/>
                             <constraint firstItem="AP0-qH-4aw" firstAttribute="leading" secondItem="mXK-UQ-sqN" secondAttribute="leading" constant="5" id="xir-Ea-3aP"/>
+                            <constraint firstItem="ddu-AC-Azu" firstAttribute="leading" secondItem="JAM-st-u0J" secondAttribute="leading" id="yoz-x7-fqw"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -54,6 +63,7 @@
             </constraints>
             <size key="customSize" width="314" height="223"/>
             <connections>
+                <outlet property="noDataLbl" destination="ddu-AC-Azu" id="Fk9-56-hom"/>
                 <outlet property="outerView" destination="mXK-UQ-sqN" id="5M5-Nf-BY0"/>
                 <outlet property="tableView" destination="JAM-st-u0J" id="gz5-04-hWj"/>
                 <outlet property="titleLbl" destination="AP0-qH-4aw" id="1rh-wZ-L7D"/>
