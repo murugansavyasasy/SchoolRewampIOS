@@ -803,7 +803,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
-                cell.createdOnlbl.text =  item.created_on
+            
+                cell.createdOnlbl.text =  item.created_on?
+                    .convertToTargetDateFormat() ?? ""
                 cell.createdOnlbl.textAlignment = .right
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
@@ -879,7 +881,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
                     getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
                         selectSubject.isHidden =  !getSubject.isHidden
@@ -889,6 +891,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }
                 }else{
                     speficBtnName.isHidden = !(selectedSections.count == 1)
+                    speficBtnName.isEnabled = true
                 }
                 spaceView.isHidden = !selectSubject.isHidden
                 

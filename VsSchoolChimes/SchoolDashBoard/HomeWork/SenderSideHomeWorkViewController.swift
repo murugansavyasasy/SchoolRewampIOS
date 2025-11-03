@@ -22,6 +22,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+   
+    @IBOutlet weak var HistoryArrowBtn: UIButton!
+    @IBOutlet weak var showHistoryBtnName: UIButton!
+   
     @IBOutlet weak var headerView: UIStackView!
     @IBOutlet weak var BackBtnNm: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -62,7 +66,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         BackBtnNm
             .configureAsBackButton(
-                firstLine: "Create New " + MenuStringFile.selectedMenuName,
+                firstLine: MenuStringFile.selectedMenuName,
                 secondLine: staffDetails?.school_name ?? ""
 
             )
@@ -93,18 +97,22 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         imageSelection()
         
         if let editId = editId,editId != "" {
-            BackBtnNm
-                .configureAsBackButton(
-                    firstLine: "Update Existing " + MenuStringFile.selectedMenuName,
-                    secondLine: staffDetails?.school_name ?? ""
-                )
-            
+            showHistoryBtnName.isHidden = true
+            HistoryArrowBtn.isHidden = true
             setSelectedHomeWork(
                 title:EditHomeWork.title ?? "",
                 content:EditHomeWork.description ?? "",
                 imageUrls:EditHomeWork.file_path ?? [] ,
                 editId:EditHomeWork.id ?? ""
             )
+        }else{
+            showHistoryBtnName.isHidden = false
+            HistoryArrowBtn.isHidden = false
+            BackBtnNm
+                .configureAsBackButton(
+                    firstLine: MenuStringFile.selectedMenuName,
+                    secondLine: staffDetails?.school_name ?? ""
+                )
         }
         
     }
@@ -248,7 +256,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                     edit: true,
                     target_type:0,
                     selectedId: [],
-                    baseURL: ServiceUrl.comm_api_homework_update,
+                    baseURL: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
                     subjectId: "",
                     message:"",
                     from: self,

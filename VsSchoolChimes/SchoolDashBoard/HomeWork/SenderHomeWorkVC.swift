@@ -199,7 +199,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         standardDropdown.selectionAction = { [weak self] index, item in
             guard let self = self else { return }
             guard let selectedSections = self.standardDetails?[index].sections else { return }
-
+            self.searchBar.text = ""
             self.sectionsDetails = selectedSections
             self.sectionList = selectedSections.compactMap { $0.name }
             self.sectionId = selectedSections.first?.id
@@ -223,7 +223,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         SectionDropdown.selectionAction = { [weak self] index, item in
             guard let self = self else { return }
             guard index < (self.sectionsDetails?.count ?? 0) else { return }
-
+            self.searchBar.text = ""
             self.sectionId = self.sectionsDetails?[index].id
             self.SectionLbl.text = item
 //            DispatchQueue.main.async {
@@ -307,6 +307,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                 case .success(let res):
                     guard res.status == true else {
                         self.handleNoData(message: res.message ?? "No data")
+                        self.searchBtn.isHidden = true
                         return
                     }
 
@@ -364,6 +365,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                         self.noDataFound.isHidden = true
                         self.designUseView.isHidden = true
                         self.Cv.isHidden = false
+                        self.searchBtn.isHidden = false
                         self.Cv.delegate = self
                         self.Cv.dataSource = self
                         self.Cv.reloadData()
@@ -377,13 +379,14 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                         self.noDataFound.isHidden = false
                         self.Cv.isHidden = true
                         self.cvHeight.constant = 0
-                        
+                        self.searchBtn.isHidden = true
                     }
                 case .failure(let error):
                     print("Homework API failed:", error.localizedDescription)
                     self.noDataFound.isHidden = false
                     self.designUseView.isHidden = false
                     self.cvHeight.constant = 0
+                    self.searchBtn.isHidden = true
                 }
             }
         }

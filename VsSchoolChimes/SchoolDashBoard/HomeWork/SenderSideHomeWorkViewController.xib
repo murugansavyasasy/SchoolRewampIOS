@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,6 +16,7 @@
                 <outlet property="ComposeHomeworkView" destination="5Vf-Cx-qQT" id="qJK-Uf-s4g"/>
                 <outlet property="DetailsLbl" destination="qYd-0j-moL" id="0cT-sn-0gI"/>
                 <outlet property="DetailsTxtview" destination="12X-i3-UOx" id="tJb-F4-rPG"/>
+                <outlet property="HistoryArrowBtn" destination="hgx-16-KNm" id="C9x-bg-eRX"/>
                 <outlet property="RecipientBtn" destination="GxC-gB-dmJ" id="FUz-tZ-toI"/>
                 <outlet property="TextViewheight" destination="fEj-3d-AFC" id="olF-Zy-J3h"/>
                 <outlet property="TitleTxtfield" destination="9Kb-gi-bvH" id="Cnu-dv-QuD"/>
@@ -25,6 +26,7 @@
                 <outlet property="headerView" destination="nHh-6m-d7k" id="5Eg-RT-IlX"/>
                 <outlet property="outerView" destination="3QS-57-hEQ" id="KQo-Ko-A1J"/>
                 <outlet property="scrollView" destination="kJa-BV-PPC" id="G6c-ou-eMq"/>
+                <outlet property="showHistoryBtnName" destination="pGZ-Mo-vfv" id="zjT-gX-25g"/>
                 <outlet property="titleCountLbl" destination="tzb-Ws-QuV" id="vf8-bC-PDt"/>
                 <outlet property="titleLbl" destination="kni-Fc-z9J" id="dwc-b8-uMx"/>
                 <outlet property="uploadAttachmentView" destination="gJh-hV-TeH" id="FTD-KP-Ctd"/>
@@ -39,7 +41,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJa-BV-PPC">
-                    <rect key="frame" x="0.0" y="131" width="393" height="687"/>
+                    <rect key="frame" x="0.0" y="190" width="393" height="594"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3QS-57-hEQ">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="728.33333333333337"/>
@@ -115,7 +117,7 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="TO STANDARD OR SECTIONS"/>
+                                            <state key="normal" title="TO STANDARD OR SECTION"/>
                                             <connections>
                                                 <action selector="RecipentBtnAct:" destination="-1" eventType="touchUpInside" id="Pp5-gM-4Xq"/>
                                             </connections>
@@ -242,10 +244,10 @@
                     </constraints>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJj-uu-Sj2" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="131"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="190"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nHh-6m-d7k">
-                            <rect key="frame" x="5" y="76" width="383" height="35"/>
+                            <rect key="frame" x="5" y="135" width="383" height="35"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydz-l1-scl">
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="35"/>
@@ -273,7 +275,7 @@
                                                     <rect key="frame" x="5" y="2" width="90" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2024 - 2025" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyT-H8-wLj">
-                                                            <rect key="frame" x="0.0" y="7.6666666666666705" width="75" height="15.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="7.6666666666666563" width="75" height="15.666666666666664"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
