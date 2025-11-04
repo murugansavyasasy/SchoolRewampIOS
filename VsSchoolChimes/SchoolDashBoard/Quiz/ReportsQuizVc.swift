@@ -99,9 +99,6 @@ class ReportsQuizVc: UIViewController,SelectNotice,addQuestionAndSubmitedListDel
             }
         }
     }
-
-
-   
 }
 
 extension ReportsQuizVc : UITableViewDelegate,UITableViewDataSource {

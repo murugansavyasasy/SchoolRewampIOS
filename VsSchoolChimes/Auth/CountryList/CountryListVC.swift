@@ -11,8 +11,8 @@ import SDWebImage   // Use this instead of Kingfisher
 
 class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-    @IBOutlet weak var naDataImg: UIImageView!
-    @IBOutlet weak var naDataLbl: UILabel!
+    @IBOutlet weak var NoDataImg: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var newBottomview: UIView!
@@ -53,6 +53,9 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         newNextBtn.layer.cornerRadius = 10
         newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        
+        NoDataImg.isHidden = true
+        NoDataLbl.isHidden = true
         
         tv.showsVerticalScrollIndicator = false
         tv.showsHorizontalScrollIndicator = false
@@ -153,6 +156,15 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 return item.name?.lowercased().contains(query) ?? false
             }
         }
+        if Filter_CountryList.isEmpty{
+            NoDataImg.isHidden = false
+            NoDataLbl.isHidden = false
+            NoDataLbl.text = "No Data Found"
+        }else{
+            NoDataImg.isHidden = true
+            NoDataLbl.isHidden = true
+        }
+        
         tv.reloadData()
     }
     
@@ -174,9 +186,16 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                         self.country_data = data.first
                         self.tv.reloadData()
                     }
+                }else{
+                    self.NoDataImg.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = successMessage.message
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
+                    self.NoDataImg.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = error.localizedDescription
                     print("API Error: \(error.localizedDescription)")
                 }
             }

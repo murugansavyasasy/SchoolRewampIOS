@@ -90,6 +90,13 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
                     switch result {
                     case .success(let success):
                         if success.status == true {
+                            if user_inputs.clearTempData(){
+                                let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                              "activity": "SEND_PTM",
+                                              "user_type": 2,
+                                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                self.paketApiCall(params:parms)
+                            }
                             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self,okAction: {
                                 self.presentingViewController?.presentingViewController?.dismiss(animated: true)
                             })
@@ -131,6 +138,31 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
     @IBAction func createMeetingBtnAct(_ sender: Any) {
         
         Create_meeting_api()
+    }
+    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                case .failure(let error):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - TableView DataSource

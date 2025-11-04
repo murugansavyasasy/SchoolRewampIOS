@@ -238,15 +238,24 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
 
                 switch result {
                 case .success(let response):
-                    self.leaveHistoryData = response.data ?? []
-                    self.filteredLeaveData = self.leaveHistoryData
-                    let isEmpty = self.leaveHistoryData.isEmpty
-                    self.NodataLbl.text = response.message
-                    self.NodataImage.isHidden = !isEmpty
-                    self.NodataLbl.isHidden = !isEmpty
-                    self.TopInfoView.isHidden = isEmpty
-                    self.searchBtn.isHidden = isEmpty
-                    self.historyTable.reloadData()
+                    
+                    if response.status == true{
+                        self.leaveHistoryData = response.data ?? []
+                        self.filteredLeaveData = self.leaveHistoryData
+                        let isEmpty = self.leaveHistoryData.isEmpty
+                        self.NodataLbl.text = response.message
+                        self.NodataImage.isHidden = !isEmpty
+                        self.NodataLbl.isHidden = !isEmpty
+                        self.TopInfoView.isHidden = isEmpty
+                        self.searchBtn.isHidden = isEmpty
+                        self.applyFilter()
+                        // self.historyTable.reloadData()
+                    }else{
+                        self.NodataImage.isHidden = false
+                        self.NodataLbl.isHidden = false
+                        self.TopInfoView.isHidden = true
+                        self.searchBtn.isHidden = true
+                    }
 
                 case .failure(let error):
                     self.NodataLbl.text = error.localizedDescription

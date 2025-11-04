@@ -63,13 +63,7 @@ class ExameMarVC: UIViewController {
                     
                     self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
                     if response.status == true{
-                        if user_inputs.clearTempData(){
-                            let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
-                                          "activity": "VIEW_EXAM_SCHUDLE",
-                                          "user_type": 1,
-                                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
-                            self.paketApiCall(params:parms)
-                        }
+                        
                     }
                 case .failure(let error):
                     print("API Error:", error)
@@ -145,6 +139,14 @@ class ExameMarVC: UIViewController {
     }
     
     func View_Marks_Action(index:Int){
+        
+        if user_inputs.clearTempData(){
+            let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                          "activity": "VIEW_EXAM_SCHUDLE",
+                          "user_type": 1,
+                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+            self.paketApiCall(params:parms)
+        }
         
         guard let examID = FilteredExamList?[index].id else { return }
         let vc = MarkListVC(nibName: nil, bundle: nil)
