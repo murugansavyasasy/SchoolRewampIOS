@@ -320,6 +320,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         print("Category View Tapped")
         dropDown.anchorView = catagoryDropDownView
         dropDown.show()
+        dropDown.direction = .bottom
         dropDown.bottomOffset = CGPoint(x: 0, y: catagoryDropDownView.bounds.height)
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             selectedCatagoryImg.kf.setImage(with: URL(string: images[index]))
@@ -359,9 +360,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     func StyleAndTranslate(){
         
         //MARK: UI Changes
-        TxtOuterview.layer.cornerRadius = 10
-        TxtOuterview.layer.borderWidth = 0.5
-        TxtOuterview.layer.borderColor = UIColor.black.cgColor
+//        TxtOuterview.layer.cornerRadius = 10
+//        TxtOuterview.layer.borderWidth = 0.5
+//        TxtOuterview.layer.borderColor = UIColor.black.cgColor
         catagoryDropDownView.setShadow(cornerRadius: 8)
         fromLbl.setFont(style: .title, size: FontSize.TitleSize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -378,6 +379,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString: CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         
+        contentTxtView.layer.cornerRadius = 10
+        contentTxtView.layer.borderWidth = 1
+        contentTxtView.layer.borderColor = UIColor.gray.cgColor
     }
     
     func registerCell(){

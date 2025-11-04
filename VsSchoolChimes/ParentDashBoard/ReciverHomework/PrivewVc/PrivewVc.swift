@@ -278,7 +278,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             self.standarSenction = res.data?.first?.name?.first?.standard ?? []
                         }else if  res.data?.first?.type == "Message sent to SCHOOL"{
-                            
+                            self.yourTargetImageView.image = UIImage(systemName: "building.columns")
                             self.standarSenction = res.data?.first?.name?.first?.institute ?? []
 //
                         } else if  res.data?.first?.type == "Message sent to GROUP"{
@@ -291,7 +291,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                         }else if  res.data?.first?.type == "Message sent to SECTION"{
                    self.standarSenction = res.data?.first?.name?.first?.section ?? []
-                            self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                            self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             
                         }else if  res.data?.first?.type == "Message sent to STAFF"{
                             self.isStaffAndStudent = false

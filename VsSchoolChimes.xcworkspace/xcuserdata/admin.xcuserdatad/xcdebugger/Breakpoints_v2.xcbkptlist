@@ -176,8 +176,8 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Pauckt/HomePageVc/HomePaucktVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "Get_campians(parameter:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -313,20 +313,20 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "957E5CB7-AD3C-4665-BC56-B9FF33A95BAF"
+            uuid = "E6406C19-452E-4522-B0A0-B414281FED1E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Mark Attendence/AttendanceReportVc.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
+            landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80ae"
+                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80c1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -336,11 +336,11 @@
                   urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "447"
-                  endingLineNumber = "447">
+                  startingLineNumber = "448"
+                  endingLineNumber = "448">
                </Location>
                <Location
-                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80ae"
+                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80c1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -350,26 +350,10 @@
                   urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "447"
-                  endingLineNumber = "447">
+                  startingLineNumber = "448"
+                  endingLineNumber = "448">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "879DEB58-A928-4A11-841E-76FC7FEDEABD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Auth/Splash/SplashViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
-            landmarkName = "validateUser()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -400,7 +384,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
             endingLineNumber = "118"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkName = "addUnderline(to:unSelectedBtn:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -417,22 +401,6 @@
             startingLineNumber = "64"
             endingLineNumber = "64"
             landmarkName = "removeAbsentStudent(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "927A00A6-8A4A-4171-8328-C3C61CA265B3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Event/EventHistoryVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "filterUsingSchoolId(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
