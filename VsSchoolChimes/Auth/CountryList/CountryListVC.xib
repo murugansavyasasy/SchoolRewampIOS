@@ -12,9 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CountryListVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="NoDataImg" destination="70P-uK-DGi" id="v8B-0G-pwP"/>
+                <outlet property="NoDataLbl" destination="ylp-1Y-WpW" id="KdW-mR-xnk"/>
                 <outlet property="backBtn" destination="fjg-g3-zoD" id="FHk-L8-aBG"/>
-                <outlet property="naDataImg" destination="70P-uK-DGi" id="v8B-0G-pwP"/>
-                <outlet property="naDataLbl" destination="ylp-1Y-WpW" id="KdW-mR-xnk"/>
                 <outlet property="newBottomview" destination="Lx3-fE-Mec" id="OOO-cp-3uW"/>
                 <outlet property="newNextBtn" destination="gG8-Dm-wsW" id="eud-bY-hQw"/>
                 <outlet property="searchBar" destination="JoL-sb-hcI" id="x9Z-s7-lCF"/>
@@ -67,7 +67,7 @@
                                                 <constraint firstAttribute="height" constant="300" id="fXT-DM-QXi"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylp-1Y-WpW">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylp-1Y-WpW">
                                             <rect key="frame" x="0.0" y="300" width="393" height="20.333333333333314"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -236,13 +236,13 @@
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

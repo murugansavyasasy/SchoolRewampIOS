@@ -290,7 +290,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             menuId: menuId ?? "", messageId: messageId ?? ""
         )
     )
-    private lazy var secondVCNav = UINavigationController(rootViewController: HelpVc())
+    //private lazy var secondVCNav = UINavigationController(rootViewController: HelpVc())
+    private lazy var secondVCNav = UINavigationController(rootViewController: HolidayVC())
     private lazy var thirdVCNav = UINavigationController(rootViewController: SettingsViewController())
     private lazy var fourthVCNav = UINavigationController(rootViewController: UpdateProfileVC(isStudent: login_astype == 2))
 
@@ -340,8 +341,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             tag: 0
         )
         let secondItem = UITabBarItem(
-            title: StringsName.Help.translated(),
-            image: UIImage(systemName: "questionmark.circle.fill"),
+            title: AttendanceString.holidays,
+            image: UIImage(systemName: "calendar"),
             tag: 1
         )
         let thirdItem = UITabBarItem(
@@ -450,8 +451,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             profileVC.delegate = self
         } else if let dashboardVC = topVC as? CustomDasboard {
             dashboardVC.delegate = self
-        } else if let helpVC = topVC as? HelpVc {
-            helpVC.passVale = login_astype ?? 0
+        } else if let holidayVC = topVC as? HolidayVC {
+            holidayVC.passValue = login_astype ?? 0
         } else if let schoolVC = topVC as? UpdateProfileVC {
             schoolVC.hideBack = true
         }

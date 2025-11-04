@@ -131,10 +131,16 @@ class absentPrivewVC: UIViewController, call {
             let components = student.att_status?.split(separator: "/").map(String.init) ?? []
             var value = ""
             
-            if user_inputs.session_type == "FH"{
-                value = components.first ?? ""
+            if user_inputs.attendance_type == "H" {
+                
+                if user_inputs.session_type == "FH"{
+                    value = components.first ?? ""
+                }else{
+                    value = (components.count > 1 ? components[1] : components.first) ?? ""
+                    print("Value",value)
+                }
             }else{
-                value = (components.count > 1 ? components[1] : components.first) ?? ""
+                value = components.first ?? ""
             }
             return value == Filter_Value
         }
@@ -170,12 +176,14 @@ class absentPrivewVC: UIViewController, call {
             let components = student.att_status?.split(separator: "/").map(String.init) ?? []
             var value = ""
             
-            // Determine session value
-            if user_inputs.session_type == "FH" {
-                value = components.first ?? ""
-            } else if user_inputs.session_type == "SH" {
-                value = components.count > 1 ? components[1] : (components.first ?? "")
-            } else {
+            if user_inputs.attendance_type == "H" {
+                // Determine session value
+                if user_inputs.session_type == "FH" {
+                    value = components.first ?? ""
+                } else if user_inputs.session_type == "SH" {
+                    value = components.count > 1 ? components[1] : (components.first ?? "")
+                }
+            }else {
                 // fallback for full day
                 value = components.first ?? ""
             }

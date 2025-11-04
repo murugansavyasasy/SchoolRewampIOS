@@ -112,6 +112,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         NameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         
+        titleLbl.isHidden = true
+        
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         purposeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         ModeDefLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -302,7 +304,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         fromTimeLbl.text = PTMString.startWith
         toTimeLbl.text = PTMString.endWith
         DurationAndBreakDefLbl.text = PTMString.durationAndBreak
-        durationLbl.text = "Slot Duration"//PTMString.duration
+        durationLbl.text = "Select Slot Duration"//PTMString.duration
         minutesDefLbl.text = PTMString.minutes
         needBreakDefLbl.text = PTMString.needBreakBetweenSlots
         breakAfterLbl.text = PTMString.breakAfter

@@ -33,7 +33,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
 //        }
         
         if CallAttendaceApi {
-            
+            user_inputs.all_present = areAllStudentsPresent() ? "T" : "F"
             self.markAttendaceApi()
             
         }else {
@@ -227,7 +227,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                // MarkAttendenceStringFile.student_id: MakeAbsentId,
                 MarkAttendenceStringFile.class_id: user_inputs.class_id,
                 MarkAttendenceStringFile.section_id: user_inputs.section_id,
-                MarkAttendenceStringFile.all_present: "F",
+                MarkAttendenceStringFile.all_present: user_inputs.all_present,
                 MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
                 MarkAttendenceStringFile.session_type: user_inputs.session_type,
                 MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date,
@@ -245,6 +245,15 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                     if succesmessage.status == true {
                         
                         DispatchQueue.main.async { [self] in
+                            
+                            if user_inputs.clearTempData(){
+                                let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                              "activity": "MARK_ATTENDANCE",
+                                              "user_type": 2,
+                                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                self.paketApiCall(params:parms)
+                            }
+                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: AlertstringFile.Success,
@@ -254,7 +263,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     self.attendaceGoBackDashBoard()
                                     
                                 }
-                            
                         }
                     }else {
                         
@@ -268,7 +276,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     self.attendaceGoBackDashBoard()
                                     
                                 }
-                            
                         }
                     }
                     
@@ -279,6 +286,31 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                     }
                 }
             }
+    }
+    
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                case .failure(let error):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
+                }
+            }
+        }
     }
     
     func getAttendanceCounts() /*-> (present: Int, absent: Int, od: Int)*/ {
@@ -438,14 +470,14 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     @IBAction func submitAttendanceAct(_ sender: Any) {
 
         if areAllStudentsPresent(){
-            
+            user_inputs.all_present = "T"
             let alert = CustomAlert()
             alert.showAlertCancel(title:AlertstringFile.Mark_All_as_Presents, message: AlertstringFile.submitAttendanceConfirmation, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self) {
                 self.markAttendaceApi()
             } onNo: {}
             
         }else{
-            
+            user_inputs.all_present = "F"
             let vc = absentPrivewVC(nibName: nil, bundle: nil)
             vc.StudentList = self.student_List
             vc.delegate = self

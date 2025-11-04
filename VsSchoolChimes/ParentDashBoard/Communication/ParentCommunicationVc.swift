@@ -587,6 +587,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             tv.reloadData()
             SearchbarStack.isHidden = true
             SearchBar.searchTextField.text = ""
+            SearchBar.resignFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             FilterCV.isHidden = true
             ReadUnreadStack.isHidden = true
