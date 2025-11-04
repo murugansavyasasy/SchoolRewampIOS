@@ -51,6 +51,8 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
         
         WaitingLbl.isHidden = true
+        
+        optionsBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
     }
     
     func edit(edit:Bool,delete:Bool,selectedId:String){
@@ -70,7 +72,7 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .up
+            popoverController.permittedArrowDirections = .right
             popoverController.delegate = self
         }
         

@@ -147,7 +147,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         if indexPath.section == 0{
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDataTV, for: indexPath) as! MeetingDataTV
             
-            cell.dateLbl.text = slotData?.date
+            cell.dateLbl.text = slotData?.date?.convertToTargetDateFormat()
             cell.meetingNameLbl.text = slotData?.event_name
             cell.durationLbl.text = String(slotData?.meeting_duration ?? 0) + " " + PTMString.minutes
             cell.modeLbl.text = slotData?.event_mode

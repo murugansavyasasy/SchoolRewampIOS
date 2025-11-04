@@ -110,6 +110,9 @@ class NewPtmVC: UIViewController, Datepicker {
     func Get_Meetings_Api(EventDate: String) {
         let param = [PTMRequestStringFile.event_date:EventDate]
 
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
         APIService.shared.makeApi(
             url: ServiceUrl.ptm_api_ptm_schedule_slot_details_for_staff,
             parameters: param,
@@ -119,7 +122,7 @@ class NewPtmVC: UIViewController, Datepicker {
             
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                
+                if #available(iOS 15.0, *) { self.hideActivityLoader() }
                 switch result {
                 case .success(let success):
                     if success.status {
@@ -366,7 +369,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
         cell.dateBtn.setTitle(event.date?.convertToTargetDateFormat(), for: .normal)
         let time = (event.start_time ?? "") + " - " + (event.end_time ?? "")
         cell.timeBtn.setTitle(time, for: .normal)
-        cell.modeLbl.text = event.event_mode
+        cell.modeLbl.text = "Mode - " + (event.event_mode ?? "")
         if event.profiles?.count == 0 {
             cell.imageStack.isHidden = true
             cell.joinBtn.isHidden = false

@@ -74,16 +74,21 @@
                     <rect key="frame" x="0.0" y="124" width="393" height="728"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="content-view">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="660.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="662.66666666666663"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holidays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vla-7I-pjk">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="VWB-Ln-IV2">
                                     <rect key="frame" x="15" y="8" width="363" height="24"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Holidays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vla-7I-pjk">
+                                            <rect key="frame" x="0.0" y="0.0" width="363" height="24"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVO-kt-kYW">
-                                    <rect key="frame" x="16" y="49.666666666666657" width="30" height="25"/>
+                                    <rect key="frame" x="16" y="52" width="30" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="6eV-B5-zwM"/>
                                         <constraint firstAttribute="width" constant="30" id="kQI-q9-8Gl"/>
@@ -99,7 +104,7 @@
                                     </connections>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="HvU-we-dtk">
-                                    <rect key="frame" x="56" y="52" width="281" height="20.333333333333329"/>
+                                    <rect key="frame" x="56" y="54.33333333333335" width="281" height="20.333333333333336"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7l-63-BPI">
                                             <rect key="frame" x="0.0" y="0.0" width="281" height="20.333333333333332"/>
@@ -110,7 +115,7 @@
                                     </subviews>
                                 </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRk-2w-5fh">
-                                    <rect key="frame" x="347" y="49.666666666666657" width="30" height="25"/>
+                                    <rect key="frame" x="347" y="52" width="30" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="1cU-eb-dLG"/>
                                         <constraint firstAttribute="width" constant="30" id="Yfb-l6-cve"/>
@@ -127,7 +132,7 @@
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="calendar-container">
-                                    <rect key="frame" x="0.0" y="82.333333333333343" width="393" height="270"/>
+                                    <rect key="frame" x="0.0" y="84.666666666666657" width="393" height="270"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="gYP-Ij-cQD">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="270"/>
@@ -150,14 +155,14 @@
                                     </constraints>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mDZ-V4-bTk">
-                                    <rect key="frame" x="0.0" y="360.33333333333331" width="393" height="299.99999999999994"/>
+                                    <rect key="frame" x="0.0" y="362.66666666666674" width="393" height="300"/>
                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="300" id="bq2-NZ-0gI"/>
                                     </constraints>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Holidays " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olx-oB-xVl">
-                                    <rect key="frame" x="0.0" y="376.33333333333331" width="393" height="15.666666666666686"/>
+                                    <rect key="frame" x="0.0" y="378.66666666666669" width="393" height="15.666666666666686"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                     <color key="textColor" systemColor="systemRedColor"/>
                                     <nil key="highlightedColor"/>
@@ -170,21 +175,21 @@
                                 <constraint firstAttribute="trailing" secondItem="IRk-2w-5fh" secondAttribute="trailing" constant="16" id="BSp-tw-Ild"/>
                                 <constraint firstItem="olx-oB-xVl" firstAttribute="trailing" secondItem="mDZ-V4-bTk" secondAttribute="trailing" id="Ijx-4N-OVv"/>
                                 <constraint firstItem="olx-oB-xVl" firstAttribute="top" secondItem="mDZ-V4-bTk" secondAttribute="top" constant="16" id="J67-3I-fi3"/>
+                                <constraint firstItem="VWB-Ln-IV2" firstAttribute="top" secondItem="content-view" secondAttribute="top" constant="8" id="Jjv-N2-8fy"/>
                                 <constraint firstItem="IRk-2w-5fh" firstAttribute="leading" secondItem="HvU-we-dtk" secondAttribute="trailing" constant="10" id="OYP-Sc-fCq"/>
+                                <constraint firstAttribute="trailing" secondItem="VWB-Ln-IV2" secondAttribute="trailing" constant="15" id="OYk-p6-4I7"/>
                                 <constraint firstAttribute="trailing" secondItem="mDZ-V4-bTk" secondAttribute="trailing" id="QqR-rD-D2z"/>
                                 <constraint firstItem="calendar-container" firstAttribute="top" secondItem="HvU-we-dtk" secondAttribute="bottom" constant="10" id="R9s-AF-1a9"/>
                                 <constraint firstItem="mDZ-V4-bTk" firstAttribute="top" secondItem="calendar-container" secondAttribute="bottom" constant="8" id="Wdj-8p-ebr"/>
                                 <constraint firstItem="IRk-2w-5fh" firstAttribute="centerY" secondItem="HvU-we-dtk" secondAttribute="centerY" id="ZdC-wJ-qBd"/>
-                                <constraint firstItem="Vla-7I-pjk" firstAttribute="top" secondItem="content-view" secondAttribute="top" constant="8" id="auV-Bd-Ky4"/>
                                 <constraint firstItem="calendar-container" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" id="calendar-leading"/>
                                 <constraint firstAttribute="trailing" secondItem="calendar-container" secondAttribute="trailing" id="calendar-trailing"/>
-                                <constraint firstItem="Vla-7I-pjk" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="15" id="eOk-Ms-nKe"/>
                                 <constraint firstItem="mDZ-V4-bTk" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" id="eSk-zn-K0O"/>
                                 <constraint firstItem="olx-oB-xVl" firstAttribute="leading" secondItem="mDZ-V4-bTk" secondAttribute="leading" id="gGx-8i-dTJ"/>
                                 <constraint firstItem="xVO-kt-kYW" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="16" id="l8G-Ta-pJI"/>
                                 <constraint firstItem="HvU-we-dtk" firstAttribute="leading" secondItem="xVO-kt-kYW" secondAttribute="trailing" constant="10" id="lRV-ul-fLA"/>
-                                <constraint firstAttribute="trailing" secondItem="Vla-7I-pjk" secondAttribute="trailing" constant="15" id="uNx-kU-oxG"/>
-                                <constraint firstItem="HvU-we-dtk" firstAttribute="top" secondItem="Vla-7I-pjk" secondAttribute="bottom" constant="20" id="zFN-Ar-bnf"/>
+                                <constraint firstItem="xVO-kt-kYW" firstAttribute="top" secondItem="VWB-Ln-IV2" secondAttribute="bottom" constant="20" id="tJY-F0-HU9"/>
+                                <constraint firstItem="VWB-Ln-IV2" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="15" id="vnQ-0S-Koy"/>
                             </constraints>
                         </view>
                     </subviews>

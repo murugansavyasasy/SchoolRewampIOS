@@ -28,8 +28,10 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     private var filteredHolidays: [EventHolidayData] = []
     private var holidayColors: [String: UIColor] = [:]
     var studentDetails = UserDefaultFileManager.get_child_Details()
+    var staffDetails = UserDefaultFileManager.get_child_Details()
     private let weekdays = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     let formatter = DateFormatter()
+    var passValue = 0
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -37,10 +39,20 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        let name = studentDetails?.name ?? ""
-        let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
-        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
-        titleLbl.text = AttendanceString.holidays
+        if passValue == 1 || passValue == 2{
+            BackBtn.isHidden = true
+            titleLbl.isHidden = true
+            studentNameLbl.text = "  " + AttendanceString.holidays
+            studentNameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        }else{
+            BackBtn.isHidden = false
+            titleLbl.isHidden = false
+            let name = studentDetails?.name ?? ""
+            let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+            studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
+            titleLbl.text = AttendanceString.holidays
+        }
+        
         setupViews()
         addSwipeGestures()
     }
@@ -68,11 +80,18 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             showActivityLoader()
         }
 
+        var token = ""
+        if passValue == 1{
+            token = staffDetails?.access_token ?? ""
+        }else{
+            token = studentDetails?.access_token ?? ""
+        }
+        
         APIService.shared.makeApi(
             url: ServiceUrl.school_event_view_holidays,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? "") { [weak self] (result: Result<EventHolidayResponse, Error>) in
+            token: token) { [weak self] (result: Result<EventHolidayResponse, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         self?.hideActivityLoader()
@@ -85,12 +104,15 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                         self?.updateFilteredHolidays()
                         self?.updateHeaderLabels()
                         if response.status == true{
-                            if user_inputs.clearTempData(){
-                                let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
-                                              "activity": "VIEW_EVENTS",
-                                              "user_type": 1,
-                                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
-                                self?.paketApiCall(params:parms)
+                            
+                            if self?.passValue == 0{
+                                if user_inputs.clearTempData(){
+                                    let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                                  "activity": "VIEW_EVENTS",
+                                                  "user_type": 1,
+                                                  "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                    self?.paketApiCall(params:parms)
+                                }
                             }
                         }
                     case .failure(let error):
