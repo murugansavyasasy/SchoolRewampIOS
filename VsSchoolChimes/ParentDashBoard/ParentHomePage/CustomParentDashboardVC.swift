@@ -89,6 +89,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             recentActiveMenuCollection.dataSource = self
             MenuCollection.delegate = self
             MenuCollection.dataSource = self
+        pagecontroller.currentPage = 0
             setupHeaderView()
             setupLabels()
             setupProfileImage()

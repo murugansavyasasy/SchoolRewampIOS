@@ -13,6 +13,9 @@ protocol SearchDelegate: AnyObject {
 
 class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
     
+    @IBOutlet weak var nodataFoundStack: UIStackView!
+    @IBOutlet weak var noDatafoundImg: UIImageView!
+    @IBOutlet weak var nodataFoundLbl: UILabel!
     // MARK: - IBOutlets
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -64,11 +67,13 @@ class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
             delegate?.searchText("Submited")
             searchBar.text = ""
             submitedBtn.tintColor = .blue
+            
         case 2:
             pendingLbl.isHidden = false
             delegate?.searchText("Pending")
             searchBar.text = ""
             pendingBtn.tintColor = .blue
+            
         default: break
         }
     }
@@ -81,6 +86,7 @@ class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
         delegate?.searchText("true")
         if !sender.isSelected{
             searchBar.endEditing(true)
+            
         }
     }
     // MARK: - UISearchBarDelegate

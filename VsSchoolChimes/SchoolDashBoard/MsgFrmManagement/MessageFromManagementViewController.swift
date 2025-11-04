@@ -126,6 +126,7 @@ class MessageFromManagementViewController: UIViewController {
             return matchesSchool && matchesSearch
         }
         
+//        print("filteredDatafilteredData",filteredData.)
         updateNoDataUI(isEmpty: filteredData.isEmpty)
         tv.reloadData()
     }
@@ -211,11 +212,13 @@ class MessageFromManagementViewController: UIViewController {
                 self.updateNoDataUI(isEmpty: self.messageData.isEmpty)
                 if self.messageData.isEmpty {
                     self.NoDataLbl.text = response.message
+                    self.searchBtn.isHidden = true
                 }
                 
             case .failure(let error):
                 self.updateNoDataUI(isEmpty: true)
                 self.NoDataLbl.text = error.localizedDescription
+                self.searchBtn.isHidden = true
             }
             
             self.tv.reloadData()
@@ -234,10 +237,12 @@ class MessageFromManagementViewController: UIViewController {
                     self.filterMessages()
                 } else {
                     self.handleEmptyArchive(message: response.message ?? "")
+                    self.searchBtn.isHidden = true
                 }
                 
             case .failure(let error):
                 self.handleEmptyArchive(message: error.localizedDescription)
+                self.searchBtn.isHidden = true
             }
             
             self.shouldShowFooter = false
@@ -268,6 +273,7 @@ class MessageFromManagementViewController: UIViewController {
     private func updateMessageReadStatus(detailId: String) {
         for (index, message) in filteredData.enumerated() where message.id == detailId {
             filteredData[index].is_unread = false
+            messageData[index].is_unread = false
         }
         tv.reloadData()
     }
@@ -317,6 +323,8 @@ class MessageFromManagementViewController: UIViewController {
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
         
         dropDown.selectionAction = { [weak self] (index, item) in
+            
+            self?.SearchBar.searchTextField.text = ""
             self?.handleSchoolSelection(index: index, item: item, schoolDetails: details)
         }
         
@@ -330,6 +338,7 @@ class MessageFromManagementViewController: UIViewController {
     }
     
     @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
+        SearchBar.searchTextField.text = ""
         fetchArchivedMessages()
     }
 }

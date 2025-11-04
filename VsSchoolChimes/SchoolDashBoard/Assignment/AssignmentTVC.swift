@@ -168,7 +168,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
         
-        assignmentProgressLbl.text = "Submitted Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
+        assignmentProgressLbl.text = "Submission Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)
     }

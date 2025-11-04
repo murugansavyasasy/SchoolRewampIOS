@@ -254,6 +254,7 @@ class AssignmentReport: UIViewController, SelectedId {
         
         academicDropDown.selectionAction = { [weak self] index, item in
             self?.academicYearLabel.text = item
+            self?.searchBar.text = ""
             self?.academicId = self?.academicYearDataList[index].id
             self?.getAssigment()
         }

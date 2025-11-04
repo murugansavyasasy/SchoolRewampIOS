@@ -628,6 +628,7 @@ struct AttenenceReportData: Codable{
     let admission_no: String?
     let att_status: String?
     let absent_on: String?
+    let roll_no: String?
 }
 
 struct StudentStatisticsResponse: Codable {
@@ -866,6 +867,8 @@ struct AbsentisReportStudent: Codable {
     let admission_no: String?
     let photo_path: String?
     let primary_mobile: String?
+    let gender: String?
+    
 }
 
 //MARK: Leave Request History
@@ -969,15 +972,15 @@ struct LessonPlanStaffReportResponse: Codable {
 }
 
 struct LessonPlanStaffReport: Codable {
-    let section_subject_id: String
-    let staff_name: String
-    let class_name: String
-    let section_name: String
-    let subject_name: String
-    let completed_items: String
-    let total_items: String
-    let percentage_value: Int
-    let items_completed: String
+    var  section_subject_id: String
+    var  staff_name: String
+    var  class_name: String
+    var  section_name: String
+    var  subject_name: String
+    var  completed_items: String
+    var  total_items: String
+    var  percentage_value: Int
+    var  items_completed: String
 }
 
 struct LessonPlanDetailResponse: Codable {

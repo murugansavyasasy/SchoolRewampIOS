@@ -33,7 +33,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     }
     func edit(edit:Bool,delete:Bool,selectedId:String){
         self.selectedId = selectedId
-        self.delete = delete
+        self.delete = !delete
         self.edit = edit
         EditBtn.isHidden = !(edit || delete)
         EditBtn1.isHidden = !(edit || delete)

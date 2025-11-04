@@ -66,6 +66,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     var sectionValue:String?
     var reciver = false
     var onDismiss: (() -> Void)?
+    var isNoDataFound = false
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +78,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         let Name = userNameValue ?? ""
         let Standard = sectionValue ?? ""
         userName.configureAsBackTitle(firstLine: Name, secondLine: Standard)
+//        isNodataInSearch = filterAssignment.count == 0
     }
     
     func ReadStatusUpdate(type: String,detail_id: String){
@@ -250,6 +252,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                 for: .normal
             )
             cell.delegate = self
+//            cell.nodataFoundStack.isHidden = isNoDataFound
             return cell
                 case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
