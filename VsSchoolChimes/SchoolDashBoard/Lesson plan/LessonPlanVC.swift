@@ -34,7 +34,7 @@ class LessonPlanVC: UIViewController {
     var staffRole = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
     var LessonPlanData: [LessonPlanStaffReport]?
     var SearchData: [LessonPlanStaffReport]?
-    
+    var isAllClassSelected: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -170,21 +170,46 @@ class LessonPlanVC: UIViewController {
     @IBAction func AllClassAct(_ sender: Any) {
         addUnderline(to: AllClassBtn, unselectedButton: MyClassBtn)
         ReqestType = LessonPlanStringFile.allclass
+        searchBar.text = ""
+        searchBar.isHidden = true
+        searchIconBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchBar.resignFirstResponder()
         lesson_plan_staff_report_Api()
     }
   
     @IBAction func MyClassAct(_ sender: Any) {
         addUnderline(to: MyClassBtn, unselectedButton: AllClassBtn)
         ReqestType = LessonPlanStringFile.myclass
+        searchBar.text = ""
+        searchBar.isHidden = true
+        searchIconBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchBar.resignFirstResponder()
         lesson_plan_staff_report_Api()
     }
     
     @IBAction func SearchButtonAct(_ sender: UIButton) {
         searchBar.becomeFirstResponder()
         sender.isSelected.toggle()
-        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        searchIconBtn.setImage(UIImage(systemName: icon), for: .normal)
-        searchBar.isHidden = !sender.isSelected
+//        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+//        searchIconBtn.setImage(UIImage(systemName: icon), for: .normal)
+//        searchBar.isHidden = !sender.isSelected
+//        searchBar.resignFirstResponder()
+//        searchBar.text = ""
+        if sender.isSelected{
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            
+            searchBar.isHidden = true
+            NodataImage.isHidden = true
+            NodataLbl.isHidden = true
+            searchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            SearchData = LessonPlanData
+            tableview.reloadData()
+        }
     }
     @IBAction func BackBtnAct(_ sender: Any) {
         dismiss(animated: true)
@@ -235,6 +260,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
 //        if lesson.total_items != "0"{
             let vc = ViewLessonVC(nibName: nil, bundle: nil)
             vc.Reqest_Type = ReqestType
+        vc.LesonPlanReport = lesson
             vc.SubjectId = lesson.section_subject_id
             vc.IsDeleteHiden = ReqestType == "myclass" ? false : true
             vc.modalPresentationStyle = .fullScreen

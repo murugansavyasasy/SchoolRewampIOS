@@ -12,6 +12,9 @@ import FSCalendar
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController {
     
+  
+    @IBOutlet weak var searchImage: UIImageView!
+    @IBOutlet weak var noSearchDataLbl: UILabel!
     @IBOutlet weak var LatePresentageLbl: UILabel!
     @IBOutlet weak var ODperesentageLbl: UILabel!
     @IBOutlet weak var absentPresentageLbl: UILabel!
@@ -110,6 +113,7 @@ class MarkAttendenceVC: UIViewController {
         AttendaceSectionStac.isHidden = true
         updateMonthLabel()
         UIupdate()
+       
         get_Academic_year()
         SearchBar.searchTextField.addDoneButton()
         backBtnName.applyBackButton()
@@ -120,7 +124,8 @@ class MarkAttendenceVC: UIViewController {
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
         standardView.addGestureRecognizer(standardTap)
-        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+//            view.addGestureRecognizer(tapGesture)
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
         TV.register(
@@ -130,10 +135,61 @@ class MarkAttendenceVC: UIViewController {
 
     }
     
-   
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardHeight = keyboardFrame.cgRectValue.height
+        
+        // Shift your main view slightly up
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= keyboardHeight / 2.5
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // Move view back to normal
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+
     @IBAction func searchActBtn(_ sender: UIButton) {
         
+        sender.isSelected.toggle()
         
+        if sender.isSelected{
+            SearchBar.isHidden = false
+            SearchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+            sender.tintColor = .label
+        }else{
+            
+            SearchBar.isHidden = true
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            sender.tintColor = .black
+            noSearchDataLbl.isHidden = true
+            searchImage.isHidden = true
+            SearchBar.resignFirstResponder()
+            SearchBar.searchTextField.text = ""
+            FilteredReport = attendenceReport
+            TV.reloadData()
+            
+        }
         
     }
     override func viewDidLayoutSubviews() {
@@ -255,6 +311,7 @@ class MarkAttendenceVC: UIViewController {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
             
             popoverVC.configureButtons(with: [
+                ("FN : ForeNoon / AN : AfterNoon", "", .black),
                 ("P", "Present", .systemGreen),
                 ("A", "Absent", .systemRed),
                 ("OD", "On Duty", .systemBlue),
@@ -270,6 +327,7 @@ class MarkAttendenceVC: UIViewController {
         // Remove underline from both buttons
         [selectedButton, unselectedButton].forEach { button in
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            
             button.tintColor = .black
         }
         
@@ -457,6 +515,7 @@ class MarkAttendenceVC: UIViewController {
                                     on: self) {
                                     self.dismiss(animated: true)
                                 }
+                            
                         }
                     }else {
                         DispatchQueue.main.async {
@@ -596,22 +655,6 @@ class MarkAttendenceVC: UIViewController {
                         reportFullView.isHidden = false
                         notTakenView.isHidden = true
                         
-                        // ✅ Calculate counts
-                        let totalCount = attendenceReport?.count
-                        let presentCount = attendenceReport?.filter {
-                            $0.att_status == "P"
-                        }.count
-                        let absentCount = attendenceReport?.filter {
-                            $0.att_status == "A"
-                        }.count
-                        
-                        // ✅ Percentages
-                        let presentPercentage = totalCount ?? 0 > 0 ? (
-                            Double(presentCount ?? 0) / Double(totalCount ?? 0)
-                        ) * 100 : 0
-                        let absentPercentage = totalCount ?? 0 > 0 ? (
-                            Double(absentCount ?? 0) / Double(totalCount ?? 0)
-                        ) * 100 : 0
                         
                     
                         updateAttendancePercentages()
@@ -740,12 +783,16 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
         
         let cell = TV.dequeueReusableCell(withIdentifier: "ReportAttCell", for: indexPath) as! ReportAttCell
         
-        
+        cell.selectionStyle = .none
         cell.StudentLbl.text = FilteredReport?[indexPath.row].student_name
         cell.admissionLbl.text = "admission no : " + (
             FilteredReport?[indexPath.row].admission_no ?? ""
         )
+        cell.rollNumberLbl.isHidden =  (
+            (FilteredReport?[indexPath.row].roll_no) == ""
+        ) ? true : false
         
+        cell.rollNumberLbl.text = "Roll No : " + (FilteredReport?[indexPath.row].roll_no ?? "")
         if let attStatus = FilteredReport?[indexPath.row].att_status {
             let parts = attStatus.components(separatedBy: "/")
             
@@ -806,22 +853,39 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
 @available(iOS 14.0, *)
 extension MarkAttendenceVC: UISearchBarDelegate {
     
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText.isEmpty {
             FilteredReport = attendenceReport
-        }else {
-            
+        } else {
             let text = searchText.lowercased()
             
             FilteredReport = attendenceReport?.filter { AttenenceReportData in
-                
                 (AttenenceReportData.student_name?.lowercased().contains(text) ?? false) ||
                 (AttenenceReportData.admission_no?.lowercased().contains(text) ?? false)
             }
         }
-        TV.reloadData()
+        
+        // Reload table view smoothly without animation
+        UIView.performWithoutAnimation {
+            TV.reloadData()
+            TV.layoutIfNeeded()
+        }
+        
+        // Check if filtered data is empty
+        let isEmpty = (FilteredReport?.isEmpty ?? true)
+        if isEmpty {
+            // Optional UI handling
+            noSearchDataLbl.isHidden = false
+            searchImage.isHidden = false
+            noSearchDataLbl.text = "No Student Data Found"
+        } else {
+            noSearchDataLbl.isHidden = true
+            searchImage.isHidden = true
+        }
     }
+
 }
 @available(iOS 14.0, *)
 extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {

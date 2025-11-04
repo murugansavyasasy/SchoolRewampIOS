@@ -183,6 +183,18 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                         self.Filtered_stuent_Listt = self.student_List
                         self.getAttendanceCounts()
                         self.tv.reloadData()
+                        
+                        // Check if all students are absent
+                           let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
+                           
+                           if allAbsent {
+                               
+                               self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                           } else {
+                               
+                               self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+                           }
+                        
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
                             self.dismiss(animated: true)
@@ -338,10 +350,15 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         let absentCount = statuses.filter { $0 == "ABSENT" }.count
         let odCount = statuses.filter { $0 == "OD" }.count
         
-        PresentCountLbl.text = String(presentCount)
-        AbsentCountLbl.text = String(absentCount)
-        OdCountLbl.text = String(odCount)
-
+        
+//        PresentCountLbl.text = String(presentCount)
+//        AbsentCountLbl.text = String(absentCount)
+//        OdCountLbl.text = String(odCount)
+        
+        PresentCountLbl.text = formatCount(presentCount)
+           AbsentCountLbl.text = formatCount(absentCount)
+           OdCountLbl.text = formatCount(odCount)
+        
 //        return (presentCount, absentCount, odCount)
     }
 
@@ -375,13 +392,27 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             // Count of students marked as absent
             totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
             let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-            PresentCountLbl.text = String(PresenrCount)
-            AbsentCountLbl.text = String(totalcount)
+//            PresentCountLbl.text = String(PresenrCount)
+//            AbsentCountLbl.text = String(totalcount)
+            
+            PresentCountLbl.text = formatCount(PresenrCount)
+                AbsentCountLbl.text = formatCount(totalcount)
+
+//                OdCountLbl.text = String(format: "%02d", odCount)
             let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
             selectAllBtn.setImage(image, for: .normal)
         }
     }
     
+    func formatCount(_ count: Int) -> String {
+            if count == 0 {
+                return "0"
+            } else if count < 10 {
+                return String(format: "0%d", count)
+            } else {
+                return String(count)
+            }
+        }
     @IBAction func selectAllAct(_ sender: UIButton) {
         
             // Toggle the state
@@ -558,6 +589,9 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         searchStack.isHidden = !sender.isSelected
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar.text = ""
+        Filtered_stuent_Listt = student_List
+        tv.reloadData()
     }
     
     @IBAction func fliter(_ sender: UIButton) {
@@ -609,7 +643,15 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         let attendanceStatus = student_data?.att_status
         let components = attendanceStatus?.split(separator: "/")
         var attendanceType = ""
-
+        let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
+        
+        if allAbsent {
+            
+            self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        } else {
+            
+            self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        }
         if user_inputs.attendance_type == "H" {
             if user_inputs.session_type == "FH" {
                 attendanceType = components?.first.map(String.init) ?? ""

@@ -276,6 +276,7 @@ extension absentPrivewVC:UITableViewDelegate,UITableViewDataSource{
         cell.addmissionLbl.isHidden = data?.admission_no ==  "" ? true : false
         cell.addmissionLbl.text =  "admission no: " + (data?.admission_no ?? "")
         
+        
         return cell
     }
     

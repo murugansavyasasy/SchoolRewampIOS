@@ -33,6 +33,8 @@ class ViewLessonVC: UIViewController, SelectedId {
     @IBOutlet weak var FilterCV: UICollectionView!
     @IBOutlet weak var menuNameLbl: UILabel!
     
+    @IBOutlet weak var searchBtnName: UIButton!
+    
     var SubjectId : String?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ViewLessonData: [LessonPlanDetail]?
@@ -42,7 +44,7 @@ class ViewLessonVC: UIViewController, SelectedId {
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var LessonPlanStatus = 0
     var IsDeleteHiden = false
-    
+    var LesonPlanReport : LessonPlanStaffReport?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,6 +59,9 @@ class ViewLessonVC: UIViewController, SelectedId {
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         
         SearchBar.isHidden = true
+        SearchBar.delegate = self
+        SearchBar.applyRightTxt()
+        SearchBar.searchTextField.addDoneButton()
         TableView.showsVerticalScrollIndicator = false
         TableView.showsHorizontalScrollIndicator = false
         
@@ -78,6 +83,30 @@ class ViewLessonVC: UIViewController, SelectedId {
     override func viewWillAppear(_ animated: Bool) {
         
         View_Lesson_Plan_Api()
+    }
+    
+    
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        SearchBar.becomeFirstResponder()
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            SearchBar.isHidden = false
+            SearchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            
+            SearchBar.isHidden = true
+            NoDataImg.isHidden = true
+            NoDataLbl.isHidden = true
+            SearchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            SearchBar.searchTextField.text = ""
+            FilteredData = ViewLessonData
+            TableView.reloadData()
+        }
+        
     }
     
     //MARK: Api Call Functions
@@ -114,6 +143,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                         self.NoDataLbl.text = success.message
                         self.NoDataImg.isHidden = false
                         self.NoDataLbl.isHidden = false
+                        self.searchBtnName.isHidden = !success.status
                     }
                     TableView.reloadData()
                     
@@ -253,6 +283,10 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         let cell = TableView.dequeueReusableCell(withIdentifier: "LessonPlanTVC", for: indexPath) as! LessonPlanTVC
         
         let lesson = FilteredData?[indexPath.row]
+        cell.titleNameLbl.text = LesonPlanReport?.subject_name
+        cell.chapterLbl.text = " chapter " + (
+            LesonPlanReport?.items_completed ?? ""
+        )
 //        let colour: UIColor
         switch lesson?.lesson_plan_status{
             
@@ -296,7 +330,8 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         cell.FilterLbl.text = Filters[indexPath.item]
         
-        cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.blue.withAlphaComponent(0.6) : .systemGray5
+        cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.primery
+            .withAlphaComponent(0.8) : .systemGray5
         cell.FilterLbl.textColor = indexPath == selectedIndex ? UIColor.white : .black
         cell.CheckboxImg.isHidden = false
         
@@ -350,4 +385,49 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         return CGSize(width: width, height: 40) // Adjust height accordingly
     }
     
+}
+@available(iOS 14.0, *)
+extension ViewLessonVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchLesson(searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchLesson(_ searchText: String) {
+        guard let allData = ViewLessonData else { return }
+
+        // Apply base filter based on selected status (same logic as your LessonFilter)
+        var baseFiltered: [LessonPlanDetail]
+        if LessonPlanStatus == 0 {
+            baseFiltered = allData
+        } else {
+            baseFiltered = allData.filter { $0.lesson_plan_status == LessonPlanStatus }
+        }
+
+        // Now apply search filter
+        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            // No search text → show normal filtered data
+            FilteredData = baseFiltered
+        } else {
+            let lowerText = searchText.lowercased()
+            FilteredData = baseFiltered.filter { lesson in
+                // Search inside each detail item (name or value)
+                return lesson.details.contains { item in
+                    (item.name?.lowercased().contains(lowerText) ?? false) ||
+                    (item.value?.lowercased().contains(lowerText) ?? false)
+                }
+            }
+        }
+
+        // Handle empty state
+        NoDataImg.isHidden = !(FilteredData?.isEmpty ?? false)
+        NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? false)
+        NoDataLbl.text = (FilteredData?.isEmpty ?? false) ? "No Lesson Found" : ""
+
+        TableView.reloadData()
+    }
+
 }

@@ -32,7 +32,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         BottomView.layer.shadowRadius = 8
         BottomView.layer.masksToBounds = false
         
-        
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         CancelBtn.layer.cornerRadius = 10
         UpdateBtn.layer.cornerRadius = 10
         CancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
