@@ -271,6 +271,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 date: self.selectedDate ?? ""
             )
             NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+            noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
             bottomCV.reloadData()
             view.endEditing(true)
         }
@@ -473,7 +474,9 @@ extension homeWorkVc: UISearchBarDelegate{
         
         // Show/hide no results label
         self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+        self.noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
         self.homeWorkDefaultLbl.isHidden = self.FilterHomeWorkList.isEmpty
+      
         self.bottomCV.reloadData()
     }
 
