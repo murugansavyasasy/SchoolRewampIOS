@@ -9,101 +9,144 @@ import UIKit
 
 @available(iOS 14.0, *)
 class SettingsViewController: UIViewController, BaktoHome {
+    
     func backtohome(type: String) {
         delegate?.backtohome(type: "")
         tableview.reloadData()
     }
     
+    // MARK: - Outlets
     @IBOutlet weak var SettingspageHeading: UILabel!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var topView: UIView!
+    
+    // MARK: - Properties
     var menuname = SettingStringFile()
+    var section: [Section]?
+    var imagesArray: [UIImage] = []
+    var delegate: BaktoHome?
+    var passVale = 1
+    var Language: String?
+    
+    // MARK: - Section Data
     lazy var sections: [Section] = [
         Section(
-            title: menuname.general,
+            title: "Account & Security",
+            items: [
+                "Change Password",
+                menuname.faceID
+            ]
+        ),
+        Section(
+            title: "Preference",
             items: [
                 menuname.notifications,
+                menuname.changeAppLanguage
+            ]
+        ),
+        Section(
+            title: "Support & Information",
+            items: [
                 menuname.faq,
                 menuname.contactUs,
                 menuname.termsAndConditions,
-                menuname.changeAppLanguage,
-                menuname.faceID,
-                "Change Password",
+                "Privacy Policy",
+                "About the App",
+                "How to Use?",
                 "What's new"
             ]
         ),
-        Section(title: menuname.feedback, items: [menuname.reportABug, menuname.feedback, menuname.logout])
+        Section(
+            title: "Feedback",
+            items: [
+                menuname.reportABug,
+                menuname.feedback,
+                "App Version",
+                menuname.logout
+            ]
+        )
     ]
-    var section:[Section]?
+    
+    // MARK: - Image Data
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid", "lock.rotation","WhatNews"]),
-        Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
+        Image(title: "Account & Security", Imageitems: [
+            "lock.rotation",
+            "faceid"
+        ]),
+        Image(title: "Preference", Imageitems: [
+            "bell",
+            "character.bubble.ja"
+        ]),
+        Image(title: "Support & Information", Imageitems: [
+            "person.crop.circle.badge.questionmark.fill",
+            "phone.arrow.up.right.circle.fill",
+            "chart.line.uptrend.xyaxis",
+            "shield.lefthalf.filled",
+            "info.circle.fill",
+            "questionmark.circle",
+            "WhatNews"
+        ]),
+        Image(title: "Feedback", Imageitems: [
+            "questionmark.diamond.fill",
+            "paperplane.fill",
+            "number.square.fill",
+            "iphone.and.arrow.forward"
+        ])
     ]
-    var imagesArray: [UIImage] = []
-    var delegate:BaktoHome?
-    var passVale = 1
-    var Language:String?
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         section = sections
         SettingspageHeading.text = MenuTapbar.shared.Settings
         SettingspageHeading.setFont(style: .body, size: 20)
-        // Do any additional setup after loading the view.
         
         for imageCategory in Images {
-            
             for uiImage in imageCategory.uiImages {
                 if let image = uiImage {
-                    print("Loaded UIImage: \(image)")
                     imagesArray.append(image)
                 } else {
-                    print("Failed to load UIImage for one of the symbols.")
+                    print("⚠️ Failed to load UIImage for one of the symbols in \(imageCategory.title)")
                 }
             }
         }
+        
         tableview.dataSource = self
         tableview.delegate = self
         tableview.backgroundColor = Colornames.bottomClr
         
-        
-        let nib = UINib(nibName: CellConfingName.SettingsTableViewCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.SettingsTableViewCell)
-        
-        
-        tableview.register(UINib(nibName:CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
-        
-        
+        tableview.register(UINib(nibName: CellConfingName.SettingsTableViewCell, bundle: nil),
+                           forCellReuseIdentifier: CellConfingName.SettingsTableViewCell)
+        tableview.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil),
+                           forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         section = sections
-        
     }
 }
 
+// MARK: - TableView Delegate & DataSource
 @available(iOS 14.0, *)
-extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
-    
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.SettingHeaderView) as! SettingHeaderView
-        cell.headerLabel.text = sections[section].title.translated()
-        cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
-        
-        return cell
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.SettingHeaderView) as! SettingHeaderView
+        header.headerLabel.text = sections[section].title.translated()
+        header.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
+        return header
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].items.count
@@ -111,18 +154,37 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SettingsTableViewCell, for: indexPath) as! SettingsTableViewCell
-        cell.nameLbl.text = sections[indexPath.section].items[indexPath.row].translated()
-        cell.nameLbl.textColor = sections[indexPath.section].items[indexPath.row].translated() == menuname.logout ? .red : .black
-        cell.faceIdSwitch.isHidden = sections[indexPath.section].items[indexPath.row].translated() != menuname.faceID ? true:false
-        cell.arrowImg.isHidden = sections[indexPath.section].items[indexPath.row].translated() != menuname.faceID ? false:true
-        cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
-        if sections[indexPath.section].items[indexPath.row] == "What's new"{
+        
+        let item = sections[indexPath.section].items[indexPath.row]
+        let image = Images[indexPath.section].uiImages[indexPath.row]
+        
+        cell.nameLbl.text = item.translated()
+        cell.nameLbl.textColor = item == menuname.logout ? .red : .black
+        cell.faceIdSwitch.isHidden = item != menuname.faceID
+        cell.arrowImg.isHidden = item == menuname.faceID
+        cell.imgView.image = image
+        
+        if item == "What's new" {
             cell.imgView.image = UIImage(named: "WhatNews")
         }
-       
         
-        cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(systemName: "iphone.and.arrow.forward") ? .red : .black
+        if image == UIImage(systemName: "iphone.and.arrow.forward") {
+            cell.imgView.tintColor = .red
+        } else {
+            cell.imgView.tintColor = .black
+        }
         
+        if item == "App Version" {
+            cell.versionLbl.isHidden = false
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+               let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+                cell.versionLbl.text = "\(version) (\(build))"
+            }
+            cell.arrowImg.isHidden = true
+            cell.faceIdSwitch.isHidden = true
+        } else {
+            cell.versionLbl.isHidden = true
+        }
         
         cell.arrowImg.applyRTLFlip(Language == "ar")
         cell.imgView.applyRTLFlip(Language == "ar")
@@ -130,97 +192,100 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         return cell
     }
-    
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if  sections[indexPath.section].items[indexPath.row] == menuname.contactUs{
-            let vc = ContactUsVc(nibName: nil, bundle: nil)
-            vc.passValue = passVale
-            vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: true)
-        }else if  sections[indexPath.section].items[indexPath.row] == menuname.notifications{
-            
-            let vc = NotificationViewController(nibName: nil, bundle: nil)
+        let selectedItem = sections[indexPath.section].items[indexPath.row]
+        switch selectedItem {
+        case menuname.contactUs:
+            let vc = ContactUsVc()
             vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
-        }
-        else if  sections[indexPath.section].items[indexPath.row] == menuname.reportABug{
+        case "Privacy Policy":
+            let vc = TermsAndCondVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "Privacy Policy"
+            vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
+            present(vc, animated: true)
+        case "About the App":
+            let vc = TermsAndCondVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "About the App"
+            vc.url = UserDefaultFileManager.get_globalSelection()?.about_the_app
+            present(vc, animated: true)
+        case "How to Use?":
+            let vc = TermsAndCondVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "How to Use?"
+            vc.url = UserDefaultFileManager.get_globalSelection()?.how_to_use
+            present(vc, animated: true)
+        case menuname.notifications:
+            let vc = NotificationViewController()
+            vc.token = passVale == 1 ? UserDefaultFileManager.get_staff_Details()?.access_token ?? "" :
+                                       UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            vc.isParent = passVale == 2
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true)
             
-            let vc = ReportBugVcViewController(nibName: nil, bundle: nil)
+        case menuname.reportABug:
+            let vc = ReportBugVcViewController()
             vc.modalPresentationStyle = .overFullScreen
             vc.passValue = passVale
             present(vc, animated: true)
             
-        }else if  sections[indexPath.section].items[indexPath.row] == menuname.feedback{
-            
-//            let vc = RateUsViewController(nibName: nil, bundle: nil)
-//            vc.passValue = passVale
-//            vc.modalPresentationStyle = .overFullScreen
-//            present(vc, animated: true)
-            
-           
+        case menuname.feedback:
             if let url = URL(string: "https://apps.apple.com/app/id700513732?action=write-review") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                UIApplication.shared.open(url)
             }
-
             
-        }
-        
-        
-        else if  sections[indexPath.section].items[indexPath.row] == menuname.logout{
-    
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(true, forKey: "Logout")
-            
-            let vc = LogoutViewController(nibName: nil, bundle: nil)
+        case menuname.logout:
+            UserDefaults.standard.set(true, forKey: "Logout")
+            let vc = LogoutViewController()
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: false)
             
-        }
-        
-        else if  sections[indexPath.section].items[indexPath.row] == menuname.faq{
-            
-            let vc = FAQViewController(nibName: nil, bundle: nil)
+        case menuname.faq:
+            let vc = FAQViewController()
             vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
-        }
-        
-        
-        else if  sections[indexPath.section].items[indexPath.row] == menuname.changeAppLanguage{
             
-            let vc = LanguageVc(nibName: nil, bundle: nil)
+        case menuname.changeAppLanguage:
+            let vc = LanguageVc()
             vc.modalPresentationStyle = .overFullScreen
             vc.delegate = self
             present(vc, animated: true)
-        }else if sections[indexPath.section].items[indexPath.row] == menuname.termsAndConditions{
-            
-            let vc = TermsAndCondVC(nibName: nil, bundle: nil)
+        case menuname.termsAndConditions:
+            let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
+            vc.tittleString = "Terms & Conditions"
+            vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
             present(vc, animated: true)
-        }else if sections[indexPath.section].items[indexPath.row] == "What's new"{
             
-            let vc = WhatsNewVc(nibName: nil, bundle: nil)
+        case "What's new":
+            let vc = WhatsNewVc()
             vc.isStaff = passVale == 1
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
-        }else if sections[indexPath.section].items[indexPath.row] == "Change Password" {
             
-            let vc = CreatePasswordVc(nibName: nil, bundle: nil)
+        case "Change Password":
+            let vc = CreatePasswordVc()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
+            
+        default:
+            break
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
-    
 }
+
+// MARK: - Section Models
 struct Section {
     let title: String
     let items: [String]
@@ -230,15 +295,8 @@ struct Image {
     let title: String
     let uiImages: [UIImage?]
     
-    // Custom initializer that takes an array of system image names (strings)
     init(title: String, Imageitems: [String]) {
         self.title = title
-        // Convert each string in Imageitems to a UIImage
-        self.uiImages = Imageitems.map { UIImage(systemName: $0) }
+        self.uiImages = Imageitems.map { UIImage(systemName: $0) ?? UIImage(named: $0) }
     }
 }
-
-let Images: [Image] = [
-    Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","WhatNews"]),
-    Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
-]

@@ -129,7 +129,7 @@
                                                 <imageReference key="image" image="info.circle.fill" catalog="system" symbolScale="small"/>
                                             </state>
                                             <connections>
-                                                <action selector="InfoBtnAct" destination="-1" eventType="touchUpInside" id="5vx-r4-UTU"/>
+                                                <action selector="InfoBtnAct:" destination="-1" eventType="touchUpInside" id="Ni9-q7-SGL"/>
                                             </connections>
                                         </button>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="P8w-Zv-cBF">

@@ -17,12 +17,14 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
     @IBOutlet weak var LoadingView: UIView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var Pdfview: WKWebView!
+    var url : String?
+    var tittleString:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Pdfview.navigationDelegate = self
-        
-        if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {
+        BackBtn.setTitle(tittleString ?? "", for: .normal)
+        if let pdfURL = URL(string: url ?? "https://schoolchimes.com/vs_web/terms_conditions/") {
             let request = URLRequest(url: pdfURL)
             Pdfview.load(request)
         }

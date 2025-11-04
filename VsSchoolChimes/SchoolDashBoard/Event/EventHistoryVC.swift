@@ -85,7 +85,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             schoolName.text = "All"
         }
         if checkMutipleSchool() {
-            schoolDropDown.isHidden = false
+            schoolDropDown.isHidden = true
             schoolList = school_details?.compactMap { $0.school_name }
             schoolList?.insert("All", at: 0)
             self.dropDown.dataSource = self.schoolList ?? []
@@ -480,7 +480,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.titleString = event.title
         detailVC.descriptionString = event.description
         detailVC.postedBy = event.sent_by
-        detailVC.targetId = event.id
+        detailVC.params = ["id": event.id ?? ""]
         detailVC.EndUrl = ServiceUrl.event_target_details
         detailVC.subject_name = "Event".translated()
         detailVC.modalPresentationStyle = .custom

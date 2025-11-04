@@ -206,20 +206,54 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         case CommonStringFile.IMAGE:
             cell.imageView.isHidden = false
             cell.webview.isHidden = true
-            cell.imageView.sd_setImage(with: URL(string: data.url ?? ""), placeholderImage: UIImage(named: "placeholder"))
+            
+            if let urlString = data.url,
+               let url = URL(string: urlString.trimmingCharacters(in: .whitespacesAndNewlines)),
+               url.scheme?.hasPrefix("http") == true {
+                // Remote image (HTTP/HTTPS)
+                cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"))
+            } else if let path = data.url {
+                // Local file
+                let fileURL = URL(fileURLWithPath: path)
+                if FileManager.default.fileExists(atPath: fileURL.path) {
+                    cell.imageView.image = UIImage(contentsOfFile: fileURL.path)
+                } else {
+                    cell.imageView.image = UIImage(named: "placeholder")
+                }
+            } else {
+                cell.imageView.image = UIImage(named: "placeholder")
+            }
+            
             cell.outerView.clearShadow()
             cell.outerView.backgroundColor = .white
+
         case CommonStringFile.VIDEO:
+            cell.imageView.isHidden = false
+            cell.webview.isHidden = true
             cell.imageView.image = UIImage(named: "video (1)")
             cell.outerView.setShadow()
             cell.outerView.backgroundColor = .white
+
         default:
-            let iconName = getFileIconName(for: URL(fileURLWithPath: data.url ?? ""))
+            var iconName = "placeholder"
+            if let urlString = data.url?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if let url = URL(string: urlString), url.scheme?.hasPrefix("http") == true {
+                    // Web URL
+                    iconName = getFileIconName(for: url)
+                } else {
+                    // Local file
+                    let fileURL = URL(fileURLWithPath: urlString)
+                    iconName = getFileIconName(for: fileURL)
+                }
+            }
+            
+            cell.imageView.isHidden = false
+            cell.webview.isHidden = true
             cell.imageView.image = UIImage(named: iconName)
             cell.outerView.setShadow()
             cell.outerView.backgroundColor = .white
         }
-        
+
         
        
         return cell

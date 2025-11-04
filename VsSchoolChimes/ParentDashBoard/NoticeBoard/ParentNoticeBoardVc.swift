@@ -319,12 +319,11 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         }
         
         SearchData = FilteredData
-        
         let Hide = SearchData?.isEmpty ?? false
         NodataImage.isHidden = !Hide
         NoDataLbl.isHidden = !Hide
         EmptyView.isHidden = !Hide
-        
+        NoDataLbl.text = "No Data Found"
         FilterCV.reloadData()
         
         tableview.reloadData()

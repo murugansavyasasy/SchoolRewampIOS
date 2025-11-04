@@ -431,6 +431,7 @@ struct CommunicationReciverResponse: Codable {
 struct CommunicationReciverData: Codable {
     let type: String
     let id: String
+    let header_id: String
     let content: String
     let title: String
     let date: String
@@ -497,6 +498,7 @@ struct Attachment: Codable {
     var can_delete: Bool?
     var isExpanded: Bool?
     var school_id: String?
+    var target_type: String?
 }
 
 struct AttachmentFilePath: Codable {
@@ -1967,7 +1969,7 @@ struct notificationSuc : Codable{
 struct notificationData : Codable{
     let menu_id : Int?
     let menu_name : String?
-    let details : [notificationDetails]?
+    var details : [notificationDetails]?
     
 }
 
@@ -2500,6 +2502,30 @@ struct InvoiceItem: Codable {
 }
 
 
+
+
+// MARK: - Root model
+struct TargetDetailsResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [TargetDetail]?
+}
+
+// MARK: - Data model
+struct TargetDetail: Codable {
+    let type: String?
+    let name: [TargetName]?
+}
+
+// MARK: - Name model
+struct TargetName: Codable {
+    var institute : [String]?
+    var standard : [String]?
+    var group_name : [String]?
+    var sections : [String]?
+    var name : String?
+}
+
 struct targetSuc : Codable{
     
     var status : Bool?
@@ -2510,24 +2536,23 @@ struct targetSuc : Codable{
 
 struct targetDataDetails : Codable{
     var type : String?
-    var name: [String]?
+    var name: [targetInfoData]?
     
 }
 
-struct targetSucResp : Codable{
-    
-    var status : Bool?
-    var message : String?
-    var data : [targetDataDetailsResp]?
-}
-
-struct targetDataDetailsResp : Codable{
+struct targetInfoData : Codable{
+    var institute : [String]?
+    var standard : [String]?
+    var group : [String]?
+    var section : [String]?
     var name : String?
     var role:  String?
-//    var class : String?
-    var section : String?
+    var sec : String?
+    var std : String?
     var mobile : String?
+    
 }
+
 
 
 struct GlobalVariablesResponse: Codable {
@@ -2567,6 +2592,15 @@ struct GlobalVariable: Codable {
     var ebooks_url: String?
     var market_place_url: String?
     var fees_url: String?
+    var v_card_numbers: String?
+    var contact_display_name: String?
+    var contact_alert_title: String?
+    var contact_alert_content: String?
+    var support_email: String?
+    var support_contact: String?
+    var privacy_policy: String?
+    var about_the_app: String?
+    var how_to_use: String?
 }
 
 struct checkQuizLevelSuc : Codable{

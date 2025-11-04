@@ -20,23 +20,37 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func voiceforword(selectedIndex: Int?) {
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
         
-        if isScheduleSelected{
-            enabelScheduleView(
-                isforward: true,
-                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
-                durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
-                url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
+        if emengencyCall.isOn && (VoiceHistory?[selectedIndex ?? 0].duration ?? 0) >=  30{
+            let alert = UIAlertController(
+                title: "Oops!",
+                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
+                preferredStyle: .alert
             )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
         }else{
-            enabelVoice_view(
-                isforward: true,
-                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
-                durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
-                url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
-            )
+            
+            if isScheduleSelected{
+                enabelScheduleView(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
+                    title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
+                    durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
+                    url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
+                )
+            }else{
+                enabelVoice_view(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
+                    title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
+                    durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
+                    url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
+                )
+            }
         }
+        
+      
+        
         
         
     }
@@ -303,6 +317,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             Timinglbl.text = "00:00/03:00"
             //            enableDisable()
         }
+        
         
     }
     
@@ -610,8 +625,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         DateSelection.appearance.todayColor = .orange
         DateSelection.appearance.eventDefaultColor = .purple
         DateSelection.allowsMultipleSelection = true
-        
-        
+        DateSelection.scrollEnabled = false
+        DateSelection.placeholderType = .none
+        DateSelection.setCurrentPage(Date(), animated: false)
         //MARK: VOICE BUTTON BACKGROUND
         voiceBtn.backgroundColor = .white
         voiceClickView.layer.cornerRadius = 8
@@ -695,16 +711,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         //        sendbtn.isEnabled = false
     }
     
-    func printCurrentMonth() {
-        let currentPage = DateSelection.currentPage
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM yyyy" // Format as Month Year (e.g., "November 2024")
-        let formattedMonth = dateFormatter.string(from: currentPage)
-        monthLbl.text = formattedMonth.translated()
-    }
-    func hideCalendarHeader() {
-        DateSelection.headerHeight = 0
-    }
+    
 //    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 //        // Get the current text
 //        let currentText = textField.text ?? ""
@@ -911,6 +918,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     
                 }
                 
+                waveView.progress = 0
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
                 dltbtn.isHidden = false
@@ -1124,7 +1132,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         recordingTimer?.invalidate()
         recordingTimer = nil
         btnplay.setImage(ImageName.playbutton, for: .normal)
-        if let urls = URL(string: AudioPlayUrl!){
+        if let urls = URL(string: AudioPlayUrl ?? ""){
             // Calculate total recording duration and set Timinglbl
             if let startTime = recordingStartTime {
                 let duration = Date().timeIntervalSince(startTime)
@@ -1220,11 +1228,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         btnplay.setImage(ImageName.playbutton, for: .normal)
+        waveView.progress = 0
+        
         player?.pause()
         updateTimer?.invalidate()
         audioRecorder?.updateMeters()
-        let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
-        let normalizedPower = max(0, (averagePower + 160) / 160)
+
+        let normalizedPower = max(0, (0) / 160)
         waveView.updateWithLevel(CGFloat(normalizedPower))
         playerItem?.seek(to: CMTime.zero)
     }
@@ -1348,7 +1358,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func voiceview(_ sender: Any) {
         playbackOff()
-        selectedDates.removeAll()
+//        selectedDates.removeAll()
         let title = CommonStringFile.Select_from_history
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
@@ -1372,26 +1382,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func doneSelection(_ sender: Any) {
         
-        if selectedDates.count == 0{
-            
+      
             ViewAnimator.animateConstraintChange { [self] in
-                dateSelectedViewHeight.constant = 0
-                self.view.layoutIfNeeded()
+                reloadCollectionAndUpdateHeight()
             }
             
-        }else if selectedDates.count <= 3{
-            ViewAnimator.animateConstraintChange { [self] in
-                dateSelectedViewHeight.constant = 64
-                self.view.layoutIfNeeded()
-            }
-            
-        }else{
-            ViewAnimator.animateConstraintChange { [self] in
-                dateSelectedViewHeight.constant = 120
-                self.view.layoutIfNeeded()
-            }
-            
-        }
+        
         dateBtn.isSelected = false
         ViewAnimator.hideFade(calanderOuter)
     }
@@ -1414,7 +1410,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     @IBAction func textviewshow(_ sender: Any) {
         playbackOff()
-        selectedDates.removeAll()
+//        selectedDates.removeAll()
         let title = CommonStringFile.Select_from_history
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
@@ -1436,12 +1432,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
-        //        for i in 0..<selectedDates.count {
-        //                    DateSelection.deselect(selectedDates[i])
-        //                }
+                for i in 0..<selectedDates.count {
+                            DateSelection.deselect(selectedDates[i])
+                        }
+        DateSelection.reloadData()
         playbackOff()
         selectedDates.removeAll()
-        
         let title = CommonStringFile.Select_from_history
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
@@ -1503,7 +1499,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     func enabelVoice_view(isforward: Bool, voiceUrl: String, title: String, durations: Int,url: String) {
-        emengencyCall.isOn = false
         isScheduleSelected = false
         updateEmergencyCallVisibility(staff_role)
         
@@ -1511,12 +1506,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             recordImgHeightCon.constant = 0
             Timinglbl.isHidden = true
             addfile.isHidden = true
+            waveView.progress = 0
+            btnplay.setImage(ImageName.playbutton, for: .normal)
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             forWardVoiceDuraction = durations
             AudioPlayUrl = voiceUrl
-            voiceTileTextFldCount.text = "\(title.count) / 500"
+//            voiceTileTextFldCount.text = "\(title.count) / 500"
+            voiceTileTextFldCount.isHidden = true
             ViewAnimator.animateConstraintChange { [self] in
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()
@@ -1587,10 +1585,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         if isforward {
             recordImgHeightCon.constant = 0
+            waveView.progress = 0
+            btnplay.setImage(ImageName.playbutton, for: .normal)
             Timinglbl.isHidden = true
             addfile.isHidden = true
             AudioPlayUrl = url
-            voiceTileTextFldCount.text = "\(title.count) / 500"
+//            voiceTileTextFldCount.text = "\(title.count) / 500"
+            voiceTileTextFldCount.isHidden = true
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
@@ -1912,11 +1913,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func minimumDate(for calendar: FSCalendar) -> Date {
-        return Date()
+        return Calendar.current.startOfDay(for: Date())
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {
-        return Calendar.current.date(byAdding: .day, value: 7, to: Date())!
+        return Calendar.current.date(byAdding: .day, value: 6, to: Date())!
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -1974,28 +1975,59 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         selectedDates.remove(at: index)
         DateSelection.deselect(dateToRemove)
         DateSelection.reloadData()
-        // Update height based on count
-        var newHeight: CGFloat = 0
-        if selectedDates.count == 0 {
-            newHeight = 0
-        } else if selectedDates.count <= 3 {
-            newHeight = 64
-        } else {
-            newHeight = 128
-        }
-        
-        // Animate constraint change
-        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-            self.dateSelectedViewHeight.constant = newHeight
-            self.view.layoutIfNeeded()
-        }
-        
-        dateCV.reloadData()
+        reloadCollectionAndUpdateHeight()
+//        // Update height based on count
+//        var newHeight: CGFloat = 0
+//        if selectedDates.count == 0 {
+//            newHeight = 0
+//        } else if selectedDates.count <= 3 {
+//            newHeight = 64
+//        } else if selectedDates.count <= 6{
+//            newHeight = 128
+//        }else{
+//            newHeight = 200
+//        }
+//        
+//        // Animate constraint change
+//        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
+////            self.dateSelectedViewHeight.constant = self.dateCV.collectionViewLayout.collectionViewContentSize.height
+//            self.dateSelectedViewHeight.constant = newHeight
+//            self.view.layoutIfNeeded()
+//        }
+//        
+//        dateCV.reloadData()
     }
     
     
+    func reloadCollectionAndUpdateHeight() {
+        dateCV.reloadData()
+        dateCV.layoutIfNeeded()
+       
+        DispatchQueue.main.async {
+            let contentHeight = self.dateCV.collectionViewLayout.collectionViewContentSize.height
+            self.dateSelectedViewHeight.constant = contentHeight
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+    }
+    
+    func printCurrentMonth() {
+        let currentPage = DateSelection.currentPage
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM yyyy" // Format as Month Year (e.g., "November 2024")
+        let formattedMonth = dateFormatter.string(from: currentPage)
+        monthLbl.text = formattedMonth.translated()
+    }
+    func hideCalendarHeader() {
+        DateSelection.headerHeight = 0
+    }
+    
     //MARK: Collection View Delegate Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("selectedDates",selectedDates.count)
         return selectedDates.count
     }
     

@@ -206,6 +206,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     var allHomeworkData: [HomeworkList] = []
     var isReadStatus : Bool?
     var toggle = true
+    var clickedMessageId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -270,6 +271,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 date: self.selectedDate ?? ""
             )
             NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+            noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
             bottomCV.reloadData()
             view.endEditing(true)
         }
@@ -334,6 +336,17 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     self.bottomCV.dataSource  = self
                     self.bottomCV.reloadData()
                     
+                    DispatchQueue.main.async {
+                        if self.clickedMessageId != "" {
+                            if let index = self.FilterHomeWorkList.firstIndex(
+                                where: { $0.id == self.clickedMessageId
+                                }) {
+                                let indexPath = IndexPath(item: index, section: 0)
+                                self.bottomCV.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+                            }
+                            
+                        }
+                    }
                     let isEmpty = filteredHomework.isEmpty
                   
 //                    self.NodataFoundLbl.isHidden = !isEmpty
@@ -461,7 +474,9 @@ extension homeWorkVc: UISearchBarDelegate{
         
         // Show/hide no results label
         self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+        self.noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
         self.homeWorkDefaultLbl.isHidden = self.FilterHomeWorkList.isEmpty
+      
         self.bottomCV.reloadData()
     }
 

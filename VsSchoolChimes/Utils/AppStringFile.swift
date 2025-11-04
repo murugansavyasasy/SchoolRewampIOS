@@ -496,6 +496,7 @@ class LessonplanStringFile {
     static let allClasses = "All Classes".translated()
     static let myClasses = "My Classes".translated()
     static let editLessonPlan = "Edit Lesson Plan".translated()
+    static let createLessonPlan = "Create Lesson Plan".translated()
     static let itemsCompleted = "items completed".translated()
     static let yetToStart = "Yet to Start".translated()
     static let inProgress = "In Progress".translated()

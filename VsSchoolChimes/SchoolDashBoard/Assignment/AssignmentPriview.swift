@@ -237,7 +237,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PreviewTargetTVC", for: indexPath) as? PreviewTargetTVC else {
                 return UITableViewCell()
             }
-            cell.confic(TargetType: data?.target_type ?? "", id: data?.id ?? "")
+            cell.configure(targetType: data?.target_type ?? "", id: data?.id ?? "")
             return cell
                 case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {

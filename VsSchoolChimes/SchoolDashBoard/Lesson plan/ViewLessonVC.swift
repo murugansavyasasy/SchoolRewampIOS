@@ -51,6 +51,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                 secondLine: staffDetails?.school_name ?? ""
             )
         creteBtn.setShadow(cornerRadius: creteBtn.frame.width/2)
+        creteBtn.isHidden = IsDeleteHiden
         NoDataImg.isHidden = true
         NoDataLbl.isHidden = true
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)

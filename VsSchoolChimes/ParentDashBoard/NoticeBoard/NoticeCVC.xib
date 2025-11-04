@@ -23,7 +23,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRT-xZ-z4W">
                         <rect key="frame" x="5" y="5" width="194" height="281"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI9-zn-Ogz">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI9-zn-Ogz">
                                 <rect key="frame" x="10" y="21" width="8" height="8"/>
                                 <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -33,7 +33,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0b-k4-tZc">
-                                <rect key="frame" x="23" y="15" width="20" height="20"/>
+                                <rect key="frame" x="6" y="15" width="20" height="20"/>
                                 <color key="backgroundColor" name="Clr"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="Ms3-7c-x0O"/>
@@ -43,7 +43,7 @@
                                 <state key="normal" image="text.document.fill" catalog="system"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jf2-Vv-xjY">
-                                <rect key="frame" x="53" y="10" width="96" height="30"/>
+                                <rect key="frame" x="36" y="10" width="113" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="h9z-PS-a07"/>
                                 </constraints>
@@ -194,7 +194,7 @@
                             <constraint firstItem="Aiq-Yz-NIf" firstAttribute="top" secondItem="XRT-xZ-z4W" secondAttribute="top" constant="5" id="di6-Zh-kqQ"/>
                             <constraint firstItem="HI9-zn-Ogz" firstAttribute="leading" secondItem="XRT-xZ-z4W" secondAttribute="leading" constant="10" id="fES-Zg-Zfx"/>
                             <constraint firstItem="P0b-k4-tZc" firstAttribute="centerY" secondItem="jf2-Vv-xjY" secondAttribute="centerY" id="gxd-uL-cXw"/>
-                            <constraint firstItem="P0b-k4-tZc" firstAttribute="leading" secondItem="HI9-zn-Ogz" secondAttribute="trailing" constant="5" id="oV9-QB-OtA"/>
+                            <constraint firstItem="P0b-k4-tZc" firstAttribute="leading" secondItem="HI9-zn-Ogz" secondAttribute="trailing" constant="-12" id="oV9-QB-OtA"/>
                             <constraint firstItem="wIC-Gs-zxK" firstAttribute="top" secondItem="NWv-eW-6n1" secondAttribute="bottom" constant="10" id="qbj-VD-zsM"/>
                             <constraint firstAttribute="bottom" secondItem="wIC-Gs-zxK" secondAttribute="bottom" constant="10" id="stj-Kw-kLd"/>
                             <constraint firstItem="NWv-eW-6n1" firstAttribute="top" secondItem="huX-eu-RGo" secondAttribute="bottom" constant="10" id="t5R-jC-uJ5"/>

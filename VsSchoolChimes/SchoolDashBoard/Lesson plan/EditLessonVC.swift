@@ -32,15 +32,17 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         BottomView.layer.shadowRadius = 8
         BottomView.layer.masksToBounds = false
         
-        BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.editLessonPlan, secondLine: staffDetails?.school_name ?? "")
+        
         CancelBtn.layer.cornerRadius = 10
         UpdateBtn.layer.cornerRadius = 10
         CancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         UpdateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         if isCreate{
             UpdateBtn.setTitle("Create", for: .normal)
+            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.createLessonPlan, secondLine: staffDetails?.school_name ?? "")
         }else{
             UpdateBtn.setTitle("Update", for: .normal)
+            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.editLessonPlan, secondLine: staffDetails?.school_name ?? "")
         }
         Tableview.showsVerticalScrollIndicator = false
         Tableview.showsHorizontalScrollIndicator = false
@@ -232,11 +234,10 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBAction func UpdateAct(_ sender: Any) {
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_update_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-                self.LessonPlan_Update_Api()
+            self.LessonPlan_Update_Api()
         }, onNo: {
             
         })
-        
         
     }
     

@@ -14,9 +14,8 @@ class ContactUsVc: UIViewController {
     @IBOutlet weak var tv: UITableView!
     
     var content = ["Our 24*7 Customer Service.","Write us at."]
-    var contact = ["9786543210","saranraj@savyasasy.com"]
+    var contact = [UserDefaultFileManager.get_globalSelection()?.support_contact,UserDefaultFileManager.get_globalSelection()?.support_email]
     var icon  = [ImageName.Phone,ImageName.mail]
-    
     var passValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()

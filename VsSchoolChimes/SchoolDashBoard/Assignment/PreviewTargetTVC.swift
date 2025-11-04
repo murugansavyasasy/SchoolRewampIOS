@@ -13,121 +13,124 @@ class PreviewTargetTVC: UITableViewCell {
     @IBOutlet weak var yourTargetImageView: UIImageView!
     @IBOutlet weak var targetCvHeight: NSLayoutConstraint!
     @IBOutlet weak var targetCv: UICollectionView!
-    var targetCvdata : [String] = []
-    var speficTargetData : [targetDataDetailsResp] = []
-    let staffDetails = UserDefaultFileManager.get_staff_Details()
-    var targetId : String?
-    var TargetType : String?
+    
+    var targetCvdata: [targetInfoData] = []
+    var standarSenction: [String] = []
+    
+    var targetId: String?
+    var targetType: String?
+    var isStaffAndStudent: Bool = false
+    
+    private let staffDetails = UserDefaultFileManager.get_staff_Details()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        targetCv.register(UINib(nibName: "TargetCvCell", bundle: nil), forCellWithReuseIdentifier: "TargetCvCell")
+        
+        targetCv.register(UINib(nibName: "TargetCvCell", bundle: nil),
+                          forCellWithReuseIdentifier: "TargetCvCell")
         targetCv.delegate = self
         targetCv.dataSource = self
+        
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2
         layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         targetCv.collectionViewLayout = layout
     }
-    func confic(TargetType:String,id:String){
-        self.TargetType = TargetType
+    
+    func configure(targetType: String, id: String) {
+        self.targetType = targetType
         self.targetId = id
-        if TargetType != "5" || TargetType != "6" {
-            getTargetReport(targetIdOrType: targetId ?? "", TargetType: TargetType)
-        }else{
-            getSpeficTargetReport(targetIdOrType: targetId ?? "", TargetType: TargetType)
-        }
+        getTargetReport(targetIdOrType: id, targetType: targetType)
     }
 }
+
 extension PreviewTargetTVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if TargetType == "5" || TargetType == "6" {
-            return speficTargetData.count
-        }else{
-            return targetCvdata.count
-        }
+        return isStaffAndStudent ? standarSenction.count : targetCvdata.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TargetCvCell", for: indexPath) as? TargetCvCell else {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TargetCvCell",
+                                                            for: indexPath) as? TargetCvCell else {
             return UICollectionViewCell()
         }
-        if TargetType == "5" || TargetType == "6" {
-            cell.nameLbl.text = "🎓 " + (speficTargetData[indexPath.row].name ?? "")
-        }else{
-            if yourTargetLbl.text == "Sent To Standard" {
-                cell.nameLbl.text = "🎓 " + targetCvdata[indexPath.row]
-            }else if yourTargetLbl.text == "Sent To School" {
-                cell.nameLbl.text = "🏫 " + targetCvdata[indexPath.row]
-            }else{
-                cell.nameLbl.text = "👤 " + targetCvdata[indexPath.row]
-            }
+        
+        if isStaffAndStudent {
+            cell.nameLbl.text = standarSenction[indexPath.row]
+        } else {
+            cell.nameLbl.text = targetCvdata[indexPath.row].name ?? ""
         }
-        return  cell
+        
+        return cell
     }
+}
+
+extension PreviewTargetTVC {
     
-    
-    func getTargetReport(targetIdOrType : String,TargetType:String) {
+    func getTargetReport(targetIdOrType: String, targetType: String) {
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_assignment_target_details,
-            parameters: ["id": targetIdOrType, "target_type":TargetType ],
+            parameters: ["id": targetIdOrType, "target_type": targetType],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
+            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
-                    if res.status == true{
-                        self.targetCvdata = res.data?.first?.name ?? []
-                        if res.data?.first?.type == "STANDARD"{
-                            self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
-                            self.yourTargetLbl.text = "Sent To Standard"
-                        }else if  res.data?.first?.type == "SCHOOL"{
-                            self.yourTargetLbl.text = "Sent To School"
-                            
-                        } else if  res.data?.first?.type == "GROUP"{
-                            self.yourTargetLbl.text = "Sent To Group"
-                            self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
-                        }
-                        self.reloadss()
-                    }
-                case .failure(let err):
-                    print(err.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    
-    func getSpeficTargetReport(targetIdOrType : String,TargetType:String) {
-        APIService.shared.makeApi(
-            url: ServiceUrl.comm_api_assignment_target_details,
-            parameters: ["id": targetIdOrType, "target_type":TargetType ],
-            type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
-        ) { [weak self] (result: Result<targetSucResp, Error>) in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let res):
-                    if res.status == true{
-                        self.speficTargetData = res.data ?? []
-                        self.yourTargetLbl.text  = "Studet"
-                        self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
-                        self.reloadss()
-                    }
-                case .failure(let err):
-                    print(err.localizedDescription)
+                    guard res.status == true, let firstData = res.data?.first else { return }
                     
+                    self.yourTargetLbl.text = firstData.type
+                    self.isStaffAndStudent = true // default
+                    
+                    switch firstData.type {
+                    case "Message sent to STANDARD":
+                        self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
+                        self.standarSenction = firstData.name?.first?.standard ?? []
+                        
+                    case "Message sent to SCHOOL":
+                        self.yourTargetImageView.image = UIImage(systemName: "building.2.fill")
+                        self.standarSenction = firstData.name?.first?.institute ?? []
+                        
+                    case "Message sent to GROUP":
+                        self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        self.standarSenction = firstData.name?.first?.group ?? []
+                        
+                    case "Message sent to SECTION":
+                        self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        self.standarSenction = firstData.name?.first?.section ?? []
+                        
+                    case "Message sent to STUDENTS":
+                        self.isStaffAndStudent = false
+                        self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        self.targetCvdata = firstData.name ?? []
+                        
+                    case "Message sent to STAFF":
+                        self.isStaffAndStudent = false
+                        self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
+                        self.targetCvdata = firstData.name ?? []
+                        
+                    default:
+                        break
+                    }
+                    
+                    self.reloadCollectionViewHeight()
+                    
+                case .failure(let err):
+                    print("Target API Error:", err.localizedDescription)
                 }
             }
         }
     }
-    func reloadss(){
+    
+    private func reloadCollectionViewHeight() {
         targetCv.reloadData()
         targetCv.layoutIfNeeded()
+        
         DispatchQueue.main.async {
             self.targetCvHeight.constant = self.targetCv.collectionViewLayout.collectionViewContentSize.height
         }
