@@ -60,6 +60,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - Properties
     var searchData: [Notice] = []
     var allNotices: [Notice] = []
+    var filterData: [Notice] = []
     var delegate:EditObjectDelegate?
     let alert = CustomAlert()
     let dropDown = DropDown()
@@ -151,9 +152,13 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     func filterUsingSchoolId(_ schoolId: String) {
         if schoolId == "All" {
             searchData = allNotices
+            filterData = allNotices
         } else {
-            searchData = allNotices.filter { $0.school_id == schoolId }
+            searchData = filterData.filter { $0.school_id == schoolId }
         }
+        searchBar.searchTextField.text = ""
+        self.noDataLbl.isHidden = !self.searchData.isEmpty
+        self.noDataImg.isHidden = !self.searchData.isEmpty
         collectionView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -189,7 +194,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {
-            searchData = allNotices
+            searchData = filterData
             self.noDataImg.isHidden = !self.searchData.isEmpty
             collectionView.reloadData()
             searchBar.searchTextField.text = ""
@@ -258,7 +263,8 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                 switch result {
                 case .success(let successResponse):
                     self.allNotices = successResponse.data ?? []
-                    self.searchData = self.allNotices
+                    self.filterData = successResponse.data ?? []
+                    self.searchData = self.filterData
                     self.collectionView.reloadData()
                     self.noDataLbl.text = successResponse.message ?? ""
                     self.noDataLbl.isHidden = !self.searchData.isEmpty
@@ -302,6 +308,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                                     on: self
                                 ) {
                                     self.allNotices.removeAll { $0.id == noticeId }
+                                    self.filterData.removeAll { $0.id == noticeId }
                                     self.searchData.removeAll { $0.id == noticeId }
                                     self.collectionView.reloadData()
                                     self.noDataLbl.isHidden = !self.searchData.isEmpty
@@ -331,9 +338,9 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - SearchBar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            searchData = allNotices
+            searchData = filterData
         } else {
-            searchData = allNotices.filter {
+            searchData = filterData.filter {
                 ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                 ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
             }
@@ -346,29 +353,29 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
-        searchData = allNotices
+        searchData = filterData
         collectionView.reloadData()
     }
     
     // MARK: - Count Buttons
     @IBAction func totalCountTapped(_ sender: UIButton) {
-        searchData = allNotices
+        searchData = filterData
         collectionView.reloadData()
     }
     
     @IBAction func todayCountTapped(_ sender: UIButton) {
         let today = getCurrentDateString()
-        searchData = allNotices.filter { $0.created_on?.contains(today) == true }
+        searchData = filterData.filter { $0.created_on?.contains(today) == true }
         collectionView.reloadData()
     }
     
     @IBAction func withFileCountTapped(_ sender: UIButton) {
-        searchData = allNotices.filter { !($0.file_path?.isEmpty ?? true) }
+        searchData = filterData.filter { !($0.file_path?.isEmpty ?? true) }
         collectionView.reloadData()
     }
     
     @IBAction func withoutFileCountTapped(_ sender: UIButton) {
-        searchData = allNotices.filter { $0.file_path?.isEmpty ?? true }
+        searchData = filterData.filter { $0.file_path?.isEmpty ?? true }
         collectionView.reloadData()
     }
 }

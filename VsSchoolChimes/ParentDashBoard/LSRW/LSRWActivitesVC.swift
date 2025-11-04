@@ -429,7 +429,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                             }
                         } else {
                             let vc = LSRWSubmissionVC()
-                            vc.submitedAssignment = data
+//                            vc.submitedAssignment = data
                             vc.modalPresentationStyle = .pageSheet
                             
                             if let sheet = vc.sheetPresentationController {

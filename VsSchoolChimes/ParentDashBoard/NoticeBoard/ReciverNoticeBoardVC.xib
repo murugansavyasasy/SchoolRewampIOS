@@ -15,7 +15,8 @@
             <connections>
                 <outlet property="collectionView" destination="q0c-PN-s7s" id="rxc-ay-Flx"/>
                 <outlet property="nameLbl" destination="YUn-hI-OEG" id="JWO-Sz-DNf"/>
-                <outlet property="noDataImg" destination="9f2-SW-KoQ" id="Pq6-5w-pZX"/>
+                <outlet property="noDataImg" destination="leg-6c-xON" id="mam-T4-847"/>
+                <outlet property="noDataLbl" destination="5fA-EJ-nPD" id="F4R-0f-VNO"/>
                 <outlet property="searchBar" destination="CM9-eI-e8Z" id="ntC-3N-gvp"/>
                 <outlet property="tabView" destination="f18-FF-FgY" id="aKd-mi-TFu"/>
                 <outlet property="titleLbl" destination="KtB-ej-s0z" id="Lbs-X8-JT8"/>
@@ -88,12 +89,23 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ScM-LK-Ail">
                     <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noNotice" translatesAutoresizingMaskIntoConstraints="NO" id="9f2-SW-KoQ">
-                            <rect key="frame" x="30" y="197" width="333" height="300"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="300" id="X45-f9-kaI"/>
-                            </constraints>
-                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3z0-aI-W5y">
+                            <rect key="frame" x="0.0" y="41" width="393" height="310.33333333333331"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noNotice" translatesAutoresizingMaskIntoConstraints="NO" id="leg-6c-xON">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="280"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="280" id="5E5-0A-DSD"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fA-EJ-nPD">
+                                    <rect key="frame" x="0.0" y="290" width="393" height="20.333333333333314"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="39a-Hk-rBE">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="694"/>
                             <subviews>
@@ -203,12 +215,12 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
-                        <constraint firstItem="9f2-SW-KoQ" firstAttribute="leading" secondItem="ScM-LK-Ail" secondAttribute="leading" constant="30" id="8oi-9c-aJD"/>
+                        <constraint firstItem="3z0-aI-W5y" firstAttribute="top" secondItem="q0c-PN-s7s" secondAttribute="top" id="5EB-Rn-pQp"/>
                         <constraint firstItem="39a-Hk-rBE" firstAttribute="top" secondItem="ScM-LK-Ail" secondAttribute="top" id="9kl-ay-bsz"/>
                         <constraint firstAttribute="trailing" secondItem="39a-Hk-rBE" secondAttribute="trailing" id="Dkh-q2-Can"/>
-                        <constraint firstAttribute="trailing" secondItem="9f2-SW-KoQ" secondAttribute="trailing" constant="30" id="Hcc-FB-oiI"/>
+                        <constraint firstAttribute="trailing" secondItem="3z0-aI-W5y" secondAttribute="trailing" id="KwM-df-Xth"/>
                         <constraint firstAttribute="bottom" secondItem="39a-Hk-rBE" secondAttribute="bottom" id="Unu-Q9-7tE"/>
-                        <constraint firstItem="9f2-SW-KoQ" firstAttribute="centerY" secondItem="ScM-LK-Ail" secondAttribute="centerY" id="aGO-0z-nKA"/>
+                        <constraint firstItem="3z0-aI-W5y" firstAttribute="leading" secondItem="ScM-LK-Ail" secondAttribute="leading" id="ZJp-nK-lc4"/>
                         <constraint firstItem="39a-Hk-rBE" firstAttribute="leading" secondItem="ScM-LK-Ail" secondAttribute="leading" id="gtK-eG-yEh"/>
                     </constraints>
                 </view>

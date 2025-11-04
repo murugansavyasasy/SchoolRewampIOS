@@ -15,7 +15,8 @@
             <connections>
                 <outlet property="backBtn" destination="C3T-wS-ckn" id="Bu9-Xu-n9X"/>
                 <outlet property="bgView" destination="qjc-ha-zjw" id="uTP-JQ-BjA"/>
-                <outlet property="nodataImg" destination="k5K-0T-Gof" id="nWE-FL-dwy"/>
+                <outlet property="nodataImg" destination="QxB-iR-mfv" id="2ob-cp-26u"/>
+                <outlet property="nodataLbl" destination="FlQ-2Z-pFX" id="EsG-NV-0b4"/>
                 <outlet property="searchBar" destination="O0a-CO-gv6" id="8Hg-T6-2t1"/>
                 <outlet property="searchBtn" destination="Bmp-NF-BsC" id="mp6-As-fxi"/>
                 <outlet property="tv" destination="hXu-vi-gsd" id="cvg-AP-XrS"/>
@@ -75,12 +76,23 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynr-y0-lTl">
                     <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Nodata" translatesAutoresizingMaskIntoConstraints="NO" id="k5K-0T-Gof">
-                            <rect key="frame" x="20" y="176" width="353" height="400"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="400" id="EgZ-z6-2HP"/>
-                            </constraints>
-                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="OQT-wD-pyU">
+                            <rect key="frame" x="5" y="59.666666666666657" width="383" height="0.0"/>
+                            <subviews>
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lsrwNodata" translatesAutoresizingMaskIntoConstraints="NO" id="QxB-iR-mfv">
+                                    <rect key="frame" x="0.0" y="0.0" width="1159" height="300"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="605-wm-Azc"/>
+                                    </constraints>
+                                </imageView>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlQ-2Z-pFX">
+                                    <rect key="frame" x="0.0" y="0.0" width="1159" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHl-hQ-OkN" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
                             <rect key="frame" x="5" y="8" width="383" height="41.666666666666664"/>
                             <subviews>
@@ -95,6 +107,7 @@
                                         </label>
                                         <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0a-CO-gv6">
                                             <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
+                                            <color key="barTintColor" systemColor="systemGray5Color"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <scopeButtonTitles>
                                                 <string>Title</string>
@@ -140,15 +153,15 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="hXu-vi-gsd" secondAttribute="bottom" id="4NM-nz-sOP"/>
-                        <constraint firstItem="k5K-0T-Gof" firstAttribute="centerY" secondItem="hXu-vi-gsd" secondAttribute="centerY" id="5zs-SF-boU"/>
                         <constraint firstItem="hXu-vi-gsd" firstAttribute="top" secondItem="HHl-hQ-OkN" secondAttribute="bottom" constant="8" id="8td-FT-ZTx"/>
+                        <constraint firstItem="OQT-wD-pyU" firstAttribute="leading" secondItem="HHl-hQ-OkN" secondAttribute="leading" id="Kx2-i4-sYa"/>
                         <constraint firstItem="hXu-vi-gsd" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" id="Mpw-rd-WXa"/>
-                        <constraint firstItem="k5K-0T-Gof" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" constant="20" id="bpd-AP-DUG"/>
-                        <constraint firstAttribute="trailing" secondItem="k5K-0T-Gof" secondAttribute="trailing" constant="20" id="bvm-6E-ab6"/>
+                        <constraint firstItem="OQT-wD-pyU" firstAttribute="top" secondItem="HHl-hQ-OkN" secondAttribute="bottom" constant="10" id="Qhq-Gr-k3v"/>
                         <constraint firstAttribute="trailing" secondItem="hXu-vi-gsd" secondAttribute="trailing" id="cdo-RA-sQa"/>
                         <constraint firstItem="HHl-hQ-OkN" firstAttribute="top" secondItem="Ynr-y0-lTl" secondAttribute="top" constant="8" id="e00-u1-6d5"/>
                         <constraint firstAttribute="trailing" secondItem="HHl-hQ-OkN" secondAttribute="trailing" constant="5" id="wec-Zb-0u8"/>
                         <constraint firstItem="HHl-hQ-OkN" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" constant="5" id="xeJ-Zd-jpz"/>
+                        <constraint firstItem="OQT-wD-pyU" firstAttribute="trailing" secondItem="HHl-hQ-OkN" secondAttribute="trailing" id="zmg-ly-L5T"/>
                     </constraints>
                 </view>
             </subviews>
@@ -167,8 +180,8 @@
         </view>
     </objects>
     <resources>
-        <image name="Nodata" width="6000" height="4000"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="lsrwNodata" width="1159" height="772.32000732421875"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="ParentClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

@@ -13,13 +13,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ParentNoticeBoardVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="EmptyView" destination="9kT-fE-hpL" id="1KU-g3-d22"/>
                 <outlet property="FilterCV" destination="5Od-Wz-DMo" id="mrS-1C-ED6"/>
                 <outlet property="FilterImageview" destination="5tu-fX-XZM" id="XLf-vh-Z8q"/>
                 <outlet property="HeadingLabel" destination="dzL-u0-OpH" id="m3j-9I-CH6"/>
                 <outlet property="NameLbl" destination="R17-G6-HYv" id="w2B-Lr-2Ko"/>
                 <outlet property="NoDataLbl" destination="Q6R-8e-E9O" id="ZqD-Sw-zfI"/>
-                <outlet property="NodataImage" destination="IIr-vX-J2O" id="1Lw-r4-e4r"/>
                 <outlet property="SearchFilterStack" destination="VAb-Ih-Dkl" id="dCR-c2-POO"/>
                 <outlet property="StandardLbl" destination="ITA-pO-r3W" id="YbU-xJ-qly"/>
                 <outlet property="backBtn" destination="RAF-MZ-6Sl" id="q8F-pi-5dS"/>
@@ -101,6 +99,23 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8aq-nA-CeI">
                             <rect key="frame" x="0.0" y="50" width="393" height="709"/>
                             <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5xM-Bo-Jml">
+                                    <rect key="frame" x="10" y="95" width="373" height="314"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="QMp-03-ROC">
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="280"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="280" id="CuJ-ND-OEZ"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6R-8e-E9O">
+                                            <rect key="frame" x="0.0" y="290" width="373" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="y45-vO-07y">
                                     <rect key="frame" x="5" y="10" width="383" height="85"/>
                                     <subviews>
@@ -148,41 +163,9 @@
                                     </constraints>
                                 </stackView>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gm3-Zn-cGt">
-                                    <rect key="frame" x="0.0" y="503" width="393" height="198"/>
+                                    <rect key="frame" x="0.0" y="105" width="393" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="5xM-Bo-Jml">
-                                    <rect key="frame" x="10" y="95" width="373" height="408"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9kT-fE-hpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="100"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="100" id="8q5-wh-zBx"/>
-                                            </constraints>
-                                        </view>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="IIr-vX-J2O">
-                                            <rect key="frame" x="0.0" y="102" width="373" height="280"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="280" id="A6Y-Kn-8vY"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6R-8e-E9O">
-                                            <rect key="frame" x="50" y="384" width="273" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="Q6R-8e-E9O" secondAttribute="trailing" constant="50" id="0z5-Vk-FzS"/>
-                                        <constraint firstAttribute="trailing" secondItem="IIr-vX-J2O" secondAttribute="trailing" id="1YV-e0-Id2"/>
-                                        <constraint firstAttribute="trailing" secondItem="9kT-fE-hpL" secondAttribute="trailing" id="7zW-Cy-bij"/>
-                                        <constraint firstItem="IIr-vX-J2O" firstAttribute="leading" secondItem="5xM-Bo-Jml" secondAttribute="leading" id="d4V-Of-v3h"/>
-                                        <constraint firstItem="Q6R-8e-E9O" firstAttribute="leading" secondItem="5xM-Bo-Jml" secondAttribute="leading" constant="50" id="fAw-6V-Rk1"/>
-                                        <constraint firstItem="9kT-fE-hpL" firstAttribute="leading" secondItem="5xM-Bo-Jml" secondAttribute="leading" id="ovO-Ew-raa"/>
-                                    </constraints>
-                                </stackView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -192,10 +175,10 @@
                                 <constraint firstItem="y45-vO-07y" firstAttribute="top" secondItem="8aq-nA-CeI" secondAttribute="top" constant="10" id="IUC-4K-rm3"/>
                                 <constraint firstAttribute="trailing" secondItem="y45-vO-07y" secondAttribute="trailing" constant="5" id="T3y-5l-zKo"/>
                                 <constraint firstItem="5xM-Bo-Jml" firstAttribute="leading" secondItem="8aq-nA-CeI" secondAttribute="leading" constant="10" id="Vpa-0n-FUC"/>
+                                <constraint firstItem="gm3-Zn-cGt" firstAttribute="top" secondItem="y45-vO-07y" secondAttribute="bottom" constant="10" id="ZQ3-XA-BIu"/>
                                 <constraint firstItem="5xM-Bo-Jml" firstAttribute="top" secondItem="y45-vO-07y" secondAttribute="bottom" id="cgr-bh-XQ5"/>
                                 <constraint firstItem="gm3-Zn-cGt" firstAttribute="leading" secondItem="8aq-nA-CeI" secondAttribute="leading" id="dgY-tW-IhX"/>
                                 <constraint firstAttribute="trailing" secondItem="gm3-Zn-cGt" secondAttribute="trailing" id="mVg-GF-cAh"/>
-                                <constraint firstItem="gm3-Zn-cGt" firstAttribute="top" secondItem="5xM-Bo-Jml" secondAttribute="bottom" id="qgH-af-5z3"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -226,7 +209,7 @@
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <namedColor name="ParentClr">
-            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
