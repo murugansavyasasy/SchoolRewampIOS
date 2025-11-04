@@ -12,6 +12,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     
     // MARK: - IBOutlets
     @IBOutlet weak var noDataImg: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tabView: UIView!
@@ -146,7 +147,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         } else {
             searchData = allNotices
             self.noDataImg.isHidden = !self.searchData.isEmpty
-            self.noDataImg.isHidden = !self.searchData.isEmpty
+            self.noDataLbl.isHidden = !self.searchData.isEmpty
             collectionView.reloadData()
             searchBar.searchTextField.text = ""
             searchBar?.resignFirstResponder()
@@ -176,6 +177,8 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                     self.allNotices = successResponse.data ?? []
                     self.searchData = self.allNotices
                     self.noDataImg.isHidden = !self.searchData.isEmpty
+                    self.noDataLbl.isHidden = !self.searchData.isEmpty
+                    self.noDataLbl.text = successResponse.message ?? ""
                     self.updateCounts()
                     
                     self.collectionView.reloadData()
@@ -240,7 +243,9 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
             }
         }
         noDataImg.isHidden = !searchData.isEmpty
-        noDataImg.image = UIImage(named: "noSearchData")
+        noDataLbl.isHidden = !searchData.isEmpty
+        noDataLbl.text = "No Data Found"
+//        noDataImg.image = UIImage(named: "noSearchData")
         updateCounts()
         collectionView.reloadData()
     }

@@ -85,7 +85,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             schoolName.text = "All"
         }
         if checkMutipleSchool() {
-            schoolDropDown.isHidden = false
+            schoolDropDown.isHidden = true
             schoolList = school_details?.compactMap { $0.school_name }
             schoolList?.insert("All", at: 0)
             self.dropDown.dataSource = self.schoolList ?? []

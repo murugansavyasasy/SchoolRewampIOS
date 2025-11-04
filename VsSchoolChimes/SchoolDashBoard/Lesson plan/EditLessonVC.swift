@@ -39,8 +39,10 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         UpdateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         if isCreate{
             UpdateBtn.setTitle("Create", for: .normal)
+            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.createLessonPlan, secondLine: staffDetails?.school_name ?? "")
         }else{
             UpdateBtn.setTitle("Update", for: .normal)
+            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.editLessonPlan, secondLine: staffDetails?.school_name ?? "")
         }
         Tableview.showsVerticalScrollIndicator = false
         Tableview.showsHorizontalScrollIndicator = false

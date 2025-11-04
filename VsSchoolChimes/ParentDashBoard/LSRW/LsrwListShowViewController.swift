@@ -11,6 +11,7 @@ import UIKit
 class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var nodataImg: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var backBtn: UIButton!
@@ -32,7 +33,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
-        
+        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
         backBtn.applyBackButton()
         backBtn.configureAsBackButton(
             firstLine: "\(childDetails?.name ?? "")",
@@ -74,11 +77,15 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
                     self?.tasks = response.data ?? []
                     self?.filteredTasks = self?.tasks ?? []
                     self?.nodataImg.isHidden = !(self?.filteredTasks.isEmpty ?? true)
-                    self?.nodataImg.image = UIImage(named: "noRecords")
+                    self?.nodataLbl.isHidden = !(self?.filteredTasks.isEmpty ?? true)
+                    self?.nodataLbl.text = response.message ?? ""
                     self?.tv.reloadData()
                     
                 case .failure(let error):
                     print("API Error:", error)
+                    self?.nodataImg.isHidden = !(self?.filteredTasks.isEmpty ?? true)
+                    self?.nodataLbl.isHidden = !(self?.filteredTasks.isEmpty ?? true)
+                    self?.nodataLbl.text = error.localizedDescription
                 }
             }
         }
@@ -107,6 +114,11 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
             searchBar.isHidden = true
             searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         }
+        filteredTasks = tasks
+        nodataImg.isHidden = !filteredTasks.isEmpty
+        nodataLbl.isHidden = !filteredTasks.isEmpty
+        nodataLbl.text = ""
+        tv.reloadData()
     }
     
     // MARK: - Table View
@@ -173,7 +185,8 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         nodataImg.isHidden = !filteredTasks.isEmpty
-        nodataImg.image = UIImage(named: "noSearchData")
+        nodataLbl.isHidden = !filteredTasks.isEmpty
+        nodataLbl.text = "No Data Found"
         tv.reloadData()
     }
     
