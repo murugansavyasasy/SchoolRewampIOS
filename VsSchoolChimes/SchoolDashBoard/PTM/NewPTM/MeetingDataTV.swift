@@ -22,6 +22,8 @@ class MeetingDataTV: UITableViewCell {
     @IBOutlet weak var classBtn: UIButton!
     @IBOutlet weak var classesLbl: UILabel!
     
+    var onJoin : (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -46,6 +48,10 @@ class MeetingDataTV: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func JoinBtnAct(_ sender: Any) {
+        onJoin?()
     }
     
 }

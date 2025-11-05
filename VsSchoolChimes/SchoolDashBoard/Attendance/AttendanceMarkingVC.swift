@@ -10,7 +10,7 @@ import DropDown
 
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
     
-    func markAsAbsent(AbsentStudent: [AttendanceStudentListData], CallAttendaceApi: Bool) {
+    func markAsAbsent(AbsentStudent: [AttendanceStudentListDetails], CallAttendaceApi: Bool) {
 //        if CallAttendaceApi{
 //            user_inputs.all_present = "T"
 //            filterData = AbsentStudent
@@ -92,8 +92,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     var dropDown = DropDown()
     var  MakeAbsentId: [[String: String]] = []
     
-    var student_List: [AttendanceStudentListData]?
-    var Filtered_stuent_Listt: [AttendanceStudentListData]?
+    var student_List: [AttendanceStudentListDetails]?
+    var Filtered_stuent_Listt: [AttendanceStudentListDetails]?
     var searchQuery: String = ""
     var selectedSort = CommonStringFile.NameASC
     var isAllAbsent = false
@@ -167,6 +167,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             MarkAttendenceStringFile.section_id: user_inputs.section_id,
             MarkAttendenceStringFile.class_id: user_inputs.class_id,
             MarkAttendenceStringFile.date: user_inputs.attendance_date,
+            MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_list, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<AttendanceStudentListResponse, Error>) in
@@ -179,7 +180,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 case .success(let success):
                     
                     if success.status == true {
-                        self.student_List = success.data
+                        self.student_List = success.data?.first?.attd_details
                         self.Filtered_stuent_Listt = self.student_List
                         self.getAttendanceCounts()
                         self.tv.reloadData()
@@ -515,7 +516,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
 
     
     
-    func getSpecialAttendanceType(for student: AttendanceStudentListData) -> [String: String] {
+    func getSpecialAttendanceType(for student: AttendanceStudentListDetails) -> [String: String] {
         let components = student.att_status?.split(separator: "/").map(String.init) ?? []
         
         var value = ""

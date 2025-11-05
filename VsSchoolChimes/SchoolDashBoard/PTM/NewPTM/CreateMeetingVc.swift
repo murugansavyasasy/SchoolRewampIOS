@@ -77,8 +77,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
-    
-    
+    @IBOutlet weak var calendarcancelBtn: UIButton!
     
     var breakDuration: [String] = []
     var SelectedClasses = Set<IndexPath>()
@@ -234,6 +233,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         calendarDoneBtn.layer.cornerRadius = 10
         calendarDoneBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        calendarcancelBtn.layer.cornerRadius = 10
+        calendarcancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         calendarMonthLbl.setFont(style: .title, size: FontSize.TitleSize)
         
@@ -572,7 +574,6 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     }
     
     @IBAction func SelectDate(){
-        
         showCalendar()
     }
     
@@ -593,7 +594,23 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         }
     }
     
-    
+    func setSelectedDatesInCalendar(){
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        
+        for date in calendar.selectedDates{
+            calendar.deselect(date)
+        }
+        
+        calendar.allowsMultipleSelection = true
+        
+        for dateString in SelectedDates{
+            if let date = formatter.date(from: dateString) {
+                calendar.select(date)
+            }
+        }
+    }
     
     func date(date: String) {
         
@@ -615,6 +632,11 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             self.selectedDatesCv.reloadData()
         }
         hideCalendar()
+    }
+    
+    @IBAction func cancelAct(_ sender: Any) {
+        hideCalendar()
+        setSelectedDatesInCalendar()
     }
     
     func reload(index: Int) {

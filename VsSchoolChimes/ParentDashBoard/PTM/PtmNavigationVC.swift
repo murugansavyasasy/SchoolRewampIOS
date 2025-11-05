@@ -29,6 +29,8 @@ class PtmNavigationVC: UIViewController {
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         
+        searchBtn.isHidden = true
+        
         scheduleMeetingBtn.setTitle("Book PTM Slots", for: .normal)
         yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
         
@@ -48,6 +50,7 @@ class PtmNavigationVC: UIViewController {
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.backgroundColor = .clear
         searchBtn.isHidden = true
+        firstChildVC.Reload()
         transition(to: firstChildVC)
 //        removeChildVc()
 //        getSlotsApi()
@@ -63,14 +66,13 @@ class PtmNavigationVC: UIViewController {
         dismiss(animated: true)
     }
     
-    @IBAction func searchBtnAct(_ sender: Any) {
+    @IBAction func searchBtnAct(_ sender: UIButton) {
         
-//        if let Child = childVc{
-//            Child.searchBar.isHidden.toggle()
-//        }
-        
-        if let childA = currentChildVC as? PtmHistoryVC {
-            childA.searchBar.isHidden.toggle()
+        if let child = currentChildVC as? PtmHistoryVC {
+            sender.isSelected.toggle()
+            let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+            searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+            child.searchBtnAct(selected: sender.isSelected)
         }
     }
 

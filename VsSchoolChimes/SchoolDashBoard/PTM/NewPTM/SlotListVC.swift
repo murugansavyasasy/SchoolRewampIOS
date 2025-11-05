@@ -153,7 +153,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             cell.modeLbl.text = slotData?.event_mode
             cell.JoinBtn.isHidden = slotData?.event_mode == "Virtual" ? false : true
             cell.TimeLbl.text = (slotData?.start_time ?? "") + " - " + (slotData?.end_time ?? "")
-            
+            cell.onJoin = { [weak self] in
+                self?.openMeetingLink("")
+            }
             return cell
         }else {
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
@@ -289,4 +291,32 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         return now > givenTimeToday
     }
+    
+    func openMeetingLink(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+
+        // Extract scheme safely
+        let scheme = url.scheme ?? ""
+
+        // Allowed URL schemes
+        let allowedSchemes = ["http", "https", "zoomus", "msteams", "meet"]
+
+        // If scheme isn’t recognized, try to open as https:// instead
+        if !allowedSchemes.contains(scheme) {
+            if let httpsURL = URL(string: urlString.replacingOccurrences(of: "\(scheme)://", with: "https://")) {
+                UIApplication.shared.open(httpsURL)
+            }
+            return
+        }
+
+        // If the app for this scheme is installed, open it
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            // Fallback to Safari
+            UIApplication.shared.open(url)
+        }
+    }
+
+
 }

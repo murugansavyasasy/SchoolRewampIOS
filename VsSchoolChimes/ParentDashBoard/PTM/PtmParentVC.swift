@@ -41,6 +41,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     let dropDown = DropDown()
     var childVc : PtmHistoryVC?
     var availableSlots : [AvailableSlot] = []
+    var hasLoadedOnce = false
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -49,6 +50,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         generateDates()
         getsubjects()
         Get_Available_slot_count()
+        hasLoadedOnce = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,6 +58,10 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         updateTableHeight()
     }
     
+    func Reload(){
+        getSlotsApi()
+    }
+   
     func updateTableHeight() {
         tv.layoutIfNeeded()
         tableViewHeight.constant = tv.contentSize.height
