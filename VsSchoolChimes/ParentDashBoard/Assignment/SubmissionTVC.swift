@@ -15,6 +15,7 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
     }
     
     
+    @IBOutlet weak var attachmentStack: UIStackView!
     @IBOutlet weak var EditBtn1: UIButton!
     @IBOutlet weak var EditBtn: UIButton!
     @IBOutlet weak var img1: UIImageView!
@@ -66,9 +67,16 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         imgCount.setTitle(nil, for: .normal)
     }
     func loadFiles(into cell: SubmissionTVC, files: [FilePath]) {
+        // Hide all image views initially
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
         cell.imgCount.isHidden = true
-
+        
+        if files.isEmpty {
+            cell.attachmentStack.isHidden = true
+            return
+        } else {
+            cell.attachmentStack.isHidden = false
+        }
         for (index, file) in files.prefix(3).enumerated() {
             guard let urlString = file.url, let url = URL(string: urlString) else { continue }
             let imageViews = [cell.img1, cell.img2, cell.img3]
@@ -81,12 +89,12 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
                 imageView?.sd_setImage(with: url)
             }
         }
-        
         if files.count > 3 {
             cell.imgCount.setTitle("+\(files.count - 3)", for: .normal)
             cell.imgCount.isHidden = false
         }
     }
+
     
     func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
         view.layer.cornerRadius = cornerRadius

@@ -19,6 +19,7 @@
                 <outlet property="TitleTxtfield" destination="5Tq-fx-tKi" id="UNr-QN-yg1"/>
                 <outlet property="ToStdOrSecBtnBottom" destination="fMp-z2-ggI" id="UPb-Mk-mJ8"/>
                 <outlet property="audioFile" destination="swF-vH-WBt" id="i2s-7R-Aey"/>
+                <outlet property="backBtn" destination="zNx-dR-ANi" id="bcG-dZ-J2p"/>
                 <outlet property="collectionViewHeight" destination="QoB-F1-DOQ" id="zhE-oc-yre"/>
                 <outlet property="dateLbl" destination="viv-SG-9q1" id="Kgm-gV-erL"/>
                 <outlet property="dateView" destination="FWP-cF-qbv" id="Wvl-aT-5Mc"/>
@@ -281,7 +282,7 @@
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="TO STANDARD OR SECTIONS"/>
+                                                            <state key="normal" title="TO STANDARD OR SECTION"/>
                                                             <connections>
                                                                 <action selector="selectRecipient:" destination="-1" eventType="touchUpInside" id="QCd-CC-wXb"/>
                                                             </connections>

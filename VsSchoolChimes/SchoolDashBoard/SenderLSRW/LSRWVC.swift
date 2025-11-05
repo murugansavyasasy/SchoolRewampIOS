@@ -24,6 +24,7 @@ class LSRWVC: UIViewController, FilterDelegate {
     @IBOutlet weak var lsrwTable: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataImg: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
 
     // MARK: - Data
     private var dashboardData: [Overview] = []
@@ -101,13 +102,15 @@ class LSRWVC: UIViewController, FilterDelegate {
                     self.filterTask = self.recentTasks
                     self.allTask = firstData
                     self.nodataImg.isHidden = !self.filterTask.isEmpty
+                    self.nodataLbl.isHidden = !self.filterTask.isEmpty
                     self.lsrwTable.reloadData()
                 }
-
 
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
+                    self.nodataImg.isHidden = false
+                    self.nodataLbl.isHidden = false
                     self.lsrwTable.reloadData()
                 }
             }
@@ -129,11 +132,10 @@ class LSRWVC: UIViewController, FilterDelegate {
         case "All":
             filterTask = recentTasks
 
-        case "Pending":
-            let pendingTasks = activeTask.filter { $0.is_submitted == false }
+        case "Active":
             filterTask = filterTask.map { section in
                 switch section {
-                case .active: return .active(pendingTasks)
+                case .active: return .active(activeTask)
                 case .completed: return .completed([])
                 default: return section
                 }
@@ -159,6 +161,22 @@ class LSRWVC: UIViewController, FilterDelegate {
                 default: return section
                 }
             }
+        }
+
+        // ✅ Handle No Data state
+        let hasData = filterTask.contains { section in
+            switch section {
+            case .active(let list), .completed(let list):
+                return !list.isEmpty
+            case .overview, .filterArray:
+                return true
+            }
+        }
+
+        nodataImg.isHidden = hasData
+        nodataLbl.isHidden = hasData
+        if !hasData {
+            nodataLbl.text = "No data available for this filter"
         }
 
         lsrwTable.reloadData()
@@ -276,7 +294,6 @@ extension LSRWVC {
             return overviewHeaderView()
         }
 
-        // ✅ Normal flow
         let sectionData = filterTask[section]
         let headerView = UIView()
         headerView.backgroundColor = .white

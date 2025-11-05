@@ -1,7 +1,5 @@
-//
-//  SenderLSRWVC.swift
+//  SenderLSRWVC.swift (fixed)
 //  School Chimes
-//
 //  Created by Chandhru on 30/06/25.
 //
 
@@ -16,6 +14,8 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     // MARK: - Protocol Methods
     func date(date: String) {
         dateLbl.text = date
+        // Update placeholder behavior or validation state if needed
+        placeholderLabel.isHidden = !(DetailsTxtview.text?.isEmpty ?? true) && DetailsTxtview.textColor != .lightGray
     }
     
     func didTapButton(
@@ -49,6 +49,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     
     // MARK: - IBOutlets
     @IBOutlet weak var typeSectionCV: UICollectionView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateLbl: UITextField!
     @IBOutlet weak var recordingView: UIView!
@@ -82,7 +83,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     var alert = CustomAlert()
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
-    
+    var placeholderLabel: UILabel!
     // Audio Properties
     private var recordingTimer: Timer?
     private var recordingStartTime: Date?
@@ -104,7 +105,8 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         setupInitialConfiguration()
-        
+        setupPlaceholderIfNeeded()
+        backBtn.setTitle(MenuStringFile.selectedMenuName, for: .normal)
         // Enable user interaction
         dateView.isUserInteractionEnabled = true
         uploadAttachmentView.imageCollectionview.backgroundColor = .clear
@@ -114,7 +116,30 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         
         setupTaskTypesCollectionView()
     }
-    
+    private func setupPlaceholderIfNeeded() {
+        // Create placeholder label for UITextView instead of seeding the textview with the placeholder string
+        placeholderLabel = UILabel()
+        placeholderLabel.text = CommonStringFile.Description.translated()
+        placeholderLabel.font = DetailsTxtview.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        DetailsTxtview.addSubview(placeholderLabel)
+        NSLayoutConstraint.activate([
+            placeholderLabel.leadingAnchor.constraint(equalTo: DetailsTxtview.leadingAnchor, constant: 8),
+            placeholderLabel.trailingAnchor.constraint(equalTo: DetailsTxtview.trailingAnchor, constant: -8),
+            placeholderLabel.topAnchor.constraint(equalTo: DetailsTxtview.topAnchor, constant: 8)
+        ])
+        
+        // If the text view currently contains the language default description placeholder string
+        // treat it as empty and show our label
+        let isEmptyContent = (DetailsTxtview.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || DetailsTxtview.text == CommonStringFile.Description
+        placeholderLabel.isHidden = !isEmptyContent ? true : false
+        if DetailsTxtview.text == CommonStringFile.Description {
+            DetailsTxtview.text = ""
+            DetailsTxtview.textColor = .black
+        }
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Stop all audio playback when leaving the screen
@@ -166,6 +191,11 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         DetailsTxtview.addDoneButton()
         DetailsTxtview.delegate = self
         TitleTxtfield.delegate = self
+        
+        // Make sure initial text is empty and placeholder label handles placeholder appearance
+        if DetailsTxtview.text == CommonStringFile.Description {
+            DetailsTxtview.text = ""
+        }
     }
     
     private func setupNotifications() {
@@ -188,12 +218,14 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         uploadAttachmentView.imageCollectionview.dataSource = self
     }
 
-    
     // MARK: - Public Methods
     func setSelectedHomeWork(title: String, content: String, imageUrls: [FilePath]) {
         DetailsTxtview.text = content
         DetailsTxtview.textColor = content.isEmpty ? .lightGray : .black
         TitleTxtfield.text = title
+        
+        // Update placeholder visibility
+        placeholderLabel.isHidden = !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         
         let imageItems = imageUrls.map {
             AttachmentItem(image: nil, imageURL: $0.url, fileType: $0.type ?? "")
@@ -221,8 +253,9 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         
         RecipientBtn.layer.cornerRadius = 10
-        DetailsTxtview.text = CommonStringFile.Description
-        DetailsTxtview.textColor = .lightGray
+        // Leave DetailsTxtview text blank and rely on placeholderLabel
+        // DetailsTxtview.text = CommonStringFile.Description
+        // DetailsTxtview.textColor = .lightGray
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         // Label Font Style
@@ -252,39 +285,28 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     }
     
     @IBAction func selectRecipient(_ sender: UIButton) {
-        
-        // Validate title field
-        guard let title = TitleTxtfield.text, !title.isEmpty else {
-            alert.showAlert(
-                title: "Missing Field",
-                message: "Please enter the Title.",
-                on: self
-            )
+        // Individual validation checks with focused feedback
+        let title = (TitleTxtfield.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        if title.isEmpty {
+            showFieldAlert(title: "Missing Title", message: "Please enter the Title.", focus: TitleTxtfield)
             return
         }
         
-        // Validate description field
-        guard let description = DetailsTxtview.text,
-              !description.isEmpty,
-              description != CommonStringFile.Description else {
-            alert.showAlert(
-                title: "Missing Field",
-                message: "Please enter the Description.",
-                on: self
-            )
+        if isDescriptionEmpty() {
+            showFieldAlert(title: "Missing Description", message: "Please enter the Description.", focus: DetailsTxtview)
             return
         }
         
-        // Validate date field
-        guard let dateText = dateLbl.text,
-              !dateText.isEmpty,
-              let dateString = convertDate(dateText),
-              !dateString.isEmpty else {
-            alert.showAlert(
-                title: "Missing Field",
-                message: "Please select a Submission Date.",
-                on: self
-            )
+        let dateText = (dateLbl.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        if dateText.isEmpty || convertDate(dateText) == nil {
+            showFieldAlert(title: "Missing Submission Date", message: "Please select a valid Submission Date.", focus: dateLbl)
+            return
+        }
+        
+        // Optional: check recipient selection (if your button's title represents selection)
+        let recipientTitle = (RecipientBtn.title(for: .normal) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        if recipientTitle.isEmpty || recipientTitle.lowercased().contains("select") {
+            showFieldAlert(title: "Missing Recipient", message: "Please select recipient(s) to send this to.", focus: nil)
             return
         }
         
@@ -295,8 +317,8 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         // Proceed with API parameters
         let params: [String: Any] = [
             assignmentResquestStringKey.title: title,
-            assignmentResquestStringKey.description: description,
-            assignmentResquestStringKey.submission_date: dateString,
+            assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
+            assignmentResquestStringKey.submission_date: convertDate(dateText) ?? "",
             assignmentResquestStringKey.activity_type: taskTypes[selectedTaskIndex].0,
         ]
         
@@ -307,8 +329,18 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-
-
+    
+    private func showFieldAlert(title: String, message: String, focus: UIResponder?) {
+        alert.showAlert(title: title, message: message, on: self)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            focus?.becomeFirstResponder()
+        }
+    }
+    
+    private func isDescriptionEmpty() -> Bool {
+        let text = DetailsTxtview.text ?? ""
+        return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || text == CommonStringFile.Description
+    }
     
     private func startRecording() {
         audioManager.checkRecordPermission { [weak self] granted in
@@ -775,6 +807,8 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 extension SenderLSRWVC: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        // Hide placeholder once user begins editing
+        placeholderLabel.isHidden = true
         if DetailsTxtview.text == CommonStringFile.Description {
             DetailsTxtview.text = ""
             DetailsTxtview.textColor = .black
@@ -782,13 +816,19 @@ extension SenderLSRWVC: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if DetailsTxtview.text.isEmpty {
-            DetailsTxtview.text = CommonStringFile.Description
-            DetailsTxtview.textColor = .gray
+        // Show placeholder if text view is empty
+        let isEmptyContent = (textView.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        placeholderLabel.isHidden = !isEmptyContent ? true : false
+        if isEmptyContent {
+            DetailsTxtview.text = ""
+            DetailsTxtview.textColor = .black
         }
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        // Update placeholder visibility
+        placeholderLabel.isHidden = !(textView.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        
         let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
         TextViewheight.constant = newHeight

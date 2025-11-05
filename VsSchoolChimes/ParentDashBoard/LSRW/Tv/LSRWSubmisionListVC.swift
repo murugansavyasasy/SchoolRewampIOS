@@ -213,7 +213,7 @@ class LSRWSubmisionListVC: UIViewController,
         guard kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }
-        
+
         let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: "SectionHeader",
@@ -221,10 +221,13 @@ class LSRWSubmisionListVC: UIViewController,
         )
         header.subviews.forEach { $0.removeFromSuperview() }
 
+        // Show description and title ONLY for the first section
+        guard indexPath.section == 0 else { return header }
+
         var yOffset: CGFloat = 0
 
-        // Description label (first section only)
-        if indexPath.section == 0, let text = titleSting, !text.isEmpty {
+        // Description label
+        if let text = titleSting, !text.isEmpty {
             let descriptionLabel = UILabel()
             descriptionLabel.font = UIFont.systemFont(ofSize: 14)
             descriptionLabel.textColor = .darkGray
@@ -246,11 +249,7 @@ class LSRWSubmisionListVC: UIViewController,
                                                height: 30))
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
-        switch filterSection[indexPath.section] {
-        case .videos: titleLabel.text = "📹 Videos"
-        case .audios: titleLabel.text = "🎵 Audios"
-        case .images: titleLabel.text = "🖼 Images & Docs"
-        }
+        titleLabel.text = "🖼 Files"
         header.addSubview(titleLabel)
 
         return header
@@ -260,9 +259,14 @@ class LSRWSubmisionListVC: UIViewController,
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
+        // Only show header for the first section
+        guard section == 0 else {
+            return .zero
+        }
+
         var height: CGFloat = 30 // for title label
 
-        if section == 0, let text = titleSting, !text.isEmpty {
+        if let text = titleSting, !text.isEmpty {
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 14)
             label.numberOfLines = 0
@@ -276,6 +280,7 @@ class LSRWSubmisionListVC: UIViewController,
 
         return CGSize(width: collectionView.frame.width, height: height)
     }
+
 
 
     

@@ -23,10 +23,11 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var nodataImg: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     
     // MARK: - Properties
     private var reportData: [ReportData]?
-    private var currentData: PerformanceData?   // ✅ store API response
+    private var currentData: PerformanceData?
     let dropDown = DropDown()
     var monthId: Int = 1
     
@@ -90,18 +91,24 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
                 if response.status, let data = response.data.first {
                     DispatchQueue.main.async {
                         self?.nodataImg.isHidden = true
+                        self?.nodataLbl.isHidden = true
                         self?.mapResponseToReportData(data: data)
                     }
                 } else {
                     DispatchQueue.main.async {
                         self?.reportData = nil
                         self?.nodataImg.isHidden = false
+                        self?.nodataLbl.isHidden = false
+                        self?.nodataLbl.text = response.message
                         self?.tableView.reloadData()
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
+                    self?.nodataImg.isHidden = false
+                    self?.nodataLbl.isHidden = false
+                    self?.nodataLbl.text = error.localizedDescription
                 }
             }
         }

@@ -46,11 +46,13 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         calendarItems = getAllPastDatesIncludingTodayForLastMonth()
         nodataLbl.isHidden = true
         noRecordImg.isHidden = true
-        
         register()
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getAssigment()
     }
-    
     func getAssigment() {
         if #available(iOS 15.0, *) {
             showActivityLoader()

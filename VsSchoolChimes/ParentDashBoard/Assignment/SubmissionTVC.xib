@@ -32,7 +32,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="UKf-wM-nZ2">
-                                        <rect key="frame" x="0.0" y="23" width="430" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="59.333333333333336" width="430" height="20.333333333333336"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maths" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhN-nl-cd5">
                                                 <rect key="frame" x="0.0" y="0.0" width="430" height="20.333333333333332"/>
@@ -49,13 +49,13 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ap-fI-I4T">
-                                        <rect key="frame" x="0.0" y="48.333333333333336" width="430" height="15.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="121.00000000000003" width="430" height="15.666666666666657"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EUv-xQ-sYZ">
-                                        <rect key="frame" x="0.0" y="69" width="430" height="104"/>
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EUv-xQ-sYZ">
+                                        <rect key="frame" x="0.0" y="139.33333333333334" width="430" height="0.0"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-10" id="ir5-Bb-zXn">
                                                 <rect key="frame" x="0.0" y="0.0" width="174" height="47"/>
@@ -183,6 +183,7 @@
                 <outlet property="EditBtn" destination="fji-OV-2Zj" id="59Q-Pg-JNz"/>
                 <outlet property="EditBtn1" destination="VMT-QO-Lg6" id="rjx-US-wve"/>
                 <outlet property="assignmentTitle" destination="Z9B-lt-QbA" id="sfs-xo-Mcg"/>
+                <outlet property="attachmentStack" destination="EUv-xQ-sYZ" id="0DD-0l-jvY"/>
                 <outlet property="date" destination="cyC-Xr-nGn" id="agY-gF-stI"/>
                 <outlet property="descriptionLbl" destination="0Ap-fI-I4T" id="VXd-Ku-eNI"/>
                 <outlet property="img1" destination="zGz-u1-BmM" id="EOa-OD-d4H"/>

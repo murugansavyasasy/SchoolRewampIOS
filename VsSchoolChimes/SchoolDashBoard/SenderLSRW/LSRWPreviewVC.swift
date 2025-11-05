@@ -158,7 +158,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 txt = "Due Date"
             }
             
-            cell.submitDate.text = "\(txt): \(formattedDateStatus(from: date ?? ""))"
+            cell.submitDate.text = "\(txt): \(ConvertDateStringSmart(date ?? "",toFormat: "dd MMM yyyy h.mm a"))"
             cell.statusView.setImage(icon, for: .normal)
             cell.statusView.tintColor = statusColor
             // Optional: Adjust image & title spacing

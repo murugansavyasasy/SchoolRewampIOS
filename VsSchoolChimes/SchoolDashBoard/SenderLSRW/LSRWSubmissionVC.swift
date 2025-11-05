@@ -154,8 +154,6 @@ extension LSRWSubmissionVC: UISearchBarDelegate {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         
         var filteredData = report
-        
-        // Apply current filter type
         switch selectedFilter {
         case .all:
             break
