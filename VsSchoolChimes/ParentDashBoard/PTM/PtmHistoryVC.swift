@@ -26,8 +26,6 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var NoDataImage: UIImageView!
     
-    
-    
     let childDetails = UserDefaultFileManager.get_child_Details()
     var slotData: [SlotCategory]?
     var AllSections : [SlotSection]?
@@ -53,14 +51,14 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         reasonDefLbl.setFont(style: .body, size: FontSize.TitleSize)
         continueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        reasonTextfield.addDoneButton()
+        
         continueBtn.layer.cornerRadius = 8
         tv.showsVerticalScrollIndicator = false
         tv.showsHorizontalScrollIndicator = false
         tv.register(UINib(nibName: CellConfingName.BookedSlotTV, bundle: nil), forCellReuseIdentifier: CellConfingName.BookedSlotTV)
         tv.delegate = self
         tv.dataSource = self
-        
-        get_meetings_api()
     }
     
     override func viewDidLayoutSubviews() {
@@ -71,13 +69,22 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         Popuptopview.clipsToBounds = true
     }
     
-    func get_meetings_api(){
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        get_meetings_api()
+    }
+    
+    func get_meetings_api(){
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_slot_history_for_student, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<SlotDetailsResponse,Error>) in
             
             guard let self = self else {return}
             
             DispatchQueue.main.async {
+                if #available(iOS 15.0, *){ self.hideActivityLoader() }
                 
                 switch result {
                 case .success(let success):
@@ -122,6 +129,10 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func Cancel_meeting_Api(){
         
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
+        
         let param: [String:Any] = [PTMRequestStringFile.slot_id:cancelId ?? "", PTMRequestStringFile.cancelled_reason: reasonTextfield.text ?? ""]
         
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_slot_by_student, parameters: param, type: ApitTypeSringFile.PUT, token: childDetails?.access_token ?? "") {[weak self] (result:Result<CommonApiSuc,Error>) in
@@ -129,7 +140,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             guard let self = self else {return}
             
             DispatchQueue.main.async {
-                
+                if #available(iOS 15.0, *){ self.hideActivityLoader() }
                 switch result {
                 case .success(let success):
                     if success.status == true{
@@ -188,6 +199,8 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
 
     func hidePopup() {
+        reasonTextfield.text = ""
+        reasonTextfield.resignFirstResponder()
         UIView.animate(withDuration: 0.3, animations: {
             self.PopupContainerview.alpha = 0
         }) { _ in
@@ -279,6 +292,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             cell.cancelStackHeight.constant = 0
             cell.callBtn.isHidden = true
             cell.cancelBtn.isHidden = true
+            cell.JoinBtn.isHidden = true
             cell.statusBtn.backgroundColor = .systemGreen.withAlphaComponent(0.7)
             cell.statusBtn.setTitleColor(.white, for: .normal)
         }
@@ -315,27 +329,51 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
 extension PtmHistoryVC: UISearchBarDelegate{
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
-                FilteredSection = AllSections
-                tv.reloadData()
-                return
-            }
-            
-            let query = searchText.lowercased().trimmingCharacters(in: .whitespaces)
-            
-        FilteredSection = AllSections?.compactMap { section in
-                let filteredSlots = section.slots.filter { slot in
-                    (slot.purpose?.lowercased().contains(query) ?? false) ||
-                    (slot.staff_name?.lowercased().contains(query) ?? false) ||
-                    (slot.subject_name?.first?.lowercased().contains(query) ?? false) ||
-                    (slot.status?.lowercased().contains(query) ?? false) ||
-                    (slot.date?.convertToTargetDateFormat()?.lowercased().contains(query) ?? false) ||
-                    (slot.time?.lowercased().contains(query) ?? false)
-                }
-                return filteredSlots.isEmpty ? nil : SlotSection(title: section.title, slots: filteredSlots)
-            }
-            
+    func searchBtnAct(selected:Bool){
+        
+        if selected{
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+        }else{
+            searchBar.searchTextField.text = ""
+            searchBar.isHidden = true
+            searchBar.resignFirstResponder()
+            FilteredSection = AllSections
+            NoDataImage.isHighlighted = true
+            NoDataLbl.isHighlighted = true
             tv.reloadData()
         }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
+            FilteredSection = AllSections
+            tv.reloadData()
+            return
+        }
+        
+        let query = searchText.lowercased().trimmingCharacters(in: .whitespaces)
+        
+        FilteredSection = AllSections?.compactMap { section in
+            let filteredSlots = section.slots.filter { slot in
+                (slot.purpose?.lowercased().contains(query) ?? false) ||
+                (slot.staff_name?.lowercased().contains(query) ?? false) ||
+                (slot.subject_name?.first?.lowercased().contains(query) ?? false) ||
+                (slot.status?.lowercased().contains(query) ?? false) ||
+                (slot.date?.convertToTargetDateFormat()?.lowercased().contains(query) ?? false) ||
+                (slot.time?.lowercased().contains(query) ?? false)
+            }
+            return filteredSlots.isEmpty ? nil : SlotSection(title: section.title, slots: filteredSlots)
+        }
+        
+        if  FilteredSection?.isEmpty == true{
+            NoDataLbl.isHidden = false
+            NoDataImage.isHidden = false
+        }else{
+            NoDataLbl.isHidden = true
+            NoDataImage.isHidden = true
+        }
+        
+        tv.reloadData()
+    }
 }

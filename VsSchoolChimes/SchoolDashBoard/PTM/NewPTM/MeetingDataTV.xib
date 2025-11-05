@@ -150,6 +150,9 @@
                                         <state key="normal" title="Join Meeting">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="JoinBtnAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vb1-Y3-vk8"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

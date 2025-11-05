@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -37,20 +37,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ub3-EA-61m">
-                    <rect key="frame" x="0.0" y="112.33333333333331" width="393" height="705.66666666666674"/>
+                    <rect key="frame" x="0.0" y="171.33333333333331" width="393" height="612.66666666666674"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tjY-eC-2yf">
-                            <rect key="frame" x="0.0" y="272.33333333333337" width="393" height="433.33333333333337"/>
+                            <rect key="frame" x="0.0" y="267.33333333333337" width="393" height="345.33333333333337"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="aeU-Uq-xId">
-                            <rect key="frame" x="10" y="203" width="373" height="300"/>
+                            <rect key="frame" x="10" y="156.33333333333337" width="373" height="300"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Nobio" translatesAutoresizingMaskIntoConstraints="NO" id="U2x-w7-rHS">
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="268"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bme-ja-z2h">
-                                    <rect key="frame" x="0.0" y="277.00000000000006" width="373" height="23"/>
+                                    <rect key="frame" x="0.0" y="276.99999999999994" width="373" height="23"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -61,7 +61,7 @@
                             </constraints>
                         </stackView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="ZvU-35-ye9">
-                            <rect key="frame" x="0.0" y="211.33333333333337" width="391" height="56"/>
+                            <rect key="frame" x="0.0" y="206.33333333333334" width="391" height="56.000000000000028"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="pkC-95-6WR"/>
                             </constraints>
@@ -71,22 +71,23 @@
                             </connections>
                         </searchBar>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1SP-AH-axz">
-                            <rect key="frame" x="20" y="20.000000000000014" width="353" height="41"/>
-                            <color key="backgroundColor" name="AttendenceColor"/>
+                            <rect key="frame" x="20" y="20" width="353" height="36"/>
+                            <color key="backgroundColor" name="topBackgroundCLr"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="IQq-nW-hAW"/>
+                                <constraint firstAttribute="height" constant="35" id="IQq-nW-hAW"/>
                             </constraints>
                             <segments>
                                 <segment title="Today's Report"/>
                                 <segment title="Historical Data"/>
                             </segments>
-                            <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="selectedSegmentTintColor" name="PrimeryColor"/>
                             <connections>
                                 <action selector="segmentAction:" destination="-1" eventType="valueChanged" id="iFL-Tm-MZb"/>
                             </connections>
                         </segmentedControl>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="LRM-m6-h5J">
-                            <rect key="frame" x="30" y="70.000000000000014" width="333" height="131.33333333333337"/>
+                            <rect key="frame" x="30" y="65.000000000000014" width="333" height="131.33333333333337"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Qc7-Sf-qQW">
                                     <rect key="frame" x="0.0" y="0.0" width="333" height="38"/>
@@ -152,7 +153,7 @@
                                     </subviews>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select staff" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w11-ph-eHu">
-                                    <rect key="frame" x="0.0" y="56.000000000000007" width="333" height="19.333333333333336"/>
+                                    <rect key="frame" x="0.0" y="55.999999999999979" width="333" height="19.333333333333336"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -214,10 +215,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="toI-E6-oPq" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="112.33333333333333"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="171.33333333333334"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZE-sV-f1C">
-                            <rect key="frame" x="10" y="69" width="333" height="23.333333333333329"/>
+                            <rect key="frame" x="10" y="127.99999999999999" width="333" height="23.333333333333329"/>
                             <color key="tintColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -257,14 +258,14 @@
         <image name="Nobio" width="1500" height="1500"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
-        <namedColor name="AttendenceColor">
-            <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="topBackgroundCLr">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

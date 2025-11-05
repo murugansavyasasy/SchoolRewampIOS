@@ -59,6 +59,9 @@ class LocationViewController: UIViewController {
         TaptoPunchBtn.layer.cornerRadius = 10
         LocationErrorStack.layer.cornerRadius = 10
         LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
+        SegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        SegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        SegmentControl.selectedSegmentTintColor = .primery
         StyleAndTranslate()
     }
     

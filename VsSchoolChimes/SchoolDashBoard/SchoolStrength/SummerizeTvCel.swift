@@ -58,31 +58,44 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
 
         // MARK: - Common Setup
         let item = dispalyArray[indexPath.row]
-        cell.OverAllcountLbl.text = "\(item.count)"
         cell.roles.text = item.name
-        cell.updateProgress(absentees: String(item.Girl), total: String(item.count))
-
+       
         // MARK: - Role-based Setup
         switch item.name {
         case "Staff":
             configureCell(cell, icon: "teachers", tint: .aproved,
                           maleLabel: "Male", femaleLabel: "Female",
                           progressTint: .maleClr, trackTint: .femaleClr,
-                          present: item.count, previous: item.previousYear)
-
+                          present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys)
+            cell.updateProgress(
+                absentees: String(item.boys),
+                total: String(item.count)
+                )
+            cell.OverAllcountLbl.text = "\(item.count)"
         case "Students":
             configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
                           maleLabel: "Boys", femaleLabel: "Girls",
                           progressTint: .maleClr, trackTint: .femaleClr,
-                          present: item.count, previous: item.previousYear)
+                          present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys)
+            cell.updateProgress(
+                absentees: String(item.boys),
+                total: String(item.count)
+                )
 
+            cell.OverAllcountLbl.text = "\(item.count)"
         case "Total":
             configureCell(cell, icon: "School Needs", tint: .button,
                           maleLabel: "Staffs", femaleLabel: "Students",
                           progressTint: .aproved.withAlphaComponent(0.7),
                           trackTint: .primery.withAlphaComponent(0.7),
-                          present: item.count, previous: item.previousYear)
-
+                          present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys)
+           
+            cell
+                .updateProgress(
+                    absentees: String(item.Girl),
+                    total: String(item.count)
+                )
+            cell.OverAllcountLbl.text = "\(item.count)"
         default:
             break
         }
@@ -99,16 +112,19 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         progressTint: UIColor,
         trackTint: UIColor,
         present: Int,
-        previous: Int
+        previous: Int,
+        girls: Int,
+        boys: Int
     ) {
         cell.Icons.image = UIImage(named: icon) ?? UIImage(systemName: icon)
         cell.Icons.tintColor = tint
         cell.progressbar.progressTintColor = progressTint
         cell.progressbar.trackTintColor = trackTint
 
-        cell.girlCount.text = "\(femaleLabel): \(present)"
-        cell.boyCountLbl.text = "\(maleLabel): \(abs(present - previous))"
+        cell.girlCount.text = "\(femaleLabel): \(girls)"
+        cell.boyCountLbl.text = "\(maleLabel): \(boys)"
 
+        
         // MARK: - Year Comparison Logic
         if present > previous {
             let diff = present - previous

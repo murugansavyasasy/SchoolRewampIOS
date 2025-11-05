@@ -766,6 +766,8 @@ struct SchoolStrength: Codable {
     let previous : Previous?
     let total_student_strength: String?
     let total_staff_strength: String?
+    let total_male_staffs_strength: String?
+    let total_female_staffs_strength: String?
     let total_boys_strength: String?
     let total_girls_strength: String?
     let total_others_strength: String?
@@ -2631,13 +2633,18 @@ struct UpdateItem: Codable {
     let downloadable_image: String?
 }
 
-struct AttendanceStudentListResponse : Codable{
-    let status:Bool?
-    let message:String?
-    let data:[AttendanceStudentListData]?
+struct AttendanceStudentListResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [AttendanceStudentListData]?
 }
 
-struct AttendanceStudentListData: Codable{
+struct AttendanceStudentListData: Codable {
+    let is_edit: Bool?
+    let attd_details: [AttendanceStudentListDetails]?
+}
+
+struct AttendanceStudentListDetails: Codable {
     let id: String?
     let name: String?
     let admission_no: String?
@@ -2645,6 +2652,7 @@ struct AttendanceStudentListData: Codable{
     var att_type: String?
     var att_status: String?
 }
+
 // MARK: - FAQ Models
 struct FAQResponse: Codable {
     let status: Bool?

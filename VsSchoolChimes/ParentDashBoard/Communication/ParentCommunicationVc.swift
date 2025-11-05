@@ -65,9 +65,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var TitleLbl: UILabel!
     
     
-    var BtnId = 1
-    let backgroundcolor = Colornames.topBackgroundCLr
-    let tapColor = Colornames.topBackgroundCLr1
     var playIndex :Int?
     var AudioPlayUrl: String?
     var passValue = 0
@@ -798,7 +795,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         print("Archived messages tapped!")
 
         GetArchiveCommunicationList()
-        
+        SearchBar.searchTextField.text = ""
         shouldShowFooter = false
     }
 
@@ -1069,6 +1066,7 @@ extension ParentCommunicationVc : UISearchBarDelegate {
         NodataLbl.isHidden = !(SearchMessages?.count == 0)
         NodataImage.isHidden = !(SearchMessages?.count == 0)
         NodataLbl.text = "No Data Found"
+        tv.isScrollEnabled = !(SearchMessages?.count == 0)
         tv.reloadData()
     }
 
