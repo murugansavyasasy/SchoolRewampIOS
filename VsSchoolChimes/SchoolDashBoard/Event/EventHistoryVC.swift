@@ -56,7 +56,12 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     var SchoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBtn.configureAsBackTitle(firstLine: "Event History", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        backBtn
+            .configureAsBackTitle(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: UserDefaultFileManager
+                    .get_staff_Details()?.school_name ?? ""
+            )
         historyTable.register(UINib(nibName: CellConfingName.EventTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.EventTVC)
         historyTable.register(UINib(nibName: "OngoingTVC", bundle: nil), forCellReuseIdentifier: "OngoingTVC")
         historyTable.register(UINib(nibName: "ReciverEventTVC", bundle: nil), forCellReuseIdentifier: "ReciverEventTVC")
@@ -408,6 +413,8 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
             cell.config(category: nil, onGoing: events, type: false, index: selectedIndex ?? 0)
             cell.pageController.numberOfPages = events.count
+            cell.pageController.isHidden = events.count == 0
+            cell.endUrl =  ServiceUrl.event_target_details
             return cell
             
         case .categories(let categories):
@@ -500,7 +507,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         switch filteredSections[section] {
-        case .featured: label.text = "Today's Events"
+        case .featured: label.text = "Ongoing Events"
         case .categories: label.text = "Event Categories"
         case .upcoming: label.text = "Upcoming Events"
         case .completed: label.text = "Completed Events"

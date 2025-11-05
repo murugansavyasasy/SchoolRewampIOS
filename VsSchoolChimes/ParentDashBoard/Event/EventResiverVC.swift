@@ -307,6 +307,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
             cell.config(category: nil, onGoing: events, type: false, index: selectedIndex ?? 0)
             cell.pageController.numberOfPages = events.count
+            cell.endUrl = ""
             return cell
             
         case .categories(let categories):
@@ -393,7 +394,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         switch filteredSections[section] {
-        case .featured: label.text = "Today's Events"
+        case .featured: label.text = "Ongoing Events"
         case .categories: label.text = "Event Categories"
         case .upcoming: label.text = "Upcoming Events"
         case .completed: label.text = "Completed Events"

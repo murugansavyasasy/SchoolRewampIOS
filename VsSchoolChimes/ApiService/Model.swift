@@ -766,6 +766,8 @@ struct SchoolStrength: Codable {
     let previous : Previous?
     let total_student_strength: String?
     let total_staff_strength: String?
+    let total_male_staffs_strength: String?
+    let total_female_staffs_strength: String?
     let total_boys_strength: String?
     let total_girls_strength: String?
     let total_others_strength: String?

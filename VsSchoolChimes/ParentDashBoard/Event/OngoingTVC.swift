@@ -19,6 +19,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
     var delegate:FilterCatagories?
     var selectedIndex : Int?
     let transitionDelegate = TransitioningDelegate()
+    var endUrl : String?
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -74,8 +75,8 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                        detailVC.attachmetList = notice.file_path
                        detailVC.selectedDate = notice.date
                        detailVC.titleString = notice.title
-                       detailVC.targetId = notice.id
-                       detailVC.EndUrl = ServiceUrl.event_target_details
+                       detailVC.params = ["id": notice.id ?? ""]
+                       detailVC.EndUrl = endUrl
                        detailVC.descriptionString = notice.description
                        detailVC.subject_name = "Event".translated()
                        detailVC.postedBy = notice.sent_by
@@ -96,18 +97,27 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
 
             // Shadow and border for selected cell
             if isSelected {
+                
                 cell.iconView.setShadow(shadowColor: .blue, shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
+                cell.iconView.layer.borderColor = UIColor.systemBlue
+                    .withAlphaComponent(0.15).cgColor
                 cell.iconView.layer.borderColor = UIColor.systemBlue.cgColor
                 cell.iconView.layer.borderWidth = 2
             } else {
                 cell.iconView.setShadow(shadowOpacity: 0)
-                cell.iconView.layer.borderColor = UIColor.lightGray.cgColor
-                cell.iconView.layer.borderWidth = 1
+//                cell.iconView.layer.borderColor = UIColor.lightGray.cgColor
+//                cell.iconView.layer.borderWidth = 1
+                
+                cell.iconView.backgroundColor = UIColor(white: 0.98, alpha: 1.0)
+                cell.iconView.layer.borderWidth = 0
+                cell.iconView.layer.borderColor = UIColor.clear.cgColor
+
             }
 //            cell.iconheight.constant = categoryItem.url == "" ? 0:50
             cell.titleLbl.font = categoryItem.url == "" ? UIFont.systemFont(ofSize: 14, weight: .medium):UIFont.systemFont(ofSize: 11, weight: .medium)
             cell.titleLbl.text = categoryItem.name ?? ""
             cell.iconImg.kf.setImage(with: URL(string: categoryItem.url ?? ""),placeholder: UIImage(named: "ImagePdf"))
+            pageController.isHidden = true
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OngoingCVC", for: indexPath) as? OngoingCVC,

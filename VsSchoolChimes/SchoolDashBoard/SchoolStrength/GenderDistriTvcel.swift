@@ -50,16 +50,29 @@ class GenderDistriTvcel: UITableViewCell {
         girlsLbl.text = "\(girls) Students (\(String(format: "%.1f", girlsPercentage))%)"
     }
    
-    func updateProgress(absentees: String, total: String) {
-        // String → Float convert
-        let absentCount = Float(absentees) ?? 0
-        let totalCount = Float(total) ?? 1  // avoid divide by zero
+//    func updateProgress(absentees: String, total: String) {
+//        // String → Float convert
+//        let absentCount = Float(absentees) ?? 0
+//        let totalCount = Float(total) ?? 1  // avoid divide by zero
+//        
+//        let progressValue = absentCount / totalCount
+//        
+//        boysProgress.setProgress(progressValue, animated: true)   // 0.0 to 1.0
+//        
+//       
+//    }
+ 
+
+
+    func updateProgress(maleCount: String, totalCount: String) {
+        let male = Float(maleCount) ?? 0
+        let total = Float(totalCount) ?? 1
         
-        let progressValue = absentCount / totalCount
+        var progressValue = male / total
+        if progressValue > 1 { progressValue = 1 }
         
-        boysProgress.setProgress(progressValue, animated: true)   // 0.0 to 1.0
-        
-        updateGenderLabels(boys:total,girls:absentees)
+        boysProgress.setProgress(progressValue, animated: true)
+        updateGenderLabels(boys: maleCount, girls: String(Int(total) - Int(male)))
     }
 
 
