@@ -46,7 +46,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var imgs = ["shiyam","StudImg","stuentimg 1"]
-    var Sorting = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓"]
+    var Sorting = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓","Admission No ↓","Admission No ↑"]
     var Gender = ["All","Male","Female","Others"]
     var Filters = ["All students"]
     var studentList : [StudentData]?
@@ -58,6 +58,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
    // var selection:String?
     var showSearch:Bool = false
     var academicId = 0
+    var noRecord:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -126,19 +127,34 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         dismiss(animated: true)
     }
     @IBAction func Search(_ sender: UIButton) {
+        sender.isSelected.toggle()
         showSearch.toggle()
         searchHeight.constant = showSearch ? 60 : 0
-        
-        let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
-        searchBtn.setImage(img, for: .normal)
-        
-//        searchHidBtn.isHidden = !showSearch
+        if sender.isSelected{
+            searchBar.becomeFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            searchBar.resignFirstResponder()
+            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            nodataImg.isHidden = true
+            nodataLbl.isHidden = true
+            filterStudent = studentList
+            reportTable.reloadData()
+           
+            
+        }
     }
     @IBAction func hideSearch(_ sender: UIButton) {
         showSearch.toggle()
         searchHeight.constant = showSearch ? 60 : 0
         let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
         searchBtn.setImage(img, for: .normal)
+        searchBar.text = ""
+        nodataImg.isHidden = true
+        nodataLbl.isHidden = true
+        filterStudent = studentList
+        reportTable.reloadData()
 //        searchHidBtn.isHidden = !showSearch
     }
     
@@ -182,31 +198,34 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         fillterDropdown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
-            switch index{
-            case 0:
-                
-                getStanderd.isHidden = true
-                getStudentAPI()
-              
-            case 1:
-                
-                if sectionArray.first != "All" {
-                    sectionArray.insert("All", at: 0)
+            if !noRecord  {
+                switch index{
+                case 0:
+                    
+                    getStanderd.isHidden = true
+                    getStudentAPI()
+                  
+                case 1:
+                    
+                    if sectionArray.first != "All" {
+                        sectionArray.insert("All", at: 0)
+                    }
+                    sectionBtn.setTitle(sectionArray.first, for: .normal)
+                    getStanderd.isHidden = false
+                    sectionSelection.isHidden = false
+                    classId = standardDetails?.first?.id
+                    getStudentAPI(class_id:classId)
+                    
+                default:
+                    getStanderd.isHidden = true
+                    getStudentAPI()
                 }
-                sectionBtn.setTitle(sectionArray.first, for: .normal)
-                getStanderd.isHidden = false
-                sectionSelection.isHidden = false
-                classId = standardDetails?.first?.id
-                getStudentAPI(class_id:classId)
                 
-            default:
-                getStanderd.isHidden = true
-                getStudentAPI()
+                reportTable.reloadData()
+                //self.filterBtn.setTitle(item.translated(), for: .normal)
+            }
             }
             
-            reportTable.reloadData()
-            //self.filterBtn.setTitle(item.translated(), for: .normal)
-        }
     }
     @IBAction func selectCatagory(_ sender: UIButton) {
         AcodemicDropdown.dataSource = accadimYr
@@ -217,6 +236,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.width = selectedType.bounds.width
         AcodemicDropdown.show()
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
+            searchHeight.constant = 0
+            searchBar.text = ""
+            searchBtn
+                .setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             getStandardsAPI(
                 academic_year_id: localData.accidamic_year_data?
                     .data?[index].id ?? 0
@@ -283,7 +306,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
 
            GenderDropdown.selectionAction = { [weak self] (index: Int, selectedGender: String) in
                guard let self = self else { return }
-
+               searchBar.text = ""
                self.GenderBtn.setTitle(selectedGender, for: .normal)
                self.filterStudents(by: selectedGender)
                self.reportTable.reloadData()
@@ -356,6 +379,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
 //                        classId = ""
 //                        sectionId = ""
                         getStanderd.isHidden = true
+                        noRecord = false
                         self.filterBtn.setTitle("All students", for: .normal)
                         getStudentAPI()
                     }
@@ -372,7 +396,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         nodataLbl.text = successMessage.message
                         FilterCV.isHidden = true
                         GenderBtn.isHidden = true
-                        Filters.removeLast()
+                        noRecord = true
+//                        Filters.removeLast()
+//                        Filters.removeAll()
                         FilterCV.reloadData()
                         reportTable.reloadData()
                        // getStudentAPI()
@@ -442,6 +468,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.nodataImg.isHidden = false
                         self.FilterCV.isHidden = true
                         self.GenderBtn.isHidden = true
+                        self.searchBtn.isHidden = true
                         //                    self.reportSegment.isHidden = true
                     }
                     self.reportTable.reloadData()
@@ -453,6 +480,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     print("API Error: \(error.localizedDescription)")
                     self.filterStudent = []
                     self.studentList = []
+                    self.searchBtn.isHidden = true
                     self.reportTable.reloadData()
                 }
             }
@@ -518,7 +546,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.rollNo.text = studentDetail.roll_no
             cell.admissionLbl.text = studentDetail.admission_no
-            cell.dobLbl.text = studentDetail.dob
+            cell.dobLbl.text = studentDetail.dob.convertToTargetDateFormat()
             cell.studentNmae.text = studentDetail.name
             cell.standerdLbl.text = studentDetail.class_name + " - " + studentDetail.section_name
             cell.genderLbl.text = studentDetail.gender
@@ -553,7 +581,7 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         cell.FilterLbl.text = Sorting[indexPath.item]
         let isSelected = indexPath == selectedIndex
         
-        cell.cellView.backgroundColor = isSelected ? UIColor.topBackgroundCLr : UIColor.systemGray5
+        cell.cellView.backgroundColor = isSelected ? UIColor.countryClr  : UIColor.systemGray5
         //        cell.cellView.layer.cornerRadius = 12
         //        cell.cellView.layer.borderWidth = isSelected ? 1 : 0
         //        cell.cellView.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.clear.cgColor
@@ -571,7 +599,7 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.item < Sorting.count else { return }
-        
+        searchBar.text = ""
         selectedIndex = indexPath
         let selectedFilter = Sorting[indexPath.item]
         
@@ -588,9 +616,17 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
             }
         case Sorting[2]:
             filterStudent = sortedStudent.sorted {
-                $0.admission_no < $1.admission_no
+                $0.roll_no < $1.roll_no
             }
         case Sorting[3]:
+            filterStudent = sortedStudent.sorted {
+                $0.roll_no > $1.roll_no
+            }
+        case Sorting[4]:
+            filterStudent = sortedStudent.sorted {
+                $0.admission_no < $1.admission_no
+            }
+        case Sorting[5]:
             filterStudent = sortedStudent.sorted {
                 $0.admission_no > $1.admission_no
             }

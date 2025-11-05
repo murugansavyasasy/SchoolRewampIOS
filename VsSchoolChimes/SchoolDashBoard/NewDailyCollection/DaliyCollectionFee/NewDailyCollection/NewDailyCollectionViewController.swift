@@ -59,7 +59,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         Backbtn.applyBackButton()
         norecordLbl.isHidden = true
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd,yyyy"
+        dateFormatter.dateFormat = "dd MMM yyy"
         let formattedDateTime = dateFormatter.string(from: currentDateTime)
         currentdate = formattedDateTime
         fromLbl.text = formattedDateTime
@@ -69,7 +69,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         calendarView.addGestureRecognizer(fromdateTap)
         segmentName.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
         segmentName.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        segmentName.selectedSegmentTintColor = .blue.withAlphaComponent(0.6)
+        segmentName.selectedSegmentTintColor = .primery
         let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
         TodateView.addGestureRecognizer(todateTap)
         tv.dataSource = self
@@ -169,7 +169,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
 //                           let toDate = parseDate(from: todate) {
 //                            totalCollectionLblTitle.text = "Total Collection \(getDateRangeLabel(from: fromDate, to: toDate))"
 //                        }
-                        titleStack.isHidden = successMessage.data?.count == 0
+//                        titleStack.isHidden = successMessage.data?.count == 0
                         tv.isHidden = successMessage.data?.count == 0
                         tv.reloadData()
                         norecordLbl.isHidden = successMessage.data?.count != 0

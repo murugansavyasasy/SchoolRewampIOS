@@ -324,36 +324,6 @@
             endingLineNumber = "448"
             landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80c1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (School_Chimes.EventDisplaySection) -&gt; Swift.Optional&lt;School_Chimes.EventDisplaySection&gt; in closure #1 @Swift.MainActor () -&gt; () in School_Chimes.EventResiverVC.searchBar(_: __C.UISearchBar, textDidChange: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448">
-               </Location>
-               <Location
-                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80c1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (School_Chimes.EventDisplaySection) -&gt; Swift.Optional&lt;School_Chimes.EventDisplaySection&gt; in closure #1 @Swift.MainActor () -&gt; () in School_Chimes.EventResiverVC.searchBar(_: __C.UISearchBar, textDidChange: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

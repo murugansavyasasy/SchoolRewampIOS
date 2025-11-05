@@ -12,7 +12,6 @@ class SchoolStrengthCvcell: UICollectionViewCell {
     @IBOutlet weak var arrowImage: UIImageView!
     @IBOutlet weak var boyCountLbl: UILabel!
     @IBOutlet weak var progressbar: UIProgressView!
-    @IBOutlet weak var progressContainer: UIView!
     @IBOutlet weak var girlCount: UILabel!
     @IBOutlet weak var lastYearLbl: UILabel!
     @IBOutlet weak var roles: UILabel!
@@ -61,18 +60,25 @@ class SchoolStrengthCvcell: UICollectionViewCell {
     }
 
     func updateProgress(absentees: String, total: String) {
+        let value = Float(absentees) ?? 0
+        let totalValue = Float(total) ?? 1
+        
+        var progressValue = value / totalValue
+        if progressValue > 1 { progressValue = 1 } // avoid overflow
+        
+        progressbar.setProgress(progressValue, animated: true)
+    }
+
+
+    
+    func updateProgressStaffAndStudent(absentees: String, total: String) {
         // String → Float convert
         let absentCount = Float(absentees) ?? 0
         let totalCount = Float(total) ?? 1  // avoid divide by zero
         
-        let progressValue = absentCount / totalCount
+        let progressValue = totalCount / absentCount
         
-        progressbar.setProgress(progressValue, animated: true)   // 0.0 to 1.0 range
-        
-        
-        // Optional: progress color change
-//        progress.progressTintColor =
-//        progress.trackTintColor = .systemGreen
+        progressbar.setProgress(progressValue, animated: true)   // 0.0 to 1.0
     }
     
     

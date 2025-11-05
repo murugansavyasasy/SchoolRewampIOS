@@ -51,6 +51,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         setupSearchBar()
         setupInitialData()
         setupGestureRecognizers()
+        
+        SegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        SegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        SegmentControl.selectedSegmentTintColor = .primery
     }
     
     // MARK: - UI Setup
