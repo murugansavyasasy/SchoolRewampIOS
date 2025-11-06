@@ -39,10 +39,13 @@ class OutpassVC: UIViewController {
             FromDateLbl.text = leaveInfo?.leave_from?.convertToTargetDateFormat()
             ToDateLbl.text = leaveInfo?.leave_to?.convertToTargetDateFormat()
             NoOfDaysLbl.text = (leaveInfo?.no_of_days ?? "") + " Days"
-            ReasonLbl.text = (leaveInfo?.reason ?? "") + "In many cases, the Swift compiler is smart enough to optimize both map and for loops similarly, especially for simple transformations. So for smaller datasets or non-critical code, the difference might be negligible"
+            ReasonLbl.text = leaveInfo?.reason ?? ""
             ApprovedByLbl.text = leaveInfo?.approved_by
-            
         }
+        
+        let imageUrl = URL(string: UserDefaultFileManager.get_child_Details()?.profile ?? "")
+        
+        ImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(systemName: "Default_profile"))
         
         ImageView.layer.cornerRadius = ImageView.frame.height / 2
         

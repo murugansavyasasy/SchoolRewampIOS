@@ -25,6 +25,10 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
     @IBOutlet weak var requestBtn: UIButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var fullview: UIView!
+    @IBOutlet weak var MenuNameLbl: UILabel!
+    
+    
+    var placeholderLabel: UILabel!
     var CertificatTypes : [String]?
     let dropdown = DropDown()
     var textChanged: ((String) -> Void)? // callback to controller
@@ -37,9 +41,9 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
         
         ResondefaultLbl.setRequiredText("Reason", asteriskColor: .red)
         
-        
         certificateTypeApi()
         ResontextView.addDoneButton()
+        MenuNameLbl.text = MenuStringFile.selectedMenuName
         requestBtn.layer.cornerRadius = 10
         textView.layer.borderWidth = 0.5
         textView.layer.borderColor = UIColor.lightGray.cgColor
@@ -59,12 +63,26 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
         
     }
     func resetFields() {
-        ResontextView.text = placeHolderName
-        ResontextView.textColor = .lightGray
+        ResontextView.text = ""
+        placeholderLabel.isHidden = false
         urgetStatus = "Not Urgent"
         NoturgentCheckImg.image = UIImage(named: "RadioCheck")
         UrgentCheckImg.image = UIImage(named: "CheckCircle")
         DropdownLbl.text = CertificatTypes?.first
+    }
+    
+    func setupPlaceholder() {
+        ResontextView.text = ""
+        placeholderLabel = UILabel()
+        placeholderLabel.text = placeHolderName
+        placeholderLabel.font = ResontextView.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        ResontextView.applyRightTxt()
+        ResontextView.applyRightTxt(with: placeholderLabel)
+        ResontextView.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !ResontextView.text.isEmpty // Hide if text exists
     }
 
     @IBAction func requestCertificateBtn(_ sender: UIButton) {
@@ -77,28 +95,23 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
                     .text)
         
     }
-    
-    
-    func setupPlaceholder() {
-        ResontextView.text = placeHolderName
-        ResontextView.textColor = UIColor.lightGray
-    }
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = placeHolderName
-            textView.textColor = UIColor.lightGray
-        }
-    }
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        if textView.textColor == UIColor.lightGray {
+//            textView.text = nil
+//            textView.textColor = UIColor.black
+//        }
+//    }
+//
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if textView.text.isEmpty {
+//            textView.text = placeHolderName
+//            textView.textColor = UIColor.lightGray
+//        }
+//    }
     func textViewDidChange(_ textView: UITextView) {
             textChanged?(textView.text) // callback to controller
+            placeholderLabel.isHidden = !ResontextView.text.isEmpty
         }
     
     @IBAction func UrgentAct() {

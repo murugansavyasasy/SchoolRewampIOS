@@ -46,6 +46,9 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
            subjectLbl.text = staffMembersData.subject_name
            blockedView.isHidden = true
            
+           teacherLbl.setFont(style: .title, size: 15)
+           subjectLbl.setFont(style: .title, size: 11)
+           
            if staffMembersData.is_blocked == true {
                blockedView.isHidden = false
                TextViewFullView.isHidden = true
