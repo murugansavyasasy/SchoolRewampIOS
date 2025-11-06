@@ -421,6 +421,8 @@
 		8483F6412E6AF89100E2C886 /* PunchUserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483F63E2E6AF89100E2C886 /* PunchUserDetailsTVC.swift */; };
 		8488061B2DF6A963004806BF /* SubmissionTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848806192DF6A963004806BF /* SubmissionTVC.swift */; };
 		8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8488061A2DF6A963004806BF /* SubmissionTVC.xib */; };
+		84883C4E2EBC77D5005108AD /* PunchAttendaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */; };
+		84883C4F2EBC77D5005108AD /* PunchAttendaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
 		8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8489D9EA2DFBF07700D7226A /* FeePendingTVC.xib */; };
 		8489D9EC2DFBF07700D7226A /* FeePendingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D9E92DFBF07700D7226A /* FeePendingTVC.swift */; };
@@ -1336,6 +1338,8 @@
 		8483F63F2E6AF89100E2C886 /* PunchUserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchUserDetailsTVC.xib; sourceTree = "<group>"; };
 		848806192DF6A963004806BF /* SubmissionTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionTVC.swift; sourceTree = "<group>"; };
 		8488061A2DF6A963004806BF /* SubmissionTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmissionTVC.xib; sourceTree = "<group>"; };
+		84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchAttendaceVC.swift; sourceTree = "<group>"; };
+		84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchAttendaceVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
 		8489D9E92DFBF07700D7226A /* FeePendingTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeePendingTVC.swift; sourceTree = "<group>"; };
 		8489D9EA2DFBF07700D7226A /* FeePendingTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeePendingTVC.xib; sourceTree = "<group>"; };
@@ -2894,6 +2898,15 @@
 			path = FirstCell;
 			sourceTree = "<group>";
 		};
+		84883C4B2EBC779F005108AD /* PunchAttendaceVc */ = {
+			isa = PBXGroup;
+			children = (
+				84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */,
+				84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */,
+			);
+			path = PunchAttendaceVc;
+			sourceTree = "<group>";
+		};
 		848B94662CFD724800FFC5C2 /* ImagePdf */ = {
 			isa = PBXGroup;
 			children = (
@@ -3445,6 +3458,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84883C4B2EBC779F005108AD /* PunchAttendaceVc */,
 				84DE94992E5324F7008E1BF4 /* Quiz */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				FA2A3FB72DB0CA6C0000AF55 /* Sender Attachment */,
@@ -4487,6 +4501,7 @@
 				187CF4DB2D11A176001422CE /* ClassTimeTableTableViewCell.xib in Resources */,
 				FAD8BDA82E66CDD100C7CD53 /* BookedSlotTV.xib in Resources */,
 				18926C642D02DE81002BBB97 /* TestTVC.xib in Resources */,
+				84883C4E2EBC77D5005108AD /* PunchAttendaceVC.xib in Resources */,
 				849AD0352D1A841C002DEC07 /* StrengthTvCell.xib in Resources */,
 				849AD0362D1A841C002DEC07 /* SchoolStrengthVC.xib in Resources */,
 				84A271812CEDAB9F0033EB02 /* News.gif in Resources */,
@@ -5146,6 +5161,7 @@
 				84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */,
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
 				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
+				84883C4F2EBC77D5005108AD /* PunchAttendaceVC.swift in Sources */,
 				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
 				18D718DA2D0D479B00E9EDA3 /* SectionCollectionViewCell.swift in Sources */,
 				84BB5EB02D11337E00AD0C87 /* ExamsListCVCell.swift in Sources */,

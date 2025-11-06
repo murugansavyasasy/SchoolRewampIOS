@@ -12,8 +12,8 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var noOfQuestionDefaultLbl: UILabel!
     @IBOutlet weak var descrptionDefaultLbl: UILabel!
     @IBOutlet weak var titleDefaultLbl: UILabel!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
+//    @IBOutlet weak var headerView: UIView!
+//    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var numberOfQuestionText: UITextField!
     @IBOutlet weak var discriptionsTextFild: UITextView!
@@ -35,11 +35,11 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         titleText.delegate = self
         discriptionsTextFild.delegate = self
         
-        backBtn
-            .configureAsBackButton(
-                firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? ""
-            )
+//        backBtn
+//            .configureAsBackButton(
+//                firstLine: MenuStringFile.selectedMenuName,
+//                secondLine: staffDetails?.school_name ?? ""
+//            )
         titleText.addDoneButton()
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
@@ -49,9 +49,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             .setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
         titleDefaultLbl.setRequiredText(MenuStringFile.Title)
         descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
-        headerView.layer.cornerRadius = 20
-        headerView.layer.masksToBounds = true
-        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         nextBtn.layer.cornerRadius = 10
         discriptionsTextFild.layer.cornerRadius = 10

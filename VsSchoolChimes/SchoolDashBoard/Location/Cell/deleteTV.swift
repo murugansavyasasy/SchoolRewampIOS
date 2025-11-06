@@ -38,17 +38,17 @@ class deleteTV: UITableViewCell {
 //        setupActions()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        locationLbl.text = nil
-        coordinatesLbl.text = nil
-        distanceLbl.text = nil
-        placeLbl.text = nil
-        visitLbl.text = nil
-        timeLbl.text = nil
-        locationData = nil
-        indexPath = nil
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        locationLbl.text = nil
+//        coordinatesLbl.text = nil
+//        distanceLbl.text = nil
+//        placeLbl.text = nil
+//        visitLbl.text = nil
+//        timeLbl.text = nil
+//        locationData = nil
+//        indexPath = nil
+//    }
     
     // MARK: - Setup Methods
     private func setupUI() {
@@ -68,10 +68,7 @@ class deleteTV: UITableViewCell {
         }
     }
     
-//    private func setupActions() {
-//        editBtn.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-//        deleteBtn.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-//    }
+
     
     // MARK: - Configuration
     func configure(with locationData: GeometricLocation, at indexPath: IndexPath) {
