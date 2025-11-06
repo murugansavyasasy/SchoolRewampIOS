@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,10 +43,28 @@
                                 <action selector="createMeetingBtnAct:" destination="-1" eventType="touchUpInside" id="ulm-Yz-8bg"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOL-gh-Twt">
+                            <rect key="frame" x="15" y="15" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="EV8-qM-9iX"/>
+                                <constraint firstAttribute="height" constant="40" id="GX7-i7-J1E"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal">
+                                <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="medium"/>
+                            </state>
+                            <connections>
+                                <action selector="backAct:" destination="-1" eventType="touchUpInside" id="fEb-GW-wqo"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="kOL-gh-Twt" firstAttribute="top" secondItem="aVJ-wv-4t0" secondAttribute="top" constant="15" id="51l-cL-Vji"/>
                         <constraint firstAttribute="trailing" secondItem="zCe-PW-shx" secondAttribute="trailing" id="9mq-DE-ilx"/>
+                        <constraint firstItem="kOL-gh-Twt" firstAttribute="leading" secondItem="aVJ-wv-4t0" secondAttribute="leading" constant="15" id="Tk0-WU-LIN"/>
                         <constraint firstAttribute="trailing" secondItem="T88-ew-TNt" secondAttribute="trailing" constant="30" id="aCz-oY-vwy"/>
                         <constraint firstItem="zCe-PW-shx" firstAttribute="top" secondItem="aVJ-wv-4t0" secondAttribute="top" constant="50" id="cmY-kh-FP5"/>
                         <constraint firstItem="T88-ew-TNt" firstAttribute="top" secondItem="zCe-PW-shx" secondAttribute="bottom" constant="20" id="hCJ-X6-zA4"/>
@@ -67,8 +86,12 @@
         </view>
     </objects>
     <resources>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

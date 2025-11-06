@@ -7,7 +7,7 @@
 
 import UIKit
 protocol markeAsAbsent : AnyObject {
-    func markAsAbsent(AbsentStudent:[AttendanceStudentListData],CallAttendaceApi : Bool)
+    func markAsAbsent(AbsentStudent:[AttendanceStudentListDetails],CallAttendaceApi : Bool)
 }
 
 class absentPrivewVC: UIViewController, call {
@@ -77,8 +77,8 @@ class absentPrivewVC: UIViewController, call {
     
     
     var delegate:markeAsAbsent?
-    var StudentList:[AttendanceStudentListData]?
-    var Filtered_StudentList:[AttendanceStudentListData]?
+    var StudentList:[AttendanceStudentListDetails]?
+    var Filtered_StudentList:[AttendanceStudentListDetails]?
     var Filter_Value = "A"
     
     override func viewDidLoad() {

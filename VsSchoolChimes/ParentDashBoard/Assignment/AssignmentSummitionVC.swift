@@ -85,9 +85,10 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     func deleteEvent(id: String?) {
         guard let targetID = id, !targetID.isEmpty else {
-            print("Invalid notice ID")
+            print("❌ Invalid assignment ID")
             return
         }
+        
         alert.showAlertCancel(
             title: AlertstringFile.Confirm,
             message: AlertstringFile.deletemessage,
@@ -105,28 +106,36 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                         guard let self = self else { return }
                         
                         switch result {
-                        case .success(let successResponse):
-                            if successResponse.status == true {
+                        case .success(let response):
+                            if response.status == true {
                                 CustomAlert.showAlertWithOkAction(
                                     title: AlertstringFile.Success,
-                                    message: successResponse.message ?? "",
+                                    message: response.message ?? "Deleted successfully.",
                                     on: self
                                 ) {
                                     self.assignments?.removeAll { $0.id == targetID }
                                     
-                                    self.sumitionList.reloadData()
+                                    if self.assignments?.isEmpty == true {
+                                        self.dismiss(animated: true)
+                                    } else {
+                                        self.sumitionList.reloadData()
+                                    }
                                 }
                             } else {
                                 self.alert.showAlert(
                                     title: AlertstringFile.Failed,
-                                    message: successResponse.message ?? "",
+                                    message: response.message ?? "Failed to delete the assignment.",
                                     on: self
                                 )
                             }
                             
                         case .failure(let error):
-                            print("Error deleting notice: \(error.localizedDescription)")
-                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
+                            print("❌ Error deleting assignment: \(error.localizedDescription)")
+                            self.alert.showAlert(
+                                title: "Error",
+                                message: error.localizedDescription,
+                                on: self
+                            )
                         }
                     }
                 }
@@ -136,6 +145,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
             }
         )
     }
+
     @IBAction func BackBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -169,14 +179,20 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
         }else{
             if let data = assignments?[indexPath.row]{
                 if let (timeAgo, dateString) = data.submitted_on?.submissionTimeDisplay(){
-                    cell.date.text = dateString
-                    cell.timeLeft.text = "Submited: \(timeAgo)"
+//                    cell.date.text = dateString
+//                    cell.timeLeft.text = "Submited: \(timeAgo)"
+                    if let dateString = data.submitted_on,
+                       let formattedDate = dateString.convertToTargetDateFormat() {
+                        cell.timeLeft.text = "Submitted: \(formattedDate)"
+                    } else {
+                        cell.timeLeft.text = "Submitted: N/A"
+                    }
                 }
                 cell.assignmentTitle.text = titleName
                 cell.subjectName.text = subject
                 
                 cell.FilesUrl = data.file_path
-               
+                cell.loadFiles(into: cell, files: data.file_path ?? [])
                 cell.descriptionLbl.text = data.description
                 cell.edit(edit:true, delete: true, selectedId: data.id ?? "")
                 cell.delegate = self
@@ -206,7 +222,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
         }
         
         detailVC.titleString = titleName
-        detailVC.subject_name = "Assignment".translated()
+        detailVC.subject_name = MenuStringFile.selectedMenuName
         detailVC.modalPresentationStyle = .custom
         
         transitionDelegate.originFrame = convertedFrame

@@ -31,6 +31,11 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         tableView.rowHeight = UITableView.automaticDimension
     }
     
+    @IBAction func backAct(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    
     //MARK: Api Call Function
     
     func Create_meeting_api(){

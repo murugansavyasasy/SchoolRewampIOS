@@ -2633,13 +2633,18 @@ struct UpdateItem: Codable {
     let downloadable_image: String?
 }
 
-struct AttendanceStudentListResponse : Codable{
-    let status:Bool?
-    let message:String?
-    let data:[AttendanceStudentListData]?
+struct AttendanceStudentListResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [AttendanceStudentListData]?
 }
 
-struct AttendanceStudentListData: Codable{
+struct AttendanceStudentListData: Codable {
+    let is_edit: Bool?
+    let attd_details: [AttendanceStudentListDetails]?
+}
+
+struct AttendanceStudentListDetails: Codable {
     let id: String?
     let name: String?
     let admission_no: String?
@@ -2647,6 +2652,7 @@ struct AttendanceStudentListData: Codable{
     var att_type: String?
     var att_status: String?
 }
+
 // MARK: - FAQ Models
 struct FAQResponse: Codable {
     let status: Bool?
