@@ -266,12 +266,13 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             searchbar.becomeFirstResponder()
         }else{
             searchbar.searchTextField.text = ""
+            NodataFoundLbl.isHidden = true
+            noDataImage.isHidden = true
+            searchbar.resignFirstResponder()
             self.FilterHomeWorkList = self.filterHomeworkGroupByDate(
                 from: self.allHomeworkData,
                 date: self.selectedDate ?? ""
             )
-            NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
-            noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
             bottomCV.reloadData()
             view.endEditing(true)
         }
@@ -349,7 +350,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     }
                     let isEmpty = filteredHomework.isEmpty
                   
-//                    self.NodataFoundLbl.isHidden = !isEmpty
+                    self.NodataFoundLbl.isHidden = !isEmpty
                     
                     self.noDataImage.isHidden = !isEmpty
                     //                    self.searchbar.isHidden = isEmpty

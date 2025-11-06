@@ -20,9 +20,6 @@ class AssignmentDetailTVC: UITableViewCell {
     @IBOutlet weak var attachmentLbl: UILabel!
     @IBOutlet weak var attachmentCollectionView: UICollectionView!
     @IBOutlet weak var attachmentCollectionHeight: NSLayoutConstraint!
-    @IBOutlet weak var dueDate: UILabel!
-    @IBOutlet weak var subject: UILabel!
-    @IBOutlet weak var classLbl: UILabel!
     
     // MARK: - Properties
     private var attachmentList: [FilePath] = []
@@ -38,9 +35,6 @@ class AssignmentDetailTVC: UITableViewCell {
     func configureCell(with assignment: Report, attachments: [FilePath]) {
         titleLbl.text = assignment.title ?? ""
         descriptionLbl.text = assignment.description ?? ""
-        dueDate.text = "🗓️ \(assignment.end_date?.convertToTargetDateFormat() ?? "")"
-        subject.text = "📖 \(assignment.subject ?? "")"
-        classLbl.text = "⿻ \(assignment.category ?? "")"
         
         attachmentList = attachments
         attachmentLbl.text = "𓄲 Attachments (\(attachments.count))"

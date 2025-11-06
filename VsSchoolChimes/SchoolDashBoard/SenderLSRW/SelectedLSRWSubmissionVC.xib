@@ -15,7 +15,8 @@
             <connections>
                 <outlet property="dropDownView" destination="XQE-rm-aMc" id="ZDT-bt-w1B"/>
                 <outlet property="monthLbl" destination="98t-CC-jR9" id="yCj-Z7-Eiq"/>
-                <outlet property="nodataImg" destination="4Ha-MN-8LI" id="TPQ-CY-kBf"/>
+                <outlet property="nodataImg" destination="xga-tk-dfs" id="J98-YL-rAj"/>
+                <outlet property="nodataLbl" destination="ecA-1D-c3F" id="7n4-53-Sa6"/>
                 <outlet property="tableView" destination="uZR-d8-59P" id="Lrj-N4-EiE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,12 +29,23 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEF-Ac-Bkr">
                     <rect key="frame" x="0.0" y="104" width="393" height="748"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lsrwNodata" translatesAutoresizingMaskIntoConstraints="NO" id="4Ha-MN-8LI">
-                            <rect key="frame" x="30" y="199" width="333" height="350"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="350" id="YMo-b8-ghh"/>
-                            </constraints>
-                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RwV-8z-RLn">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
+                            <subviews>
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lsrwNodata" translatesAutoresizingMaskIntoConstraints="NO" id="xga-tk-dfs">
+                                    <rect key="frame" x="0.0" y="0.0" width="1159" height="280"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="280" id="D4I-GZ-yLY"/>
+                                    </constraints>
+                                </imageView>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecA-1D-c3F">
+                                    <rect key="frame" x="0.0" y="0.0" width="1159" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uZR-d8-59P">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="748"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -41,13 +53,13 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
-                        <constraint firstItem="4Ha-MN-8LI" firstAttribute="centerY" secondItem="uZR-d8-59P" secondAttribute="centerY" id="1Fm-Wi-4RD"/>
                         <constraint firstAttribute="bottom" secondItem="uZR-d8-59P" secondAttribute="bottom" id="H1v-nS-PAC"/>
-                        <constraint firstItem="4Ha-MN-8LI" firstAttribute="leading" secondItem="uZR-d8-59P" secondAttribute="leading" constant="30" id="HLG-IS-zqk"/>
+                        <constraint firstItem="RwV-8z-RLn" firstAttribute="top" secondItem="uZR-d8-59P" secondAttribute="top" id="U8V-is-tqt"/>
                         <constraint firstItem="uZR-d8-59P" firstAttribute="top" secondItem="lEF-Ac-Bkr" secondAttribute="top" id="URS-HN-SZQ"/>
                         <constraint firstItem="uZR-d8-59P" firstAttribute="leading" secondItem="lEF-Ac-Bkr" secondAttribute="leading" id="jQc-jL-gI1"/>
                         <constraint firstAttribute="trailing" secondItem="uZR-d8-59P" secondAttribute="trailing" id="kAd-n2-L2m"/>
-                        <constraint firstItem="4Ha-MN-8LI" firstAttribute="trailing" secondItem="uZR-d8-59P" secondAttribute="trailing" constant="-30" id="tsS-7f-zEl"/>
+                        <constraint firstItem="RwV-8z-RLn" firstAttribute="leading" secondItem="uZR-d8-59P" secondAttribute="leading" id="kt6-rC-eDZ"/>
+                        <constraint firstItem="RwV-8z-RLn" firstAttribute="trailing" secondItem="uZR-d8-59P" secondAttribute="trailing" id="lgl-3F-94n"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z8b-Sn-cqo">
@@ -126,7 +138,7 @@
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

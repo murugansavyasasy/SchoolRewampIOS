@@ -15,14 +15,17 @@
             <connections>
                 <outlet property="addressOuterView" destination="jKr-2q-hom" id="eiJ-gZ-9zy"/>
                 <outlet property="adressLbl" destination="sLf-9A-NpJ" id="hj0-tr-Ucl"/>
+                <outlet property="distaceDefaultLbl" destination="rsW-fA-Xb2" id="eHU-4J-AVe"/>
                 <outlet property="distanceDropDownView" destination="RH2-e7-5iV" id="egu-iT-r73"/>
                 <outlet property="distanceLbl" destination="q67-EZ-dPw" id="W1C-B1-aWx"/>
                 <outlet property="distanceOuterView" destination="6c1-Ag-0BG" id="UVm-dK-xru"/>
                 <outlet property="distanceTxt" destination="9Qh-pE-qWZ" id="xc6-rG-QZ0"/>
                 <outlet property="getLocationBtn" destination="znG-wN-GIT" id="nbX-ax-X6g"/>
+                <outlet property="getLocationDefaultLbl" destination="5Gx-7r-jts" id="bgJ-Nn-cmt"/>
                 <outlet property="informationOuterView" destination="rxK-kN-s1W" id="0Ny-Xw-h7w"/>
                 <outlet property="instractionLbl" destination="RHe-fO-Y9v" id="ezh-G4-U3r"/>
                 <outlet property="latlongLbl" destination="lQd-gS-tkW" id="qQa-J9-TAI"/>
+                <outlet property="locationDefaultLbl" destination="Y28-SN-dsa" id="VIK-B6-GVR"/>
                 <outlet property="locationNameTxt" destination="n0L-hg-M6N" id="Q2D-wo-VYL"/>
                 <outlet property="locationView" destination="q0E-px-AkB" id="Zt4-ZH-qY9"/>
                 <outlet property="mapView" destination="8fu-b1-a9i" id="932-Uy-QUa"/>
@@ -78,13 +81,13 @@
                                                         <constraint firstAttribute="bottom" secondItem="oBl-Wf-AtI" secondAttribute="bottom" id="sPs-En-4ln"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Important" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3N-8c-GuH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Important Notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3N-8c-GuH">
                                                     <rect key="frame" x="8" y="15" width="377" height="25"/>
                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="19"/>
                                                     <color key="textColor" systemColor="systemRedColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Name*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y28-SN-dsa">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y28-SN-dsa">
                                                     <rect key="frame" x="13" y="131.66666666666666" width="367" height="22.333333333333343"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -105,7 +108,7 @@
                                                         <constraint firstAttribute="height" id="u2E-zk-J3y"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsW-fA-Xb2">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsW-fA-Xb2">
                                                     <rect key="frame" x="13" y="229" width="367" height="22.333333333333343"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -188,7 +191,7 @@
                                                         <constraint firstItem="e6b-ML-6Nk" firstAttribute="top" secondItem="6c1-Ag-0BG" secondAttribute="top" constant="5" id="xps-3x-PrP"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Location*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gx-7r-jts">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gx-7r-jts">
                                                     <rect key="frame" x="13" y="312.33333333333331" width="367" height="22.333333333333314"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22.329999999999998" id="gBZ-De-Xyk"/>
@@ -200,8 +203,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VwO-uL-q9c">
                                                     <rect key="frame" x="13" y="10" width="37" height="35"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v1X-Pp-F1U">
-                                                            <rect key="frame" x="0.0" y="2.9999999999999982" width="37" height="29.333333333333329"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v1X-Pp-F1U">
+                                                            <rect key="frame" x="0.0" y="1.9999999999999982" width="37" height="31.333333333333329"/>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </imageView>
                                                     </subviews>
@@ -273,7 +276,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0E-px-AkB">
                                                             <rect key="frame" x="0.0" y="0.0" width="353" height="100"/>
                                                             <subviews>
-                                                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fu-b1-a9i">
+                                                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fu-b1-a9i">
                                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="100"/>
                                                                     <standardMapConfiguration key="preferredConfiguration"/>
                                                                 </mapView>
@@ -296,7 +299,7 @@
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Tap to view location history">
                                                                 <backgroundConfiguration key="background" cornerRadius="4">
-                                                                    <color key="backgroundColor" red="0.35737061129999997" green="0.6401742909" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <color key="backgroundColor" name="PrimeryColor"/>
                                                                 </backgroundConfiguration>
                                                             </buttonConfiguration>
                                                             <connections>
@@ -399,7 +402,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

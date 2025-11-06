@@ -228,6 +228,9 @@ class QuizListStringFile{
 struct CommonStringFile{
     //MARK:
     static let Search = "Search".translated()
+    static let Location_name = "Location Name".translated()
+    static let Distance = "Distance".translated()
+    static let Get_Location = "Get Location".translated()
     static let You_can_only_select_up_to2_video_files = "You can only select up to 2 video files.".translated()
     static let Cancel = "Cancel".translated()
     static let Camera = "Camera".translated()

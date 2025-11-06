@@ -48,7 +48,7 @@ extension LSRWReportTVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         if indexPath.item == 0 {
             cell.config(title: "Weekly Report", weeklyReport: weeklyReports, topPerformance: nil)
         } else {
-            cell.config(title: "Top Perfomence", weeklyReport: nil, topPerformance: topPerformers)
+            cell.config(title: "Top Performance", weeklyReport: nil, topPerformance: topPerformers)
         }
         cell.contentView.layer.cornerRadius = 10
         cell.contentView.backgroundColor = UIColor.white

@@ -89,7 +89,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             recentActiveMenuCollection.dataSource = self
             MenuCollection.delegate = self
             MenuCollection.dataSource = self
-        pagecontroller.currentPage = 0
+//        pagecontroller.currentPage = 0
             setupHeaderView()
             setupLabels()
             setupProfileImage()
@@ -152,8 +152,8 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.MenuCollection.reloadData()
                         self.refreshCount = true
                         self.recentActiveMenuCollection.isHidden = (details.frequently_used?.isEmpty ?? true)
-                        self.pagecontroller.isHidden = (details.frequently_used?.count ?? 0) < 2
-                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
+//                        self.pagecontroller.isHidden = (details.frequently_used?.count ?? 0) < 2
+//                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -448,14 +448,14 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
 
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == recentActiveMenuCollection {
-            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
-            if let maxIndex = visibleIndexes.max() {
-                pagecontroller.currentPage = maxIndex
-            }
-        }
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        if scrollView == recentActiveMenuCollection {
+//            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
+//            if let maxIndex = visibleIndexes.max() {
+//                pagecontroller.currentPage = maxIndex
+//            }
+//        }
+//    }
 }
 
 @available(iOS 14.0, *)

@@ -21,6 +21,9 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var instractionLbl: UILabel!
     
+    @IBOutlet weak var getLocationDefaultLbl: UILabel!
+    @IBOutlet weak var distaceDefaultLbl: UILabel!
+    @IBOutlet weak var locationDefaultLbl: UILabel!
     let locationManager = CLLocationManager()
     var latitude = ""
     var longitude = ""
@@ -74,8 +77,14 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         locationNameTxt.layer.borderWidth = 1
         locationNameTxt.layer.borderColor = UIColor.lightGray.cgColor
         locationNameTxt.layer.cornerRadius = 4
-        instractionLbl.text = "\(CommonStringFile.add_location_firstMessage)\n\n\(CommonStringFile.add_location_firstMessage)"
+        instractionLbl.text = "\(CommonStringFile.add_location_firstMessage)\n\n\(CommonStringFile.add_location_secondMessage)"
+        
+        locationDefaultLbl.setRequiredText(CommonStringFile.Location_name)
+        distaceDefaultLbl.setRequiredText(CommonStringFile.Distance)
+        getLocationDefaultLbl.setRequiredText(CommonStringFile.Get_Location)
     }
+    
+    
     
     func setupLocation() {
         mapView.showsUserLocation = true
@@ -241,7 +250,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     }
     
     @IBAction func dropDown(_ sender: UIButton) {
-        let myArray = [ "20","30","40","50","60","70","80","90","100"]
+        let myArray = [ "10","20","30","40","50","60","70","80","90","100","Custom"]
         dropDown.dataSource = myArray
         dropDown.anchorView = distanceDropDownView
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
@@ -251,7 +260,15 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             distanceLbl.text = item
             distanceTxt.text = item
+            distanceTxt.isUserInteractionEnabled = false
+            if item == "Custom" {
+                distanceTxt.isUserInteractionEnabled = true
+                distanceTxt.text = ""
+                
+            }
         }
+        
+        
     }
     @IBAction func history(_ sender: UIButton) {
         let vc = AddLocationHistory(nibName: nil, bundle: nil)

@@ -85,7 +85,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UEg-XI-Ylm">
                                     <rect key="frame" x="15" y="10" width="365" height="551"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Whf-fI-QzA">
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Whf-fI-QzA">
                                             <rect key="frame" x="8" y="0.0" width="349" height="20.333333333333332"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -155,13 +155,13 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add attachment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fvy-8I-U0T">
-                                                            <rect key="frame" x="0.0" y="0.0" width="325" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attachment (1)" translatesAutoresizingMaskIntoConstraints="NO" id="yrb-ik-UVc">
-                                                            <rect key="frame" x="325" y="0.0" width="20" height="20"/>
+                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attachment (1)" translatesAutoresizingMaskIntoConstraints="NO" id="yrb-ik-UVc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                                             <color key="tintColor" systemColor="systemGreenColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="TVr-Ol-u9G"/>
@@ -183,8 +183,8 @@
                                             </subviews>
                                         </stackView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYD-zs-TPp">
-                                            <rect key="frame" x="30" y="471" width="305" height="40"/>
-                                            <color key="backgroundColor" name="ButtonColor"/>
+                                            <rect key="frame" x="50" y="471" width="265" height="40"/>
+                                            <color key="backgroundColor" name="ParentClr"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="3Ia-al-Kg9"/>
                                             </constraints>
@@ -199,7 +199,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="tYD-zs-TPp" secondAttribute="trailing" constant="30" id="4Y6-qY-bJX"/>
+                                        <constraint firstAttribute="trailing" secondItem="tYD-zs-TPp" secondAttribute="trailing" constant="50" id="4Y6-qY-bJX"/>
                                         <constraint firstItem="Whf-fI-QzA" firstAttribute="leading" secondItem="UEg-XI-Ylm" secondAttribute="leading" constant="8" id="Hsi-dU-FMC"/>
                                         <constraint firstItem="5iH-zv-qC9" firstAttribute="leading" secondItem="UEg-XI-Ylm" secondAttribute="leading" constant="10" id="Ofp-AS-Aiu"/>
                                         <constraint firstAttribute="trailing" secondItem="6Mo-ho-Uon" secondAttribute="trailing" constant="10" id="Pj4-9n-bMg"/>
@@ -208,7 +208,7 @@
                                         <constraint firstAttribute="trailing" secondItem="Whf-fI-QzA" secondAttribute="trailing" constant="8" id="WK8-5G-d0T"/>
                                         <constraint firstItem="Whf-fI-QzA" firstAttribute="top" secondItem="UEg-XI-Ylm" secondAttribute="top" id="gKa-Jy-cJH"/>
                                         <constraint firstAttribute="trailing" secondItem="5iH-zv-qC9" secondAttribute="trailing" constant="10" id="kRd-tQ-D3o"/>
-                                        <constraint firstItem="tYD-zs-TPp" firstAttribute="leading" secondItem="UEg-XI-Ylm" secondAttribute="leading" constant="30" id="kss-oe-es8"/>
+                                        <constraint firstItem="tYD-zs-TPp" firstAttribute="leading" secondItem="UEg-XI-Ylm" secondAttribute="leading" constant="50" id="kss-oe-es8"/>
                                         <constraint firstItem="5iH-zv-qC9" firstAttribute="top" secondItem="Whf-fI-QzA" secondAttribute="bottom" constant="20" id="kwZ-DR-XOT"/>
                                         <constraint firstItem="6Mo-ho-Uon" firstAttribute="leading" secondItem="UEg-XI-Ylm" secondAttribute="leading" constant="10" id="npN-ty-cQP"/>
                                         <constraint firstItem="6Mo-ho-Uon" firstAttribute="top" secondItem="5iH-zv-qC9" secondAttribute="bottom" constant="20" id="riD-ri-iJx"/>
@@ -255,8 +255,8 @@
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="ButtonColor">
-            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ParentClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

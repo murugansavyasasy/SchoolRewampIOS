@@ -231,9 +231,9 @@ class AttachmentsVc: UIViewController {
         }
     }
     
-    func ReadStatusUpdate(type: String, detail_id: String) {
+    func ReadStatusUpdate(type: String, detail_id: String,Endurl: String) {
         APIService.shared.makeApi(
-            url: ServiceUrl.comm_communication_read_status_update,
+            url: Endurl,
             parameters: [
                 ReadStatusUpdateStringFile.type: type,
                 ReadStatusUpdateStringFile.detail_id: detail_id
@@ -314,9 +314,21 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             self.filteredAttachments?[indexPath.row].isExpanded = newValue
             
             if self.filteredAttachments?[indexPath.row].is_unread == true {
-                self.ReadStatusUpdate(
-                    type: "ATTACHMENT",
-                    detail_id: self.filteredAttachments?[indexPath.row].id ?? "")
+                if self.filteredAttachments?[indexPath.row].is_archive == true{
+                    self.ReadStatusUpdate(
+                        type: "ATTACHMENT",
+                        detail_id: self.filteredAttachments?[indexPath.row].id ?? "",
+                        Endurl:ServiceUrl.comm_communication_read_status_update_archive
+                    )
+                }else{
+                    self.ReadStatusUpdate(
+                        type: "ATTACHMENT",
+                        detail_id: self.filteredAttachments?[indexPath.row].id
+                        ?? "",
+                        Endurl: ServiceUrl.comm_communication_read_status_update
+                    )
+                }
+               
             }
             tableView.beginUpdates()
             tableView.endUpdates()
@@ -388,6 +400,24 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
     ) {
         guard let attach = filteredAttachments?[indexPath.row],
               let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        if attach.is_unread == true {
+            if attach.is_archive == true{
+                self.ReadStatusUpdate(
+                    type: "ATTACHMENT",
+                    detail_id: attach.id ?? "",
+                    Endurl:ServiceUrl.comm_communication_read_status_update_archive
+                )
+            }else{
+                self.ReadStatusUpdate(
+                    type: "ATTACHMENT",
+                    detail_id: attach.id
+                    ?? "",
+                    Endurl: ServiceUrl.comm_communication_read_status_update
+                )
+            }
+           
+        }
         
         let cellFrameInSuperview = tableView.convert(cell.frame, to: view)
         

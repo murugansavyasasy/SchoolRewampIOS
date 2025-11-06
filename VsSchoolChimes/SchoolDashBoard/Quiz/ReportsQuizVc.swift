@@ -11,10 +11,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     
     // MARK: - Outlets
     @IBOutlet weak var searchView: UISearchBar!
-    @IBOutlet weak var searchBtn: UIButton!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var academicDropView: UIView!
-    @IBOutlet weak var backLbl: UILabel!
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
@@ -45,16 +41,16 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         searchView.barTintColor = .clear
         searchView.backgroundColor = .clear
         searchView.searchTextField.addDoneButton()
-        backLbl.configureAsBackTitle(
-            firstLine: MenuStringFile.selectedMenuName,
-            secondLine: staffDetails?.school_name ?? ""
-        )
-        
-        headerView.layer.cornerRadius = 20
-        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        academicDropView.layer.cornerRadius = 10
-        academicDropView.layer.borderWidth = 1
-        academicDropView.layer.borderColor = UIColor.white.cgColor
+//        backLbl.configureAsBackTitle(
+//            firstLine: MenuStringFile.selectedMenuName,
+//            secondLine: staffDetails?.school_name ?? ""
+//        )
+//        
+//        headerView.layer.cornerRadius = 20
+//        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+//        academicDropView.layer.cornerRadius = 10
+//        academicDropView.layer.borderWidth = 1
+//        academicDropView.layer.borderColor = UIColor.white.cgColor
     }
     
     private func registerCells() {
@@ -95,7 +91,7 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     @IBAction func search(_ sender: UIButton) {
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
+//        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         
         searchView.isHidden = !sender.isSelected
         if sender.isSelected {
@@ -166,7 +162,9 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
         cell.PlayBtn.isHidden = true
         cell.titleLbl.text = quiz.title
         cell.discretiponsLbl.text = quiz.description
-        cell.exameDateLbl.text = formattedDateStatus(from: quiz.sent_time ?? "")
+        cell.exameDateLbl.text = formattedDateStatus(
+            from: quiz.sent_time ?? "",
+            isTimeNeeded: true)
         cell.subjectLbl.text = quiz.subject
         cell.postedByLbl.text = "Posted By: \(quiz.sent_by ?? "")"
         

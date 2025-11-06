@@ -16,7 +16,6 @@ class LocationViewController: UIViewController {
     @IBOutlet weak var AllowLocationDescribeLbl: UILabel!
     @IBOutlet weak var AllowLocationLbl: UILabel!
     @IBOutlet weak var AllowLoactionThumbnail: UIImageView!
-    @IBOutlet weak var addLocationBtn: UIButton!
     @IBOutlet weak var ScrollView: UIScrollView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var LocationErrorStack: UIStackView!
@@ -77,7 +76,7 @@ class LocationViewController: UIViewController {
         PunchDescriptionLbl.setFont(style: .header, size: FontSize.HeaderSize)
         EnableLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TaptoPunchBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        addLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+//        addLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         if #available(iOS 15.0, *) {
             var config = UIButton.Configuration.plain()
             config.image = UIImage(systemName: "plus.circle.fill")
@@ -589,7 +588,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(punchStack)
         ViewAnimator.hideFade(LocationErrorStack)
         PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch
-        PunchThumbnail.image = UIImage(named: "biomatricSucess")
+        PunchThumbnail.image = UIImage(named: "PunchAttenace")
         punchStack.backgroundColor = .white
         PunchDescriptionLbl.textColor = .black
     }

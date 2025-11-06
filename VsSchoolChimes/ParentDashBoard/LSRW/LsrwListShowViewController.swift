@@ -52,10 +52,11 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         tv.dataSource = self
         tv.estimatedRowHeight = 80
         tv.rowHeight = UITableView.automaticDimension
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         SkillListApi()
     }
-    
     private func SkillListApi() {
         if #available(iOS 15.0, *) {
             showActivityLoader()

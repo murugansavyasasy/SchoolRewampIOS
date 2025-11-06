@@ -122,7 +122,14 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         descriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
-        addPhotosLabel.setRequiredText(CommonStringFile.Add_attachment)
+        setAttributedText(
+            for: addPhotosLabel,
+            with: CommonStringFile.Add_attachment_optional.translated(),
+            firstString: CommonStringFile.Add_attachment.translated(),
+            secondString: CommonStringFile.Optional.translated(),
+            color1: .black,
+            color2: .lightGray
+        )
         descriptionLbl.setRequiredText(CommonStringFile.Description)
     }
     

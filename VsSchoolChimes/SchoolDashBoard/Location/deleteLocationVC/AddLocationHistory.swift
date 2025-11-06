@@ -15,8 +15,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
        
         noRecLbl.isHidden = true
-        tv.delegate = self
-        tv.dataSource = self
+       
         let rowNib = UINib(nibName: CellConfingName.deleteTV, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: CellConfingName.deleteTV)
         let gifImage = UIImage.gifImageWithName("Map Location")
@@ -43,6 +42,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.configure(with:locationData, at: indexPath)
         }
         
+        
 //        cell.coordinatesLbl.text = "\(locationHistory?[indexPath.row].latitude ?? "") - \(locationHistory?[indexPath.row].longitude ?? "")"
 //        cell.locationLbl.text = locationHistory?[indexPath.row].location
 //        cell.distanceLbl.text = "\(locationHistory?[indexPath.row].distance ?? "") Meter"
@@ -68,9 +68,9 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 print("location Name: \(location)")
                 print("distance Name: \(distance)")
                 if distance != "" && location != ""{
-                    update(param: ["id":self.locationHistory?[sender.tag].id ?? 0,
+                    update(param: ["id":String(self.locationHistory?[sender.tag].id ?? 0),
                                    "location":location,
-                                   "distance":distance])
+                                   "distance":Int(distance) ?? 0])
                 }else{
                     let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty", preferredStyle: UIAlertController.Style.alert)
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
@@ -106,7 +106,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                     case .success(let result):
                         DispatchQueue.main.async {
                             self?.fetchAttachments()
-                            self?.tv.reloadData()
                         }
                     case .failure(let error):
                         print("Error fetching attachments:", error.localizedDescription)
@@ -140,7 +139,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 switch result {
                 case .success(let result):
                     self?.fetchAttachments()
-                    self?.tv.reloadData()
+//                    self?.tv.reloadData()
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
                 }
@@ -176,6 +175,8 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                         DispatchQueue.main.async {
                             self?.noRecLbl.isHidden = true
                             self?.locationHistory = response.data
+                            self?.tv.delegate = self
+                            self?.tv.dataSource = self
                             self?.tv.reloadData()
                         }
                     }else{

@@ -547,7 +547,6 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
             selectedIndex = 0
         }
         
-        self.historyTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
