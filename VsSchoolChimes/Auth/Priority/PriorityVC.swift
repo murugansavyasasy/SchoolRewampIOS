@@ -123,7 +123,7 @@ class PriorityVC: UIViewController {
            TeacherParentlbl.text = (CommonStringFile.LoginAs.translated())+" Managment"
        }else{
            
-           TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname)
+           TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Student/Parent"
        }
      
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)

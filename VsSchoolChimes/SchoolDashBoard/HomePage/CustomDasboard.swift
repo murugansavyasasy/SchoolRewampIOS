@@ -153,8 +153,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.isEmpty ?? true
-                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
-                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
+//                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
+//                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         user_inputs.menuList = self.menu_details?.compactMap{$0.name} ?? []
                     } else {
@@ -558,14 +558,14 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         return false
     }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == recentActiveMenuCollection {
-            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
-            if let maxIndex = visibleIndexes.max() {
-                pagecontroller.currentPage = maxIndex
-            }
-        }
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        if scrollView == recentActiveMenuCollection {
+//            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
+//            if let maxIndex = visibleIndexes.max() {
+//                pagecontroller.currentPage = maxIndex
+//            }
+//        }
+//    }
 }
 
 @available(iOS 14.0, *)
