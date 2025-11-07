@@ -11,18 +11,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="317" id="KGk-i7-Jjw" customClass="StrengthTvCell" customModule="School_Chimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="318" height="317"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="298" id="KGk-i7-Jjw" customClass="StrengthTvCell" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="318" height="298"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="318" height="317"/>
+                <rect key="frame" x="0.0" y="0.0" width="318" height="298"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fv7-Bq-GnT">
-                        <rect key="frame" x="10" y="2" width="298" height="295"/>
+                        <rect key="frame" x="10" y="5" width="298" height="285"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gKf-Dz-aiS">
-                                <rect key="frame" x="0.0" y="10" width="298" height="275"/>
+                                <rect key="frame" x="0.0" y="5" width="298" height="275"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsJ-fB-8Ge">
                                         <rect key="frame" x="0.0" y="0.0" width="298" height="120"/>
@@ -147,18 +147,18 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="gKf-Dz-aiS" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="UfC-io-Y1s"/>
-                            <constraint firstAttribute="bottom" secondItem="gKf-Dz-aiS" secondAttribute="bottom" constant="10" id="WUl-76-u94"/>
+                            <constraint firstAttribute="bottom" secondItem="gKf-Dz-aiS" secondAttribute="bottom" constant="5" id="WUl-76-u94"/>
                             <constraint firstAttribute="trailing" secondItem="gKf-Dz-aiS" secondAttribute="trailing" id="cnf-jf-eED"/>
-                            <constraint firstItem="gKf-Dz-aiS" firstAttribute="top" secondItem="Fv7-Bq-GnT" secondAttribute="top" constant="10" id="mCm-Qn-hb7"/>
+                            <constraint firstItem="gKf-Dz-aiS" firstAttribute="top" secondItem="Fv7-Bq-GnT" secondAttribute="top" constant="5" id="mCm-Qn-hb7"/>
                         </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                 <constraints>
                     <constraint firstItem="Fv7-Bq-GnT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Hd1-F6-BiR"/>
+                    <constraint firstAttribute="bottom" secondItem="Fv7-Bq-GnT" secondAttribute="bottom" constant="8" id="K6C-ui-gm6"/>
                     <constraint firstAttribute="trailing" secondItem="Fv7-Bq-GnT" secondAttribute="trailing" constant="10" id="bKi-XG-bWF"/>
-                    <constraint firstItem="Fv7-Bq-GnT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="eQd-bg-YNJ"/>
-                    <constraint firstAttribute="bottom" secondItem="Fv7-Bq-GnT" secondAttribute="bottom" constant="20" symbolic="YES" id="fXu-U3-lQY"/>
+                    <constraint firstItem="Fv7-Bq-GnT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="eQd-bg-YNJ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -175,7 +175,7 @@
                 <outlet property="standardLbl" destination="7bp-k9-jWa" id="SDP-BB-PUI"/>
                 <outlet property="viewDetailsBtnName" destination="BHP-6G-1LL" id="qsB-O3-s56"/>
             </connections>
-            <point key="canvasLocation" x="137.40458015267174" y="114.43661971830987"/>
+            <point key="canvasLocation" x="137.40458015267174" y="107.74647887323944"/>
         </tableViewCell>
     </objects>
     <resources>
