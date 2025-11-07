@@ -36,7 +36,11 @@ class HomePaucktVC: UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.placeholder = "Search"
         searchBar.delegate = self
+        searchBar.layer.borderWidth = 0
+        searchBar.backgroundImage = UIImage()
+        searchBar.searchTextField.addDoneButton()
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
