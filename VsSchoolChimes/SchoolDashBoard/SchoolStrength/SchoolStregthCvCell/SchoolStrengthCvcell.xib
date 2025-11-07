@@ -146,25 +146,25 @@
                                             <constraint firstItem="OP0-yA-Evr" firstAttribute="top" secondItem="UWJ-JY-STq" secondAttribute="top" constant="2.6666666666666679" id="ymD-bB-eiP"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="B5h-i9-lRw">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="B5h-i9-lRw">
                                         <rect key="frame" x="0.0" y="50.333333333333336" width="154" height="20.333333333333336"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="+ 3 from last year" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wls-mZ-39J">
-                                                <rect key="frame" x="0.0" y="4.3333333333333277" width="91.666666666666671" height="11.666666666666664"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="+ no previous record" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wls-mZ-39J">
+                                                <rect key="frame" x="0.0" y="4.3333333333333277" width="149" height="11.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slachImg" translatesAutoresizingMaskIntoConstraints="NO" id="7SA-t7-RVH">
-                                                <rect key="frame" x="94.666666666666671" y="2.6666666666666572" width="15" height="15"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7SA-t7-RVH">
+                                                <rect key="frame" x="139" y="2.6666666666666572" width="15" height="15"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="96D-uV-iMo"/>
                                                     <constraint firstAttribute="height" constant="15" id="nRQ-6D-LJt"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvF-pv-bmZ">
-                                                <rect key="frame" x="112.66666666666664" y="0.0" width="41.333333333333329" height="20.333333333333332"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvF-pv-bmZ">
+                                                <rect key="frame" x="154" y="0.0" width="0.0" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -217,7 +217,6 @@
         <image name="females" width="1792" height="1792"/>
         <image name="males" width="24" height="24"/>
         <image name="person.2.fill" catalog="system" width="128" height="86"/>
-        <image name="slachImg" width="30" height="30"/>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

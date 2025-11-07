@@ -24,7 +24,7 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
    
     @IBOutlet weak var barchartHeight: NSLayoutConstraint!
     @IBOutlet weak var cellview: UIView!
-   
+    var hasAnimatedProgress = false
     var sections: [SectionList]?
     var boycount : String?
     var girlscount : String?
@@ -51,19 +51,22 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
 
 
     func updateProgress(boys: String, girls: String) {
-        
         let boysCount = Int(boys) ?? 0
-           let girlsCount = Int(girls) ?? 0
-           let total = boysCount + girlsCount
-           guard total > 0 else { return }
+        let girlsCount = Int(girls) ?? 0
+        let total = boysCount + girlsCount
+        guard total > 0 else {
+            progressView.progress = 0
+            return
+        }
 
-           // Calculate percentage (0.0 to 1.0)
-           let boysPercent = Float(boysCount) / Float(total)
-           let girlsPercent = Float(girlsCount) / Float(total)
+        let boysPercent = Float(boysCount) / Float(total)
 
-           // Update ProgressView
-        progressView.setProgress(boysPercent, animated: true)
-          
+        if !hasAnimatedProgress {
+            progressView.setProgress(boysPercent, animated: true)
+            hasAnimatedProgress = true
+        } else {
+            progressView.setProgress(boysPercent, animated: false)
+        }
     }
     
     func configure(_ sections: [SectionList]?) {

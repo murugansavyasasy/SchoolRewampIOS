@@ -6,13 +6,29 @@ import DropDown
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
     
     func date(date: String) {
-        if dateSelection == true{
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        
+        if dateSelection {
             fromLbl.text = date
-            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
-        }else{
+            if let toDateText = todateLbl.text,
+               let fromDate = formatter.date(from: date),
+               let toDate = formatter.date(from: toDateText),
+               fromDate > toDate {
+                todateLbl.text = date
+            }
+        } else {
             todateLbl.text = date
-            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
+            if let fromDateText = fromLbl.text,
+               let fromDate = formatter.date(from: fromDateText),
+               let toDate = formatter.date(from: date),
+               fromDate > toDate {
+                todateLbl.text = fromDateText
+            }
         }
+        
+        daily_collectionApi(type: String(segmentName.selectedSegmentIndex + 1))
     }
     
     @IBOutlet weak var fromDateLbl: UILabel!
@@ -99,6 +115,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.date = fromLbl.text
+        vc.maximumDate = Date()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -109,6 +127,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dateSelection = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.date = todateLbl.text
+        vc.maximumDate = Date()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)

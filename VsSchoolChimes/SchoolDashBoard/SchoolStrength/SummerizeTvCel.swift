@@ -59,47 +59,49 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         // MARK: - Common Setup
         let item = dispalyArray[indexPath.row]
         cell.roles.text = item.name
-       
+        cell
+            .updateProgress(
+                absentees: String(item.boys),
+                total: String(item.count)
+            )
+        cell.OverAllcountLbl.text = "\(item.count)"
+        
         // MARK: - Role-based Setup
-        switch item.name {
-        case "Staff":
-            configureCell(cell, icon: "teachers", tint: .aproved,
-                          maleLabel: "Male", femaleLabel: "Female",
-                          progressTint: .maleClr, trackTint: .femaleClr,
-                          present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys)
-            cell.updateProgress(
-                absentees: String(item.boys),
-                total: String(item.count)
-                )
-            cell.OverAllcountLbl.text = "\(item.count)"
-        case "Students":
-            configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
-                          maleLabel: "Boys", femaleLabel: "Girls",
-                          progressTint: .maleClr, trackTint: .femaleClr,
-                          present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys)
-            cell.updateProgress(
-                absentees: String(item.boys),
-                total: String(item.count)
-                )
-
-            cell.OverAllcountLbl.text = "\(item.count)"
-        case "Total":
-            configureCell(cell, icon: "School Needs", tint: .button,
-                          maleLabel: "Staffs", femaleLabel: "Students",
-                          progressTint: .aproved.withAlphaComponent(0.7),
-                          trackTint: .primery.withAlphaComponent(0.7),
-                          present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys)
-           
-            cell
-                .updateProgress(
-                    absentees: String(item.Girl),
-                    total: String(item.count)
-                )
-            cell.OverAllcountLbl.text = "\(item.count)"
-        default:
-            break
+        
+            switch item.name {
+            case "Staff":
+                configureCell(cell, icon: "teachers", tint: .aproved,
+                              maleLabel: "Male", femaleLabel: "Female",
+                              progressTint: .maleClr, trackTint: .femaleClr,
+                              present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
+                //            cell.updateProgress(
+                //                absentees: String(item.boys),
+                //                total: String(item.count)
+                //                )
+                //            cell.OverAllcountLbl.text = "\(item.count)"
+            case "Students":
+                configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
+                              maleLabel: "Boys", femaleLabel: "Girls",
+                              progressTint: .maleClr, trackTint: .femaleClr,
+                              present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
+                //            cell.updateProgress(
+                //                absentees: String(item.boys),
+                //                total: String(item.count)
+                //                )
+                //
+                //            cell.OverAllcountLbl.text = "\(item.count)"
+            case "Total":
+                configureCell(cell, icon: "School Needs", tint: .button,
+                              maleLabel: "Staffs", femaleLabel: "Students",
+                              progressTint: .aproved.withAlphaComponent(0.7),
+                              trackTint: .primery.withAlphaComponent(0.7),
+                              present: item.count, previous: item.previousYear,girls: item.boys,boys: item.Girl,message: item.message)
+                
+                
+            default:
+                break
+            
         }
-
         return cell
     }
 
@@ -114,7 +116,8 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         present: Int,
         previous: Int,
         girls: Int,
-        boys: Int
+        boys: Int,
+        message : String
     ) {
         cell.Icons.image = UIImage(named: icon) ?? UIImage(systemName: icon)
         cell.Icons.tintColor = tint
@@ -126,23 +129,30 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
 
         
         // MARK: - Year Comparison Logic
-        if present > previous {
-            let diff = present - previous
-            cell.lastYearLbl.text = " +\(diff) from last year"
-            cell.lastYearLbl.textColor = .aproved
-            cell.arrowImage.image = UIImage(systemName: "arrow.up.circle.fill")
-            cell.arrowImage.tintColor = .aproved
-        } else if present == previous {
-            cell.lastYearLbl.text = " No change from last year"
-            cell.lastYearLbl.textColor = .systemGray
-            cell.arrowImage.image = UIImage(named: "slachImg")
-            cell.arrowImage.tintColor = .black
-        } else {
-            let diff = previous - present
-            cell.lastYearLbl.text = " -\(diff) from last year"
-            cell.lastYearLbl.textColor = .red1
-            cell.arrowImage.image = UIImage(systemName: "arrow.down.circle.fill")
-            cell.arrowImage.tintColor = .red1
+        cell.lastYearLbl.text =  message
+        cell.arrowImage.isHidden = true
+        if message == "" {
+            cell.arrowImage.isHidden = false
+            if present > previous {
+                let diff = present - previous
+                cell.lastYearLbl.text = " +\(diff) from last year"
+                cell.lastYearLbl.textColor = .aproved
+                cell.arrowImage.image = UIImage(systemName: "arrow.up.circle.fill")
+                cell.arrowImage.tintColor = .aproved
+            } else if present == previous {
+                cell.lastYearLbl.text = " No change from last year"
+                cell.lastYearLbl.textColor = .systemGray
+//                cell.arrowImage.image = UIImage(named: "slachImg")
+                cell.arrowImage.isHidden = true
+                cell.arrowImage.tintColor = .black
+            } else {
+                let diff = previous - present
+                cell.lastYearLbl.text = " -\(diff) from last year"
+                cell.lastYearLbl.textColor = .red1
+                cell.arrowImage.image = UIImage(systemName: "arrow.down.circle.fill")
+                cell.arrowImage.tintColor = .red1
+            }
+            
         }
     }
 
