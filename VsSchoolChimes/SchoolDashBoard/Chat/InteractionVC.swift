@@ -16,6 +16,8 @@ class InteractionVC: UIViewController {
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var noDatimgView: UIImageView!
     @IBOutlet weak var noDataFoundLbl: UILabel!
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
     var passvalue = 0
     var staffMembersData: [StaffMember]?
     var filterData: [StaffMember]?
@@ -25,18 +27,21 @@ class InteractionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        searchBar.searchTextField.addDoneButton()
-        searchBar.searchTextField.backgroundColor = .white
         FullView.layer.cornerRadius = 30
         FullView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         FullView.layer.masksToBounds = true
         let name = studentDetails?.name ?? ""
         let standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         backBtn.configureAsBackTitle(firstLine: name, secondLine: standard)
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
         tv.dataSource = self
+        searchBar.isHidden = true
+        searchBar.searchTextField.addDoneButton()
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
         getStaff()
         
@@ -103,11 +108,25 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
             cell.userImg.isHidden = datas.profile?.isEmpty ?? true
             cell.userBtn.isHidden = !cell.userImg.isHidden
             if let name = datas.name, !name.isEmpty {
-                let firstTwo = String(name.prefix(2)).uppercased()
-                cell.userBtn.setTitle(firstTwo, for: .normal)
+                let parts = name.split(separator: " ")
+                if let firstWord = parts.first {
+                    let firstLetter = String(firstWord.prefix(1)).uppercased()
+                    
+                    if let lastWord = parts.last {
+                        let lastLetter = String(lastWord.suffix(1)).uppercased()
+                        
+                        // If only one word, avoid duplication
+                        if parts.count == 1 {
+                            cell.userBtn.setTitle(firstLetter, for: .normal)
+                        } else {
+                            cell.userBtn.setTitle(firstLetter + lastLetter, for: .normal)
+                        }
+                    }
+                }
             } else {
-                cell.userBtn.setTitle("-", for: .normal) // fallback if empty
+                cell.userBtn.setTitle("-", for: .normal) // fallback
             }
+
         }
         return cell
         
@@ -145,6 +164,8 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
                             filterData = successMessage.data ?? []
                             noDatimgView.isHidden = !(filterData?.isEmpty ?? false)
                             noDataFoundLbl.isHidden = !(filterData?.isEmpty ?? false)
+                            noDataFoundLbl.text = successMessage.message
+                            searchBtn.isHidden = (filterData?.isEmpty ?? false)
                             tv.reloadData()
                         }
                     }else{
@@ -153,11 +174,17 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
                             filterData = successMessage.data ?? []
                             noDatimgView.isHidden = !(filterData?.isEmpty ?? false)
                             noDataFoundLbl.isHidden = !(filterData?.isEmpty ?? false)
+                            noDataFoundLbl.text = successMessage.message
+                            searchBtn.isHidden = true
                             tv.reloadData()
                         }
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    noDatimgView.isHidden = false
+                    noDataFoundLbl.isHidden = false
+                    noDataFoundLbl.text = error.localizedDescription
+                    searchBtn.isHidden = true
                 }
             }
     }

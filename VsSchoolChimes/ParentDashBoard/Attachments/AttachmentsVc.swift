@@ -116,6 +116,7 @@ class AttachmentsVc: UIViewController {
                     self.searchBtn.isHidden = isEmpty
                     self.noDataImage.isHidden = !isEmpty
                     self.noDataLabel.isHidden = !isEmpty
+                    self.tv.isScrollEnabled = !isEmpty
                     self.noDataLabel.text = response.message
                     self.tv.reloadData()
                     
@@ -134,6 +135,7 @@ class AttachmentsVc: UIViewController {
                     self.searchBtn.isHidden = true
                     self.noDataImage.isHidden = false
                     self.noDataLabel.isHidden = false
+                    self.tv.isScrollEnabled = false
                     self.noDataLabel.text = error.localizedDescription
                 }
             }
@@ -478,6 +480,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         if self.filteredAttachments?.isEmpty ?? true {
             self.noDataLabel.isHidden = false
             self.noDataImage.isHidden = false
+            self.tv.isScrollEnabled = false
             self.noDataLabel.text = "No Attachment Found"
             
             

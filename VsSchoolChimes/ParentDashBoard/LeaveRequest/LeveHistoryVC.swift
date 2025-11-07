@@ -388,7 +388,17 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
         
         let data = filteredLeaveData[indexPath.section].details?[indexPath.row]//filteredLeaveData[indexPath.row]
         
-        cell.DaysCountLbl.text = (data?.no_of_days ?? "") + " " + AttendanceString.dayApplication
+//        cell.DaysCountLbl.text = (data?.no_of_days ?? "") + " " + AttendanceString.dayApplication
+        
+        if let daysString = data?.no_of_days,
+           let days = Double(daysString) {
+            let unit = days > 1 ? "days" : "day"
+            cell.DaysCountLbl.text = "\(daysString) \(unit) Application"
+        } else {
+            cell.DaysCountLbl.text = "0 day Application"
+        }
+
+        
         cell.DateLbl.text = "\(data?.leave_from?.convertToTargetDateFormat() ?? "") - \(data?.leave_to?.convertToTargetDateFormat() ?? "")"
         cell.TypeLbl.text = data?.leave_type
         cell.ReasonLbl.text = data?.reason

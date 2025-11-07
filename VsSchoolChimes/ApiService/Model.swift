@@ -1515,6 +1515,7 @@ struct CertificateRequest: Codable {
     var requested_on: String?
     var status: String?
     var issued_on: String?
+    var message: String?
 }
 //MARK: DetailedExamList
 struct DetailedExamListResponse: Codable {

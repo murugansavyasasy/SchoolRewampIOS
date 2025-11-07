@@ -14,10 +14,12 @@
             <connections>
                 <outlet property="NoDataImage" destination="Bsy-Sc-gur" id="ec8-N7-fbB"/>
                 <outlet property="NoDataLbl" destination="1mZ-7N-GDE" id="lGN-Fa-4Ng"/>
+                <outlet property="SearchBtn" destination="aaG-rp-SR0" id="zkx-H3-Fff"/>
                 <outlet property="TitleLbl" destination="ud9-Wx-jlO" id="CVe-S8-Nvs"/>
                 <outlet property="TopView" destination="2fy-0D-nOV" id="rwM-dj-sAM"/>
                 <outlet property="backBtn" destination="T2V-oH-1rT" id="qIK-Mp-JEn"/>
                 <outlet property="cv" destination="qJe-cg-tlm" id="fAF-IW-67W"/>
+                <outlet property="searchBar" destination="86J-oh-baG" id="PWV-2D-0KQ"/>
                 <outlet property="studentNameLbl" destination="sfv-LI-VPn" id="k3s-X0-6KA"/>
                 <outlet property="tv" destination="YY8-wu-xnp" id="i3e-km-JFQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -52,11 +54,26 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfv-LI-VPn">
-                                    <rect key="frame" x="35" y="17.666666666666671" width="338" height="0.0"/>
+                                    <rect key="frame" x="35" y="17.666666666666671" width="303" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aaG-rp-SR0">
+                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="2Ak-fi-rCR"/>
+                                        <constraint firstAttribute="height" constant="35" id="Jx3-Zn-WYq"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="magnifyingglass" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="XuF-bl-MY5"/>
+                                    </connections>
+                                </button>
                             </subviews>
                         </stackView>
                     </subviews>
@@ -76,23 +93,30 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-cg-By1">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-cg-By1">
                             <rect key="frame" x="0.0" y="64" width="393" height="630"/>
                             <subviews>
+                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="86J-oh-baG">
+                                    <rect key="frame" x="10" y="0.0" width="373" height="56"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="Eh1-et-haq"/>
+                                    </connections>
+                                </searchBar>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Bsy-Sc-gur">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="280"/>
+                                    <rect key="frame" x="0.0" y="66" width="393" height="280"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="280" id="bjW-j7-bDe"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mZ-7N-GDE">
-                                    <rect key="frame" x="50" y="280" width="293" height="24"/>
+                                    <rect key="frame" x="50" y="356" width="293" height="24"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-cg-tlm">
-                                    <rect key="frame" x="0.0" y="304" width="393" height="326"/>
+                                    <rect key="frame" x="0.0" y="390" width="393" height="240"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="yBp-LO-vp4">
                                         <size key="itemSize" width="128" height="128"/>
@@ -103,6 +127,8 @@
                                 </collectionView>
                             </subviews>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="86J-oh-baG" secondAttribute="trailing" constant="10" id="0jF-Be-whE"/>
+                                <constraint firstItem="86J-oh-baG" firstAttribute="leading" secondItem="pzN-cg-By1" secondAttribute="leading" constant="10" id="7p5-va-hsJ"/>
                                 <constraint firstAttribute="trailing" secondItem="qJe-cg-tlm" secondAttribute="trailing" id="9RT-Ag-Xlz"/>
                                 <constraint firstItem="Bsy-Sc-gur" firstAttribute="leading" secondItem="pzN-cg-By1" secondAttribute="leading" id="JdV-mO-ls0"/>
                                 <constraint firstItem="qJe-cg-tlm" firstAttribute="leading" secondItem="pzN-cg-By1" secondAttribute="leading" id="Jrv-Y7-i4w"/>
@@ -158,6 +184,7 @@
     <resources>
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

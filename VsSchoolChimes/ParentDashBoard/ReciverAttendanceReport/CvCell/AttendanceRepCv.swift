@@ -24,6 +24,10 @@ class AttendanceRepCv: UICollectionViewCell {
         // Initialization code
      
         fullview.layer.cornerRadius = 15
+        fullview.layer.shadowColor = UIColor.black.cgColor
+        fullview.layer.shadowOffset = CGSize(width: 0, height: 2)
+        fullview.layer.shadowRadius = 5
+        fullview.layer.shadowOpacity = 0.3
         
         AbsentBtnNm.layer.cornerRadius = 8
         
