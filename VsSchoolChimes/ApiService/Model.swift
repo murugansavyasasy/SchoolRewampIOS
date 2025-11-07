@@ -783,7 +783,7 @@ struct SchoolStrength: Codable {
     let total_girls_strength: String?
     let total_others_strength: String?
     let total_staff_strength: String?
-     
+    let message : String?
 }
 struct Standard: Codable {
     let id: String?

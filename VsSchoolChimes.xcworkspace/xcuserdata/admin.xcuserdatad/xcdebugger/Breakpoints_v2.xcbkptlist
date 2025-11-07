@@ -324,36 +324,6 @@
             endingLineNumber = "448"
             landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80c1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (School_Chimes.EventDisplaySection) -&gt; Swift.Optional&lt;School_Chimes.EventDisplaySection&gt; in closure #1 @Swift.MainActor () -&gt; () in School_Chimes.EventResiverVC.searchBar(_: __C.UISearchBar, textDidChange: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448">
-               </Location>
-               <Location
-                  uuid = "E6406C19-452E-4522-B0A0-B414281FED1E - 4bf2993f9eaf80c1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (School_Chimes.EventDisplaySection) -&gt; Swift.Optional&lt;School_Chimes.EventDisplaySection&gt; in closure #1 @Swift.MainActor () -&gt; () in School_Chimes.EventResiverVC.searchBar(_: __C.UISearchBar, textDidChange: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Event/EventResiverVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -407,32 +377,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7781E3C4-2C35-47FA-851E-76D4ACF4016F"
+            uuid = "5D7228E6-597E-4BCF-8F23-30BBEC05911E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolStrength/StrengthTvCell.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolStrength/SchoolStrengthVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "updateProgress(boys:girls:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AE2B3289-E824-4A5E-9417-F6091ED05BC4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolStrength/StrengthTvCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "updateProgress(boys:girls:)"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "createStrengthList(from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
