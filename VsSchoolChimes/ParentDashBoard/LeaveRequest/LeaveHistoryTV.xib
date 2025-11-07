@@ -36,24 +36,24 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlg-9Y-RVj">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xlg-9Y-RVj">
                                         <rect key="frame" x="0.0" y="25.666666666666664" width="280" height="26.333333333333336"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-80-0XT">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="26.333333333333332"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Type" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qw3-80-0XT">
+                                                <rect key="frame" x="0.0" y="0.0" width="160" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" systemColor="systemYellowColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFq-vr-jcD">
-                                                <rect key="frame" x="200" y="0.0" width="80" height="26.333333333333332"/>
+                                                <rect key="frame" x="160" y="0.0" width="120" height="26.333333333333332"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="80" id="YaD-FS-mcb"/>
+                                                    <constraint firstAttribute="width" constant="120" id="YaD-FS-mcb"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle">
-                                                        <fragment content="Get Outpass">
+                                                        <fragment content="Generate Outpass">
                                                             <attributes>
                                                                 <color key="NSColor" systemColor="linkColor"/>
                                                                 <font key="NSFont" metaFont="cellTitle"/>
@@ -78,10 +78,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqf-xi-bRe">
-                                <rect key="frame" x="170" y="8" width="125" height="25"/>
+                                <rect key="frame" x="170" y="8" width="125" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYr-FP-LIZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="25"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="FcO-2B-DJm"/>
                                             <constraint firstAttribute="width" constant="90" id="kVT-wH-JSV"/>
@@ -90,7 +90,7 @@
                                         <state key="normal" title="status"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQs-cY-T18">
-                                        <rect key="frame" x="90" y="3" width="35" height="22"/>
+                                        <rect key="frame" x="90" y="-5" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="Bbg-ib-lEi"/>
                                             <constraint firstAttribute="height" constant="35" id="WlY-Xw-RJR"/>
@@ -108,7 +108,7 @@
                                 </subviews>
                             </stackView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hmk-m3-p2L">
-                                <rect key="frame" x="195" y="41.000000000000007" width="100" height="70.666666666666686"/>
+                                <rect key="frame" x="195" y="46.000000000000007" width="100" height="70.666666666666686"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="e9L-Wd-bWL">
                                         <rect key="frame" x="10" y="7.9999999999999964" width="82" height="54.666666666666657"/>
@@ -196,13 +196,13 @@
         <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

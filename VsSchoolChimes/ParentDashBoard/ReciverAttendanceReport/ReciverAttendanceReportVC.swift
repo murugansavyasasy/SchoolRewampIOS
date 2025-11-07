@@ -227,30 +227,31 @@ class ReciverAttendanceReportVC: UIViewController {
             default: suffix = "th"
             }
         }
-
-        let dayString = "\(day)"
-        let fullString = "\(day)\(suffix)"
+        
+        // Format day with leading zero if < 10
+        let dayString = String(format: "%02d", day)
+        let fullString = "\(dayString)\(suffix)"
         let attributed = NSMutableAttributedString(string: fullString)
-
+        
         // Load Poppins-Medium
         let suffixFont = UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)
-
+        
         // Apply style to suffix only
         attributed.setAttributes([
             .font: suffixFont,
             .baselineOffset: 20
         ], range: NSRange(location: dayString.count, length: suffix.count))
-
+        
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.minimumLineHeight = 30 // Try increasing this value if clipping persists
-
+        paragraphStyle.minimumLineHeight = 30
+        
         attributed.addAttributes([
             .paragraphStyle: paragraphStyle
         ], range: NSRange(location: 0, length: fullString.count))
-
         
         return attributed
     }
+
 
     
     func setupDayButtons() {

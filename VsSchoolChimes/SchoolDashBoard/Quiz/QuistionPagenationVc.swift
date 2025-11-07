@@ -16,6 +16,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var presentView: UIView!
 
+    @IBOutlet weak var toolbarTitle: UILabel!
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var page1 = UIViewController()
@@ -27,14 +28,14 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
 
         // Do any additional setup after loading the view.
         
+        toolbarTitle.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
         BackBtn.imageView?.applyRTLFlip(Language == "ar")
         
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-
-        uiConficration()
+       
         setupPageViewController()
         loadPages([page1, page2])
 //        disableSwipeGesture()
@@ -42,13 +43,18 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         if let firstPage = pages.first {
             pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
         }
+        
+        for view in pageViewController.view.subviews {
+                if let scrollView = view as? UIScrollView {
+                    scrollView.isScrollEnabled = false  // disable swipe
+                }
+                if let pageControl = view as? UIPageControl {
+                    pageControl.isHidden = true  // hide dots
+                }
+            }
     }
 
-    
-    func uiConficration() {
-//        BackBtn.setTitle(titleLbl, for: .normal)
-        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-    }
+
 
     private func setupPageViewController() {
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -106,8 +112,8 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
 //            self.searcchBtn.isHidden = index == 0
-            self.createLbl.backgroundColor = index == 0 ? .blue : .white
-            self.reportsLb.backgroundColor = index == 0 ? .white : .blue
+            self.createLbl.backgroundColor = index == 0 ? .blue : .systemGray5
+            self.reportsLb.backgroundColor = index == 0 ? .systemGray5 : .blue
             self.reportsBtn.tintColor = index == 0 ? .black : .blue
             self.createBtn.tintColor = index == 1 ? .black : .blue
         }

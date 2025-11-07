@@ -91,7 +91,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var dropDown = DropDown()
     var  MakeAbsentId: [[String: String]] = []
-    
     var student_List: [AttendanceStudentListDetails]?
     var Filtered_stuent_Listt: [AttendanceStudentListDetails]?
     var searchQuery: String = ""
@@ -180,6 +179,13 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 case .success(let success):
                     
                     if success.status == true {
+                        
+                        if success.data?.first?.is_edit == true{
+                            self.confirmBtn.setTitle("Confirm & Edit Attendance", for: .normal)
+                        }else{
+                            self.confirmBtn.setTitle("Confirm & Submit Attendance", for: .normal)
+                        }
+                        
                         self.student_List = success.data?.first?.attd_details
                         self.Filtered_stuent_Listt = self.student_List
                         self.getAttendanceCounts()

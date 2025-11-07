@@ -67,10 +67,15 @@ class SchoolStrengthVC: UIViewController {
         
         let totalStudent = Int(data.total_student_strength ?? "0") ?? 0
         let totalStaff = Int(data.total_staff_strength ?? "0") ?? 0
-        let total = totalStudent + totalStaff
+        let total = totalStudent + totalStaff + (Int(
+            data.total_others_strength ?? "0"
+        ) ?? 0)
         let totalPreviousYear = Int(previousData?.total_student_strength ?? "0") ?? 0 + (
             Int(previousData?.total_staff_strength ?? "0") ?? 0
         )
+        
+       
+        
         
         
         list
@@ -80,7 +85,10 @@ class SchoolStrengthVC: UIViewController {
                     name: "Total",
                     previousYear: totalPreviousYear,
                     Girl:Int(data.total_staff_strength ?? "0") ?? 0,
-                    boys:  Int(data.total_student_strength ?? "0") ?? 0
+                    boys:  Int(
+                        data.total_student_strength ?? "0"
+                    ) ?? 0,
+                    message: previousData?.message ?? ""
                 )
             )
         
@@ -95,7 +103,8 @@ class SchoolStrengthVC: UIViewController {
                     Girl: Int(data.total_girls_strength ?? "0") ?? 0,
                     boys: Int(
                         data.total_boys_strength ?? "0"
-                    ) ?? 0
+                    ) ?? 0,
+                    message: previousData?.message ?? ""
                 )
             )
         
@@ -112,7 +121,8 @@ class SchoolStrengthVC: UIViewController {
                     ) ?? 0,
                     boys: Int(
                         data.total_male_staffs_strength ?? "0"
-                    ) ?? 0
+                    ) ?? 0,
+                    message: previousData?.message ?? ""
                 )
             )
        
@@ -162,13 +172,14 @@ class SchoolStrengthVC: UIViewController {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
                     self.SchoolStrength = response.data
+                    self.previousData = response.data?.first?.previous
                     if let firstData = response.data?.first {
                         let strengthList = self.createStrengthList(from: firstData)
-                        
-                        // இங்கே உங்க chart / progress update function க்கு pass பண்ணலாம்
                         print("✅ Strength List:", strengthList)
                         self.displayArray = strengthList
                     }
+    
+                    
                     self.selectedIndexPath = nil
                     self.chartSet = false
                     self.totalBoys = response.data?.first?.total_student_strength ?? "0"
@@ -324,4 +335,5 @@ struct StrengthDisplayModel {
     var previousYear: Int
     var Girl : Int
     var boys : Int
+    var message : String
 }

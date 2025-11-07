@@ -225,8 +225,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         SessionDefLbl.text = AttendanceString.session
         ToSessionDefLbl.text = AttendanceString.session
         
-        FromDateBtn.setTitle(AttendanceString.selectFromDate, for: .normal)
-        ToDateBtn.setTitle(AttendanceString.selectToDate, for: .normal)
+        FromDateBtn.setTitle("Select Date", for: .normal)
+        ToDateBtn.setTitle("Select Date", for: .normal)
         FromSessionBtn.setTitle(AttendanceString.firstHalf, for: .normal)
         ToSessionBtn.setTitle(AttendanceString.secondHalf, for: .normal)
         

@@ -137,6 +137,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
                     NodataImage.isHidden = !(allLeaveRecords?.isEmpty ?? false)
                     NodateLbl.isHidden = !(allLeaveRecords?.isEmpty ?? false)
                     searchBtn.isHidden = allLeaveRecords?.isEmpty ?? false
+                    filterBtnStack.isHidden = !(Success.status ?? true)
                     leaveRequestTable.reloadData()
                 }
                 
