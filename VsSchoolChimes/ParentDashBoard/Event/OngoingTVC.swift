@@ -97,21 +97,13 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
 
             // Shadow and border for selected cell
             if isSelected {
-                
                 cell.iconView.setShadow(shadowColor: .blue, shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
-                cell.iconView.layer.borderColor = UIColor.systemBlue
-                    .withAlphaComponent(0.15).cgColor
                 cell.iconView.layer.borderColor = UIColor.systemBlue.cgColor
                 cell.iconView.layer.borderWidth = 2
             } else {
                 cell.iconView.setShadow(shadowOpacity: 0)
-//                cell.iconView.layer.borderColor = UIColor.lightGray.cgColor
-//                cell.iconView.layer.borderWidth = 1
-                
-                cell.iconView.backgroundColor = UIColor(white: 0.98, alpha: 1.0)
-                cell.iconView.layer.borderWidth = 0
-                cell.iconView.layer.borderColor = UIColor.clear.cgColor
-
+                cell.iconView.layer.borderColor = UIColor.lightGray.cgColor
+                cell.iconView.layer.borderWidth = 1
             }
 //            cell.iconheight.constant = categoryItem.url == "" ? 0:50
             cell.titleLbl.font = categoryItem.url == "" ? UIFont.systemFont(ofSize: 14, weight: .medium):UIFont.systemFont(ofSize: 11, weight: .medium)
