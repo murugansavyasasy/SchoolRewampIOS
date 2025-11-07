@@ -111,6 +111,7 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
         vc.noOfQuestion = quiz.no_of_questions ?? 0
         vc.id = quiz.id
+        vc.titleString = quiz.title ?? ""
         vc.subject_Id = quiz.subject_id
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -167,6 +168,7 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
             isTimeNeeded: true)
         cell.subjectLbl.text = quiz.subject
         cell.postedByLbl.text = "Posted By: \(quiz.sent_by ?? "")"
+        cell.levelLbl.text = "Level " + String(quiz.level ?? 0)
         
         return cell
     }

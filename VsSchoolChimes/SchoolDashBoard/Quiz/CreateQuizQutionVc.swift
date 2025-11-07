@@ -14,6 +14,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
             } else {
                 selectedQuestionIds.remove(id)
             }
+           updateSelectAllButtonState()
         }
     
     func addAnotherCell(at indexPath: IndexPath) {
@@ -88,6 +89,7 @@ class CreateQuizQutionVc: UIViewController {
     @IBOutlet weak var CancelBtn: UIButton!
     @IBOutlet weak var sendQuizBtn: UIButton!
     @IBOutlet weak var QuestionNoLbl: UILabel!
+    @IBOutlet weak var TitleLbl: UILabel!
     
     
     let staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -97,6 +99,7 @@ class CreateQuizQutionVc: UIViewController {
     var subject_Id : String?
     var QuestionBankData: [QuestionItem] = []
     var selectedQuestionIds: Set<String> = []
+    var titleString = ""
 
     
     override func viewDidLoad() {
@@ -115,6 +118,8 @@ class CreateQuizQutionVc: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        TitleLbl.text = titleString
         
         tv.register(UINib(nibName: "QuistionTvTableViewCell", bundle: nil),
                 forCellReuseIdentifier: "QuistionTvTableViewCell")
@@ -299,6 +304,7 @@ class CreateQuizQutionVc: UIViewController {
                     if success.status == true {
                         self.QuestionBankData = success.data ?? []
                         self.popupBGview.isHidden = false
+                        self.updateSelectAllButtonState()
                         self.selectedQuestionIds = Set(self.questions.compactMap { $0.id })
                         self.QuestionBankTv.reloadData()
                         
@@ -321,22 +327,22 @@ class CreateQuizQutionVc: UIViewController {
             if q.chapter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 return "Please fill the Chapter for Question \(i + 1)."
             }
-            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.question == "Enter Question Here"{
                 return "Please fill the Question text for Question \(i + 1)."
             }
-            if q.a_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if q.a_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.a_option == "Enter Option A"{
                 return "Please provide Option A for Question \(i + 1)."
             }
-            if q.b_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if q.b_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.b_option == "Enter Option B"{
                 return "Please provide Option B for Question \(i + 1)."
             }
-            if q.c_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if q.c_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.c_option == "Enter Option C"{
                 return "Please provide Option C for Question \(i + 1)."
             }
-            if q.d_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if q.d_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.d_option == "Enter Option D"{
                 return "Please provide Option D for Question \(i + 1)."
             }
-            if q.answer?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            if q.answer == nil || q.answer == "Select correct answer" {
                 return "Please select the correct answer for Question \(i + 1)."
             }
             if q.correct_answer_text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
@@ -361,57 +367,122 @@ class CreateQuizQutionVc: UIViewController {
     
     
     @IBAction func AddImportQuestionAct(_ sender: Any) {
-        
-        if questions.count + selectedQuestionIds.count > noOfQuestion{
-            
-                CustomAlert.showAlertWithOkAction(title: "Limit Reached", message: "You exceeds the maximum no of Questions", on: self)
-            
-                return
+        // ✅ First check if nothing is selected
+        if selectedQuestionIds.isEmpty {
+            CustomAlert.showAlertWithOkAction(
+                title: "No Selection",
+                message: "You didn’t select any questions from the Question Bank.",
+                on: self
+            )
+            return
         }
-        
-            // 1. Remove questions that are no longer selected
-            questions.removeAll { quizQ in
-                guard let id = quizQ.id else { return false }
-                return !selectedQuestionIds.contains(id)
-            }
-            
-            // 2. Add new ones that were selected but not yet in `questions`
-            for id in selectedQuestionIds {
-                if !questions.contains(where: { $0.id == id }),
-                   let bankItem = QuestionBankData.first(where: { $0.id == id }) {
-                    
-                    let newQuizQ = QuizQuestiondata(
-                        id: bankItem.id,
-                        quiz_id: nil,
-                        chapter: bankItem.chapter ?? "",
-                        question: bankItem.question ?? "",
-                        answer: bankItem.answer,
-                        a_option: bankItem.a_option ?? "",
-                        b_option: bankItem.b_option ?? "",
-                        c_option: bankItem.c_option ?? "",
-                        d_option: bankItem.d_option ?? "",
-                        mark: bankItem.mark
-                    )
-                    questions.append(newQuizQ)
 
-                }
-            }
-            
-            // 3. Refresh main table
-            tv.reloadData()
-            
-            // 4. Dismiss popup
-        popupBGview.isHidden = true
-        
-        self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
+        // ✅ Then check the limit
+        if selectedQuestionIds.count > noOfQuestion {
+            CustomAlert.showAlertWithOkAction(
+                title: "Limit Reached",
+                message: "You exceed the maximum number of questions (\(noOfQuestion)).",
+                on: self
+            )
+            return
         }
+
+        // 1. Remove questions that are no longer selected
+        questions.removeAll { quizQ in
+            guard let id = quizQ.id else { return false }
+            return !selectedQuestionIds.contains(id)
+        }
+
+        // 2. Add new ones that were selected but not yet in `questions`
+        for id in selectedQuestionIds {
+            if !questions.contains(where: { $0.id == id }),
+               let bankItem = QuestionBankData.first(where: { $0.id == id }) {
+
+                let answerIndex = Int(bankItem.answer ?? "")
+                var correctText: String? = nil
+                if let idx = answerIndex {
+                    switch idx {
+                    case 1: correctText = bankItem.a_option
+                    case 2: correctText = bankItem.b_option
+                    case 3: correctText = bankItem.c_option
+                    case 4: correctText = bankItem.d_option
+                    default: break
+                    }
+                }
+
+                let newQuizQ = QuizQuestiondata(
+                    id: bankItem.id,
+                    quiz_id: nil,
+                    chapter: bankItem.chapter ?? "",
+                    question: bankItem.question ?? "",
+                    answer: bankItem.answer,
+                    a_option: bankItem.a_option ?? "",
+                    b_option: bankItem.b_option ?? "",
+                    c_option: bankItem.c_option ?? "",
+                    d_option: bankItem.d_option ?? "",
+                    mark: bankItem.mark,
+                    correct_answer_text: correctText
+                )
+                questions.append(newQuizQ)
+            }
+        }
+
+        // 3. Refresh main table
+        tv.reloadData()
+
+        // 4. Dismiss popup
+        popupBGview.isHidden = true
+
+        QuestionNoLbl.text = "Question Limit: \(questions.count)/\(noOfQuestion)"
+    }
+
 
     @IBAction func cancelAct(_ sender: Any) {
         
-        popupBGview.isHidden = true
+            selectedQuestionIds = Set(questions.compactMap { $0.id }) // reset to actual imported
+            popupBGview.isHidden = true
+            QuestionBankTv.reloadData()
+            QuestionNoLbl.text = "Question Limit: \(questions.count)/\(noOfQuestion)"
     }
+    
     @IBAction func selectAllAct(_ sender: Any) {
+        let shouldSelectAll = selectedQuestionIds.count != QuestionBankData.count
+        
+        if shouldSelectAll {
+            // Check limit
+            if questions.count + QuestionBankData.count > noOfQuestion {
+                CustomAlert.showAlertWithOkAction(
+                    title: "Limit Reached",
+                    message: "You cannot select all because it exceeds the maximum number of questions (\(noOfQuestion)).",
+                    on: self
+                )
+                return
+            }
+            selectedQuestionIds = Set(QuestionBankData.compactMap { $0.id })
+            selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        } else {
+            selectedQuestionIds.removeAll()
+            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        }
+        
+        QuestionBankTv.reloadData()
+        QuestionNoLbl.text = "Question Limit: \(questions.count + selectedQuestionIds.count)/\(noOfQuestion)"
+        updateSelectAllButtonState()
     }
+
+    private func updateSelectAllButtonState() {
+        let total = QuestionBankData.count
+        let selected = selectedQuestionIds.count
+        
+        if selected == total && total > 0 {
+            selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        } else {
+            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        }
+        
+        QuestionNoLbl.text = "Question Limit: \(questions.count + selected)/\(noOfQuestion)"
+    }
+
     
 }
 
@@ -453,13 +524,14 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             cell.layoutIfNeeded()
             
             let model = QuestionBankData[indexPath.row]
-            
             cell.indexPath = indexPath
             cell.questionId = model.id
             cell.delegate = self
-            let isChecked = questions.contains { $0.id == model.id }
+
+            // ✅ Use selectedQuestionIds instead of questions
+            let isChecked = selectedQuestionIds.contains(model.id ?? "")
             cell.configureQuestionBankCell(with: model, isChecked: isChecked)
-            
+
             return cell
         }
     }
