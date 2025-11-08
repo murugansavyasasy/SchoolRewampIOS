@@ -50,7 +50,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     var dropdown = DropDown()
     var questionId: String?
     var isChecked = false
-    var options = [ "A", "B", "C", "D"]
+    var options = [ "Option A", "Option B", "Option C", "Option D"]
     var answerIndex: Int?
     
     override func awakeFromNib() {
@@ -83,11 +83,12 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         dropdown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             correctAnsLbl.text = item
-            if let index = indexPath {
-                answerIndex = index.row
-                delegate?.updateQuestion(at: index, model: captureModel())
+            answerIndex = index   // ✅ store option index (0–3)
+            if let indexPath = indexPath {
+                delegate?.updateQuestion(at: indexPath, model: captureModel())
             }
         }
+
     }
     
     func setupUI() {
@@ -149,7 +150,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 setupTextView(opBTxtView, placeholder: "Enter Option B")
                 setupTextView(opCTxtView, placeholder: "Enter Option C")
                 setupTextView(opDTxtView, placeholder: "Enter Option D")
-                setupTextView(questionTxtView, placeholder: "Enter Question")
+                setupTextView(questionTxtView, placeholder: "Enter Question Here")
     }
 
    
@@ -177,7 +178,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 case opBTxtView: textView.text = "Enter Option B"
                 case opCTxtView: textView.text = "Enter Option C"
                 case opDTxtView: textView.text = "Enter Option D"
-                case questionTxtView: textView.text = "Enter Question"
+                case questionTxtView: textView.text = "Enter Question Here"
                 default: break
                 }
             }
@@ -194,14 +195,14 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opBTxtView.text    = model.b_option.isEmpty ? "Enter Option B" : model.b_option
         opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C" : model.c_option
         opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D" : model.d_option
-        questionTxtView.text = model.question.isEmpty ? "Enter Question" : model.question
+        questionTxtView.text = model.question.isEmpty ? "Enter Question Here" : model.question
         if let answerStr = model.answer,
            let answerIndex = Int(answerStr),
            answerIndex > 0,
            answerIndex <= options.count {
             correctAnsLbl.text = options[answerIndex - 1]
         } else {
-            correctAnsLbl.text = "Select"
+            correctAnsLbl.text = "Select correct answer"
         }
 
         
@@ -255,7 +256,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
            answerIndex <= options.count {
             correctAnsLbl.text = options[answerIndex - 1]
         } else {
-            correctAnsLbl.text = "Select"
+            correctAnsLbl.text = "Select correct answer"
         }
 
         
@@ -288,24 +289,53 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     }
 
         
+//    func captureModel() -> QuizQuestiondata {
+//        
+//        let Answer = (answerIndex ?? 0) + 1
+//
+//        let correctAnswerText: String? = {
+//            switch Answer {
+//            case 1: return opATxtView.text
+//            case 2: return opBTxtView.text
+//            case 3: return opCTxtView.text
+//            case 4: return opDTxtView.text
+//            default: return nil
+//            }
+//        }()
+//
+//        return QuizQuestiondata(
+//            chapter: ChapterTxtFld.text ?? "",
+//            question: questionTxtView.text ?? "",
+//            answer: String(Answer),
+//            a_option: opATxtView.text ?? "",
+//            b_option: opBTxtView.text ?? "",
+//            c_option: opCTxtView.text ?? "",
+//            d_option: opDTxtView.text ?? "",
+//            mark: Int(markTxtFild.text ?? ""),
+//            correct_answer_text: correctAnswerText
+//        )
+//
+//    }
+    
     func captureModel() -> QuizQuestiondata {
+        var answerString: String? = nil
+        var correctAnswerText: String? = nil
         
-        let Answer = (answerIndex ?? 0) + 1
-
-        let correctAnswerText: String? = {
-            switch Answer {
-            case 1: return opATxtView.text
-            case 2: return opBTxtView.text
-            case 3: return opCTxtView.text
-            case 4: return opDTxtView.text
-            default: return nil
+        if let idx = answerIndex {
+            answerString = String(idx + 1)
+            switch idx {
+            case 0: correctAnswerText = opATxtView.text
+            case 1: correctAnswerText = opBTxtView.text
+            case 2: correctAnswerText = opCTxtView.text
+            case 3: correctAnswerText = opDTxtView.text
+            default: break
             }
-        }()
-
+        }
+        
         return QuizQuestiondata(
             chapter: ChapterTxtFld.text ?? "",
             question: questionTxtView.text ?? "",
-            answer: String(Answer),
+            answer: answerString,
             a_option: opATxtView.text ?? "",
             b_option: opBTxtView.text ?? "",
             c_option: opCTxtView.text ?? "",
@@ -313,8 +343,8 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             mark: Int(markTxtFild.text ?? ""),
             correct_answer_text: correctAnswerText
         )
-
     }
+
     
     func textViewDidChange(_ textView: UITextView) {
         

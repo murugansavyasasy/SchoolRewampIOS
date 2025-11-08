@@ -13,6 +13,7 @@ enum EventDisplaySection {
     case categories([EventCategory])
     case upcoming([EventList])
     case completed([EventList])
+    case nodata([String])
 }
 
 protocol FilterCatagories {
@@ -38,6 +39,7 @@ class EventResiverVC: UIViewController {
     let transitionDelegate = TransitioningDelegate()
     var allEventSections: [EventDisplaySection] = []
     var filteredSections: [EventDisplaySection] = []
+    var baseSection: [EventDisplaySection] = []
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var clickedMessageId : String?
     var selectedIndex:Int?
@@ -78,7 +80,7 @@ class EventResiverVC: UIViewController {
     
     // MARK: - Setup Methods
     private func setupStudentInfo() {
-       
+        
         let name = studentDetails?.name ?? ""
         let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         
@@ -144,7 +146,7 @@ class EventResiverVC: UIViewController {
                         if !(firstSection.on_going?.isEmpty ?? false) {
                             self.allEventSections.append(.featured(firstSection.on_going ?? []))
                         }
-                       
+                        
                         if !(firstSection.up_coming?.isEmpty ?? false) {
                             self.allEventSections.append(.upcoming(firstSection.up_coming ?? []))
                         }
@@ -184,9 +186,9 @@ class EventResiverVC: UIViewController {
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-
+                
                 guard let self = self else { return }
-
+                
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {
@@ -207,11 +209,22 @@ class EventResiverVC: UIViewController {
     }
     
     @IBAction func search(_ sender: UIButton) {
-        searchbar.becomeFirstResponder()
+        
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         searchStack.isHidden = !sender.isSelected
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        if sender.isSelected {
+            searchbar.becomeFirstResponder()
+        } else {
+            filteredSections = baseSection
+            let hasData = !self.filteredSections.isEmpty
+            self.tableview.reloadData()
+            searchbar.searchTextField.text = ""
+            searchbar?.resignFirstResponder()
+        }
+        
     }
     
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
@@ -296,6 +309,8 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         switch filteredSections[section] {
         case .featured, .categories: return 1
         case .upcoming(let events), .completed(let events): return events.count
+        case .nodata(let nodata):
+            return nodata.count
         }
     }
     
@@ -307,6 +322,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OngoingTVC", for: indexPath) as! OngoingTVC
             cell.config(category: nil, onGoing: events, type: false, index: selectedIndex ?? 0)
             cell.pageController.numberOfPages = events.count
+            cell.pageController.isHidden = events.count <= 1
             cell.endUrl = ""
             return cell
             
@@ -326,7 +342,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             cell.descriptionLbl.text = event.description
             cell.date = event.date
             cell.time = event.time
-//            cell.reminderBtn.isHidden = false
+            //            cell.reminderBtn.isHidden = false
             cell.outerView.backgroundColor = UIColor(hex: "8000FF").withAlphaComponent(0.5)
             loadFiles(into: cell, files: event.file_path ?? [])
             cell.attacmentView.isHidden = event.file_path?.count ==  0
@@ -345,14 +361,47 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
             loadFiles(into: cell, files: event.file_path ?? [])
             cell.attacmentView.isHidden = event.file_path?.count ==  0
             return cell
+        case .nodata(_):
+            return createNoDataCell(tableView)
         }
     }
-    
+    private func createNoDataCell(_ tableView: UITableView) -> UITableViewCell {
+        let noDataCell = UITableViewCell(style: .default, reuseIdentifier: "NoDataCell")
+        noDataCell.selectionStyle = .none
+        noDataCell.backgroundColor = .clear
+        
+        let imageView = UIImageView(image: UIImage(named: "noSearchData"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let label = UILabel()
+        label.text = "No Data Found"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        noDataCell.contentView.addSubview(imageView)
+        noDataCell.contentView.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: noDataCell.contentView.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: noDataCell.contentView.topAnchor, constant: 30),
+            imageView.widthAnchor.constraint(equalToConstant: 150),
+            imageView.heightAnchor.constraint(equalToConstant: 150),
+            
+            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            label.leadingAnchor.constraint(equalTo: noDataCell.contentView.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: noDataCell.contentView.trailingAnchor, constant: -20)
+        ])
+        
+        return noDataCell
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch filteredSections[indexPath.section] {
         case .featured: return 220
         case .categories: return 130
-        case .upcoming, .completed: return UITableView.automaticDimension
+        case .upcoming,.nodata, .completed: return UITableView.automaticDimension
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -398,6 +447,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         case .categories: label.text = "Event Categories"
         case .upcoming: label.text = "Upcoming Events"
         case .completed: label.text = "Completed Events"
+        case .nodata:label.text = ""
         }
         
         headerView.addSubview(label)
@@ -411,7 +461,12 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        switch filteredSections[section] {
+        case .nodata:
+            return 0
+        default:
+            return 40
+        }
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return .leastNormalMagnitude
@@ -425,8 +480,10 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
     func filterCatagories(name: String) {
         if name != "All"{
             self.filteredSections = filterEventListsByTitle(searchText: name)
+            self.baseSection = self.filteredSections
         }else{
             filteredSections = allEventSections
+            self.baseSection = self.filteredSections
             selectedIndex = 0
         }
         
@@ -438,48 +495,73 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
         DispatchQueue.main.async {
+            
             if searchText.isEmpty {
-                self.filteredSections = self.allEventSections
+                self.filteredSections = self.baseSection
                 self.selectedIndex = 0
             } else {
-                self.filteredSections = self.allEventSections.compactMap { section in
+                
+                var hasMatchedData = false
+                var newFilteredSections: [EventDisplaySection] = []
+                for section in self.baseSection {
+                    
                     switch section {
+                        
                     case .featured(let events):
                         let matched = events.filter {
                             $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
                         }
-                        return matched.isEmpty ? nil : .featured(matched)
+                        if !matched.isEmpty {
+                            hasMatchedData = true
+                            newFilteredSections.append(.featured(matched))
+                        }
                         
                     case .categories(let categories):
-                        let matched = categories.filter {
-                            $0.name?.localizedCaseInsensitiveContains(searchText) ?? false
-                        }
-                        return matched.isEmpty ? nil : .categories(matched)
+                        newFilteredSections.append(.categories(categories))
                         
                     case .upcoming(let events):
                         let matched = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                             ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
-                        return matched.isEmpty ? nil : .upcoming(matched)
+                        if !matched.isEmpty {
+                            hasMatchedData = true
+                            newFilteredSections.append(.upcoming(matched))
+                        }
                         
                     case .completed(let events):
                         let matched = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                             ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
-                        return matched.isEmpty ? nil : .completed(matched)
+                        if !matched.isEmpty {
+                            hasMatchedData = true
+                            newFilteredSections.append(.completed(matched))
+                        }
+                        
+                    case .nodata:
+                        continue
                     }
                 }
+                if !hasMatchedData {
+                    newFilteredSections.append(.nodata(["Search Data Not Found"]))
+                }
+                
+                self.filteredSections = newFilteredSections
             }
+            
             self.tableview.reloadData()
         }
     }
+    
+    
     func filterEventListsByTitle(searchText: String) -> [EventDisplaySection] {
         var filteredSections: [EventDisplaySection] = []
         let lowercasedSearchText = searchText.lowercased()
         
+        var hasMatchedData = false
         for section in allEventSections {
             switch section {
             case .featured(let events):
@@ -489,13 +571,13 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                 }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.featured(filteredEvents))
+                    hasMatchedData = true
                 }
                 
             case .categories(let categories):
                 filteredSections.append(.categories(categories))
-                if let index = categories.firstIndex(where: {
-                    $0.name?.lowercased() == lowercasedSearchText
-                }) {
+                
+                if let index = categories.firstIndex(where: { $0.name?.lowercased() == lowercasedSearchText }) {
                     selectedIndex = index
                 } else {
                     selectedIndex = 0
@@ -508,6 +590,7 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                 }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.upcoming(filteredEvents))
+                    hasMatchedData = true
                 }
                 
             case .completed(let events):
@@ -517,11 +600,18 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                 }
                 if !filteredEvents.isEmpty {
                     filteredSections.append(.completed(filteredEvents))
+                    hasMatchedData = true
                 }
+                
+            case .nodata:
+                break
             }
         }
-        
+        if !hasMatchedData {
+            filteredSections.append(.nodata(["nodata"]))
+        }
         return filteredSections
     }
+    
 }
 

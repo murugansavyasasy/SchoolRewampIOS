@@ -158,11 +158,12 @@ class AssignmentReport: UIViewController, SelectedId {
         reportTable.register(UINib(nibName: "AssignmentTVC", bundle: nil), forCellReuseIdentifier: "AssignmentTVC")
         reportTable.delegate = self
         reportTable.dataSource = self
-        
+        searchBar.placeholder = "Search"
+        searchBar.searchTextField.backgroundColor = .red
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
         searchBar.placeholder = "Search"
         searchBar.delegate = self
-        searchBar.layer.borderWidth = 0
-        searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.addDoneButton()
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         backLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")

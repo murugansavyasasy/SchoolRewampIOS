@@ -53,6 +53,7 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
         reminderBtn.layer.cornerRadius = 8
         exportRecordBtn.layer.cornerRadius = 8
         attachmentList = attachments
+        attachmentLbl.isHidden = attachments.count == 0
         attachmentLbl.text = "𓄲 Attachments (\(attachments.count))"
         reloadCollectionAndUpdateHeight()
     }

@@ -97,8 +97,8 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
 
             // Shadow and border for selected cell
             if isSelected {
-                cell.iconView.setShadow(shadowColor: .blue, shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
-                cell.iconView.layer.borderColor = UIColor.systemBlue.cgColor
+                cell.iconView.setShadow(shadowColor: UIColor(hex: "377DF4"), shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
+                cell.iconView.layer.borderColor = UIColor(hex: "377DF4").cgColor
                 cell.iconView.layer.borderWidth = 2
             } else {
                 cell.iconView.setShadow(shadowOpacity: 0)

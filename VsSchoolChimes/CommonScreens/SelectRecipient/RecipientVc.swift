@@ -432,7 +432,7 @@ class RecipientVc: UIViewController{
                         activity = ""
                     }
 
-                    if user_inputs.clearTempData() {
+                    if user_inputs.clearTempData(),activity != "" {
                         let params: [String: Any] = [
                             "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
                             "activity": activity,
