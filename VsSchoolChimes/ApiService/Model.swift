@@ -2037,6 +2037,8 @@ struct QuizListData : Codable{
     let submitted_count : Int?
     let total_mark : String?
     let no_of_levels : String?
+  
+    
     
 }
     
