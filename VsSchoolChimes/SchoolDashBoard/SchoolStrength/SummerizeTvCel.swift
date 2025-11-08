@@ -59,8 +59,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         // MARK: - Common Setup
         let item = dispalyArray[indexPath.row]
         cell.roles.text = item.name
-        cell
-            .updateProgress(
+        cell.updateProgress(
                 absentees: String(item.boys),
                 total: String(item.count)
             )

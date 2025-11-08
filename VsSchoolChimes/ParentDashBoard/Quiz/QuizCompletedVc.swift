@@ -17,13 +17,18 @@ class QuizCompletedVc: UIViewController {
     var quiz_details : [MyQuizDetails]?
     var selected_QuizId : String?
     var childDetails = UserDefaultFileManager.get_child_Details()
+    var correct_ans : String = ""
+    var worng_ans : String = ""
+    var not_ans: String = ""
+    var subjet_name : String = ""
+    var completed_date : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
-        menuNameLbl.text = MenuStringFile.selectedMenuName
+        menuNameLbl.text =  MenuStringFile.selectedMenuName + " Submission"
 
         tv.register(UINib(nibName: "QuizCompletedFirstTv", bundle: nil), forCellReuseIdentifier: "QuizCompletedFirstTv")
 //        
@@ -53,14 +58,55 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
             
                 // ✅ First cell: Summary
                 let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCompletedFirstTv", for: indexPath) as! QuizCompletedFirstTv
-            cell.setProgress(to: 50.0)
-//            cell.subjectQuiz.text =
-//                let studentData = apiResponse // your parsed model
-//                cell.studentIdLabel.text = studentData.student_id
-//                cell.rightAnswerLabel.text = studentData.right_answer
-//                cell.wrongAnswerLabel.text = studentData.wrong_answer
-//                cell.unAnswerLabel.text = studentData.un_answer
-                
+            cell.subjectQuiz.text = subjet_name
+            cell.completedAtLbl.text = "Completed at: " + formattedDateStatus(from: completed_date, isTimeNeeded: true)
+            let parts = correct_ans.split(separator: "/")
+                   if parts.count == 2,
+                      let correct = Double(parts[0]),
+                      let total = Double(parts[1]),
+                      total > 0 {
+
+                       let percentage = (correct / total) * 100.0
+                       cell.setProgress(to: percentage)  // 🟢 use your PieChart function
+                   } else {
+                       cell.setProgress(to: 0.0)
+                   }
+            
+              
+            // Example for "notAnsBtn"
+            cell.notAnsBtn.setImage(UIImage(systemName: "questionmark"), for: .normal)
+            cell.notAnsBtn.setTitle("Not Ans " + not_ans, for: .normal)
+            cell.notAnsBtn.titleLabel?.numberOfLines = 2
+            cell.notAnsBtn.titleLabel?.lineBreakMode = .byWordWrapping
+
+            cell.wrongBtn.titleLabel?.numberOfLines = 2
+            cell.wrongBtn.titleLabel?.lineBreakMode = .byWordWrapping
+            cell.crtBtn.titleLabel?.numberOfLines = 2
+            cell.crtBtn.titleLabel?.lineBreakMode = .byWordWrapping
+
+            cell.wrongBtn.setTitleFont(style: .primary, size: 10)
+            cell.notAnsBtn.setTitleFont(style: .primary, size: 10)
+            cell.crtBtn.setTitleFont(style: .primary, size: 10)
+            // Add spacing between image and text
+            cell.notAnsBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
+            cell.notAnsBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+
+            // Optional styling
+            cell.notAnsBtn.tintColor = .orange
+            cell.notAnsBtn.setTitleColor(.orange, for: .normal)
+
+            cell.crtBtn
+                .setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+            cell.crtBtn.setTitle("Correct Ans " + correct_ans, for: .normal)
+            cell.crtBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
+            cell.crtBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+
+            cell.wrongBtn.setImage(UIImage(systemName: "multiply.circle"), for: .normal)
+            cell.wrongBtn.setTitle("Wrong Ans " + worng_ans, for: .normal)
+            cell.wrongBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
+            cell.wrongBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+
+            
                 return cell
             } else {
                 // ✅ Remaining cells: Quiz details
@@ -142,7 +188,7 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 320
+            return 330
         }else{
             return UITableView.automaticDimension
         }
@@ -165,6 +211,9 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                    
                     if successResponse.status == true{
                         
+                        self.correct_ans = successResponse.data?.first?.right_answer ?? ""
+                        self.worng_ans = successResponse.data?.first?.wrong_answer ?? ""
+                        self.not_ans = successResponse.data?.first?.un_answer ?? ""
                         self.get_QuizDetails = successResponse.data ?? []
                         self.quiz_details = successResponse.data?.first?.quiz_details ?? []
                         self.tv.reloadData()

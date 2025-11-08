@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -152,11 +152,33 @@
                                     <constraint firstItem="jgW-Im-RnA" firstAttribute="top" secondItem="d9j-65-dmb" secondAttribute="bottom" constant="5" id="z2F-Bf-5N2"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iyO-el-ziO">
+                                <rect key="frame" x="213" y="0.0" width="75" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Khc-41-1HU">
+                                        <rect key="frame" x="5" y="5" width="65" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="BackGroundClr"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Khc-41-1HU" secondAttribute="trailing" constant="5" id="5dV-15-PZJ"/>
+                                    <constraint firstAttribute="height" constant="30" id="KRp-Fq-5hD"/>
+                                    <constraint firstItem="Khc-41-1HU" firstAttribute="top" secondItem="iyO-el-ziO" secondAttribute="top" constant="5" id="RUc-Ao-U15"/>
+                                    <constraint firstAttribute="bottom" secondItem="Khc-41-1HU" secondAttribute="bottom" constant="5" id="VY4-4A-kC8"/>
+                                    <constraint firstAttribute="width" constant="75" id="WA1-hF-6WL"/>
+                                    <constraint firstItem="Khc-41-1HU" firstAttribute="leading" secondItem="iyO-el-ziO" secondAttribute="leading" constant="5" id="v8l-ht-80G"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="JTI-SF-yco" firstAttribute="leading" secondItem="YYd-ft-7iG" secondAttribute="leading" constant="5" id="9Se-XL-hOe"/>
                             <constraint firstItem="JTI-SF-yco" firstAttribute="top" secondItem="YYd-ft-7iG" secondAttribute="top" constant="5" id="CPz-Ji-c3c"/>
+                            <constraint firstItem="iyO-el-ziO" firstAttribute="top" secondItem="YYd-ft-7iG" secondAttribute="top" id="Tee-ws-7v1"/>
+                            <constraint firstAttribute="trailing" secondItem="iyO-el-ziO" secondAttribute="trailing" id="VbU-XG-Zqd"/>
                             <constraint firstAttribute="trailing" secondItem="JTI-SF-yco" secondAttribute="trailing" constant="5" id="Wwy-Yx-8Tk"/>
                             <constraint firstAttribute="bottom" secondItem="JTI-SF-yco" secondAttribute="bottom" constant="5" id="ava-zH-87Q"/>
                         </constraints>
@@ -175,10 +197,12 @@
                 <outlet property="CellView" destination="YYd-ft-7iG" id="S7r-3W-5UZ"/>
                 <outlet property="DeafultimageView" destination="PVt-vf-ryn" id="3OX-U1-7LX"/>
                 <outlet property="EndTimeLbl" destination="uuK-By-aI3" id="hdt-E6-eSA"/>
+                <outlet property="LevelView" destination="iyO-el-ziO" id="KO1-RM-JXe"/>
                 <outlet property="PlayBtn" destination="oCi-eC-PnL" id="WPG-vf-ThW"/>
                 <outlet property="addQuestionBtnName" destination="NZb-YY-mAr" id="HUL-cD-bkN"/>
                 <outlet property="discretiponsLbl" destination="R0Y-KB-GYS" id="EHJ-Wh-cNG"/>
                 <outlet property="exameDateLbl" destination="w1d-2C-ICZ" id="d5m-Xg-t3h"/>
+                <outlet property="levelLbl" destination="Khc-41-1HU" id="Vb9-97-CPE"/>
                 <outlet property="postedByLbl" destination="FUI-rt-sn3" id="ds5-y0-JHq"/>
                 <outlet property="strtTimeLbl" destination="v98-nk-f4o" id="Cck-w2-w1b"/>
                 <outlet property="subjectLbl" destination="NJm-Op-J5b" id="qKF-Mz-bw1"/>
@@ -191,6 +215,9 @@
     <resources>
         <image name="Quiz1" width="2048" height="2048"/>
         <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="pending">
             <color red="0.94900000095367432" green="0.57599997520446777" blue="0.22400000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

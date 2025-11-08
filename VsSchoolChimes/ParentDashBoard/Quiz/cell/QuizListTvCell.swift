@@ -25,6 +25,11 @@ class QuizListTvCell: UITableViewCell {
     @IBOutlet weak var DeafultimageView: UIImageView!
     @IBOutlet weak var CellView: UIView!
     @IBOutlet weak var PlayBtn: UIButton!
+    @IBOutlet weak var LevelView: UIView!
+    @IBOutlet weak var levelLbl: UILabel!
+    
+    
+    
     var delegate : addQuestionAndSubmitedListDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +37,12 @@ class QuizListTvCell: UITableViewCell {
         DeafultimageView.layer.cornerRadius = 10
         addQuestionBtnName.layer.cornerRadius = 10
         submittedListBtnName.layer.cornerRadius = 10
+        LevelView.layer.cornerRadius = 15
+        LevelView.layer.maskedCorners = [.layerMinXMaxYCorner]
+        LevelView.clipsToBounds = true
+        LevelView.layer.masksToBounds = true
+        CellView.clipsToBounds = true
+        
     }
 
     @IBAction func addQestBtn(_ sender: UIButton) {

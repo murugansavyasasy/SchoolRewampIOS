@@ -47,12 +47,9 @@ class QuizVC: UIViewController {
        
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
-        
         CellRegister()
-        
         tv.delegate = self
         tv.dataSource = self
-//        tv.reloadData()
         Get_Quiz()
 
     }
@@ -231,11 +228,10 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         cell.LevelLbl.text = String(get_QuizDetails[indexPath.row].level ?? 0)
         cell.MaxmarkLbl.text = String(get_QuizDetails[indexPath.row].max_mark ?? 0)
         cell.NoOfQuestionLbl.text = String(get_QuizDetails[indexPath.row].no_of_questions ?? 0)
-        cell.createdDateLbl.text = get_QuizDetails[indexPath.row].created_on?.convertToTargetDateFormat()
-        cell.PostByLbl.text = get_QuizDetails[indexPath.row].SentBy
-//            cell.postedByLbl.text = ("Posted By:") + (
-//                get_QuizDetails[indexPath.row].SentBy ?? ""
-//            )
+        cell.createdDateLbl.text = "Created on " + formattedDateStatus(from: get_QuizDetails[indexPath.row].created_on ?? "", isTimeNeeded: true)
+        cell.PostByLbl.text = "Posted By: " + (
+            get_QuizDetails[indexPath.row].SentBy ?? ""
+        )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
         cell.playBtn.setImage(imgae, for: .normal)
         let title = stausType == "1" ? "Play Now" : ""
@@ -251,6 +247,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         didSelectRowAt indexPath: IndexPath
     ) {
         
+        
         if stausType == "1"{
             
             let vc = PlayQuizVc(nibName: nil, bundle: nil)
@@ -261,6 +258,9 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
             
             let vc = QuizCompletedVc(nibName: nil, bundle: nil)
 //            vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
+            vc.subjet_name = self.get_QuizDetails[indexPath.row].subject ?? ""
+            vc.completed_date = self
+                .get_QuizDetails[indexPath.row].submitted_on ?? ""
             vc.selected_QuizId = self.get_QuizDetails[indexPath.row].quiz_id
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)

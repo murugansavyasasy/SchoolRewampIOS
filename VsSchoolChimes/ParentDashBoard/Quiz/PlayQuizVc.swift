@@ -9,6 +9,11 @@ import UIKit
 
 class PlayQuizVc: UIViewController {
     
+    @IBOutlet weak var progressQuizStac: UIStackView!
+    @IBOutlet weak var contentStack: UIStackView!
+    @IBOutlet weak var noRecordStack: UIStackView!
+    @IBOutlet weak var noImagefoundImg: UIImageView!
+    @IBOutlet weak var noDataFoundLbl: UILabel!
     @IBOutlet weak var pageControls: UIPageControl!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var fullView: UIView!
@@ -27,18 +32,18 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var Button3: UIButton!
     @IBOutlet weak var Button4: UIButton!
     @IBOutlet weak var NextBtn: UIButton!
-    @IBOutlet weak var CompletedView: UIView!
-    @IBOutlet weak var ContinueBtn: UIButton!
-    @IBOutlet weak var CompletedImg: UIImageView!
-    @IBOutlet weak var CompletedLbl: UILabel!
-    @IBOutlet weak var CompTotalQuestionDefLbl: UILabel!
-    @IBOutlet weak var CompTotalQuestionNoLbl: UILabel!
-    @IBOutlet weak var CompCorretAnsDefLbl: UILabel!
-    @IBOutlet weak var CompCorrectAnsCountLbl: UILabel!
-    @IBOutlet weak var CompInccorectCountLbl: UILabel!
-    @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
-    @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
-    @IBOutlet weak var CompTotalmarkLbl: UILabel!
+//    @IBOutlet weak var CompletedView: UIView!
+//    @IBOutlet weak var ContinueBtn: UIButton!
+//    @IBOutlet weak var CompletedImg: UIImageView!
+//    @IBOutlet weak var CompletedLbl: UILabel!
+//    @IBOutlet weak var CompTotalQuestionDefLbl: UILabel!
+//    @IBOutlet weak var CompTotalQuestionNoLbl: UILabel!
+//    @IBOutlet weak var CompCorretAnsDefLbl: UILabel!
+//    @IBOutlet weak var CompCorrectAnsCountLbl: UILabel!
+//    @IBOutlet weak var CompInccorectCountLbl: UILabel!
+//    @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
+//    @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
+//    @IBOutlet weak var CompTotalmarkLbl: UILabel!
     var answeredOptions: [String: Int] = [:]
     var currentQuestionIndex = 0
     var buttons: [UIButton] = []
@@ -56,7 +61,7 @@ class PlayQuizVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Get_QuizQuestion()
-        CompletedView.isHidden = true
+//        CompletedView.isHidden = true
         fullView.layer.cornerRadius = 10
         buttons = [Button1,Button2,Button3,Button4]
         
@@ -77,10 +82,10 @@ class PlayQuizVc: UIViewController {
         
         StyleAndTranslate()
     }
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
-    
+//    override func viewDidLayoutSubviews() {
+//        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+//    }
+//    
     //To Set Font to the Option Buttons
     func applyCustomFontToButtons() {
         guard let customFont = UIFont(name: "Poppins-Medium", size: 14) else {
@@ -127,11 +132,16 @@ class PlayQuizVc: UIViewController {
                             repeating: nil,
                             count: self.getQuestiondataDetails.count
                         )
+                        self.progressQuizStac.isHidden = false
+                        self.contentStack.isHidden = false
+                        self.noRecordStack.isHidden = true
                         self.loadQuestion()
                     }else{
-                        
+                        self.progressQuizStac.isHidden = true
+                        self.contentStack.isHidden = true
+                        self.noRecordStack.isHidden = false
+                        self.noDataFoundLbl.text = successResponse.message ?? ""
                     }
-                    
                     
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
@@ -147,9 +157,9 @@ class PlayQuizVc: UIViewController {
         PreviousBtn.layer.cornerRadius = 10
         PreviousBtn.backgroundColor = .lightGray
         QuestionView.layer.cornerRadius = 10
-        CompletedView.layer.cornerRadius = 10
-        ContinueBtn.layer.cornerRadius = 10
-        CompletedImg.image = gifImages
+//        CompletedView.layer.cornerRadius = 10
+//        ContinueBtn.layer.cornerRadius = 10
+//        CompletedImg.image = gifImages
         Button1.layer.cornerRadius = 15
         Button2.layer.cornerRadius = 15
         Button3.layer.cornerRadius = 15
@@ -160,16 +170,16 @@ class PlayQuizVc: UIViewController {
 //        QuestionCountLbl.setFont(style: .title, size: FontSize.TitleSize)
         NextBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         PreviousBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        CompletedLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        CompTotalmarkLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompTotalMarkDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompTotalQuestionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompTotalQuestionNoLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompCorrectAnsCountLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompInCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-        CompInccorectCountLbl.setFont(style: .title, size: FontSize.TitleSize)
-        ContinueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+//        CompletedLbl.setFont(style: .header, size: FontSize.HeaderSize)
+//        CompTotalmarkLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompTotalMarkDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompTotalQuestionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompTotalQuestionNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompCorrectAnsCountLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompInCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        CompInccorectCountLbl.setFont(style: .title, size: FontSize.TitleSize)
+//        ContinueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }
     
     func loadQuestion() {

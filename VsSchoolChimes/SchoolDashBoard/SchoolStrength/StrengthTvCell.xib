@@ -169,6 +169,7 @@
                 <outlet property="countLbl" destination="cx6-id-w6f" id="Kbf-yc-0wr"/>
                 <outlet property="femaleImgView" destination="vJD-GI-9Ys" id="YeG-GA-ezK"/>
                 <outlet property="girlsCountLbl" destination="cQt-95-QUx" id="DQA-Im-Ebk"/>
+                <outlet property="maleImageView" destination="fwt-Ns-TN1" id="WfS-98-mwI"/>
                 <outlet property="progressView" destination="lxM-eg-HLr" id="pZe-kO-Ts0"/>
                 <outlet property="sectionCollertionView" destination="GMt-WI-yQo" id="NHu-rO-qLp"/>
                 <outlet property="standardFullview" destination="rsJ-fB-8Ge" id="TM2-mE-OY4"/>
