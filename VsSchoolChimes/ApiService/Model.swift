@@ -2677,7 +2677,18 @@ struct UpdateItem: Codable {
     let video_link: String?
     let downloadable_image: String?
 }
+struct IntroResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [IntroFeature]?
+}
 
+struct IntroFeature: Codable {
+    let id: String?
+    let title: String?
+    let description: String?
+    let file_path: [FilePath]?
+}
 struct AttendanceStudentListResponse: Codable {
     let status: Bool?
     let message: String?

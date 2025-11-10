@@ -113,6 +113,7 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @IBAction  func GotoTermsVc(){
         let vc = TermsAndCondVC(nibName: nil, bundle: nil)
+        vc.tittleString = "Terms & Conditions"
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         

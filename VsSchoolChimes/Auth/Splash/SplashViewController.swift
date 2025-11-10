@@ -597,21 +597,36 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func proceedWithAppFlow() {
-        if let countryDetails = UserDefaultFileManager.getCountryDetails() {
-            countryId = countryDetails.id
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) { [weak self] in
-            guard let self else { return }
-            if self.countryId != nil {
-                self.checkBiometricStatus()
-            } else {
-                let vc = CountryListVC()
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+
+        let hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "Onboarding")
+
+        if hasCompletedOnboarding {
+
+            if let countryDetails = UserDefaultFileManager.getCountryDetails() {
+                countryId = countryDetails.id
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) { [weak self] in
+                guard let self else { return }
+
+                if self.countryId != nil {
+                    self.checkBiometricStatus()
+                } else {
+                    let vc = CountryListVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+            }
+
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
+                let vc = OnboardingVC()
+                vc.modalPresentationStyle = .overFullScreen
+                self?.present(vc, animated: true)
             }
         }
     }
+
     
     // MARK: - App Store Link
     func callAppStore(appStoreLink: String) {

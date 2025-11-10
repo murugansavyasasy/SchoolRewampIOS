@@ -380,13 +380,11 @@ struct OTPScreenStringFile{
 }
 struct RatingCellStringFile{
     
-    static let Bad =  "Bad".translated()
-    static let Not_bad =  "Not bad".translated()
-    static let Better =  "Better".translated()
-    static let Nice =  "Nice".translated()
-    static let Well_done =  "Well done".translated()
-    static let Excellent =  "Excellent".translated()
-    static let Good =  "Good".translated()
+    static let Bad =  "Unsatisfactory".translated()
+    static let Not_bad =  "Needs Improvement".translated()
+    static let Better =  "Fair Experience".translated()
+    static let Nice =  "Very Good".translated()
+    static let Good =  "Outstanding".translated()
     
 }
 struct PiechartCvcellStringFile{

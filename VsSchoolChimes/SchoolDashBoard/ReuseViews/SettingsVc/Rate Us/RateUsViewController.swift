@@ -1,104 +1,149 @@
-
-//  RateUs_ViewController.swift
+//
+//  RateUsViewController.swift
 //  VoiceSnap
 //
 //  Created by Chandhru veeramalai on 05/11/24.
 //
 
 import UIKit
-protocol RatingDelegate{
-    func rating(_ ratingcount:Int)
-    func Submit(_ category:Set<String>,suggessions:String)
+
+protocol RatingDelegate: AnyObject {
+    func rating(_ ratingcount: Int)
+    func Submit(_ category: Set<String>, suggessions: String)
 }
-class RateUsViewController: UIViewController{
+
+class RateUsViewController: UIViewController {
     
-    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tableview: UITableView!
-    var isSelected:Bool = false
+    
+    var isSelected: Bool = false
     var passValue = 1
+    private var popoverOverlayView: UIView?
+    weak var delegate: ViewAttachments?
+    var submit :Bool?
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
-        
-        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
-        UiUpdate()
-        
+        setupUI()
     }
+    
     override func viewDidLayoutSubviews() {
-        if passValue == 1{
-            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }else{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        super.viewDidLayoutSubviews()
+        
+        if passValue == 1 {
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1],
+                               startPoint: CGPoint(x: 1, y: 0.5),
+                               endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1],
+                                    startPoint: CGPoint(x: 1, y: 0.5),
+                                    endPoint: CGPoint(x: 0, y: 0.5))
+        } else {
+            view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                               startPoint: CGPoint(x: 1, y: 0.5),
+                               endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                                    startPoint: CGPoint(x: 1, y: 0.5),
+                                    endPoint: CGPoint(x: 0, y: 0.5))
         }
     }
-    func UiUpdate(){
+    
+    private func setupUI() {
         tableview.register(UINib(nibName: CellConfingName.BanerTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.BanerTableViewCell)
         tableview.register(UINib(nibName: CellConfingName.RatingTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.RatingTableViewCell)
         tableview.register(UINib(nibName: CellConfingName.RatingTypeTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.RatingTypeTableViewCell)
-    }
-    
-    //MARK: BackButton Action
-    @IBAction func backBtn(_ sender: Any) {
+        tableview.register(UINib(nibName: CellConfingName.SuccesseRatusTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SuccesseRatusTVC)
         
-        dismiss(animated: true)
+        tableview.delegate = self
+        tableview.dataSource = self
         
+        tableview.rowHeight = UITableView.automaticDimension
+        tableview.estimatedRowHeight = 100
     }
-    
 }
 
-extension RateUsViewController:UITableViewDelegate,UITableViewDataSource, RatingDelegate {
-    func Submit(_ category:Set<String>,suggessions:String) {
-        print(category)
-        let vc = SubmitRatingViewController(nibName:nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+// MARK: - RatingCellDelegate (Maybe later button)
+extension RateUsViewController: RatingCellDelegate {
+    func didTapLaterButton() {
+        self.dismiss(animated: true)
+        delegate?.dismiss(true)
+    }
+}
+
+// MARK: - UITableView
+extension RateUsViewController: UITableViewDelegate, UITableViewDataSource, RatingDelegate {
+    
+    // User gives rating
+    func rating(_ ratingcount: Int) {
+        print("Rating Selected: \(ratingcount)")
+        
+        let shouldShowSection3 = ratingcount > 0
+        let previousValue = isSelected
+        isSelected = shouldShowSection3
+        
+        tableview.beginUpdates()
+        if previousValue == false && shouldShowSection3 == true {
+            tableview.insertSections(IndexSet(integer: 2), with: .fade)
+        }else if previousValue == true && shouldShowSection3 == false {
+            tableview.deleteSections(IndexSet(integer: 2), with: .fade)
+        }
+        
+        tableview.endUpdates()
+        delegate?.viewAttachment(sender: UIButton())
     }
     
-    func rating(_ ratingcount: Int) {
-        print(ratingcount)
-        isSelected = ratingcount != 0 ? true : false
-        
+    
+    // Submit button tap from last cell
+    func Submit(_ category: Set<String>, suggessions: String) {
+        print(category)
+        submit = true
+        isSelected = false
         tableview.reloadData()
+        
+        delegate?.viewAttachment(sender: UIButton())
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) {
+            self.dismiss(animated: true)
+            self.delegate?.dismiss(true)
+        }
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        if submit ?? false{
+            return 1
+        }else{
+            return isSelected ? 3 : 2
+        }
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0{
-            let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.BanerTableViewCell, for: indexPath) as! BanerTableViewCell
-            return cell
-        }else if indexPath.section == 1{
-            let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTableViewCell, for: indexPath) as! RatingTableViewCell
-            cell.RatingDelegate = self
-            return cell
+        if submit ?? false{
+            return tableview.dequeueReusableCell(withIdentifier: CellConfingName.SuccesseRatusTVC, for: indexPath)
+            
         }else{
-            let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTypeTableViewCell, for: indexPath) as! RatingTypeTableViewCell
-            cell.ratingDelegate = self
-            return cell
+            
+            switch indexPath.section {
+                
+            case 0:
+                return tableview.dequeueReusableCell(withIdentifier: CellConfingName.BanerTableViewCell, for: indexPath)
+                
+            case 1:
+                let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTableViewCell, for: indexPath) as! RatingTableViewCell
+                cell.RatingDelegate = self
+                cell.delegate = self
+                return cell
+                
+            case 2:
+                let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTypeTableViewCell, for: indexPath) as! RatingTypeTableViewCell
+                cell.ratingDelegate = self
+                return cell
+                
+            default:
+                return UITableViewCell()
+            }
         }
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0{
-            return isSelected == false ? 200 : 0
-        }else if indexPath.section == 1{
-            return UITableView.automaticDimension
-        }else{
-            return isSelected == true ? UITableView.automaticDimension : 0
-        }
-        
-    }
-    
-    
 }
