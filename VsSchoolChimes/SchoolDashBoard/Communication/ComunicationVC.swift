@@ -15,7 +15,7 @@ extension ComunicationVC: UIPopoverPresentationControllerDelegate {
         return .none // Ensures popover on iPhone
     }
 }
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate, HistoryFinishPalyingDelegate,UITextFieldDelegate{
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, ForwordDelegate, HistoryFinishPalyingDelegate{
     
     func voiceforword(selectedIndex: Int?) {
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
@@ -81,6 +81,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
     let alert = CustomAlert()
+    var activeField: UIView?
     
     @IBOutlet weak var textMsgVoiceCountLbl: UILabel!
     @IBOutlet weak var voiceTileTextFldCount: UILabel!
@@ -203,6 +204,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         setInitialButtonTitles()
         StyleAndTranslater()
        
+        [voiceTitleeTxt, TxtTitle, TextMsgTittle].forEach {$0?.delegate = self}
+        informationcontent.delegate = self
         
         if emengencyCall.isOn{
             isEmergencyVoice = true
@@ -568,23 +571,31 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         informationcontent.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !informationcontent.text.isEmpty // Hide if text exists
     }
+   
     @objc func keyboardWillShow(_ notification: Notification) {
-        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            isKeyboardVisible = true
-            UIView.animate(withDuration: 0.3) {
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
-            }
-        }
-    }
+           guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+           guard let activeField = activeField else { return }
+           
+           let keyboardTop = view.frame.height - keyboardFrame.height
+           let activeFieldBottom = activeField.convert(activeField.bounds, to: view).maxY
+           
+           // Move only if the field is hidden by the keyboard
+           if activeFieldBottom > keyboardTop {
+               let offset = activeFieldBottom - keyboardTop + 16 // 16pt padding
+               UIView.animate(withDuration: 0.3) {
+                   self.view.transform = CGAffineTransform(translationX: 0, y: -offset)
+               }
+               isKeyboardVisible = true
+           }
+       }
+
+       @objc func keyboardWillHide(_ notification: Notification) {
+           UIView.animate(withDuration: 0.3) {
+               self.view.transform = .identity
+           }
+           isKeyboardVisible = false
+       }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
-        guard isKeyboardVisible else { return }
-        isKeyboardVisible = false
-        UIView.animate(withDuration: 0.3) {
-            self.outerView.transform = .identity // Reset position
-        }
-    }
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty
     }
@@ -1756,6 +1767,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 tableView.endUpdates()
             }
             
+            cell.descriptiontext = TextHistory?[indexPath.row].content ?? ""
             cell.MessageTitle.text = TextHistory?[indexPath.row].title
             cell.delegate = self
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
@@ -2102,5 +2114,23 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension ComunicationVC: UITextFieldDelegate, UITextViewDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        activeField = textView
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeField = nil
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        activeField = nil
     }
 }

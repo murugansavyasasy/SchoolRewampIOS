@@ -543,7 +543,6 @@ struct AttendanceString{
     static let awaiting = "Awaiting".translated()
     static let generateOutpass = "Generate Outpass".translated()
     static let absent = "Absent".translated()
-    static let noHolidaysFor = "No Holidays for".translated()
     static let holidaysFor = "Holidays for".translated()
     static let LeaveHistory = "Leave History".translated()
     static let notTaken = "Not Taken".translated()

@@ -351,7 +351,7 @@ class ReciverAttendanceReportVC: UIViewController {
         setProgress(
             on: LeaveTakenview,
             value: absentDays,
-            total: 30,
+            total: totalDays,
             unit: "",
             fillColor: .backGroundClr,
             labelColor: .backGroundClr
