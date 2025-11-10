@@ -8,43 +8,69 @@
 import UIKit
 
 class PopoverViewVC: UIViewController {
-    
     @IBOutlet weak var overallStack: UIStackView!
-    
-    enum PopoverType {
-        case badge   // P, A, OD, LA, -
-        case symbol  // SF Symbols like checkmark.circle
-    }
-    
-    // Store the configuration data
+
+    enum PopoverType { case badge, symbol }
+
     private var configData: [(symbol: String, title: String, color: UIColor)]?
     private var configType: PopoverType?
-    
+
+    var itemCount: Int { configData?.count ?? 0 }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.cornerRadius = 14
         view.clipsToBounds = true
         
-        // Configure if data was set
         if let data = configData, let type = configType {
             setupButtons(with: data, type: type)
         }
     }
-    
-    // Public method to set configuration before view loads
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Force layout pass
+        view.layoutIfNeeded()
+        
+        // Measure actual height the stack wants
+        let targetWidth = view.bounds.width
+        let fittingSize = overallStack.systemLayoutSizeFitting(
+            CGSize(width: 250, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+        
+        // Add small padding, and cap at max height
+        let maxHeight: CGFloat = 400
+        let finalHeight = min(fittingSize.height + 16, maxHeight)
+        
+        // Update popover size *after* layout
+        if preferredContentSize.height != finalHeight {
+            preferredContentSize = CGSize(width: targetWidth, height: finalHeight)
+            
+            // 🔥 Force the popover controller to refresh layout
+            if let popover = presentationController?.presentedView {
+                popover.setNeedsLayout()
+                popover.layoutIfNeeded()
+            }
+        }
+        
+        print("✅ Stack calculated height:", fittingSize.height)
+    }
+
+
+
     func configureButtons(with data: [(symbol: String, title: String, color: UIColor)], type: PopoverType) {
         self.configData = data
         self.configType = type
         
-        // If view is already loaded, configure immediately
         if isViewLoaded {
             setupButtons(with: data, type: type)
         }
     }
-    
-    // Private method that does the actual setup
+
     private func setupButtons(with data: [(symbol: String, title: String, color: UIColor)], type: PopoverType) {
-        // Clear existing
         overallStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for item in data {
@@ -52,12 +78,12 @@ class PopoverViewVC: UIViewController {
             hStack.axis = .horizontal
             hStack.alignment = .center
             hStack.spacing = 10
+            
             let iconView = UIView()
             iconView.translatesAutoresizingMaskIntoConstraints = false
-            
+
             switch type {
             case .badge:
-                // Rounded text badge style
                 let label = UILabel()
                 label.text = item.symbol
                 label.textAlignment = .center
@@ -67,9 +93,7 @@ class PopoverViewVC: UIViewController {
                 label.layer.cornerRadius = 8
                 label.clipsToBounds = true
                 label.translatesAutoresizingMaskIntoConstraints = false
-                
                 iconView.addSubview(label)
-                
                 NSLayoutConstraint.activate([
                     label.leadingAnchor.constraint(equalTo: iconView.leadingAnchor),
                     label.trailingAnchor.constraint(equalTo: iconView.trailingAnchor),
@@ -78,18 +102,22 @@ class PopoverViewVC: UIViewController {
                     iconView.widthAnchor.constraint(equalToConstant: 32),
                     iconView.heightAnchor.constraint(equalToConstant: 24)
                 ])
-                
+
             case .symbol:
-                // SF Symbol style
                 let imageView = UIImageView()
                 let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
-                imageView.image = UIImage(systemName: item.symbol, withConfiguration: config)
-                imageView.tintColor = item.color
+                
+                if let systemImage = UIImage(systemName: item.symbol, withConfiguration: config) {
+                    imageView.image = systemImage
+                    imageView.tintColor = item.color
+                } else if let assetImage = UIImage(named: item.symbol) {
+                    imageView.image = assetImage
+                    imageView.tintColor = nil
+                }
+                
                 imageView.contentMode = .scaleAspectFit
                 imageView.translatesAutoresizingMaskIntoConstraints = false
-                
                 iconView.addSubview(imageView)
-                
                 NSLayoutConstraint.activate([
                     imageView.centerXAnchor.constraint(equalTo: iconView.centerXAnchor),
                     imageView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor),

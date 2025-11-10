@@ -26,6 +26,8 @@ class CoupenCvCell: UICollectionViewCell {
         brandImg.layer.cornerRadius = 12
         backgroundImageView.layer.masksToBounds = true
         brandImg.layer.masksToBounds = true
+        brandImg.layer.borderWidth = 1
+        brandImg.layer.borderColor = UIColor.systemGray5.cgColor
         groupImg.layer.masksToBounds = true
         groupImg.layer.cornerRadius = groupImg.frame.width/2
         // Allow multiline labels

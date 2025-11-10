@@ -447,12 +447,25 @@ class ReciverAttendanceReportVC: UIViewController {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
             
             popoverVC.configureButtons(with: [
-                ("circle", "Not Taken", .systemRed),
-                ("checkmark.circle.fill", "Present", .systemGreen),
-                ("circle.lefthalf.filled", "First Half", .systemBlue),
-                ("circle.righthalf.filled", "Second Half", .systemBlue),
+                ("minus.circle.fill", "Not Taken", .systemRed),
+                ("checkmark.circle.fill", "Present", .systemBlue),
                 ("a.circle.fill", "Absent", .systemRed),
-                ("h.circle.fill", "Holiday", .systemPink)
+                ("Late", "Late Comer", .systemPink),
+                ("Od", "OD", .systemOrange),
+                ("present_absent", "FN Present - AN Absent", .systemBlue),
+                ("present_late", "FN Present - AN Late comer", .systemBlue),
+                ("present_OD", "FN Present - AN OD", .systemBlue),
+                ("presnt_notTaken", "FN Present - AN Not Taken", .systemBlue),
+                ("absent_present", "FN Absent - AN Present", .systemBlue),
+                ("Late_Present", "FN Late comer - AN Present", .systemBlue),
+                ("Late_Absent", "FN Late comer - AN Absent", .systemBlue),
+                ("Late_Od", "FN Late comer - AN OD", .systemBlue),
+                ("Late_notTaken", "FN Late comer - AN Not Taken", .systemBlue),
+                ("Od_Present", "FN OD - AN Present", .systemBlue),
+                ("Od_Absent", "FN OD - AN Absent", .systemBlue),
+                ("Od_Late", "FN OD - AN Late comer", .systemBlue),
+                ("Od_notTaken", "FN OD - AN Not Taken", .systemBlue),
+                
             ], type: .symbol)
             
             showPopover(from: sender, contentVC: popoverVC)
@@ -497,9 +510,9 @@ class ReciverAttendanceReportVC: UIViewController {
     }
 }
 extension ReciverAttendanceReportVC: UIPopoverPresentationControllerDelegate {
-    func showPopover(from sender: UIView, contentVC: UIViewController) {
+    
+    func showPopover(from sender: UIView, contentVC: PopoverViewVC) {
         contentVC.modalPresentationStyle = .popover
-        contentVC.preferredContentSize = CGSize(width: 180, height: 180)
         
         if let popover = contentVC.popoverPresentationController {
             popover.sourceView = sender

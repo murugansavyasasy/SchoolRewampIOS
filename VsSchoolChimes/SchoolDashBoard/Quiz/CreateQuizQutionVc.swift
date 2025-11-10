@@ -41,6 +41,14 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         if let existingQuizId = existing.quiz_id {
             existing.quiz_id = existingQuizId
         }
+        
+        if let newAnswer = model.answer, !newAnswer.isEmpty {
+            existing.answer = newAnswer
+        }
+
+        if let newText = model.correct_answer_text, !newText.isEmpty {
+            existing.correct_answer_text = newText
+        }
 
         // Now update editable fields from the UI model
         existing.chapter = model.chapter
@@ -49,9 +57,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         existing.b_option = model.b_option
         existing.c_option = model.c_option
         existing.d_option = model.d_option
-        existing.answer = model.answer
         existing.mark = model.mark
-        existing.correct_answer_text = model.correct_answer_text
         existing.file_path = model.file_path
 
         // Save back to array
@@ -327,7 +333,7 @@ class CreateQuizQutionVc: UIViewController {
             if q.chapter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 return "Please fill the Chapter for Question \(i + 1)."
             }
-            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.question == "Enter Question Here"{
+            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.question == "Enter Question here"{
                 return "Please fill the Question text for Question \(i + 1)."
             }
             if q.a_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.a_option == "Enter Option A"{

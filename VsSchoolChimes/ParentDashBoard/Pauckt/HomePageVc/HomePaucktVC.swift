@@ -8,22 +8,20 @@ class HomePaucktVC: UIViewController
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TotalcoinsFullView: UIView!
     @IBOutlet weak var headerView: UIView!
-    
     @IBOutlet weak var totalCoinsLbl: UILabel!
     @IBOutlet weak var couponsCV: UICollectionView!
     @IBOutlet weak var categoriesCV: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    var offers: [Offer] = []
-    
     @IBOutlet weak var norecordLbl: UILabel!
+    @IBOutlet weak var norecordImg: UIImageView!
+    
     enum SectionType: Int, CaseIterable {
         case firstCellType
         case secondCellType
         case thirdCellType
     }
     
-    
+    var offers: [Offer] = []
     var secondArray: [Int] = [10, 20, 30, 40]
     var thirdArray: [Bool] = [true, false, true, false]
     var categories: [Categorys] = []
@@ -33,45 +31,55 @@ class HomePaucktVC: UIViewController
     var childId : String?
     var mobileNumber : String?
     var selectedCategoryIndex: Int = 0 // Default is "All"
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.placeholder = "Search"
         searchBar.delegate = self
-        searchBar.layer.borderWidth = 0
+        
+        // Remove the default background of UISearchBar
         searchBar.backgroundImage = UIImage()
-        searchBar.searchTextField.addDoneButton()
+        searchBar.barTintColor = .clear
+        searchBar.isTranslucent = true
+        
+        // Set textfield background color
+        let textField = searchBar.searchTextField
+        textField.backgroundColor = .systemGray5
+        textField.layer.cornerRadius = 8
+        textField.layer.masksToBounds = true
+        
+        textField.addDoneButton()
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
-                searchTextField.inputAccessoryView = getDoneToolbar()
-            }
-//        couponsCV.backgroundColor = .clear
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = [
-//            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 1.0).cgColor,
-//            UIColor.white.cgColor
-//        ]
-//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-//        gradientLayer.frame = couponsCV.bounds
-//        
-//        let backgroundView = UIView(frame: couponsCV.bounds)
-//        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
-//        gradientLayer.frame = UIScreen.main.bounds
-//        view.layer.insertSublayer(gradientLayer, at: 0)
-//        couponsCV.backgroundView = backgroundView
-//        
+            searchTextField.inputAccessoryView = getDoneToolbar()
+        }
+        //        couponsCV.backgroundColor = .clear
+        //        let gradientLayer = CAGradientLayer()
+        //        gradientLayer.colors = [
+        //            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 1.0).cgColor,
+        //            UIColor.white.cgColor
+        //        ]
+        //        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        //        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        //        gradientLayer.frame = couponsCV.bounds
+        //
+        //        let backgroundView = UIView(frame: couponsCV.bounds)
+        //        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+        //        gradientLayer.frame = UIScreen.main.bounds
+        //        view.layer.insertSublayer(gradientLayer, at: 0)
+        //        couponsCV.backgroundView = backgroundView
+        //
         TotalcoinsFullView.layer.cornerRadius = 12
         TotalcoinsFullView.layer.shadowColor = UIColor.black.cgColor
         TotalcoinsFullView.layer.shadowOpacity = 0.1
         TotalcoinsFullView.layer.shadowOffset = CGSize(width: 0, height: 2)
         TotalcoinsFullView.layer.shadowRadius = 4
-//        
+        //
         Get_Categories()
-//        BackBtn.setTitleFont(style: .secondary, size: 15)
+        //        BackBtn.setTitleFont(style: .secondary, size: 15)
         totalCoinsLbl.setFont(style: .title, size: 17)
         UsedCoinsLbl.setFont(style: .body, size: 15)
         AllCouponsLbl.setFont(style: .title, size: 17)
@@ -81,12 +89,12 @@ class HomePaucktVC: UIViewController
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
-       
-//        get_coins(){
-//            
-//            self.Get_Categories()
-//        }
+        
+        
+        //        get_coins(){
+        //
+        //            self.Get_Categories()
+        //        }
     }
     
     func getDoneToolbar() -> UIToolbar {
@@ -94,34 +102,44 @@ class HomePaucktVC: UIViewController
         doneToolbar.barStyle = .default
         doneToolbar.tintColor = .systemBlue
         doneToolbar.sizeToFit()
-
+        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
         done.setTitleTextAttributes([.foregroundColor: UIColor.systemBlue], for: .normal)
-
+        
         doneToolbar.items = [flexSpace, done]
         return doneToolbar
     }
-
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     @IBAction func search(_ sender: UIButton) {
         sender.isSelected.toggle()
+        
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
-            searchBar?.isHidden = !sender.isSelected
-            if sender.isSelected {
-                searchBar?.becomeFirstResponder()
-            } else {
-                searchBar?.resignFirstResponder()
-            }
+        
+        searchBar?.isHidden = !sender.isSelected
+        
+        if sender.isSelected {
+            searchBar?.becomeFirstResponder()
+        } else {
+            searchBar?.resignFirstResponder()
+        }
+        
+        filteredOffers = CampaignData
+        norecordImg.isHidden = filteredOffers.count != 0
+        norecordLbl.isHidden = filteredOffers.count != 0
+        norecordLbl.text = "Data Not Found"
+        couponsCV.reloadData()
     }
     func setupCollectionView() {
         
         couponsCV.register(UINib(nibName: "CoupenCvCell", bundle: nil), forCellWithReuseIdentifier: "CoupenCvCell")
         categoriesCV.register(UINib(nibName: "CaterogyCvCell", bundle: nil), forCellWithReuseIdentifier: "CaterogyCvCell")
-        
+        couponsCV.showsHorizontalScrollIndicator = false
+        couponsCV.showsVerticalScrollIndicator = false
         couponsCV.delegate = self
         couponsCV.dataSource = self
         
@@ -150,8 +168,8 @@ class HomePaucktVC: UIViewController
         
         if collectionView == categoriesCV{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CaterogyCvCell", for: indexPath) as! CaterogyCvCell
-                    let category = categories[indexPath.item]
-                    cell.configure(with: category, selected: indexPath.item == selectedCategoryIndex)
+            let category = categories[indexPath.item]
+            cell.configure(with: category, selected: indexPath.item == selectedCategoryIndex)
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CoupenCvCell", for: indexPath) as! CoupenCvCell
@@ -195,7 +213,7 @@ class HomePaucktVC: UIViewController
         }
     }
     
-   
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -207,7 +225,7 @@ class HomePaucktVC: UIViewController
             
             let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
             let width = max(textWidth + padding, 70) // minimum width
-            return CGSize(width: width, height: 90)
+            return CGSize(width: 100, height: collectionView.bounds.height)
         } else {
             return CGSize(width: collectionView.frame.width / 2, height: 290)
         }
@@ -274,6 +292,9 @@ class HomePaucktVC: UIViewController
                     .contains(searchText.lowercased()) == true
             }
         }
+        norecordImg.isHidden = filteredOffers.count != 0
+        norecordLbl.isHidden = filteredOffers.count != 0
+        norecordLbl.text = "Data Not Found"
         couponsCV.reloadData()
     }
     
@@ -287,35 +308,35 @@ class HomePaucktVC: UIViewController
                 
             case .success(let success):
                 DispatchQueue.main.async { [self] in
-
+                    
                     if success.data?.categories?.count == 0 {
-                            AllCouponsLbl.isHidden = true
-                            norecordLbl.isHidden = false
-                            norecordLbl.text = "There is no Coupon Found"
-                        } else {
-                            norecordLbl.isHidden = true
-                            AllCouponsLbl.isHidden = false
-
-                            var updatedCategories = success.data?.categories ?? []
-                            let allCategory = Categorys(id: 0, category_name: "All")
-                            updatedCategories.insert(allCategory, at: 0)
-                            self.categories = updatedCategories
-                            
-                            categoriesCV.delegate = self
-                            categoriesCV.dataSource = self
-                            self.categoriesCV.reloadData()
-                            
-                            // ✅ Auto-select and auto-scroll to first index
-                            let firstIndex = IndexPath(item: 0, section: 0)
-                            self.categoriesCV.selectItem(at: firstIndex, animated: false, scrollPosition: [])
-                            self.categoriesCV.scrollToItem(at: firstIndex, at: .left, animated: true)
-                            self.collectionView(self.categoriesCV, didSelectItemAt: firstIndex)
-                        }
-
-                       
-                        Get_campians(
-                            parameter: ["mobile_no": "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
-                        )
+                        AllCouponsLbl.isHidden = true
+                        norecordLbl.isHidden = false
+                        norecordLbl.text = "There is no Coupon Found"
+                    } else {
+                        norecordLbl.isHidden = true
+                        AllCouponsLbl.isHidden = false
+                        
+                        var updatedCategories = success.data?.categories ?? []
+                        let allCategory = Categorys(id: 0, category_name: "All")
+                        updatedCategories.insert(allCategory, at: 0)
+                        self.categories = updatedCategories
+                        
+                        categoriesCV.delegate = self
+                        categoriesCV.dataSource = self
+                        self.categoriesCV.reloadData()
+                        
+                        // ✅ Auto-select and auto-scroll to first index
+                        let firstIndex = IndexPath(item: 0, section: 0)
+                        self.categoriesCV.selectItem(at: firstIndex, animated: false, scrollPosition: [])
+                        self.categoriesCV.scrollToItem(at: firstIndex, at: .left, animated: true)
+                        self.collectionView(self.categoriesCV, didSelectItemAt: firstIndex)
+                    }
+                    
+                    
+                    Get_campians(
+                        parameter: ["mobile_no": "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
+                    )
                 }
             case .failure(let error):
                 
@@ -325,7 +346,7 @@ class HomePaucktVC: UIViewController
             }
         }
     }
-
+    
     func Get_campians(parameter : [String: Any]){
         print("paramparamm,nc",parameter)
         
@@ -335,39 +356,39 @@ class HomePaucktVC: UIViewController
                 result: Result<CampaignsResponse,
                 Error>
             ) in
-            
-            switch result{
                 
-            case .success(let success):
-                print("successseadasadad`",success)
-                DispatchQueue.main.async { [self] in
-                    if success.data?.campaigns?.data?.count ?? 0 == 0 {
-                        norecordLbl.isHidden = false
-                        norecordLbl.text = "There is no Coupon Found"
-                        AllCouponsLbl.isHidden = true
-                        couponsCV.isHidden = true
-                    }else{
-                        norecordLbl.isHidden = true
-                        AllCouponsLbl.isHidden = false
-                        CampaignData = success.data?.campaigns?.data ?? []
-                        filteredOffers = CampaignData
-                        couponsCV.isHidden = false
-                        couponsCV.delegate = self
-                        couponsCV.dataSource = self
-                        couponsCV.reloadData()
-                    }
+                switch result{
                     
-                }
-            case .failure(let error):
-                
-                DispatchQueue.main.async {
-                    print("Error:",error.localizedDescription)
+                case .success(let success):
+                    print("successseadasadad`",success)
+                    DispatchQueue.main.async { [self] in
+                        if success.data?.campaigns?.data?.count ?? 0 == 0 {
+                            norecordLbl.isHidden = false
+                            norecordImg.isHidden = false
+                            norecordLbl.text = "There is no Coupon Found"
+                            AllCouponsLbl.isHidden = true
+                            couponsCV.isHidden = true
+                        }else{
+                            norecordLbl.isHidden = true
+                            norecordImg.isHidden = true
+                            AllCouponsLbl.isHidden = false
+                            CampaignData = success.data?.campaigns?.data ?? []
+                            filteredOffers = CampaignData
+                            couponsCV.isHidden = false
+                            couponsCV.delegate = self
+                            couponsCV.dataSource = self
+                            couponsCV.reloadData()
+                        }
+                        
+                    }
+                case .failure(let error):
+                    
+                    DispatchQueue.main.async {
+                        print("Error:",error.localizedDescription)
+                    }
                 }
             }
-        }
     }
-    
-    
 }
 
 
