@@ -39,6 +39,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         collectionview.dataSource = self
         // Initialization code
         textview.layer.cornerRadius = Colornames.CORadius10
+        SubmitBtn.layer.cornerRadius = SubmitBtn.frame.height/2
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.lightGray.cgColor
         textview.addDoneButton()
@@ -82,13 +83,9 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         names[indexPath.item].selected?.toggle()
-        
-        // Add or remove the category name from SelectedCategory based on its selection state
         if names[indexPath.item].selected == true {
-            // Add the category name to SelectedCategory
             SelectedCategory.insert(names[indexPath.item].name ?? "")
         } else {
-            // Remove the category name from SelectedCategory
             if let name = names[indexPath.item].name {
                 if let index = SelectedCategory.firstIndex(of: name) {
                     SelectedCategory.remove(at: index)
@@ -113,9 +110,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     
     
     @IBAction func submit(_ sender: Any) {
-        if SelectedCategory.count != 0{
-            ratingDelegate?.Submit(SelectedCategory, suggessions: suggestContetTxtView.text)
-        }
+        ratingDelegate?.Submit(SelectedCategory, suggessions: suggestContetTxtView.text)
     }
     
     
