@@ -67,28 +67,25 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     }
     
     
-    @IBAction func correctAnsDropDown(){
-        
+    @IBAction func correctAnsDropDown() {
+        // ✅ Dismiss keyboard first
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
+        // ✅ Then show dropdown
         dropdown.anchorView = correctOptionView
         dropdown.dataSource = options
-        
-        
-        dropdown.bottomOffset = CGPoint(x: 0, y:(dropdown.anchorView?.plainView.bounds.height)!)
-        
+        dropdown.bottomOffset = CGPoint(x: 0, y: (dropdown.anchorView?.plainView.bounds.height) ?? 0)
         dropdown.direction = .bottom
         DropDown.appearance().backgroundColor = UIColor.white
-        dropdown.show() //7
-        
-        
+        dropdown.show()
+
         dropdown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             correctAnsLbl.text = item
-            answerIndex = index   // ✅ store option index (0–3)
+            answerIndex = index
             if let indexPath = indexPath {
                 delegate?.updateQuestion(at: indexPath, model: captureModel())
             }
         }
-
     }
     
     func setupUI() {
@@ -150,7 +147,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 setupTextView(opBTxtView, placeholder: "Enter Option B")
                 setupTextView(opCTxtView, placeholder: "Enter Option C")
                 setupTextView(opDTxtView, placeholder: "Enter Option D")
-                setupTextView(questionTxtView, placeholder: "Enter Question Here")
+                setupTextView(questionTxtView, placeholder: "Enter Question here")
     }
 
    
@@ -178,7 +175,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 case opBTxtView: textView.text = "Enter Option B"
                 case opCTxtView: textView.text = "Enter Option C"
                 case opDTxtView: textView.text = "Enter Option D"
-                case questionTxtView: textView.text = "Enter Question Here"
+                case questionTxtView: textView.text = "Enter Question here"
                 default: break
                 }
             }
@@ -195,7 +192,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opBTxtView.text    = model.b_option.isEmpty ? "Enter Option B" : model.b_option
         opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C" : model.c_option
         opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D" : model.d_option
-        questionTxtView.text = model.question.isEmpty ? "Enter Question Here" : model.question
+        questionTxtView.text = model.question.isEmpty ? "Enter Question here" : model.question
         if let answerStr = model.answer,
            let answerIndex = Int(answerStr),
            answerIndex > 0,
@@ -378,6 +375,11 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func AddAnotherAct(_ sender: UIButton) {
+        
+        if let index = indexPath {
+            delegate?.updateQuestion(at: index, model: captureModel())
+        }
+        
         if let index = indexPath {
             delegate?.addAnotherCell(at: index)
         }
@@ -504,5 +506,11 @@ extension UIView {
             responder = responder?.next
         }
         return nil
+    }
+}
+
+extension CGRect {
+    var maxYPoint: CGPoint {
+        return CGPoint(x: midX, y: maxY)
     }
 }
