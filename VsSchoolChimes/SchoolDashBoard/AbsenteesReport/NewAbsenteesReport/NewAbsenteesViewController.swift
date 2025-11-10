@@ -61,6 +61,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         noRecordView.layer.cornerRadius = 8
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
+        
         updateMonthLabel()
         dateLbl.isHidden = true
         cvIcon.isHidden = true
@@ -94,7 +95,6 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         
         cvIcon.dataSource = self
         cvIcon.delegate = self
-//        
         Tv.dataSource = self
         Tv.delegate = self
         
@@ -127,8 +127,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                 DispatchQueue.main.async {
                     self.absentData = response.data
                     self.class_wiseData = self.absentData?.first?.class_wise ?? []
-                    
                     self.eventDates.removeAll()
+                    
                     if let data = response.data {
                         for item in data {
                             if let total = item.total_absentees,
@@ -136,18 +136,12 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                                totalInt > 0,
                                let dateStr = item.date,
                                let date = self.dateFormatter.date(from: dateStr) {
-                                self.eventDates.append(date)
-                            }
-                        }
-                    }
-            
-                   
+                                self.eventDates.append(date)}}}
                     
                     let today = Date()
                     let calendar = Calendar.current
                     let hasEventToday = self.eventDates.contains { eventDate in
-                        calendar.isDate(eventDate, inSameDayAs: today)
-                    }
+                        calendar.isDate(eventDate, inSameDayAs: today)}
                     
                     if !hasEventToday {
                         print("No absentee event today.")
@@ -170,30 +164,23 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         let formatter = DateFormatter()
                         formatter.dateFormat = "dd-MM-yyyy"
                         let currentDateString = formatter.string(from: Date())
-                        let sectionIDs = self.getSectionID(
-                            for: currentDateString
-                        ) ?? ""
-                        self.AbsentStudent(sectionId:sectionIDs , date: currentDateString )
+                        
+                        if let ids = self.getClassAndSectionID(
+                            for: currentDateString) {
+                            self.AbsentStudent(
+                                sectionId:ids.sectionID ?? "" ,
+                                date: currentDateString,
+                                standarId: ids.classID ?? "")}
                         
                         if let info = self.getAbsenteeInfo(
-                            for: currentDateString
-                        ) {
-                           
-                            self.updateProgress(
+                            for: currentDateString) {self.updateProgress(
                                 absentees: "\(info.totalAbsentees)",
-                                total: "\(info.studentCounts)"
-                                
-                            )
-                            
-                        }
-                    }
+                                total: "\(info.studentCounts)")}}
                     
                     self.calendar.reloadData()
                     if let firstDate = self.absentData?.first?.date {
                         self.filterData(for: firstDate)
                     }
-                    
-                    
                 }
                 
             case .failure(let error):
@@ -242,10 +229,11 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     }
     
     
-    func AbsentStudent(sectionId: String, date: String) {
+    func AbsentStudent(sectionId: String, date: String,standarId:String) {
         let param = [
             AbsenteesReportStringFile.absent_on: date,
-            AbsenteesReportStringFile.section_id: sectionId
+            AbsenteesReportStringFile.section_id: sectionId,
+            AbsenteesReportStringFile.standard_id: standarId
         ]
 
         APIService.shared.makeApi(
@@ -296,7 +284,6 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
         cell.sectionLbl.text = "Section : " + data.section_name
         cell.absentCountLbl.text =  " Absent : " +  data.total_absentees + " / " +  data.student_counts
         
-        
         if ClickID == indexPath.row  {
             cell.fullview.backgroundColor = .primery
             cell.fullview.layer.cornerRadius = 10
@@ -307,7 +294,6 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             cell.absentCountLbl.textAlignment = .center
             cell.progress.isHidden = false
             cell.updateProgress(absentees:data.total_absentees , total: data.student_counts)
-           
             cell.sectionLbl.textColor = .white
             cell.absentCountLbl.textColor = .primery
             classNameLbl.text =  data.class_name
@@ -316,7 +302,6 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             totalLbl.text = "Total students : \(data.student_counts)"
             cell.absentFullview.backgroundColor = .attendence
         } else {
-            
             cell.fullview.backgroundColor = .systemGray6
             cell.fullview.layer.cornerRadius = 10
             cell.progress.isHidden = true
@@ -329,7 +314,6 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             cell.absentFullview.backgroundColor = .clear
         }
         
-//        
         return cell
     }
     
@@ -340,18 +324,20 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
         classNameLbl.text =  data.class_name
         sectionLbl.text =  data.section_name
         cvIcon.reloadData()
-        
         updateProgress(
             absentees: data.total_absentees,
-            total: data.student_counts
-        )
-        AbsentStudent(sectionId:data.section_id , date: selectedDate ?? "" )
+            total: data.student_counts)
+        
+        if let ids = self.getClassAndSectionID(
+            for: selectedDate ?? "") {
+            self.AbsentStudent(
+                sectionId:ids.sectionID ?? "" ,
+                date: selectedDate ?? "",
+                standarId: ids.classID ?? "")
+        }
         
         abesentCountLbl.text = "Absentees : \(data.total_absentees)"
         totalLbl.text = "Total students : \(data.student_counts)"
-       
-        
-//        Tv.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -360,20 +346,10 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
     
     
     func updateProgress(absentees: String, total: String) {
-        
-        
-        
         let absentCount = Float(absentees) ?? 0
         let totalCount = Float(total) ?? 1  // avoid divide by zero
-        
-//        print("absentss",absent)
-//        print("total",total)
         let progressValue = absentCount / totalCount
         progres.setProgress(progressValue, animated: true)
-        
-        // Optional: progress color change
-//        progres.progressTintColor = .systemRed
-//        progres.trackTintColor = .systemGreen
     }
 
 
@@ -409,28 +385,16 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
         if data.photo_path == nil || data.photo_path == "" {
             cell.profileImage.tintColor = .error
             if data.gender == "male"{
-                
                 cell.profileImage.image = UIImage(named: "malesss")
                 cell.profileImage.tintColor = .primery.withAlphaComponent(0.8)
             }else{
                 cell.profileImage.image = UIImage(named: "FemaleGender")
-                cell.profileImage.tintColor = .systemPink
-                    .withAlphaComponent(0.6)
+                cell.profileImage.tintColor = .systemPink.withAlphaComponent(0.6)
             }
         }else{
             cell.profileImage.tintColor = .clear
             cell.profileImage.sd_setImage(with: URL(string: data.photo_path ?? ""), placeholderImage: UIImage(named: "placeholder"))
-            
         }
-        
-        
-        
-        
-//        if let urlStr = data.photo_path, let url = URL(string: urlStr) {
-//            cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(systemName: "globe"))
-//        }
-        
-        
         return cell
     }
     
@@ -480,16 +444,8 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         let hasEvent = eventDates.contains { Calendar.current.isDate($0, inSameDayAs: date) }
         
         if hasEvent {
-            
             return true
         } else {
-            // Alert show பண்ணு
-//            let alert = UIAlertController(title: "No Absentees",
-//                                          message: "This date has no Absentees Report.",
-//                                          preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-            
             fullview.isHidden = true
             noRecordView.isHidden = false
             noRecordLbl.text = "No Absentees Report from this date"
@@ -513,46 +469,33 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         
         let selectedDateForFilter = filterFormatter.string(from: date)
         let selectedDateForLabel = showFormatter.string(from: date)
-        
-        print("Selected Date (Filter): \(selectedDateForFilter)")
-        print("Selected Date (Label): \(selectedDateForLabel)")
-        
+
         // UILabel update
         dateLbl.text = selectedDateForLabel
         selectedDate = selectedDateForFilter
         // Data filter
         filterData(for: selectedDateForFilter)
         
-        let sectionIDs = getSectionID(for: selectedDate ?? "") ?? ""
-        AbsentStudent(sectionId:sectionIDs , date: selectedDate ?? "" )
-        
-        if let repost = getAbsenteeInfo(for: selectedDateForFilter) {
-            
-            print("repost.totalAbsentees",repost.totalAbsentees)
-            print("repost.studentCounts",repost.studentCounts)
-        }
-        
+        if let ids = self.getClassAndSectionID(
+            for: selectedDate ?? ""
+        ) {self.AbsentStudent(
+                sectionId:ids.sectionID ?? "" ,
+                date: selectedDate ?? "",
+                standarId: ids.classID ?? "")}
         
         if let info = getAbsenteeInfo(for: selectedDateForFilter) {
             noRecordView.isHidden = true
             fullview.isHidden = false
             updateProgress(
                 absentees: "\(info.totalAbsentees)",
-                total: "\(info.studentCounts)"
-                
-            )
+                total: "\(info.studentCounts)")
             
         } else {
             print("No data found for this date")
             noRecordView.isHidden = false
             fullview.isHidden = true
         }
-        
-        
-       
-        
-        
-        
+ 
     }
     func minimumDate(for calendar: FSCalendar) -> Date {
         return Date(timeIntervalSince1970: 0) // very old date
@@ -579,7 +522,6 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         let current = calendar.currentPage
         var dateComponents = DateComponents()
         dateComponents.month = isNext ? 1 : -1
-        
         let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
         calendar.setCurrentPage(newDate, animated: true)
         
@@ -608,16 +550,17 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         }
     }
    
-    func getSectionID(for selectedDate: String) -> String? {
+    func getClassAndSectionID(for selectedDate: String) -> (classID: String?, sectionID: String?)? {
         guard let absentData = absentData else { return nil }
         
-        // அந்த தேதிக்கான data எடு
         if let matchedDate = absentData.first(where: { $0.date == selectedDate }) {
-            // முதல் class_wise → முதல் section_wise → section_id
-            return matchedDate.class_wise?.first?.section_wise?.first?.section_id
+            let classID = matchedDate.class_wise?.first?.class_id
+            let sectionID = matchedDate.class_wise?.first?.section_wise?.first?.section_id
+            return (classID, sectionID)
         }
         return nil
     }
+
     
     func getAbsenteeInfo(for selectedDate: String) -> (totalAbsentees: Int, studentCounts: Int)? {
         guard let absentData = absentData else { return nil }
@@ -640,17 +583,10 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
                     }
                 }
             }
-            
             return (totalAbs, totalStu)
         }
-        
         return nil
     }
-
-
-   
-
-
 }
 
 
