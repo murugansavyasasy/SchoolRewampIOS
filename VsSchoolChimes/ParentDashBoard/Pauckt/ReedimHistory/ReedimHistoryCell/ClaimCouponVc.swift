@@ -37,7 +37,6 @@ class ClaimCouponVc: UIViewController {
     @IBOutlet weak var TimeDefLbl: UILabel!
     @IBOutlet weak var VenueDefLbl: UILabel!
     @IBOutlet weak var Qrheight: NSLayoutConstraint!
-    
     var couponDetails : Coupon?
     
     override func viewDidLoad() {
