@@ -228,6 +228,7 @@ class AbsenteesReportStringFile {
     
     static var absent_on = "absent_on"
     static var section_id = "section_id"
+    static var standard_id = "standard_id"
 }
 
 class assignmentResquestStringKey{

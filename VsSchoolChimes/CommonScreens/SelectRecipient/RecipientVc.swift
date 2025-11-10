@@ -475,6 +475,7 @@ class RecipientVc: UIViewController{
                 getSubjectListAPI(finalSectionIds)
             }
             
+            
         }
         selectSubject.isHidden = !(selectedSections.count >= 1)
         getSubject.isHidden = true
@@ -639,7 +640,7 @@ class RecipientVc: UIViewController{
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             if let label = self.selectLevel.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = "Level \(item)"
+                label.text = item
                 user_inputs.level = Int(item) ?? 1
             }
         }
@@ -1078,6 +1079,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectStandardDropDown.isHidden = true
+                        selectSubject.isHidden = true
                         nodata(false, message: successMessage.message ?? "")
                     }
                 }
@@ -1159,10 +1161,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         if let quizData = successMessage.data {
-                            for item in quizData {
-                                levelDropDown.append(String(item.level ?? 0))
+                            levelDropDown = quizData.compactMap { item in
+                                item.level.map { "Level \($0)" }
                             }
                         }
+
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
@@ -1202,6 +1205,16 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             label.text = subjectDetails?.first?.name
                             subjectId =  subjectDetails?.first?.id ?? ""
                         }
+                        
+                        
+                        if Menu_id.quiz == Menu_id.staffSelectedMenuId{
+                            getQuizLevel(
+                                SubjectId: subjectId ?? "",
+                                ClassId: classID ?? "",
+                                SectionId: String(sectionId ?? 0)
+                            )
+                        }
+                        
                     }
                 }else{
                     DispatchQueue.main.async { [self] in

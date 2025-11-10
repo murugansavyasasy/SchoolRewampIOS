@@ -37,11 +37,12 @@ class QuizSubmissionVc: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        quizNmaeLbl.text = senderQuizlist.title
+        quizNmaeLbl.configureAsBackTitle(firstLine: "Quiz Submission List",secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         discreptionsLbl.text = senderQuizlist.description
-        titleLbl.text = "Type: " + (senderQuizlist.type_name ?? "")
+        titleLbl.text = senderQuizlist.title//"Type: " + (senderQuizlist.type_name ?? "")
         subjectLbl.text = senderQuizlist.subject
-        PostedOnLbl.text = formattedDateStatus(from: senderQuizlist.submission_date ??  "")
+       // PostedOnLbl.text = formattedDateStatus(from: senderQuizlist.submission_date ??  "")
         QuizDetailsView.layer.cornerRadius = 10
         DescriptionBaseview.layer.cornerRadius = 10
         StudentListBaseview.layer.cornerRadius = 10
