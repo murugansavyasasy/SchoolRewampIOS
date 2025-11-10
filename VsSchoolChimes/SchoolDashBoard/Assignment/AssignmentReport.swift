@@ -159,12 +159,15 @@ class AssignmentReport: UIViewController, SelectedId {
         reportTable.delegate = self
         reportTable.dataSource = self
         searchBar.placeholder = "Search"
-        searchBar.searchTextField.backgroundColor = .red
-        searchBar.layer.cornerRadius = 8
-        searchBar.searchTextField.layer.masksToBounds = true
-        searchBar.placeholder = "Search"
         searchBar.delegate = self
-        searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
+        searchBar.barTintColor = .clear
+        searchBar.isTranslucent = true
+        let textField = searchBar.searchTextField
+        textField.backgroundColor = .systemGray5
+        textField.layer.cornerRadius = 8
+        textField.layer.masksToBounds = true
+        textField.addDoneButton()
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         backLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: academicView)

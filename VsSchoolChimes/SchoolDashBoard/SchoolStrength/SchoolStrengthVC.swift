@@ -188,9 +188,16 @@ class SchoolStrengthVC: UIViewController {
                     self.norecordLbl.text = response.message
                     self.norecordLbl.isHidden = hasData
                     self.norecordImg.isHidden = hasData
-                    self.Tv.delegate = self
-                    self.Tv.dataSource = self
-                    self.Tv.reloadData()
+                    if response.status == true{
+                        self.Tv.isHidden = false
+                        self.Tv.delegate = self
+                        self.Tv.dataSource = self
+                        self.Tv.reloadData()
+                    }else{
+                        
+                        self.Tv.isHidden = true
+                    }
+                    
                     if hasData {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                             let indexPath = IndexPath(row: 0, section: 0)
@@ -288,8 +295,18 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             if standard.girls_count == "0"{
                 cell.femaleImgView.image = UIImage(named: "males")
                 cell.femaleImgView.tintColor = .maleClr
+                cell.maleImageView.image = UIImage(named: "males")
+                cell.maleImageView.tintColor = .maleClr
+                
             }
-            if standard.boys_count  == "0"{
+            else if standard.boys_count  == "0"{
+                cell.femaleImgView.image = UIImage(named: "females")
+                cell.femaleImgView.tintColor = .femaleClr
+                cell.maleImageView.image = UIImage(named: "females")
+                cell.maleImageView.tintColor = .femaleClr
+            }else{
+                cell.maleImageView.image = UIImage(named: "males")
+                cell.maleImageView.tintColor = .maleClr
                 cell.femaleImgView.image = UIImage(named: "females")
                 cell.femaleImgView.tintColor = .femaleClr
             }

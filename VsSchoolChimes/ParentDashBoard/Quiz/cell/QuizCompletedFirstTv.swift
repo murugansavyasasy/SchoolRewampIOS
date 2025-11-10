@@ -31,6 +31,7 @@ class QuizCompletedFirstTv: UITableViewCell {
         notAnsBtn.setTitleFont(style: .primary, size: 10)
         crtBtn.setTitleFont(style: .primary, size: 10)
         setupPieChart()
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -41,7 +42,22 @@ class QuizCompletedFirstTv: UITableViewCell {
     }
     
     
-    
+    func configureButton(_ button: UIButton, systemImageName: String, title: String, tintColor: UIColor) {
+        let image = UIImage(systemName: systemImageName)
+        button.setImage(image, for: .normal)
+        button.setTitle(title, for: .normal)
+        
+        // Text and image spacing
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+        
+        // Alignment & color
+        button.tintColor = tintColor
+        button.setTitleColor(.black, for: .normal)
+        button.contentHorizontalAlignment = .leading
+        button.semanticContentAttribute = .forceLeftToRight
+    }
+
     private func setupPieChart() {
            pieChartView.holeRadiusPercent = 0.6 // Adjust inner circle size
            pieChartView.transparentCircleRadiusPercent = 0.65

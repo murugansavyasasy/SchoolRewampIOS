@@ -382,7 +382,7 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func receiverPauckt(from viewController: UIViewController) {
-        let vc = HomePaucktVC(nibName: nil, bundle: nil)
+        let vc = CustomTabVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

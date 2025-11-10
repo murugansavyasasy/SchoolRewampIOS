@@ -10,6 +10,7 @@ import Charts
 
 class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var maleImageView: UIImageView!
     @IBOutlet weak var femaleImgView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var standardLbl: UILabel!
@@ -42,10 +43,6 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         sectionCollertionView.dataSource = self
         sectionCollertionView.register(UINib(nibName: "SectionStregnthCVC", bundle: nil), forCellWithReuseIdentifier: "SectionStregnthCVC")
         
-        
-//        updateProgress(
-//            boys: boycount ?? "",
-//            girls: girlscount ?? "")
     }
 
 
@@ -106,12 +103,12 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         setTwoPartAttributedText(label: cell.otersCountLbl,
                                  firstText: "Unspecified : ",
                                  firstColor: .darkGray,
-                                 secondText: "\(section.other_count ?? "")",
+                                 secondText: "\(section.other_count ?? "0")",
                                  secondColor: .black)
         
         // Student Count Button Title
         let title =  "Total Students " + "\(section.total_students ?? "")"
-        let font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 10, weight: .semibold)
         let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let textWidth = (title as NSString).size(withAttributes: attributes).width
         let padding: CGFloat = 20
@@ -134,12 +131,12 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
                                   secondText: String,
                                   secondColor: UIColor) {
         let firstAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 14),
+            .font: UIFont.systemFont(ofSize: 11),
             .foregroundColor: firstColor
         ]
         
         let secondAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 14),
+            .font: UIFont.boldSystemFont(ofSize: 11),
             .foregroundColor: secondColor
         ]
         

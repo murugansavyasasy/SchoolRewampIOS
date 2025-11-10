@@ -1156,68 +1156,110 @@ struct Categorys: Codable {
 
 
 struct MyCouponResponse: Codable {
-    var status: Bool?
-    var message: String?
-    var data: CouponData?
+    let status: Bool?
+    let data: CouponData?
+    let message: String?
 }
 
 struct CouponData: Codable {
-    var total_pages: Int?
-    var coupon_list: CouponLists?
+    let couponList: CouponList?
+    let totalPages: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case couponList = "coupon_list"
+        case totalPages = "total_pages"
+    }
 }
 
-struct CouponLists: Codable {
-    var current_page: Int?
-    var data: [Coupon]?
-    var first_page_url: String?
-    var from: Int?
-    var next_page_url: String?
-    var path: String?
-    var per_page: Int?
-    var prev_page_url: String?
-    var to: Int?
+struct CouponList: Codable {
+    let firstPageURL: String?
+    let nextPageURL: String?
+    let currentPage: Int?
+    let from: Int?
+    let to: Int?
+    let path: String?
+    let data: [Coupon]?
+
+    enum CodingKeys: String, CodingKey {
+        case firstPageURL = "first_page_url"
+        case nextPageURL = "next_page_url"
+        case currentPage = "current_page"
+        case from, to, path, data
+    }
 }
 
 struct Coupon: Codable {
-    var id: Int?
-    var merchant_name: String?
-    var campaign_name: String?
-    var merchant_id: Int?
-    var merchant_logo: String?
-    var about_merchant: String?
-    var campaign_type: String?
-    var offer_type: String?
-    var discount: Int?
-    var template_files: [String]?
-    var threshold_amount: String?
-    var expiry_date: String?
-    var expiry_type: String?
-    var coupon_valid_for: String?
-    var how_to_use: String?
-    var terms_and_conditions: String?
-    var cover_image: String?
-    var cta_url: String?
-    var offer_text: String?
-    var location_list: [Location]?
-    var redeemed_on: String?
-    var qr_code: String?
-    var category_name: String?
-    var source_link: String?
-    var industry_name: String?
-    var coupon_code: String?
-    var coupon_status: String?
-    var expires_in: Int?
-    var isCTAvalid: Bool?
-    var CTAname: String?
-    var CTAredirect: String?
-    var offer_to_show: String?
+    let qrCode: String?
+    let campaignType: String?
+    let ctaName: String?
+    let merchantName: String?
+    let expiryDate: String?
+    let coverImage: String?
+    let industryName: String?
+    let couponStatus: String?
+    let sourceLink: String?
+    let templateFiles: [String]?
+    let expiresIn: Int?
+    let merchantID: Int?
+    let discount: Int?
+    let offerType: String?
+    let id: Int?
+    let categoryName: String?
+    let locationList: [Location]?
+    let aboutMerchant: String?
+    let couponCode: String?
+    let offerToShow: String?
+    let expiryType: String?
+    let campaignName: String?
+    let merchantLogo: String?
+    let ctaURL: String?
+    let isCTAvalid: Bool?
+    let ctaRedirect: String?
+    let howToUse: String?
+    let termsAndConditions: String?
+
+    enum CodingKeys: String, CodingKey {
+        case qrCode = "qr_code"
+        case campaignType = "campaign_type"
+        case ctaName = "CTAname"
+        case merchantName = "merchant_name"
+        case expiryDate = "expiry_date"
+        case coverImage = "cover_image"
+        case industryName = "industry_name"
+        case couponStatus = "coupon_status"
+        case sourceLink = "source_link"
+        case templateFiles = "template_files"
+        case expiresIn = "expires_in"
+        case merchantID = "merchant_id"
+        case offerType = "offer_type"
+        case categoryName = "category_name"
+        case locationList = "location_list"
+        case aboutMerchant = "about_merchant"
+        case couponCode = "coupon_code"
+        case offerToShow = "offer_to_show"
+        case expiryType = "expiry_type"
+        case campaignName = "campaign_name"
+        case merchantLogo = "merchant_logo"
+        case ctaURL = "cta_url"
+        case isCTAvalid = "isCTAvalid"
+        case ctaRedirect = "CTAredirect"
+        case howToUse = "how_to_use"
+        case termsAndConditions = "terms_and_conditions"
+        case discount, id
+    }
 }
 
 struct Location: Codable {
-    var location_name: String?
-    var latitude: String?
-    var longitude: String?
+    let longitude: String?
+    let latitude: String?
+    let locationName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case locationName = "location_name"
+        case longitude, latitude
+    }
 }
+
 
 struct GetCoinResponse: Codable {
     var status: Int?
@@ -2037,6 +2079,8 @@ struct QuizListData : Codable{
     let submitted_count : Int?
     let total_mark : String?
     let no_of_levels : String?
+  
+    
     
 }
     
