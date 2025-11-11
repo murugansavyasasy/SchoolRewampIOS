@@ -328,51 +328,81 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
         ScheduleSelectedDate.removeAll()
-        for i in 0..<selectedDates.count{
+        for i in 0..<selectedDates.count {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             let formattedDate = dateFormatter.string(from: selectedDates[i])
             ScheduleSelectedDate.append(formattedDate)
         }
+        
         let today_date = getCurrentDateString()
-        if(AudioPlayUrl != "" && voiceTitleeTxt.text != ""){
-            
-            user_inputs.voice_link = AudioPlayUrl!
-            user_inputs.description = voiceTitleeTxt.text!
-            user_inputs.duration = voiceRecordedDuration ?? forWardVoiceDuraction ?? 0
-            user_inputs.is_schedule = isScheduleSelected
-            user_inputs.is_emergency = isEmergencyVoice ?? false
-            user_inputs.file_name = "sss-" + today_date + ".mp3"
-            if emengencyCall.isOn || !isScheduleSelected {
-                user_inputs.schedule_date = [today_date]
-                user_inputs.start_time = ""
-                user_inputs.end_time = ""
-                recienpient_validation(isVoice : true)
-            } else {
-                if ScheduleSelectedDate.count != 0{
-                    let originalDates = ScheduleSelectedDate
-                    let convertedDates = convertDateStrings(dates: originalDates)
-                    ScheduleSelectedDate = convertedDates
-                    user_inputs.schedule_date = ScheduleSelectedDate
-                    user_inputs.start_time = fromTime.titleLabel?.text ?? ""
-                    user_inputs.end_time = toTime.titleLabel?.text ?? ""
-                    recienpient_validation(isVoice : true)
-                }else{
-                    alert.showAlert(title: "",message: AlertstringFile.select_date,on: self)
-                }
-            }
-            
-            
-        }
-        else{
-            alert
-                .showAlert(
-                    title: "",
-                    message: AlertstringFile.voice_or_title_is_required,
-                    on: self)
+        
+        guard AudioPlayUrl != "", let voiceTitle = voiceTitleeTxt.text, !voiceTitle.isEmpty else {
+            alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+            return
         }
         
+        user_inputs.voice_link = AudioPlayUrl!
+        user_inputs.description = voiceTitle
+        user_inputs.duration = voiceRecordedDuration ?? forWardVoiceDuraction ?? 0
+        user_inputs.is_schedule = isScheduleSelected
+        user_inputs.is_emergency = isEmergencyVoice ?? false
+        user_inputs.file_name = "sss-" + today_date + ".mp3"
+        
+        // If emergency or not scheduling, send immediately
+        if emengencyCall.isOn || !isScheduleSelected {
+            user_inputs.schedule_date = [today_date]
+            user_inputs.start_time = ""
+            user_inputs.end_time = ""
+            recienpient_validation(isVoice: true)
+            return
+        }
+        
+        // --- Schedule Validation ---
+        guard ScheduleSelectedDate.count != 0 else {
+            alert.showAlert(title: "", message: AlertstringFile.select_date, on: self)
+            return
+        }
+        
+        // Convert date strings
+        let convertedDates = convertDateStrings(dates: ScheduleSelectedDate)
+        ScheduleSelectedDate = convertedDates
+        user_inputs.schedule_date = ScheduleSelectedDate
+        
+        guard let fromTimeText = fromTime.titleLabel?.text,
+              let toTimeText = toTime.titleLabel?.text else {
+            alert.showAlert(title: "", message: "Invalid time selection.", on: self)
+            return
+        }
+        
+        // 1️⃣ Validate To Time > From Time
+        guard let sampleDate = selectedDates.first,
+              let fromDateSample = combineDateAndTime(date: sampleDate, timeString: fromTimeText),
+              let toDateSample = combineDateAndTime(date: sampleDate, timeString: toTimeText),
+              toDateSample > fromDateSample else {
+            alert.showAlert(title: "", message: "End time must be greater than start time.", on: self)
+            return
+        }
+        
+        // 2️⃣ Validate no past times for today in *any* selected date
+        let now = Date()
+        let calendar = Calendar.current
+        for selectedDate in selectedDates {
+            if calendar.isDateInToday(selectedDate),
+               let fromDate = combineDateAndTime(date: selectedDate, timeString: fromTimeText),
+               fromDate < now {
+                alert.showAlert(title: "", message: "You cannot select a past time for today's date.", on: self)
+                return
+            }
+        }
+        
+        // ✅ All good — proceed
+        user_inputs.start_time = fromTimeText
+        user_inputs.end_time = toTimeText
+        recienpient_validation(isVoice: true)
     }
+
+
     
     @IBAction func text_sendActionBtn(_ sender: UIButton) {
         
@@ -482,7 +512,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     
-    
+    func combineDateAndTime(date: Date, timeString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a" // match your button format (e.g. "2:30 PM")
+        if let timeDate = dateFormatter.date(from: timeString) {
+            let calendar = Calendar.current
+            let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: timeDate)
+            
+            var combinedComponents = DateComponents()
+            combinedComponents.year = dateComponents.year
+            combinedComponents.month = dateComponents.month
+            combinedComponents.day = dateComponents.day
+            combinedComponents.hour = timeComponents.hour
+            combinedComponents.minute = timeComponents.minute
+            
+            return calendar.date(from: combinedComponents)
+        }
+        return nil
+    }
+
     
     
     

@@ -311,7 +311,8 @@ class MarkAttendenceVC: UIViewController {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
             
             popoverVC.configureButtons(with: [
-                ("FN : ForeNoon / AN : AfterNoon", "", .black),
+                ("FN", "ForeNoon", .black),
+                ("FN","ForeNoon", .black),
                 ("P", "Present", .systemGreen),
                 ("A", "Absent", .systemRed),
                 ("OD", "On Duty", .systemBlue),
@@ -962,7 +963,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
 extension MarkAttendenceVC: UIPopoverPresentationControllerDelegate {
     func showPopover(from sender: UIView, contentVC: UIViewController) {
         contentVC.modalPresentationStyle = .popover
-        contentVC.preferredContentSize = CGSize(width: 180, height: 170)
+        contentVC.preferredContentSize = CGSize(width: 180, height: 220)
         
         if let popover = contentVC.popoverPresentationController {
             popover.sourceView = sender

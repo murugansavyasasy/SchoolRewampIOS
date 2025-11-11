@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate {
     
     
     @IBOutlet weak var AnySuggestionsLbl: UILabel!
@@ -17,7 +17,6 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     @IBOutlet weak var collectionview: UICollectionView!
     
     @IBOutlet weak var suggestContetTxtView: UITextView!
-    
     @IBOutlet weak var SubmitBtn: UIButton!
     var ratingDelegate : RatingDelegate?
     var load = false
@@ -35,6 +34,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     override func awakeFromNib() {
         super.awakeFromNib()
         Uiupdate()
+        textview.delegate = self
         collectionview.delegate = self
         collectionview.dataSource = self
         // Initialization code
@@ -44,6 +44,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         textview.layer.borderColor = UIColor.lightGray.cgColor
         textview.addDoneButton()
     }
+
     func Uiupdate(){
         
         AnySuggestionsLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -54,10 +55,6 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         layout.minimumLineSpacing = 10 // Customize line spacing
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
         collectionview.collectionViewLayout = layout
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
