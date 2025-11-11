@@ -9,13 +9,17 @@ import UIKit
 
 class BirthDayWishVC: UIViewController {
 
+    @IBOutlet weak var dateLbl: UILabel!
     private var confettiLayer: CAEmitterLayer?
     private var isAnimating = true
+    @IBOutlet weak var nameLbl: UILabel!
     private let confetti1: ConfettiView = .top
     @IBOutlet weak var profileImgView: UIImageView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var childView: UIView!
+    var nameLbl_text:String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         parentView.layer.cornerRadius = 10
@@ -24,7 +28,12 @@ class BirthDayWishVC: UIViewController {
         profileImgView.layer.cornerRadius = profileImgView.frame.height/2
         profileImgView.layer.borderWidth = 7
         profileImgView.layer.borderColor = UIColor.primery.cgColor
-        confeeti()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.confeeti()
+        }
+
+        
     }
 
     @IBAction func celebrateBtn(_ sender: UIButton) {
