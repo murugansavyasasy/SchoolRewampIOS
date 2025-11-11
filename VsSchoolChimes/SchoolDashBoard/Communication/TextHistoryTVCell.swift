@@ -31,6 +31,7 @@ class TextHistoryTVCell: UITableViewCell {
     private var isExpanded = false
     private var fullText: String = ""
     
+    var descriptiontext = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -60,7 +61,7 @@ class TextHistoryTVCell: UITableViewCell {
     }
     
     @IBAction func Select(_ sender: UIButton) {
-        delegate?.select(Tittle: MessageTitle.text ?? "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")
+        delegate?.select(Tittle: MessageTitle.text ?? "selectedText", descriptContent: descriptiontext)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

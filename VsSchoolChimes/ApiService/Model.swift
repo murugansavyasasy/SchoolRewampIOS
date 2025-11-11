@@ -639,8 +639,9 @@ struct StudentStatisticsResponse: Codable {
 
 struct StudentStatistics: Codable {
     let total_working_days: Int?
-    let present_days: Int?
-    let absent_days: Int?
+    let present_days: Double?
+    let absent_days: Double?
+    let absent_limit: Int?
     let completed_working_days: Int?
     let upcoming_working_days: Int?
     let attendance_percentage: String?
@@ -648,10 +649,10 @@ struct StudentStatistics: Codable {
 }
 
 struct WeeklyStatus: Codable {
-    let start : String?
-    let end : String?
-    let student_name : String?
-    let att_list : [String]?
+    let start: String?
+    let end: String?
+    let student_name: String?
+    let att_list: [String]?
 }
 
 
@@ -2677,7 +2678,18 @@ struct UpdateItem: Codable {
     let video_link: String?
     let downloadable_image: String?
 }
+struct IntroResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [IntroFeature]?
+}
 
+struct IntroFeature: Codable {
+    let id: String?
+    let title: String?
+    let description: String?
+    let file_path: [FilePath]?
+}
 struct AttendanceStudentListResponse: Codable {
     let status: Bool?
     let message: String?

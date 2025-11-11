@@ -132,6 +132,7 @@ class PopoverViewVC: UIViewController {
             titleLabel.text = item.title
             titleLabel.textColor = .label
             titleLabel.font = .systemFont(ofSize: 15)
+            titleLabel.numberOfLines = 0
             
             hStack.addArrangedSubview(iconView)
             hStack.addArrangedSubview(titleLabel)

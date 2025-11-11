@@ -49,6 +49,7 @@ class CellConfingName {
     static let BanerTableViewCell = "BanerTableViewCell"
     static let RatingTableViewCell = "RatingTableViewCell"
     static let RatingTypeTableViewCell = "RatingTypeTableViewCell"
+    static let SuccesseRatusTVC = "SuccesseRatusTVC"
     static let SuggestionsCollectionViewCell = "SuggestionsCollectionViewCell"
     static let StrengthTvCell = "StrengthTvCell"
     static let StandardTVC = "StandardTVC"

@@ -287,13 +287,11 @@
 		8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8E82CDC83860006068E /* RateUsViewController.swift */; };
 		8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */; };
 		8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */; };
-		8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EE2CDC83860006068E /* SubmitRatingViewController.swift */; };
 		8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */; };
 		8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8E62CDC83860006068E /* BanerTableViewCell.xib */; };
 		8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8E92CDC83860006068E /* RateUsViewController.xib */; };
 		8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8EB2CDC83860006068E /* RatingTableViewCell.xib */; };
 		8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */; };
-		8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */; };
 		8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */; };
 		8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9022CDC8A820006068E /* LogoutViewController.swift */; };
 		8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9032CDC8A820006068E /* LogoutViewController.xib */; };
@@ -333,6 +331,8 @@
 		845347FD2E5C64B600D47393 /* LessonPlanTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845347FB2E5C64B600D47393 /* LessonPlanTVC.xib */; };
 		845988412DD61382007CDB23 /* EventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845988402DD61382007CDB23 /* EventTVC.xib */; };
 		845988422DD61382007CDB23 /* EventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459883F2DD61382007CDB23 /* EventTVC.swift */; };
+		845AB8702EC1F89C003C22E1 /* SuccesseRatusTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845AB86F2EC1F89C003C22E1 /* SuccesseRatusTVC.xib */; };
+		845AB8712EC1F89C003C22E1 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		845CAC882E54B06C000FA540 /* LSRWSubmisionListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845CAC872E54B06C000FA540 /* LSRWSubmisionListVC.xib */; };
 		845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		845F21752E45C0DD0078AF69 /* AssignmentPriview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F21732E45C0DD0078AF69 /* AssignmentPriview.swift */; };
@@ -1202,8 +1202,6 @@
 		8442A8EB2CDC83860006068E /* RatingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingTableViewCell.xib; sourceTree = "<group>"; };
 		8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingTypeTableViewCell.swift; sourceTree = "<group>"; };
 		8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingTypeTableViewCell.xib; sourceTree = "<group>"; };
-		8442A8EE2CDC83860006068E /* SubmitRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRatingViewController.swift; sourceTree = "<group>"; };
-		8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitRatingViewController.xib; sourceTree = "<group>"; };
 		8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionsCollectionViewCell.xib; sourceTree = "<group>"; };
 		8442A9022CDC8A820006068E /* LogoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
@@ -1251,6 +1249,8 @@
 		845347FB2E5C64B600D47393 /* LessonPlanTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonPlanTVC.xib; sourceTree = "<group>"; };
 		8459883F2DD61382007CDB23 /* EventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTVC.swift; sourceTree = "<group>"; };
 		845988402DD61382007CDB23 /* EventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTVC.xib; sourceTree = "<group>"; };
+		845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccesseRatusTVC.swift; sourceTree = "<group>"; };
+		845AB86F2EC1F89C003C22E1 /* SuccesseRatusTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuccesseRatusTVC.xib; sourceTree = "<group>"; };
 		845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWSubmisionListVC.swift; sourceTree = "<group>"; };
 		845CAC872E54B06C000FA540 /* LSRWSubmisionListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWSubmisionListVC.xib; sourceTree = "<group>"; };
 		845F21732E45C0DD0078AF69 /* AssignmentPriview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentPriview.swift; sourceTree = "<group>"; };
@@ -1818,6 +1818,7 @@
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		8405884C2DE18CE100A7384E /* FeeDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeeDetail; sourceTree = "<group>"; };
 		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
+		845AB85F2EC1A786003C22E1 /* OnboardingFlow */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingFlow; sourceTree = "<group>"; };
 		845CF1202E81737E001B2147 /* What'sNewVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "What'sNewVC"; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
@@ -2765,10 +2766,10 @@
 				8442A8EB2CDC83860006068E /* RatingTableViewCell.xib */,
 				8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */,
 				8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */,
-				8442A8EE2CDC83860006068E /* SubmitRatingViewController.swift */,
-				8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */,
 				8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */,
 				8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */,
+				845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */,
+				845AB86F2EC1F89C003C22E1 /* SuccesseRatusTVC.xib */,
 			);
 			path = "Rate Us";
 			sourceTree = "<group>";
@@ -3362,6 +3363,7 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
 				849DD1612D9668B00027910D /* Biometric */,
 				848CC1802D8A9E2A00CD0255 /* Password */,
 				848CC1742D8A98AB00CD0255 /* MobileNumber */,
@@ -4271,6 +4273,7 @@
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				8405884C2DE18CE100A7384E /* FeeDetail */,
 				843BCD752E2E71EA00D4364A /* CalanderCv */,
+				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
 				845CF1202E81737E001B2147 /* What'sNewVC */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
@@ -4760,6 +4763,7 @@
 				84127AF22E03C8F00092159D /* Gilroy-Bold.ttf in Resources */,
 				84127AF32E03C8F00092159D /* CustomTabVC.xib in Resources */,
 				84127AF42E03C8F00092159D /* CoupenDetailCVC.xib in Resources */,
+				845AB8702EC1F89C003C22E1 /* SuccesseRatusTVC.xib in Resources */,
 				84127AF52E03C8F00092159D /* AddCoupenTVC.xib in Resources */,
 				84127AF62E03C8F00092159D /* CVCell.xib in Resources */,
 				84127AF72E03C8F00092159D /* ExperiedDetailTVC.xib in Resources */,
@@ -4784,7 +4788,6 @@
 				8450D0082E9639A1008D57D9 /* absentPrivewVC.xib in Resources */,
 				84DE949C2E53252E008E1BF4 /* SenderQuizVc.xib in Resources */,
 				843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */,
-				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */,
 				844DEDE92E549C150016A347 /* QuistionTvTableViewCell.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
@@ -5005,6 +5008,7 @@
 				FACD4D712E30F46F0084B125 /* TimetableBottomVC.swift in Sources */,
 				846E7FAD2E2785CC00BC954B /* AudioPlayerTVC.swift in Sources */,
 				FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */,
+				845AB8712EC1F89C003C22E1 /* SuccesseRatusTVC.swift in Sources */,
 				FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */,
 				FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
 				FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */,
@@ -5403,7 +5407,6 @@
 				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
 				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
-				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
 				845347FC2E5C64B600D47393 /* LessonPlanTVC.swift in Sources */,
 				848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */,
 				FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */,

@@ -8,7 +8,15 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class SettingsViewController: UIViewController, BaktoHome {
+class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
+    func viewAttachment(sender: UIButton) {
+        updatePopoverHeight()
+    }
+    
+    func dismiss(_: Bool) {
+        removePopoverOverlay()
+    }
+    
     
     func backtohome(type: String) {
         delegate?.backtohome(type: "")
@@ -27,7 +35,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     var delegate: BaktoHome?
     var passVale = 1
     var Language: String?
-    
+    private var popoverOverlayView: UIView?
     // MARK: - Section Data
     lazy var sections: [Section] = [
         Section(
@@ -236,9 +244,10 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             present(vc, animated: true)
             
         case menuname.feedback:
-            if let url = URL(string: "https://apps.apple.com/app/id700513732?action=write-review") {
-                UIApplication.shared.open(url)
-            }
+//            if let url = URL(string: "https://apps.apple.com/app/id700513732?action=write-review") {
+//                UIApplication.shared.open(url)
+//            }
+            presentPopover()
             
         case menuname.logout:
             UserDefaults.standard.set(true, forKey: "Logout")
@@ -298,5 +307,104 @@ struct Image {
     init(title: String, Imageitems: [String]) {
         self.title = title
         self.uiImages = Imageitems.map { UIImage(systemName: $0) ?? UIImage(named: $0) }
+    }
+}
+@available(iOS 14.0, *)
+extension SettingsViewController {
+    private func presentPopover() {
+        let popoverVC = RateUsViewController()
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.delegate = self
+        popoverVC.loadViewIfNeeded()
+        popoverVC.view.layoutIfNeeded()
+        
+        let scrollContentHeight = popoverVC.tableview.contentSize.height
+        let paddingX: CGFloat = 20
+        let width = view.frame.width - (paddingX * 2)
+        let height = min(scrollContentHeight, view.frame.height)
+        
+        popoverVC.preferredContentSize = CGSize(width: width, height: height)
+        
+        let originX = (view.frame.width - width) / 2
+        let originY = (view.frame.height - height) / 2
+        let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
+        
+        addPopoverOverlay()
+        
+        if let popover = popoverVC.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.backgroundColor = .white
+            popover.sourceRect = sourceRect
+            popover.permittedArrowDirections = []
+            popover.delegate = self
+        }
+        
+        present(popoverVC, animated: true)
+    }
+    private func addPopoverOverlay() {
+        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+
+        let overlay = UIView(frame: window.bounds)
+        overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlay.alpha = 0
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopoverOverlay))
+        overlay.addGestureRecognizer(tapGesture)
+
+        window.addSubview(overlay)
+        popoverOverlayView = overlay
+
+        UIView.animate(withDuration: 0.2) {
+            overlay.alpha = 1
+        }
+    }
+    func updatePopoverHeight() {
+        guard let presentedVC = presentedViewController as? RateUsViewController else { return }
+
+        presentedVC.loadViewIfNeeded()
+        presentedVC.view.layoutIfNeeded()
+
+        let scrollContentHeight = presentedVC.tableview.contentSize.height
+        let paddingX: CGFloat = 20
+        let width = view.frame.width - (paddingX * 2)
+        let height = min(scrollContentHeight, view.frame.height * 0.85)
+
+        presentedVC.preferredContentSize = CGSize(width: width, height: height)
+
+        if let popover = presentedVC.popoverPresentationController {
+            popover.sourceRect = CGRect(
+                x: (view.frame.width - width) / 2,
+                y: (view.frame.height - height) / 2,
+                width: width,
+                height: height
+            )
+        }
+    }
+    @objc private func dismissPopoverOverlay() {
+        removePopoverOverlay()
+        dismiss(animated: true)
+    }
+
+    private func removePopoverOverlay() {
+        guard let overlay = popoverOverlayView else { return }
+
+        UIView.animate(withDuration: 0.2, animations: {
+            overlay.alpha = 0
+        }, completion: { _ in
+            overlay.removeFromSuperview()
+            self.popoverOverlayView = nil
+        })
+    }
+}
+
+@available(iOS 14.0, *)
+extension SettingsViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        removePopoverOverlay()
     }
 }
