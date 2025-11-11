@@ -374,13 +374,13 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
         
         cell.nameLbl.text = data.student_name
         cell.classLbl.text = data.roll_no
-        cell.StatusBtn.setTitle("Call", for: .normal)
-        cell.StatusBtn.backgroundColor = .systemBlue
+//        cell.StatusBtn.setTitle("Call", for: .normal)
+//        cell.StatusBtn.backgroundColor = .systemBlue
         cell.addmissionLbl.isHidden = data.admission_no ==  "" ? true : false
         cell.addmissionLbl.text =  "admission no: " + (data.admission_no ?? "")
-        cell.delegate = self
-        cell.StatusBtn.tag = indexPath.row
-        cell.StatusBtn.isUserInteractionEnabled = true
+       // cell.delegate = self
+//        cell.StatusBtn.tag = indexPath.row
+//        cell.StatusBtn.isUserInteractionEnabled = true
         
         if data.photo_path == nil || data.photo_path == "" {
             cell.profileImage.tintColor = .error
@@ -395,6 +395,34 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
             cell.profileImage.tintColor = .clear
             cell.profileImage.sd_setImage(with: URL(string: data.photo_path ?? ""), placeholderImage: UIImage(named: "placeholder"))
         }
+        
+        cell.StatusBtn.isHidden = true
+        cell.separatorView.isHidden = false
+        cell.FNStack.isHidden = false
+        cell.ANStack.isHidden = false
+        
+        if let attStatus = absentStudentData[indexPath.row].attd_status {
+            let parts = attStatus.components(separatedBy: "/")
+            
+            // Expecting formats like "P/A", "OD/OD", "P~/P", etc.
+            if parts.count == 2 {
+                let fnInfo = getStatusInfo(for: parts[0])
+                let anInfo = getStatusInfo(for: parts[1])
+                
+                cell.FNBtn.setTitle(fnInfo.0, for: .normal)
+                cell.FNBtn.backgroundColor = fnInfo.1
+                
+                cell.ANBtn.setTitle(anInfo.0, for: .normal)
+                cell.ANBtn.backgroundColor = anInfo.1
+            } else {
+                // Fallback if format is unexpected
+                cell.FNBtn.setTitle("-", for: .normal)
+                cell.FNBtn.backgroundColor = .lightGray
+                cell.ANBtn.setTitle("-", for: .normal)
+                cell.ANBtn.backgroundColor = .lightGray
+            }
+        }
+        
         return cell
     }
     
@@ -418,7 +446,20 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
         return UITableView.automaticDimension
     }
     
-    
+    func getStatusInfo(for status: String) -> (String, UIColor) {
+        switch status {
+        case "P":
+            return ("P", .systemGreen)
+        case "A":
+            return ("A", .error)
+        case "OD":
+            return ("OD", .systemBlue)
+        case "P~":
+            return ("LA", .button)
+        default:
+            return ("-", .lightGray)
+        }
+    }
 }
 // MARK: - Data Models
 

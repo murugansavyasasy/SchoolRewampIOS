@@ -14,14 +14,21 @@ class QuizSubmisionTvCell: UITableViewCell {
 
     @IBOutlet weak var imageViewWith: NSLayoutConstraint!
     @IBOutlet weak var profileImage: UIImageView!
-    
     @IBOutlet weak var addmissionLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var classLbl: UILabel!
     @IBOutlet weak var SubmittedOnBtn: UIButton!
     @IBOutlet weak var StatusBtn: UIButton!
     @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var FNStack: UIStackView!
+    @IBOutlet weak var ANStack: UIStackView!
+    @IBOutlet weak var FNBtn: UIButton!
+    @IBOutlet weak var ANBtn: UIButton!
+    
+    
     weak var delegate:call?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -35,6 +42,12 @@ class QuizSubmisionTvCell: UITableViewCell {
         
         SubmittedOnBtn.titleLabel?.numberOfLines = 0
         SubmittedOnBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        
+        separatorView.isHidden = true
+        FNStack.isHidden = true
+        ANStack.isHidden = true
+        FNBtn.layer.cornerRadius = 10
+        ANBtn.layer.cornerRadius = 10
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

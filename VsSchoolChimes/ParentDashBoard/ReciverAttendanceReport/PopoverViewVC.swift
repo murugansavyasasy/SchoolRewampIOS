@@ -27,37 +27,37 @@ class PopoverViewVC: UIViewController {
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // Force layout pass
-        view.layoutIfNeeded()
-        
-        // Measure actual height the stack wants
-        let targetWidth = view.bounds.width
-        let fittingSize = overallStack.systemLayoutSizeFitting(
-            CGSize(width: 250, height: UIView.layoutFittingCompressedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-        
-        // Add small padding, and cap at max height
-        let maxHeight: CGFloat = 400
-        let finalHeight = min(fittingSize.height + 16, maxHeight)
-        
-        // Update popover size *after* layout
-        if preferredContentSize.height != finalHeight {
-            preferredContentSize = CGSize(width: targetWidth, height: finalHeight)
-            
-            // 🔥 Force the popover controller to refresh layout
-            if let popover = presentationController?.presentedView {
-                popover.setNeedsLayout()
-                popover.layoutIfNeeded()
-            }
-        }
-        
-        print("✅ Stack calculated height:", fittingSize.height)
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        
+//        // Force layout pass
+//        view.layoutIfNeeded()
+//        
+//        // Measure actual height the stack wants
+//        let targetWidth = view.bounds.width
+//        let fittingSize = overallStack.systemLayoutSizeFitting(
+//            CGSize(width: 250, height: UIView.layoutFittingCompressedSize.height),
+//            withHorizontalFittingPriority: .required,
+//            verticalFittingPriority: .fittingSizeLevel
+//        )
+//        
+//        // Add small padding, and cap at max height
+//        let maxHeight: CGFloat = 400
+//        let finalHeight = min(fittingSize.height + 16, maxHeight)
+//        
+//        // Update popover size *after* layout
+//        if preferredContentSize.height != finalHeight {
+//            preferredContentSize = CGSize(width: targetWidth, height: finalHeight)
+//            
+//            // 🔥 Force the popover controller to refresh layout
+//            if let popover = presentationController?.presentedView {
+//                popover.setNeedsLayout()
+//                popover.layoutIfNeeded()
+//            }
+//        }
+//        
+//        print("✅ Stack calculated height:", fittingSize.height)
+//    }
 
 
 

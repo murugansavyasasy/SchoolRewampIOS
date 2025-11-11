@@ -638,12 +638,12 @@ struct StudentStatisticsResponse: Codable {
 }
 
 struct StudentStatistics: Codable {
-    let total_working_days: Int?
+    let total_working_days: Double?
     let present_days: Double?
     let absent_days: Double?
-    let absent_limit: Int?
-    let completed_working_days: Int?
-    let upcoming_working_days: Int?
+    let absent_limit: Double?
+    let completed_working_days: Double?
+    let upcoming_working_days: Double?
     let attendance_percentage: String?
     let weekly_status: WeeklyStatus?
 }
@@ -871,6 +871,7 @@ struct AbsentisReportStudent: Codable {
     let photo_path: String?
     let primary_mobile: String?
     let gender: String?
+    let attd_status: String?
     
 }
 
