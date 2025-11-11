@@ -20,6 +20,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var noLeaveImage: UIImageView!
     
     // MARK: - Properties
     var eventHolidayData: [EventHolidayData]?
@@ -52,6 +53,9 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
             titleLbl.text = AttendanceString.holidays
         }
+        
+        noHolidayLbl.isHidden = true
+        noLeaveImage.isHidden = true
         
         setupViews()
         addSwipeGestures()
@@ -251,8 +255,9 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             return holidayDate >= startOfMonth && holidayDate < endOfMonth
         }.sorted { ($0.date ?? "") < ($1.date ?? "") }
         formatter.dateFormat = "MMMM yyyy"
-        noHolidayLbl.text = "\(AttendanceString.noHolidaysFor) \(formatter.string(from: currentDate))"
+        noHolidayLbl.text = "\("No holidays in") \(formatter.string(from: currentDate))"
         noHolidayLbl.isHidden = !filteredHolidays.isEmpty
+        noLeaveImage.isHidden = !filteredHolidays.isEmpty
         leaveListTable.reloadData()
     }
     private func updateHeaderLabels() {

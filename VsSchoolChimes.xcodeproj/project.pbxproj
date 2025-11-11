@@ -423,6 +423,8 @@
 		8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8488061A2DF6A963004806BF /* SubmissionTVC.xib */; };
 		84883C4E2EBC77D5005108AD /* PunchAttendaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */; };
 		84883C4F2EBC77D5005108AD /* PunchAttendaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */; };
+		84883EE72EC1B570005108AD /* BirthDayWishVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84883EE62EC1B570005108AD /* BirthDayWishVC.xib */; };
+		84883EE82EC1B570005108AD /* BirthDayWishVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84883EE52EC1B570005108AD /* BirthDayWishVC.swift */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
 		8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8489D9EA2DFBF07700D7226A /* FeePendingTVC.xib */; };
 		8489D9EC2DFBF07700D7226A /* FeePendingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D9E92DFBF07700D7226A /* FeePendingTVC.swift */; };
@@ -1340,6 +1342,8 @@
 		8488061A2DF6A963004806BF /* SubmissionTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmissionTVC.xib; sourceTree = "<group>"; };
 		84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchAttendaceVC.swift; sourceTree = "<group>"; };
 		84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchAttendaceVC.xib; sourceTree = "<group>"; };
+		84883EE52EC1B570005108AD /* BirthDayWishVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthDayWishVC.swift; sourceTree = "<group>"; };
+		84883EE62EC1B570005108AD /* BirthDayWishVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BirthDayWishVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
 		8489D9E92DFBF07700D7226A /* FeePendingTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeePendingTVC.swift; sourceTree = "<group>"; };
 		8489D9EA2DFBF07700D7226A /* FeePendingTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeePendingTVC.xib; sourceTree = "<group>"; };
@@ -3728,6 +3732,8 @@
 				84D85D772D51D7B5006842E9 /* CustomShimmerView.swift */,
 				84D85D792D51D7C6006842E9 /* CustomShimmerView.xib */,
 				FA8535482D9BC91400E0379C /* NewShimmerView.swift */,
+				84883EE52EC1B570005108AD /* BirthDayWishVC.swift */,
+				84883EE62EC1B570005108AD /* BirthDayWishVC.xib */,
 			);
 			path = CommonScreens;
 			sourceTree = "<group>";
@@ -4741,6 +4747,7 @@
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
 				848CC17A2D8A997200CD0255 /* MobileNumberVc.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
+				84883EE72EC1B570005108AD /* BirthDayWishVC.xib in Resources */,
 				8483F6402E6AF89100E2C886 /* PunchUserDetailsTVC.xib in Resources */,
 				84127AE92E03C8F00092159D /* AddSuccessTVC.xib in Resources */,
 				84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */,
@@ -5113,6 +5120,7 @@
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,
 				84EFF9CF2CCC7A6000C11C26 /* PasswordVc.swift in Sources */,
+				84883EE82EC1B570005108AD /* BirthDayWishVC.swift in Sources */,
 				84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */,
 				FAED585D2E4B682200497026 /* MeetingDetailTV.swift in Sources */,
 				840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */,
