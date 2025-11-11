@@ -2723,3 +2723,17 @@ struct SchoolQA: Codable {
     let question: String?
     let answer: [String]?
 }
+struct ReviewResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [Review]?
+}
+
+struct Review: Codable {
+    let id: String?
+    let mobile: String?
+    let rating: Int?
+    let description: String?
+    let created_on: String?
+    let updated_on: String?
+}

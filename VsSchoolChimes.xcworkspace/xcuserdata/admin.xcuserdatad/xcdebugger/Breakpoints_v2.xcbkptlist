@@ -176,9 +176,9 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Pauckt/HomePageVc/HomePaucktVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "Get_campians(parameter:)"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
+            landmarkName = "Get_Categories()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

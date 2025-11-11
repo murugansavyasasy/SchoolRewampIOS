@@ -81,6 +81,16 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupHeaderView()
         Global_variabel()
         setupProfileImage()
+        
+        DispatchQueue.main.async {
+            
+            let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .formSheet
+            self.present(vc, animated: true)
+            
+        }
+        
+        
     }
     
     @IBAction func notificationBtn(_ sender: UIButton) {

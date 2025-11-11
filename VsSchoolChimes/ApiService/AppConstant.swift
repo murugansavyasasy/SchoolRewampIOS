@@ -188,6 +188,8 @@ struct ServiceUrl{
     static let comm_api_assignment_target_details = "comm/api/assignment/target-details"
     static let dashboard_api_dashboard_faqs = "dashboard/api/dashboard/faqs"
     static let dashboard_api_dashboard_features = "dashboard/api/dashboard/features"
+    static let dashboard_api_reviews_list = "dashboard/api/reviews/list"
+    static let dashboard_api_reviews_add = "dashboard/api/reviews/add"
 }
 
 struct localData{

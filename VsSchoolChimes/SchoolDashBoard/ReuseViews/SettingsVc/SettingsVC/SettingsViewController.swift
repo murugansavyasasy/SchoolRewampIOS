@@ -244,9 +244,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             present(vc, animated: true)
             
         case menuname.feedback:
-//            if let url = URL(string: "https://apps.apple.com/app/id700513732?action=write-review") {
-//                UIApplication.shared.open(url)
-//            }
             presentPopover()
             
         case menuname.logout:
