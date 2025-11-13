@@ -260,8 +260,18 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         }
 
         let comparison = Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day)
-        todayLbl.text = (comparison == .orderedSame) ? "Today" :
-                        (comparison == .orderedAscending) ? "Past Date" : "Future Date"
+        if comparison == .orderedSame {
+            todayLbl.text = "Today"
+        } else if comparison == .orderedAscending {
+            // 🟢 Past date → show day name
+            let dayFormatter = DateFormatter()
+            dayFormatter.dateFormat = "EEEE" // Full day name: Monday, Tuesday...
+            todayLbl.text = dayFormatter.string(from: selectedDate)
+        } else {
+            // 🔵 Future date
+            todayLbl.text = "Future Date"
+        }
+
         dateLbl.text = outputFormatter.string(from: selectedDate)
     }
 
@@ -370,6 +380,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                         self.Cv.dataSource = self
                         self.Cv.reloadData()
                         DispatchQueue.main.async {
+                            self.Cv.layoutIfNeeded()
                             self.cvHeight.constant = self.Cv.contentSize.height
                         }
                     }else{
@@ -543,6 +554,8 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
         // Reload the UI
         if FilterHomeWorkList?.count == 0{
             self.noDataFound.isHidden = false
+            self.nodataFoundLbl.isHidden = false
+            self.nodataFoundLbl.text = "No home work found" 
             self.cvHeight.constant = 0
         }
         Cv.reloadData()

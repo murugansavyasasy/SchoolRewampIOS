@@ -458,6 +458,7 @@ extension homeWorkVc: UISearchBarDelegate{
                 date: self.selectedDate ?? ""
             )
             self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
+            self.noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
             self.bottomCV.reloadData()
             return
         }

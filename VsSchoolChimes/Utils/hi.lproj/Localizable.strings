@@ -5,6 +5,27 @@
   Created by admin on 08/11/24.
   
 */
+//MARK: Login
+"Password" = "पासवर्ड";
+"Mobile Number" = "मोबाइल नंबर";
+"Login" = "लॉगिन";
+"WELCOME BACK !" = "स्वागत है फिर से!";
+"SchoolCommunityMessage" = "अपने स्कूल समुदाय से जुड़े रहें।\nआपके अपडेट्स, संचार और स्कूल जीवन—सब एक ही जगह पर।";
+"Forgot Password ?" = "पासवर्ड भूल गए?";
+//Mark: PasswordScreen
+
+"Create Password" = "पासवर्ड बनाएँ";
+"Confirm password" = "पासवर्ड की पुष्टि करें";
+"Enter the old password" = "पुराना पासवर्ड दर्ज करें";
+"Your password has been securely store and encrypted for protection. For security reason, it cannot be displayed in plain text." = "आपका पासवर्ड सुरक्षित रूप से संग्रहीत और एन्क्रिप्ट किया गया है। सुरक्षा कारणों से इसे सामान्य पाठ में प्रदर्शित नहीं किया जा सकता।";
+"Enter the new password" = "नया पासवर्ड दर्ज करें";
+"Create the new password" = "नया पासवर्ड बनाएँ";
+"Re-enter the new password" = "नया पासवर्ड फिर से दर्ज करें";
+"Change password" = "पासवर्ड बदलें";
+"Reset password" = "पासवर्ड रीसेट करें";
+
+
+
 "welcome_message" = "स्वागत है";
 "change_language" = "भाषा बदलें";
 "Home" = "होम";
@@ -25,20 +46,104 @@
 
 
 // MARK: Settings page
-"Notifications" = "सूचनाएं";
-"FAQ" = "सामान्य प्रश्न";
-"Contact Us" = "हमसे संपर्क करें";
-"Terms and Conditions" = "नियम और शर्तें";
-"Change App Language" = "ऐप की भाषा बदलें";
-"Feedback" = "प्रतिक्रिया";
-"Report a bug" = "त्रुटि की रिपोर्ट करें";
-"Send Feedback" = "प्रतिक्रिया भेजें";
-"Logout" = "लॉगआउट करें";
-"GENERAL" = "सामान्य";
-"Feedback" = "प्रतिक्रिया";
+"general" = "सामान्य";
+"notifications" = "सूचनाएँ";
+"faq" = "अक्सर पूछे जाने वाले प्रश्न";
+"contactUs" = "संपर्क करें";
+"termsAndConditions" = "नियम और शर्तें";
+"changeAppLanguage" = "ऐप भाषा बदलें";
+"feedback" = "हमें रेट करें";
+"reportABug" = "बग रिपोर्ट करें";
+"sendFeedback" = "प्रतिपुष्टि भेजें";
+"logout" = "लॉगआउट";
+"faceID" = "Face ID / Touch ID";
+
+"accountSecurity" = "खाता और सुरक्षा";
+"preference" = "प्राथमिकता";
+"supportInfo" = "सहायता और जानकारी";
+"feedbackSection" = "प्रतिपुष्टि";
+
+"changePassword" = "पासवर्ड बदलें";
+"privacyPolicy" = "गोपनीयता नीति";
+"aboutApp" = "ऐप के बारे में";
+"howToUse" = "कैसे उपयोग करें?";
+"whatsNew" = "क्या नया है";
+"appVersion" = "ऐप संस्करण";
 "Settings" = "सेटिंग्स";
-"Rate Us" = "हमें रेट करें";
-"Contact Support" = "सहायता संपर्क करें";
+
+// MARK: Common String files
+"Search" = "खोजें";
+"Location Name" = "स्थान का नाम";
+"Distance" = "दूरी";
+"Get Location" = "स्थान प्राप्त करें";
+"You can only select up to 2 video files." = "आप केवल 2 वीडियो फ़ाइलें चुन सकते हैं.";
+"Cancel" = "रद्द करें";
+"Camera" = "कैमरा";
+"Document" = "दस्तावेज़";
+"Video" = "वीडियो";
+"Photos" = "फ़ोटो";
+"VIDEO" = "वीडियो";
+"M4A" = "ऑडियो";
+"See less" = "कम देखें";
+"See more" = "अधिक देखें";
+"selected Text" = "चयनित पाठ";
+"Roll No ASC" = "रोल नंबर आरोही क्रम";
+"Roll No DSC" = "रोल नंबर अवरोही क्रम";
+"Admission No DSC" = "प्रवेश संख्या अवरोही क्रम";
+"Admission No ASC" = "प्रवेश संख्या आरोही क्रम";
+"Name A-Z" = "नाम A-Z";
+"Name Z-A" = "नाम Z-A";
+"Present" = "उपस्थित";
+"Absent" = "अनुपस्थित";
+"Get All Student" = "सभी छात्रों को प्राप्त करें";
+"Standard & Section" = "कक्षा और अनुभाग";
+"Standard" = "कक्षा";
+"Logout" = "लॉग आउट";
+"Select from history" = "इतिहास से चुनें";
+"Roll No" = "रोल नंबर";
+"Name" = "नाम";
+"Status" = "स्थिति";
+"Section" = "अनुभाग";
+"Academic Year" = "शैक्षणिक वर्ष";
+"Filter" = "फ़िल्टर";
+"Upload Attachment" = "संलग्नक अपलोड करें";
+"Upload Image/Document" = "चित्र/दस्तावेज़ अपलोड करें";
+"Upload Image/Document (Optional)" = "चित्र/दस्तावेज़ अपलोड करें (वैकल्पिक)";
+"Description" = "विवरण";
+"Starts on" = "प्रारंभ होता है";
+"Groups" = "समूह";
+"Section or student" = "अनुभाग या छात्र";
+"Standard or section" = "कक्षा या अनुभाग";
+"From Time" = "से समय";
+"Schedule date" = "निर्धारित तिथि";
+"Do not dial beyond" = "इससे आगे कॉल न करें";
+"Emergency call   ℹ️ " = "आपातकालीन कॉल   ℹ️ ";
+"Instant Call" = "तुरंत कॉल करें";
+"Text Message" = "टेक्स्ट संदेश";
+"Schedule Call" = "कॉल शेड्यूल करें";
+"Enter Text Here" = "यहाँ पाठ दर्ज करें";
+"Enter Reason" = "कारण दर्ज करें";
+"Back to compose" = "लिखने के लिए वापस जाएँ";
+"Venue" = "स्थान";
+"Add Photos" = "फ़ोटो जोड़ें";
+"Event Details" = "कार्यक्रम विवरण";
+"Event Title" = "कार्यक्रम शीर्षक";
+"(Optional)" = "(वैकल्पिक)";
+"completed" = "पूर्ण";
+"pending" = "लंबित";
+"Enter bugs" = "त्रुटियाँ दर्ज करें";
+"Profile" = "प्रोफ़ाइल";
+"Contact Support" = "सहायता से संपर्क करें";
+"Terms and Conditions" = "नियम और शर्तें";
+"Principal" = "प्रधानाचार्य";
+"Parent" = "अभिभावक";
+"Proceed" = "आगे बढ़ें";
+"Welcome" = "स्वागत है";
+"Home" = "मुखपृष्ठ";
+"Settings" = "सेटिंग्स";
+"Help" = "सहायता";
+"Attendance Report" = "उपस्थिति रिपोर्ट";
+
 
 // MARK: Dashboard
 "discussion" = "चर्चा";

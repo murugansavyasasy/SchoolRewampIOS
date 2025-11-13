@@ -1017,3 +1017,52 @@ extension UILabel {
         self.textAlignment = .left
     }
 }
+
+class LocalizationButton: UIButton {
+
+    @IBInspectable var localizationKey: String?
+
+     override func awakeFromNib() {
+         super.awakeFromNib()
+         applyLocalization()
+
+         NotificationCenter.default.addObserver(
+             self,
+             selector: #selector(applyLocalization),
+             name: NSNotification.Name("LANGUAGE_CHANGED"),
+             object: nil
+         )
+     }
+
+     @objc private func applyLocalization() {
+         let key = localizationKey?.isEmpty == false ? localizationKey! : (self.title(for: .normal) ?? "")
+
+         self.setTitle(key.translated(), for: .normal)
+     }
+}
+
+class LocalizationLabel: UILabel {
+
+    @IBInspectable var localizationKey: String? {
+        didSet {
+            applyLocalization()
+        }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        applyLocalization()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applyLocalization),
+            name: NSNotification.Name("LANGUAGE_CHANGED"),
+            object: nil
+        )
+    }
+
+    @objc private func applyLocalization() {
+        let key = localizationKey?.isEmpty == false ? localizationKey! : (self.text ?? "")
+        self.text = key.translated()
+    }
+}

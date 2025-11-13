@@ -1829,6 +1829,7 @@
 		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
 		84AB0FFC2E78E094001160AD /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
 		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
+		84C765B52EC48C8700D78358 /* Message */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Message; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
 		84E0FBF72D8E73D800CACCFE /* SchoolList */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SchoolList; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -3464,6 +3465,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84C765B52EC48C8700D78358 /* Message */,
 				84883C4B2EBC779F005108AD /* PunchAttendaceVc */,
 				84DE94992E5324F7008E1BF4 /* Quiz */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
@@ -4284,6 +4286,7 @@
 				849DD1612D9668B00027910D /* Biometric */,
 				84AB0FFC2E78E094001160AD /* CvCell */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
+				84C765B52EC48C8700D78358 /* Message */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
 			);

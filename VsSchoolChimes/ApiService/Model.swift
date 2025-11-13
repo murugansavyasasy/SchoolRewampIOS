@@ -325,6 +325,7 @@ struct MenuCountDetail: Codable {
 }
 
 struct MenuData: Codable {
+    let is_birthday : Bool?
     let contact_details: ContactDetails?
     let frequently_used: [MenuDetail]?
     let menus: [MenuDetail]?

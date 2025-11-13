@@ -39,41 +39,42 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     // MARK: - Section Data
     lazy var sections: [Section] = [
         Section(
-            title: "Account & Security",
+            title: menuname.accountSecurity,
             items: [
-                "Change Password",
+                menuname.changePassword,
                 menuname.faceID
             ]
         ),
         Section(
-            title: "Preference",
+            title: menuname.preference,
             items: [
                 menuname.notifications,
                 menuname.changeAppLanguage
             ]
         ),
         Section(
-            title: "Support & Information",
+            title: menuname.supportInfo,
             items: [
                 menuname.faq,
                 menuname.contactUs,
                 menuname.termsAndConditions,
-                "Privacy Policy",
-                "About the App",
-                "How to Use?",
-                "What's new"
+                menuname.privacyPolicy,
+                menuname.aboutApp,
+                menuname.howToUse,
+                menuname.whatsNew
             ]
         ),
         Section(
-            title: "Feedback",
+            title: menuname.feedbackSection,
             items: [
                 menuname.reportABug,
                 menuname.feedback,
-                "App Version",
+                menuname.appVersion,
                 menuname.logout
             ]
         )
     ]
+
     
     // MARK: - Image Data
     let Images: [Image] = [
@@ -161,28 +162,32 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SettingsTableViewCell, for: indexPath) as! SettingsTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.SettingsTableViewCell,
+            for: indexPath
+        ) as! SettingsTableViewCell
         
         let item = sections[indexPath.section].items[indexPath.row]
         let image = Images[indexPath.section].uiImages[indexPath.row]
         
-        cell.nameLbl.text = item.translated()
+        cell.nameLbl.localizationKey = item
         cell.nameLbl.textColor = item == menuname.logout ? .red : .black
         cell.faceIdSwitch.isHidden = item != menuname.faceID
         cell.arrowImg.isHidden = item == menuname.faceID
-        cell.imgView.image = image
-        
-        if item == "What's new" {
+        if item == menuname.whatsNew {
             cell.imgView.image = UIImage(named: "WhatNews")
+        } else {
+            cell.imgView.image = image
         }
-        
+
         if image == UIImage(systemName: "iphone.and.arrow.forward") {
             cell.imgView.tintColor = .red
         } else {
             cell.imgView.tintColor = .black
         }
-        
-        if item == "App Version" {
+
+        // ✅ App Version case
+        if item == menuname.appVersion {
             cell.versionLbl.isHidden = false
             if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
                let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
@@ -193,13 +198,15 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.versionLbl.isHidden = true
         }
-        
+
+        // ✅ RTL Support
         cell.arrowImg.applyRTLFlip(Language == "ar")
         cell.imgView.applyRTLFlip(Language == "ar")
+
         cell.selectionStyle = .none
-        
         return cell
     }
+
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -379,8 +386,9 @@ extension SettingsViewController {
         }
     }
     @objc private func dismissPopoverOverlay() {
-        removePopoverOverlay()
-        dismiss(animated: true)
+        guard let popoverVC = presentedViewController else { return }
+           popoverVC.dismiss(animated: true)
+           removePopoverOverlay()
     }
 
     private func removePopoverOverlay() {
