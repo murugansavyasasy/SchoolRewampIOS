@@ -157,7 +157,7 @@
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="All"/>
                                             <connections>
-                                                <action selector="AllAct:" destination="-1" eventType="touchUpInside" id="A48-nB-PTI"/>
+                                                <action selector="allAction:" destination="-1" eventType="touchUpInside" id="PVd-oa-KTp"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oah-Cx-55a">
@@ -169,7 +169,7 @@
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Unread"/>
                                             <connections>
-                                                <action selector="UnreadAct:" destination="-1" eventType="touchUpInside" id="LN8-bD-JeA"/>
+                                                <action selector="unreadAction:" destination="-1" eventType="touchUpInside" id="Dds-Sc-iea"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ar9-1W-NMI">
@@ -178,7 +178,7 @@
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Read"/>
                                             <connections>
-                                                <action selector="ReadAct:" destination="-1" eventType="touchUpInside" id="rQZ-5K-mpg"/>
+                                                <action selector="readAction:" destination="-1" eventType="touchUpInside" id="bI4-c0-9pR"/>
                                             </connections>
                                         </button>
                                     </subviews>

@@ -83,6 +83,9 @@ class AttachmentsVc: UIViewController {
             searchBar.isHidden = true
             searchBar.resignFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            noDataImage.isHidden = true
+            noDataLabel.isHidden = true
+            tv.isScrollEnabled = true
             searchBar.searchTextField.text = ""
             filteredAttachments = attachmentData
             tv.reloadData()
@@ -194,13 +197,14 @@ class AttachmentsVc: UIViewController {
                         self.searchBtn.isHidden = isEmpty
                         self.noDataImage.isHidden = !isEmpty
                         self.noDataLabel.isHidden = !isEmpty
+                        self.tv.isScrollEnabled = !isEmpty
                         self.noDataLabel.text = response.message
                         self.tv.reloadData()
                         
                     } else {
                         
                         let isEmpty = self.filteredAttachments?.isEmpty ?? false
-                        
+                        self.tv.isScrollEnabled = !isEmpty
                         if isEmpty{
                             self.searchBtn.isHidden = isEmpty
                             self.noDataImage.isHidden = !isEmpty
@@ -487,6 +491,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         } else {
             self.noDataLabel.isHidden = true
             self.noDataImage.isHidden = true
+            self.tv.isScrollEnabled = true
             
         }
     }

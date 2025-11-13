@@ -147,7 +147,7 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                         cell.Button4.backgroundColor = .systemGreen.withAlphaComponent(0.3)
                     }
                     
-                    cell.crtAnsLbl.isHidden  = true
+                    cell.correctAnswerStack.isHidden  = true
                 } else {
                     // ❌ Wrong → Red for student's choice, Green for correct answer
                     if cell.Button1.title(for: .normal) == studentAnswer {
@@ -173,8 +173,9 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                     }
 
                     // 🔎 Show label with correct answer (if needed)
-                    cell.crtAnsLbl.isHidden  = false
-                    cell.crtAnsLbl.text = "Correct: \(correctAnswer)"
+                    cell.correctAnswerStack.isHidden  = false
+                    cell.crtAnsLbl.text = correctAnswer
+                    cell.yourAnsLbl.text = studentAnswer
                 }
                 
                 cell.file_path = detail?.file_path

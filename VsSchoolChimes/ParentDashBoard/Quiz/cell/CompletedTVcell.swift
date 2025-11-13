@@ -20,6 +20,10 @@ class CompletedTVcell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var QuestionLbl: UILabel!
     @IBOutlet weak var QuestionView: UIView!
     @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var correctAnswerStack: UIStackView!
+    @IBOutlet weak var yourAnsLbl: UILabel!
+    
+    
     var file_path: [FilePath]?
     var buttons : [UIButton] = []
     override func awakeFromNib() {
