@@ -189,6 +189,15 @@ class AttachHistroyVC: UIViewController, SelectedId {
         } else {
             filteredAttachments = attachmentData.filter { $0.school_id == schoolId }
         }
+        
+        if filteredAttachments?.count == 0{
+            noDataImg.isHidden = false
+            noDataLabel.isHidden = false
+        }else{
+            
+            noDataImg.isHidden = true
+            noDataLabel.isHidden = true
+        }
         tv.reloadData()
     }
     func Attachments(withId AttachmentId: String) -> Attachment? {
