@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QuizVC: UIViewController {
+class QuizVC: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
@@ -20,6 +20,8 @@ class QuizVC: UIViewController {
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBtn: UIButton!
     
     
     //var colours = ["lesson1","lesson2","lesson3"]
@@ -29,11 +31,13 @@ class QuizVC: UIViewController {
     var selectedOption : [Int] = []
     var questions : [Question] = []
     var get_QuizDetails : [QuizListData] = []
+    var filteredExams : [QuizListData] = []
     var correctAnswers = ""
     var incorrectAnswers = ""
     var childDetails = UserDefaultFileManager.get_child_Details()
     let images = ["Quiz1", "Quiz2", "Quiz3"]
     var stausType   = "1"
+    var searchText = ""
     
     override func viewDidLoad() {
         
@@ -47,6 +51,13 @@ class QuizVC: UIViewController {
        
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
+        
+        searchBar.isHidden = true
+        searchBar.placeholder = CommonStringFile.Search
+        searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate = self
+        
         CellRegister()
         tv.delegate = self
         tv.dataSource = self
@@ -69,7 +80,8 @@ class QuizVC: UIViewController {
                 case .success(let successResponse):
                    
                         self.get_QuizDetails = successResponse.data ?? []
-                        let isempty = self.get_QuizDetails.isEmpty
+                        self.filteredExams = self.get_QuizDetails
+                        let isempty = self.filteredExams.isEmpty
                         self.tv.reloadData()
                         self.NoDataImage.isHidden = !isempty
                         self.NoDataLbl.isHidden = !isempty
@@ -201,13 +213,63 @@ class QuizVC: UIViewController {
 //        present(vc, animated: true)
         dismiss(animated: true)
     }
+    
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            searchBar.isHidden = true
+            searchBar.resignFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            filteredExams = get_QuizDetails
+            NoDataLbl.isHidden = true
+            NoDataImage.isHidden = true
+            tv.reloadData()
+        }
+    }
+    
+    func Filter_data(){
+        
+        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                if trimmed.isEmpty {
+                    filteredExams = get_QuizDetails
+                } else {
+                    filteredExams = get_QuizDetails.filter { exam in
+                        let titleMatch = exam.title?.localizedCaseInsensitiveContains(trimmed) ?? false
+                        let descMatch = exam.description?.localizedCaseInsensitiveContains(trimmed) ?? false
+                        let subjectMatch = exam.subject?.localizedCaseInsensitiveContains(trimmed) ?? false
+                        let sentByMatch = exam.sent_by?.localizedCaseInsensitiveContains(trimmed) ?? false
+                        let createdOnMatch = exam.created_on?.localizedCaseInsensitiveContains(trimmed) ?? false
+                        
+                        return titleMatch || descMatch || subjectMatch || sentByMatch || createdOnMatch
+                    }
+                }
+
+                // Reload your table or collection view
+                tv.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        self.searchText = searchText
+        
+        Filter_data()
+    }
+    
 }
 
 //MARK: Tableview Delegate Functions
 extension QuizVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       
-            return get_QuizDetails.count
+        return filteredExams.count
         
     }
     
@@ -217,20 +279,20 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? quizCellTv else {
                 return UITableViewCell()
             }
-            let quiz = get_QuizDetails[indexPath.row]
+            let quiz = filteredExams[indexPath.row]
                let imageName = images[indexPath.row % images.count]
 //            cell.DeafultimageView.image = UIImage(named: imageName)
             
-        cell.titleLbl.text = get_QuizDetails[indexPath.row].title?.capitalized
-        cell.discretiponsLbl.text = get_QuizDetails[indexPath.row].description?.capitalized
+        cell.titleLbl.text = filteredExams[indexPath.row].title?.capitalized
+        cell.discretiponsLbl.text = filteredExams[indexPath.row].description?.capitalized
 //            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
-            cell.subjectLbl.text = get_QuizDetails[indexPath.row].subject
-        cell.LevelLbl.text = String(get_QuizDetails[indexPath.row].level ?? 0)
-        cell.MaxmarkLbl.text = String(get_QuizDetails[indexPath.row].max_mark ?? 0)
-        cell.NoOfQuestionLbl.text = String(get_QuizDetails[indexPath.row].no_of_questions ?? 0)
-        cell.createdDateLbl.text = "Created on " + formattedDateStatus(from: get_QuizDetails[indexPath.row].created_on ?? "", isTimeNeeded: true)
+            cell.subjectLbl.text = filteredExams[indexPath.row].subject
+        cell.LevelLbl.text = String(filteredExams[indexPath.row].level ?? 0)
+        cell.MaxmarkLbl.text = String(filteredExams[indexPath.row].max_mark ?? 0)
+        cell.NoOfQuestionLbl.text = String(filteredExams[indexPath.row].no_of_questions ?? 0)
+        cell.createdDateLbl.text = "Created on " + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
         cell.PostByLbl.text = "Posted By: " + (
-            get_QuizDetails[indexPath.row].SentBy ?? ""
+            filteredExams[indexPath.row].SentBy ?? ""
         )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
         cell.playBtn.setImage(imgae, for: .normal)
@@ -251,17 +313,17 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         if stausType == "1"{
             
             let vc = PlayQuizVc(nibName: nil, bundle: nil)
-            vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
+            vc.selectedQuizId = self.filteredExams[indexPath.row].quiz_id
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }else{
             
             let vc = QuizCompletedVc(nibName: nil, bundle: nil)
 //            vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
-            vc.subjet_name = self.get_QuizDetails[indexPath.row].subject ?? ""
+            vc.subjet_name = self.filteredExams[indexPath.row].subject ?? ""
             vc.completed_date = self
-                .get_QuizDetails[indexPath.row].submitted_on ?? ""
-            vc.selected_QuizId = self.get_QuizDetails[indexPath.row].quiz_id
+                .filteredExams[indexPath.row].submitted_on ?? ""
+            vc.selected_QuizId = self.filteredExams[indexPath.row].quiz_id
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

@@ -94,6 +94,20 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         VideoView.isHidden = true
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
+        
+        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         imageSelection()
         
         if let editId = editId,editId != "" {
@@ -114,18 +128,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                     secondLine: staffDetails?.school_name ?? ""
                 )
         }
-        
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     
     @IBAction func backBtnAct(_ sender: UIButton) {
-        
+        editId = ""
         dismiss(animated: true)
     }
     @IBAction func viewHistory(_ sender: UIButton) {
@@ -256,7 +262,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                     edit: true,
                     target_type:0,
                     selectedId: [],
-                    baseURL: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
+                    baseURL: ServiceUrl.comm_api_homework_update,
                     subjectId: "",
                     message:"",
                     from: self,
@@ -270,7 +276,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                             on: self
                         ) { [self] in
                             print("success")
-                            editId = nil
+                            editId = ""
                             RecipientBtn.setTitle("Next", for: .normal)
                             TitleTxtfield.text = ""
                             DetailsTxtview.text = ""

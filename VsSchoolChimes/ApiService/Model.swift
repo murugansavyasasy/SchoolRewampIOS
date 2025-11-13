@@ -423,13 +423,14 @@ struct AwsData: Codable {
 }
 
 //MARK: - Get Communication List(Reciver)
+import AVFoundation
 struct CommunicationReciverResponse: Codable {
     let status: Bool
     let message: String
     let data: [CommunicationReciverData]
 }
 
-struct CommunicationReciverData: Codable {
+class CommunicationReciverData: Codable {
     let type: String
     let id: String
     let header_id: String
@@ -443,7 +444,7 @@ struct CommunicationReciverData: Codable {
     var isExpand:Bool?
     let is_archive: Bool?
     let duration : Int?
-    
+    var playbackSeconds: Double?
 }
 
 struct ReadStatusResponse: Codable {
@@ -2082,9 +2083,6 @@ struct QuizListData : Codable{
     let submitted_count : Int?
     let total_mark : String?
     let no_of_levels : String?
-  
-    
-    
 }
     
 

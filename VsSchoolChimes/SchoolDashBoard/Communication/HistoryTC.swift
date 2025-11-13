@@ -42,6 +42,7 @@ class HistoryTC: UITableViewCell {
     
     var playIndex: Int? = nil
     weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
+    var messageId: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -102,13 +103,13 @@ class HistoryTC: UITableViewCell {
         playBtn.setImage(ImageName.playbutton, for: .normal)
     }
     
-    func setupPlayer(with url: URL) {
-        player = AVPlayer(url: url)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerDidFinishPlaying),
-                                               name: .AVPlayerItemDidPlayToEndTime,
-                                               object: player?.currentItem)
-    }
+//    func setupPlayer(with url: URL) {
+//        player = AVPlayer(url: url)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(playerDidFinishPlaying),
+//                                               name: .AVPlayerItemDidPlayToEndTime,
+//                                               object: player?.currentItem)
+//    }
     
     @IBAction func play(_ sender: UIButton) {
         sender.isSelected.toggle()
@@ -116,69 +117,44 @@ class HistoryTC: UITableViewCell {
     }
     
     func updatePlayState(isPlaying: Bool, url: String?) {
-        self.isPlaying = isPlaying
-
-        if isPlaying {
-            // Safely unwrap and encode the URL
-            guard let urlString = url,
-                  let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                  let audioURL = URL(string: encodedURLString) else {
-                print("Invalid audio URL")
-                return
-            }
-
-            // Configure audio session for playback
-            do {
-                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch {
-                print("Audio session error: \(error.localizedDescription)")
-            }
-
-            // Create player and play
-            playerItem = AVPlayerItem(url: audioURL)
-            player = AVPlayer(playerItem: playerItem)
-            player?.volume = 1.0
-            player?.play()
+            self.isPlaying = isPlaying
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                print("Player status:", self.player?.currentItem?.status.rawValue ?? -1)
-                if let err = self.player?.currentItem?.error {
-                    print("AVPlayer error:", err)
-                } else {
-                    print("No AVPlayer error")
+            if isPlaying {
+                if player == nil {
+                    guard let urlString = url,
+                          let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                          let audioURL = URL(string: encodedURLString) else { return }
+                    
+                    playerItem = AVPlayerItem(url: audioURL)
+                    player = AVPlayer(playerItem: playerItem)
+                    
+                    // Observe playback finished
+                    NotificationCenter.default.addObserver(self,
+                                                           selector: #selector(playerDidFinishPlaying),
+                                                           name: .AVPlayerItemDidPlayToEndTime,
+                                                           object: playerItem)
                 }
+                
+                player?.play()
+                playBtn.setImage(ImageName.pausebutton, for: .normal)
+                
+                // Start timer
+                updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
+                                                   target: self,
+                                                   selector: #selector(updateSlider),
+                                                   userInfo: nil,
+                                                   repeats: true)
+                updateTimeDisplay()
+                
+            } else {
+                player?.pause()
+                playerView.updateWithLevel(0.0)
+                playBtn.setImage(ImageName.playbutton, for: .normal)
+                updateTimer?.invalidate()
+                updateTimer = nil
+                updateTimeDisplay()
             }
-
-
-            // Update UI
-            playBtn.setImage(ImageName.pausebutton, for: .normal)
-
-            // Observe when playback finishes
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(playerDidFinishPlaying),
-                name: .AVPlayerItemDidPlayToEndTime,
-                object: player?.currentItem
-            )
-
-            // Start timer for slider updates
-            updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                               target: self,
-                                               selector: #selector(updateSlider),
-                                               userInfo: nil,
-                                               repeats: true)
-
-            updateTimeDisplay()
-
-        } else {
-            // Pause playback and clean up
-            player?.pause()
-            playBtn.setImage(ImageName.playbutton, for: .normal)
-            updateTimer?.invalidate()
-            updateTimeDisplay()
         }
-    }
 
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?,
@@ -209,14 +185,15 @@ class HistoryTC: UITableViewCell {
             playerView.setNeedsDisplay()
         }
 
-        @objc func playerDidFinishPlaying() {
-            playBtn.setImage(ImageName.playbutton, for: .normal)
-            isPlaying = false
-            playerView.progress = 1.0
-            playerView.updateWithLevel(0.0)
-            playerView.setNeedsDisplay()
-            FinishPlayingdelegate?.didFinishPlaying(at: playBtn.tag)
-        }
+    @objc func playerDidFinishPlaying() {
+        playBtn.setImage(ImageName.playbutton, for: .normal)
+        isPlaying = false
+        playerView.progress = 1.0
+        playerView.updateWithLevel(0.0)
+        playerView.setNeedsDisplay()
+        FinishPlayingdelegate?.didFinishPlaying(at: playBtn.tag)
+        player?.seek(to: .zero)
+    }
 
         private func updateTimeDisplay() {
             guard let currentItem = player?.currentItem,
@@ -258,6 +235,40 @@ class HistoryTC: UITableViewCell {
         ForwordDelegate?.voiceforword(selectedIndex: sender.tag)
     }
     
+    func forceStopAndReset() {
+        player?.pause()
+        player = nil
+        playerItem = nil
+        updateTimer?.invalidate()
+        updateTimer = nil
+        isPlaying = false
+
+        // Reset UI
+        playBtn.setImage(ImageName.playbutton, for: .normal)
+        totaltime.text = "00:00 / 00:00"
+        playerView.progress = 0.0
+        playerView.updateWithLevel(0.0)
+        playerView.setNeedsDisplay()
+    }
+    
+    func updatePlayState(isPlaying: Bool, url: String?, messageId: String) {
+            self.messageId = messageId
+            
+            if isPlaying, let url = url {
+                AudioPlaybackManager.shared.play(url: url, messageId: messageId)
+                playBtn.setImage(ImageName.pausebutton, for: .normal)
+            } else {
+                AudioPlaybackManager.shared.pause()
+                playBtn.setImage(ImageName.playbutton, for: .normal)
+            }
+        }
+        
+        func stopAudioPlay_back() {
+            if let id = messageId, AudioPlaybackManager.shared.currentMessageId == id {
+                AudioPlaybackManager.shared.stop()
+            }
+        }
+    
 }
 
 extension HistoryTC {
@@ -272,5 +283,46 @@ extension HistoryTC {
         // Optionally, reset the progress and time labels
         playerView.progress = 0.0
         totaltime.text = "00:00 / \(totalsecont)"
+    }
+}
+
+
+import AVFoundation
+
+class AudioPlaybackManager {
+    static let shared = AudioPlaybackManager()
+    
+    private var player: AVPlayer?
+    private(set) var currentMessageId: String?
+    
+    func play(url: String, messageId: String) {
+        if currentMessageId != messageId {
+            // New audio, reset player
+            player = AVPlayer(url: URL(string: url)!)
+            currentMessageId = messageId
+        }
+        player?.play()
+    }
+    
+    func pause() {
+        player?.pause()
+    }
+    
+    func stop() {
+        player?.pause()
+        player = nil
+        currentMessageId = nil
+    }
+    
+    func currentTime() -> CMTime? {
+        return player?.currentTime()
+    }
+    
+    func seek(to time: CMTime) {
+        player?.seek(to: time)
+    }
+    
+    func isPlaying(messageId: String) -> Bool {
+        return currentMessageId == messageId && player?.rate != 0
     }
 }

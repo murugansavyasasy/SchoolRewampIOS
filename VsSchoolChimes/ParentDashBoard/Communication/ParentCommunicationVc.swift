@@ -7,45 +7,127 @@
 
 import UIKit
 import DropDown
+import AVFoundation
 
-class ParentCommunicationVc: UIViewController, reloadDelegate{
+class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate{
     
     func deleteDelegate(index: Int) {
         
     }
-    func reload(index: Int) {
-        
-            if let currentIndex = playIndex, currentIndex != index {
-                let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-                if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
-                    previousCell.updatePlayState(isPlaying: false, url: nil)
-                }
-            }
-            
-        playIndex = (playIndex == index) ? nil : index
-        var currentmessage: CommunicationReciverData?
-        
+        var playIndex: Int?
+        var lastPlaybackTime: CMTime?
+        var lastMessageId: String?
 
-        currentmessage = SearchMessages?[index]
-        
-        if currentmessage?.is_unread == true {
-            
-            if currentmessage?.is_archive ?? false {
-                ReadStatusUpdateArchive(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
-            }else {
-                
-                ReadStatusUpdate(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
-            }
-            
-            currentmessage?.is_unread = false
-            
-            if let PlayingMessage = currentmessage{
-                SearchMessages?[index] = PlayingMessage
+    /// To save and resume audio playback progress per message, you can modify the code in `reload(index:)`
+    /// and `didFinishPlaying(at:)` while tracking playback time in your `displayedMessages` array.
+
+    func reload(index: Int) {
+        let message = displayedMessages[index]
+        let messageId = message.id
+
+        // Pause previous cell if switching
+        if let currentIndex = playIndex, currentIndex != index {
+            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
+                // ✅ Save playback time before pausing
+                displayedMessages[currentIndex].playbackSeconds = previousCell.player?.currentTime().seconds
+                previousCell.player?.pause()
+                previousCell.playBtn.setImage(ImageName.playbutton, for: .normal)
+                previousCell.playerView.updateWithLevel(0.0)
             }
         }
-        
-            tv.reloadData()
+
+        // Toggle playback
+        let isSameIndex = (playIndex == index)
+        playIndex = isSameIndex ? nil : index
+
+        let currentIndexPath = IndexPath(row: index, section: 0)
+        guard let currentCell = tv.cellForRow(at: currentIndexPath) as? HistoryTC else { return }
+
+        if isSameIndex {
+            // ✅ Pause and save playback time
+            if let time = currentCell.player?.currentTime() {
+                displayedMessages[index].playbackSeconds = time.seconds
+            }
+            currentCell.player?.pause()
+            currentCell.updatePlayState(isPlaying: false, url: nil)
+        } else {
+            // ✅ Resume playback from saved time
+            let resumeTime = displayedMessages[index].playbackSeconds ?? 0
+            currentCell.updatePlayState(isPlaying: true, url: message.content)
+
+            if resumeTime > 0 {
+                let seekTime = CMTime(seconds: resumeTime, preferredTimescale: 600)
+                currentCell.player?.seek(to: seekTime) { _ in
+                    currentCell.player?.play()
+                }
+            }
+
+            currentCell.NewImageView.isHidden = true
+            ReadStatusUpdateArchive(type: "Voice", detail_id: messageId)
+        }
     }
+
+    func didFinishPlaying(at index: Int) {
+        print("didFinishPlaying")
+        if playIndex == index {
+            playIndex = nil
+        }
+        // ✅ Reset saved playback time when finished
+        displayedMessages[index].playbackSeconds = 0
+
+        let indexPath = IndexPath(row: index, section: 0)
+        if let cell = tv.cellForRow(at: indexPath) as? HistoryTC {
+            cell.updatePlayState(isPlaying: false, url: nil)
+        }
+    }
+
+
+
+        // Before reload (search/filter/archive)
+        func savePlaybackStateBeforeReload() {
+            if let index = playIndex {
+                let indexPath = IndexPath(row: index, section: 0)
+                if let cell = tv.cellForRow(at: indexPath) as? HistoryTC {
+                    lastPlaybackTime = cell.player?.currentTime()
+                    lastMessageId = displayedMessages[index].id
+                }
+            }
+        }
+
+        // After reload
+        func restorePlaybackStateAfterReload() {
+            if let id = lastMessageId,
+               let index = displayedMessages.firstIndex(where: { $0.id == id }),
+               let time = lastPlaybackTime {
+                let indexPath = IndexPath(row: index, section: 0)
+                if let cell = tv.cellForRow(at: indexPath) as? HistoryTC {
+                    cell.updatePlayState(isPlaying: true,
+                                         url: displayedMessages[index].content)
+                    cell.player?.seek(to: time)
+                }
+            }
+        }
+    
+   
+    func pauseCurrentAudioBeforeReload() {
+        if let index = playIndex {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tv.cellForRow(at: indexPath) as? HistoryTC {
+                lastPlaybackTime = cell.player?.currentTime()
+                lastMessageId = displayedMessages[index].id
+                if let time = cell.player?.currentTime() {
+                    displayedMessages[index].playbackSeconds = time.seconds
+                }
+                cell.player?.pause()
+                cell.playBtn.setImage(ImageName.playbutton, for: .normal)
+                cell.updatePlayState(isPlaying: false, url: nil)
+            }
+            // ✅ Clear playIndex so reload doesn’t auto-play
+            playIndex = nil
+        }
+    }
+
     
     @IBOutlet weak var ReadUnreadStack: UIStackView!
     @IBOutlet weak var UnreadBtn: UIButton!
@@ -65,7 +147,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     @IBOutlet weak var TitleLbl: UILabel!
     
     
-    var playIndex :Int?
+    //var playIndex :Int?
     var AudioPlayUrl: String?
     var passValue = 0
     var count = 5
@@ -73,18 +155,20 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     var shouldShowFooterLabel = false
     var ArchiveMessage = ""
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var TotalMessageList : [CommunicationReciverData]?
-    var FilteredMessages : [CommunicationReciverData]?
-    var SearchMessages : [CommunicationReciverData]?
+    var allMessages: [CommunicationReciverData] = []     // Master list
+    var displayedMessages: [CommunicationReciverData] = [] // Filtered + searched data
     var dropDown = DropDown()
     let dateFormatter = DateFormatter()
     let Filters = ["All","VOICE","TEXT"/*,"Read","Unread"*/]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     
     var readStatus = 0  //All = 0, read = 1, unread = 2
+    var selectedFilterType: String?
     
     var showfilter = false
     var clickedMessageId : String?
+   // var lastPlaybackTime: CMTime?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -118,14 +202,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     }
 
     override func viewDidLayoutSubviews() {
-        
-//        if passValue == 1{
-//            view.backgroundColor = .topBackgroundCLr
-//            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//
-//        }else{
-//            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//        }
         
         tv.beginUpdates()
         tv.endUpdates()
@@ -189,134 +265,54 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     //MARK: Filter Buttons Actions
     
-    @IBAction func AllAct(_ sender: Any) {
-        
-        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
-        ReadBtn.backgroundColor = .white
-        UnreadBtn.backgroundColor = .white
+    @IBAction func allAction(_ sender: Any) {
+        pauseCurrentAudioBeforeReload()
+        updateFilterButtons(selected: AllBtn)
         readStatus = 0
-        
-        if selectedIndex.row == 0{
-            
-            FilteredMessages = TotalMessageList
-        }else {
-            
-            FilteredMessages = TotalMessageList?.messages(ofType: Filters[selectedIndex.row])
-        }
-        
-        SearchMessages = FilteredMessages
-        playIndex = nil
-        NodataLbl.isHidden = !(SearchMessages?.count == 0)
-        NodataImage.isHidden = !(SearchMessages?.count == 0)
-        NodataLbl.text = "No Data Found"
-        
-        tv.reloadData()
+        applyFilters()
     }
-    
-    @IBAction func ReadAct(_ sender: Any) {
-        
-        ReadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
-        UnreadBtn.backgroundColor = .white
-        AllBtn.backgroundColor = .white
+
+    @IBAction func readAction(_ sender: Any) {
+        pauseCurrentAudioBeforeReload()
+        updateFilterButtons(selected: ReadBtn)
         readStatus = 1
-        
-        if selectedIndex.row == 0{
-            
-            FilteredMessages = TotalMessageList?.readMessages()
-            
-        }else{
-            
-            FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
-        }
-        playIndex = nil
-        SearchMessages = FilteredMessages
-        NodataLbl.isHidden = !(SearchMessages?.count == 0)
-        NodataImage.isHidden = !(SearchMessages?.count == 0)
-        NodataLbl.text = "No Data Found"
-        tv.reloadData()
+        applyFilters()
     }
-    
-    @IBAction func UnreadAct(_ sender: Any) {
-        
-        UnreadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
-        ReadBtn.backgroundColor = .white
-        AllBtn.backgroundColor = .white
+
+    @IBAction func unreadAction(_ sender: Any) {
+        pauseCurrentAudioBeforeReload()
+        updateFilterButtons(selected: UnreadBtn)
         readStatus = 2
-         
-        if selectedIndex.row == 0{
-            
-            FilteredMessages = TotalMessageList?.unreadMessages()
-            
-        }else{
-            
-            FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
-        }
-        playIndex = nil
-        SearchMessages = FilteredMessages
-        NodataLbl.isHidden = !(SearchMessages?.count == 0)
-        NodataImage.isHidden = !(SearchMessages?.count == 0)
-        NodataLbl.text = "No Data Found"
-        tv.reloadData()
+        applyFilters()
     }
-    
+
+
     
     @IBAction func filter(_ sender: UIButton) {
         
-        
-//        dropDown.dataSource = ["VOICE","TEXT","Read","Unread","All"]
-//        dropDown.anchorView = FilterImage
-//        dropDown.bottomOffset = CGPoint(x: 0, y: (FilterImage.bounds.height))
-//
-//        dropDown.direction = .bottom
-//
-//        dropDown.show()
-//        dropDown.selectionAction = { [self] (index: Int, item: String) in
-//           // self.filterBtn.setTitle(item.translated(), for: .normal)
-//
-//            filterSelection(FilterType: item)
-//
-//            isFiltered = true
-//            tv.reloadData()
-//
-//        }
-        
-        
         FilterCV.isHidden.toggle()
         ReadUnreadStack.isHidden.toggle()
-        
-//        showfilter.toggle()
-//        
-//       if showfilter == true {
-//            ViewAnimator.showFade(FilterCV)
-//            ViewAnimator.showFade(ReadUnreadStack)
-//        }else {
-//            ViewAnimator.hideFade(FilterCV)
-//            ViewAnimator.hideFade(ReadUnreadStack)
-//        }
     }
     
-    func filterSelection(FilterType: String) {
-        
-        switch FilterType{
-        case "VOICE":
-            FilteredMessages = TotalMessageList?.messages(ofType: "VOICE")
-           
-        case "TEXT":
-            FilteredMessages = TotalMessageList?.messages(ofType: "TEXT")
-        
-//        case "Read" :
-//            FilteredMessages = TotalMessageList?.readMessages()
-//
-//        case "Unread" :
-//            FilteredMessages = TotalMessageList?.unreadMessages()
-            
-        case "All" :
-            FilteredMessages = TotalMessageList
-        
-        default:
-           
-            FilteredMessages = TotalMessageList
+    func updateFilterButtons(selected button: UIButton) {
+        [AllBtn, ReadBtn, UnreadBtn].forEach { btn in
+            btn?.backgroundColor = (btn == button) ? .systemGreen.withAlphaComponent(0.4) : .white
         }
+    }
+
+    /// Applies read/unread/type filters together
+    func applyFilters() {
+        // Determine message type from selected index
+        let selectedType = (selectedIndex.row == 0) ? nil : Filters[selectedIndex.row]
+        
+        // Filter allMessages according to readStatus + message type
+        displayedMessages = allMessages.filtered(readStatus: readStatus, type: selectedType)
+        
+        // Reset playback
+        playIndex = nil
+        
+        // Update UI
+        updateUIAfterFiltering()
     }
     
     
@@ -333,9 +329,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                     
                     DispatchQueue.main.async {
                         
-                        self.TotalMessageList = SuccessMessage.data
-                        self.SearchMessages = self.TotalMessageList
-                        self.FilteredMessages = self.TotalMessageList
+                        self.allMessages = SuccessMessage.data
+                        self.displayedMessages = self.allMessages
                         self.NodataLbl.isHidden = true
                         self.NodataImage.isHidden = true
                         self.searchBtn.isHidden = false
@@ -353,9 +348,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                 }else {
                     
                     DispatchQueue.main.async {
-                        self.TotalMessageList = []
-                        self.SearchMessages = self.TotalMessageList
-                        self.FilteredMessages = self.TotalMessageList
+                        self.allMessages = []
+                        self.displayedMessages = self.allMessages
                        // SearchbarStack.isHidden = true
                         self.NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
                         self.NodataLbl.isHidden = false
@@ -377,7 +371,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
     
     private func scrollToClickedMessage() {
         guard let id = clickedMessageId,
-              let index = FilteredMessages?.firstIndex(where: { $0.header_id == id }) else {
+              let index = displayedMessages.firstIndex(where: { $0.header_id == id }) else {
             return
         }
 
@@ -398,105 +392,71 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             }
         }
     }
+   
     func GetArchiveCommunicationList() {
+        savePlaybackStateBeforeReload()
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list_archive, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [weak self] (result : Result<CommunicationReciverResponse,Error>) in
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_communication_list_archive,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<CommunicationReciverResponse, Error>) in
             
-            guard let self = self else {return}
+            guard let self = self else { return }
             
             switch result {
                 
-            case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
-                    
-                    DispatchQueue.main.async {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    if response.status {
+                        // ✅ Append new archived messages
+                        self.allMessages.append(contentsOf: response.data)
                         
-                        self.TotalMessageList?.append(contentsOf: SuccessMessage.data)
+                        // ✅ Apply current filters (type + readStatus)
+                        self.applyFilters()
                         
-                        if self.selectedIndex.row == 0{
-                            
-                            switch self.readStatus {
-                                
-                            case 0 :
-                                self.FilteredMessages = self.TotalMessageList
-                                
-                            case 1 :
-                                self.FilteredMessages = self.TotalMessageList?.readMessages()
-                                
-                            case 2:
-                                self.FilteredMessages = self.TotalMessageList?.unreadMessages()
-                                
-                            default:
-                                self.FilteredMessages = self.TotalMessageList
-                            }
-                            
-                        }else {
-                            
-                            switch self.readStatus {
-                                
-                            case 0:
-                                self.FilteredMessages = self.TotalMessageList?.messages(ofType: self.Filters[ self.selectedIndex.row])
-                                
-                            case 1:
-                                self.FilteredMessages = self.TotalMessageList?.readMessages(ofType: self.Filters[ self.selectedIndex.row])
-                            case 2:
-                                self.FilteredMessages = self.TotalMessageList?.unreadMessages(ofType: self.Filters[ self.selectedIndex.row])
-                                
-                            default:
-                                self.FilteredMessages = self.TotalMessageList?.messages(ofType: self.Filters[ self.selectedIndex.row])
-                            }
-                            
-                        }
-                        
-                        self.SearchMessages = self.FilteredMessages
-                        
-                       // SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
+                        // ✅ Restore UI
                         self.NodataLbl.isHidden = true
                         self.NodataImage.isHidden = true
                         self.shouldShowFooterLabel = false
                         self.tv.isHidden = false
                         self.searchBtn.isHidden = false
                         self.tv.isScrollEnabled = true
+                        self.restorePlaybackStateAfterReload()
+                    } else {
+                        // ⚠️ Handle empty archive or API message
                         self.tv.reloadData()
-                    }
-                    
-                }else {
-                    
-                    DispatchQueue.main.async {
+                        self.restorePlaybackStateAfterReload()
                         
-                        self.tv.reloadData()
-                        
-                        if self.TotalMessageList?.count == 0 {
-                            //SearchbarStack.isHidden = true
-                            self.NodataLbl.text = SuccessMessage.message
+                        if self.allMessages.isEmpty {
+                            self.NodataLbl.text = response.message
                             self.shouldShowFooterLabel = false
                             self.tv.isHidden = true
                             self.searchBtn.isHidden = true
                             self.NodataImage.isHidden = false
                             self.NodataLbl.isHidden = false
-                        }else {
-                            self.ArchiveMessage = SuccessMessage.message
+                        } else {
+                            self.ArchiveMessage = response.message
                             self.shouldShowFooterLabel = true
                         }
                     }
                 }
                 
             case .failure(let error):
-                
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
                     self.tv.reloadData()
+                    self.restorePlaybackStateAfterReload()
                     
-                    if self.TotalMessageList?.count == 0 {
-                        //SearchbarStack.isHidden = true
+                    if self.allMessages.isEmpty {
                         self.NodataLbl.text = error.localizedDescription
-                        //NodataLbl.text = "Something went wrong! Try again Later"
                         self.tv.isHidden = true
                         self.searchBtn.isHidden = true
                         self.NodataImage.isHidden = false
                         self.NodataLbl.isHidden = false
-                    }else {
+                        self.shouldShowFooterLabel = false
+                    } else {
                         self.ArchiveMessage = error.localizedDescription
                         self.shouldShowFooterLabel = true
                     }
@@ -504,6 +464,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             }
         }
     }
+
     
     func ReadStatusUpdate(type: String,detail_id: String) {
         
@@ -579,8 +540,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             SearchbarStack.isHidden = false
             sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
         }else {
-            FilteredMessages = TotalMessageList
-            SearchMessages = FilteredMessages
+            displayedMessages = allMessages
             tv.reloadData()
             SearchbarStack.isHidden = true
             SearchBar.searchTextField.text = ""
@@ -608,14 +568,14 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return SearchMessages?.count ?? 0
+        return displayedMessages.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let message = SearchMessages?[indexPath.row]
+        let message = displayedMessages[indexPath.row]
         
-        switch message?.type.uppercased() {
+        switch message.type.uppercased() {
        
         case "TEXT":
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
@@ -629,13 +589,13 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
             
-            cell.MessageTitle.text = message?.title
+            cell.MessageTitle.text = message.title
            
-            let formattedDateString = dateFormatter.convertDate(message?.date ?? "") ?? ""
+            let formattedDateString = dateFormatter.convertDate(message.date) ?? ""
             
-            cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message?.time)
+            cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
 
-            cell.descriptContent.attributedText = self.descript(for:message?.content ?? "", expanded: message?.isExpand ?? false)
+            cell.descriptContent.attributedText = self.descript(for:message.content ?? "", expanded: message.isExpand ?? false)
 
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
             
@@ -645,7 +605,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             
                 cell.configureShimmer()
                 
-                if message?.is_unread == true{
+            if message.is_unread == true{
                     cell.newImageOuterView.isHidden = false
                     cell.NewImageView.isHidden = false
                 }else {
@@ -663,30 +623,34 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
             
-            cell.emergencyMessageBtn.isHidden = !(voiceData?.is_emergency ?? false)
+            cell.emergencyMessageBtn.isHidden = !(voiceData.is_emergency)
             cell.sendbtn.isHidden = true
             cell.sentBtnHeight.constant = 0
             cell.sentBtnWidth.constant = 0
-            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.content)
+            cell.updatePlayState(isPlaying: isPlaying, url: voiceData.content)
             cell.playBtn.tag = indexPath.row
             cell.sendbtn.tag = indexPath.row
             cell.delegate = self
+            cell.FinishPlayingdelegate = self
             cell.NewImageView.isHidden = true
             
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
            
           
-                let formattedDateString = dateFormatter.convertDate(message?.date ?? "") ?? ""
-                cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: message?.time)
+            let formattedDateString = dateFormatter.convertDate(message.date) ?? ""
+            cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
             
             
-            cell.contentlbl.text = voiceData?.title ?? ""
+            cell.contentlbl.text = voiceData.title
             
-            let duration = voiceData?.duration ?? 0
-            print("duration1",duration)
-            let formatted = formatDuration(duration)
-            print("duration",formatted)
-            cell.totaltime.text = "00:00 / \(formatted)"
+            let duration = voiceData.duration ?? 0
+            let formattedDuration = formatDuration(duration)
+
+            // ✅ Use saved playback time or 0 if none
+            let elapsedSeconds = voiceData.playbackSeconds ?? 0
+            let formattedElapsed = formatDuration(Int(elapsedSeconds))
+
+            cell.totaltime.text = "\(formattedElapsed) / \(formattedDuration)"
             
             if !isPlaying {
                 cell.playerView.progress = 0.0
@@ -701,7 +665,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 cell.configureShimmer()
             }
             
-            cell.NewImageView.isHidden = !(message?.is_unread ?? false)
+            cell.NewImageView.isHidden = !(message.is_unread)
             
             return cell
             
@@ -714,11 +678,11 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         return UITableView.automaticDimension
     }
     
-        func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-            if let historyCell = cell as? HistoryTC {
-                historyCell.stopAudioPlayback()
-            }
-        }
+//        func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//            if let historyCell = cell as? HistoryTC {
+//                historyCell.stopAudioPlayback()
+//            }
+//        }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
@@ -820,7 +784,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         
         var message: CommunicationReciverData?
 
-        message = SearchMessages?[indexPath.row]
+        message = displayedMessages[indexPath.row]
  
         guard let fullDescription = message?.content else { return }
 
@@ -851,7 +815,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
          //Save updated message back to the data source.
             
             if let updatedMessage = message{
-                SearchMessages?[indexPath.row] = updatedMessage
+                displayedMessages[indexPath.row] = updatedMessage
             }
         
         // Refresh table view layout.
@@ -972,52 +936,14 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        pauseCurrentAudioBeforeReload()
+        selectedIndex = indexPath
         
-        selectedIndex = indexPath // Update selected index
+        selectedFilterType = (indexPath.row == 0) ? nil : Filters[indexPath.row]
         
-        if selectedIndex.row == 0{
-            
-            switch readStatus {
-                
-            case 0:
-                FilteredMessages = TotalMessageList
-                
-            case 1:
-                FilteredMessages = TotalMessageList?.readMessages()
-                
-            case 2:
-                FilteredMessages = TotalMessageList?.unreadMessages()
-                
-            default:
-                FilteredMessages = TotalMessageList
-            }
-            
-        }else {
-            
-            switch readStatus {
-                
-            case 0:
-                FilteredMessages = TotalMessageList?.messages(ofType: Filters[selectedIndex.row])
-                
-            case 1:
-                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
-                
-            case 2:
-                FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
-                
-            default:
-                FilteredMessages = TotalMessageList?.messages(ofType: Filters[selectedIndex.row])
-            }
-            
-        }
-        
-        SearchMessages = FilteredMessages
-        
-        NodataLbl.isHidden = !(SearchMessages?.count == 0)
-        NodataImage.isHidden = !(SearchMessages?.count == 0)
-        NodataLbl.text = "No Data Found"
+        displayedMessages = allMessages.filtered(readStatus: readStatus, type: selectedFilterType)
         playIndex = nil
-        tv.reloadData()
+        updateUIAfterFiltering()
         FilterCV.reloadData()
     }
     
@@ -1037,65 +963,52 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
 extension ParentCommunicationVc : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        guard let totalMessages = FilteredMessages else {
-            FilteredMessages = []
-            tv.reloadData()
-            return
-        }
-
-        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            SearchMessages = totalMessages
-        } else {
+            pauseCurrentAudioBeforeReload()
             
-            let lowercasedSearch = searchText.lowercased()
-
-            SearchMessages = totalMessages.filter { message in
-                let content = message.content.lowercased()
-                let title = message.title.lowercased()
-                let dateString = dateFormatter.convertDate(message.date)?.lowercased() ?? ""
-                let type = message.type.lowercased()
-
-                return title.contains(lowercasedSearch) ||
-                       content.contains(lowercasedSearch) ||
-                       dateString.contains(lowercasedSearch) ||
-                       type.contains(lowercasedSearch)
+            let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            
+            // Step 1: Start from filtered base
+            let baseList = allMessages.filtered(readStatus: readStatus, type: selectedFilterType)
+            
+            // Step 2: Apply search if needed
+            if trimmedText.isEmpty {
+                displayedMessages = baseList
+            } else {
+                displayedMessages = baseList.filter { msg in
+                    let date = dateFormatter.convertDate(msg.date)?.lowercased() ?? ""
+                    return [msg.title, msg.content, msg.type, date]
+                        .map { $0.lowercased() }
+                        .contains { $0.contains(trimmedText) }
+                }
             }
+            
+            updateUIAfterFiltering()
         }
-
-        NodataLbl.isHidden = !(SearchMessages?.count == 0)
-        NodataImage.isHidden = !(SearchMessages?.count == 0)
+    
+    private func updateUIAfterFiltering() {
+        let isEmpty = displayedMessages.isEmpty
+        NodataLbl.isHidden = !isEmpty
+        NodataImage.isHidden = !isEmpty
         NodataLbl.text = "No Data Found"
-        tv.isScrollEnabled = !(SearchMessages?.count == 0)
+        tv.isScrollEnabled = !isEmpty
         tv.reloadData()
+       // restorePlaybackStateAfterReload()
     }
 
 }
 
 extension Array where Element == CommunicationReciverData {
-    
-    // Filter unread messages
-    func unreadMessages() -> [CommunicationReciverData] {
-        return self.filter { $0.is_unread }
-    }
-    
-    // Filter read messages
-    func readMessages() -> [CommunicationReciverData] {
-        return self.filter { !$0.is_unread }
-    }
-    
-    // Filter by type (e.g. "TEXT", "VOICE")
-    func messages(ofType type: String) -> [CommunicationReciverData] {
-        return self.filter { $0.type.uppercased() == type.uppercased() }
-    }
-    
-    // Filter unread messages of a specific type
-    func unreadMessages(ofType type: String) -> [CommunicationReciverData] {
-        return self.filter { $0.is_unread && $0.type.uppercased() == type.uppercased() }
-    }
-    
-    // Filter read messages of a specific type
-    func readMessages(ofType type: String) -> [CommunicationReciverData] {
-        return self.filter { !$0.is_unread && $0.type.uppercased() == type.uppercased() }
+    func filtered(readStatus: Int, type: String?) -> [CommunicationReciverData] {
+        self.filter { msg in
+            let matchesType = type == nil || msg.type.caseInsensitiveCompare(type!) == .orderedSame
+            let matchesReadStatus: Bool = {
+                switch readStatus {
+                case 1: return !msg.is_unread
+                case 2: return msg.is_unread
+                default: return true
+                }
+            }()
+            return matchesType && matchesReadStatus
+        }
     }
 }
