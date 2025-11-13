@@ -82,13 +82,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         Global_variabel()
         setupProfileImage()
         
-        DispatchQueue.main.async {
-            
-            let vc = BirthDayWishVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .formSheet
-            self.present(vc, animated: true)
-            
-        }
+       
         
         
     }
@@ -163,10 +157,19 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.isEmpty ?? true
+                        
 //                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
 //                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         user_inputs.menuList = self.menu_details?.compactMap{$0.name} ?? []
+                        if details.is_birthday ?? false{
+                            DispatchQueue.main.async {
+                                let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .formSheet
+                                self.present(vc, animated: true)
+                            }
+                        }
+                        
                     } else {
                         self.menu_details = []
                         self.MenuCollection.reloadData()

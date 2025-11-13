@@ -24,16 +24,16 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Uw9-nx-YuQ">
-                            <rect key="frame" x="0.0" y="20" width="393" height="759"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Uw9-nx-YuQ" secondAttribute="trailing" id="EIj-za-XZc"/>
                         <constraint firstItem="Uw9-nx-YuQ" firstAttribute="leading" secondItem="40d-b3-NCD" secondAttribute="leading" id="IkY-mJ-91M"/>
-                        <constraint firstAttribute="bottom" secondItem="Uw9-nx-YuQ" secondAttribute="bottom" id="J64-d2-JaJ"/>
+                        <constraint firstAttribute="bottom" secondItem="Uw9-nx-YuQ" secondAttribute="bottom" constant="10" id="J64-d2-JaJ"/>
                         <constraint firstItem="Uw9-nx-YuQ" firstAttribute="width" secondItem="40d-b3-NCD" secondAttribute="width" id="Mbu-ub-bWX"/>
-                        <constraint firstItem="Uw9-nx-YuQ" firstAttribute="top" secondItem="40d-b3-NCD" secondAttribute="top" id="gjL-kv-Quz"/>
+                        <constraint firstItem="Uw9-nx-YuQ" firstAttribute="top" secondItem="40d-b3-NCD" secondAttribute="top" constant="10" id="gjL-kv-Quz"/>
                     </constraints>
                 </scrollView>
             </subviews>

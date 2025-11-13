@@ -77,6 +77,10 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchStack: UIStackView!
     @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var TitleLbl: UILabel!
+    
     
     var filterData : [StudentDetails]?
     var abseentessData : [StudentDetails]?
@@ -103,7 +107,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
         StyleAndTranslater()
         let standard = StandardString + " - " + SectionString
-        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: standard)
+        TitleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: standard)
         
         confirmBtn.layer.cornerRadius = 10
 
@@ -125,6 +129,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         PresentDefLbl.setFont(style: .body, size: FontSize.BodySize)
         AbsentDefLbl.setFont(style: .body, size: FontSize.BodySize)
         OdDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        noDataLbl.setFont(style: .body, size: 20)
         
         filterBtn.setTitle(CommonStringFile.NameASC, for: .normal)
         filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -134,6 +139,10 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
         searchStack.isHidden = true
+        
+        noDataImage.isHidden = true
+        noDataLbl.isHidden = true
+        noDataLbl.text = "No Student Found!"
         
         tv.showsVerticalScrollIndicator = false
         tv.showsHorizontalScrollIndicator = false
@@ -587,18 +596,26 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
         // 4️⃣ Update the filtered data source
         Filtered_stuent_Listt = result
+        noDataLbl.isHidden = !(Filtered_stuent_Listt?.isEmpty ?? false)
+        noDataImage.isHidden = !(Filtered_stuent_Listt?.isEmpty ?? false)
         tv.reloadData()
     }
 
     
     @IBAction func searchBtnCilck(_ sender: UIButton) {
         sender.isSelected.toggle()
-        searchStack.isHidden = !sender.isSelected
-        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
-        searchBar.text = ""
-        Filtered_stuent_Listt = student_List
-        tv.reloadData()
+        if sender.isSelected{
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+            searchStack.isHidden = false
+            searchBar.becomeFirstResponder()
+        }else{
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchStack.isHidden = true
+            searchBar.resignFirstResponder()
+            searchBar.searchTextField.text = ""
+            searchQuery = ""
+            applyFilterAndSort()
+        }
     }
     
     @IBAction func fliter(_ sender: UIButton) {

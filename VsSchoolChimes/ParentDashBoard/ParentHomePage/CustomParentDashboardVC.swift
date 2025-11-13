@@ -157,6 +157,14 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
+                        
+                        if details.is_birthday ?? false{
+                            DispatchQueue.main.async {
+                                let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .formSheet
+                                self.present(vc, animated: true)
+                            }
+                        }
                     } else {
                         self.MenuCollection.reloadData()
                     }
