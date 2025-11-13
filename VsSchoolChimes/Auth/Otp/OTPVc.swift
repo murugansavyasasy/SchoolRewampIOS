@@ -21,7 +21,6 @@ class OTPVc: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var ResendLbl: UILabel!
     @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
-    @IBOutlet weak var StackView: UIStackView!
     @IBOutlet weak var callUsLbl: UILabel!
     
     var countdownTimer: Timer?

@@ -35,7 +35,7 @@
                                                     <constraint firstAttribute="width" constant="22" id="4TX-aU-cXn"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wia-De-e5t">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wia-De-e5t" customClass="LocalizationLabel" customModule="School_Chimes" customModuleProvider="target">
                                                 <rect key="frame" x="31.999999999999993" y="0.0" width="84.333333333333314" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                 <nil key="textColor"/>
@@ -92,7 +92,7 @@
                 <outlet property="arrowImg" destination="nyR-Sb-TQn" id="qHp-Rh-kqJ"/>
                 <outlet property="faceIdSwitch" destination="WyM-Hq-7rF" id="buQ-Am-V8X"/>
                 <outlet property="imgView" destination="d5H-b3-lRv" id="HXQ-sm-mfz"/>
-                <outlet property="nameLbl" destination="Wia-De-e5t" id="xEg-ZC-Qoq"/>
+                <outlet property="nameLbl" destination="Wia-De-e5t" id="4Qf-cK-sKM"/>
                 <outlet property="versionLbl" destination="Rt7-td-Yxp" id="GLd-Ud-wYG"/>
             </connections>
             <point key="canvasLocation" x="63.358778625954194" y="32.04225352112676"/>

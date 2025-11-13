@@ -96,6 +96,7 @@ class LanguageVc: UIViewController {
                   let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
                 return
             }
+            NotificationCenter.default.post(name: NSNotification.Name("LANGUAGE_CHANGED"), object: nil)
             MenuTapbar.shared = MenuTapbar()
             let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
             let initialViewController = storyboard.instantiateInitialViewController()

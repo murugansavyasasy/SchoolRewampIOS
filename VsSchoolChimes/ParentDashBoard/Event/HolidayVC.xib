@@ -75,7 +75,7 @@
                     <rect key="frame" x="0.0" y="124" width="393" height="694"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="content-view">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="928.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="878.33333333333337"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="VWB-Ln-IV2">
                                     <rect key="frame" x="15" y="8" width="363" height="24"/>
@@ -156,22 +156,22 @@
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YKt-kP-ebp">
-                                    <rect key="frame" x="0.0" y="362.66666666666669" width="393" height="565.66666666666652"/>
+                                    <rect key="frame" x="0.0" y="362.66666666666669" width="393" height="515.66666666666652"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noLeaveHistory" translatesAutoresizingMaskIntoConstraints="NO" id="sdI-cS-UjR">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="250"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Holidayillustrate" translatesAutoresizingMaskIntoConstraints="NO" id="sdI-cS-UjR">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="250" id="KJk-U6-LHz"/>
+                                                <constraint firstAttribute="height" constant="200" id="KJk-U6-LHz"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Holidays " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olx-oB-xVl">
-                                            <rect key="frame" x="25" y="249.99999999999991" width="343" height="15.666666666666657"/>
+                                            <rect key="frame" x="25" y="199.99999999999994" width="343" height="15.666666666666657"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                             <color key="textColor" systemColor="systemRedColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mDZ-V4-bTk">
-                                            <rect key="frame" x="0.0" y="265.66666666666669" width="393" height="300.00000000000006"/>
+                                            <rect key="frame" x="0.0" y="215.66666666666669" width="393" height="300.00000000000006"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="300" id="bq2-NZ-0gI"/>
@@ -235,9 +235,9 @@
         </view>
     </objects>
     <resources>
+        <image name="Holidayillustrate" width="4680" height="3120"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
-        <image name="noLeaveHistory" width="600" height="600"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -196,6 +196,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         } else {
             searchData = filterData
             self.noDataImg.isHidden = !self.searchData.isEmpty
+            self.noDataLbl.isHidden = !self.searchData.isEmpty
             collectionView.reloadData()
             searchBar.searchTextField.text = ""
             searchBar?.resignFirstResponder()
@@ -346,6 +347,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             }
         }
         self.noDataLbl.isHidden = !self.searchData.isEmpty
+        self.noDataLbl.text = "No Data Found"
         self.noDataImg.isHidden = !self.searchData.isEmpty
         collectionView.reloadData()
     }

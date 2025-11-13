@@ -10,9 +10,8 @@ import UIKit
 class SettingsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var faceIdSwitch: UISwitch!
-    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var nameLbl: LocalizationLabel!
     @IBOutlet weak var imgView: UIImageView!
-    
     @IBOutlet weak var versionLbl: UILabel!
     @IBOutlet weak var arrowImg: UIImageView!
     
