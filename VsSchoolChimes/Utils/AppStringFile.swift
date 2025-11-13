@@ -200,17 +200,29 @@ class SettingStringFile{
     
     static var shared = SettingStringFile()
     
-     let general = "GENERAL"
-     let notifications = "Notifications"
-     let faq = "FAQ"
-     let contactUs = "Contact Us"
-     let termsAndConditions = "Terms and Conditions"
-     let changeAppLanguage = "Change App Language"
-     let feedback = "Rate Us"
-     let reportABug = "Report a bug"
-     let sendFeedback = "Send Feedback"
-     let logout = "Logout"
-    let faceID  = "Face ID/Touch ID"
+     let general = "general"
+     let notifications = "notifications"
+     let faq = "faq"
+     let contactUs = "contactUs"
+     let termsAndConditions = "termsAndConditions"
+     let changeAppLanguage = "changeAppLanguage"
+     let feedback = "feedback"
+     let reportABug = "reportABug"
+     let sendFeedback = "sendFeedback"
+     let logout = "logout"
+    let faceID  = "faceID"
+    let accountSecurity  = "accountSecurity"
+    let preference  = "preference"
+    let supportInfo  = "supportInfo"
+    let feedbackSection  = "feedbackSection"
+    let changePassword  = "changePassword"
+    let privacyPolicy  = "privacyPolicy"
+    let aboutApp  = "aboutApp"
+    let howToUse  = "howToUse"
+    let whatsNew  = "whatsNew"
+    let appVersion  = "appVersion"
+    let Password  = "Password"
+    let MobileNumber  = "Mobile Number"
 }
 
 
@@ -366,13 +378,12 @@ struct CommonStringFile{
 
 
 struct ChangePasswordStringFile{
-    
-    static let Enter_the_new_password = "Enter the new password".translated()
-    static let Enter_the_old_password = "Enter the old password".translated()
-    static let create_newpassword = "Create the new password".translated()
-    static let confirm_password = "Re-enter the new  password".translated()
-    static let change_password = "Change password".translated()
-    static let Reset_password = "Reset password".translated()
+    static let Enter_the_new_password = "Enter the new password"
+    static let Enter_the_old_password = "Enter the old password"
+    static let create_newpassword = "Create the new password"
+    static let confirm_password = "Re-enter the new  password"
+    static let change_password = "Change password"
+    static let Reset_password = "Reset password"
 }
 struct OTPScreenStringFile{
     

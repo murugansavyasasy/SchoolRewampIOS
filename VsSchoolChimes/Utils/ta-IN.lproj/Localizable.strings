@@ -5,6 +5,27 @@
   Created by admin on 08/11/24.
   
 */
+//MARK: Login
+"Password" = "கடவுச்சொல்";
+"Mobile Number" = "மொபைல் எண்";
+"Login" = "உள்நுழைவு";
+"WELCOME BACK !" = "உங்களை மீண்டும் வரவேற்கிறோம்!";
+"SchoolCommunityMessage" = "உங்கள் பள்ளி சமூகத்துடன் இணைந்திருங்கள்.\nஉங்கள் புதுப்பிப்புகள், தொடர்புகள் மற்றும் பள்ளி வாழ்க்கை—அனைத்தும் ஒரே இடத்தில்.";
+"Forgot Password ?" = "கடவுச்சொல்லை மறந்துவிட்டீர்களா?";
+
+//Mark: PasswordScreen
+"Create Password" = "கடவுச்சொல்லை உருவாக்கவும்";
+"Confirm password" = "கடவுச்சொல்லை உறுதிப்படுத்தவும்";
+"Enter the old password" = "பழைய கடவுச்சொல்லை உள்ளிடவும்";
+"Your password has been securely store and encrypted for protection. For security reason, it cannot be displayed in plain text." = "உங்கள் கடவுச்சொல் பாதுகாப்பாக சேமிக்கப்பட்டு குறியாக்கம் செய்யப்பட்டுள்ளது. பாதுகாப்பு காரணங்களுக்காக, அது சாதாரண எழுத்தில் காட்ட முடியாது.";
+"Enter the new password" = "புதிய கடவுச்சொல்லை உள்ளிடவும்";
+"Create the new password" = "புதிய கடவுச்சொல்லை உருவாக்கவும்";
+"Re-enter the new password" = "புதிய கடவுச்சொல்லை மீண்டும் உள்ளிடவும்";
+"Change password" = "கடவுச்சொல்லை மாற்றவும்";
+"Reset password" = "கடவுச்சொல்லை மீட்டமைக்கவும்";
+
+
+
 "welcome_message" = "வணக்கம்";
 "change_language" = "மொழி மாற்றவும்";
 "Home" = "முகப்பு";
@@ -25,19 +46,31 @@
 
 
 // MARK: Settings page
-"Notifications" = "அறிவிப்புகள்";
-"FAQ" = "கேள்வி பதில்கள்";
-"Contact Us" = "எங்களை தொடர்பு கொள்ளவும்";
-"Terms and Conditions" = "விதிமுறைகள் மற்றும் நிபந்தனைகள்";
-"Change App Language" = "செயலியின் மொழியை மாற்றவும்";
-"Feedback" = "மறுமொழி";
-"Report a bug" = "பிழையை அறிவிக்கவும்";
-"Send Feedback" = "மறுமொழி அனுப்பவும்";
-"Rate Us" = "எங்களை மதிப்பீடு செய்யவும்";
-"Logout" = "வெளியேறு";
-"GENERAL" = "பொது";
-"FEEDBACK" = "மறுமொழி";
+"general" = "பொது";
+"notifications" = "அறிவிப்புகள்";
+"faq" = "அடிக்கடி கேட்கப்படும் கேள்விகள்";
+"contactUs" = "எங்களை தொடர்பு கொள்ள";
+"termsAndConditions" = "விதிமுறைகள் மற்றும் நிபந்தனைகள்";
+"changeAppLanguage" = "பயன்பாட்டு மொழியை மாற்றவும்";
+"feedback" = "எங்களை மதிப்பிடுங்கள்";
+"reportABug" = "பிழையை தெரிவிக்கவும்";
+"sendFeedback" = "கருத்தை அனுப்பவும்";
+"logout" = "வெளியேறு";
+"faceID" = "Face ID / Touch ID";
+
+"accountSecurity" = "கணக்கு மற்றும் பாதுகாப்பு";
+"preference" = "விருப்பத்தைத் தேர்ந்தெடுக்கவும்";
+"supportInfo" = "ஆதரவு & தகவல்";
+"feedbackSection" = "கருத்து";
+
+"changePassword" = "கடவுச்சொல்லை மாற்றவும்";
+"privacyPolicy" = "தனியுரிமைக் கொள்கை";
+"aboutApp" = "பயன்பாட்டைப் பற்றி";
+"howToUse" = "எப்படி பயன்படுத்துவது?";
+"whatsNew" = "புதியவை என்ன";
+"appVersion" = "ஆப் பதிப்பு";
 "Settings" = "அமைப்புகள்";
+
 
 // MARK: Dashboard
 "discussion" = "சர்ச்சை";

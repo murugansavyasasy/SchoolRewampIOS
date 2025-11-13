@@ -11,7 +11,6 @@ import Contacts
 @available(iOS 14.0, *)
 class LoginVc: UIViewController {
     
-    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var PasswordLabel: UILabel!
@@ -27,14 +26,13 @@ class LoginVc: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var PasswordBaseview: UIView!
     
-    
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
     var country_data : CountryData?
     private var originalContentInset: UIEdgeInsets = .zero
     private var originalScrollIndicatorInsets: UIEdgeInsets = .zero
     private var hasShownKeyboard = false
-
+    var menuname = SettingStringFile()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +40,8 @@ class LoginVc: UIViewController {
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
-        
+        MobilTextFld.placeholder = menuname.MobileNumber.translated()
+        passTextFld.placeholder = menuname.Password.translated()
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
@@ -116,24 +115,14 @@ class LoginVc: UIViewController {
     
     @IBAction func forgetClick() {
         if MobilTextFld.text != "" && MobilTextFld.text?.count == country_data?.mobile_number_length {
-            
-            //call forgot api and then navigate to the OTP screen
-            
             ForgotPasswordAPIcall()
-            
         } else {
-            
-            AlertModal
-                .showAlert(
-                    title: AlertstringFile.Oops,
-                    message: AlertstringFile.Enter_valid_Mobile,
-                    on: self
-                )
-            
+            AlertModal.showAlert(
+                title: AlertstringFile.Oops,
+                message: AlertstringFile.Enter_valid_Mobile,
+                on: self)
         }
     }
-    
-    
     
     @IBAction func loginBtn(_ sender: Any) {
         validateMobileAndPassword()
@@ -152,8 +141,6 @@ class LoginVc: UIViewController {
         validate_user()
     }
     
-    
-    
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
@@ -168,161 +155,100 @@ class LoginVc: UIViewController {
             showActivityLoader()
         }
         let secureID = SecureIDManager.getSecureID()
-        var parameters: [String: Any] = [
-            
+        let parameters: [String: Any] = [
             mobileNumber.mobile_number: MobilTextFld.text ?? "",
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID,
             mobileNumber.password:passTextFld.text ?? ""
         ]
         
-        APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: "") { [self] (
-                        result: Result<UserValidationResponseSuc,
-                        Error>
-                     ) in
-                switch result {
-                case .success(let response):
-                    if response.status == true {
-                        DispatchQueue.main.async { [self] in
-                            
-                            guard let data = response.data?.first else {
-                                print("No data available")
-                                return
-                            }
-                            if #available(iOS 15.0, *) {
-                                self.hideActivityLoader()
-                            }
-                            UserDefaultFileManager
-                                .saveUserDetails(
-                                    data: (data))
-                            
-                            
-                            if(data.is_number_exists == true){
-                                
-                                if(data.otp_sent == true){
-                                    UserDefaultFileManager
-                                        .saveLoginCredentials(
-                                            mobile_number:MobilTextFld.text ?? "",
-                                            pwd:passTextFld.text ?? ""
-                                        )
-                                    otp_Vc(valdiateResponse: response.data ?? [])
-                                }
-                                else {
+        APIService.shared.makeApi(url: ServiceUrl.validate_validate_user,parameters:parameters
+                                  , type: ApitTypeSringFile.POST, token: "") { [self] (result: Result<UserValidationResponseSuc,Error>) in
+            switch result {
+            case .success(let response):
+                if response.status == true {
+                    DispatchQueue.main.async { [self] in
+                        guard let data = response.data?.first else {
+                            print("No data available")
+                            return
+                        }
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                        UserDefaultFileManager.saveUserDetails(data: (data))
+                        
+                        if(data.is_number_exists == true){
+                            if(data.otp_sent == true){
+                                UserDefaultFileManager.saveLoginCredentials(
+                                    mobile_number:MobilTextFld.text ?? "",
+                                    pwd:passTextFld.text ?? "")
+                                otp_Vc(valdiateResponse: response.data ?? [])
+                            }else {
+                                if data.is_password_updated == true {
+                                    UserDefaultFileManager.saveLoginCredentials(
+                                        mobile_number:MobilTextFld.text ?? "",
+                                        pwd:passTextFld.text ?? "")
                                     
-                                    if data.is_password_updated == true {
+                                    if(data.user_details?.is_staff == true) &&  (
+                                        data.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityVC()
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
                                         
-                                        
-                                        UserDefaultFileManager
-                                            .saveLoginCredentials(
-                                                mobile_number:MobilTextFld.text ?? "",
-                                                pwd:passTextFld.text ?? ""
-                                            )
-                                        
-                                        if(data.user_details?.is_staff == true) &&  (
-                                            data.user_details?.is_parent == true
-                                        ){
-                                            let vc = PriorityVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
+                                    }else if(data.user_details?.is_staff == true){
+                                        if(data.user_details?.staff_details?.count ?? 0 > 1){
+                                            let vc = PriorityVC()
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
-                                            
+                                        }else{
+                                            let vc = TapBarVC()
+                                            ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
                                         }
-                                        else if(data.user_details?.is_staff == true){
-                                            
-                                            
-                                            if(
-                                                data.user_details?.staff_details?.count ?? 0 > 1
-                                            ){
-                                                let vc = PriorityVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
-                                                
-                                                vc.modalPresentationStyle = .fullScreen
-                                                present(vc, animated: true)
-                                            }
-                                            else{
-                                                
-                                                let vc = TapBarVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
-                                                ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
-                                                vc.login_astype = 1
-                                                vc.modalPresentationStyle = .fullScreen
-                                                present(vc, animated: true)
-                                            }
-                                            
-                                            
-                                        }
-                                        else if(data.user_details?.is_parent == true){
-                                            
-                                            if(
-                                                data.user_details?.child_details?.count ?? 0 > 1
-                                            ){
-                                                let vc = PriorityVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
-                                                
-                                                vc.modalPresentationStyle = .fullScreen
-                                                present(vc, animated: true)
-                                            }
-                                            else{
-                                                
-                                                let vc = TapBarVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
-                                                vc.login_astype = 2
-                                                ServiceUrl.token = data.user_details?.child_details?.first?.access_token ?? ""
-                                                vc.modalPresentationStyle = .fullScreen
-                                                present(vc, animated: true)
-                                            }
-                                        }
+                                    }else if(data.user_details?.is_parent == true){
                                         
+                                        if(data.user_details?.child_details?.count ?? 0 > 1){
+                                            let vc = PriorityVC()
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }else{
+                                            let vc = TapBarVC()
+                                            vc.login_astype = 2
+                                            ServiceUrl.token = data.user_details?.child_details?.first?.access_token ?? ""
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
                                     }
-                                    
-                                    
                                 }
-                                
                             }
-                            else {
-                                AlertModal
-                                    .showAlert(
-                                        title: AlertstringFile.Oops,
-                                        message: response.message ?? "",
-                                        on: self
-                                    )
-                            }
-                            
-                        }
-                    }else{
-                        DispatchQueue.main.async { [self] in
-                            
-                            if #available(iOS 15.0, *) {
-                                self.hideActivityLoader()
-                            }
-                            AlertModal
-                                .showAlert(
-                                    title: AlertstringFile.Oops,
-                                    message: response.message ?? "",
-                                    on: self
-                                )
-                            
+                        }else {
+                            AlertModal.showAlert(
+                                title: AlertstringFile.Oops,
+                                message: response.message ?? "",
+                                on: self)
                         }
                     }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
+                }else{
+                    DispatchQueue.main.async { [self] in
+                        
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                        AlertModal.showAlert(
+                            title: AlertstringFile.Oops,
+                            message: response.message ?? "",
+                            on: self)
                     }
                 }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
             }
-        
+        }
     }
     
     
@@ -350,7 +276,6 @@ class LoginVc: UIViewController {
                             self.hideActivityLoader()
                         }
                         if successmessage.status == true {
-                            
                             let vc = OTPVc(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = MobilTextFld.text
@@ -361,17 +286,13 @@ class LoginVc: UIViewController {
                             present(vc, animated: true)
                             
                         }else {
-                            
                             DispatchQueue.main.async {
-                                self.AlertModal
-                                    .showAlert(
-                                        title: AlertstringFile.Oops,
-                                        message: successmessage.message ?? "",
-                                        on: self
-                                    )
+                                self.AlertModal.showAlert(
+                                    title: AlertstringFile.Oops,
+                                    message: successmessage.message ?? "",
+                                    on: self)
                             }
                         }
-                        
                     }
                     
                 case.failure(let error):
@@ -382,9 +303,7 @@ class LoginVc: UIViewController {
                             self.hideActivityLoader()
                         }
                     }
-                    
                 }
-                
             }
     }
 }
@@ -399,7 +318,7 @@ extension LoginVc: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField // ✅ Now dynamically tracks the active field
+        activeTextField = textField
         
         if textField == MobilTextFld {
             MobilTextFld.layer.borderColor = UIColor.systemBlue.cgColor
@@ -431,17 +350,11 @@ extension LoginVc: UITextFieldDelegate {
             if string.count > 1 {
                 return true
             }
-            
-            // Get current text
             let currentText = textField.text ?? ""
             let formattedText = removeCountryCodeAndSpaces(from: currentText)
-            
-            // Ensure correct formatting
             if formattedText != currentText {
                 textField.text = formattedText
             }
-            
-            // Check length restriction
             let newLength = (formattedText.count + string.count - range.length)
             return newLength <= (country_data?.mobile_number_length ?? 10)
         }
@@ -450,101 +363,45 @@ extension LoginVc: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        
-        // Remove country code & spaces
         let cleanedText = removeCountryCodeAndSpaces(from: text)
-        
-        // Limit to max length
         let maxLength = country_data?.mobile_number_length ?? 10
         let finalText = String(cleanedText.prefix(maxLength))
-        
-        // Set cleaned text back to textField
         textField.text = finalText
     }
     
     
     func removeCountryCodeAndSpaces(from phone: String) -> String {
-        // Define a regex pattern that matches a leading '+' followed by 1-3 digits and any optional whitespace.
         let pattern = "^\\+\\d{1,3}\\s*"
         var phoneWithoutCountryCode = phone
-        
-        // Remove the country code using the regular expression.
         if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
             let range = NSRange(location: 0, length: phone.utf16.count)
-            phoneWithoutCountryCode = regex.stringByReplacingMatches(in: phone,
-                                                                     options: [],
-                                                                     range: range,
-                                                                     withTemplate: "")
+            phoneWithoutCountryCode = regex.stringByReplacingMatches(in: phone,options: [],range: range,withTemplate: "")
         }
-        
-        // Remove all whitespace (spaces, newlines, etc.) from the remaining phone number.
         let trimmedPhone = phoneWithoutCountryCode.components(separatedBy: .whitespacesAndNewlines).joined()
         return trimmedPhone
     }
-    
-    //    @objc func keyboardWillShow(notification: NSNotification) {
-    //        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-    //
-    //        let bottomInset = keyboardFrame.height + 20 // padding
-    //        scrollView.contentInset.bottom = bottomInset
-    //        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
-    //    }
-    //
-    //    @objc func keyboardWillHide(notification: NSNotification) {
-    //        scrollView.contentInset.bottom = 0
-    //        scrollView.verticalScrollIndicatorInsets.bottom = 0
-    //    }
-    
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
-
-        // Determine which text field is active
         guard let activeTextField = [MobilTextFld, passTextFld].first(where: { $0.isFirstResponder }) else {
             return
         }
-
-        // Convert the active text field’s frame to the main view’s coordinate space
         let textFieldBottom = activeTextField.convert(activeTextField.bounds, to: self.view).maxY
         let keyboardTop = self.view.frame.height - keyboardFrame.height
-
-        // Move view up only if text field is covered by keyboard
         if textFieldBottom > keyboardTop {
-            let overlap = textFieldBottom - keyboardTop + 80 // Add some padding
+            let overlap = textFieldBottom - keyboardTop + 80
             UIView.animate(withDuration: 0.3) {
                 self.view.frame.origin.y = -overlap
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) {
             self.view.frame.origin.y = 0
         }
     }
-
-    
-//    @objc func keyboardWillShow(notification: NSNotification) {
-//        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-//        
-//        // Store the current insets only the first time
-//        if originalContentInset == .zero {
-//            originalContentInset = scrollView.contentInset
-//            originalScrollIndicatorInsets = scrollView.verticalScrollIndicatorInsets
-//        }
-//        
-//        let bottomInset = keyboardFrame.height + 20 // padding
-//        scrollView.contentInset.bottom = bottomInset
-//        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
-//    }
-//    
-//    @objc func keyboardWillHide(notification: NSNotification) {
-//        // Restore original insets
-//        scrollView.contentInset.bottom = 0
-//        scrollView.verticalScrollIndicatorInsets.bottom = 0
-//    }
-    
 }
 
 

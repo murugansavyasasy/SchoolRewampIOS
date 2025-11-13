@@ -110,10 +110,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToLbl.setFont(style: .title, size: FontSize.TitleSize)
         
-//        dateOuterView.layer.borderColor = UIColor.lightGray.cgColor
-//        dateOuterView.layer.borderWidth = 0.5
-//        dateOuterView.layer.cornerRadius = 8
-        
         FromDateView.layer.borderColor = UIColor.lightGray.cgColor
         FromDateView.layer.borderWidth = 0.5
         FromDateView.layer.cornerRadius = 8
@@ -356,6 +352,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         vc.dateSelection = 2
         vc.delegate = self
+        vc.date = toDateLbl.text
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.present(vc, animated: false)

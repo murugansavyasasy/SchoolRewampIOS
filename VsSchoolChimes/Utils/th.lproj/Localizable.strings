@@ -5,6 +5,27 @@
   Created by admin on 08/11/24.
   
 */
+//MARK: Login
+"Password" = "รหัสผ่าน";
+"Mobile Number" = "หมายเลขโทรศัพท์มือถือ";
+"Login" = "เข้าสู่ระบบ";
+"WELCOME BACK !" = "ยินดีต้อนรับกลับมา!";
+"SchoolCommunityMessage" = "เชื่อมต่อกับชุมชนโรงเรียนของคุณ\nการอัปเดต การสื่อสาร และชีวิตในโรงเรียนของคุณ — ทั้งหมดอยู่ในที่เดียว";
+"Forgot Password ?" = "ลืมรหัสผ่านหรือไม่?";
+//Mark: PasswordScreen
+
+"Create Password" = "สร้างรหัสผ่าน";
+"Confirm password" = "ยืนยันรหัสผ่าน";
+"Enter the old password" = "กรอกรหัสผ่านเดิม";
+"Your password has been securely store and encrypted for protection. For security reason, it cannot be displayed in plain text." = "รหัสผ่านของคุณถูกจัดเก็บและเข้ารหัสไว้อย่างปลอดภัย เพื่อความปลอดภัยจึงไม่สามารถแสดงเป็นข้อความธรรมดาได้";
+"Enter the new password" = "กรอกรหัสผ่านใหม่";
+"Create the new password" = "สร้างรหัสผ่านใหม่";
+"Re-enter the new password" = "กรอกรหัสผ่านใหม่อีกครั้ง";
+"Change password" = "เปลี่ยนรหัสผ่าน";
+"Reset password" = "รีเซ็ตรหัสผ่าน";
+
+// MARK: Common String files
+
 "welcome_message" = "ยินดีต้อนรับ";
 "change_language" = "เปลี่ยนภาษา";
 "Home" = "หน้าหลัก";
@@ -25,18 +46,31 @@
 
 
 // MARK: settings page
-"Notifications" = "การแจ้งเตือน";
-"FAQ" = "คำถามที่พบบ่อย";
-"Contact Us" = "ติดต่อเรา";
-"Terms and Conditions" = "ข้อกำหนดและเงื่อนไข";
-"Change App Language" = "เปลี่ยนภาษาของแอป";
-"Feedback" = "คำติชม";
-"Report a bug" = "รายงานข้อบกพร่อง";
-"Send Feedback" = "ส่งคำติชม";
-"Logout" = "ออกจากระบบ";
-"GENERAL" = "ทั่วไป";
-"Feedback" = "คำติชม";
+"general" = "ทั่วไป";
+"notifications" = "การแจ้งเตือน";
+"faq" = "คำถามที่พบบ่อย";
+"contactUs" = "ติดต่อเรา";
+"termsAndConditions" = "ข้อกำหนดและเงื่อนไข";
+"changeAppLanguage" = "เปลี่ยนภาษาของแอป";
+"feedback" = "ให้คะแนนเรา";
+"reportABug" = "รายงานข้อบกพร่อง";
+"sendFeedback" = "ส่งข้อเสนอแนะ";
+"logout" = "ออกจากระบบ";
+"faceID" = "Face ID / Touch ID";
+
+"accountSecurity" = "บัญชีและความปลอดภัย";
+"preference" = "การตั้งค่า";
+"supportInfo" = "การสนับสนุนและข้อมูล";
+"feedbackSection" = "ข้อเสนอแนะ";
+
+"changePassword" = "เปลี่ยนรหัสผ่าน";
+"privacyPolicy" = "นโยบายความเป็นส่วนตัว";
+"aboutApp" = "เกี่ยวกับแอป";
+"howToUse" = "วิธีใช้งาน?";
+"whatsNew" = "มีอะไรใหม่";
+"appVersion" = "เวอร์ชันแอป";
 "Settings" = "การตั้งค่า";
+
 
 // MARK: Dashboard
 "discussion" = "การอภิปราย";

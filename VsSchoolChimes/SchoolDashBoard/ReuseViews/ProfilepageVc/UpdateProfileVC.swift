@@ -143,6 +143,7 @@ class UpdateProfileVC: UIViewController {
                             self.profileImg.kf.setImage(with: imageUrl)
                             self.changeProfileUrl = imageUrl
                             self.profileNode = photoItem.node ?? "photoPath"
+                            self.editBtn.isEnabled = photoItem.is_editable ?? false
                         }
                         
                         // Find document section and extract URLs into attachments
