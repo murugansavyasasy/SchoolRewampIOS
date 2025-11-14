@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+
 @available(iOS 14.0, *)
 class LessonEditTV: UITableViewCell, Datepicker {
     
@@ -28,175 +29,202 @@ class LessonEditTV: UITableViewCell, Datepicker {
     var originalValue: String = ""
     
     var onEdit: ((String, String) -> Void)?
-
-
-        override func awakeFromNib() {
-            super.awakeFromNib()
-
-//            NameLbl.setFont(style: .title, size: FontSize.TitleSize)
-            DropdownField.font = UIFont(name: "Poppins-Medium", size: 13)
-            TextField.font = UIFont(name: "Poppins-Medium", size: 13)
-            DropdownLbl.font = UIFont(name: "Poppins-Medium", size: 13)
-            TextField.layer.cornerRadius = 8
-            TextField.layer.borderWidth = 1
-            TextField.layer.borderColor = UIColor.systemGray5.cgColor
-            TextField.addDoneButton()
-            TextField.delegate = self
-            TextField.isScrollEnabled = false
-            dateBtn.layer.cornerRadius = 6
-            setupDropdownGesture()
-        }
-
-        private func setupDropdownGesture() {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDropdownTap))
-            DropdownField.addGestureRecognizer(tapGesture)
-            DropdownField.isUserInteractionEnabled = true
-            DropDownView.addGestureRecognizer(tapGesture)
-        }
-
-        @objc private func handleDropdownTap() {
-            if currentFieldType == "datepicker" {
-                showDatePicker()
-            } else if currentFieldType == "dropdown" {
-                dropDown.show()
-            }
-        }
-
-    func configure(with edit: LessonEditData) {
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupUI()
+        setupDropdownGesture()
+    }
+    
+    private func setupUI() {
+        DropdownField.font = UIFont(name: "Poppins-Medium", size: 13)
+        TextField.font = UIFont(name: "Poppins-Medium", size: 13)
+        DropdownLbl.font = UIFont(name: "Poppins-Medium", size: 13)
         
+        TextField.layer.cornerRadius = 8
+        TextField.layer.borderWidth = 1
+        TextField.layer.borderColor = UIColor.systemGray5.cgColor
+        TextField.addDoneButton()
+        TextField.delegate = self
+        TextField.isScrollEnabled = false
+        
+        dateBtn.layer.cornerRadius = 6
+    }
+    
+    private func setupDropdownGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDropdownTap))
+        DropDownView.addGestureRecognizer(tapGesture)
+        DropDownView.isUserInteractionEnabled = true
+    }
+    
+    @objc private func handleDropdownTap() {
+        switch currentFieldType {
+        case "datepicker":
+            showDatePicker()
+        case "dropdown":
+            dropDown.show()
+        default:
+            break
+        }
+    }
+    
+    // MARK: - Configure Cell
+    func configure(with edit: LessonEditData) {
         NameLbl.text = "\(edit.name ?? "") :"
         currentFieldType = edit.field_type ?? ""
         fieldID = edit.field_id ?? edit.id ?? ""
         originalValue = edit.value ?? ""
-
-            switch edit.field_type {
-            case "dropdown":
-                DropDownView.layer.borderWidth =  1
-                DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
-                DropDownView.layer.cornerRadius = 8
-                TextField.isHidden = true
-                DropdownField.isHidden = true
-                DropDownView.isHidden = false
-                dateBtn.isHidden = true
-                dropDownBtn.isHidden = false
-                DropdownField.text = edit.value ?? "Select Value"
-                DropdownLbl.text = edit.value ?? "Select Value"
-                DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
-                DropdownField.isEnabled = !(edit.is_disable ?? false)
-                DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
-                if edit.is_disable ?? false {
-                    DropdownField.backgroundColor = .systemGray6.withAlphaComponent(0.7)
-                    DropDownView.backgroundColor = .systemGray6.withAlphaComponent(0.7)
-                }else {
-                    DropdownField.backgroundColor = .white
-                    DropDownView.backgroundColor = .white
-                }
-                dropDown.dataSource = edit.field_data ?? []
-                dropDown.anchorView = DropdownField
-                dropDown.bottomOffset = CGPoint(x: 0, y: DropdownField.frame.height)
-                dropDown.selectionAction = { [weak self] index, item in
-                    self?.DropdownField.text = item
-                    self?.DropdownLbl.text = item
-                    
-                    if item != self?.originalValue {
-                        self?.onEdit?(self?.fieldID ?? "", item)
-                       }
-                }
-
-            case "text":
-                TextField.isHidden = false
-                DropdownField.isHidden = true
-                DropDownView.isHidden = true
-                TextField.text = edit.value
-                TextField.isEditable = !(edit.is_disable ?? false)
-                if edit.is_disable ?? false {
-                    TextField.backgroundColor = .systemGray6.withAlphaComponent(0.7)
-                    TextField.isUserInteractionEnabled = false
-                }else {
-                    TextField.backgroundColor = .white
-                   // TextField.layer.borderColor = UIColor.systemGreen.cgColor
-                }
-                // ✅ Adjust height based on content right now (from API)
-                    let size = CGSize(width: TextField.frame.width, height: .infinity)
-                    let estimatedSize = TextField.sizeThatFits(size)
-                    let minHeight: CGFloat = 45
-                    TextFieldHeight.constant = max(estimatedSize.height, minHeight)
-
-
-            case "datepicker":
-                DropDownView.clearShadow()
-                DropDownView.layer.borderWidth = 1
-                DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
-                DropDownView.layer.cornerRadius = 8
-                TextField.isHidden = true
-                DropdownField.isHidden = true
-                DropDownView.isHidden = false
-                dateBtn.isHidden = false
-                dropDownBtn.isHidden = true
-                DropdownField.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
-                DropdownLbl.text = convertDate(edit.value ?? "",toFormat: "dd MMM yyyy")//edit.value
-                DropdownField.isUserInteractionEnabled = !(edit.is_disable ?? false)
-                DropDownView.isUserInteractionEnabled = !(edit.is_disable ?? false)
-                DropdownField.addTarget(self, action: #selector(showDatePicker), for: .editingDidBegin)
-                if edit.is_disable ?? false {
-                    DropdownField.backgroundColor = .systemGray6.withAlphaComponent(0.7)
-                    DropDownView.backgroundColor = .systemGray6.withAlphaComponent(0.7)
-                }else {
-                    DropdownField.backgroundColor = .white
-                    DropDownView.backgroundColor = .white
-                }
-
-            default:
-                break
+        
+        resetVisibility()
+        
+        switch edit.field_type {
+        case "dropdown":
+            configureDropdown(edit)
+        case "text":
+            configureTextField(edit)
+        case "datepicker":
+            configureDatePicker(edit)
+        default:
+            break
+        }
+    }
+    
+    private func resetVisibility() {
+        TextField.isHidden = true
+        DropdownField.isHidden = true
+        DropDownView.isHidden = true
+        dateBtn.isHidden = true
+        dropDownBtn.isHidden = true
+    }
+    
+    // MARK: - Configure Dropdown
+    private func configureDropdown(_ edit: LessonEditData) {
+        DropDownView.layer.borderWidth = 1
+        DropDownView.layer.cornerRadius = 8
+        DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
+        
+        DropDownView.isHidden = false
+        dropDownBtn.isHidden = false
+        
+        DropdownLbl.text = edit.value?.isEmpty == false ? edit.value : "Select Value"
+        DropdownField.textColor = edit.value?.isEmpty == false ? UIColor.black : UIColor.systemGray6
+        DropdownField.text = edit.value ?? "Select Value"
+        
+        dropDown.dataSource = edit.field_data ?? []
+        dropDown.anchorView = DropDownView
+        dropDown.bottomOffset = CGPoint(x: 0, y: DropDownView.frame.height)
+        dropDown.selectionAction = { [weak self] index, item in
+            guard let self = self else { return }
+            self.DropdownLbl.text = item
+            if item != self.originalValue {
+                self.onEdit?(self.fieldID, item)
             }
         }
-
+        
+        applyDisableState(isDisabled: edit.is_disable ?? false, views: [DropDownView])
+    }
+    
+    // MARK: - Configure TextField
+    private func configureTextField(_ edit: LessonEditData) {
+        TextField.isHidden = false
+        TextField.text = edit.value
+        TextField.isEditable = !(edit.is_disable ?? false)
+        applyDisableState(isDisabled: edit.is_disable ?? false, views: [TextField])
+        
+        // Dynamic height
+        let size = CGSize(width: TextField.frame.width, height: .infinity)
+        let estimatedSize = TextField.sizeThatFits(size)
+        TextFieldHeight.constant = max(estimatedSize.height, 45)
+    }
+    
+    // MARK: - Configure Date Picker
+    private func configureDatePicker(_ edit: LessonEditData) {
+        DropDownView.layer.borderWidth = 1
+        DropDownView.layer.borderColor = UIColor.systemGray5.cgColor
+        DropDownView.layer.cornerRadius = 8
+        
+        DropDownView.isHidden = false
+        dateBtn.isHidden = false
+        
+        let formatted = convertDate(edit.value ?? "", toFormat: "dd MMM yyyy")
+        DropdownLbl.text = formatted
+        
+        applyDisableState(isDisabled: edit.is_disable ?? false, views: [DropDownView])
+    }
+    
+    // MARK: - Disable/Enable State Styling
+    private func applyDisableState(isDisabled: Bool, views: [UIView]) {
+        for view in views {
+            if isDisabled {
+                view.backgroundColor = UIColor.systemGray6.withAlphaComponent(0.8)
+                if let textField = view as? UITextView {
+                    textField.textColor = .systemGray
+                }
+                if let textField = view as? UITextField {
+                    textField.textColor = .systemGray
+                }
+                if let label = view as? UILabel {
+                    label.textColor = .systemGray
+                }
+                view.layer.borderColor = UIColor.systemGray4.cgColor
+                view.isUserInteractionEnabled = false
+            } else {
+                view.backgroundColor = .white
+                view.layer.borderColor = UIColor.systemGray5.cgColor
+                if let textField = view as? UITextView {
+                    textField.textColor = .black
+                }
+                if let textField = view as? UITextField {
+                    textField.textColor = .black
+                }
+                if let label = view as? UILabel {
+                    label.textColor = .black
+                }
+                view.isUserInteractionEnabled = true
+            }
+        }
+    }
+    
+    // MARK: - Date Picker
     @objc func showDatePicker() {
-           guard let vc = parentViewController else { return }
-
-           let picker = DatePickerVC()
-           picker.modalPresentationStyle = .overCurrentContext
-           picker.delegate = self
-           picker.dateSelection = 2
-           picker.date = DropdownField.text
-           picker.view.backgroundColor = .black.withAlphaComponent(0.6)
-           vc.present(picker, animated: false)
-       }
-
-       // MARK: - Datepicker delegate method
-       func date(date: String) {
-           DropdownLbl.text = date
-           if date != originalValue {
-               let convertedDate = convertDate(date) ?? ""
-               onEdit?(fieldID, convertedDate)
-           }
-       }
+        guard let vc = parentViewController else { return }
+        let picker = DatePickerVC()
+        picker.modalPresentationStyle = .overCurrentContext
+        picker.delegate = self
+        picker.dateSelection = 2
+        picker.date = DropdownLbl.text
+        picker.view.backgroundColor = .black.withAlphaComponent(0.6)
+        vc.present(picker, animated: false)
+    }
+    
+    func date(date: String) {
+        DropdownLbl.text = date
+        if date != originalValue {
+            let convertedDate = convertDate(date) ?? ""
+            onEdit?(fieldID, convertedDate)
+        }
+    }
 }
 
+// MARK: - UITextView Delegate
 @available(iOS 14.0, *)
 extension LessonEditTV: UITextViewDelegate {
-    
     func textViewDidChange(_ textView: UITextView) {
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
-
-        // Set a minimum height of 45
-        let minHeight: CGFloat = 45
-        TextFieldHeight.constant = max(estimatedSize.height, minHeight)
-
+        TextFieldHeight.constant = max(estimatedSize.height, 45)
+        
         UIView.setAnimationsEnabled(false)
         tableView?.beginUpdates()
         tableView?.endUpdates()
         UIView.setAnimationsEnabled(true)
-
+        
         let newValue = textView.text ?? ""
         if newValue != originalValue {
             onEdit?(fieldID, newValue)
         }
     }
-
 }
-
 
 
 import Foundation

@@ -39,6 +39,7 @@ class AssignmentReport: UIViewController, SelectedId {
     @IBOutlet weak var academicView: UIView!
     @IBOutlet weak var academicDropView: UIView!
     @IBOutlet weak var academicYearLabel: UILabel!
+    @IBOutlet weak var seachBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var reportTable: UITableView!
     @IBOutlet weak var noDataLabel: UILabel!
@@ -141,6 +142,7 @@ class AssignmentReport: UIViewController, SelectedId {
                     self?.data = response.data ?? []
                     self?.filteredData = self?.data ?? []
                     let isEmpty = self?.data.isEmpty ?? true
+                    self?.seachBtn.isHidden = isEmpty
                     self?.noDataLabel.isHidden = !isEmpty
                     self?.noDataLabel.text = isEmpty ? response.message : ""
                     self?.noRecordImage.isHidden = !isEmpty
@@ -299,7 +301,7 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
         let detailVC = AssignmentPriview()
         let selectedItem = filteredData[indexPath.row]
         detailVC.data = selectedItem
-        detailVC.userNameValue = UserDefaultFileManager.get_staff_Details()?.name
+        detailVC.userNameValue = MenuStringFile.selectedMenuName
         detailVC.sectionValue = UserDefaultFileManager.get_staff_Details()?.school_name
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview

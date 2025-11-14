@@ -107,11 +107,12 @@ class SenderAssignmentTextViewController: UIViewController,
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
         assignTitleTxtFld.addDoneButton()
+        assignTitleTxtFld.placeholder = "Title".translated()
         contentTextView.addDoneButton()
         contentTextView.applyRightTxt()
         categoryLbl.applyRightTxt()
-        categoryLbl.setRequiredText("Category")
-        SubmissionDateLbl.setRequiredText("Submission Date")
+        categoryLbl.setRequiredText("Category".translated())
+        SubmissionDateLbl.setRequiredText("Submission Date".translated())
         categoryDropDownLbl.applyRightTxt()
         DescriptionLbl.applyRightTxt()
         letterscountLbl.applyRightTxt()
@@ -149,6 +150,7 @@ class SenderAssignmentTextViewController: UIViewController,
     @objc private func selectDateTapped() {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.minimumDate = Date()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -178,7 +180,7 @@ class SenderAssignmentTextViewController: UIViewController,
         dayFormatter.locale = Locale(identifier: "en_US_POSIX")
         dayFormatter.dateFormat = "EEEE"
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
-        dayLbl.text = dayFormatter.string(from: dateToUse)
+        dayLbl.text = dayFormatter.string(from: dateToUse).translated()
     }
 
     // MARK: - DeleteImge (custom)

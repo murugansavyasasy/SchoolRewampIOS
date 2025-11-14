@@ -63,6 +63,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
     var submitcount:Int?
     var unsubmitcount:Int?
     var assignmentId:String?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
        override func awakeFromNib() {
            super.awakeFromNib()
            let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
@@ -175,6 +176,9 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
                 vcc.titleName = tittleLbl.text
                 vcc.subject = SubjectLabel.text
                 vcc.id = id
+                vcc.backBtnTittle1 = studentDetails?.name ?? ""
+                vcc.backBtnTittle2 = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+                vcc.isStudent = "My Submission"
                 vcc.modalPresentationStyle = .fullScreen
                 currentVC.present(vcc, animated: true, completion: nil)
             }
