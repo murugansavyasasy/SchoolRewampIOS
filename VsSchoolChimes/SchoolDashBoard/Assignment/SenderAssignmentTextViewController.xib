@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -45,10 +45,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHq-oe-agh" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7U-N3-tnC">
-                            <rect key="frame" x="10" y="128" width="363" height="35"/>
+                            <rect key="frame" x="10" y="69" width="363" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="VaW-1n-QcQ"/>
                             </constraints>
@@ -72,7 +72,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YT0-qY-ngg">
-                    <rect key="frame" x="0.0" y="183" width="393" height="669"/>
+                    <rect key="frame" x="0.0" y="124" width="393" height="728"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUO-2J-dua">
                             <rect key="frame" x="0.0" y="10" width="393" height="652"/>
@@ -103,7 +103,7 @@
                                                         <action selector="cancel:" destination="-1" eventType="touchUpInside" id="K48-kf-H5y"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esN-Vw-zdd">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esN-Vw-zdd" customClass="LocalizationButton" customModule="School_Chimes" customModuleProvider="target">
                                                     <rect key="frame" x="176.66666666666663" y="0.0" width="156.33333333333337" height="40"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -120,7 +120,7 @@
                                             </subviews>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q7a-Ea-2mM">
-                                            <rect key="frame" x="10" y="38.333333333333314" width="353" height="40"/>
+                                            <rect key="frame" x="10" y="38.333333333333343" width="353" height="40"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="VlX-Zh-l4J">
                                                     <rect key="frame" x="323" y="10" width="20" height="20"/>
@@ -221,7 +221,7 @@
                                                                     <state key="normal" image="calendarimage"/>
                                                                 </button>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eWR-6g-dBu">
-                                                                    <rect key="frame" x="50" y="9.6666666666666288" width="283" height="41"/>
+                                                                    <rect key="frame" x="50" y="9.6666666666666856" width="283" height="41"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1d-TB-aGx">
                                                                             <rect key="frame" x="0.0" y="0.0" width="283" height="14.333333333333334"/>
@@ -230,7 +230,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tet-kt-ysV">
-                                                                            <rect key="frame" x="0.0" y="19.333333333333371" width="283" height="21.666666666666671"/>
+                                                                            <rect key="frame" x="0.0" y="19.333333333333314" width="283" height="21.666666666666671"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -331,7 +331,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="DQj-QD-FHX">
                                     <rect key="frame" x="278" y="10" width="105" height="35"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oML-74-3mM">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oML-74-3mM" customClass="LocalizationButton" customModule="School_Chimes" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="35"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -381,7 +381,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="BUO-2J-dua" firstAttribute="leading" secondItem="YT0-qY-ngg" secondAttribute="leading" id="3YO-6h-46q"/>
                         <constraint firstAttribute="trailing" secondItem="BUO-2J-dua" secondAttribute="trailing" id="9CN-VZ-3p5"/>
@@ -391,7 +391,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uHq-oe-agh" secondAttribute="trailing" id="9Tz-go-i6X"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B4x-Ui-VYN"/>

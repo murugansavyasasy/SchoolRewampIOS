@@ -39,26 +39,31 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         EditBtn1.isHidden = !(edit || delete)
     }
     @IBAction func edit(_ sender: UIButton) {
-        let popoverContentVC = PopupVC(edit: self.edit ?? false, delete: self.delete ?? false, selectedId: selectedId)
+        let hasEdit = self.edit ?? false
+        let hasDelete = self.delete ?? false
+        let popoverContentVC = PopupVC(edit: hasEdit, delete: hasDelete, selectedId: selectedId)
         popoverContentVC.delegate = self
-        popoverContentVC.preferredContentSize = CGSize(width: 120, height: edit ?? false ? 90:50)
+        let height: CGFloat = (hasEdit && hasDelete) ? 90 : (hasEdit || hasDelete ? 50 : 0)
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: height)
         popoverContentVC.modalPresentationStyle = .popover
+        
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
             popoverController.permittedArrowDirections = .down
             popoverController.delegate = self
         }
-        
-        // For iPhones: Present as a pop-up instead of full-screen
         if UIDevice.current.userInterfaceIdiom == .phone {
             popoverContentVC.modalPresentationStyle = .overFullScreen
-            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         }
-        if let topVC = getCurrentViewController() {
+
+        if let topVC = getCurrentViewController(), height > 0 {
             topVC.present(popoverContentVC, animated: true, completion: nil)
         }
     }
+    
+
     func configure(with details: [LessonDetailItem]) {
         // Clear old views
         subTitlleStack.arrangedSubviews.forEach { $0.removeFromSuperview() }

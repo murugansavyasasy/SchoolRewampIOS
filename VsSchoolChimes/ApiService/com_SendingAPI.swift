@@ -161,8 +161,7 @@ class  commonApi_forSending {
             actionLbl2: AlertstringFile.Cancel,
             on: viewController,
             onOk: { [self] in
-                let totalUploads = user_inputs.SelectedUrls.count + 1 // 1 for AWS/media upload
-                
+                let totalUploads = user_inputs.SelectedUrls.count + 1
                 var completedUploads = 0
                 
                 func updateProgress() {

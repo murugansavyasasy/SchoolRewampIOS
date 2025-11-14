@@ -33,20 +33,20 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
 
         if dateSelection == true {
             fromDateLbl.text = outputDateString
-            fromeDayLbl.text = dayName
+            fromeDayLbl.text = dayName.translated()
             if let toText = toDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                 let labelFormatter = DateFormatter()
                 labelFormatter.dateFormat = "dd MMM yyyy"
                 if let toDate = labelFormatter.date(from: toText) {
                     if dayDate > toDate {
                         toDateLbl.text = outputDateString
-                        toDayLbl.text = dayName
+                        toDayLbl.text = dayName.translated()
                     }
                 }
             }
         } else {
             toDateLbl.text = outputDateString
-            toDayLbl.text = dayName
+            toDayLbl.text = dayName.translated()
         }
     }
 
@@ -105,7 +105,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         menuNameLbl.text = MenuStringFile.selectedMenuName
-        DisplayRangeLbl.setRequiredText(CommonStringFile.Notice_Display_Date_Range)
+        DisplayRangeLbl.setRequiredText(CommonStringFile.Notice_Display_Date_Range.translated())
         
         FromLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -274,12 +274,10 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dayNameFormatter.dateFormat = "EEEE"
         let fromDay = dayNameFormatter.string(from: startDate)
         let toDay = dayNameFormatter.string(from: endDate)
-        
-        // ✅ Set labels
         fromDateLbl.text = fromDisplay
-        fromeDayLbl.text = fromDay
+        fromeDayLbl.text = fromDay.translated()
         toDateLbl.text = toDisplay
-        toDayLbl.text = toDay
+        toDayLbl.text = toDay.translated()
     }
 
 

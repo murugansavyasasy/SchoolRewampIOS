@@ -964,7 +964,7 @@ struct SubmissionResponse: Codable {
 struct Submission: Codable {
     let id: String?
     let description: String?
-    let tittle: String?
+    let title: String?
     let submitted_on: String?
     let file_path: [FilePath]?
 }

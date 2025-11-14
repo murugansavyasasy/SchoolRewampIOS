@@ -60,7 +60,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     var edit:Bool?
     var delete:Bool?
     var selectedId:String?
-    
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -93,6 +93,9 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         let vcc = AssignmentSummitionVC(nibName: nil, bundle: nil)
         vcc.titleName = titleLbl.text
         vcc.subject = subject
+        vcc.backBtnTittle1 = studentDetails?.name ?? ""
+        vcc.backBtnTittle2 = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        vcc.isStudent = "My Submission"
         vcc.id = id
         vcc.modalPresentationStyle = .fullScreen
         currentVC.present(vcc, animated: true)
@@ -157,17 +160,13 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         self.assignment = assignment
         titleLbl.text = assignment.title
         descriptionLbl.text = assignment.description
-        
-        // Clear old stack items
         subCatogoriesStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         categories = createCategoriesArray(from: assignment)
-        
         if let categories = categories, !categories.isEmpty {
             let generatedStack = createSubCategoriesStack(with: categories)
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
-        
         assignmentProgressLbl.text = "Submission Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)

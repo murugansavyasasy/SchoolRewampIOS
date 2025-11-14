@@ -87,7 +87,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     func fetchData(notice: Submission?) {
         attachments.removeAll()
         if let notice = notice {
-            titleTxt.text = notice.tittle ?? ""
+            titleTxt.text = notice.title ?? ""
             DescriptionTextview.text = notice.description
             id = notice.id
             DescriptionTextview.textColor = .black
@@ -134,8 +134,8 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     
     @IBAction func submitBtn(_ sender: UIButton) {
-        
-        if DescriptionTextview.text != "", id != nil, !attachments.isEmpty {
+        let alert = CustomAlert()
+        if DescriptionTextview.text != "", id != nil{
             uploadMedia(
                 file: attachments,
                 viewController: self,

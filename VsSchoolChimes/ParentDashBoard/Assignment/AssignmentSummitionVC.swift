@@ -38,29 +38,33 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     var titleName:String?
     var subject:String?
     var id:String?
+    var backBtnTittle1 : String?
+    var backBtnTittle2 : String?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     let transitionDelegate = TransitioningDelegate()
     var submissions_details: [SubmissionDetail]?
     let alert = CustomAlert()
     var submitedList = false
+    var isStudent:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        let name = studentDetails?.name ?? ""
-        let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
-        MenuName.text = "My Submission"
+        
+        studentNameLbl.configureAsBackTitle(firstLine: backBtnTittle1 ?? "", secondLine: backBtnTittle2 ?? "")
+        MenuName.text = isStudent
         noDtaImg.isHidden = true
         nodataLbl.isHidden = true
         sumitionList.delegate = self
         sumitionList.dataSource = self
         sumitionList.register(UINib(nibName: "SubmissionTVC", bundle: nil), forCellReuseIdentifier: "SubmissionTVC")
-        if !submitedList{
-            ReadStatusUpdate()
-        }
         
     }
-
-    func ReadStatusUpdate(){
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !submitedList{
+            getMySubmission()
+        }
+    }
+    func getMySubmission(){
         
         APIService.shared.makeApi(url: ServiceUrl.comm_api_my_submissions, parameters: ["id":id ?? ""], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [self] (result : Result<SubmissionResponse,Error>) in
             
@@ -163,9 +167,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                 let (timeAgo, dateString) = submittedDate
                 cell.assignmentTitle.text = titleName
                 cell.subjectName.text = subject
-//                cell.date.text = dateString
                 cell.FilesUrl = data.file_path
-//                cell.timeLeft.text = "Submited: \(timeAgo)"
                 if let dateString = data.submitted_on,
                    let formattedDate = dateString.convertToTargetDateFormat() {
                     cell.timeLeft.text = "Submitted: \(formattedDate)"
@@ -179,8 +181,6 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
         }else{
             if let data = assignments?[indexPath.row]{
                 if let (timeAgo, dateString) = data.submitted_on?.submissionTimeDisplay(){
-//                    cell.date.text = dateString
-//                    cell.timeLeft.text = "Submited: \(timeAgo)"
                     if let dateString = data.submitted_on,
                        let formattedDate = dateString.convertToTargetDateFormat() {
                         cell.timeLeft.text = "Submitted: \(formattedDate)"
@@ -203,33 +203,94 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.row >= 0 else { return }
-        
+
         let cellFrameInSuperview = tableView.rectForRow(at: indexPath)
         let convertedFrame = tableView.convert(cellFrameInSuperview, to: view)
-        
-        let detailVC = PrivewVc()
-        
+
+        let detailVC = AssignmentPriview()
+        detailVC.userNameValue = backBtnTittle1
+        detailVC.sectionValue = backBtnTittle2
+        detailVC.reciver = true
+
         if submitedList {
             guard let submission = submissions_details?[indexPath.row] else { return }
-            detailVC.attachmetList = submission.file_path
-            detailVC.selectedDate = submission.submitted_on
-            detailVC.descriptionString = submission.description
+            let report = Report(
+                id: submission.id,
+                header_id: nil,
+                title: titleName,
+                description: submission.description ?? "",
+                category: "",
+                subject: subject ?? "",
+                date: submission.submitted_on ?? "",
+                time: "",
+                school_id: studentDetails?.school_id,
+                school_name: studentDetails?.school_name,
+                recipient_type: "",
+                target_type: "",
+                created_date: submission.submitted_on,
+                created_time: "",
+                progress: nil,
+                submitted_count: nil,
+                total_count: nil,
+                end_date: "",
+                is_unread: nil,
+                sent_by: "",
+                can_edit: nil,
+                can_delete: nil,
+                sort_order: "",
+                is_archive: false,
+                iframe: submission.iframe,
+                file_size: submission.file_size,
+                thumbnail: "",
+                file_path: submission.file_path
+            )
+            detailVC.data = report
+
         } else {
             guard let assignment = assignments?[indexPath.row] else { return }
-            detailVC.attachmetList = assignment.file_path
-            detailVC.selectedDate = assignment.submitted_on
-            detailVC.descriptionString = assignment.description
+
+            // Convert Submission → Report model
+            let report = Report(
+                id: assignment.id,
+                header_id: nil,
+                title: assignment.title ?? titleName ?? "",
+                description: assignment.description ?? "",
+                category: "",
+                subject: subject ?? "",
+                date: assignment.submitted_on ?? "",
+                time: "",
+                school_id: studentDetails?.school_id,
+                school_name: studentDetails?.school_name,
+                recipient_type: "",
+                target_type: "",
+                created_date: assignment.submitted_on,
+                created_time: "",
+                progress: nil,
+                submitted_count: nil,
+                total_count: nil,
+                end_date: "",
+                is_unread: nil,
+                sent_by: "",
+                can_edit: nil,
+                can_delete: nil,
+                sort_order: "",
+                is_archive: false,
+                iframe: "",
+                file_size: "",
+                thumbnail: "",
+                file_path: assignment.file_path
+            )
+
+            detailVC.data = report
         }
-        
-        detailVC.titleString = titleName
-        detailVC.subject_name = MenuStringFile.selectedMenuName
+
         detailVC.modalPresentationStyle = .custom
-        
         transitionDelegate.originFrame = convertedFrame
         detailVC.transitioningDelegate = transitionDelegate
-        
+
         present(detailVC, animated: true)
     }
+
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
