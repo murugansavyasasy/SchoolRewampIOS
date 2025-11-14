@@ -440,6 +440,9 @@ class RecipientVc: UIViewController{
                             "menu_id": Menu_id.staffSelectedMenuId
                         ]
                         paketApiCall(params: params)
+                    }else{
+                        
+                        gotoDashboard()
                     }
                 }
             }
