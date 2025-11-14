@@ -17,7 +17,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var BottomView: UIView!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
-    var     EditData: [LessonEditData]?
+    var EditData: [LessonEditData]?
     var particular_Id : String?
     var ReqestType: String?
     var editedFields: [String: String] = [:]

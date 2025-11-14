@@ -145,6 +145,7 @@
 "No Data Found!" = "No Data Found!";
 "Notice Active Period" = "Notice Active Period";
 "All" = "All";
+"NEXT" = "Next";
 "Edit" = "Edit";
 "Welcome" = "Welcome";
 "Change Language" = "Change Language";
@@ -163,6 +164,62 @@
 "Receiver Assignment" = "Receiver Assignment";
 "Online Meeting" = "Online Meeting";
 "Attendance Report" = "Attendance Report";
+"Submission Date" = "Submission Date";
+"Category" = "Category";
+"Choose Recipients" = "Choose Recipients";
+"TO STANDARD OR SECTION" = "To Standard or Section";
+
+// MARK: Days
+"Sunday" = "Sunday";
+"Monday" = "Monday";
+"Tuesday" = "Tuesday";
+"Wednesday" = "Wednesday";
+"Thursday" = "Thursday";
+"Friday" = "Friday";
+"Saturday" = "Saturday";
+
+"Sun" = "Sun";
+"Mon" = "Mon";
+"Tue" = "Tue";
+"Wed" = "Wed";
+"Thu" = "Thu";
+"Fri" = "Fri";
+"Sat" = "Sat";
+
+"Su" = "Su";
+"Mo" = "Mo";
+"Tu" = "Tu";
+"We" = "We";
+"Th" = "Th";
+"Fr" = "Fr";
+"Sa" = "Sa";
+
+// MARK: Months
+"January" = "January";
+"February" = "February";
+"March" = "March";
+"April" = "April";
+"May" = "May";
+"June" = "June";
+"July" = "July";
+"August" = "August";
+"September" = "September";
+"October" = "October";
+"November" = "November";
+"December" = "December";
+
+"Jan" = "Jan";
+"Feb" = "Feb";
+"Mar" = "Mar";
+"Apr" = "Apr";
+"May_" = "May";
+"Jun" = "Jun";
+"Jul" = "Jul";
+"Aug" = "Aug";
+"Sep" = "Sep";
+"Oct" = "Oct";
+"Nov" = "Nov";
+"Dec" = "Dec";
 
 // MARK: Settings page
 "general" = "General";

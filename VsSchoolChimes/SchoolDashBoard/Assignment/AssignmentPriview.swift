@@ -35,7 +35,6 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
     var reciver = false
     var onDismiss: (() -> Void)?
     var isNoDataFound = false
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,6 +153,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                     if response.status ?? false {
                         self.submittedAssignment = response.data ?? []
                         self.filterAssignment = response.data ?? []
+                        self.selectedAssignment = response.data ?? []
                     }
                     self.assignmentTable.reloadData()
                 }
@@ -168,6 +168,8 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
 
     // MARK: - Search Delegate
     func searchText(_ searchText: String) {
+        print(searchText)
+        
         if searchText == "All" {
             filterAssignment = submittedAssignment
             selectedAssignment = submittedAssignment
@@ -178,8 +180,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             filterAssignment = submittedAssignment.filter { ($0.submit_status ?? "") == "NOTSUBMITTED" }
             selectedAssignment = filterAssignment
         } else if searchText == "true" {
-            assignmentTable.beginUpdates()
-            assignmentTable.endUpdates()
+            filterAssignment = selectedAssignment
         } else if searchText.isEmpty {
             filterAssignment = selectedAssignment
         } else {
@@ -189,7 +190,14 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                 ($0.section?.localizedCaseInsensitiveContains(searchText) ?? false)
             }
         }
-        assignmentTable.reloadSections(IndexSet(integer: 3), with: .automatic)
+        DispatchQueue.main.async {
+            if self.assignmentTable.numberOfSections > 3 {
+                UIView.performWithoutAnimation {
+                    self.assignmentTable.reloadSections(IndexSet(integer: 3), with: .none)
+                }
+            } else {                self.assignmentTable.reloadData()
+            }
+        }
     }
 
     // MARK: - TableView DataSource
@@ -348,6 +356,9 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         submissionVC.titleName = data?.title
         submissionVC.submitedList = true
         submissionVC.submissions_details = selectedStudent.submissions_details
+        submissionVC.backBtnTittle1 = userNameValue ?? ""
+        submissionVC.backBtnTittle2 = sectionValue ?? ""
+        submissionVC.isStudent = "Submission"
         submissionVC.modalPresentationStyle = .fullScreen
         present(submissionVC, animated: false)
     }

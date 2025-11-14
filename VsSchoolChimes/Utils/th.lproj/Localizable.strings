@@ -145,6 +145,7 @@
 "No Data Found!" = "ไม่พบข้อมูล!";
 "Notice Active Period" = "ช่วงเวลาที่ประกาศใช้งาน";
 "All" = "ทั้งหมด";
+"NEXT" = "ถัดไป"; 
 "Edit" = "แก้ไข";
 "Welcome" = "ยินดีต้อนรับ";
 "Change Language" = "เปลี่ยนภาษา";
@@ -162,6 +163,62 @@
 "Receiver Assignment" = "มอบหมายผู้รับ";
 "Online Meeting" = "การประชุมออนไลน์";
 "Attendance Report" = "รายงานการเข้าเรียน";
+"Submission Date" = "วันที่ส่ง";
+"Category" = "หมวดหมู่";
+"Choose Recipients" = "เลือกผู้รับ";
+"TO STANDARD OR SECTION" = "ไปยังระดับหรือชั้นเรียน";
+
+// MARK: Days
+"Sunday" = "วันอาทิตย์";
+"Monday" = "วันจันทร์";
+"Tuesday" = "วันอังคาร";
+"Wednesday" = "วันพุธ";
+"Thursday" = "วันพฤหัสบดี";
+"Friday" = "วันศุกร์";
+"Saturday" = "วันเสาร์";
+
+"Sun" = "อา.";
+"Mon" = "จ.";
+"Tue" = "อ.";
+"Wed" = "พ.";
+"Thu" = "พฤ.";
+"Fri" = "ศ.";
+"Sat" = "ส.";
+
+"Su" = "อา";
+"Mo" = "จ";
+"Tu" = "อ";
+"We" = "พ";
+"Th" = "พฤ";
+"Fr" = "ศ";
+"Sa" = "ส";
+
+// MARK: Months
+"January" = "มกราคม";
+"February" = "กุมภาพันธ์";
+"March" = "มีนาคม";
+"April" = "เมษายน";
+"May" = "พฤษภาคม";
+"June" = "มิถุนายน";
+"July" = "กรกฎาคม";
+"August" = "สิงหาคม";
+"September" = "กันยายน";
+"October" = "ตุลาคม";
+"November" = "พฤศจิกายน";
+"December" = "ธันวาคม";
+
+"Jan" = "ม.ค.";
+"Feb" = "ก.พ.";
+"Mar" = "มี.ค.";
+"Apr" = "เม.ย.";
+"May_" = "พ.ค.";
+"Jun" = "มิ.ย.";
+"Jul" = "ก.ค.";
+"Aug" = "ส.ค.";
+"Sep" = "ก.ย.";
+"Oct" = "ต.ค.";
+"Nov" = "พ.ย.";
+"Dec" = "ธ.ค.";
 
 // MARK: settings page
 "general" = "ทั่วไป";

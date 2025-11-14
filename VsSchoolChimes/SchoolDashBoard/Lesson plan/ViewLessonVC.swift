@@ -39,6 +39,7 @@ class ViewLessonVC: UIViewController, SelectedId {
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ViewLessonData: [LessonPlanDetail]?
     var FilteredData: [LessonPlanDetail]?
+    var searchData: [LessonPlanDetail]?
     var Reqest_Type: String?
     var Filters = [CommonStringFile.all,LessonplanStringFile.yetToStart,LessonplanStringFile.inProgress,CommonStringFile.completed]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
@@ -59,15 +60,17 @@ class ViewLessonVC: UIViewController, SelectedId {
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         
         SearchBar.isHidden = true
+        SearchBar.searchTextField.addDoneButton()
+        SearchBar.placeholder = CommonStringFile.Search.translated()
+        SearchBar.searchTextField.backgroundColor = .systemGray5
+        SearchBar.layer.cornerRadius = 8
+        SearchBar.searchTextField.layer.masksToBounds = true
         SearchBar.delegate = self
         SearchBar.applyRightTxt()
         SearchBar.searchTextField.addDoneButton()
         TableView.showsVerticalScrollIndicator = false
         TableView.showsHorizontalScrollIndicator = false
-        
-//        let nib = UINib(nibName: CellConfingName.LessonViewTvCell, bundle: nil)
         let nib = UINib(nibName: "LessonPlanTVC", bundle: nil)
-//        TableView.register(nib, forCellReuseIdentifier: CellConfingName.LessonViewTvCell)
         TableView.register(nib, forCellReuseIdentifier: "LessonPlanTVC")
         
         TableView.delegate = self
@@ -103,7 +106,7 @@ class ViewLessonVC: UIViewController, SelectedId {
             SearchBar.resignFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             SearchBar.searchTextField.text = ""
-            FilteredData = ViewLessonData
+            FilteredData = searchData
             TableView.reloadData()
         }
         
@@ -135,8 +138,8 @@ class ViewLessonVC: UIViewController, SelectedId {
                     
                     if success.status == true{
                         self.ViewLessonData = success.data
-                        self.LessonFilter(Status: LessonPlanStatus)
-                        self.NoDataLbl.text = CommonStringFile.No_data_found
+                        FilteredData = ViewLessonData
+                        searchData = ViewLessonData
                     }else {
                         self.ViewLessonData = []
                         self.FilterCV.isHidden = true
@@ -220,6 +223,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                         CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
                             self.ViewLessonData?.removeAll{$0.particular_id == particularID}
                             self.FilteredData?.removeAll{$0.particular_id == particularID}
+                            self.searchData?.removeAll{$0.particular_id == particularID}
                             self.TableView.reloadData()
                         })
                     }else {
@@ -284,10 +288,9 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         
         let lesson = FilteredData?[indexPath.row]
         cell.titleNameLbl.text = LesonPlanReport?.subject_name
-        cell.chapterLbl.text = " chapter " + (
+        cell.chapterLbl.text = "Chapters Completed " + (
             LesonPlanReport?.items_completed ?? ""
         )
-//        let colour: UIColor
         switch lesson?.lesson_plan_status{
             
         case 1:
@@ -365,12 +368,17 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     func LessonFilter(Status:Int){
         if Status == 0{
             FilteredData = ViewLessonData
+            searchData = FilteredData
         }else{
             FilteredData = ViewLessonData?.filter{$0.lesson_plan_status == Status}
+            searchData = ViewLessonData?.filter{$0.lesson_plan_status == Status}
         }
-        
-        NoDataImg.isHidden = !(FilteredData?.isEmpty ?? false)
-        NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? false)
+        searchBtnName.isHidden = (FilteredData?.isEmpty ?? true)
+        SearchBar.isHidden = (FilteredData?.isEmpty ?? true)
+        SearchBar.searchTextField.text = ""
+        NoDataImg.isHidden = !(FilteredData?.isEmpty ?? true)
+        NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? true)
+        NoDataLbl.text = (FilteredData?.isEmpty ?? true) ? "No LessonPlan Found" : ""
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -397,9 +405,7 @@ extension ViewLessonVC: UISearchBarDelegate {
     }
     
     func searchLesson(_ searchText: String) {
-        guard let allData = ViewLessonData else { return }
-
-        // Apply base filter based on selected status (same logic as your LessonFilter)
+        guard let allData = searchData else { return }
         var baseFiltered: [LessonPlanDetail]
         if LessonPlanStatus == 0 {
             baseFiltered = allData
@@ -425,7 +431,7 @@ extension ViewLessonVC: UISearchBarDelegate {
         // Handle empty state
         NoDataImg.isHidden = !(FilteredData?.isEmpty ?? false)
         NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? false)
-        NoDataLbl.text = (FilteredData?.isEmpty ?? false) ? "No Lesson Found" : ""
+        NoDataLbl.text = (FilteredData?.isEmpty ?? false) ? "No LessonPlan Found" : ""
 
         TableView.reloadData()
     }

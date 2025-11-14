@@ -171,6 +171,7 @@
 "No Data Found!" = "कोई डेटा नहीं मिला!";
 "Notice Active Period" = "सूचना सक्रिय अवधि";
 "All" = "सभी";
+"NEXT" = "अगला";
 "Edit" = "संपादित करें";
 "Welcome" = "स्वागत है";
 "Change Language" = "भाषा बदलें";
@@ -188,6 +189,62 @@
 "Receiver Assignment" = "प्राप्तकर्ता कार्य";
 "Online Meeting" = "ऑनलाइन मीटिंग";
 "Attendance Report" = "उपस्थिति रिपोर्ट";
+"Submission Date" = "जमा करने की तिथि";
+"Category" = "श्रेणी";
+"Choose Recipients" = "प्राप्तकर्ताओं का चयन करें";
+"TO STANDARD OR SECTION" = "मानक या अनुभाग को";
+
+// MARK: Days
+"Sunday" = "रविवार";
+"Monday" = "सोमवार";
+"Tuesday" = "मंगलवार";
+"Wednesday" = "बुधवार";
+"Thursday" = "गुरुवार";
+"Friday" = "शुक्रवार";
+"Saturday" = "शनिवार";
+
+"Sun" = "रवि";
+"Mon" = "सोम";
+"Tue" = "मंगल";
+"Wed" = "बुध";
+"Thu" = "गुरु";
+"Fri" = "शुक्र";
+"Sat" = "शनि";
+
+"Su" = "र";
+"Mo" = "स";
+"Tu" = "मं";
+"We" = "बु";
+"Th" = "गु";
+"Fr" = "शु";
+"Sa" = "श";
+
+// MARK: Months
+"January" = "जनवरी";
+"February" = "फ़रवरी";
+"March" = "मार्च";
+"April" = "अप्रैल";
+"May" = "मई";
+"June" = "जून";
+"July" = "जुलाई";
+"August" = "अगस्त";
+"September" = "सितंबर";
+"October" = "अक्टूबर";
+"November" = "नवंबर";
+"December" = "दिसंबर";
+
+"Jan" = "जन";
+"Feb" = "फ़र";
+"Mar" = "मार्च";
+"Apr" = "अप्र";
+"May_" = "मई";
+"Jun" = "जून";
+"Jul" = "जुल";
+"Aug" = "अग";
+"Sep" = "सित";
+"Oct" = "अक्ट";
+"Nov" = "नव";
+"Dec" = "दिस";
 
 
 // MARK: Dashboard
