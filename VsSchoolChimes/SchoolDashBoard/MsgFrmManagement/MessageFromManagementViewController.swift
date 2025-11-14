@@ -163,11 +163,40 @@ class MessageFromManagementViewController: UIViewController {
             type: ApitTypeSringFile.GET,
             token: token
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
-            self?.handleMessagesResponse(result)
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let response):
+                    self.messageData = response.data ?? []
+                    self.filteredData = self.messageData
+                    let hidden = self.filteredData.isEmpty
+                    
+                    self.searchBtn.isHidden = hidden
+                    self.schoolDropDown.isHidden = hidden
+                    self.NoDataImage.isHidden = !hidden
+                    self.NoDataLbl.isHidden = !hidden
+                    self.NoDataLbl.text = response.message
+                    
+                case .failure(let error):
+                    self.NoDataLbl.text = error.localizedDescription
+                    self.searchBtn.isHidden = true
+                    self.schoolDropDown.isHidden = true
+                    self.NoDataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                }
+                
+                self.tv.reloadData()
+            }
         }
     }
     
     private func fetchArchivedMessages() {
+        
+        SearchBar.searchTextField.text = ""
+        searchText = ""
         let token = staffDetails?.access_token ?? ""
         
         APIService.shared.makeApi(
@@ -176,7 +205,30 @@ class MessageFromManagementViewController: UIViewController {
             type: ApitTypeSringFile.GET,
             token: token
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
-            self?.handleArchivedMessagesResponse(result)
+           
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result{
+                case .success(let response):
+                    self.messageData.append(contentsOf: response.data ?? [])
+                    let hidden = self.messageData.isEmpty
+                    self.searchBtn.isHidden = hidden
+                    self.filterMessages()
+                    self.shouldShowFooterLabel = !(response.status ?? false)
+                    self.archiveMessage = response.message ?? ""
+                    
+                case .failure(let error):
+                    let hidden = self.messageData.isEmpty
+                    self.searchBtn.isHidden = hidden
+                    self.filterMessages()
+                    self.shouldShowFooterLabel = true
+                    self.archiveMessage = error.localizedDescription
+                }
+                self.shouldShowFooter = false
+                self.tv.reloadData()
+            }
         }
     }
     
@@ -234,7 +286,10 @@ class MessageFromManagementViewController: UIViewController {
                 if response.status == true {
                     self.messageData.append(contentsOf: response.data ?? [])
                     self.shouldShowFooterLabel = false
+                    self.SearchBar.searchTextField.text = ""
+                    self.searchText = ""
                     self.filterMessages()
+                    self.shouldShowFooter = false
                 } else {
                     self.handleEmptyArchive(message: response.message ?? "")
                     self.searchBtn.isHidden = true
@@ -245,7 +300,7 @@ class MessageFromManagementViewController: UIViewController {
                 self.searchBtn.isHidden = true
             }
             
-            self.shouldShowFooter = false
+           
             self.tv.reloadData()
         }
     }
@@ -325,6 +380,7 @@ class MessageFromManagementViewController: UIViewController {
         dropDown.selectionAction = { [weak self] (index, item) in
             
             self?.SearchBar.searchTextField.text = ""
+            self?.searchText = ""
             self?.handleSchoolSelection(index: index, item: item, schoolDetails: details)
         }
         
@@ -338,7 +394,6 @@ class MessageFromManagementViewController: UIViewController {
     }
     
     @objc private func seeArchivedMessagesTapped(_ sender: UIButton) {
-        SearchBar.searchTextField.text = ""
         fetchArchivedMessages()
     }
 }

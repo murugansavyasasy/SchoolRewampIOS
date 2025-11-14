@@ -71,7 +71,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        searchBar.searchTextField.text = ""
         get_meetings_api()
     }
     
@@ -114,6 +114,8 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     }
                     
                     self.FilteredSection = self.AllSections
+                    self.NoDataLbl.isHidden = !(self.FilteredSection?.isEmpty ?? false)
+                    self.NoDataImage.isHidden = !(self.FilteredSection?.isEmpty ?? false)
                     self.tv.reloadData()
                     
                 case .failure(let failure):
@@ -218,13 +220,15 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
        }
     
     func JoinButtonTapped(Link: String) {
-        let meetingURLString = Link
-        if let url = URL(string: meetingURLString) {
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                print("Cannot open meeting link")
-            }
+        var fixedLink = Link
+        if !fixedLink.lowercased().hasPrefix("http") {
+            fixedLink = "https://" + fixedLink
+        }
+        
+        if let url = URL(string: fixedLink) {
+            UIApplication.shared.open(url)
+        } else {
+            print("Cannot open meeting link")
         }
     }
     
@@ -262,7 +266,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.MeetingNameLbl.text = slot?.purpose
         cell.staffNameLbl.text = "with "  + (slot?.staff_name ?? "")
         cell.subjectLbl.text = slot?.subject_name?.first
-        cell.dateBtn.setTitle(slot?.date, for: .normal)
+        cell.dateBtn.setTitle(slot?.date?.convertToTargetDateFormat(), for: .normal)
         cell.TimeBtn.setTitle(slot?.time, for: .normal)
         let duration = String(slot?.duration ?? 0) + " min"
         cell.DurationBtn.setTitle(duration, for: .normal)
@@ -271,7 +275,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.JoinBtn.isHidden = slot?.mode != "Virtual"
         cell.cancelBtn.isHidden = slot?.status == "Completed"
         cell.statusBtn.setTitle(slot?.status, for: .normal)
-        cell.DateLbl.text = slot?.date
+        cell.DateLbl.text = slot?.date?.convertToTargetDateFormat()
         cell.TimeLbl.text = slot?.time
         
         if slot?.mode == "In Person"{
@@ -339,31 +343,31 @@ extension PtmHistoryVC: UISearchBarDelegate{
             searchBar.isHidden = true
             searchBar.resignFirstResponder()
             FilteredSection = AllSections
-            NoDataImage.isHighlighted = true
-            NoDataLbl.isHighlighted = true
+            NoDataImage.isHidden = true
+            NoDataLbl.isHidden = true
             tv.reloadData()
         }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
-            FilteredSection = AllSections
-            tv.reloadData()
-            return
-        }
         
         let query = searchText.lowercased().trimmingCharacters(in: .whitespaces)
         
-        FilteredSection = AllSections?.compactMap { section in
-            let filteredSlots = section.slots.filter { slot in
-                (slot.purpose?.lowercased().contains(query) ?? false) ||
-                (slot.staff_name?.lowercased().contains(query) ?? false) ||
-                (slot.subject_name?.first?.lowercased().contains(query) ?? false) ||
-                (slot.status?.lowercased().contains(query) ?? false) ||
-                (slot.date?.convertToTargetDateFormat()?.lowercased().contains(query) ?? false) ||
-                (slot.time?.lowercased().contains(query) ?? false)
+        if query.isEmpty{
+            FilteredSection = AllSections
+        }else{
+            
+            FilteredSection = AllSections?.compactMap { section in
+                let filteredSlots = section.slots.filter { slot in
+                    (slot.purpose?.lowercased().contains(query) ?? false) ||
+                    (slot.staff_name?.lowercased().contains(query) ?? false) ||
+                    (slot.subject_name?.first?.lowercased().contains(query) ?? false) ||
+                    (slot.status?.lowercased().contains(query) ?? false) ||
+                    (slot.date?.convertToTargetDateFormat()?.lowercased().contains(query) ?? false) ||
+                    (slot.time?.lowercased().contains(query) ?? false)
+                }
+                return filteredSlots.isEmpty ? nil : SlotSection(title: section.title, slots: filteredSlots)
             }
-            return filteredSlots.isEmpty ? nil : SlotSection(title: section.title, slots: filteredSlots)
         }
         
         if  FilteredSection?.isEmpty == true{

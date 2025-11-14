@@ -16,7 +16,8 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
-   
+    @IBOutlet weak var menuNameLbl: UILabel!
+    
     var global = UserDefaultFileManager.get_globalSelection()
     
     var Child_details = UserDefaultFileManager.get_child_Details()
@@ -30,11 +31,8 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
         
         webView.navigationDelegate = self
         
-        backBtnNm
-            .configureAsBackButton(
-                firstLine: MenuStringFile.selectedMenuName,
-                secondLine: Child_details?.school_name ?? ""
-            )
+        menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: Child_details?.school_name ?? "")
+        
         webkitLoading()
     }
 
