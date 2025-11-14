@@ -84,7 +84,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
 
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
-        calendar.appearance.selectionColor = .primery
+        calendar.appearance.selectionColor = .error
+        calendar.appearance.todayColor
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
@@ -152,8 +153,9 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         self.fullview.isHidden = true
                         self.noRecordView.isHidden = false
                         self.noRecordLbl.text = "No Absentees Report from this date"
+                        self.studentLbl.isHidden = true
                     }else{
-                        
+                        self.studentLbl.isHidden = false
                         self.dateLbl.isHidden = false
                         self.cvIcon.isHidden = false
                         self.infoStack.isHidden = false
@@ -328,13 +330,12 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             absentees: data.total_absentees,
             total: data.student_counts)
         
-        if let ids = self.getClassAndSectionID(
-            for: selectedDate ?? "") {
+        
             self.AbsentStudent(
-                sectionId:ids.sectionID ?? "" ,
+                sectionId:data.section_id ,
                 date: selectedDate ?? "",
-                standarId: ids.classID ?? "")
-        }
+                standarId: data.class_id)
+       
         
         abesentCountLbl.text = "Absentees : \(data.total_absentees)"
         totalLbl.text = "Total students : \(data.student_counts)"
@@ -501,6 +502,7 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
      infoStack.isHidden = false
         Tv.isHidden = false
         fullview.backgroundColor = .white
+        studentLbl.isHidden = false
         studentLbl.text = "👨🏻‍🎓 Absent  students list"
         let filterFormatter = DateFormatter()
         filterFormatter.dateFormat = "dd-MM-yyyy"
