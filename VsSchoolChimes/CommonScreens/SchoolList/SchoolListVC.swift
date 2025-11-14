@@ -58,8 +58,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         setupRadioButton(button: studentBtnName)
         setupRadioButton(button: staffBtnName)
         schoolBtn.layer.cornerRadius = 8
-        chooseUrSchoolLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        headerSchoolLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        chooseUrSchoolLbl.setFont(style: .header, size: 13)
+        headerSchoolLbl.setFont(style: .header, size: 16)
         
         if come_fromLogin{
             ViewAnimator.hideFade(segmentName)

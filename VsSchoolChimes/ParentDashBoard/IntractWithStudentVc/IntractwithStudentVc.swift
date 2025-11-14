@@ -10,7 +10,6 @@ import UIKit
 class IntractwithStudentVc: UIViewController {
     
     @IBOutlet weak var backBtn: UILabel!
-    @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var noDataFoundLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -36,16 +35,23 @@ class IntractwithStudentVc: UIViewController {
         
         popupView.layer.cornerRadius = 10
         
-        backBtn.configureAsBackTitle(firstLine: " Intract With Student",
+        backBtn.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: StaffDetails?.school_name ?? "")
+        
+        searchBar.delegate = self
+        searchBar.isHidden = true
+        searchBar.searchTextField.addDoneButton()
+        searchBar.backgroundImage = UIImage()
+        searchBar.placeholder = CommonStringFile.Search
+        
+        imgView.isHidden = true
+        noDataFoundLbl.isHidden = true
         
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
         tv.dataSource = self
-        searchBar.delegate = self
-        searchBar.barTintColor = .white
-        searchBar.searchTextField.backgroundColor = .white
+        
         getStaff()
         
         blockListTV.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
@@ -65,14 +71,14 @@ class IntractwithStudentVc: UIViewController {
                         DispatchQueue.main.async { [self] in
                             getStandardDetails = successMessage.data ?? []
                             filteredData = successMessage.data ?? []
-                            searchView.isHidden = (successMessage.status ?? true)
+                            searchBtn.isHidden = filteredData?.isEmpty ?? false
                             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
                             imgView.isHidden = !(filteredData?.isEmpty ?? true)
                             tv.reloadData()
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
-                            searchView.isHidden = (successMessage.status ?? false)
+                            searchBtn.isHidden = filteredData?.isEmpty ?? false
                             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
                             imgView.isHidden = !(filteredData?.isEmpty ?? true)
                             noDataFoundLbl.text = successMessage.message ?? ""
@@ -80,7 +86,7 @@ class IntractwithStudentVc: UIViewController {
                     }
                 case .failure(let error):
                     DispatchQueue.main.async { [self] in
-                        searchView.isHidden = true
+                        searchBtn.isHidden = true
                         noDataFoundLbl.isHidden = false
                         noDataFoundLbl.text = error.localizedDescription
                         imgView.isHidden = false
@@ -103,15 +109,13 @@ class IntractwithStudentVc: UIViewController {
                     
                     self.BlockList = success.data
                     
-                    if self.BlockList?.isEmpty == true{
-                        CustomAlert.showAlertWithOkAction(title: "No Data", message: success.message ?? "", on: self) {}
-                        self.NodataView.isHidden = false
-                        self.popupNodataLbl.text = success.message
-                    }else{
-                        self.NodataView.isHidden = true
-                        self.showPopup()
-                        self.blockListTV.reloadData()
-                    }
+                    // CustomAlert.showAlertWithOkAction(title: "No Data", message: success.message ?? "", on: self) {}
+                    self.showPopup()
+                    self.NodataView.isHidden = !(self.BlockList?.isEmpty ?? false)
+                    self.popupNodataLbl.text = success.message
+                    self.showPopup()
+                    self.blockListTV.reloadData()
+                   
                     
                 case .failure(let failure):
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {}
@@ -153,6 +157,8 @@ class IntractwithStudentVc: UIViewController {
                                     blockList.remove(at: index)
                                     self.BlockList = blockList
                                     self.blockListTV.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                                    self.NodataView.isHidden = !blockList.isEmpty
+                                    self.popupNodataLbl.text = "No Blocked Students"
                                 }
                             }
                         }else{
@@ -225,6 +231,7 @@ class IntractwithStudentVc: UIViewController {
     }
     
     func showPopup() {
+        searchBar.resignFirstResponder()
         popupContainerView.alpha = 0
         popupContainerView.isHidden = false
         UIView.animate(withDuration: 0.3) {
@@ -245,7 +252,7 @@ class IntractwithStudentVc: UIViewController {
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         
-        searchView.isHidden = !sender.isSelected
+        searchBar.isHidden = !sender.isSelected
         if sender.isSelected {
             searchBar.becomeFirstResponder()
         } else {
@@ -333,6 +340,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             cell.statusView.backgroundColor = .systemBlue
             cell.statusView.setTitleColor(.white, for: .normal)
             cell.statusView.setTitle("Unblock", for: .normal)
+            cell.statusView.isUserInteractionEnabled = true
             cell.onBlock = { [weak self] in
                 self?.UnBlock_Api(id: student?.id ?? "")
             }
