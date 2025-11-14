@@ -30,7 +30,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     private var currentData: PerformanceData?
     let dropDown = DropDown()
     var monthId: Int = 1
-    
+    var selectedIndex:Int?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -364,7 +364,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     
     func navigate(index: Int?) {
         guard let index = index, let currentData = currentData else { return }
-        
+        selectedIndex = index
         switch index {
         case 0: updateStudentList(with: filterArray(studentList:currentData.today_submitted ?? []))
         case 1: updateStudentList(with: filterArray(studentList:currentData.listening?.details ?? []))
@@ -424,7 +424,7 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
         switch reportData[indexPath.section] {
         case .filterList(let filters):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
-            cell.configure(with: filters, selectedIndex: 0,selection: true)
+            cell.configure(with: filters, selectedIndex: selectedIndex ?? 0,selection: true)
             cell.delegate = self
             return cell
             
