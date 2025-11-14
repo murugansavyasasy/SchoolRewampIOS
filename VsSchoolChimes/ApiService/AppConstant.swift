@@ -190,6 +190,7 @@ struct ServiceUrl{
     static let dashboard_api_dashboard_features = "dashboard/api/dashboard/features"
     static let dashboard_api_reviews_list = "dashboard/api/reviews/list"
     static let dashboard_api_reviews_add = "dashboard/api/reviews/add"
+    static let ptm_api_ptm_schedule_datewise_booked_slots = "ptm/api/ptm-schedule/datewise-booked-slots"
 }
 
 struct localData{

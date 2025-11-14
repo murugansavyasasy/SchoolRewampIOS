@@ -372,6 +372,36 @@
             endingLineNumber = "64"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "223C6C96-08E0-4DC3-831F-EED3B189E81C - ecf48d72aacd61bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.TextDetailsResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ComunicationVC.get_Text_History() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1127"
+                  endingLineNumber = "1127">
+               </Location>
+               <Location
+                  uuid = "223C6C96-08E0-4DC3-831F-EED3B189E81C - 10a6a79a5a3e2500"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.TextDetailsResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ComunicationVC.get_Text_History() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1128"
+                  endingLineNumber = "1128">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -59,6 +59,7 @@ class PtmNavigationVC: UIViewController {
         scheduleMeetingBtn.backgroundColor = .clear
         yourMeetingBtn.backgroundColor = .white
         searchBtn.isHidden = false
+        
         transition(to: secondChildVC)
        // addChildVc()
     }

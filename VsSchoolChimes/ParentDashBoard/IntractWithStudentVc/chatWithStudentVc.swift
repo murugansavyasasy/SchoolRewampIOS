@@ -26,6 +26,8 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     @IBOutlet weak var Popuptopview: UIView!
     @IBOutlet weak var BlockStudentDefLbl: UILabel!
     @IBOutlet weak var reasonDefLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
+    
     
     var staffMembersData = StaffMember()
     var staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -45,6 +47,10 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         MessgeTextview.isHidden = true
         MessgeTextview.addDoneButton()
         questionLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        noRecordlbl.isHidden = true
+        noDataImage.isHidden = true
+        
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
@@ -102,6 +108,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             noRecordlbl.isHidden = true
+                            noDataImage.isHidden = true
                             chatDataDetails = successMessage.data?
                                 .reversed() ?? []
                             tableView.reloadData()
@@ -112,12 +119,16 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                     }else{
                         DispatchQueue.main.async { [self] in
                             noRecordlbl.isHidden = false
+                            noDataImage.isHidden = false
                             noRecordlbl.text = successMessage.message ?? ""
                             //                            TextViewFullView.isHidden = true
                         }
                     }
                 case .failure(let error):
                     print("❌ API error: \(error.localizedDescription)")
+                    noRecordlbl.isHidden = false
+                    noDataImage.isHidden = false
+                    noRecordlbl.text = error.localizedDescription
                 }
             }
     }
@@ -304,6 +315,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     }
 
     func hidePopup() {
+        reasonTextfield.text = ""
         UIView.animate(withDuration: 0.3, animations: {
             self.PopupContainerview.alpha = 0
         }) { _ in

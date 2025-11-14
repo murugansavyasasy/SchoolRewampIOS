@@ -23,7 +23,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
 
     func reload(index: Int) {
         let message = displayedMessages[index]
-        let messageId = message.id
 
         // Pause previous cell if switching
         if let currentIndex = playIndex, currentIndex != index {
@@ -33,9 +32,13 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                 displayedMessages[currentIndex].playbackSeconds = previousCell.player?.currentTime().seconds
                 previousCell.player?.pause()
                 previousCell.playBtn.setImage(ImageName.playbutton, for: .normal)
-                previousCell.playerView.updateWithLevel(0.0)
+                
+                // ❌ old: previousCell.playerView.updateWithLevel(0.0)
+                // ✅ new: use the same helper that manual pause uses
+                previousCell.updatePlayState(isPlaying: false, url: nil)
             }
         }
+
 
         // Toggle playback
         let isSameIndex = (playIndex == index)
@@ -62,9 +65,17 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                     currentCell.player?.play()
                 }
             }
-
-            currentCell.NewImageView.isHidden = true
-            ReadStatusUpdateArchive(type: "Voice", detail_id: messageId)
+            
+            if message.is_unread{
+                
+                currentCell.NewImageView.isHidden = true
+                
+                if message.is_archive ?? false{
+                    ReadStatusUpdate(type: message.type, detail_id: message.id)
+                }else{
+                    ReadStatusUpdateArchive(type: message.type, detail_id: message.id)
+                }
+            }
         }
     }
 
@@ -477,8 +488,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                 
                 if SuccessMessage.status == true {
                     
-                    DispatchQueue.main.async { [self] in
+                    DispatchQueue.main.async { [weak self] in
                         
+                        if let index = self?.displayedMessages.firstIndex(where: {$0.id == detail_id}) {
+                            self?.displayedMessages[index].is_unread = false
+                        }
                         print(SuccessMessage.message)
                     }
                     
@@ -652,10 +666,26 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
 
             cell.totaltime.text = "\(formattedElapsed) / \(formattedDuration)"
             
-            if !isPlaying {
+//            // ✅ Restore paused time if available
+            if let pausedSeconds = voiceData.playbackSeconds, pausedSeconds > 0 {
+                let seekTime = CMTime(seconds: pausedSeconds, preferredTimescale: 600)
+                cell.player?.seek(to: seekTime)
+
+                // ✅ Update slider progress based on paused time
+                let duration = voiceData.duration ?? 1
+                let progress = pausedSeconds / Double(duration)
+                cell.playerView.progress = CGFloat(progress)
+                cell.playerView.setNeedsDisplay()
+            } else {
+                // Default to start
                 cell.playerView.progress = 0.0
                 cell.playerView.updateWithLevel(0.0)
-                cell.playerView.setNeedsDisplay()
+            }
+            
+            if !isPlaying {
+//                cell.playerView.progress = 0.0
+//                cell.playerView.updateWithLevel(0.0)
+//                cell.playerView.setNeedsDisplay()
             }else{
                 
                 cell.NewImageView.isHidden = true
