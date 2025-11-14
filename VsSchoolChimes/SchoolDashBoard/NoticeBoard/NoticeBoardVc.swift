@@ -85,14 +85,9 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         }
         if checkMutipleSchool() {
             menuNameLbl.text = MenuStringFile.selectedMenuName
-        } else {
-            let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
-            menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
-        }
-        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        schoolDropDown.setShadow(cornerRadius: 4)
-        
-        if school_details?.count ?? 0 > 1 {
+            menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
+            outerDropDownView.isHidden = false
+            schoolDropDown.setShadow(cornerRadius: 4)
             schoolDropDown.isHidden = false
             schoolList = school_details?.compactMap { $0.school_name }
             schoolList?.insert("All", at: 0)
@@ -102,8 +97,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: schoolName)
             outerDropDownView.isHidden = true
         }
-        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        schoolDropDown.setShadow(cornerRadius: 4)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         schoolDropDown.isUserInteractionEnabled = true
         schoolDropDown.addGestureRecognizer(tapGesture)
@@ -266,17 +260,33 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                     self.allNotices = successResponse.data ?? []
                     self.filterData = successResponse.data ?? []
                     self.searchData = self.filterData
-                    self.collectionView.reloadData()
+                    
+                    if self.allNotices.isEmpty{
+                        self.noDataLbl.isHidden = false
+                        self.noDataImg.isHidden = false
+                        self.searchBtn.isHidden = true
+                        self.outerDropDownView.isHidden = true
+                    }else{
+                        self.noDataLbl.isHidden = true
+                        self.noDataImg.isHidden = true
+                        self.searchBtn.isHidden = false
+                        self.outerDropDownView.isHidden = !self.checkMutipleSchool()
+                    }
+                    
                     self.noDataLbl.text = successResponse.message ?? ""
-                    self.noDataLbl.isHidden = !self.searchData.isEmpty
-                    self.noDataImg.isHidden = !self.searchData.isEmpty
-                    self.searchBtn.isHidden = self.searchData.isEmpty
+                    self.collectionView.reloadData()
+                    
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
+                    self.noDataLbl.isHidden = false
+                    self.noDataImg.isHidden = false
+                    self.searchBtn.isHidden = true
+                    self.outerDropDownView.isHidden = true
                 }
             }
         }
     }
+    
     func deleteNotice(id: String?) {
         guard let noticeId = id, !noticeId.isEmpty else {
             print("Invalid notice ID")

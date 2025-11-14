@@ -31,6 +31,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var AllSections : [SlotSection]?
     var FilteredSection : [SlotSection]?
     var cancelId: String?
+    var delegate: Searchable?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +117,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     self.FilteredSection = self.AllSections
                     self.NoDataLbl.isHidden = !(self.FilteredSection?.isEmpty ?? false)
                     self.NoDataImage.isHidden = !(self.FilteredSection?.isEmpty ?? false)
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: self.FilteredSection?.isEmpty ?? false)
                     self.tv.reloadData()
                     
                 case .failure(let failure):

@@ -10,22 +10,31 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy"
         
+//        if dateSelection {
+//            fromLbl.text = date
+//            if let toDateText = todateLbl.text,
+//               let fromDate = formatter.date(from: date),
+//               let toDate = formatter.date(from: toDateText),
+//               fromDate > toDate {
+//                todateLbl.text = date
+//            }
+//        } else {
+//            todateLbl.text = date
+//            if let fromDateText = fromLbl.text,
+//               let fromDate = formatter.date(from: fromDateText),
+//               let toDate = formatter.date(from: date),
+//               fromDate > toDate {
+//                todateLbl.text = fromDateText
+//            }
+//        }
+        
         if dateSelection {
             fromLbl.text = date
-            if let toDateText = todateLbl.text,
-               let fromDate = formatter.date(from: date),
-               let toDate = formatter.date(from: toDateText),
-               fromDate > toDate {
-                todateLbl.text = date
-            }
-        } else {
+            from_date = formatter.date(from: date)
+            
+        }else{
             todateLbl.text = date
-            if let fromDateText = fromLbl.text,
-               let fromDate = formatter.date(from: fromDateText),
-               let toDate = formatter.date(from: date),
-               fromDate > toDate {
-                todateLbl.text = fromDateText
-            }
+            To_date = formatter.date(from: date)
         }
         
         daily_collectionApi(type: String(segmentName.selectedSegmentIndex + 1))
@@ -64,6 +73,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     var dateSelection = false
     private var gradientLayer: CAGradientLayer?
     var dailyCollectionData: [DailyCollectionData] = []
+    var from_date : Date?
+    var To_date : Date?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: calendarView,cornerRadius: 6)
@@ -116,7 +128,11 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.date = fromLbl.text
-        vc.maximumDate = Date()
+        if let maxDate = To_date{
+            vc.maximumDate = maxDate
+        }else{
+            vc.maximumDate = Date()
+        }
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -129,6 +145,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         vc.dateSelection = 2
         vc.date = todateLbl.text
         vc.maximumDate = Date()
+        if let minDate = from_date{
+            vc.minimumDate = minDate
+        }
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)

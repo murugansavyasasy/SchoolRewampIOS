@@ -93,6 +93,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
         searchBtn.isHidden = true
         
+        BookSlotBtn.isHidden = true
+        
         CV.layer.cornerRadius = 12
         CV.backgroundColor = .clear
         CV.register(UINib(nibName: "DateCvCell", bundle: nil), forCellWithReuseIdentifier: "DateCvCell")
@@ -217,7 +219,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         self.tv.isHidden = false
                         self.noDataImage.isHidden = true
                         self.NodataLbl.isHidden = true
-                        self.BookSlotBtn.isHidden = false
+                       // self.BookSlotBtn.isHidden = false
                         self.tv.reloadData()
                         DispatchQueue.main.async {
                             self.updateTableHeight()
@@ -379,6 +381,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 selectedSlots.append(contentsOf: slots.filter { $0.userSelected ?? false })
             }
         }
+        
+        BookSlotBtn.isHidden = selectedSlots.isEmpty
     }
 
     
@@ -573,6 +577,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
         EventDate = formatter.string(from: selectedDate)
         getSlotsApi()
+        BookSlotBtn.isHidden = true
         CV.reloadData()
     }
     
