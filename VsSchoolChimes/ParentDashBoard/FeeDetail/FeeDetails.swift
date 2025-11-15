@@ -61,8 +61,6 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
             print("Invalid URL: \(finalURL)")
         }
 
-
-
         // Register custom cell
         feeDetailTableView.register(UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeedetailTVC)
         feeDetailTableView.delegate = self

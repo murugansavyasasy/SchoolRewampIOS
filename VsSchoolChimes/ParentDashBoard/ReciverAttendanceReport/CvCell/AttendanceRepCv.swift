@@ -29,7 +29,7 @@ class AttendanceRepCv: UICollectionViewCell {
         fullview.layer.shadowRadius = 5
         fullview.layer.shadowOpacity = 0.3
         
-        AbsentBtnNm.layer.cornerRadius = 8
+        AbsentBtnNm.layer.cornerRadius = 15
         
         pin2View.layer.cornerRadius = pin2View.frame.width / 2
         pin2View.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, // Top
