@@ -28,6 +28,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectNotice: SelectNotice?
     var IsChecked = false
+    var placeholderLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
         numberOfQuestionText.keyboardType = .numberPad
+        setupPlaceholder()
        
         noOfQuestionDefaultLbl
             .setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
@@ -59,6 +61,18 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         // Do any additional setup after loading the view.
     }
     
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = CommonStringFile.Description
+        placeholderLabel.font = discriptionsTextFild.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        discriptionsTextFild.applyRightTxt()
+        discriptionsTextFild.applyRightTxt(with: placeholderLabel)
+        discriptionsTextFild.addSubview(placeholderLabel)
+        discriptionsTextFild.isHidden = !discriptionsTextFild.text.isEmpty // Hide if text exists
+    }
     
     @IBAction func backBtnAct(_ sender: Any) {
         
@@ -90,6 +104,8 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
             textViewHeightConstraint.constant = newHeight
         }
+        
+        placeholderLabel.isHidden = !textView.text.isEmpty
         
         // Animate the change for smoother UI
         UIView.animate(withDuration: 0.2) {

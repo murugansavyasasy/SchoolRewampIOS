@@ -266,7 +266,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
                 let remarkStr = submission.remark
             else { continue }
             
-            // 🔹 Clean remark → remove % + trim
+            // Clean remark → remove % + trim
             let cleaned = remarkStr.replacingOccurrences(of: "%", with: "").trimmingCharacters(in: .whitespaces)
             
             guard let percentage = Double(cleaned), percentage > 0 else { continue }
@@ -281,19 +281,23 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
             
             let name = String(components[0])
             let stdSec = String(components[1])
+            let highest = scores.max() ?? 0
             
             return TopReport(
                 name: name,
                 studentClass: stdSec,
                 section: "",
-                percentage: scores.max() ?? 0
+                percentage: highest
             )
         }
         
+        // 🔥 Filter only students >= 70%
+        reports = reports.filter { $0.percentage >= 70 }
         reports.sort { $0.percentage > $1.percentage }
         
-        return Array(reports.prefix(4))
+        return reports
     }
+
 
 //    // MARK: - Weeks in Current Month (Days ÷ 7)
 //    func weeksInMonth(month: Int) -> Int {

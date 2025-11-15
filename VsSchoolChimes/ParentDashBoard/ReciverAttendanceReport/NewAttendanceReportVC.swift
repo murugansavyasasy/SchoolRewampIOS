@@ -116,12 +116,14 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
                     self.attendanceReportData = SuccessMessage.data ?? []
                     self.FilteredReportData = self.attendanceReportData
                     self.cv.reloadData()
+                    self.SearchBtn.isHidden = !(SuccessMessage.status ?? false)
                     self.NoDataImage.isHidden = SuccessMessage.status ?? false
                     self.NoDataLbl.isHidden = SuccessMessage.status ?? false
                     self.NoDataLbl.text = SuccessMessage.message
                 case .failure(let error):
                     self.NoDataImage.isHidden = false
                     self.NoDataLbl.isHidden = false
+                    self.SearchBtn.isHidden = true
                     self.NoDataLbl.text = error.localizedDescription
                     print("Error: \(error.localizedDescription)")
                 }

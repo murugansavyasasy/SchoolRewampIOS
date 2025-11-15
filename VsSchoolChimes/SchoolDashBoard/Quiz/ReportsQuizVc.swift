@@ -163,7 +163,7 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
         cell.PlayBtn.isHidden = true
         cell.titleLbl.text = quiz.title
         cell.discretiponsLbl.text = quiz.description
-        cell.exameDateLbl.text = formattedDateStatus(
+        cell.exameDateLbl.text = "Sent at " + formattedDateStatus(
             from: quiz.sent_time ?? "",
             isTimeNeeded: true)
         cell.subjectLbl.text = quiz.subject
