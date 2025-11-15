@@ -159,6 +159,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.minimumDate = Date()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -485,7 +486,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         // Show the time picker
         timePicker.isHidden = false
         doneButton2.isHidden = false
-        
+        applyTimeRestrictionBasedOnSelectedDate()
         let pickerYPosition = buttonFrame.minY - 210
         timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
         timePicker.backgroundColor = .white
@@ -498,6 +499,26 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         self.view.addSubview(timePicker)
         self.view.addSubview(doneButton2)
     }
+    func applyTimeRestrictionBasedOnSelectedDate() {
+        guard let selectedDateText = dateLbl.text else { return }
+
+        let df = DateFormatter()
+        df.dateFormat = "dd MMM yyyy"
+
+        guard let selectedDate = df.date(from: selectedDateText) else { return }
+
+        let today = Date()
+        let calendar = Calendar.current
+
+        if calendar.isDate(selectedDate, inSameDayAs: today) {
+            // Today → restrict past time
+            timePicker.minimumDate = today
+        } else {
+            // Future date → any time allowed
+            timePicker.minimumDate = nil
+        }
+    }
+
     @IBAction func ToTimeBtn(_ sender: UIButton) {
         showTimePicker(for: sender, date: false)
         dateSelection = true

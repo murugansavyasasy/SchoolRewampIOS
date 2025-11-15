@@ -22,6 +22,11 @@ class ReedimHistoryVc: UIViewController {
         super.viewDidLoad()
         cv.backgroundColor = .clear
         cv.backgroundView = backgroundView
+        Searchbar.placeholder = "Search"
+        Searchbar.delegate = self
+        Searchbar.backgroundImage = UIImage()
+        Searchbar.barTintColor = .clear
+        Searchbar.isTranslucent = true
         
         segments.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         segments.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
@@ -52,7 +57,7 @@ class ReedimHistoryVc: UIViewController {
         } else if segments.selectedSegmentIndex == 3 {
             CouponType = "claimed"
         }
-        Searchbar.text = "" // clear search text when switching segment
+        Searchbar.text = ""
         MyCouponDetails(coupon_type: CouponType)
         Searchbar.resignFirstResponder()
     }
@@ -65,7 +70,9 @@ class ReedimHistoryVc: UIViewController {
             "mobile_no": "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""),
             "coupon_status": coupon_type
         ]
-        
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
         APIService.shared.makeApi(
             url: ServiceUrl.my_coupons,
             parameters: param,
@@ -99,6 +106,9 @@ class ReedimHistoryVc: UIViewController {
                         self.filteredCouponList = coupons
                         self.cv.reloadData()
                     }
+                    if #available(iOS 15.0, *) {
+                        self.hideActivityLoader()
+                    }
                 }
                 
             case .failure(let error):
@@ -109,6 +119,9 @@ class ReedimHistoryVc: UIViewController {
                     self.nodataLbl.text = "Something went wrong"
                     self.cv.isHidden = true
                     self.Searchbar.isHidden = true
+                    if #available(iOS 15.0, *) {
+                        self.hideActivityLoader()
+                    }
                 }
             }
         }

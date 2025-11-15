@@ -10,27 +10,18 @@ import AVFoundation
 
 @available(iOS 15.0, *)
 class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate, EditObjectDelegate, UITextFieldDelegate {
+    // In editDta method, replace the reload logic with:
     func editDta(edit: Any?) {
-        testTable.beginUpdates()
         if let audio = edit as? AttachmentItem {
             attachments.append(audio)
-            if let index = captions.firstIndex(of: .record) {
-                captions.remove(at: index)
-                let indexPath = IndexPath(row: index, section: 1)
-                testTable.deleteRows(at: [indexPath], with: .fade)
-            }
-            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
-            
-        } else if let updatedAttachments = edit as? [AttachmentItem] {
-            attachments = updatedAttachments
-            if let index = captions.firstIndex(of: .record) {
-                captions.remove(at: index)
-                let indexPath = IndexPath(row: index, section: 1)
-                testTable.deleteRows(at: [indexPath], with: .fade)
-            }
-            testTable.reloadSections(IndexSet(integer: 1), with: .fade)
+        } else if let updated = edit as? [AttachmentItem] {
+            attachments = updated
         }
-        testTable.endUpdates()
+        
+        if let index = captions.firstIndex(of: .record) {
+            captions.remove(at: index)
+        }
+        testTable.reloadData()
     }
     
     
@@ -53,23 +44,19 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     
     
     func backtohome(type: String) {
-        testTable.beginUpdates()
-        
         if type == "Recording" {
             if !captions.contains(.record) {
-                captions.append(.record)
-                let indexPath = IndexPath(row: captions.count - 1, section: 1)
-                testTable.insertRows(at: [indexPath], with: .fade)
+                let insertIndex = max(captions.count - 1, 0)
+                captions.insert(.record, at: insertIndex)
             }
-        }else{
+        } else {
             if let index = captions.firstIndex(of: .record) {
                 captions.remove(at: index)
-                let indexPath = IndexPath(row: index, section: 1)
-                testTable.deleteRows(at: [indexPath], with: .fade)
             }
         }
-        testTable.endUpdates()
+        testTable.reloadData()
     }
+
     
     
     // MARK: - IBOutlets
@@ -153,14 +140,14 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     }
     // MARK: - Setup
     private func setupCaptions() {
+        
         guard let lsrw = lsrw else { return }
-        //        self.lsrw?.test = [
-        //            TestQuestion(question: "What is the capital of India?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"]),
-        //            TestQuestion(question: "Which is the largest planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"]),
-        //            TestQuestion(question: "Who wrote the national anthem of India?", options: ["Tagore", "Gandhi", "Nehru", "Vivekananda"]),
-        //            TestQuestion(question: "Which is the fastest land animal?", options: ["Tiger", "Cheetah", "Lion", "Horse"])
-        //        ]
+        
         if let type = lsrw.activity_type{
+            guard lsrw.is_submitted == false else {
+                return captions.append(.task)
+            }
+            captions.append(.task)
             // Configure captions based on LSRW type
             switch type {
             case .reading, .listening:
@@ -173,6 +160,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             case .unknown(_):
                 print("unkown")
             }
+            captions.append(.submit)
         }
     }
     
@@ -201,55 +189,32 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
 
 @available(iOS 15.0, *)
 extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        guard let type = lsrw?.activity_type else { return 0 }
-        guard lsrw?.is_submitted == false else { return 1 }
-        switch type {
-        case .speaking, .writing,.reading,.listening:
-            return 3
-        case .unknown(_):
-            return 1
-        }
-    }
-
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return captions.count
-        case 2:
-            return 1
-        default:
-            return 0
-        }
+        return captions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
-            cell.titleLbl.text = lsrw?.title ?? "No Title"
-            cell.descriptionLbl.text = lsrw?.description ?? "No Description"
-            cell.reminderBtn.isHidden = true
-            if let task = lsrw {
-                cell.configureCell(with: task, attachments: task.file_path ?? [])
-                switch task.activity_type{
-                case .listening,.reading:
-                    cell.exportRecordBtn.isHidden = true
-                default :
-                    cell.exportRecordBtn.isHidden = false
-                }
-            }
-            cell.exportRecordBtn.isHidden = !(lsrw?.is_submitted ?? false)
-            cell.exportRecordBtn.setTitle("My Submission", for: .normal)
-            cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
-            cell.delegate = self
-            return cell
-        case 1:
             let type = captions[indexPath.row]
             switch type {
+            case .task :
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
+                cell.titleLbl.text = lsrw?.title ?? "No Title"
+                cell.descriptionLbl.text = lsrw?.description ?? "No Description"
+                cell.reminderBtn.isHidden = true
+                if let task = lsrw {
+                    cell.configureCell(with: task, attachments: task.file_path ?? [])
+                    switch task.activity_type{
+                    case .listening,.reading:
+                        cell.exportRecordBtn.isHidden = true
+                    default :
+                        cell.exportRecordBtn.isHidden = false
+                    }
+                }
+                cell.exportRecordBtn.isHidden = !(lsrw?.is_submitted ?? false)
+                cell.exportRecordBtn.setTitle("My Submission", for: .normal)
+                cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
+                cell.delegate = self
+                return cell
             case .audio:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AudioPlayerTVC", for: indexPath) as! AudioPlayerTVC
                 if let urlString = lsrw?.file_path?.first?.url,
@@ -276,6 +241,9 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 cell.delegate = self
                 cell.Adddelegate = self
                 cell.descriptionTXT.delegate = self
+                cell.descriptionTXT.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+
+//                cell.descriptionTXT.text = descriptionString
                 cell.descriptionTXT.addDoneButton()
                 cell.config(attachments, task: lsrw?.activity_type)
                 return cell
@@ -285,46 +253,40 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 cell.recoderTime.text = "00:00"
                 cell.delegate = self
                 return cell
-                
-            default:
-                return UITableViewCell()
-            }
-            
-        case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SubmitFooterCell.identifier, for: indexPath) as! SubmitFooterCell
-            cell.submitButton.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
-            cell.contentView.backgroundColor = .clear
-            cell.backgroundColor = .clear
-            return cell
-            
-        default:
-            return UITableViewCell()
+            case .submit:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SubmitFooterCell.identifier, for: indexPath) as! SubmitFooterCell
+                cell.submitButton.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
+                cell.contentView.backgroundColor = .clear
+                cell.backgroundColor = .clear
+                return cell
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text ?? ""
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        return true
+    @objc func textFieldChanged(_ textField: UITextField) {
+        descriptionString = textField.text
     }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = textField.text ?? ""
-        descriptionString = currentText
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        return true
-    }
-    
+
     @objc private func submitTapped() {
-        guard !attachments.isEmpty, let desc = descriptionString, !desc.isEmpty else {
-            alert.showAlert(title: "", message: AlertstringFile.Please_Add_Attachment, on: self)
+
+        let isAttachmentEmpty = attachments.isEmpty
+        let isDescriptionEmpty = (descriptionString ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        if isAttachmentEmpty && isDescriptionEmpty {
+            alert.showAlert(title: "", message: "Please add attachment and description", on: self)
             return
         }
 
+        if isAttachmentEmpty {
+            alert.showAlert(title: "", message: "Please add attachment", on: self)
+            return
+        }
+
+        if isDescriptionEmpty {
+            alert.showAlert(title: "", message: "Please enter description", on: self)
+            return
+        }
         uploadMedia(
             file: attachments,
             viewController: self,
@@ -334,43 +296,38 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             guard let self = self else { return }
 
             var uploadedFiles: [[String: String]] = []
+
             for urlString in urls {
-                guard let url = URL(string: urlString) else {
-                    print("❌ Invalid URL: \(urlString)")
-                    continue
-                }
+                guard let url = URL(string: urlString) else { continue }
 
                 let ext = url.pathExtension.lowercased()
                 var type = ""
+
                 if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
-                        type = CommonStringFile.IMAGE
-                    } else if urlString.contains("vimeo.com") {
-                        type = CommonStringFile.VIDEO
-                    } else {
-                        type = ext.uppercased()
-                    }
+                    type = CommonStringFile.IMAGE
+                } else if urlString.contains("vimeo.com") {
+                    type = CommonStringFile.VIDEO
+                } else {
+                    type = ext.uppercased()
+                }
+
                 uploadedFiles.append([
                     CommonStringFile.url: urlString,
                     CommonStringFile.type: type
                 ])
             }
 
-            let iframeValue = iframe ?? ""
-            let fileSizeStr = fileSize != nil ? "\(fileSize!)" : ""
-
-            // 🔹 Always include description
             let params: [String: Any] = [
-                SendAttachmentStringFile.id: lsrw?.id ?? "",
-                assignmentResquestStringKey.description: descriptionString ?? "",
-                assignmentResquestStringKey.iframe: iframeValue,
-                assignmentResquestStringKey.file_size: fileSizeStr,
+                SendAttachmentStringFile.id: self.lsrw?.id ?? "",
+                assignmentResquestStringKey.description: self.descriptionString ?? "",
+                assignmentResquestStringKey.iframe: iframe ?? "",
+                assignmentResquestStringKey.file_size: fileSize != nil ? "\(fileSize!)" : "",
                 assignmentResquestStringKey.filePath: uploadedFiles
             ]
-
-            // 🚀 Call API
             self.sendAttachment(with: params)
         }
     }
+
 
     
     func sendAttachment(with parameters: [String: Any]) {
@@ -396,7 +353,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     }
                 case .failure(let error):
                     print("❌ API error: \(error.localizedDescription)")
-                    // Optionally show error alert here
                 }
             }
         }
@@ -429,7 +385,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                             }
                         } else {
                             let vc = LSRWSubmissionVC()
-//                            vc.submitedAssignment = data
                             vc.modalPresentationStyle = .pageSheet
                             
                             if let sheet = vc.sheetPresentationController {
@@ -473,7 +428,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         var currentProgressValues: [Int: Double] = [:] // Track per file progress
 
         func updateAndCheckCompletion(total: Int) {
-            // Calculate total progress from per file progress dictionary
             let totalProgress = currentProgressValues.values.reduce(0, +) / Double(total)
             CircularProgressLoader.shared.updateProgress(to: totalProgress * 100)
 
@@ -584,7 +538,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     }
 
                 } else {
-                    print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
                     currentProgressValues[index] = 1.0
                     completed += 1
                     updateAndCheckCompletion(total: total)
@@ -592,7 +545,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             }
 
         default:
-            print("❌ Unsupported file type")
             completion([], nil, nil, nil)
         }
     }
@@ -606,6 +558,7 @@ enum CaptionType: String {
     case test
     case addAttachment
     case record
+    case submit
 }
 
 // MARK: - Safe Subscript

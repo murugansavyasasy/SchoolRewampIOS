@@ -442,28 +442,19 @@ class AudioManager: NSObject {
         audioPlayer?.delegate = self
         audioPlayer?.prepareToPlay()
         audioPlayer?.enableRate = true
-        print("✅ Local audio player setup complete")
     }
     
     func setupRemotePlayer(with url: URL) throws {
         try setupAudioSession(forRecording: false)
-        
         delegate?.audioManagerDidStartBuffering()
-        
         playerItem = AVPlayerItem(url: url)
         avPlayer = AVPlayer(playerItem: playerItem)
-        
-        // Add observers for remote playback
         setupRemotePlayerObservers()
     }
     
     private func setupRemotePlayerObservers() {
         guard let playerItem = playerItem else { return }
-        
-        // Status observer
         playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: [.new], context: nil)
-        
-        // Duration observer
         playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.duration), options: [.new], context: nil)
         
         // Buffering observers

@@ -132,6 +132,8 @@ class HomePaucktVC: UIViewController
         norecordImg.isHidden = filteredOffers.count != 0
         norecordLbl.isHidden = filteredOffers.count != 0
         norecordLbl.text = "Data Not Found"
+        searchBar.searchTextField.text = ""
+        searchBar?.resignFirstResponder()
         couponsCV.reloadData()
     }
     func setupCollectionView() {
@@ -262,6 +264,8 @@ class HomePaucktVC: UIViewController
                 )
             } else {
                 AllCouponsLbl.text = selectedCategory.category_name
+                searchBar.searchTextField.text = ""
+                searchBar?.resignFirstResponder()
                 Get_campians(
                     parameter: [
                         "mobile_no": "91" + (
@@ -350,7 +354,9 @@ class HomePaucktVC: UIViewController
     func Get_campians(parameter : [String: Any]){
         print("paramparamm,nc",parameter)
         
-        
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
         APIService.shared
             .makeApi(url: ServiceUrl.get_campaigns, parameters: parameter, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
                 result: Result<CampaignsResponse,
@@ -379,12 +385,15 @@ class HomePaucktVC: UIViewController
                             couponsCV.dataSource = self
                             couponsCV.reloadData()
                         }
-                        
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
                     }
                 case .failure(let error):
-                    
                     DispatchQueue.main.async {
-                        print("Error:",error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
                     }
                 }
             }

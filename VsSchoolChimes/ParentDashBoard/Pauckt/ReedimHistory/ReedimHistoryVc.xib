@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReedimHistoryVc" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReedimHistoryVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="Searchbar" destination="Die-X3-4eS" id="qxG-zG-Rp6"/>
                 <outlet property="cv" destination="96e-89-uck" id="hGu-p9-aMa"/>
@@ -24,10 +24,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGy-S2-0uR">
-                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhS-yg-A9H">
-                            <rect key="frame" x="10" y="323" width="373" height="20.333333333333314"/>
+                            <rect key="frame" x="10" y="369.33333333333331" width="373" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -57,7 +57,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="v8c-Yt-tRq">
                             <rect key="frame" x="10" y="61" width="373" height="87"/>
                             <subviews>
-                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="Die-X3-4eS">
+                                <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="Die-X3-4eS">
                                     <rect key="frame" x="0.0" y="0.0" width="373" height="56"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -82,7 +82,7 @@
                             </subviews>
                         </stackView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="96e-89-uck">
-                            <rect key="frame" x="10" y="158" width="373" height="498"/>
+                            <rect key="frame" x="10" y="158" width="373" height="591"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="C1m-s5-auN">
                                 <size key="itemSize" width="128" height="128"/>

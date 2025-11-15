@@ -29,14 +29,11 @@ class AudioCVC: UICollectionViewCell {
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
+            
             // Check if it's a remote URL (http or https)
             if url.isFileURL {
-                do {
-                    try audioManager.setupPlayer(with: url)
-                    waveView.audioURL = url
-                } catch {
-                    print("❌ Failed to set up audio player:", error)
-                }
+                // File URL - directly set to waveView
+                waveView.audioURL = url
             } else {
                 // Remote URL - download it first
                 downloadAndPrepareAudio(from: url)
@@ -44,12 +41,11 @@ class AudioCVC: UICollectionViewCell {
         }
     }
     
-    private let audioManager = AudioManager()
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
         setupNotifications()
+        waveView.setParentCell(self)
     }
     
     override func prepareForReuse() {
@@ -58,6 +54,12 @@ class AudioCVC: UICollectionViewCell {
         audioURL = nil
         cellIndex = 0
         audioDelegate = nil
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        waveView.setNeedsLayout()
+        waveView.layoutIfNeeded()
     }
     
     deinit {
@@ -93,29 +95,73 @@ class AudioCVC: UICollectionViewCell {
     }
     
     private func downloadAndPrepareAudio(from remoteURL: URL) {
+        // Show loading state
+        playBtn.isEnabled = false
+        
         let session = URLSession.shared
         let task = session.downloadTask(with: remoteURL) { [weak self] (tempURL, response, error) in
             guard let self = self else { return }
-            if let tempURL = tempURL {
-                do {
-                    try self.audioManager.setupPlayer(with: tempURL)
-                    DispatchQueue.main.async {
-                        self.waveView.audioURL = tempURL
-                    }
-                } catch {
-                    print("Failed to setup player: \(error.localizedDescription)")
-                    DispatchQueue.main.async {
-                        self.showErrorAlert(message: "Failed to load audio file")
-                    }
-                }
-            } else {
-                print("Download error: \(error?.localizedDescription ?? "Unknown error")")
+            
+            if let error = error {
+                print("Download error: \(error.localizedDescription)")
                 DispatchQueue.main.async {
+                    self.playBtn.isEnabled = true
                     self.showErrorAlert(message: "Audio download failed.")
+                }
+                return
+            }
+            
+            guard let tempURL = tempURL else {
+                DispatchQueue.main.async {
+                    self.playBtn.isEnabled = true
+                    self.showErrorAlert(message: "Audio download failed.")
+                }
+                return
+            }
+            
+            // Save to permanent location
+            let permanentURL = self.saveToPermanentLocation(tempURL: tempURL, originalURL: remoteURL)
+            
+            DispatchQueue.main.async {
+                self.playBtn.isEnabled = true
+                if let url = permanentURL {
+                    self.waveView.audioURL = url
+                } else {
+                    self.showErrorAlert(message: "Failed to save audio file")
                 }
             }
         }
         task.resume()
+    }
+    
+    private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
+        let fileManager = FileManager.default
+        let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioFolderPath = documentsPath.appendingPathComponent("AudioFiles", isDirectory: true)
+        
+        // Create directory if needed
+        if !fileManager.fileExists(atPath: audioFolderPath.path) {
+            try? fileManager.createDirectory(at: audioFolderPath, withIntermediateDirectories: true)
+        }
+        
+        // Generate unique filename
+        let filename = originalURL.lastPathComponent.isEmpty ? UUID().uuidString + ".m4a" : originalURL.lastPathComponent
+        let permanentURL = audioFolderPath.appendingPathComponent(filename)
+        
+        // Remove if already exists
+        if fileManager.fileExists(atPath: permanentURL.path) {
+            try? fileManager.removeItem(at: permanentURL)
+        }
+        
+        // Copy to permanent location
+        do {
+            try fileManager.copyItem(at: tempURL, to: permanentURL)
+            print("✅ Audio saved to: \(permanentURL.path)")
+            return permanentURL
+        } catch {
+            print("❌ Failed to save audio: \(error.localizedDescription)")
+            return nil
+        }
     }
     
     @IBAction func playAudio(_ sender: UIButton) {
@@ -127,6 +173,12 @@ class AudioCVC: UICollectionViewCell {
     }
     
     private func startPlayback() {
+        // Check if audio is loaded
+        guard waveView.audioURL != nil else {
+            showErrorAlert(message: "Audio not loaded yet")
+            return
+        }
+        
         // Notify other cells to stop playing
         NotificationCenter.default.post(
             name: NSNotification.Name("AudioCellStartedPlaying"),
@@ -143,7 +195,6 @@ class AudioCVC: UICollectionViewCell {
     }
     
     func stopPlayback() {
-        playBtn.setImage(UIImage(named: "play-button"), for: .normal)
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
@@ -177,4 +228,3 @@ class AudioCVC: UICollectionViewCell {
         delegate?.deleteImage(index: sender.tag)
     }
 }
-

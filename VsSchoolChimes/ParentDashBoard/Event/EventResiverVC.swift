@@ -158,6 +158,7 @@ class EventResiverVC: UIViewController {
                         self.hideActivityLoader()
                     }
                     self.filteredSections = self.allEventSections
+                    self.baseSection = self.allEventSections
                     self.noDataLbl.isHidden = self.filteredSections.count != 0
                     self.noDataLbl.text = response.message
                     self.noDataImg.isHidden = self.filteredSections.count != 0
@@ -480,13 +481,12 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
     func filterCatagories(name: String) {
         if name != "All"{
             self.filteredSections = filterEventListsByTitle(searchText: name)
-            self.baseSection = self.filteredSections
         }else{
             filteredSections = allEventSections
-            self.baseSection = self.filteredSections
-            selectedIndex = 0
         }
-        
+        self.baseSection = self.filteredSections
+        searchbar.searchTextField.text = ""
+        searchbar?.resignFirstResponder()
         self.tableview.reloadData()
     }
     
@@ -500,7 +500,6 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
             
             if searchText.isEmpty {
                 self.filteredSections = self.baseSection
-                self.selectedIndex = 0
             } else {
                 
                 var hasMatchedData = false
@@ -511,6 +510,7 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                         
                     case .featured(let events):
                         let matched = events.filter {
+                            ($0.date?.convertToTargetDateFormat()?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                             $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
                         }
                         if !matched.isEmpty {
@@ -524,6 +524,7 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                     case .upcoming(let events):
                         let matched = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                            ($0.date?.convertToTargetDateFormat()?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                             ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
                         if !matched.isEmpty {
@@ -534,6 +535,7 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                     case .completed(let events):
                         let matched = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                            ($0.date?.convertToTargetDateFormat()?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                             ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
                         if !matched.isEmpty {
