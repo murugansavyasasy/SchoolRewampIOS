@@ -246,10 +246,6 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.dispalyArray = displayArray
-//            if !chartSet {
-//                cell.schoolStrength = SchoolStrength?.first
-//            }
-//            applyShadowAndCornerRadius(to: cell.outerView)
             return cell
 
         }
@@ -259,10 +255,12 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
     
+            let boys = (Int(totalBoys ?? "0") ?? 0) + (Int(totalgirls ?? "0") ?? 0)
+
             cell
                 .updateProgress(
-                    maleCount:totalBoys ?? ""  ,
-                    totalCount:(totalBoys ?? "") + (totalgirls ?? "")
+                    maleCount:totalBoys ?? "",
+                    totalCount: String(boys)
                 )
             return cell
         }

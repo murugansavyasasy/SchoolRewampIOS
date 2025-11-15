@@ -24,7 +24,7 @@
                 <outlet property="SegmentControl" destination="IcS-Zh-Be1" id="fZC-Up-L56"/>
                 <outlet property="TaptoPunchBtn" destination="NWZ-QJ-87i" id="o2t-Dm-mqF"/>
                 <outlet property="addlocationbtnName" destination="eEZ-4d-Kha" id="plz-y8-dVJ"/>
-                <outlet property="containerView" destination="aXl-wM-Qid" id="0zB-23-oLi"/>
+                <outlet property="containerView" destination="0Wr-56-sMX" id="tm6-Xe-xns"/>
                 <outlet property="punchStack" destination="LcP-hF-7dl" id="Jr3-MI-dUs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -278,7 +278,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

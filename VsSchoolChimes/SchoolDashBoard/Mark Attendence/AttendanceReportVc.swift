@@ -78,18 +78,18 @@ extension AttendanceReportVc : UITableViewDelegate,UITableViewDataSource {
         
         let report = FilteredReport?[indexPath.row]
         
-        if report?.att_status == "P"{
-            
-           // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
-            cell.statusView.backgroundColor = .systemGreen
-            cell.statusLbl.text = "Present"
-           
-        }else{
-            
-           // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
-            cell.statusView.backgroundColor = .systemRed
-            cell.statusLbl.text = "Absent"
-        }
+//        if report?.att_status == "P"{
+//            
+//           // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
+//            cell.statusView.backgroundColor = .systemGreen
+//            cell.statusLbl.text = "Present"
+//           
+//        }else{
+//            
+//           // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
+//            cell.statusView.backgroundColor = .systemRed
+//            cell.statusLbl.text = "Absent"
+//        }
         return cell
     }
     

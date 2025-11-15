@@ -6,6 +6,7 @@ import DropDown
 
 class LocationReportVC: UIViewController{
     
+    @IBOutlet weak var agandaStack: UIStackView!
     @IBOutlet weak var noRecdStackView: UIStackView!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var SelectYearDropdownView: UIViewX!
@@ -167,6 +168,7 @@ class LocationReportVC: UIViewController{
                         AttendanceDetails = successMessage.data
                         noRecdStackView.isHidden = true
                         NoDataLbl.isHidden = true
+                        agandaStack.isHidden = false
                         Tv.reloadData()
                     }
                     
@@ -177,6 +179,7 @@ class LocationReportVC: UIViewController{
                         NoDataLbl.text = successMessage.message
                         noRecdStackView.isHidden = false
                         NoDataLbl.isHidden = false
+                        agandaStack.isHidden = true
                         Tv.reloadData()
                     }
                 }

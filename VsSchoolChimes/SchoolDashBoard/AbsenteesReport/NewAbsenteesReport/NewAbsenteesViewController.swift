@@ -85,7 +85,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
         calendar.appearance.selectionColor = .error
-        calendar.appearance.todayColor
+        calendar.appearance.todayColor = UIColor.error.withAlphaComponent(0.6)
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
