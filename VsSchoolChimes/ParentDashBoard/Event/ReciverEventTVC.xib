@@ -36,7 +36,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RKl-fw-742">
-                                <rect key="frame" x="62.333333333333371" y="3" width="360.66666666666663" height="0.0"/>
+                                <rect key="frame" x="62.333333333333343" y="3" width="360.66666666666663" height="0.0"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-c4-x7P">
                                         <rect key="frame" x="360.66666666666669" y="7.6666666666666679" width="25" height="25.000000000000004"/>
@@ -220,6 +220,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="attacmentView" destination="FYk-o5-WTl" id="Bzi-Nj-gmt"/>
+                <outlet property="categoryView" destination="UKJ-tK-2Ji" id="dG9-Qv-qcZ"/>
                 <outlet property="dateLbl" destination="PMd-F0-SpF" id="mz0-oH-1iY"/>
                 <outlet property="descriptionLbl" destination="A6B-DG-xFD" id="C7W-PT-KcK"/>
                 <outlet property="editBtn" destination="rOb-CL-mcg" id="rGZ-bO-6ZM"/>
@@ -229,6 +230,7 @@
                 <outlet property="imgCount" destination="mdE-cY-aWt" id="UCw-gX-jfd"/>
                 <outlet property="outerView" destination="Saa-1g-u5l" id="nR5-Pv-G3f"/>
                 <outlet property="placeLbl" destination="9h2-jq-Ac5" id="Ul5-am-ouX"/>
+                <outlet property="placeView" destination="3XV-23-Pgo" id="tH5-xa-DCt"/>
                 <outlet property="reminderBtn" destination="Vno-c4-x7P" id="CJj-Uy-9Wh"/>
                 <outlet property="selectBtn" destination="fmp-wr-LgQ" id="jws-Hn-Eys"/>
                 <outlet property="titleLbl" destination="0h0-GQ-Kzk" id="JFj-hu-Q0X"/>
@@ -247,7 +249,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

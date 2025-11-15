@@ -135,7 +135,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         print("schoolIdschoolId",schoolId)
         if schoolId == "All" {
             filteredSections = allEventSections
-            baseSection = filteredSections
         } else {
             filteredSections = allEventSections.compactMap { section in
                 switch section {
@@ -155,6 +154,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                 }
             }
         }
+        baseSection = filteredSections
         historyTable.reloadData()
     }
     
@@ -244,6 +244,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     }
                     
                     self.filteredSections = self.allEventSections
+                    self.baseSection = self.filteredSections
                     let hasData = !self.allEventSections.isEmpty
                     self.noDataLbl.isHidden = hasData
                     self.noDataLbl.text = response.message
@@ -431,7 +432,8 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReciverEventTVC", for: indexPath) as! ReciverEventTVC
             cell.titleLbl.text = event.title
             cell.dateLbl.text = "\(event.category ?? "")  \(event.time ?? "") - \(event.date?.convertToTargetDateFormat() ?? "")"
-            cell.placeLbl.text = event.venue
+            let venue = event.venue ?? ""
+            cell.placeView.isHidden = venue.isEmpty
             cell.descriptionLbl.text = event.description
             cell.date = event.date
             cell.time = event.time
@@ -585,12 +587,13 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
     func filterCatagories(name: String) {
         if name != "All"{
             self.filteredSections = filterEventListsByTitle(searchText: name)
-            self.baseSection = self.filteredSections
         }else{
             filteredSections = allEventSections
-            self.baseSection = self.filteredSections
             selectedIndex = 0
         }
+        self.baseSection = self.filteredSections
+        searchBar.searchTextField.text = ""
+        searchBar?.resignFirstResponder()
         self.historyTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -613,6 +616,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
                         
                     case .featured(let events):
                         let filtered = events.filter {
+                            ($0.date?.convertToTargetDateFormat()?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                             $0.title?.localizedCaseInsensitiveContains(searchText) ?? false
                         }
                         if !filtered.isEmpty {
@@ -626,6 +630,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
                     case .upcoming(let events):
                         let filtered = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                            ($0.date?.convertToTargetDateFormat()?.lowercased().contains(searchText) ?? false) ||
                             ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
                         if !filtered.isEmpty {
@@ -636,6 +641,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
                     case .completed(let events):
                         let filtered = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                            ($0.date?.convertToTargetDateFormat()?.lowercased().contains(searchText) ?? false) ||
                             ($0.description?.localizedCaseInsensitiveContains(searchText) ?? false)
                         }
                         if !filtered.isEmpty {
@@ -692,6 +698,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
             case .upcoming(let events):
                 let filteredEvents = events.filter {
                     ($0.title?.lowercased().contains(lowercasedSearchText) ?? false) ||
+                    ($0.date?.convertToTargetDateFormat()?.lowercased().contains(lowercasedSearchText) ?? false) ||
                     ($0.category?.lowercased().contains(lowercasedSearchText) ?? false)
                 }
                 if !filteredEvents.isEmpty {
@@ -702,6 +709,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
             case .completed(let events):
                 let filteredEvents = events.filter {
                     ($0.title?.lowercased().contains(lowercasedSearchText) ?? false) ||
+                    ($0.date?.convertToTargetDateFormat()?.lowercased().contains(lowercasedSearchText) ?? false) ||
                     ($0.category?.lowercased().contains(lowercasedSearchText) ?? false)
                 }
                 if !filteredEvents.isEmpty {

@@ -46,11 +46,11 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         outerView.layer.shadowRadius = 4
         outerView.layer.masksToBounds = false
         // Fonts
-        assignmentTitle.setFont(style: .body, size: FontSize.TitleSize)
-        subjectName.setFont(style: .body, size: FontSize.BodySize)
-        date.setFont(style: .body, size: FontSize.BodySize)
-        descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-        timeLeft.setFont(style: .body, size: FontSize.BodySize)
+//        assignmentTitle.setFont(style: .body, size: FontSize.TitleSize)
+//        subjectName.setFont(style: .body, size: FontSize.BodySize)
+//        date.setFont(style: .body, size: FontSize.BodySize)
+//        descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+//        timeLeft.setFont(style: .body, size: FontSize.BodySize)
         EditBtn.isHidden = true
         EditBtn1.isHidden = true
         [img1, img2, img3, imgCount].forEach { $0?.isHidden = true }

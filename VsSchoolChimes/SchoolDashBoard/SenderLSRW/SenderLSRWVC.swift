@@ -14,7 +14,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     // MARK: - Protocol Methods
     func date(date: String) {
         dateLbl.text = date
-        // Update placeholder behavior or validation state if needed
         placeholderLabel.isHidden = !(DetailsTxtview.text?.isEmpty ?? true) && DetailsTxtview.textColor != .lightGray
     }
     
@@ -157,6 +156,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.delegate = self
+        vc.date = dateLbl.text
         vc.minimumDate = Date()
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)

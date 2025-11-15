@@ -209,7 +209,7 @@ class PriorityVC: UIViewController {
         NextButtonView.isHidden = true
         bottomView.isHidden = true
         ProceedInstructionLbl.isHidden = true
-        TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Parent"
+        TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Student/Parent"
         apply_gradients()
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
