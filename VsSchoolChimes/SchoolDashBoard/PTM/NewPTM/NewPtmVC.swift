@@ -280,6 +280,7 @@ class NewPtmVC: UIViewController, Datepicker {
         
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.date = selectDateBtn.titleLabel?.text
         vc.delegate = self
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         vc.modalPresentationStyle = .overCurrentContext

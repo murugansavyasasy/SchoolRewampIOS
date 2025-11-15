@@ -136,6 +136,7 @@ class PlayQuizVc: UIViewController {
                         self.contentStack.isHidden = false
                         self.noRecordStack.isHidden = true
                         self.loadQuestion()
+                        self.setDefaultProgressState()
                     }else{
                         self.progressQuizStac.isHidden = true
                         self.contentStack.isHidden = true
@@ -184,8 +185,8 @@ class PlayQuizVc: UIViewController {
     
     func loadQuestion() {
         let currentQuestion = getQuestiondataDetails[currentQuestionIndex]
-        
-        QuestionLbl.text = currentQuestion.question
+        let currentNo = "\(currentQuestionIndex + 1)"
+        QuestionLbl.text = currentNo + ") " + (currentQuestion.question ?? "")
         filePath = currentQuestion.file_path
         cv.isHidden = currentQuestion.file_path?.count == 0
         pageControls.isHidden = currentQuestion.file_path?.count == 1 || currentQuestion.file_path?.count == 0
@@ -221,12 +222,12 @@ class PlayQuizVc: UIViewController {
         applyCustomFontToButtons()
         
         // Update progress bar and question count
-        progressBar.progress = Float(currentQuestionIndex + 1) / Float(getQuestiondataDetails.count)
+       // progressBar.progress = Float(currentQuestionIndex + 1) / Float(getQuestiondataDetails.count)
 //        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(getQuestiondata.first?.total_questions ?? 0)"
         
         
         let current = "\(currentQuestionIndex + 1)"
-        let total = "\(getQuestiondata.first?.total_questions ?? 0)"
+        let total = "\(getQuestiondataDetails.count)"
         let fullText = "\(current) / \(total)"
 
         let attributedString = NSMutableAttributedString(string: fullText)
@@ -240,7 +241,7 @@ class PlayQuizVc: UIViewController {
                     value: UIColor.primery,
                     range: nsRange)}
 
-        QuestionCountLbl.attributedText = attributedString
+       // QuestionCountLbl.attributedText = attributedString
 
     }
     
@@ -265,15 +266,65 @@ class PlayQuizVc: UIViewController {
             let zeroCount = answeredOptions.values.filter { $0 == 0 }.count
             if zeroCount > 0 {
                 print("Number of zeros: \(zeroCount)")
-                showAlert(message: "Are you sure want to submit ?")
+                showAlert(message: " Are you sure you want to submit the quiz? because you not answered \(zeroCount) questions!")
                 
             } else {
                 print("No zeros found")
-                showAlert(message: " Are you sure you want to submit the quiz? because you not answered \(zeroCount) questions!")
+                showAlert(message: "Are you sure want to submit ?")
             }
         }
     }
     
+    func updateProgressUI() {
+        let total = getQuestiondataDetails.count
+        let answeredCount = answeredOptions.values.filter { $0 != 0 }.count
+        
+        // Progress bar update
+        progressBar.progress = Float(answeredCount) / Float(total)
+        
+        // Question count label update
+        let current = "\(answeredCount)"
+        let fullText = "\(answeredCount) / \(total)"
+        
+        let attributed = NSMutableAttributedString(string: fullText)
+        
+        if let range = fullText.range(of: current) {
+            let nsRange = NSRange(range, in: fullText)
+            attributed.addAttribute(.foregroundColor,
+                                    value: UIColor.primery,
+                                    range: nsRange)
+        }
+        
+        QuestionCountLbl.attributedText = attributed
+    }
+    
+    func setDefaultProgressState() {
+        let answeredCount = 0
+        let total = getQuestiondataDetails.count
+
+        // Set progress bar to zero
+        progressBar.progress = 0.0
+
+        let current = "\(answeredCount)"
+        let totalText = "\(total)"
+        let fullText = "\(current) / \(totalText)"
+
+        let attributedString = NSMutableAttributedString(string: fullText)
+
+        // Highlight the 0 in primery color
+        if let range = fullText.range(of: current) {
+            let nsRange = NSRange(range, in: fullText)
+            attributedString.addAttribute(
+                .foregroundColor,
+                value: UIColor.primery,
+                range: nsRange
+            )
+        }
+
+        QuestionCountLbl.attributedText = attributedString
+    }
+
+
     
     func showAlert(message: String) {
         alert.showAlertCancel(
@@ -334,31 +385,45 @@ class PlayQuizVc: UIViewController {
         }
     }
     
-    @IBAction func optionSelected(_ sender: UIButton) {
-        
-        // Update selected option for the current question
-        selectedOptions[currentQuestionIndex] = sender.tag
-//        print("sender.tag", sender.tag)
-//        for i in selectedOptions {
-//        print("SelectedOptions", i)
-//        }
-        
-        let currentQuestion = getQuestiondataDetails[currentQuestionIndex]
-           let questionId = currentQuestion.id ?? ""
+    // In optionSelected(_:) update logic
+        @IBAction func optionSelected(_ sender: UIButton) {
+            let currentIndex = currentQuestionIndex
 
-           // Save the selected option index (button.tag)
-           answeredOptions[questionId] = sender.tag + 1
-        
-        // Reset all button styles
-        for button in buttons {
-            resetButtonStyle(button)
+            // If user taps the same selected option → deselect it
+            if selectedOptions[currentIndex] == sender.tag {
+                // Remove selection
+                selectedOptions[currentIndex] = nil
+                let currentQuestion = getQuestiondataDetails[currentIndex]
+                let questionId = currentQuestion.id ?? ""
+                answeredOptions[questionId] = 0
+
+                // Reset styles for all buttons
+                for button in buttons {
+                    resetButtonStyle(button)
+                }
+                updateProgressUI()
+                return
+            }
+
+            // Normal selection
+            selectedOptions[currentIndex] = sender.tag
+            let currentQuestion = getQuestiondataDetails[currentIndex]
+            let questionId = currentQuestion.id ?? ""
+            answeredOptions[questionId] = sender.tag + 1
+
+            // Reset all styles
+            for button in buttons {
+                resetButtonStyle(button)
+            }
+
+            // Highlight selected button
+            sender.backgroundColor = .systemBlue
+            sender.tintColor = .white
+            sender.setTitleColor(.white, for: .normal)
+            
+            updateProgressUI()
         }
-        
-        // Highlight the selected button
-        sender.backgroundColor = .systemBlue
-        sender.tintColor = .white
-        sender.setTitleColor(.white, for: .normal)
-    }
+
     
     
     func resetButtonStyle(_ button: UIButton) {

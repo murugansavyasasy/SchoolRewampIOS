@@ -72,6 +72,7 @@ class TimetableVC: UIViewController {
             super.viewWillAppear(animated)
 
             // ✅ Select today immediately (so no jump later)
+            cv.layoutIfNeeded()
             let indexPath = IndexPath(item: selectedIndex, section: 0)
             cv.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
         }
