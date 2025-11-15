@@ -53,21 +53,21 @@ class LogoutViewController: UIViewController {
 //            vc.modalPresentationStyle = .fullScreen
 //            present(vc, animated: true)
 //        }
-//        UserDefaultFileManager.removeLoginCredentials()
-//            
-//        if #available(iOS 15.0, *) {
-//            let loginVC = LoginVc(nibName: nil, bundle: nil)
-//            let nav = UINavigationController(rootViewController: loginVC)
-//            nav.navigationBar.isHidden = true
-//            
-//            if let window = UIApplication.shared.connectedScenes
-//                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
-//                window.rootViewController = nav
-//                window.makeKeyAndVisible()
-//            }
-//        }
+        UserDefaultFileManager.removeLoginCredentials()
+            
+        if #available(iOS 15.0, *) {
+            let loginVC = LoginVc(nibName: nil, bundle: nil)
+            let nav = UINavigationController(rootViewController: loginVC)
+            nav.navigationBar.isHidden = true
+            
+            if let window = UIApplication.shared.connectedScenes
+                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+                window.rootViewController = nav
+                window.makeKeyAndVisible()
+            }
+        }
            
-        Logout_Api()
+       // Logout_Api()
     }
     
     @objc func CancelAct(_ sender: Any){

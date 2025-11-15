@@ -45,16 +45,20 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
         
         let baseURL = global?.fees_url ?? ""
 
+        let studentId = studentDetails?.child_id ?? ""
         let schoolId = studentDetails?.school_id ?? ""
-        let childId = studentDetails?.child_id ?? ""
 
-        let urlString = "\(baseURL)/\(schoolId)/\(childId)"
+        let finalURL = baseURL
+            .replacingOccurrences(of: ":student_id", with: studentId)
+            .replacingOccurrences(of: ":school_id", with: schoolId)
 
-        if let pdfURL = URL(string: urlString) {
+        print(finalURL)
+
+        if let pdfURL = URL(string: finalURL) {
             let request = URLRequest(url: pdfURL)
             webView.load(request)
         } else {
-            print("Invalid URL: \(urlString)")
+            print("Invalid URL: \(finalURL)")
         }
 
 
