@@ -63,6 +63,11 @@ class PtmNavigationVC: UIViewController {
         transition(to: secondChildVC)
        // addChildVc()
     }
+    
+    func childViewController(_ child: UIViewController, didUpdateDataIsEmpty isEmpty: Bool) {
+        searchBtn.isHidden = isEmpty
+    }
+    
     @IBAction func backAct(_ sender: Any) {
         dismiss(animated: true)
     }

@@ -172,12 +172,21 @@ class MessageFromManagementViewController: UIViewController {
                 case .success(let response):
                     self.messageData = response.data ?? []
                     self.filteredData = self.messageData
-                    let hidden = self.filteredData.isEmpty
                     
-                    self.searchBtn.isHidden = hidden
-                    self.schoolDropDown.isHidden = hidden
-                    self.NoDataImage.isHidden = !hidden
-                    self.NoDataLbl.isHidden = !hidden
+                    if self.filteredData.isEmpty{
+                        
+                        self.searchBtn.isHidden = true
+                        self.NoDataImage.isHidden = false
+                        self.NoDataLbl.isHidden = false
+                        self.schoolDropDown.isHidden = true
+                    }else{
+                        
+                        self.searchBtn.isHidden = false
+                        self.NoDataImage.isHidden = true
+                        self.NoDataLbl.isHidden = true
+                        self.schoolDropDown.isHidden = !self.hasMultipleSchools()
+                    }
+                    
                     self.NoDataLbl.text = response.message
                     
                 case .failure(let error):
@@ -215,8 +224,18 @@ class MessageFromManagementViewController: UIViewController {
                     self.messageData.append(contentsOf: response.data ?? [])
                     let hidden = self.messageData.isEmpty
                     self.searchBtn.isHidden = hidden
+                    
+                    if self.messageData.isEmpty{
+                        self.SearchBar.isHidden = true
+                        self.schoolDropDown.isHidden = true
+                        self.shouldShowFooterLabel = false
+                    }else{
+                        self.schoolDropDown.isHidden = !self.hasMultipleSchools()
+                        self.shouldShowFooterLabel = !(response.status ?? false)
+                    }
+                    
                     self.filterMessages()
-                    self.shouldShowFooterLabel = !(response.status ?? false)
+                    self.NoDataLbl.text = response.message ?? ""
                     self.archiveMessage = response.message ?? ""
                     
                 case .failure(let error):

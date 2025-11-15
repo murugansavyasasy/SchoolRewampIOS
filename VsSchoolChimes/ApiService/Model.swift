@@ -1736,6 +1736,7 @@ struct SlotEventDetail: Codable {
     let profiles: [String]?
     var slots: [SlotItem]?
     let std_sec_details: [ClassSectionDetail]?
+    let event_link: String?
 }
 
 struct SlotItem: Codable {
@@ -1758,6 +1759,9 @@ struct SlotItem: Codable {
     let date: String?
     let sent_by: String?
     let can_cancel: Bool?
+    let father_name: String?
+    let mother_name: String?
+    let event_link: String?
 }
 
 struct ClassSectionDetail: Codable {
@@ -1767,6 +1771,42 @@ struct ClassSectionDetail: Codable {
     let section_name: String?
 }
 
+
+//Booked slots for staff
+struct BookedSlotsResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [BookedSlotsData]
+}
+
+struct BookedSlotsData: Codable {
+    let today: [BookedSlot]?
+    let upcoming: [BookedSlot]?
+    let completed: [BookedSlot]?
+}
+
+struct BookedSlot: Codable {
+    let id: String?
+    let event_date: String?
+    let slot_from: String?
+    let slot_to: String?
+    let event_name: String?
+    let event_mode: String?
+    let event_link: String?
+    let sent_by: String?
+    let student_id: String?
+    let student_name: String?
+    let father_name: String?
+    let mother_name: String?
+    let mobile_no: String?
+    let class_id: String?
+    let section_id: String?
+    let class_name: String?
+    let section_name: String?
+    let slot_status: String?
+    let is_booked: Int?   // API gives 1, so Int is correct
+    let profile_url: String?
+}
 
 struct SlotValidationResponse: Codable {
     var status: Bool?

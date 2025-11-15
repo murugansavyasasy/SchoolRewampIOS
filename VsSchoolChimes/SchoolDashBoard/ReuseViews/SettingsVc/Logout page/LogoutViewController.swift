@@ -14,6 +14,13 @@ class LogoutViewController: UIViewController {
     @IBOutlet weak var LogoutView: UIView!
     @IBOutlet weak var Cancellabel: UILabel!
     @IBOutlet weak var LogoutButtonView: UIButton!
+    
+    let secureID = SecureIDManager.getSecureID()
+    let IsParent = UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
+    let childDetails = UserDefaultFileManager.get_child_Details()
+    let staffDetails = UserDefaultFileManager.get_staff_Details()
+    let mobileNo = UserDefaultFileManager.getLoginCredentials()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,24 +53,68 @@ class LogoutViewController: UIViewController {
 //            vc.modalPresentationStyle = .fullScreen
 //            present(vc, animated: true)
 //        }
-        UserDefaultFileManager.removeLoginCredentials()
-            
-        if #available(iOS 15.0, *) {
-            let loginVC = LoginVc(nibName: nil, bundle: nil)
-            let nav = UINavigationController(rootViewController: loginVC)
-            nav.navigationBar.isHidden = true
-            
-            if let window = UIApplication.shared.connectedScenes
-                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
-                window.rootViewController = nav
-                window.makeKeyAndVisible()
-            }
-        }
+//        UserDefaultFileManager.removeLoginCredentials()
+//            
+//        if #available(iOS 15.0, *) {
+//            let loginVC = LoginVc(nibName: nil, bundle: nil)
+//            let nav = UINavigationController(rootViewController: loginVC)
+//            nav.navigationBar.isHidden = true
+//            
+//            if let window = UIApplication.shared.connectedScenes
+//                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+//                window.rootViewController = nav
+//                window.makeKeyAndVisible()
+//            }
+//        }
            
+        Logout_Api()
     }
     
     @objc func CancelAct(_ sender: Any){
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    func Logout_Api(){
+        
+        if #available(iOS 15.0, *) {showActivityLoader() }
+        
+        
+        let param : [String:Any] = [
+            COMMON_PARAMETER.mobile_number : mobileNo ?? "",
+            COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
+            "secure_id": secureID
+        ]
+        
+        let token = (IsParent == true ? childDetails?.access_token : staffDetails?.access_token) ?? ""
+        
+        APIService.shared.makeApi(url: ServiceUrl.app_api_auth_logout, parameters: param, type: ApitTypeSringFile.POST, token: token) { [weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) { self.hideActivityLoader() }
+                switch result {
+                case .success(let success):
+                   
+                    UserDefaultFileManager.removeLoginCredentials()
+                        
+                    if #available(iOS 15.0, *) {
+                        let loginVC = LoginVc(nibName: nil, bundle: nil)
+                        let nav = UINavigationController(rootViewController: loginVC)
+                        nav.navigationBar.isHidden = true
+                        
+                        if let window = UIApplication.shared.connectedScenes
+                            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+                            window.rootViewController = nav
+                            window.makeKeyAndVisible()
+                        }
+                    }
+                    
+                case .failure(let failure):
+                    print("Error: ", failure.localizedDescription)
+                }
+            }
+        }
     }
     
 }
