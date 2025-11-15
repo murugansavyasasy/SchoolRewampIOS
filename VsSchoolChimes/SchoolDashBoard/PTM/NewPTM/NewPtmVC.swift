@@ -7,7 +7,13 @@
 
 struct SectionData {
     let title: String
-    let events: [SlotEventDetail]
+    let type : SectionType
+    let events: [Any]
+}
+
+enum SectionType {
+    case meetings
+    case slots
 }
 
 import UIKit
@@ -32,11 +38,14 @@ class NewPtmVC: UIViewController, Datepicker {
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var nodataLbl: UILabel!
+    @IBOutlet weak var meetingsBtn: UIButton!
+    @IBOutlet weak var bookedSlotsBtn: UIButton!
     
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var Meeting_data: [SlotDateData] = []
     var sections: [SectionData] = []
+    var Booked_slot_data: [BookedSlotsData] = []
     var tvHidden:Bool?
     var MeetingDate = "ALL"
     var selectedDate = ""
@@ -77,7 +86,11 @@ class NewPtmVC: UIViewController, Datepicker {
         
         plusBtn.setTitle(PTMString.create, for: .normal)
         
+        meetingsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        bookedSlotsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
+        addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
         
 //        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
 //        cv.delegate = self
@@ -136,7 +149,7 @@ class NewPtmVC: UIViewController, Datepicker {
                         // Today
                         if let todayGroups = slotData.today, !todayGroups.isEmpty {
                             let events = todayGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.todayMeetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.todayMeetings, type: .meetings, events: events))
                             let message = String(format:PTMString.meetingsToday,self.sections.first?.events.count ?? 0)
                             self.MeetingCountLbl.text = message
                         }
@@ -144,13 +157,13 @@ class NewPtmVC: UIViewController, Datepicker {
                         // Upcoming
                         if let upcomingGroups = slotData.upcoming, !upcomingGroups.isEmpty {
                             let events = upcomingGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.upcomingMeetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.upcomingMeetings, type: .meetings, events: events))
                         }
                         
                         // Completed
                         if let completedGroups = slotData.completed, !completedGroups.isEmpty {
                             let events = completedGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.completedMeetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.completedMeetings, type: .meetings, events: events))
                         }
                        
 //                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
@@ -179,6 +192,68 @@ class NewPtmVC: UIViewController, Datepicker {
     }
 
     
+    func Get_bookedSlots_Api(EventDate: String){
+        
+        let param = [PTMRequestStringFile.event_date:EventDate]
+
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_datewise_booked_slots, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<BookedSlotsResponse,Error>) in
+            
+            DispatchQueue.main.async {
+                guard let self = self else {return}
+                if #available(iOS 15.0, *){self.hideActivityLoader()}
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status{
+                        
+                        self.Booked_slot_data = success.data
+                        self.sections.removeAll()
+                        self.noDataImage.isHidden = true
+                        self.nodataLbl.isHidden = true
+                        
+                        guard let slotData = success.data.first else {return}
+                        
+                        //Today
+                        if let todaySlots = slotData.today, !todaySlots.isEmpty {
+                            let slots = todaySlots.compactMap{$0}
+                            self.sections.append(SectionData(title: "Today Slots", type: .slots, events: slots))
+                        }
+                        
+                        //Upcoming
+                        if let upcomingSlots = slotData.upcoming, !upcomingSlots.isEmpty {
+                            let slots = upcomingSlots.compactMap{$0}
+                            self.sections.append(SectionData(title: "Upcoming Slots", type: .slots, events: slots))
+                        }
+                        
+                        //Completed
+                        if let completedSlots = slotData.completed, !completedSlots.isEmpty {
+                            let slots = completedSlots.compactMap{$0}
+                            self.sections.append(SectionData(title: "Completed Slots", type: .slots, events: slots))
+                        }
+                        
+                        self.tv.reloadData()
+                    }else {
+                        
+                        self.nodataLbl.isHidden = false
+                        self.noDataImage.isHidden = false
+                        self.nodataLbl.text = success.message
+                    }
+                
+                    
+                case .failure(let failure):
+                    self.nodataLbl.isHidden = false
+                    self.noDataImage.isHidden = false
+                    self.nodataLbl.text = failure.localizedDescription
+                }
+            }
+        }
+    }
+    
     @available(iOS 14.0, *)
     @IBAction func createAct(_ sender: Any) {
         let vc = CreateMeetingVc(nibName: nil, bundle: nil)
@@ -205,6 +280,7 @@ class NewPtmVC: UIViewController, Datepicker {
         
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.date = selectDateBtn.titleLabel?.text
         vc.delegate = self
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         vc.modalPresentationStyle = .overCurrentContext
@@ -231,6 +307,28 @@ class NewPtmVC: UIViewController, Datepicker {
     @IBAction func cancelAct(_ sender: Any) {
         addUnderline(to: canceledBtn, unSelectedBtn: [upcomingBtn,completedBtn,allBtn])
     }
+    
+    @IBAction func MeetingsBtn(_ sender: Any) {
+        
+        addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
+        
+        if selectedDate == ""{
+            Get_Meetings_Api(EventDate: "ALL")
+        }else {
+            Get_Meetings_Api(EventDate: selectedDate)
+        }
+    }
+    
+    @IBAction func bookedSlotsBtn(_ sender: Any) {
+        addUnderline(to: bookedSlotsBtn, unSelectedBtn: [meetingsBtn])
+        
+        if selectedDate == ""{
+            Get_bookedSlots_Api(EventDate: "ALL")
+        }else {
+            Get_bookedSlots_Api(EventDate: selectedDate)
+        }
+    }
+    
     
     func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
         ([selectedButton] + unSelectedBtn).forEach { button in
@@ -361,33 +459,54 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDetailTV, for: indexPath) as! MeetingDetailTV
-        //cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
-        let event = sections[indexPath.section].events[indexPath.row]
-    
-        cell.MeetingNameLbl.text = event.event_name
-        cell.dateBtn.setTitle(event.date?.convertToTargetDateFormat(), for: .normal)
-        let time = (event.start_time ?? "") + " - " + (event.end_time ?? "")
-        cell.timeBtn.setTitle(time, for: .normal)
-        cell.modeLbl.text = "Mode - " + (event.event_mode ?? "")
-        if event.profiles?.count == 0 {
-            cell.imageStack.isHidden = true
-            cell.joinBtn.isHidden = false
-        }else {
-            cell.imageStack.isHidden = false
-            cell.joinBtn.isHidden = true
-            loadImages(into: cell, urls: event.profiles ?? [])
+        
+        let Sections = sections[indexPath.section]
+        
+        switch Sections.type{
+            
+        case .meetings:
+            
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDetailTV, for: indexPath) as! MeetingDetailTV
+            //cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
+            let event = sections[indexPath.section].events[indexPath.row] as? SlotEventDetail
+        
+            cell.MeetingNameLbl.text = event?.event_name
+            cell.dateBtn.setTitle(event?.date?.convertToTargetDateFormat(), for: .normal)
+            let time = (event?.start_time ?? "") + " - " + (event?.end_time ?? "")
+            cell.timeBtn.setTitle(time, for: .normal)
+            cell.modeLbl.text = "Mode - " + (event?.event_mode ?? "")
+            if event?.profiles?.count == 0 {
+                cell.imageStack.isHidden = true
+                cell.joinBtn.isHidden = false
+            }else {
+                cell.imageStack.isHidden = false
+                cell.joinBtn.isHidden = true
+                loadImages(into: cell, urls: event?.profiles ?? [])
+            }
+           
+            return cell
+            
+        case .slots:
+            
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
+            
+            return cell
+            
         }
-       
-        return cell
+        
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = SlotListVC(nibName: nil, bundle: nil)
-        vc.slotData = sections[indexPath.section].events[indexPath.row]
-        vc.MeetingStatus = sections[indexPath.section].title
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        
+        let section = sections[indexPath.section]
+        if section.type == .meetings{
+            let vc = SlotListVC(nibName: nil, bundle: nil)
+            vc.slotData = sections[indexPath.section].events[indexPath.row] as? SlotEventDetail
+            vc.MeetingStatus = sections[indexPath.section].title
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -23,11 +23,17 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var slotData: SlotEventDetail?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var MeetingStatus = ""
+    var classList:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         nameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
+        
+        if let details = slotData?.std_sec_details {
+            classList = details.map { "\($0.class_name ?? "")-\($0.section_name ?? "")" }
+        }
+        
         tv.register(UINib(nibName: CellConfingName.MeetingDataTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDataTV)
         tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self
@@ -154,8 +160,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             cell.JoinBtn.isHidden = slotData?.event_mode == "Virtual" ? false : true
             cell.TimeLbl.text = (slotData?.start_time ?? "") + " - " + (slotData?.end_time ?? "")
             cell.onJoin = { [weak self] in
-                self?.openMeetingLink("")
+                self?.openMeetingLink(self?.slotData?.event_link ?? "")
             }
+            cell.classesLbl.text = classList.joined(separator: ", ")
             return cell
         }else {
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
@@ -293,29 +300,40 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func openMeetingLink(_ urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-
-        // Extract scheme safely
-        let scheme = url.scheme ?? ""
-
-        // Allowed URL schemes
-        let allowedSchemes = ["http", "https", "zoomus", "msteams", "meet"]
-
-        // If scheme isn’t recognized, try to open as https:// instead
-        if !allowedSchemes.contains(scheme) {
-            if let httpsURL = URL(string: urlString.replacingOccurrences(of: "\(scheme)://", with: "https://")) {
-                UIApplication.shared.open(httpsURL)
+//        guard let url = URL(string: urlString) else { return }
+//
+//        // Extract scheme safely
+//        let scheme = url.scheme ?? ""
+//
+//        // Allowed URL schemes
+//        let allowedSchemes = ["http", "https", "zoomus", "msteams", "meet"]
+//
+//        // If scheme isn’t recognized, try to open as https:// instead
+//        if !allowedSchemes.contains(scheme) {
+//            if let httpsURL = URL(string: urlString.replacingOccurrences(of: "\(scheme)://", with: "https://")) {
+//                UIApplication.shared.open(httpsURL)
+//            }
+//            return
+//        }
+//
+//        // If the app for this scheme is installed, open it
+//        if UIApplication.shared.canOpenURL(url) {
+//            UIApplication.shared.open(url)
+//        } else {
+//            // Fallback to Safari
+//            UIApplication.shared.open(url)
+//        }
+        
+        var fixedLink = urlString
+            if !fixedLink.lowercased().hasPrefix("http") {
+                fixedLink = "https://" + fixedLink
             }
-            return
-        }
-
-        // If the app for this scheme is installed, open it
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            // Fallback to Safari
-            UIApplication.shared.open(url)
-        }
+            
+            if let url = URL(string: fixedLink) {
+                UIApplication.shared.open(url)
+            } else {
+                print("Cannot open meeting link")
+            }
     }
 
 

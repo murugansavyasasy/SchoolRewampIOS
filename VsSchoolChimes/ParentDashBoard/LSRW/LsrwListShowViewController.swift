@@ -29,13 +29,16 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // UI Setup
-        searchBar.placeholder = CommonStringFile.Search.translated()
-        searchBar.delegate = self
-        searchBar.searchTextField.addDoneButton()
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.backgroundImage = UIImage()
+        searchBar.searchTextField.layer.cornerRadius = 8
+        searchBar.searchTextField.backgroundColor = .white
         searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
         backBtn.applyBackButton()
         backBtn.configureAsBackButton(
             firstLine: "\(childDetails?.name ?? "")",
@@ -119,6 +122,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         nodataImg.isHidden = !filteredTasks.isEmpty
         nodataLbl.isHidden = !filteredTasks.isEmpty
         nodataLbl.text = ""
+        searchBar.searchTextField.text = ""
         tv.reloadData()
     }
     

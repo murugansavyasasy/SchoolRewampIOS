@@ -13,6 +13,8 @@ class ReciverEventTVC: UITableViewCell, SelectedId, UIPopoverPresentationControl
         delegate?.selectId(id:id, edit: edit)
     }
     
+    @IBOutlet weak var placeView: UIView!
+    @IBOutlet weak var categoryView: UIView!
     @IBOutlet weak var attacmentView: UIView!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var reminderBtn: UIButton!

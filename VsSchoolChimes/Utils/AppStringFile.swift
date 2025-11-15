@@ -278,6 +278,7 @@ struct CommonStringFile{
     static let UploadImagepdf = "Upload Image/Document".translated()
     static let UploadImagepdfoptional = "Upload Image/Document (Optional)".translated()
     static let Description = "Description".translated()
+    static let addDescription = "Add Description".translated()
     static let Starts_on = "Starts on".translated()
     static let Groups = "Groups".translated()
     static let Sectionorstudent = "Section or student".translated()
