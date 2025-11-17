@@ -36,7 +36,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3K3-Dc-cua">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="704"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="688"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8F-aZ-FCz">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="808.33333333333337"/>
@@ -201,9 +201,9 @@
                         </view>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="GGr-hG-jio" firstAttribute="top" secondItem="3K3-Dc-cua" secondAttribute="bottom" constant="30" id="6HK-jO-3iu"/>
                         <constraint firstAttribute="trailing" secondItem="m8F-aZ-FCz" secondAttribute="trailing" id="Oq3-Jq-8nf"/>
                         <constraint firstItem="m8F-aZ-FCz" firstAttribute="leading" secondItem="LWi-zF-KDf" secondAttribute="leading" id="bHo-8h-CYv"/>
-                        <constraint firstItem="X0J-yG-lGj" firstAttribute="top" secondItem="3K3-Dc-cua" secondAttribute="bottom" constant="4" id="sgI-dx-f3q"/>
                     </constraints>
                 </stackView>
             </subviews>
@@ -226,10 +226,10 @@
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

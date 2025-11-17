@@ -310,16 +310,15 @@ class MarkAttendenceVC: UIViewController {
     @IBAction func InfoBtnAct(_ sender: UIButton) {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
             
-            popoverVC.configureButtons(with: [
-                ("FN", "ForeNoon", .black),
-                ("FN","ForeNoon", .black),
-                ("P", "Present", .systemGreen),
-                ("A", "Absent", .systemRed),
-                ("OD", "On Duty", .systemBlue),
-                ("LA", "Late", .systemOrange),
-                ("-", "Not Taken", .systemGray)
-            ], type: .badge)
-            
+        popoverVC.configureButtons(with: [
+            ("FN", "ForeNoon", .blue),
+            ("AN", "AfterNoon", .blue),
+            ("P",  "Present", .systemGreen),
+            ("A",  "Absent", .systemRed),
+            ("OD", "On Duty", .systemBlue),
+            ("LA", "Late", .systemOrange),
+            ("-",  "Not Taken", .systemGray)
+        ], type: .badge)
             showPopover(from: sender, contentVC: popoverVC)
     }
 
@@ -963,7 +962,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
 extension MarkAttendenceVC: UIPopoverPresentationControllerDelegate {
     func showPopover(from sender: UIView, contentVC: UIViewController) {
         contentVC.modalPresentationStyle = .popover
-        contentVC.preferredContentSize = CGSize(width: 180, height: 220)
+        contentVC.preferredContentSize = CGSize(width: 180, height: 225)
         
         if let popover = contentVC.popoverPresentationController {
             popover.sourceView = sender
