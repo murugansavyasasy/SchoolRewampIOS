@@ -447,6 +447,7 @@
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
 		8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8494B6642CD1EC8D004B0746 /* TapBarVC.xib */; };
 		849507312DAE3EDD004343C4 /* loader (2).json in Resources */ = {isa = PBXBuildFile; fileRef = 849507302DAE3EDD004343C4 /* loader (2).json */; };
+		849714622EC70D4400AA24F8 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 849714612EC70D4400AA24F8 /* MarqueeLabel */; };
 		8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757072D2BA575006A27FD /* Std_Grp_header.swift */; };
 		8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757052D2BA575006A27FD /* RecipientTvCell.swift */; };
 		849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849757062D2BA575006A27FD /* RecipientTvCell.xib */; };
@@ -1854,6 +1855,7 @@
 				84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */,
 				FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */,
 				365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */,
+				849714622EC70D4400AA24F8 /* MarqueeLabel in Frameworks */,
 				84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */,
 				842F95CC2D85606E007A4A98 /* Kingfisher in Frameworks */,
 				841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */,
@@ -4303,6 +4305,7 @@
 				842F95CB2D85606E007A4A98 /* Kingfisher */,
 				841ACC9B2DA50C7A00326D52 /* Lottie */,
 				FACD4D692E30BE6D0084B125 /* FSCalendar */,
+				849714612EC70D4400AA24F8 /* MarqueeLabel */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* School Chimes.app */;
@@ -4391,6 +4394,7 @@
 				842F95CA2D85606E007A4A98 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				841ACC9A2DA50C7A00326D52 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				FACD4D682E30BE6D0084B125 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -5928,6 +5932,14 @@
 				minimumVersion = 5.20.0;
 			};
 		};
+		849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.3;
+			};
+		};
 		FACD4D682E30BE6D0084B125 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
@@ -5958,6 +5970,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 84759C612CEDE02400E7D367 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImageMapKit;
+		};
+		849714612EC70D4400AA24F8 /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
 		};
 		FACD4D692E30BE6D0084B125 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -13,8 +13,8 @@ class GenderDistriTvcel: UITableViewCell {
     @IBOutlet weak var girlsLbl: UILabel!
     @IBOutlet weak var boysLbl: UILabel!
     @IBOutlet weak var boysProgress: UIProgressView!
-    var  totalBoys : String?
-    var totalGirls : String?
+    var  total_students : String?
+    var total_staff : String?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
