@@ -22,7 +22,8 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
         view.layer.cornerRadius = 14
         view.clipsToBounds = true
-        
+        listTable.showsHorizontalScrollIndicator = false
+        listTable.showsVerticalScrollIndicator = false
         listTable.register(UINib(nibName: "PopoverTVC", bundle: nil), forCellReuseIdentifier: "PopoverTVC")
         listTable.delegate = self
         listTable.dataSource = self
@@ -92,5 +93,8 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     // MARK: - Row Height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 30
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true)
     }
 }
