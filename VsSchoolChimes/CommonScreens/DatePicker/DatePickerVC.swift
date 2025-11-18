@@ -99,7 +99,6 @@ class DatePickerVC: UIViewController {
     }
     
     func updateFormattedDate() {
-        
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
         let locale = Locale(identifier: normalizedCode)
@@ -124,20 +123,5 @@ class DatePickerVC: UIViewController {
         dismiss(animated: false)
     }
     
-    func normalizedLocaleIdentifier(for code: String) -> String {
-        // First, try as-is (e.g., "ta-IN")
-        if Locale.availableIdentifiers.contains(code) {
-            return code
-        }
-        
-        // Otherwise, fallback to just the language part (e.g., "ta")
-        if let langCode = code.split(separator: "-").first,
-           Locale.availableIdentifiers.contains(String(langCode)) {
-            return String(langCode)
-        }
-        
-        // Default to English if nothing matches
-        return "en"
-    }
 }
 

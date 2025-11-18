@@ -219,6 +219,22 @@
 "Oct" = "ต.ค.";
 "Nov" = "พ.ย.";
 "Dec" = "ธ.ค.";
+// MARK: LSRW Page
+"Listening" = "การฟัง";
+"Speaking" = "การพูด";
+"Reading" = "การอ่าน";
+"Writing" = "การเขียน";
+
+"Completed Tasks" = "งานที่เสร็จสมบูรณ์";
+"Active Tasks" = "งานที่กำลังดำเนินการ";
+"Dashboard Overview" = "ภาพรวมแดชบอร์ด";
+"New Task" = " งานใหม่";
+
+"All" = "ทั้งหมด";
+"Completed" = "เสร็จสมบูรณ์";
+"Pending" = "รอดำเนินการ";
+
+
 
 // MARK: settings page
 "general" = "ทั่วไป";

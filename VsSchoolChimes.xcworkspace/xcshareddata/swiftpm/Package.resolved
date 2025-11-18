@@ -1,5 +1,5 @@
 {
-  "originHash" : "2a2e50285e755fbb9cca78994cd87244c7f71b3c2deac94714253bbdfb7db097",
+  "originHash" : "ab3b4c0b4c6eb2ea9f9c2e8f5f267566abf34a456c6284acff8d24a29da9f610",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "047aa81b77adcbf583a966dfef620d17650cc656",
         "version" : "4.5.1"
+      }
+    },
+    {
+      "identity" : "marqueelabel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cbpowell/MarqueeLabel",
+      "state" : {
+        "revision" : "c6b4da400c00dfd5db7a4f6e4915ca531d95fc49",
+        "version" : "4.5.3"
       }
     },
     {

@@ -221,6 +221,21 @@
 "Nov" = "Nov";
 "Dec" = "Dec";
 
+// MARK: LSRW Page
+"Listening" = "Listening";
+"Speaking" = "Speaking";
+"Reading" = "Reading";
+"Writing" = "Writing";
+
+"Completed Tasks" = "Completed Tasks";
+"Active Tasks" = "Active Tasks";
+"Dashboard Overview" = "Dashboard Overview";
+"New Task" = " New Task";
+
+"All" = "All";
+"Completed" = "Completed";
+"Pending" = "Pending";
+
 // MARK: Settings page
 "general" = "General";
 "notifications" = "Notifications";

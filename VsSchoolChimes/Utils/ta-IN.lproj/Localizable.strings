@@ -220,6 +220,22 @@
 "Oct" = "அக்";
 "Nov" = "நவ்";
 "Dec" = "டிச";
+// MARK: LSRW Page
+"Listening" = "கேட்குதல்";
+"Speaking" = "பேசுதல்";
+"Reading" = "வாசித்தல்";
+"Writing" = "எழுத்து";
+
+"Completed Tasks" = "முடிக்கப்பட்ட பணிகள்";
+"Active Tasks" = "செயலில் உள்ள பணிகள்";
+"Dashboard Overview" = "டாஷ்போர்டு கண்ணோட்டம்";
+"New Task" = " புதிய பணி";
+
+"All" = "அனைத்தும்";
+"Completed" = "முடிந்தது";
+"Pending" = "நிலுவையில்";
+
+
 
 // MARK: Settings page
 "general" = "பொது";

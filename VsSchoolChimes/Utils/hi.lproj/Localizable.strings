@@ -246,6 +246,19 @@
 "Nov" = "नव";
 "Dec" = "दिस";
 
+// MARK: LSRW Page
+"Listening" = "सुनना";
+"Speaking" = "बोलना";
+"Reading" = "पढ़ना";
+"Writing" = "लिखना";
+"Completed Tasks" = "पूर्ण किए गए कार्य";
+"Active Tasks" = "सक्रिय कार्य";
+"Dashboard Overview" = "डैशबोर्ड अवलोकन";
+"New Task" = " नया कार्य";
+"All" = "सभी";
+"Completed" = "पूर्ण";
+"Pending" = "लंबित";
+
 
 // MARK: Dashboard
 "discussion" = "चर्चा";

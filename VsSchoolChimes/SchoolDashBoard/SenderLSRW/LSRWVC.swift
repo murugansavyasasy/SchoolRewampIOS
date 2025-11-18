@@ -55,7 +55,6 @@ class LSRWVC: UIViewController, FilterDelegate {
         completedTask.removeAll()
         recentTasks.removeAll()
         filterTask.removeAll()
-        print("✅ LSRWVC deallocated")
     }
 
     // MARK: - Table Setup
@@ -190,7 +189,7 @@ class LSRWVC: UIViewController, FilterDelegate {
             let vc = LSRWSubmissionVC()
             vc.modalPresentationStyle = .fullScreen
             vc.report = activeTask
-            vc.btnTitle = "Active Task"
+            vc.btnTitle = "Active Tasks".translated()
             present(vc, animated: true)
         case 1:
             let vc = SelectedLSRWSubmissionVC()
@@ -200,7 +199,7 @@ class LSRWVC: UIViewController, FilterDelegate {
             let vc = LSRWSubmissionVC()
             vc.modalPresentationStyle = .fullScreen
             vc.report = completedTask
-            vc.btnTitle = "Completed Task"
+            vc.btnTitle = "Completed Tasks".translated()
             present(vc, animated: true)
         default:
             print("Navigate index: \(index)")
@@ -279,7 +278,7 @@ extension LSRWVC {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
-        button.setTitle(" New Task", for: .normal)
+        button.setTitle("New Task".translated(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         button.backgroundColor = .systemBlue
@@ -310,7 +309,7 @@ extension LSRWVC {
 
         switch sectionData {
         case .overview:
-            titleLabel.text = "Dashboard Overview"
+            titleLabel.text = "Dashboard Overview".translated()
             let newTaskButton = createNewTaskButton()
             headerView.addSubview(newTaskButton)
             newTaskButton.translatesAutoresizingMaskIntoConstraints = false
@@ -323,9 +322,9 @@ extension LSRWVC {
         case .filterArray:
             titleLabel.text = ""
         case .active:
-            titleLabel.text = "Active Tasks"
+            titleLabel.text = "Active Tasks".translated()
         case .completed:
-            titleLabel.text = "Completed Tasks"
+            titleLabel.text = "Completed Tasks".translated()
         }
 
         return headerView

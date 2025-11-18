@@ -1040,7 +1040,16 @@ class LocalizationButton: UIButton {
          self.setTitle(key.translated(), for: .normal)
      }
 }
-
+func normalizedLocaleIdentifier(for code: String) -> String {
+    if Locale.availableIdentifiers.contains(code) {
+        return code
+    }
+    if let langCode = code.split(separator: "-").first,
+       Locale.availableIdentifiers.contains(String(langCode)) {
+        return String(langCode)
+    }
+    return "en"
+}
 class LocalizationLabel: UILabel {
 
     @IBInspectable var localizationKey: String? {
