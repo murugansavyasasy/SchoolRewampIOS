@@ -12,8 +12,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var noOfQuestionDefaultLbl: UILabel!
     @IBOutlet weak var descrptionDefaultLbl: UILabel!
     @IBOutlet weak var titleDefaultLbl: UILabel!
-//    @IBOutlet weak var headerView: UIView!
-//    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var numberOfQuestionText: UITextField!
     @IBOutlet weak var discriptionsTextFild: UITextView!
@@ -22,33 +20,26 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var checkBox: UIView!
     @IBOutlet weak var checkBoxImage: UIImageView!
     @IBOutlet weak var nextBtn: UIButton!
-    
-    var initialHeight : CGFloat = 60
-    var maxHeight : CGFloat = 300
+
+    var initialHeight: CGFloat = 60
+    var maxHeight: CGFloat = 300
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectNotice: SelectNotice?
-    var IsChecked = false
+    var isChecked = false
     var placeholderLabel: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         fullView.layer.cornerRadius = 10
         titleText.delegate = self
         discriptionsTextFild.delegate = self
-        
-//        backBtn
-//            .configureAsBackButton(
-//                firstLine: MenuStringFile.selectedMenuName,
-//                secondLine: staffDetails?.school_name ?? ""
-//            )
         titleText.addDoneButton()
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
         numberOfQuestionText.keyboardType = .numberPad
         setupPlaceholder()
-       
-        noOfQuestionDefaultLbl
-            .setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
+        
+        noOfQuestionDefaultLbl.setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
         titleDefaultLbl.setRequiredText(MenuStringFile.Title)
         descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
         
@@ -57,107 +48,80 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         
         checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
         checkBox.isUserInteractionEnabled = true
-        
-        // Do any additional setup after loading the view.
     }
-    
+
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description
         placeholderLabel.font = discriptionsTextFild.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
         discriptionsTextFild.applyRightTxt()
         discriptionsTextFild.applyRightTxt(with: placeholderLabel)
         discriptionsTextFild.addSubview(placeholderLabel)
-        discriptionsTextFild.isHidden = !discriptionsTextFild.text.isEmpty // Hide if text exists
+        placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
     }
-    
+
     @IBAction func backBtnAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
+
     @IBAction func viewHistory(_ sender: UIButton) {
         let vc = ReportsQuizVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true)
+        present(vc, animated: true)
     }
-    @IBAction func checkboxAct(){
-        
-        IsChecked.toggle()
-        if IsChecked {
-            checkBoxImage.image = UIImage(systemName: "checkmark.circle.fill")
-        }else{
-            checkBoxImage.image = UIImage(systemName: "circle")
-        }
+
+    @IBAction func checkboxAct() {
+        isChecked.toggle()
+        checkBoxImage.image = UIImage(
+            systemName: isChecked ? "checkmark.circle.fill" : "circle"
+        )
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
-//        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
-        
         let size = textView.contentSize
-        
-        // Check if the content exceeds the initial height
         if size.height > initialHeight {
-            // Update the height constraint based on content size
-            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
-            textViewHeightConstraint.constant = newHeight
+            textViewHeightConstraint.constant = min(size.height, maxHeight)
         }
-        
         placeholderLabel.isHidden = !textView.text.isEmpty
-        
-        // Animate the change for smoother UI
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        
-        // Scroll to make the UITextView visible
-//        scrollToView(textView)
     }
 
     @IBAction func createQuizBtnAct(_ sender: UIButton) {
-        
-       
-        // Trim and validate inputs
-        guard let title = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty,
-              let description = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines), !description.isEmpty,
-              let questionCountText = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines), !questionCountText.isEmpty,
-              let questionCount = Int(questionCountText), questionCount > 0
+        let trimmedTitle = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trimmedDescription = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trimmedQuestionCount = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        guard !trimmedTitle.isEmpty,
+              !trimmedDescription.isEmpty,
+              let questionCount = Int(trimmedQuestionCount), questionCount > 0
         else {
-            
-            let alert  = CustomAlert()
-            alert
-                .showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Please_fill,
-                    on: self
-                )
+            CustomAlert().showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Please_fill,
+                on: self
+            )
             return
         }
 
-        // ✅ Inputs are valid
-        print("Title: \(title), Description: \(description), Count: \(questionCount)")
+        print("Title: \(trimmedTitle), Description: \(trimmedDescription), Count: \(questionCount)")
 
-        
-        
         let params: [String: Any] = [
-            "title": titleText.text ?? "",
-            "description": discriptionsTextFild.text ?? "",
-            "no_of_question" : Int(numberOfQuestionText.text ?? "0") ?? 0,
+            "title": trimmedTitle,
+            "description": trimmedDescription,
+            "no_of_question": questionCount,
             "level": user_inputs.level,
-            "level_flag" : IsChecked
+            "level_flag": isChecked
         ]
-        
-//        let vc = QuizSubmissionVc(nibName: nil, bundle: nil)
+
         let vc = RecipientVc(nibName: nil, bundle: nil)
         vc.ScreenType = Menu_id.quiz
         vc.Common_request_params = params
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-
-        
     }
-   
-
 }
