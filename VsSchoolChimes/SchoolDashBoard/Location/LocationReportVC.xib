@@ -17,6 +17,7 @@
                 <outlet property="SelectYearDropdownView" destination="ksp-rv-kdN" id="TpN-MR-KWa"/>
                 <outlet property="Tv" destination="086-G3-ee4" id="vbF-GB-OZ9"/>
                 <outlet property="YearLbl" destination="V5M-hC-yQl" id="u6F-Lt-zdc"/>
+                <outlet property="agandaStack" destination="mKt-CS-3St" id="Wci-Pw-E16"/>
                 <outlet property="noRecdStackView" destination="L6S-fi-vLY" id="gcr-ex-Ie2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -103,68 +104,73 @@
                                         </view>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="ldU-l8-APj">
-                                    <rect key="frame" x="0.0" y="48" width="363" height="20"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mKt-CS-3St">
+                                    <rect key="frame" x="0.0" y="48" width="363" height="80"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89b-oH-EWf">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
-                                            <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="ldU-l8-APj">
+                                            <rect key="frame" x="0.0" y="0.0" width="363" height="20"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89b-oH-EWf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" id="5mt-rs-eJz"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FD: Full Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhb-KE-YFo">
+                                                    <rect key="frame" x="15" y="0.0" width="348" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="width" id="5mt-rs-eJz"/>
+                                                <constraint firstAttribute="height" constant="20" id="SUn-8J-mBB"/>
                                             </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FD: Full Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhb-KE-YFo">
-                                            <rect key="frame" x="15" y="0.0" width="348" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="SUn-8J-mBB"/>
-                                    </constraints>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="UfI-9a-C64">
-                                    <rect key="frame" x="0.0" y="78" width="363" height="20"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UtV-79-oMQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
-                                            <color key="backgroundColor" systemColor="systemMintColor"/>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="UfI-9a-C64">
+                                            <rect key="frame" x="0.0" y="30" width="363" height="20"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UtV-79-oMQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
+                                                    <color key="backgroundColor" systemColor="systemMintColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" id="uIj-CK-fPA"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FH: First Half ( morning session)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lye-wK-YcT">
+                                                    <rect key="frame" x="15" y="0.0" width="348" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="width" id="uIj-CK-fPA"/>
+                                                <constraint firstAttribute="height" constant="20" id="Xs4-Rt-3aN"/>
                                             </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FH: First Half ( morning session)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lye-wK-YcT">
-                                            <rect key="frame" x="15" y="0.0" width="348" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="Xs4-Rt-3aN"/>
-                                    </constraints>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="fm9-0X-AvU">
-                                    <rect key="frame" x="0.0" y="108" width="363" height="20"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oee-5v-ypv">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
-                                            <color key="backgroundColor" systemColor="systemMintColor"/>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="fm9-0X-AvU">
+                                            <rect key="frame" x="0.0" y="60" width="363" height="20"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oee-5v-ypv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
+                                                    <color key="backgroundColor" systemColor="systemMintColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" id="efC-hx-kou"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SH: Second Half (afternoon session)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Oy-h8-Klc">
+                                                    <rect key="frame" x="15" y="0.0" width="348" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="width" id="efC-hx-kou"/>
+                                                <constraint firstAttribute="height" constant="20" id="jTh-p5-csP"/>
                                             </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SH: Second Half (afternoon session)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Oy-h8-Klc">
-                                            <rect key="frame" x="15" y="0.0" width="348" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        </stackView>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="jTh-p5-csP"/>
-                                    </constraints>
                                 </stackView>
                             </subviews>
                         </stackView>

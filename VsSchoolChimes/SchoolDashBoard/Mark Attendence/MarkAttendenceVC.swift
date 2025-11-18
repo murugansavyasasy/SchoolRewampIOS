@@ -8,11 +8,14 @@
 import UIKit
 import DropDown
 import FSCalendar
+import MarqueeLabel
 
 @available(iOS 14.0, *)
 class MarkAttendenceVC: UIViewController {
     
   
+    
+    @IBOutlet weak var scrollingLbl: MarqueeLabel!
     @IBOutlet weak var searchImage: UIImageView!
     @IBOutlet weak var noSearchDataLbl: UILabel!
     @IBOutlet weak var LatePresentageLbl: UILabel!
@@ -74,8 +77,8 @@ class MarkAttendenceVC: UIViewController {
     let SectionDropdown = DropDown()
     let AcademicDropdown = DropDown()
     let StaffDetails = UserDefaultFileManager.get_staff_Details()
-    var attendenceReport : [AttenenceReportData]?
-    var FilteredReport : [AttenenceReportData]?
+    var attendenceReport : [AttendanceDataList]?
+    var FilteredReport : [AttendanceDataList]?
     var academicYearData : [AcadimicYearData]?
     var StandardData : [StandardDetail]?
     var SectionData : [sectionsDetail]?
@@ -135,6 +138,34 @@ class MarkAttendenceVC: UIViewController {
 
     }
     
+    func startContinuousMarquee(_ label: UILabel, speed: Double = 40) {
+
+        label.layer.removeAllAnimations()
+
+        let textWidth = label.intrinsicContentSize.width
+        let labelWidth = label.bounds.width
+
+        // If text fits inside, no scroll
+        if textWidth <= labelWidth { return }
+
+        // Place label starting at X = 0
+        label.frame.origin.x = 0
+
+        let totalDistance = textWidth + labelWidth
+        let duration = totalDistance / speed   // speed = pts per second
+
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       options: [.curveLinear, .repeat],
+                       animations: {
+
+            // Move fully to the left & off screen
+            label.frame.origin.x = -textWidth
+
+        }, completion: nil)
+    }
+
+
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -310,16 +341,15 @@ class MarkAttendenceVC: UIViewController {
     @IBAction func InfoBtnAct(_ sender: UIButton) {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
             
-            popoverVC.configureButtons(with: [
-                ("FN", "ForeNoon", .black),
-                ("FN","ForeNoon", .black),
-                ("P", "Present", .systemGreen),
-                ("A", "Absent", .systemRed),
-                ("OD", "On Duty", .systemBlue),
-                ("LA", "Late", .systemOrange),
-                ("-", "Not Taken", .systemGray)
-            ], type: .badge)
-            
+        popoverVC.configureButtons(with: [
+            ("FN", "ForeNoon", .blue),
+            ("AN", "AfterNoon", .blue),
+            ("P",  "Present", .systemGreen),
+            ("A",  "Absent", .systemRed),
+            ("OD", "On Duty", .systemBlue),
+            ("LA", "Late", .systemOrange),
+            ("-",  "Not Taken", .systemGray)
+        ], type: .badge)
             showPopover(from: sender, contentVC: popoverVC)
     }
 
@@ -645,22 +675,27 @@ class MarkAttendenceVC: UIViewController {
         APIService.shared.makeApi(url: ServiceUrl.attendance_student_attendance_report, parameters: Param, type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result<AttendanceReportResponse,Error>) in
             
             switch result {
-                
             case .success(let successMessage):
-                
                 if successMessage.status == true {
                     DispatchQueue.main.async { [self] in
-                        attendenceReport = successMessage.data
+                        attendenceReport = successMessage.data?.first?.attd_report ?? []
                         FilteredReport = attendenceReport
-                        
                         reportFullView.isHidden = false
                         notTakenView.isHidden = true
-                        
-                        
-                    
+                        scrollingLbl.isHidden = true
+                        if let message = successMessage.data?.first?.holiday_message,
+                           !message.isEmpty {
+                            DispatchQueue.main.async { [self] in
+                                scrollingLbl.isHidden = false
+                                scrollingLbl.type = .continuous
+                                   scrollingLbl.speed = .duration(18.0)   // Slower scroll
+                                   scrollingLbl.fadeLength = 10.0
+                                   scrollingLbl.trailingBuffer = 30.0
+                                   scrollingLbl.text = "📢Important Note: " + message
+                            }
+                        }
+
                         updateAttendancePercentages()
-                        
-                        
                         // ✅ Table reload
                         TV.isHidden = false
                         reportFullView.isHidden = false
@@ -674,8 +709,7 @@ class MarkAttendenceVC: UIViewController {
                 }else {
                     
                     DispatchQueue.main.async { [self] in
-                        
-                        attendenceReport = successMessage.data
+                        attendenceReport = successMessage.data?.first?.attd_report ?? []
                         FilteredReport = attendenceReport
                         reportFullView.isHidden = true
                         notTakenView.isHidden = false
@@ -963,7 +997,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
 extension MarkAttendenceVC: UIPopoverPresentationControllerDelegate {
     func showPopover(from sender: UIView, contentVC: UIViewController) {
         contentVC.modalPresentationStyle = .popover
-        contentVC.preferredContentSize = CGSize(width: 180, height: 220)
+        contentVC.preferredContentSize = CGSize(width: 180, height: 225)
         
         if let popover = contentVC.popoverPresentationController {
             popover.sourceView = sender

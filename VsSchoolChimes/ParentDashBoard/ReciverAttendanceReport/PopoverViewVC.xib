@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopoverViewVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="overallStack" destination="Uw9-nx-YuQ" id="RDC-1C-c9D"/>
+                <outlet property="listTable" destination="0dh-ph-Uwd" id="MH5-SB-0kz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,30 +20,18 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="40d-b3-NCD">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0dh-ph-Uwd">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Uw9-nx-YuQ">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
-                        </stackView>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="Uw9-nx-YuQ" secondAttribute="trailing" id="EIj-za-XZc"/>
-                        <constraint firstItem="Uw9-nx-YuQ" firstAttribute="leading" secondItem="40d-b3-NCD" secondAttribute="leading" id="IkY-mJ-91M"/>
-                        <constraint firstAttribute="bottom" secondItem="Uw9-nx-YuQ" secondAttribute="bottom" constant="10" id="J64-d2-JaJ"/>
-                        <constraint firstItem="Uw9-nx-YuQ" firstAttribute="width" secondItem="40d-b3-NCD" secondAttribute="width" id="Mbu-ub-bWX"/>
-                        <constraint firstItem="Uw9-nx-YuQ" firstAttribute="top" secondItem="40d-b3-NCD" secondAttribute="top" constant="10" id="gjL-kv-Quz"/>
-                    </constraints>
-                </scrollView>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="40d-b3-NCD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MyW-oi-AEa"/>
-                <constraint firstItem="40d-b3-NCD" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="PzZ-hK-qZh"/>
-                <constraint firstItem="40d-b3-NCD" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="RJR-Nw-Fg7"/>
-                <constraint firstItem="40d-b3-NCD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nNB-Yp-kO7"/>
+                <constraint firstItem="0dh-ph-Uwd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="O4M-Aq-zOS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0dh-ph-Uwd" secondAttribute="bottom" id="gwE-hf-5vZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0dh-ph-Uwd" secondAttribute="trailing" id="n6q-BV-uoM"/>
+                <constraint firstItem="0dh-ph-Uwd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="q6S-kb-sjL"/>
             </constraints>
             <point key="canvasLocation" x="-66.412213740458014" y="19.718309859154932"/>
         </view>

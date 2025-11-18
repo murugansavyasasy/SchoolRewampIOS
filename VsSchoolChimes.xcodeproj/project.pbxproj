@@ -377,6 +377,8 @@
 		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
 		846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */; };
 		846E7FAD2E2785CC00BC954B /* AudioPlayerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846E7FAA2E2785CC00BC954B /* AudioPlayerTVC.swift */; };
+		846F65D72ECB3127007DFCB1 /* PopoverTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F65D52ECB3127007DFCB1 /* PopoverTVC.swift */; };
+		846F65D82ECB3127007DFCB1 /* PopoverTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846F65D62ECB3127007DFCB1 /* PopoverTVC.xib */; };
 		8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */; };
 		8474CB9E2D9A6D0400DA0951 /* RecipientVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */; };
 		8474CBA22D9A6F6000DA0951 /* RecipientCVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */; };
@@ -445,6 +447,7 @@
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
 		8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8494B6642CD1EC8D004B0746 /* TapBarVC.xib */; };
 		849507312DAE3EDD004343C4 /* loader (2).json in Resources */ = {isa = PBXBuildFile; fileRef = 849507302DAE3EDD004343C4 /* loader (2).json */; };
+		849714622EC70D4400AA24F8 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 849714612EC70D4400AA24F8 /* MarqueeLabel */; };
 		8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757072D2BA575006A27FD /* Std_Grp_header.swift */; };
 		8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757052D2BA575006A27FD /* RecipientTvCell.swift */; };
 		849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849757062D2BA575006A27FD /* RecipientTvCell.xib */; };
@@ -1298,6 +1301,8 @@
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
 		846E7FAA2E2785CC00BC954B /* AudioPlayerTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTVC.swift; sourceTree = "<group>"; };
 		846E7FAB2E2785CC00BC954B /* AudioPlayerTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPlayerTVC.xib; sourceTree = "<group>"; };
+		846F65D52ECB3127007DFCB1 /* PopoverTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTVC.swift; sourceTree = "<group>"; };
+		846F65D62ECB3127007DFCB1 /* PopoverTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverTVC.xib; sourceTree = "<group>"; };
 		8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientVc.swift; sourceTree = "<group>"; };
 		8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientVc.xib; sourceTree = "<group>"; };
 		8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientCVcell.swift; sourceTree = "<group>"; };
@@ -1850,6 +1855,7 @@
 				84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */,
 				FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */,
 				365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */,
+				849714622EC70D4400AA24F8 /* MarqueeLabel in Frameworks */,
 				84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */,
 				842F95CC2D85606E007A4A98 /* Kingfisher in Frameworks */,
 				841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */,
@@ -3059,6 +3065,8 @@
 				FAD5DADA2E3B263F00A3CE97 /* NewAttendanceReportVC.xib */,
 				84C08C662EB396E9009F657B /* PopoverViewVC.swift */,
 				84C08C672EB396E9009F657B /* PopoverViewVC.xib */,
+				846F65D52ECB3127007DFCB1 /* PopoverTVC.swift */,
+				846F65D62ECB3127007DFCB1 /* PopoverTVC.xib */,
 			);
 			path = ReciverAttendanceReport;
 			sourceTree = "<group>";
@@ -4297,6 +4305,7 @@
 				842F95CB2D85606E007A4A98 /* Kingfisher */,
 				841ACC9B2DA50C7A00326D52 /* Lottie */,
 				FACD4D692E30BE6D0084B125 /* FSCalendar */,
+				849714612EC70D4400AA24F8 /* MarqueeLabel */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* School Chimes.app */;
@@ -4385,6 +4394,7 @@
 				842F95CA2D85606E007A4A98 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				841ACC9A2DA50C7A00326D52 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				FACD4D682E30BE6D0084B125 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -4451,6 +4461,7 @@
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
 				8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */,
 				8451EC932E24E55B00D6DBB4 /* CalanderDateCVC.xib in Resources */,
+				846F65D82ECB3127007DFCB1 /* PopoverTVC.xib in Resources */,
 				8451EC942E24E55B00D6DBB4 /* HolidayVC.xib in Resources */,
 				8411006D2E9662C600B17BD7 /* PriorityStudentTVC.xib in Resources */,
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
@@ -5383,6 +5394,7 @@
 				84BCE91F2EA12654002C8068 /* LblTvCell.swift in Sources */,
 				84D1FF1C2D4CE00A003ACC04 /* ParentDashboardVc.swift in Sources */,
 				84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */,
+				846F65D72ECB3127007DFCB1 /* PopoverTVC.swift in Sources */,
 				843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */,
 				FA3B30022E2F8BD6003B6E6D /* TotalMarkTvCell.swift in Sources */,
 				8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */,
@@ -5920,6 +5932,14 @@
 				minimumVersion = 5.20.0;
 			};
 		};
+		849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.3;
+			};
+		};
 		FACD4D682E30BE6D0084B125 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
@@ -5950,6 +5970,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 84759C612CEDE02400E7D367 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImageMapKit;
+		};
+		849714612EC70D4400AA24F8 /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
 		};
 		FACD4D692E30BE6D0084B125 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;

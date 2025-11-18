@@ -1,142 +1,100 @@
 //
-//  PopoverViewVC.swift
-//  School Chimes
+// PopoverViewVC.swift
+// School Chimes
 //
-//  Created by Chandhru on 30/10/25.
+// Created by Chandhru on 30/10/25.
 //
 
 import UIKit
 
-class PopoverViewVC: UIViewController {
-    @IBOutlet weak var overallStack: UIStackView!
-
+class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var listTable: UITableView!
+    
     enum PopoverType { case badge, symbol }
-
+    
     private var configData: [(symbol: String, title: String, color: UIColor)]?
     private var configType: PopoverType?
-
+    
     var itemCount: Int { configData?.count ?? 0 }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.cornerRadius = 14
         view.clipsToBounds = true
-        
-        if let data = configData, let type = configType {
-            setupButtons(with: data, type: type)
-        }
+        listTable.showsHorizontalScrollIndicator = false
+        listTable.showsVerticalScrollIndicator = false
+        listTable.register(UINib(nibName: "PopoverTVC", bundle: nil), forCellReuseIdentifier: "PopoverTVC")
+        listTable.delegate = self
+        listTable.dataSource = self
     }
-
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        
-//        // Force layout pass
-//        view.layoutIfNeeded()
-//        
-//        // Measure actual height the stack wants
-//        let targetWidth = view.bounds.width
-//        let fittingSize = overallStack.systemLayoutSizeFitting(
-//            CGSize(width: 250, height: UIView.layoutFittingCompressedSize.height),
-//            withHorizontalFittingPriority: .required,
-//            verticalFittingPriority: .fittingSizeLevel
-//        )
-//        
-//        // Add small padding, and cap at max height
-//        let maxHeight: CGFloat = 400
-//        let finalHeight = min(fittingSize.height + 16, maxHeight)
-//        
-//        // Update popover size *after* layout
-//        if preferredContentSize.height != finalHeight {
-//            preferredContentSize = CGSize(width: targetWidth, height: finalHeight)
-//            
-//            // 🔥 Force the popover controller to refresh layout
-//            if let popover = presentationController?.presentedView {
-//                popover.setNeedsLayout()
-//                popover.layoutIfNeeded()
-//            }
-//        }
-//        
-//        print("✅ Stack calculated height:", fittingSize.height)
-//    }
-
-
-
-    func configureButtons(with data: [(symbol: String, title: String, color: UIColor)], type: PopoverType) {
+    
+    // MARK: - Configure From Parent VC
+    func configureButtons(
+        with data: [(symbol: String, title: String, color: UIColor)],
+        type: PopoverType
+    ) {
         self.configData = data
         self.configType = type
         
         if isViewLoaded {
-            setupButtons(with: data, type: type)
+            listTable.reloadData()
         }
     }
-
-    private func setupButtons(with data: [(symbol: String, title: String, color: UIColor)], type: PopoverType) {
-        overallStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    
+    // MARK: - TableView Datasource
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return itemCount
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         
-        for item in data {
-            let hStack = UIStackView()
-            hStack.axis = .horizontal
-            hStack.alignment = .center
-            hStack.spacing = 10
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "PopoverTVC",
+            for: indexPath
+        ) as! PopoverTVC
+        
+        guard let item = configData?[indexPath.row],
+              let type = configType else { return cell }
+        
+        cell.tittleLbl.text = item.title
+        
+        switch type {
+        case .badge:
+            cell.iconImg.isHidden = true
+            cell.iconBtn.isHidden = item.symbol.isEmpty
+            cell.iconBtn.setTitle(item.symbol, for: .normal)
+            cell.iconBtn.titleLabel?.font = .boldSystemFont(ofSize: 13)
+            cell.iconBtn.backgroundColor = item.color
+            cell.iconBtn.layer.cornerRadius = 8
+            cell.iconBtn.clipsToBounds = true
             
-            let iconView = UIView()
-            iconView.translatesAutoresizingMaskIntoConstraints = false
-
-            switch type {
-            case .badge:
-                let label = UILabel()
-                label.text = item.symbol
-                label.textAlignment = .center
-                label.textColor = .white
-                label.font = .boldSystemFont(ofSize: 13)
-                label.backgroundColor = item.color
-                label.layer.cornerRadius = 8
-                label.clipsToBounds = true
-                label.translatesAutoresizingMaskIntoConstraints = false
-                iconView.addSubview(label)
-                NSLayoutConstraint.activate([
-                    label.leadingAnchor.constraint(equalTo: iconView.leadingAnchor),
-                    label.trailingAnchor.constraint(equalTo: iconView.trailingAnchor),
-                    label.topAnchor.constraint(equalTo: iconView.topAnchor),
-                    label.bottomAnchor.constraint(equalTo: iconView.bottomAnchor),
-                    iconView.widthAnchor.constraint(equalToConstant: 32),
-                    iconView.heightAnchor.constraint(equalToConstant: 24)
-                ])
-
-            case .symbol:
-                let imageView = UIImageView()
-                let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
-                
-                if let systemImage = UIImage(systemName: item.symbol, withConfiguration: config) {
-                    imageView.image = systemImage
-                    imageView.tintColor = item.color
-                } else if let assetImage = UIImage(named: item.symbol) {
-                    imageView.image = assetImage
-                    imageView.tintColor = nil
-                }
-                
-                imageView.contentMode = .scaleAspectFit
-                imageView.translatesAutoresizingMaskIntoConstraints = false
-                iconView.addSubview(imageView)
-                NSLayoutConstraint.activate([
-                    imageView.centerXAnchor.constraint(equalTo: iconView.centerXAnchor),
-                    imageView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor),
-                    imageView.widthAnchor.constraint(equalToConstant: 24),
-                    imageView.heightAnchor.constraint(equalToConstant: 24),
-                    iconView.widthAnchor.constraint(equalToConstant: 28),
-                    iconView.heightAnchor.constraint(equalToConstant: 28)
-                ])
+        case .symbol:
+            cell.iconBtn.isHidden = true
+            cell.iconImg.isHidden = false
+            
+            let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
+            
+            if let sysImg = UIImage(systemName: item.symbol, withConfiguration: config) {
+                cell.iconImg.image = sysImg
+                cell.iconImg.tintColor = item.color
+            } else if let assetImg = UIImage(named: item.symbol) {
+                cell.iconImg.image = assetImg
+                cell.iconImg.tintColor = nil
             }
-            
-            let titleLabel = UILabel()
-            titleLabel.text = item.title
-            titleLabel.textColor = .label
-            titleLabel.font = .systemFont(ofSize: 15)
-            titleLabel.numberOfLines = 0
-            
-            hStack.addArrangedSubview(iconView)
-            hStack.addArrangedSubview(titleLabel)
-            overallStack.addArrangedSubview(hStack)
         }
+        
+        return cell
+    }
+    
+    // MARK: - Row Height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 30
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true)
     }
 }

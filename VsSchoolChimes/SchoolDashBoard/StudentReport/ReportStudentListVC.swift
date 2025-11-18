@@ -378,6 +378,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         sectionId = sectionsDetails?.first?.id
 //                        classId = ""
 //                        sectionId = ""
+                        searchBtn.isHidden = false
                         getStanderd.isHidden = true
                         noRecord = false
                         self.filterBtn.setTitle("All students", for: .normal)
@@ -392,6 +393,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         getStanderd.isHidden = true
                         self.filterBtn.setTitle("All students", for: .normal)
                         nodataImg.isHidden = false
+                        searchBtn.isHidden = true
                         nodataLbl.isHidden = false
                         nodataLbl.text = successMessage.message
                         FilterCV.isHidden = true
@@ -457,12 +459,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.FilterCV.isHidden = (self.filterStudent?.isEmpty ?? false)
                         self.GenderBtn.isHidden = (self.filterStudent?.isEmpty ?? false)
                         //self.reportSegment.isHidden = false
+                        self.searchBtn.isHidden = false
                         self.FilterCV.reloadData()
                     } else {
                         self.studentList = response.data
                         self.sortedStudent = response.data
                         self.filterStudent = response.data
-                        
+                        self.searchBtn.isHidden = true
                         self.nodataLbl.text = response.message
                         self.nodataLbl.isHidden = false
                         self.nodataImg.isHidden = false
@@ -606,36 +609,45 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         guard let sortedStudent = filterStudent else { return }
         
         switch selectedFilter {
-        case Sorting[0]:
-            filterStudent = sortedStudent.sorted {
-                $0.name.localizedCompare($1.name) == .orderedAscending
+            case Sorting[0]:   // Name A-Z
+                filterStudent = sortedStudent.sorted {
+                    $0.name.localizedCompare($1.name) == .orderedAscending
+                }
+                
+            case Sorting[1]:   // Name Z-A
+                filterStudent = sortedStudent.sorted {
+                    $0.name.localizedCompare($1.name) == .orderedDescending
+                }
+                
+            case Sorting[2]:   // Roll no ascending
+                filterStudent = sortedStudent.sorted {
+                    $0.roll_no < $1.roll_no
+                    
+                }
+                
+            case Sorting[3]:   // Roll no descending
+                filterStudent = sortedStudent.sorted {
+                    $0.roll_no > $1.roll_no
+                }
+
+            case Sorting[4]:   // Admission no ascending
+                filterStudent = sortedStudent.sorted {
+                    $0.admission_no.compare($1.admission_no,
+                                             options: [.numeric, .caseInsensitive]) == .orderedAscending
+                }
+
+            case Sorting[5]:   // Admission no descending
+                filterStudent = sortedStudent.sorted {
+                    $0.admission_no.compare($1.admission_no,
+                                             options: [.numeric, .caseInsensitive]) == .orderedDescending
+                }
+
+            default:
+                filterStudent = sortedStudent
             }
-        case Sorting[1]:
-            filterStudent = sortedStudent.sorted {
-                $0.name.localizedCompare($1.name) == .orderedDescending
-            }
-        case Sorting[2]:
-            filterStudent = sortedStudent.sorted {
-                $0.roll_no < $1.roll_no
-            }
-        case Sorting[3]:
-            filterStudent = sortedStudent.sorted {
-                $0.roll_no > $1.roll_no
-            }
-        case Sorting[4]:
-            filterStudent = sortedStudent.sorted {
-                $0.admission_no < $1.admission_no
-            }
-        case Sorting[5]:
-            filterStudent = sortedStudent.sorted {
-                $0.admission_no > $1.admission_no
-            }
-        default:
-            filterStudent = sortedStudent
-        }
-        
-        FilterCV.reloadData()
-        reportTable.reloadData()
+            
+            FilterCV.reloadData()
+            reportTable.reloadData()
     }
     
     

@@ -1503,7 +1503,27 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 
                 // Add segments from updated array
             
-            }else{
+            }
+            else if Menu_id.staffSelectedMenuId == Menu_id.lsrw{
+                switch staff_role {
+                case PriorityType.is_staff:
+                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    
+                case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                    if (staffDetailsCount?.count ?? 0) > 1 {
+                        self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    } else {
+                        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                    }
+                    
+                default:
+                    print("Unhandled staff role")
+                }
+                
+            }
+            
+            
+            else{
                 
                 switch staff_role {
                 case PriorityType.is_staff:

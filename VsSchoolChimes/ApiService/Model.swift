@@ -626,13 +626,17 @@ struct AttendanceReportResponse: Codable {
 }
 
 struct AttenenceReportData: Codable{
+    let holiday_message  : String?
+    let attd_report : [AttendanceDataList]?
+   
+}
+struct AttendanceDataList: Codable {
     let student_name: String?
     let admission_no: String?
     let att_status: String?
     let absent_on: String?
     let roll_no: String?
 }
-
 struct StudentStatisticsResponse: Codable {
     let status: Bool?
     let message: String?
