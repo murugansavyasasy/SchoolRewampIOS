@@ -11,7 +11,7 @@ protocol Searchable: AnyObject {
 import UIKit
 
 class ExamDetailsVC: UIViewController, Searchable {
-    
+
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
@@ -22,137 +22,153 @@ class ExamDetailsVC: UIViewController, Searchable {
     @IBOutlet weak var ExamMarksBtn: UIButton!
     @IBOutlet weak var ExamLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
-    
-    
-    let firstChildVC = ExamTmTblVCViewController(nibName: nil, bundle: nil)
-    let secondChildVC = ExameMarVC()
-    var currentChildVC: UIViewController?
+
+    // MARK: - Child VC Instances (created ONCE)
+    lazy var firstChildVC: ExamTmTblVCViewController = {
+        let vc = ExamTmTblVCViewController()
+        vc.delegate = self
+        return vc
+    }()
+
+    lazy var secondChildVC: ExameMarVC = {
+        let vc = ExameMarVC()
+        vc.delegate = self
+        return vc
+    }()
+
+    private var currentChildVC: UIViewController?
+
     var studentDetails = UserDefaultFileManager.get_child_Details()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
-        ExamLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
-        
+
+        setupUI()
+        loadInitialChild()
+    }
+
+    // MARK: - UI Setup
+    func setupUI() {
+        ExamLbl.configureAsBackTitle(
+            firstLine: studentDetails?.name ?? "",
+            secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+        )
+
         TimeTableBtn.setTitle(ExamStringFile.examTimetable, for: .normal)
         ExamMarksBtn.setTitle(ExamStringFile.examMarks, for: .normal)
-        TimeTableBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
-        ExamMarksBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
-        
-        addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
-        
+
+        NameLbl.text = studentDetails?.name ?? ""
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
+
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        NameLbl.text = studentDetails?.name ?? ""
-        
-        firstChildVC.delegate = self
-        secondChildVC.delegate = self
-        
-        currentChildVC = firstChildVC
-        add(asChildViewController: firstChildVC)
-        
+
+        addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
     }
-    
-    
+
+    func loadInitialChild() {
+        /// Load first VC only ONCE
+        currentChildVC = firstChildVC
+        addChild(firstChildVC)
+        firstChildVC.view.frame = PresentView.bounds
+        PresentView.addSubview(firstChildVC.view)
+        firstChildVC.didMove(toParent: self)
+    }
+
+    // MARK: - Underline Handling
     func addUnderline(to selectedButton: UIButton, unselectedButton: UIButton) {
-        // Remove underline from both buttons
-        [selectedButton, unselectedButton].forEach { button in
-            button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
-            button.tintColor = .black
+        // Remove old underline
+        [selectedButton, unselectedButton].forEach {
+            $0.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            $0.tintColor = .black
         }
-        
-        // Add underline to the selected button
-        selectedButton.tintColor = .systemBlue
+
+        // Add new underline
         let underline = UIView()
         underline.tag = 999
         underline.backgroundColor = .systemBlue
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
-        
+
         NSLayoutConstraint.activate([
             underline.heightAnchor.constraint(equalToConstant: 2),
             underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
             underline.trailingAnchor.constraint(equalTo: selectedButton.trailingAnchor),
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
+
+        selectedButton.tintColor = .systemBlue
     }
-    
+
+    // MARK: - SEARCH
     @IBAction func SearchIconAct(_ sender: Any) {
-        
-        if let childA = currentChildVC as? ExamTmTblVCViewController {
-            childA.searchBar.isHidden.toggle()
-        }
-        else if let childB = currentChildVC as? ExameMarVC {
-            childB.searchBar.isHidden.toggle()
-        }
-    }
-    
-    
-    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            transition(to: firstChildVC)
-        } else {
-            transition(to: secondChildVC)
-        }
-    }
-    
-    // Add a child view controller
-    func add(asChildViewController viewController: UIViewController) {
-        // Add Child View Controller
-        addChild(viewController)
-        
-        // Configure Child View
-        viewController.view.frame = PresentView.bounds
-        PresentView.addSubview(viewController.view)
-        
-        // Notify Child View Controller
-        viewController.didMove(toParent: self)
-    }
-    
-    // Transition between child view controllers with animation
-    func transition(to newVC: UIViewController) {
-        guard let currentVC = currentChildVC, newVC != currentVC else { return }
-        
-        currentVC.willMove(toParent: nil)
-        addChild(newVC)
-        newVC.view.frame = PresentView.bounds
-        
-        transition(from: currentVC, to: newVC, duration: 0.3, options: [.transitionCrossDissolve], animations: nil) { finished in
-            currentVC.removeFromParent()
-            newVC.didMove(toParent: self)
-            self.currentChildVC = newVC
-            
-            // ✅ Update parent's empty-state immediately based on current data
-            if let child = newVC as? ExamTmTblVCViewController {
-                self.childViewController(child, didUpdateDataIsEmpty: child.examDetails?.isEmpty ?? true)
-            } else if let child = newVC as? ExameMarVC {
-                self.childViewController(child, didUpdateDataIsEmpty: child.examList?.isEmpty ?? true)
-            }
+        if let tableVC = currentChildVC as? ExamTmTblVCViewController {
+            tableVC.searchBar.isHidden.toggle()
+        } else if let marksVC = currentChildVC as? ExameMarVC {
+            marksVC.searchBar.isHidden.toggle()
         }
     }
 
-    
-    @IBAction func BackAct(_ sender: Any) {
-        
-        dismiss(animated: true)
+    // MARK: - Segmented Control Action
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            switchToChild(firstChildVC)
+        default:
+            switchToChild(secondChildVC)
+        }
     }
-    
+
     @IBAction func TimetableBtnAct(_ sender: Any) {
-        
         addUnderline(to: TimeTableBtn, unselectedButton: ExamMarksBtn)
-        transition(to: firstChildVC)
+        switchToChild(firstChildVC)
     }
-    
+
     @IBAction func ExamMarkBtnAct(_ sender: Any) {
-        
         addUnderline(to: ExamMarksBtn, unselectedButton: TimeTableBtn)
-        transition(to: secondChildVC)
+        switchToChild(secondChildVC)
     }
-    
+
+    // MARK: - Memory-Safe Transition
+    func switchToChild(_ newVC: UIViewController) {
+        guard newVC !== currentChildVC else { return }
+
+        let oldVC = currentChildVC
+        currentChildVC = newVC
+
+        oldVC?.willMove(toParent: nil)
+        addChild(newVC)
+
+        newVC.view.frame = PresentView.bounds
+
+        // Smooth transition
+        transition(
+            from: oldVC!,
+            to: newVC,
+            duration: 0.3,
+            options: .transitionCrossDissolve,
+            animations: nil
+        ) { _ in
+            oldVC?.removeFromParent()
+            newVC.didMove(toParent: self)
+        }
+
+        // Update empty state
+        if let vc = newVC as? ExamTmTblVCViewController {
+            childViewController(vc, didUpdateDataIsEmpty: vc.examDetails?.isEmpty ?? true)
+        } else if let vc = newVC as? ExameMarVC {
+            childViewController(vc, didUpdateDataIsEmpty: vc.examList?.isEmpty ?? true)
+        }
+    }
+
+    // MARK: - Delegate method
     func childViewController(_ child: UIViewController, didUpdateDataIsEmpty isEmpty: Bool) {
-        
         searchBtn.isHidden = isEmpty
     }
-    
+
+    @IBAction func BackAct(_ sender: Any) {
+        dismiss(animated: true)
+    }
 }
+
+
