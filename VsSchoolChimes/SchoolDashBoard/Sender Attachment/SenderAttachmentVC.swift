@@ -31,7 +31,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     @IBOutlet weak var AddAttachmentsLbl: UILabel!
     @IBOutlet weak var letterscountLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
-    @IBOutlet weak var titleLbl: UILabel!
+    
+    @IBOutlet weak var titleLbl: LocalizationLabel!
     @IBOutlet weak var addphotosheight: NSLayoutConstraint!
     @IBOutlet weak var AssignmenttypeLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
@@ -111,6 +112,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         menuTitleLbl.text = "Create new " + MenuStringFile.selectedMenuName
         
+        chooseRecipientsBtn.setTitle(CommonStringFile.NEXT, for: .normal)
         if let id = editId,id != ""{
             menuTitleLbl.text = "Update Existing " + MenuStringFile.selectedMenuName
            setSelectedHomeWork(
@@ -139,7 +141,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.textColor = content != "" ? .black:.lightGray
         assignTitleTxtFld.text = title
             self.editId = editId
-        chooseRecipientsBtn.setTitle("UPDATE", for: .normal)
+        chooseRecipientsBtn.setTitle(CommonStringFile.UPDATE, for: .normal)
         
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
@@ -340,7 +342,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 SendAttachmentStringFile.description: textViewText
             ]
             
-            if sender.titleLabel?.text == "UPDATE"{
+            if editId != ""{
                 
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId

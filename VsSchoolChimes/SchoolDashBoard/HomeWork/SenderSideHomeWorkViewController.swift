@@ -117,8 +117,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 title:EditHomeWork.title ?? "",
                 content:EditHomeWork.description ?? "",
                 imageUrls:EditHomeWork.file_path ?? [] ,
-                editId:EditHomeWork.id ?? ""
-            )
+                editId:EditHomeWork.id ?? "")
+            
         }else{
             showHistoryBtnName.isHidden = false
             HistoryArrowBtn.isHidden = false

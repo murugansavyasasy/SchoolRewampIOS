@@ -903,6 +903,7 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
 
 extension UILabel {
     func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
+        
         // Main label font: Poppins-Bold, size 14
         let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)
 
@@ -929,6 +930,7 @@ extension UILabel {
         combined.append(asteriskText)
 
         self.attributedText = combined
+        
     }
     func profilesetRequiredText(_ text: String, asteriskColor: UIColor = .red) {
 

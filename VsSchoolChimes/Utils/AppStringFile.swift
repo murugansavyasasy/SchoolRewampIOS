@@ -239,6 +239,8 @@ class QuizListStringFile{
 
 struct CommonStringFile{
     //MARK:
+    static let UPDATE = "UPDATE".translated()
+    static let NEXT = "NEXT".translated()
     static let Search = "Search".translated()
     static let Location_name = "Location Name".translated()
     static let Distance = "Distance".translated()

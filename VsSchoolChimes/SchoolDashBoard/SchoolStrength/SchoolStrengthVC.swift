@@ -290,13 +290,20 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             cell.girlsCountLbl.text = "Girls : \(standard.girls_count ?? "")"
             cell.countLbl.text = "Total Students: \(standard.total_students ?? "")"
 
-            if standard.girls_count == "0"{
+            if standard.girls_count == "0" && standard.boys_count  == "0"{
+                cell.femaleImgView.isHidden = true
+                cell.maleImageView.isHidden = true
+                cell.progressView.tintColor = .lightGray
+                
+            }
+            else if standard.girls_count == "0"{
                 cell.femaleImgView.image = UIImage(named: "males")
                 cell.femaleImgView.tintColor = .maleClr
                 cell.maleImageView.image = UIImage(named: "males")
                 cell.maleImageView.tintColor = .maleClr
                 
             }
+            
             else if standard.boys_count  == "0"{
                 cell.femaleImgView.image = UIImage(named: "females")
                 cell.femaleImgView.tintColor = .femaleClr
