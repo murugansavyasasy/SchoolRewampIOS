@@ -288,7 +288,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         
         let lesson = FilteredData?[indexPath.row]
         cell.titleNameLbl.text = LesonPlanReport?.subject_name
-        cell.chapterLbl.text = "Chapters Completed " + (
+        cell.chapterLbl.text = "Chapters Completed".translated() + (
             LesonPlanReport?.items_completed ?? ""
         )
         switch lesson?.lesson_plan_status{
@@ -331,7 +331,7 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
         
-        cell.FilterLbl.text = Filters[indexPath.item]
+        cell.FilterLbl.text = Filters[indexPath.item].translated()
         
         cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.primery
             .withAlphaComponent(0.8) : .systemGray5

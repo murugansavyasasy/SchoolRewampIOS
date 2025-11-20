@@ -6,9 +6,10 @@
 //
 
 import UIKit
-
+import SDWebImage
 class SchoolListTVC: UITableViewCell {
 
+    @IBOutlet weak var SchoolImgView: UIImageView!
     @IBOutlet weak var outlinView: UIView!
     @IBOutlet weak var schoolIconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!

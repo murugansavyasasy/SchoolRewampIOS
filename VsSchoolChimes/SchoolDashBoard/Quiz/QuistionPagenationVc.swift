@@ -25,8 +25,6 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         toolbarTitle.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         
@@ -151,14 +149,6 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         return pages[currentIndex + 1]
     }
 
-//    private func disableSwipeGesture() {
-//        for view in pageViewController.view.subviews {
-//            if let scrollView = view as? UIScrollView {
-//                scrollView.isScrollEnabled = false
-//            }
-//        }
-//    }
-
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return pages.count
     }
@@ -181,17 +171,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
             
           
                 if let page1 = pages.first as? SenderQuizVc{
-                    //                segmentController.selectedSegmentIndex = 0
-                    
-//                    createBtn.setTitle("Update", for: .normal)
                     updateTabUI(for: 0)
-//                    page1
-//                        .setSelectedHomeWork(
-//                            title: title,
-//                            content: content,
-//                            imageUrls: items,
-//                            editId: editID
-//                        )
                     let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
                     let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
                     pageViewController.setViewControllers([page1], direction: direction, animated: true, completion: nil)

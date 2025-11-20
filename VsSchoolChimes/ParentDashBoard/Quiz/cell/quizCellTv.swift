@@ -13,10 +13,6 @@ class quizCellTv: UITableViewCell {
     @IBOutlet weak var parentFullview: UIView!
     @IBOutlet weak var child2View: UIView!
     @IBOutlet weak var child1View: UIView!
-   
-//    @IBOutlet weak var addQuestionBtnName: UIButton!
-//    @IBOutlet weak var submittedListBtnName: UIButton!
-//    @IBOutlet weak var postedByLbl: UILabel!
     @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var discretiponsLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!

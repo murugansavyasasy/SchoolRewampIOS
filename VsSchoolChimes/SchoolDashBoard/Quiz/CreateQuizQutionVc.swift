@@ -59,11 +59,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         existing.d_option = model.d_option
         existing.mark = model.mark
         existing.file_path = model.file_path
-
-        // Save back to array
         questions[indexPath.row] = existing
-
-        print("✅ Updated Question:", existing.question, "| From Bank:", existing.id != nil)
     }
         
         func removeCell(at indexPath: IndexPath) {
@@ -78,9 +74,6 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         if questions[indexPath.row].file_path == nil {
             questions[indexPath.row].file_path = []
            }
-//           questions[indexPath.row].filePath?.append(file)
-           
-           print("📎 Attachment added to question at index \(indexPath.row): \(file.fileName)")
        }
 }
 
@@ -159,7 +152,7 @@ class CreateQuizQutionVc: UIViewController {
     @IBAction func btnAct(_ sender: UIButton) {
         
         if let errorMessage = validateQuestions() {
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: errorMessage, on: self)
+            CustomAlert.showAlertWithOkAction(title: "Missing Information".translated(), message: errorMessage, on: self)
             return
         }
         

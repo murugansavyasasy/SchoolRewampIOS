@@ -50,7 +50,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     var dropdown = DropDown()
     var questionId: String?
     var isChecked = false
-    var options = [ "Option A", "Option B", "Option C", "Option D"]
+    var options = [ "Option A".translated(), "Option B".translated(), "Option C".translated(), "Option D".translated()]
     var answerIndex: Int?
     
     override func awakeFromNib() {
@@ -188,11 +188,11 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     ) {
         ChapterTxtFld.text = model.chapter
         markTxtFild.text   = model.mark == nil ? "" : "\(model.mark ?? 0)"
-        opATxtView.text    = model.a_option.isEmpty ? "Enter Option A" : model.a_option
-        opBTxtView.text    = model.b_option.isEmpty ? "Enter Option B" : model.b_option
-        opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C" : model.c_option
-        opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D" : model.d_option
-        questionTxtView.text = model.question.isEmpty ? "Enter Question here" : model.question
+        opATxtView.text    = model.a_option.isEmpty ? "Enter Option A".translated() : model.a_option
+        opBTxtView.text    = model.b_option.isEmpty ? "Enter Option B".translated() : model.b_option
+        opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C".translated() : model.c_option
+        opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D".translated() : model.d_option
+        questionTxtView.text = model.question.isEmpty ? "Enter Question here".translated() : model.question
         if let answerStr = model.answer,
            let answerIndex = Int(answerStr),
            answerIndex > 0,
@@ -201,19 +201,14 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         } else {
             correctAnsLbl.text = "Select correct answer"
         }
-
-        
-        print("numberofQuestionnumberofQuestionnumberofQuestion",numberofQuestion)
-        // 🔹 Handle attachment button
         if let attachments = model.file_path, !attachments.isEmpty {
-            // already has attachments → show count
             attachmentBtnName.setTitle("Attachment (\(attachments.count))", for: .normal)
             attachmentBtnName.backgroundColor = .black
             attachmentBtnName.isEnabled = false   // disable click
             attachmentBtnName.alpha = 0.6
         } else {
             // no attachments → allow adding new one
-            attachmentBtnName.setTitle("Add Attachment", for: .normal)
+            attachmentBtnName.setTitle("Add Attachment".translated(), for: .normal)
             attachmentBtnName.backgroundColor = .black
             attachmentBtnName.isEnabled = true
             attachmentBtnName.alpha = 1.0
@@ -228,7 +223,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
        
         checkBoxBtn.isHidden = true
-        print("addAnotherNameaddAnotherName",addAnotherName.isHidden)
         // Placeholder color setup
         [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
             if tv?.text?.hasPrefix("Enter") == true {
@@ -253,7 +247,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
            answerIndex <= options.count {
             correctAnsLbl.text = options[answerIndex - 1]
         } else {
-            correctAnsLbl.text = "Select correct answer"
+            correctAnsLbl.text = "Select correct answer".translated()
         }
 
         
@@ -284,36 +278,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         let image = isChecked ? UIImage(systemName: "checkmark.square.fill") : UIImage(systemName: "square")
         checkBoxBtn.setImage(image, for: .normal)
     }
-
-        
-//    func captureModel() -> QuizQuestiondata {
-//        
-//        let Answer = (answerIndex ?? 0) + 1
-//
-//        let correctAnswerText: String? = {
-//            switch Answer {
-//            case 1: return opATxtView.text
-//            case 2: return opBTxtView.text
-//            case 3: return opCTxtView.text
-//            case 4: return opDTxtView.text
-//            default: return nil
-//            }
-//        }()
-//
-//        return QuizQuestiondata(
-//            chapter: ChapterTxtFld.text ?? "",
-//            question: questionTxtView.text ?? "",
-//            answer: String(Answer),
-//            a_option: opATxtView.text ?? "",
-//            b_option: opBTxtView.text ?? "",
-//            c_option: opCTxtView.text ?? "",
-//            d_option: opDTxtView.text ?? "",
-//            mark: Int(markTxtFild.text ?? ""),
-//            correct_answer_text: correctAnswerText
-//        )
-//
-//    }
-    
     func captureModel() -> QuizQuestiondata {
         var answerString: String? = nil
         var correctAnswerText: String? = nil

@@ -199,7 +199,7 @@
 "Settings" = "सेटिंग्स";
 "Help" = "सहायता";
 "Logout" = "लॉगआउट";
-
+"Chapters Completed" = "अध्याय पूर्ण";
 
 // MARK: Days
 "Sunday" = "रविवार";
@@ -577,4 +577,38 @@
 "%d Minutes" = "%d मिनट";
 "Custom" = "कस्टम";
 "%d Min" = "%d मि";
+
+//MARK: Quiz Page
+"No of question" = "प्रश्नों की संख्या";
+"Check the box to continue next level" = "अगले स्तर पर जाने के लिए बॉक्स पर टिक करें";
+"Question" = "प्रश्न";
+"Chapter" = "अध्याय";
+"Option A" = "विकल्प A";
+"Option B" = "विकल्प B";
+"Option C" = "विकल्प C";
+"Option D" = "विकल्प D";
+"Correct Ans" = "सही उत्तर";
+"Mark" = "अंक";
+"Choose" = "चुनें";
+"Add Question" = "प्रश्न जोड़ें";
+"Student Submissions" = "विद्यार्थी प्रस्तुतियाँ";
+"Upcoming" = "आगामी";
+"Max marks" = "अधिकतम अंक";
+"Subject" = "विषय";
+"Level" = "स्तर";
+"Created date" = "निर्माण तिथि";
+"posted by" = "द्वारा पोस्ट किया गया";
+"Play Now" = "अब खेलें";
+"Reports" = "रिपोर्ट्स";
+"Enter Option A" = "विकल्प A दर्ज करें";
+"Enter Option B" = "विकल्प B दर्ज करें";
+"Enter Option C" = "विकल्प C दर्ज करें";
+"Enter Option D" = "विकल्प D दर्ज करें";
+"Enter Question here" = "यहाँ प्रश्न दर्ज करें";
+"Drop Your Mark here" = "अपना अंक यहाँ दर्ज करें";
+"Send Quiz" = "क्विज़ भेजें";
+"Select correct answer" = "सही उत्तर चुनें";
+"Import from Question Bank" = "प्रश्न बैंक से आयात";
+"Question Limit: " = "प्रश्न सीमा: ";
+"Missing Information" = "जानकारी उपलब्ध नहीं है";
 
