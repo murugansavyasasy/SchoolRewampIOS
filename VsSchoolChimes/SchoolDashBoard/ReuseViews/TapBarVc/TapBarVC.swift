@@ -341,7 +341,7 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             tag: 0
         )
         let secondItem = UITabBarItem(
-            title: AttendanceString.holidays,
+            title: AttendanceString.holidays.translated(),
             image: UIImage(systemName: "calendar"),
             tag: 1
         )

@@ -168,6 +168,12 @@
 "Category" = "வகை";
 "Choose Recipients" = "பெறுநர்களைத் தேர்வுசெய்";
 "TO STANDARD OR SECTION" = "தரத்திற்கு அல்லது பிரிவிற்கு";
+"Switch Role" = "பாத்திரத்தை மாற்று";
+"DashBoard" = "கட்டுப்பாட்டு பலகை";
+"View Profile" = "சுயவிவரத்தை பார்க்க";
+"Settings" = "அமைப்புகள்";
+"Help" = "உதவி";
+"Logout" = "வெளியேறு";
 
 // MARK: Days
 "Sunday" = "ஞாயிற்றுக்கிழமை";

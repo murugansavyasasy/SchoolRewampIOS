@@ -24,10 +24,10 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var isStudent:Bool?
     // MARK: - Data
     var menuArray: [MenuItem] = [
-        MenuItem(name: "DashBoard", icon: "house"),
-        MenuItem(name: "View Profile", icon: "person.circle"),
-        MenuItem(name: "Settings", icon: "gear"),
-        MenuItem(name: "Help", icon: "questionmark.circle")
+        MenuItem(name: "DashBoard".translated(), icon: "house"),
+        MenuItem(name: "View Profile".translated(), icon: "person.circle"),
+        MenuItem(name: "Settings".translated(), icon: "gear"),
+        MenuItem(name: "Help".translated(), icon: "questionmark.circle")
     ]
     
     let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
@@ -50,12 +50,12 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let staffCount = staffDetailsCount?.count ?? 0
         let studentCount = childCount?.count ?? 0
         if (staffCount + studentCount) > 1 {
-            menuArray.append(MenuItem(name: "Switch Role", icon: "arrow.2.squarepath"))
+            menuArray.append(MenuItem(name: "Switch Role".translated(), icon: "arrow.2.squarepath"))
         }
 
         
         // Exit is always last
-        menuArray.append(MenuItem(name: "Logout", icon: "iphone.and.arrow.forward"))
+        menuArray.append(MenuItem(name: "Logout".translated(), icon: "iphone.and.arrow.forward"))
         
         menuTable.delegate = self
         menuTable.dataSource = self
@@ -131,13 +131,13 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let selectedItem = menuArray[indexPath.row]
         
         switch selectedItem.name {
-        case "View Profile":
+        case "View Profile".translated():
             delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent ?? false))
             
-        case "Settings":
+        case "Settings".translated():
             delegate?.meunu(viewController: SettingsViewController())
             
-        case "Switch Role":
+        case "Switch Role".translated():
 //            if isSwitchRoleExpanded {
 //                // collapse → remove inserted schools
 //                menuArray.removeAll { item in
@@ -156,10 +156,10 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //            tableView.reloadData()
             delegate?.meunu(viewController: UIViewController())
             
-        case "Help":
+        case "Help".translated():
             delegate?.meunu(viewController: HelpVc())
             
-        case "Logout":
+        case "Logout".translated():
             delegate?.meunu(viewController: LogoutViewController())
             
         default:

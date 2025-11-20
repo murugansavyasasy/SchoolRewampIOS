@@ -137,7 +137,7 @@ class MenuRedirectHandler {
     }
     
     func senderCommunicationNavigate(from viewController: UIViewController) {
-        let vc = CommonPagenationVc(nibName: nil, bundle: nil)
+        let vc = ComunicationVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         

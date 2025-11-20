@@ -193,6 +193,13 @@
 "Category" = "श्रेणी";
 "Choose Recipients" = "प्राप्तकर्ताओं का चयन करें";
 "TO STANDARD OR SECTION" = "मानक या अनुभाग को";
+"Switch Role" = "भूमिका बदलें";
+"DashBoard" = "डैशबोर्ड";
+"View Profile" = "प्रोफ़ाइल देखें";
+"Settings" = "सेटिंग्स";
+"Help" = "सहायता";
+"Logout" = "लॉगआउट";
+
 
 // MARK: Days
 "Sunday" = "रविवार";

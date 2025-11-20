@@ -997,7 +997,7 @@ extension MarkAttendenceVC: UIPopoverPresentationControllerDelegate {
 
         if UIDevice.current.userInterfaceIdiom == .phone {
             contentVC.modalPresentationStyle = .overFullScreen
-            contentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
+            contentVC.view.backgroundColor = .white/*UIColor(white: 0, alpha: 0.3)*/
         }
 
         present(contentVC, animated: true)

@@ -526,7 +526,7 @@ extension ReciverAttendanceReportVC: UIPopoverPresentationControllerDelegate {
 
         if UIDevice.current.userInterfaceIdiom == .phone {
             contentVC.modalPresentationStyle = .overFullScreen
-            contentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
+            contentVC.view.backgroundColor = .white//UIColor(white: 1, alpha: 1)
         }
 
         present(contentVC, animated: true)

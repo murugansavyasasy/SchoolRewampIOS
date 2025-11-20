@@ -168,6 +168,12 @@
 "Category" = "Category";
 "Choose Recipients" = "Choose Recipients";
 "TO STANDARD OR SECTION" = "To Standard or Section";
+"Switch Role" = "Switch Role";
+"DashBoard" = "Dashboard";
+"View Profile" = "View Profile";
+"Settings" = "Settings";
+"Help" = "Help";
+"Logout" = "Logout";
 
 // MARK: Days
 "Sunday" = "Sunday";
@@ -565,5 +571,3 @@
 "Custom" = "Custom";
 "%d Min" = "%d Min";
 
-
-//MARK: Assignment

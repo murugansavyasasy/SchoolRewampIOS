@@ -167,6 +167,12 @@
 "Category" = "หมวดหมู่";
 "Choose Recipients" = "เลือกผู้รับ";
 "TO STANDARD OR SECTION" = "ไปยังระดับหรือชั้นเรียน";
+"Switch Role" = "สลับบทบาท";
+"DashBoard" = "แดชบอร์ด";
+"View Profile" = "ดูโปรไฟล์";
+"Settings" = "การตั้งค่า";
+"Help" = "ความช่วยเหลือ";
+"Logout" = "ออกจากระบบ";
 
 // MARK: Days
 "Sunday" = "วันอาทิตย์";
