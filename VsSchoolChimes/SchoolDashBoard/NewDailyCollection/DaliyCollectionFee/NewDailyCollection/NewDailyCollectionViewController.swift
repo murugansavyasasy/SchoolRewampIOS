@@ -92,6 +92,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         currentdate = formattedDateTime
         fromLbl.text = formattedDateTime
         todateLbl.text = formattedDateTime
+        from_date = Date()
+        To_date = Date()
         tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
         let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
         calendarView.addGestureRecognizer(fromdateTap)

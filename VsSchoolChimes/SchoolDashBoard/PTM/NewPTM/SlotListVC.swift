@@ -168,97 +168,104 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
             
             let slot = slotData?.slots?[indexPath.row]
-            
-            cell.TimeLbl.text = (slot?.from_time ?? "") + " - " + (slot?.to_time ?? "")
-            cell.DurationLbl.text = PTMString.duration + " - " + String(slot?.meeting_duration ?? 0) +  " " + PTMString.minutes
+
+            // MARK: - Basic Info
+            cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
+            cell.DurationLbl.text = "\(PTMString.duration) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes)"
             cell.bookedByNameLbl.text = slot?.booked_by
-            
-            let imageUrl = URL(string: slot?.profile_url ?? "")
-            cell.profileImage.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "interactProfile"))
-            
-            if slot?.can_cancel == true{
-                
-                if slot?.is_cancelled ?? false{
-                    cell.edit(edit:true,delete:false,selectedId:slot?.slot_id ?? "")
-                }else {
-                    cell.edit(edit:false,delete:true,selectedId:slot?.slot_id ?? "")
-                }
-                
-                if MeetingStatus == PTMString.completedMeetings{
+
+            // MARK: - Image
+            if let url = URL(string: slot?.profile_url ?? "") {
+                cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "interactProfile"))
+            }
+
+            // MARK: - Options Button Logic
+            if slot?.can_cancel == true {
+                cell.edit(
+                    edit: slot?.is_cancelled ?? false,
+                    delete: !(slot?.is_cancelled ?? false),
+                    selectedId: slot?.slot_id ?? ""
+                )
+
+                if MeetingStatus == PTMString.completedMeetings {
                     cell.optionsBtn.isHidden = true
-                }
-                
-                if MeetingStatus == PTMString.todayMeetings{
+                } else if MeetingStatus == PTMString.todayMeetings {
                     cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
                 }
-                
+
                 cell.delegate = self
-                
-            }else {
+            } else {
                 cell.optionsBtn.isHidden = true
             }
-            
-            
-            if slot?.is_booked == true {
-                cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
-                let title = (MeetingStatus == PTMString.completedMeetings) ? "Completed" : "Booked"
-                cell.StatusBtn.setTitle(title, for: .normal)
-                cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-                cell.StatusBtn.setTitleColor(.aproved, for: .normal)
-                cell.StatusBtn.tintColor = .aproved
-                cell.BookedStatusView.isHidden = false
-                cell.WaitingLbl.isHidden = true
-                cell.BookingBaseview.backgroundColor = .systemGreen.withAlphaComponent(0.1)
-            }else {
-                cell.StatusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.075)
-                cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Available", for: .normal)
-                cell.StatusBtn.setTitleColor(.black, for: .normal)
-                cell.StatusBtn.tintColor = .systemBlue
-                cell.BookedStatusView.isHidden = true
-                cell.WaitingLbl.isHidden = false
-                cell.WaitingLbl.textColor = .systemBlue
-                cell.BookingBaseview.backgroundColor = .systemBlue.withAlphaComponent(0.1)
-                cell.WaitingLbl.text = "Waiting for Booking"
-            }
-            
+
+            // MARK: - Reset common UI
+            cell.BookedStatusView.isHidden = true
+            cell.WaitingLbl.isHidden = true
+            cell.WaitingLbl.text = nil
+
+            // MARK: - Slot Status Handling
             if slot?.status == "Expired" {
-                
-              //  cell.optionsBtn.isHidden = true
-                cell.StatusBtn.backgroundColor = .systemGray5.withAlphaComponent(1)
+
+                cell.StatusBtn.backgroundColor = .systemGray5
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
                 cell.StatusBtn.setTitle("Expired", for: .normal)
-                cell.StatusBtn.setTitleColor(.black, for: .normal)
                 cell.StatusBtn.tintColor = .black
-//                cell.BookedStatusView.isHidden = false
-//                cell.WaitingLbl.isHidden = true
-//                cell.BookingBaseview.backgroundColor = .systemGray6.withAlphaComponent(0.8)
-//                cell.bookedByDefLbl.text = "Cancelled by:"
-                cell.BookedStatusView.isHidden = true
+                cell.StatusBtn.setTitleColor(.black, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemGray5
+
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .black
-                cell.BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(1)
                 cell.WaitingLbl.text = "Slot Expired"
+
             }
-            
-            if slot?.is_cancelled_by_staff == true {
+            else if slot?.is_cancelled_by_staff == true {
+
                 cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
                 cell.StatusBtn.setTitle("Cancelled", for: .normal)
-                cell.StatusBtn.setTitleColor(.red, for: .normal)
                 cell.StatusBtn.tintColor = .red
-//                cell.BookedStatusView.isHidden = false
-//                cell.WaitingLbl.isHidden = true
-//                cell.BookingBaseview.backgroundColor = .systemGray6.withAlphaComponent(0.8)
-//                cell.bookedByDefLbl.text = "Cancelled by:"
-                cell.BookedStatusView.isHidden = true
+                cell.StatusBtn.setTitleColor(.red, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemRed.withAlphaComponent(0.1)
+
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemRed
-                cell.BookingBaseview.backgroundColor = .systemRed.withAlphaComponent(0.1)
                 cell.WaitingLbl.text = "Slot Cancelled"
+
             }
-            
+            else if slot?.is_booked == true {
+
+                cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
+                cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+
+                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                cell.StatusBtn.setTitle(title, for: .normal)
+
+                cell.StatusBtn.tintColor = .aproved
+                cell.StatusBtn.setTitleColor(.aproved, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemGreen.withAlphaComponent(0.1)
+                cell.BookedStatusView.isHidden = false
+
+            }
+            else { // Available
+
+                cell.StatusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.075)
+                cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Available", for: .normal)
+                cell.StatusBtn.tintColor = .systemBlue
+                cell.StatusBtn.setTitleColor(.black, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .systemBlue
+                cell.WaitingLbl.text = "Waiting for Booking"
+            }
+
             return cell
+
         }
     }
     

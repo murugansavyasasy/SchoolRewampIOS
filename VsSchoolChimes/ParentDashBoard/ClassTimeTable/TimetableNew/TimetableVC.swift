@@ -77,26 +77,40 @@ class TimetableVC: UIViewController {
             cv.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
         }
 
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-            if !BottomsheetPresented, let bottomSheet = bottomSheetVC {
-                let nav = UINavigationController(rootViewController: bottomSheet)
-                nav.modalPresentationStyle = .pageSheet
-                if #available(iOS 15.0, *), let sheet = nav.sheetPresentationController {
-                    if #available(iOS 16.0, *) {
-                        sheet.detents = [.custom(resolver: { _ in 510 }), .large()]
-                    } else {
-                        sheet.detents = [.medium(), .large()]
-                    }
-                    sheet.largestUndimmedDetentIdentifier = .large
-                    sheet.prefersGrabberVisible = true
+        guard !BottomsheetPresented, let bottomSheet = bottomSheetVC else { return }
+
+        let nav = UINavigationController(rootViewController: bottomSheet)
+        nav.modalPresentationStyle = .pageSheet
+
+        if #available(iOS 15.0, *) {
+            if let sheet = nav.sheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    sheet.detents = [
+                        .medium(),
+                        .large()
+                    ]
+                } else {
+                    sheet.detents = [
+                        .medium(),
+                        .large()
+                    ]
                 }
-                nav.isModalInPresentation = true
-                present(nav, animated: true)
-                BottomsheetPresented = true
+                
+                sheet.prefersGrabberVisible = true
+                sheet.largestUndimmedDetentIdentifier = .large
             }
+        } else {
+            // Fallback on earlier versions
         }
+
+        nav.isModalInPresentation = true
+        present(nav, animated: true)
+        BottomsheetPresented = true
+    }
+
 
         
         func PresentBottomSheet(animated: Bool) {

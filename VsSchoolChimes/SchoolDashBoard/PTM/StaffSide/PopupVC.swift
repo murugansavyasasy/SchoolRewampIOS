@@ -52,6 +52,11 @@ class PopupVC: UIViewController {
 //            }
 //        }
         
+        if #available(iOS 17.4, *) {
+               view.backgroundColor = .clear
+               self.popoverPresentationController?.backgroundColor = .white
+           }
+        
         if ptm{
             editStack.isHidden = true
             deleteStack.isHidden = true

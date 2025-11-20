@@ -79,29 +79,96 @@ extension UIView {
         placeholderLabel.frame.origin = CGPoint(x: xPosition, y: 8) // Adjust padding
     }
 }
+
 extension UIView {
+
     func addDoneButton() {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
-        
-        toolbar.items = [flexSpace, doneButton]
-        
-        if let textField = self as? UITextField {
-            textField.inputAccessoryView = toolbar
-            textField.autocapitalizationType = .sentences
-        } else if let textView = self as? UITextView {
-            textView.inputAccessoryView = toolbar
-            textView.autocapitalizationType = .sentences
+        if #available(iOS 26.0, *) {
+            applyLiquidToolbar()   // New custom rounded design
+        } else {
+            applyClassicToolbar()  // Old UIToolbar
         }
     }
-    
+
+    // MARK: - Classic iOS 15 toolbar
+    private func applyClassicToolbar() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
+
+        toolbar.items = [flex, done]
+
+        if let tf = self as? UITextField { tf.inputAccessoryView = toolbar }
+        if let tv = self as? UITextView { tv.inputAccessoryView = toolbar }
+    }
+
+    // MARK: - Custom Liquid toolbar (iOS 26+)
+    private func applyLiquidToolbar() {
+        let width = UIScreen.main.bounds.width
+        let height: CGFloat = 44
+        let radius: CGFloat = 14
+        let rightPadding: CGFloat = 20   // << increase this as much as you want
+
+        let keyboardBackground = UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 28/255, green: 28/255, blue: 30/255, alpha: 1)
+                : UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
+        }
+
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        container.backgroundColor = keyboardBackground
+
+        // Rounded TOP corners only
+        container.layer.cornerRadius = radius
+        container.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        container.clipsToBounds = true
+
+        // Bottom separator
+        let separator = UIView()
+        separator.backgroundColor = UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(white: 1, alpha: 0.15)
+                : UIColor(red: 199/255, green: 199/255, blue: 204/255, alpha: 1)
+        }
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(separator)
+
+        NSLayoutConstraint.activate([
+            separator.heightAnchor.constraint(equalToConstant: 0.5),
+            separator.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            separator.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        ])
+
+        // Done button
+        let done = UIButton(type: .system)
+        done.setTitle("Done", for: .normal)
+        done.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        done.setTitleColor(.systemBlue, for: .normal)
+        done.translatesAutoresizingMaskIntoConstraints = false
+        done.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
+
+        container.addSubview(done)
+
+        NSLayoutConstraint.activate([
+            done.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -rightPadding),
+            done.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+        ])
+
+        // Apply to view
+        if let tf = self as? UITextField { tf.inputAccessoryView = container }
+        if let tv = self as? UITextView { tv.inputAccessoryView = container }
+    }
+
+
     @objc private func dismissKeyboard() {
-        self.endEditing(true)
+        endEditing(true)
     }
 }
+
+
 class Custom:UIButton{
     override func awakeFromNib() {
         super.awakeFromNib()

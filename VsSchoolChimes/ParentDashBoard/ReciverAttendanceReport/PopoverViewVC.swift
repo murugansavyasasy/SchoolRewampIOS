@@ -20,6 +20,10 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 17.4, *) {
+               view.backgroundColor = .clear
+               self.popoverPresentationController?.backgroundColor = .white
+           }
         view.layer.cornerRadius = 14
         view.clipsToBounds = true
         listTable.showsHorizontalScrollIndicator = false
