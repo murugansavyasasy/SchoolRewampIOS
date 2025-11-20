@@ -7,7 +7,7 @@
 
 import UIKit
 import DropDown
-
+import SDWebImage
 @available(iOS 14.0, *)
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
@@ -182,6 +182,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         cell.name.text = schools_details?.school_name
         cell.address.text = "📍 \(schools_details?.school_address ?? "")"
         cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
+        
+        
+        cell.SchoolImgView.layer.cornerRadius = 8
+            let imageUrl = URL(string: schools_details?.school_logo ?? "")
+            cell.SchoolImgView.sd_setImage(
+                    with: imageUrl,
+                    placeholderImage: UIImage(named: "schoolss"))
         
         if segmentName.selectedSegmentIndex == 1{
             let img = schools_details?.isSelected ?? false ? UIImage(named: "checkedSquare") : UIImage(

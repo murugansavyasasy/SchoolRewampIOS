@@ -127,8 +127,6 @@ class MarkAttendenceVC: UIViewController {
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
         standardView.addGestureRecognizer(standardTap)
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//            view.addGestureRecognizer(tapGesture)
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
         TV.register(
@@ -474,8 +472,6 @@ class MarkAttendenceVC: UIViewController {
         
         AcademicDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-            print("Selected item: \(item) at index: \(index)")
-            
             // Update the label inside the UIView
             AcademicYearLbl.text = item
             AcademicYearId = academicYearData?[index].id
@@ -498,8 +494,6 @@ class MarkAttendenceVC: UIViewController {
         
         SectionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-            print("Selected item: \(item) at index: \(index)")
-            
             // Update the label inside the UIView
             sectionLbl.text = item
             sectionId = SectionData?[index].id ?? ""
@@ -513,13 +507,13 @@ class MarkAttendenceVC: UIViewController {
    
     @IBAction func BackBtnAct(_ sender: Any) {dismiss(animated: true)}
     
-    @IBAction func AllPresentAct(_ sender: Any) {
-        
-        user_inputs.class_id  = StandardId
-        user_inputs.section_id  = sectionId
-        let alert = CustomAlert()
-        alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {self.markAttendaceApi()} , onNo: {print("Canceled")})
-    }
+//    @IBAction func AllPresentAct(_ sender: Any) {
+//        
+//        user_inputs.class_id  = StandardId
+//        user_inputs.section_id  = sectionId
+//        let alert = CustomAlert()
+//        alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {self.markAttendaceApi()} , onNo: {print("Canceled")})
+//    }
     
     func markAttendaceApi(){
         
@@ -601,11 +595,8 @@ class MarkAttendenceVC: UIViewController {
                             }
                         }
                         sectionId = StandardData?.first?.sections?.first?.id ?? ""
-                        
                         standardLbl.text = StandardData?.first?.name
                         sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
-//                        student_attendance_report()
-                        
                     }else{
                         CustomAlert.showAlertWithOkAction(
                                 title: AlertstringFile.Alert_title,
@@ -821,8 +812,7 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
         cell.selectionStyle = .none
         cell.StudentLbl.text = FilteredReport?[indexPath.row].student_name
         cell.admissionLbl.text = "admission no : " + (
-            FilteredReport?[indexPath.row].admission_no ?? ""
-        )
+            FilteredReport?[indexPath.row].admission_no ?? "")
         cell.rollNumberLbl.isHidden =  (
             (FilteredReport?[indexPath.row].roll_no) == ""
         ) ? true : false
@@ -945,9 +935,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
         if IsMarkAttendaceSelected !=  true{
             student_attendance_report()
         }
-        
-        
-        
+    
     }
     func minimumDate(for calendar: FSCalendar) -> Date {
         return Date(timeIntervalSince1970: 0) // very old date
