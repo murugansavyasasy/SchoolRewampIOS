@@ -31,7 +31,7 @@
                                             <constraint firstAttribute="height" constant="20" id="vN8-t6-0x7"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xt7-50-BZL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xt7-50-BZL" customClass="LocalizationLabel" customModule="School_Chimes" customModuleProvider="target">
                                         <rect key="frame" x="25" y="12.999999999999998" width="177" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -60,7 +60,7 @@
             <size key="customSize" width="226" height="60"/>
             <connections>
                 <outlet property="CheckboxImg" destination="eUh-lz-sUt" id="QaK-20-wSE"/>
-                <outlet property="FilterLbl" destination="xt7-50-BZL" id="b12-7l-g0U"/>
+                <outlet property="FilterLbl" destination="xt7-50-BZL" id="E6P-cZ-Ldw"/>
                 <outlet property="cellView" destination="aJ7-jD-bLj" id="76j-wh-PQF"/>
             </connections>
             <point key="canvasLocation" x="272" y="15"/>

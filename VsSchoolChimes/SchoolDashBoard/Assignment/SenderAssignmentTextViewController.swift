@@ -161,9 +161,15 @@ class SenderAssignmentTextViewController: UIViewController,
         setInitialButtonTitles(date: date)
     }
     func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
+        
+        // 🔥 Get selected app language
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: localeID)
         let parser = DateFormatter()
-        parser.locale = Locale(identifier: "en_US_POSIX")
+        parser.locale = locale
         parser.dateFormat = inputFormat
+        
         let dateToUse: Date
         if let dateString = dateString, let parsedDate = parser.date(from: dateString) {
             dateToUse = parsedDate
@@ -171,17 +177,18 @@ class SenderAssignmentTextViewController: UIViewController,
             dateToUse = Date()
         }
         let displayDateFormatter = DateFormatter()
-        displayDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayDateFormatter.locale = locale
         displayDateFormatter.dateFormat = "dd MMM yyyy"
         let displayTimeFormatter = DateFormatter()
-        displayTimeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayTimeFormatter.locale = locale
         displayTimeFormatter.timeStyle = .short
         let dayFormatter = DateFormatter()
-        dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dayFormatter.locale = locale
         dayFormatter.dateFormat = "EEEE"
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
-        dayLbl.text = dayFormatter.string(from: dateToUse).translated()
+        dayLbl.text = dayFormatter.string(from: dateToUse)
     }
+
 
     // MARK: - DeleteImge (custom)
     func deleteImage(index: Int) {

@@ -732,6 +732,9 @@ func getDateRangeLabel(from fromDate: Date, to toDate: Date) -> String {
 }
 
 func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> String? {
+    let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+    let localeID = normalizedLocaleIdentifier(for: savedCode)
+
     let possibleFormats = [
         "yyyy-MM-dd",
         "dd/MM/yyyy",
@@ -745,16 +748,22 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
     ]
 
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.locale = Locale(identifier: localeID)
+
     for format in possibleFormats {
         dateFormatter.dateFormat = format
         if let date = dateFormatter.date(from: dateString) {
+
+            // Output locale based on selected language
+            dateFormatter.locale = Locale(identifier: localeID)
             dateFormatter.dateFormat = toFormat
             return dateFormatter.string(from: date)
         }
     }
+
     return nil
 }
+
 
 public class ViewAnimator {
     
@@ -970,6 +979,7 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
 
 extension UILabel {
     func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
+        
         // Main label font: Poppins-Bold, size 14
         let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)
 
@@ -996,6 +1006,7 @@ extension UILabel {
         combined.append(asteriskText)
 
         self.attributedText = combined
+        
     }
     func profilesetRequiredText(_ text: String, asteriskColor: UIColor = .red) {
 
@@ -1107,7 +1118,16 @@ class LocalizationButton: UIButton {
          self.setTitle(key.translated(), for: .normal)
      }
 }
-
+func normalizedLocaleIdentifier(for code: String) -> String {
+    if Locale.availableIdentifiers.contains(code) {
+        return code
+    }
+    if let langCode = code.split(separator: "-").first,
+       Locale.availableIdentifiers.contains(String(langCode)) {
+        return String(langCode)
+    }
+    return "en"
+}
 class LocalizationLabel: UILabel {
 
     @IBInspectable var localizationKey: String? {

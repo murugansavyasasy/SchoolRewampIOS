@@ -168,6 +168,12 @@
 "Category" = "Category";
 "Choose Recipients" = "Choose Recipients";
 "TO STANDARD OR SECTION" = "To Standard or Section";
+"Switch Role" = "Switch Role";
+"DashBoard" = "Dashboard";
+"View Profile" = "View Profile";
+"Settings" = "Settings";
+"Help" = "Help";
+"Logout" = "Logout";
 
 // MARK: Days
 "Sunday" = "Sunday";
@@ -220,6 +226,21 @@
 "Oct" = "Oct";
 "Nov" = "Nov";
 "Dec" = "Dec";
+
+// MARK: LSRW Page
+"Listening" = "Listening";
+"Speaking" = "Speaking";
+"Reading" = "Reading";
+"Writing" = "Writing";
+
+"Completed Tasks" = "Completed Tasks";
+"Active Tasks" = "Active Tasks";
+"Dashboard Overview" = "Dashboard Overview";
+"New Task" = " New Task";
+
+"All" = "All";
+"Completed" = "Completed";
+"Pending" = "Pending";
 
 // MARK: Settings page
 "general" = "General";
@@ -550,5 +571,3 @@
 "Custom" = "Custom";
 "%d Min" = "%d Min";
 
-
-//MARK: Assignment

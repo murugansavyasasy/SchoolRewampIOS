@@ -376,7 +376,10 @@ func AwsCurrentDateString(format: String = "YYYY-MM-DD") -> String {
 }
 func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") -> String {
     guard let date = date else { return "" }
+    let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+    let localeID = normalizedLocaleIdentifier(for: savedCode)
     
+    // All possible input formats
     let possibleFormats = [
         "yyyy-MM-dd",
         "dd-MM-yyyy",
@@ -396,15 +399,13 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "d EEE, MMM yyyy",
         "EEE, dd MMM yyyy"
     ]
-    
     let outputFormatter = DateFormatter()
+    outputFormatter.locale = Locale(identifier: localeID)
     outputFormatter.dateFormat = toFormat
-    outputFormatter.locale = Locale(identifier: "en_US_POSIX")
-    
     for format in possibleFormats {
         let inputFormatter = DateFormatter()
+        inputFormatter.locale = Locale(identifier: localeID)
         inputFormatter.dateFormat = format
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         if let dateObj = inputFormatter.date(from: date) {
             return outputFormatter.string(from: dateObj)
@@ -414,6 +415,7 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
     print("❌ Could not match format for: \(date)")
     return ""
 }
+
 
 class DateFormatterHelpers {
     

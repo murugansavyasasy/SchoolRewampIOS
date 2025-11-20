@@ -92,10 +92,10 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     private var isRemoteAudio = false
     
     let taskTypes = [
-        ("Listening", "headphones"),
-        ("Speaking", "mic"),
-        ("Reading", "book"),
-        ("Writing", "pencil")
+        ("Listening".translated(), "headphones"),
+        ("Speaking".translated(), "mic"),
+        ("Reading".translated(), "book"),
+        ("Writing".translated(), "pencil")
     ]
     
     var selectedTaskIndex: Int = 0
@@ -191,11 +191,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         DetailsTxtview.addDoneButton()
         DetailsTxtview.delegate = self
         TitleTxtfield.delegate = self
-        
-        // Make sure initial text is empty and placeholder label handles placeholder appearance
-        if DetailsTxtview.text == CommonStringFile.Description {
-            DetailsTxtview.text = ""
-        }
     }
     
     private func setupNotifications() {
@@ -263,7 +258,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         selectedDateLbl.setRequiredText(CommonStringFile.selectedDate)
         DetailsLbl.setRequiredText(CommonStringFile.Description)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
-        
+        TitleTxtfield.placeholder = CommonStringFile.Title.translated()
         setAttributedText(
             for: uploadattachmentLbl,
             with: CommonStringFile.Add_attachment_optional.translated(),
@@ -303,7 +298,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
             return
         }
         
-        // Optional: check recipient selection (if your button's title represents selection)
         let recipientTitle = (RecipientBtn.title(for: .normal) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         if recipientTitle.isEmpty || recipientTitle.lowercased().contains("select") {
             showFieldAlert(title: "Missing Recipient", message: "Please select recipient(s) to send this to.", focus: nil)

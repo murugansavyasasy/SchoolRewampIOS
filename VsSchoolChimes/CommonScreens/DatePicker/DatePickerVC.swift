@@ -59,14 +59,9 @@ class DatePickerVC: UIViewController {
         } else {
             datepicker.date = Date()
         }
-        
-        // Format selected date/time
         updateFormattedDate()
-        
-        // Listen to changes
         datepicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
     }
-    // Try multiple formats to parse string to Date
     func dateConvert(_ dateString: String) -> Date? {
         let formats = [
             "EEE d MMM yyyy",
@@ -83,8 +78,7 @@ class DatePickerVC: UIViewController {
         let locale = Locale(identifier: normalizedCode)
     
         let formatter = DateFormatter()
-        formatter.locale = locale//Locale(identifier: "en_US_POSIX")
-        
+        formatter.locale = locale
         for format in formats {
             formatter.dateFormat = format
             if let date = formatter.date(from: dateString) {
@@ -99,7 +93,6 @@ class DatePickerVC: UIViewController {
     }
     
     func updateFormattedDate() {
-        
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
         let locale = Locale(identifier: normalizedCode)
@@ -124,20 +117,5 @@ class DatePickerVC: UIViewController {
         dismiss(animated: false)
     }
     
-    func normalizedLocaleIdentifier(for code: String) -> String {
-        // First, try as-is (e.g., "ta-IN")
-        if Locale.availableIdentifiers.contains(code) {
-            return code
-        }
-        
-        // Otherwise, fallback to just the language part (e.g., "ta")
-        if let langCode = code.split(separator: "-").first,
-           Locale.availableIdentifiers.contains(String(langCode)) {
-            return String(langCode)
-        }
-        
-        // Default to English if nothing matches
-        return "en"
-    }
 }
 

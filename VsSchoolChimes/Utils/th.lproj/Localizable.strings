@@ -167,6 +167,12 @@
 "Category" = "หมวดหมู่";
 "Choose Recipients" = "เลือกผู้รับ";
 "TO STANDARD OR SECTION" = "ไปยังระดับหรือชั้นเรียน";
+"Switch Role" = "สลับบทบาท";
+"DashBoard" = "แดชบอร์ด";
+"View Profile" = "ดูโปรไฟล์";
+"Settings" = "การตั้งค่า";
+"Help" = "ความช่วยเหลือ";
+"Logout" = "ออกจากระบบ";
 
 // MARK: Days
 "Sunday" = "วันอาทิตย์";
@@ -219,6 +225,22 @@
 "Oct" = "ต.ค.";
 "Nov" = "พ.ย.";
 "Dec" = "ธ.ค.";
+// MARK: LSRW Page
+"Listening" = "การฟัง";
+"Speaking" = "การพูด";
+"Reading" = "การอ่าน";
+"Writing" = "การเขียน";
+
+"Completed Tasks" = "งานที่เสร็จสมบูรณ์";
+"Active Tasks" = "งานที่กำลังดำเนินการ";
+"Dashboard Overview" = "ภาพรวมแดชบอร์ด";
+"New Task" = " งานใหม่";
+
+"All" = "ทั้งหมด";
+"Completed" = "เสร็จสมบูรณ์";
+"Pending" = "รอดำเนินการ";
+
+
 
 // MARK: settings page
 "general" = "ทั่วไป";

@@ -18,37 +18,48 @@ import AVKit
 class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate {
     
     func date(date: String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = standardDateFormat
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+            let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+            let locale = Locale(identifier: normalizedCode)
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = locale  // <-- MUST SET THIS
+            dateFormatter.dateFormat = standardDateFormat
+
+            guard let dayDate = dateFormatter.date(from: date) else {
+                print("❌ Failed to parse date:", date)
+                return
+            }
+
         guard let dayDate = dateFormatter.date(from: date) else { return }
-
-        // ✅ Convert to desired date format: 10 Oct 2025
-        dateFormatter.dateFormat = "dd MMM yyyy"
         let outputDateString = dateFormatter.string(from: dayDate)
-        
-        // ✅ Get the day name (e.g. Monday, Tuesday)
         let dayNameFormatter = DateFormatter()
-        dayNameFormatter.dateFormat = "EEEE"  // Full day name
+        dayNameFormatter.locale = locale
+        dayNameFormatter.dateFormat = "EEEE"
         let dayName = dayNameFormatter.string(from: dayDate)
-
         if dateSelection == true {
             fromDateLbl.text = outputDateString
-            fromeDayLbl.text = dayName.translated()
+            fromeDayLbl.text = dayName
+            
             if let toText = toDateLbl.text?.replacingOccurrences(of: "\n", with: " ") {
                 let labelFormatter = DateFormatter()
+                labelFormatter.locale = locale
                 labelFormatter.dateFormat = "dd MMM yyyy"
-                if let toDate = labelFormatter.date(from: toText) {
-                    if dayDate > toDate {
-                        toDateLbl.text = outputDateString
-                        toDayLbl.text = dayName.translated()
-                    }
+                
+                if let toDate = labelFormatter.date(from: toText),
+                   dayDate > toDate {
+                    
+                    toDateLbl.text = outputDateString
+                    toDayLbl.text = dayName
                 }
             }
         } else {
             toDateLbl.text = outputDateString
-            toDayLbl.text = dayName.translated()
+            toDayLbl.text = dayName
         }
     }
+
+
 
     
     @IBOutlet weak var fromeDayLbl: UILabel!
@@ -252,33 +263,38 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     // MARK: - Setting Current Date as Initial Date
     func setInitialDate(_ fromDate: String?, _ toDate: String?) {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: localeID)
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = locale
         dateFormatter.dateFormat = "dd-MM-yyyy"
         
         let currentDate = Date()
         let futureDate = Calendar.current.date(byAdding: .day, value: 30, to: currentDate)!
         
+        // Parse provided dates OR fallback
         let startDate = (fromDate != nil ? dateFormatter.date(from: fromDate!) : nil) ?? currentDate
         let endDate   = (toDate   != nil ? dateFormatter.date(from: toDate!)   : nil) ?? futureDate
         
-        // 📅 Date display formatter
         let displayFormatter = DateFormatter()
-        displayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayFormatter.locale = locale
         displayFormatter.dateFormat = "dd MMM yyyy"
-        let fromDisplay = displayFormatter.string(from: startDate)
-        let toDisplay = displayFormatter.string(from: endDate)
         
-        // 🗓 Day name formatter
+        let fromDisplay = displayFormatter.string(from: startDate)
+        let toDisplay   = displayFormatter.string(from: endDate)
         let dayNameFormatter = DateFormatter()
-        dayNameFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dayNameFormatter.locale = locale
         dayNameFormatter.dateFormat = "EEEE"
+        
         let fromDay = dayNameFormatter.string(from: startDate)
-        let toDay = dayNameFormatter.string(from: endDate)
+        let toDay   = dayNameFormatter.string(from: endDate)
         fromDateLbl.text = fromDisplay
-        fromeDayLbl.text = fromDay.translated()
+        fromeDayLbl.text = fromDay
         toDateLbl.text = toDisplay
-        toDayLbl.text = toDay.translated()
+        toDayLbl.text = toDay
     }
+
 
 
 
