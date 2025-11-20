@@ -342,7 +342,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 SendAttachmentStringFile.description: textViewText
             ]
             
-            if editId != ""{
+            if let editId = editId,!editId.isEmpty{
                 
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId
