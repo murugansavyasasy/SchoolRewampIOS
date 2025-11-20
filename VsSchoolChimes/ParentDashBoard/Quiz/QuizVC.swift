@@ -281,23 +281,21 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
             }
             let quiz = filteredExams[indexPath.row]
                let imageName = images[indexPath.row % images.count]
-//            cell.DeafultimageView.image = UIImage(named: imageName)
             
         cell.titleLbl.text = filteredExams[indexPath.row].title?.capitalized
         cell.discretiponsLbl.text = filteredExams[indexPath.row].description?.capitalized
-//            cell.exameDateLbl.text = "Create on 16,Oct 2025 04:24 PM"
             cell.subjectLbl.text = filteredExams[indexPath.row].subject
         cell.LevelLbl.text = String(filteredExams[indexPath.row].level ?? 0)
         cell.MaxmarkLbl.text = String(filteredExams[indexPath.row].max_mark ?? 0)
         cell.NoOfQuestionLbl.text = String(filteredExams[indexPath.row].no_of_questions ?? 0)
-        cell.createdDateLbl.text = "Created on " + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
-        cell.PostByLbl.text = "Posted By: " + (
+        cell.createdDateLbl.text = "Created on ".translated() + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
+        cell.PostByLbl.text = "Posted By".translated() + ": " + (
             filteredExams[indexPath.row].SentBy ?? ""
         )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
         cell.playBtn.setImage(imgae, for: .normal)
         let title = stausType == "1" ? "Play Now" : ""
-        cell.playBtn.setTitle(title, for: .normal)
+        cell.playBtn.setTitle(title.translated(), for: .normal)
         cell.playBtnWidth.constant = stausType == "1" ? 138 : 40
             return cell
 //        }

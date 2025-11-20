@@ -174,7 +174,7 @@
 "Settings" = "அமைப்புகள்";
 "Help" = "உதவி";
 "Logout" = "வெளியேறு";
-
+"Chapters Completed" = "முடித்த அத்தியாயங்கள்";
 // MARK: Days
 "Sunday" = "ஞாயிற்றுக்கிழமை";
 "Monday" = "திங்கட்கிழமை";
@@ -596,4 +596,37 @@
 "Custom" = "விருப்பத்தேர்வு";
 "%d Min" = "%d நிமி";
 
+//MARK: Quiz Page
+"No of question" = "கேள்விகளின் எண்ணிக்கை";
+"Check the box to continue next level" = "அடுத்த நிலைக்கு செல்ல பெட்டியை தேர்ந்தெடுக்கவும்";
+"Question" = "கேள்வி";
+"Chapter" = "அத்தியாயம்";
+"Option A" = "விருப்பம் A";
+"Option B" = "விருப்பம் B";
+"Option C" = "விருப்பம் C";
+"Option D" = "விருப்பம் D";
+"Correct Ans" = "சரியான பதில்";
+"Mark" = "மதிப்பெண்";
+"Choose" = "தேர்வு செய்";
+"Add Question" = "கேள்வி சேர்க்க";
+"Student Submissions" = "மாணவர் சமர்ப்பிப்புகள்";
+"Upcoming" = "விரைவில்";
+"Max marks" = "அதிகபட்ச மதிப்பெண்கள்";
+"Subject" = "பாடம்";
+"Level" = "நிலை";
+"Created date" = "உருவாக்கிய தேதி";
+"posted by" = "பதிவிட்டவர்";
+"Play Now" = "இப்போது விளையாடு";
+"Reports" = "அறிக்கைகள்";
+"Enter Option A" = "விருப்பம் A ஐ உள்ளிடவும்";
+"Enter Option B" = "விருப்பம் B ஐ உள்ளிடவும்";
+"Enter Option C" = "விருப்பம் C ஐ உள்ளிடவும்";
+"Enter Option D" = "விருப்பம் D ஐ உள்ளிடவும்";
+"Enter Question here" = "இங்கே கேள்வியை உள்ளிடவும்";
+"Drop Your Mark here" = "உங்கள் மதிப்பெண்களை இங்கே இடுக";
+"Send Quiz" = "வினாடி வினாவை அனுப்பவும்";
+"Select correct answer" = "சரியான பதிலை தேர்வு செய்யவும்";
+"Import from Question Bank" = "கேள்வி வங்கியில் இருந்து இறக்கு";
+"Question Limit: " = "கேள்வி வரம்பு: ";
+"Missing Information" = "தகவல் காணவில்லை";
 
