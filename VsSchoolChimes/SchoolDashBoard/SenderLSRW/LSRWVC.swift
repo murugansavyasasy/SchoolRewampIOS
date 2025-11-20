@@ -36,7 +36,7 @@ class LSRWVC: UIViewController, FilterDelegate {
     private var selectedIndex = 0
 
     private let filterArray = [
-        "All", "Listening", "Speaking", "Reading", "Writing", "Completed", "Active"
+        "All".translated(), "Listening".translated(), "Speaking".translated(), "Reading".translated(), "Writing".translated(), "Completed".translated(), "Active".translated()
     ]
 
     // MARK: - Lifecycle
@@ -128,10 +128,10 @@ class LSRWVC: UIViewController, FilterDelegate {
         let selectedFilter = filterArray[idx]
 
         switch selectedFilter {
-        case "All":
+        case "All".translated():
             filterTask = recentTasks
 
-        case "Active":
+        case "Active".translated():
             filterTask = filterTask.map { section in
                 switch section {
                 case .active: return .active(activeTask)
@@ -140,7 +140,7 @@ class LSRWVC: UIViewController, FilterDelegate {
                 }
             }
 
-        case "Completed":
+        case "Completed".translated():
             filterTask = filterTask.map { section in
                 switch section {
                 case .active: return .active([])
@@ -150,7 +150,7 @@ class LSRWVC: UIViewController, FilterDelegate {
             }
 
         default:
-            let filteredActive = activeTask.filter { $0.activity_type?.displayName == selectedFilter }
+            let filteredActive = activeTask.filter { $0.activity_type?.displayName.translated() == selectedFilter }
             let filteredCompleted = completedTask.filter { $0.activity_type?.displayName == selectedFilter }
 
             filterTask = filterTask.map { section in

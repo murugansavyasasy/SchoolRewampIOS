@@ -665,6 +665,9 @@ func getDateRangeLabel(from fromDate: Date, to toDate: Date) -> String {
 }
 
 func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> String? {
+    let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+    let localeID = normalizedLocaleIdentifier(for: savedCode)
+
     let possibleFormats = [
         "yyyy-MM-dd",
         "dd/MM/yyyy",
@@ -678,16 +681,22 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
     ]
 
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.locale = Locale(identifier: localeID)
+
     for format in possibleFormats {
         dateFormatter.dateFormat = format
         if let date = dateFormatter.date(from: dateString) {
+
+            // Output locale based on selected language
+            dateFormatter.locale = Locale(identifier: localeID)
             dateFormatter.dateFormat = toFormat
             return dateFormatter.string(from: date)
         }
     }
+
     return nil
 }
+
 
 public class ViewAnimator {
     

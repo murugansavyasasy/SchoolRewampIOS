@@ -1988,34 +1988,59 @@ struct LSRWTask: Codable {
     let submitted_average: String?
 }
 
-// MARK: - Enum for activity_type
 enum LSRWType: Codable {
     case listening
     case speaking
     case reading
     case writing
-    case unknown(String)  // store raw value if it doesn't match
+    case unknown(String)
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let rawValue = (try? container.decode(String.self)) ?? ""
+        let raw = (try? container.decode(String.self)) ?? ""
 
-        switch rawValue.lowercased() {
-        case "listening": self = .listening
-        case "speaking":  self = .speaking
-        case "reading":   self = .reading
-        case "writing":   self = .writing
-        default:          self = .unknown(rawValue)
+        let value = raw.lowercased()
+
+        // Normalize translated values back to English
+        let mapToEnglish: [String: LSRWType] = [
+            "listening": .listening,
+            "speaking": .speaking,
+            "reading": .reading,
+            "writing": .writing,
+
+            // Tamil
+            "கேட்குதல்": .listening,
+            "பேசுதல்": .speaking,
+            "படித்தல்": .reading,
+            "எழுதுதல்": .writing,
+
+            // Hindi
+            "सुनना": .listening,
+            "बोलना": .speaking,
+            "पढ़ना": .reading,
+            "लिखना": .writing,
+
+            // Thai
+            "การฟัง": .listening,
+            "การพูด": .speaking,
+            "การอ่าน": .reading,
+            "การเขียน": .writing
+        ]
+
+        if let mapped = mapToEnglish[value] {
+            self = mapped
+        } else {
+            self = .unknown(raw)
         }
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .listening: try container.encode("Listening")
-        case .speaking:  try container.encode("Speaking")
-        case .reading:   try container.encode("Reading")
-        case .writing:   try container.encode("Writing")
+        case .listening: try container.encode("listening")
+        case .speaking:  try container.encode("speaking")
+        case .reading:   try container.encode("reading")
+        case .writing:   try container.encode("writing")
         case .unknown(let value): try container.encode(value)
         }
     }
@@ -2032,14 +2057,16 @@ enum LSRWType: Codable {
 
     var displayName: String {
         switch self {
-        case .listening: return "Listening"
-        case .speaking:  return "Speaking"
-        case .reading:   return "Reading"
-        case .writing:   return "Writing"
+        case .listening: return "Listening".translated()
+        case .speaking:  return "Speaking".translated()
+        case .reading:   return "Reading".translated()
+        case .writing:   return "Writing".translated()
         case .unknown(let value): return value
         }
     }
 }
+
+
 extension LSRWType {
     init(_ rawValue: String) {
         switch rawValue.lowercased() {

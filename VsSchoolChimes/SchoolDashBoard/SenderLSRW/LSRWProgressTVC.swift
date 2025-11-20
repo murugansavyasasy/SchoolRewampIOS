@@ -12,7 +12,7 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var progressCV: UICollectionView!
 
     private var progressDataArray: [Overview]?
-    private let filterArray = ["All","Listening","Speaking","Reading","Writing","Completed","Pending"]
+    private let filterArray = ["All".translated(),"Listening".translated(),"Speaking".translated(),"Reading".translated(),"Writing".translated(),"Completed".translated(),"Pending".translated()]
 
     weak var delegate: FilterDelegate?
     private var isFilterMode = false
@@ -104,7 +104,7 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
             let width = (collectionView.bounds.width - totalSpacing) / numberOfItemsPerRow
             return CGSize(width: width, height: 120)
         } else {
-            let text = filterArray[indexPath.row]
+            let text = filterArray[indexPath.row].translated()
             let font = UIFont.systemFont(ofSize: 16, weight: .medium)
             let padding: CGFloat = 20
             let textWidth = text.size(withAttributes: [.font: font]).width

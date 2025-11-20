@@ -298,7 +298,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
             return
         }
         
-        // Optional: check recipient selection (if your button's title represents selection)
         let recipientTitle = (RecipientBtn.title(for: .normal) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         if recipientTitle.isEmpty || recipientTitle.lowercased().contains("select") {
             showFieldAlert(title: "Missing Recipient", message: "Please select recipient(s) to send this to.", focus: nil)
