@@ -210,33 +210,33 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedItem = sections[indexPath.section].items[indexPath.row]
+        let selectedItem = sections[indexPath.section].items[indexPath.row].translated()
         switch selectedItem {
-        case menuname.contactUs:
+        case menuname.contactUs.translated():
             let vc = ContactUsVc()
             vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
-        case "Privacy Policy":
+        case menuname.privacyPolicy.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.tittleString = "Privacy Policy"
             vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
             present(vc, animated: true)
-        case "About the App":
+        case menuname.aboutApp.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.tittleString = "About the App"
             vc.url = UserDefaultFileManager.get_globalSelection()?.about_the_app
             present(vc, animated: true)
-        case "How to Use?":
+        case menuname.howToUse.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.tittleString = "How to Use?"
             vc.url = UserDefaultFileManager.get_globalSelection()?.how_to_use
             present(vc, animated: true)
-        case menuname.notifications:
+        case menuname.notifications.translated():
             let vc = NotificationViewController()
             vc.token = passVale == 1 ? UserDefaultFileManager.get_staff_Details()?.access_token ?? "" :
                                        UserDefaultFileManager.get_child_Details()?.access_token ?? ""
@@ -244,46 +244,46 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
-        case menuname.reportABug:
+        case menuname.reportABug.translated():
             let vc = ReportBugVcViewController()
             vc.modalPresentationStyle = .overFullScreen
             vc.passValue = passVale
             present(vc, animated: true)
             
-        case menuname.feedback:
+        case menuname.feedback.translated():
             presentPopover()
             
-        case menuname.logout:
+        case menuname.logout.translated():
             UserDefaults.standard.set(true, forKey: "Logout")
             let vc = LogoutViewController()
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: false)
             
-        case menuname.faq:
+        case menuname.faq.translated():
             let vc = FAQViewController()
             vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
-        case menuname.changeAppLanguage:
+        case menuname.changeAppLanguage.translated():
             let vc = LanguageVc()
             vc.modalPresentationStyle = .overFullScreen
             vc.delegate = self
             present(vc, animated: true)
-        case menuname.termsAndConditions:
+        case menuname.termsAndConditions.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.tittleString = "Terms & Conditions"
             vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
             present(vc, animated: true)
             
-        case "What's new":
+        case menuname.whatsNew.translated():
             let vc = WhatsNewVc()
             vc.isStaff = passVale == 1
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
-        case "Change Password":
+        case menuname.changePassword.translated():
             let vc = CreatePasswordVc()
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)

@@ -1343,6 +1343,7 @@ struct SubmissionDetail: Codable {
     let id: String?
     let description: String?
     let submitted_on: String?
+    let created_on: String?
     let iframe: String?
     let file_size: String?
     let file_path: [FilePath]?

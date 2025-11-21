@@ -27,8 +27,6 @@ class WhatsNewCVC: UICollectionViewCell {
         imgView.clipsToBounds = true
         videoView.layer.cornerRadius = 8
         videoView.clipsToBounds = true
-        descriptionTxt.isScrollEnabled = false
-        descriptionTxt.isUserInteractionEnabled = false
     }
 
     override func prepareForReuse() {
@@ -43,13 +41,9 @@ class WhatsNewCVC: UICollectionViewCell {
         // Title + Description
         tittleLbl.text = item.name ?? ""
         descriptionTxt.text = item.description ?? ""
-        
-        // 👇 Adjust textView height based on content
         let size = CGSize(width: descriptionTxt.frame.width, height: .infinity)
         let estimatedSize = descriptionTxt.sizeThatFits(size)
         descriptionHeight.constant = estimatedSize.height
-
-        // Video or Image
         if let link = item.video_link,
            !link.isEmpty,
            let url = URL(string: link) {

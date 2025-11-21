@@ -11,7 +11,7 @@ class OnboardingCVC: UICollectionViewCell {
 
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var headingLbl: UILabel!
-    @IBOutlet weak var descriptionLbl: UILabel!
+    @IBOutlet weak var descriptionLbl: UITextView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

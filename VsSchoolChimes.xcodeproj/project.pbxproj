@@ -652,6 +652,8 @@
 		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
 		84E5A25F2E53255100A71420 /* AudioCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E5A25E2E53255100A71420 /* AudioCVC.xib */; };
 		84E5A2602E53255100A71420 /* AudioCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5A25D2E53255100A71420 /* AudioCVC.swift */; };
+		84E614242ED02B85003DBCE1 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E614222ED02B85003DBCE1 /* SplashVC.swift */; };
+		84E614252ED02B85003DBCE1 /* SplashVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E614232ED02B85003DBCE1 /* SplashVC.xib */; };
 		84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */; };
 		84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E70DD02D49F61900E916D1 /* DatePickerVC.xib */; };
 		84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E795DB2D2FF3DF000B36BC /* ChatCvcell.swift */; };
@@ -1577,6 +1579,8 @@
 		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
 		84E5A25D2E53255100A71420 /* AudioCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCVC.swift; sourceTree = "<group>"; };
 		84E5A25E2E53255100A71420 /* AudioCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCVC.xib; sourceTree = "<group>"; };
+		84E614222ED02B85003DBCE1 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		84E614232ED02B85003DBCE1 /* SplashVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashVC.xib; sourceTree = "<group>"; };
 		84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
 		84E70DD02D49F61900E916D1 /* DatePickerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerVC.xib; sourceTree = "<group>"; };
 		84E795DB2D2FF3DF000B36BC /* ChatCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCvcell.swift; sourceTree = "<group>"; };
@@ -3411,6 +3415,8 @@
 				84A0D10F2DC8C9E30037E1BF /* Splach.gif */,
 				84A5BEBE2C198DE200E32496 /* SplashViewController.swift */,
 				84A5BEC02C198DF600E32496 /* SplashStoryboard.storyboard */,
+				84E614222ED02B85003DBCE1 /* SplashVC.swift */,
+				84E614232ED02B85003DBCE1 /* SplashVC.xib */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -4609,6 +4615,7 @@
 				FAFF9DFF2D6C7B7A00498368 /* SlotsCollectionViewCell.xib in Resources */,
 				FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */,
 				84C3A1F22E66BE55002E7506 /* MsgViewVC.xib in Resources */,
+				84E614252ED02B85003DBCE1 /* SplashVC.xib in Resources */,
 				8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */,
 				FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */,
 				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
@@ -5415,6 +5422,7 @@
 				8442A8F42CDC83860006068E /* BanerTableViewCell.swift in Sources */,
 				8442A8F52CDC83860006068E /* GifImage.swift in Sources */,
 				8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */,
+				84E614242ED02B85003DBCE1 /* SplashVC.swift in Sources */,
 				8480A4122E31F4CB009A7DED /* NoticeCVC.swift in Sources */,
 				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
 				849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */,
@@ -5718,7 +5726,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -5761,7 +5769,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
