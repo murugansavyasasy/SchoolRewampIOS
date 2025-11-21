@@ -173,7 +173,7 @@
 "Settings" = "การตั้งค่า";
 "Help" = "ความช่วยเหลือ";
 "Logout" = "ออกจากระบบ";
-
+"Chapters Completed" = "บทเรียนที่เสร็จสมบูรณ์";
 // MARK: Days
 "Sunday" = "วันอาทิตย์";
 "Monday" = "วันจันทร์";
@@ -584,3 +584,38 @@
 "%d Minutes" = "%d นาที";
 "Custom" = "กำหนดเอง";
 "%d Min" = "%d นาที";
+
+//MARK: Quiz Page
+"No of question" = "จำนวนคำถาม";
+"Check the box to continue next level" = "ทำเครื่องหมายในช่องเพื่อไปยังระดับถัดไป";
+"Question" = "คำถาม";
+"Chapter" = "บทเรียน";
+"Option A" = "ตัวเลือก A";
+"Option B" = "ตัวเลือก B";
+"Option C" = "ตัวเลือก C";
+"Option D" = "ตัวเลือก D";
+"Correct Ans" = "คำตอบที่ถูกต้อง";
+"Mark" = "คะแนน";
+"Choose" = "เลือก";
+"Add Question" = "เพิ่มคำถาม";
+"Student Submissions" = "ผลงานนักเรียน";
+"Upcoming" = "กำลังจะมาถึง";
+"Max marks" = "คะแนนสูงสุด";
+"Subject" = "วิชา";
+"Level" = "ระดับ";
+"Created date" = "วันที่สร้าง";
+"posted by" = "โพสต์โดย";
+"Play Now" = "เล่นตอนนี้";
+"Reports" = "รายงาน";
+"Enter Option A" = "กรอกตัวเลือก A";
+"Enter Option B" = "กรอกตัวเลือก B";
+"Enter Option C" = "กรอกตัวเลือก C";
+"Enter Option D" = "กรอกตัวเลือก D";
+"Enter Question here" = "กรอกคำถามที่นี่";
+"Drop Your Mark here" = "วางคะแนนของคุณที่นี่";
+"Send Quiz" = "ส่งแบบทดสอบ";
+"Select correct answer" = "เลือกคำตอบที่ถูกต้อง";
+"Import from Question Bank" = "นำเข้าจากคลังคำถาม";
+"Question Limit: " = "จำกัดจำนวนคำถาม: ";
+"Missing Information" = "ข้อมูลขาดหาย";
+

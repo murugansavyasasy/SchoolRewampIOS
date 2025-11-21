@@ -111,7 +111,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        if item.name == "Logout" {
+        if item.name == "Logout".translated() {
             cell.ExameLbl.textColor = .red
             cell.iconBtn.tintColor = .red
         }else{

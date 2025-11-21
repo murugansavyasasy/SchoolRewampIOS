@@ -174,7 +174,7 @@
 "Settings" = "Settings";
 "Help" = "Help";
 "Logout" = "Logout";
-
+"Chapters Completed" = "Chapters Completed";
 // MARK: Days
 "Sunday" = "Sunday";
 "Monday" = "Monday";
@@ -570,4 +570,37 @@
 "%d Minutes" = "%d Minutes";
 "Custom" = "Custom";
 "%d Min" = "%d Min";
+//MARK: Quiz Page
+"No of question" = "No of question";
+"Check the box to continue next level" = "Check the box to continue next level";
+"Question" = "Question";
+"Chapter" = "Chapter";
+"Option A" = "Option A";
+"Option B" = "Option B";
+"Option C" = "Option C";
+"Option D" = "Option D";
+"Correct Ans" = "Correct Answer";
+"Mark" = "Mark";
+"Choose" = "Choose";
+"Add Question" = "Add Question";
+"Student Submissions" = "Student Submissions";
+"Upcoming" = "Upcoming";
+"Max marks" = "Max marks";
+"Subject" = "Subject";
+"Level" = "Level";
+"Created date" = "Created date";
+"posted by" = "Posted by";
+"Play Now" = "Play Now";
+"Reports" = "Reports";
+"Enter Option A" = "Enter Option A";
+"Enter Option B" = "Enter Option B";
+"Enter Option C" = "Enter Option C";
+"Enter Option D" = "Enter Option D";
+"Enter Question here" = "Enter Question here";
+"Drop Your Mark here" = "Drop Your Mark here";
+"Send Quiz" = "Send Quiz";
+"Select correct answer" = "Select correct answer";
+"Import from Question Bank" = "Import from Question Bank";
+"Question Limit: " = "Question Limit: ";
+"Missing Information" = "Missing Information";
 

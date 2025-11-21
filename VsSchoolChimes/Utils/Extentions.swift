@@ -979,35 +979,33 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
 
 extension UILabel {
     func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
-        
-        // Main label font: Poppins-Bold, size 14
-        let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)
 
-        // Asterisk font: Poppins-Regular, larger size
-        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
-
+        // Font safety
+        let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? .boldSystemFont(ofSize: 14)
+        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? .systemFont(ofSize: 16)
         let normalText = NSAttributedString(
-            string: text,
+            string: text.translated(),
             attributes: [
                 .font: mainFont,
                 .foregroundColor: self.textColor ?? .black
-            ])
-
+            ]
+        )
         let asteriskText = NSAttributedString(
             string: "*",
             attributes: [
                 .font: asteriskFont,
                 .foregroundColor: asteriskColor,
-                .baselineOffset: 2 // tweak to align nicely with main text
-            ])
+                .baselineOffset: 3
+            ]
+        )
 
         let combined = NSMutableAttributedString()
         combined.append(normalText)
         combined.append(asteriskText)
 
         self.attributedText = combined
-        
     }
+
     func profilesetRequiredText(_ text: String, asteriskColor: UIColor = .red) {
 
         // Asterisk font: Poppins-Regular, larger size

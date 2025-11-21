@@ -38,8 +38,9 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         numberOfQuestionText.addDoneButton()
         numberOfQuestionText.keyboardType = .numberPad
         setupPlaceholder()
-        
-        noOfQuestionDefaultLbl.setRequiredText(noOfQuestionDefaultLbl.text?.translated() ?? "")
+        numberOfQuestionText.placeholder = "No of question".translated()
+        titleText.text = MenuStringFile.Title.translated()
+        noOfQuestionDefaultLbl.setRequiredText(noOfQuestionDefaultLbl.text ?? "")
         titleDefaultLbl.setRequiredText(MenuStringFile.Title)
         descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
         
@@ -52,7 +53,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.Description
+        placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = discriptionsTextFild.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
