@@ -82,7 +82,7 @@
                                 <outlet property="delegate" destination="-1" id="meW-M3-nOm"/>
                             </connections>
                         </tableView>
-                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ch4-X4-Jhw">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ch4-X4-Jhw">
                             <rect key="frame" x="30" y="542" width="330" height="40"/>
                             <color key="backgroundColor" systemColor="systemBlueColor"/>
                             <constraints>
@@ -93,6 +93,9 @@
                             <state key="normal" title="Send">
                                 <imageReference key="image" image="paperplane" catalog="system" symbolScale="small"/>
                             </state>
+                            <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Send" imagePadding="3">
+                                <imageReference key="image" image="paperplane" catalog="system" symbolScale="small"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="sendBtnAction:" destination="-1" eventType="touchUpInside" id="P8o-lT-Pt9"/>
                             </connections>
@@ -191,7 +194,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="viewFlipsideBackgroundColor">
             <color red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

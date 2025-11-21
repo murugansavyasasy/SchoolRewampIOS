@@ -52,6 +52,8 @@ class NewPtmVC: UIViewController, Datepicker {
     //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
+    var expandedIndex: IndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -490,6 +492,111 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
             
+            let slot = sections[indexPath.section].events[indexPath.row] as? BookedSlot
+
+            /*// MARK: - Basic Info
+            cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
+            cell.DurationLbl.text = "\(PTMString.duration) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes)"
+            cell.bookedByNameLbl.text = slot?.booked_by
+
+            // MARK: - Image
+            if let url = URL(string: slot?.profile_url ?? "") {
+                cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "interactProfile"))
+            }
+
+            // MARK: - Options Button Logic
+            if slot?.can_cancel == true {
+                cell.edit(
+                    edit: slot?.is_cancelled ?? false,
+                    delete: !(slot?.is_cancelled ?? false),
+                    selectedId: slot?.slot_id ?? ""
+                )
+
+                if MeetingStatus == PTMString.completedMeetings {
+                    cell.optionsBtn.isHidden = true
+                } else if MeetingStatus == PTMString.todayMeetings {
+                    cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
+                }
+
+                cell.delegate = self
+            } else {
+                cell.optionsBtn.isHidden = true
+            }
+
+            // MARK: - Reset common UI
+            cell.BookedStatusView.isHidden = true
+            cell.WaitingLbl.isHidden = true
+            cell.WaitingLbl.text = nil
+
+            // MARK: - Slot Status Handling
+            if slot?.status == "Expired" {
+
+                cell.StatusBtn.backgroundColor = .systemGray5
+                cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Expired", for: .normal)
+                cell.StatusBtn.tintColor = .black
+                cell.StatusBtn.setTitleColor(.black, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemGray5
+
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .black
+                cell.WaitingLbl.text = "Slot Expired"
+
+            }
+            else if slot?.is_cancelled_by_staff == true {
+
+                cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
+                cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Cancelled", for: .normal)
+                cell.StatusBtn.tintColor = .red
+                cell.StatusBtn.setTitleColor(.red, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemRed.withAlphaComponent(0.1)
+
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .systemRed
+                cell.WaitingLbl.text = "Slot Cancelled"
+
+            }
+            else if slot?.is_booked == true {
+
+                cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
+                cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+
+                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                cell.StatusBtn.setTitle(title, for: .normal)
+
+                cell.StatusBtn.tintColor = .aproved
+                cell.StatusBtn.setTitleColor(.aproved, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemGreen.withAlphaComponent(0.1)
+                cell.BookedStatusView.isHidden = false
+
+            }
+            else { // Available
+
+                cell.StatusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.075)
+                cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
+                cell.StatusBtn.setTitle("Available", for: .normal)
+                cell.StatusBtn.tintColor = .systemBlue
+                cell.StatusBtn.setTitleColor(.black, for: .normal)
+
+                cell.BookingBaseview.backgroundColor = .systemBlue.withAlphaComponent(0.1)
+
+                cell.WaitingLbl.isHidden = false
+                cell.WaitingLbl.textColor = .systemBlue
+                cell.WaitingLbl.text = "Waiting for Booking"
+            }*/
+            
+            
+               cell.Collapsedelegate = self
+               cell.indexPath = indexPath
+               
+               // update expansion
+               let isExpanded = expandedIndex == indexPath
+               cell.updateExpansion(isExpanded: isExpanded)
+
             return cell
             
         }
@@ -515,5 +622,31 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension NewPtmVC: BookingCellDelegate {
+
+    func didTapCollapse(cell: SlotListTV) {
+        guard let indexPath = cell.indexPath else { return }
+
+        tv.beginUpdates()
+
+        if expandedIndex == indexPath {
+            // collapse current
+            expandedIndex = nil
+        } else {
+            // collapse previous
+            if let previous = expandedIndex {
+                tv.reloadRows(at: [previous], with: .automatic)
+            }
+            // expand new
+            expandedIndex = indexPath
+        }
+
+        // reload the tapped cell
+        tv.reloadRows(at: [indexPath], with: .automatic)
+
+        tv.endUpdates()
     }
 }

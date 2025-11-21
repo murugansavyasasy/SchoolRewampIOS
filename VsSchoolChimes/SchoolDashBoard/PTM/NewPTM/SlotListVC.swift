@@ -24,6 +24,8 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var MeetingStatus = ""
     var classList:[String] = []
+    var expandedIndex: IndexPath?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -263,6 +265,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.WaitingLbl.textColor = .systemBlue
                 cell.WaitingLbl.text = "Waiting for Booking"
             }
+            cell.Collapsedelegate = self
+            let isExpanded = expandedIndex == indexPath
+                cell.updateExpansion(isExpanded: isExpanded)
 
             return cell
 
@@ -344,4 +349,31 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
 
 
+}
+
+extension SlotListVC: BookingCellDelegate {
+
+    func didTapCollapse(cell: SlotListTV) {
+        guard let indexPath = tv.indexPath(for: cell) else { return }
+
+        tv.beginUpdates()
+
+        if expandedIndex == indexPath {
+            // Collapse the same cell
+            expandedIndex = nil
+        } else {
+            // Collapse previous if exists
+            if let previousIndex = expandedIndex {
+                expandedIndex = indexPath
+                tv.reloadRows(at: [previousIndex], with: .automatic)
+            }
+
+            // Expand the new one
+            expandedIndex = indexPath
+        }
+
+        // Reload clicked cell
+        tv.reloadRows(at: [indexPath], with: .automatic)
+        tv.endUpdates()
+    }
 }
