@@ -888,7 +888,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
                     getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
-                        selectSubject.isHidden =  !getSubject.isHidden
+//                        selectSubject.isHidden =  !getSubject.isHidden
+                        selectSubject.isHidden = false
+                       
+                        getSubjectListAPI(sectionIds ?? "")
                     }else{
                         selectSubject.isHidden = true
                         subjectId = ""
@@ -897,7 +900,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     speficBtnName.isHidden = !(selectedSections.count == 1)
                     speficBtnName.isEnabled = true
                 }
-                spaceView.isHidden = !selectSubject.isHidden
+                spaceView.isHidden = true
                 
             }
             
@@ -1014,7 +1017,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if successmessage.status == true{
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
-                            spaceView.isHidden = false
+//                            spaceView.isHidden = false
+                            spaceView.isHidden = true
                             groupDetails = successmessage.data
                             nodata(true, message: "")
                             if var students = groupDetails {
@@ -1050,7 +1054,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-                        spaceView.isHidden = false
+//                        spaceView.isHidden = false
+                        spaceView.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
                         nodata(true, message: "")
@@ -1137,7 +1142,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
-                            spaceView.isHidden = false
+//                            spaceView.isHidden = false
+                            spaceView.isHidden = true
                             sendbtnName.isHidden = true
                             tv.isHidden = true
                             
@@ -1222,7 +1228,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-                        spaceView.isHidden = false
+//                        spaceView.isHidden = false
+                        spaceView.isHidden = true
                     }
                 }
             case .failure(let error):
