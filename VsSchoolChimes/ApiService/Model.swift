@@ -1808,9 +1808,13 @@ struct BookedSlot: Codable {
     let class_name: String?
     let section_name: String?
     let slot_status: String?
-    let is_booked: Int?   // API gives 1, so Int is correct
+    let is_booked: Bool?
     let profile_url: String?
+    let can_cancel: Bool?
+    let is_cancelled: Bool?
+    let is_cancelled_by_staff: Bool?
 }
+
 
 struct SlotValidationResponse: Codable {
     var status: Bool?

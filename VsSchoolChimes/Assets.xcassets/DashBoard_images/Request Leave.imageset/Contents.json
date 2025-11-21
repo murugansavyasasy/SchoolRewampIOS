@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "leave.svg",
+      "filename" : "svgviewer-output (1).svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "leave 1.svg",
+      "filename" : "svgviewer-output (1) 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "leave 2.svg",
+      "filename" : "svgviewer-output (1) 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
