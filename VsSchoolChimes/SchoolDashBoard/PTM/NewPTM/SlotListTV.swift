@@ -5,6 +5,10 @@
 //  Created by Lakshmanan on 12/08/25.
 //
 
+protocol BookingCellDelegate: AnyObject {
+    func didTapCollapse(cell: SlotListTV)
+}
+
 import UIKit
 
 class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
@@ -23,6 +27,9 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var bookedByNameLbl: UILabel!
     @IBOutlet weak var bookedByDefLbl: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var fatherNameStack: UIStackView!
+    @IBOutlet weak var motherNAmeStack: UIStackView!
+    @IBOutlet weak var collapseBtn: UIButton!
     
     
     var showpopup:ShowPopupDelegate?
@@ -30,6 +37,10 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     var delete:Bool?
     var delegate:SelectedId?
     var selectedId:String?
+    weak var Collapsedelegate: BookingCellDelegate?
+    var isExpanded = false
+    var indexPath: IndexPath?
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,6 +64,9 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         WaitingLbl.isHidden = true
         
         optionsBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
+        
+        fatherNameStack.isHidden = true
+        motherNAmeStack.isHidden = true
     }
     
     func edit(edit:Bool,delete:Bool,selectedId:String){
@@ -61,6 +75,17 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         self.edit = edit
         optionsBtn.isHidden = !(edit || delete)
     }
+    
+    @IBAction func collapseBtnAct(_ sender: Any) {
+        
+        Collapsedelegate?.didTapCollapse(cell: self)
+    }
+    
+    func updateExpansion(isExpanded: Bool) {
+            self.isExpanded = isExpanded
+            fatherNameStack.isHidden = !isExpanded
+            motherNAmeStack.isHidden = !isExpanded
+        }
     
     @IBAction func optionBtnAct(_ sender: UIButton) {
         

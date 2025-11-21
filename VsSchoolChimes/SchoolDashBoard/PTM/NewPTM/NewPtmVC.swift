@@ -52,6 +52,8 @@ class NewPtmVC: UIViewController, Datepicker {
     //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
+    var expandedIndex: IndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -586,6 +588,14 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.WaitingLbl.textColor = .systemBlue
                 cell.WaitingLbl.text = "Waiting for Booking"
             }*/
+            
+            
+               cell.Collapsedelegate = self
+               cell.indexPath = indexPath
+               
+               // update expansion
+               let isExpanded = expandedIndex == indexPath
+               cell.updateExpansion(isExpanded: isExpanded)
 
             return cell
             
@@ -612,5 +622,31 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension NewPtmVC: BookingCellDelegate {
+
+    func didTapCollapse(cell: SlotListTV) {
+        guard let indexPath = cell.indexPath else { return }
+
+        tv.beginUpdates()
+
+        if expandedIndex == indexPath {
+            // collapse current
+            expandedIndex = nil
+        } else {
+            // collapse previous
+            if let previous = expandedIndex {
+                tv.reloadRows(at: [previous], with: .automatic)
+            }
+            // expand new
+            expandedIndex = indexPath
+        }
+
+        // reload the tapped cell
+        tv.reloadRows(at: [indexPath], with: .automatic)
+
+        tv.endUpdates()
     }
 }
