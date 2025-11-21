@@ -552,6 +552,7 @@ class RecipientVc: UIViewController{
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
+        vc.selected_subjectID = subjectId
         vc.AlertMessageContent = message
         vc.Common_request_params  = Common_request_params
         vc.accidmaticNAme = acidmicYrLbl.text
@@ -698,6 +699,9 @@ class RecipientVc: UIViewController{
                 speficBtnName.isHidden = true
             }
             
+            if Menu_id.staffSelectedMenuId == Menu_id.isAssaignment{
+                speficBtnName.isHidden = !(array_selectedId.count == 1)
+            }
             if Menu_id.staffSelectedMenuId == Menu_id.quiz{
                 
                 getQuizLevel(
