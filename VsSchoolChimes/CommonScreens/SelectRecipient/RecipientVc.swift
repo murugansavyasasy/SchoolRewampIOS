@@ -109,7 +109,7 @@ class RecipientVc: UIViewController{
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
         selectLevel.isHidden = true
-        spaceView.isHidden = false
+        spaceView.isHidden = true
         getSubject.isHidden = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
@@ -885,20 +885,27 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
                     getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
 //                        selectSubject.isHidden =  !getSubject.isHidden
                         selectSubject.isHidden = false
-                       
                         getSubjectListAPI(sectionIds ?? "")
                     }else{
                         selectSubject.isHidden = true
                         subjectId = ""
                     }
                 }else{
-                    speficBtnName.isHidden = !(selectedSections.count == 1)
-                    speficBtnName.isEnabled = true
+                    if Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+                        speficBtnName.isHidden = !(selectedSections.count == 1)
+                        speficBtnName.isEnabled = true
+                        selectSubject.isHidden = false
+                        getSubjectListAPI(sectionIds ?? "")
+                    }else{
+                        speficBtnName.isHidden = !(selectedSections.count == 1)
+                        speficBtnName.isEnabled = true
+                    }
+                   
                 }
                 spaceView.isHidden = true
                 
@@ -983,7 +990,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                spaceView.isHidden = !selectSubject.isHidden
+//                spaceView.isHidden = !selectSubject.isHidden
+                spaceView.isHidden = true
                 subjectId = selectedSections.count == 0 ? "" : subjectId
                 selectSubject.isHidden = subjectId == "" || subjectId == nil
                 getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
@@ -1205,6 +1213,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         tv.isHidden = false
+                        spaceView.isHidden = true
                         subjectDetails = successMessage.data
                         subjectDetails?.enumerated().forEach { index, student in
                             subjectList.append(student.name ?? "")
