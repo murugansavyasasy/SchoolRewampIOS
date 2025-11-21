@@ -117,8 +117,11 @@ extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 
         let item = dataResponse[indexPath.item]
         cell.headingLbl.text = item.title
-        cell.descriptionLbl.text = item.description
-
+        if indexPath.item == 0 {
+            cell.descriptionLbl.text = "•Developed a comprehensive healthcare app, implementing user registration, password management, profile editing, and notifications. •Designed intuitive interfaces for Home, Profile, Appointment, and Resources screens. •Enhanced patient management with secure authentication, real-time appointment tracking, multi-medium communication, and digital note-taking. •Integrated appointment management, patient status, letter generation, digital signatures, and payment processing. •Created a platform for medical professionals with features for appointment management, patient progress tracking, medication prescribing, and secure communication. •Ensured robust security and user-friendly navigation. •Individual Contribution: Patient App, Doctor's App & Front Office iPad App frontend design and Connectivity Happy Testing | Secure Digital Exam Software •Developed a platform for educational institutions to manage the creation, delivery, and evaluation of examinations. •Supported both objective and subjective questions with features such as instant exam delivery, question banks, multiple question papers, and multi-level evaluation. •Integrated test history and analytics to enhance examination management. •Individual Contribution: Student App and Teacher App"
+        }else{
+            cell.descriptionLbl.text = item.description
+        }
         if let urlString = item.file_path?.first?.url,
            let url = URL(string: urlString) {
             cell.imgView.sd_setImage(with: url)

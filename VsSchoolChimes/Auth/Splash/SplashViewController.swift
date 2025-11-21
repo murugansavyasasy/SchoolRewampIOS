@@ -54,7 +54,6 @@ class DeveloperModeDetector {
 // MARK: - SplashViewController
 @available(iOS 14.0, *)
 class SplashViewController: UIViewController, UIPopoverPresentationControllerDelegate, ReminderCalback {
-    
     // MARK: - IBOutlets
     @IBOutlet weak var versionLbl: UILabel!
     @IBOutlet weak var bellImageView: UIImageView!
