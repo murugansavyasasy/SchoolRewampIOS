@@ -111,6 +111,8 @@
 "LeaveRequestInfo" = "ข้อมูลคำร้องขอ ลา";
 "Student/Parent" = "ผู้เรียน/ผู้ปกครอง";
 "or Student/Parent" = "หรือผู้เรียน/ผู้ปกครอง";
+"LoginAsStudentParent" = "เข้าสู่ระบบเป็นนักเรียน/ผู้ปกครอง";
+"ClickProceedToContinue" = "คลิกดำเนินการต่อเพื่อดำเนินการต่อ"; 
 "Principal" = "ผู้อำนวยการ";
 "Login As Teacher Or Parent" = "เข้าสู่ระบบในฐานะครูหรือผู้ปกครอง";
 "Login As" = "เข้าสู่ระบบเป็น";
@@ -147,6 +149,7 @@
 "All" = "ทั้งหมด";
 "NEXT" = "ถัดไป";
 "Proceed" = "ดำเนินการต่อ";
+"Management" = "การจัดการ";
 "Edit" = "แก้ไข";
 "Welcome" = "ยินดีต้อนรับ";
 "Change Language" = "เปลี่ยนภาษา";

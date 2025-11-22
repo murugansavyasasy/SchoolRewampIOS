@@ -665,42 +665,6 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
     
 }
 
-class GradientView: UIView {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupGradient()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupGradient()
-    }
-    
-    private func setupGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.bounds
-        gradientLayer.colors = [
-            UIColor.blue.withAlphaComponent(0.4).cgColor,
-            UIColor.white.cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.cornerRadius = 10
-        self.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if let gradientLayer = self.layer.sublayers?.first as? CAGradientLayer {
-            gradientLayer.frame = self.bounds
-            gradientLayer.cornerRadius = 10        }
-        self.layer.cornerRadius = 10
-        self.clipsToBounds = true
-    }
-}
-
 @available(iOS 14.0, *)
 extension ReportStudentListVC: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

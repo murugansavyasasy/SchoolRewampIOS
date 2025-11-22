@@ -120,14 +120,14 @@ class PriorityVC: UIViewController {
        
        if staff_role == PriorityType.is_principal{
            
-           TeacherParentlbl.text = (CommonStringFile.LoginAs.translated())+" Managment"
+           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated()) \( "Management".translated() )"
        }else{
            
-           TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Student/Parent"
+           TeacherParentlbl.text = CommonStringFile.LoginAsStudentParent.translated()
        }
      
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
-       teacherButton.setTitle(rollname, for: .normal)
+       teacherButton.setTitle(rollname.translated(), for: .normal)
     }
     
     func apply_gradients() {
@@ -182,11 +182,11 @@ class PriorityVC: UIViewController {
     @IBAction func teacherAct(_ sender: Any) {
         
         if staff_role == PriorityType.is_principal{
-            
-            TeacherParentlbl.text = (CommonStringFile.LoginAs.translated())+" Managment"
+            TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated()) \( "Management".translated() )"
+
         }else{
             
-            TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname)
+            TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname.translated())
         }
         
         if staff_role == PriorityType.is_staff{
@@ -209,7 +209,7 @@ class PriorityVC: UIViewController {
         NextButtonView.isHidden = true
         bottomView.isHidden = true
         ProceedInstructionLbl.isHidden = true
-        TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Student/Parent"
+        TeacherParentlbl.text = CommonStringFile.LoginAsStudentParent.translated()
         apply_gradients()
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
@@ -340,14 +340,17 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.StudentImage.kf.setImage(with: URL(string: childDetails?[indexPath.row].profile ?? ""),placeholder: UIImage(systemName: "person.fill"))
             if #available(iOS 15.0, *) {
                 let gradientSets: [[CGColor]] = [
-                    [UIColor.systemBlue.cgColor, UIColor.systemTeal.cgColor],
-                    [UIColor.systemPurple.cgColor, UIColor.systemPink.cgColor],
-                    [UIColor.systemOrange.cgColor, UIColor.systemRed.cgColor],
-                    [UIColor.systemGreen.cgColor, UIColor.systemMint.cgColor],
-                    [UIColor.systemIndigo.cgColor, UIColor.systemBlue.cgColor]
+                    [UIColor(hex: "#7FD1FA").cgColor, UIColor(hex: "#7FE8FA").cgColor],
+                    [UIColor(hex: "#D7A5FA").cgColor, UIColor(hex: "#FAA5D7").cgColor],
+                    [UIColor(hex: "#FAC97F").cgColor, UIColor(hex: "#FA9A7F").cgColor],
+                    [UIColor(hex: "#7FFAAF").cgColor, UIColor(hex: "#A5FAE8").cgColor],
+                    [UIColor(hex: "#A5A5FA").cgColor, UIColor(hex: "#7FC4FA").cgColor]
                 ]
-                let gradientColors = gradientSets[indexPath.row % gradientSets.count]
-                cell.setGradientColors(gradientColors)
+//                let gradientSets: [[CGColor]] = [ [UIColor.systemBlue.cgColor, UIColor.systemTeal.cgColor], [UIColor.systemPurple.cgColor, UIColor.systemPink.cgColor], [UIColor.systemOrange.cgColor, UIColor.systemRed.cgColor], [UIColor.systemGreen.cgColor, UIColor.systemMint.cgColor], [UIColor.systemIndigo.cgColor, UIColor.systemBlue.cgColor] ]
+                
+                let colors = gradientSets[indexPath.row % gradientSets.count]
+                cell.setGradientColors(colors)
+                
             }
                
             cell.SchoolAdressLbl.text = childDetails?[indexPath.row].school_city ?? ""

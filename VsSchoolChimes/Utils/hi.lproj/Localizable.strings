@@ -136,6 +136,8 @@
 "Create Leave Request" = "छुट्टी निवेदन बनाएँ";
 "LeaveRequestInfo" = "छुट्टी निवेदन जानकारी";
 "Student/Parent" = "छात्र/अभिभावक";
+"LoginAsStudentParent" = "छात्र/अभिभावक के रूप में लॉगिन करें";
+"ClickProceedToContinue" = "जारी रखने के लिए आगे क्लिक करें";
 "or Student/Parent" = "या छात्र/अभिभावक";
 "Principal" = "प्रधानाध्यापक";
 "Login As Teacher Or Parent" = "शिक्षक या अभिभावक के रूप में लॉगिन करें";
@@ -201,6 +203,7 @@
 "Logout" = "लॉगआउट";
 "Chapters Completed" = "अध्याय पूर्ण";
 "Proceed" = "जारी रखें";
+"Management" = "प्रबंधन";
 // MARK: Days
 "Sunday" = "रविवार";
 "Monday" = "सोमवार";

@@ -10,7 +10,6 @@ import Darwin
 import AVFoundation
 import AudioToolbox
 
-
 // MARK: - Confetti Particle
 class ConfettiParticle: UIView {
     var startPosition: CGPoint = .zero
@@ -30,6 +29,67 @@ class ConfettiParticle: UIView {
     required init?(coder: NSCoder) { fatalError("init(coder:) not implemented") }
 }
 
+// MARK: - Star Particle View
+class StarParticleView: UIView {
+    private let starLayer = CAShapeLayer()
+    
+    init(size: CGFloat, color: UIColor) {
+        super.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        setupStar(size: size, color: color)
+    }
+    
+    required init?(coder: NSCoder) { fatalError("init(coder:) not implemented") }
+    
+    private func setupStar(size: CGFloat, color: UIColor) {
+        let path = createStarPath(size: size)
+        starLayer.path = path.cgPath
+        starLayer.fillColor = color.cgColor
+        starLayer.shadowColor = color.cgColor
+        starLayer.shadowRadius = 3
+        starLayer.shadowOpacity = 0.8
+        starLayer.shadowOffset = .zero
+        layer.addSublayer(starLayer)
+    }
+    
+    private func createStarPath(size: CGFloat) -> UIBezierPath {
+        let path = UIBezierPath()
+        let center = CGPoint(x: size / 2, y: size / 2)
+        let points = 4
+        let outerRadius = size / 2
+        let innerRadius = size / 6
+        
+        for i in 0..<(points * 2) {
+            let radius = i % 2 == 0 ? outerRadius : innerRadius
+            let angle = CGFloat(i) * .pi / CGFloat(points) - .pi / 2
+            let point = CGPoint(
+                x: center.x + radius * cos(angle),
+                y: center.y + radius * sin(angle)
+            )
+            if i == 0 { path.move(to: point) }
+            else { path.addLine(to: point) }
+        }
+        path.close()
+        return path
+    }
+    
+    func startBlinking() {
+        let animation = CAKeyframeAnimation(keyPath: "opacity")
+        animation.values = [0.2, 1.0, 0.2]
+        animation.keyTimes = [0, 0.5, 1]
+        animation.duration = Double.random(in: 1.0...2.5)
+        animation.repeatCount = .infinity
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        layer.add(animation, forKey: "blink")
+        
+        let scaleAnim = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnim.values = [0.8, 1.2, 0.8]
+        scaleAnim.keyTimes = [0, 0.5, 1]
+        scaleAnim.duration = animation.duration
+        scaleAnim.repeatCount = .infinity
+        layer.add(scaleAnim, forKey: "pulse")
+    }
+}
+
 // MARK: - Ripple Ring View
 class RippleRingView: UIView {
     override init(frame: CGRect) {
@@ -46,6 +106,7 @@ class RippleRingView: UIView {
 class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var empoweringLabel: UILabel!
@@ -56,8 +117,10 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     @IBOutlet weak var dot3: UIView!
     @IBOutlet weak var confettiContainerView: UIView!
     @IBOutlet weak var rippleContainerView: UIView!
+    
     // MARK: - Properties
     private var confettiParticles: [ConfettiParticle] = []
+    private var starParticles: [StarParticleView] = []
     private var rippleTimer: Timer?
     private var isAnimating = true
     private var dotAnimationTimers: [Timer] = []
@@ -75,17 +138,21 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     private let lottieWidth: CGFloat = 400
     private let lottieHeight: CGFloat = 400
     private let sizeScaleDown: CGFloat = 0.6
-        private let speedMultiplier: Double = 0.75
-        private let extraRandomConfettiCount = 12
+    private let speedMultiplier: Double = 0.75
+    private let extraRandomConfettiCount = 12
+    
+    // REDUCED: Confetti size multiplier (was 1.0, now 0.5 for 50% smaller)
+    private let confettiSizeMultiplier: CGFloat = 0.5
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        createStars()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        checkDeveloperMode()
         startSplashAnimation()
     }
     
@@ -120,6 +187,46 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         }
     }
     
+    // MARK: - Stars Creation
+    private func createStars() {
+        let starColors: [UIColor] = [
+            UIColor(hex: "#4FC3F7"),  // Light blue
+            UIColor(hex: "#29B6F6"),  // Sky blue
+            UIColor(hex: "#03A9F4"),  // Blue
+            UIColor(hex: "#81D4FA")   // Pale blue
+        ]
+        
+        let numberOfStars = 12
+        let containerBounds = confettiContainerView.bounds
+        
+        for _ in 0..<numberOfStars {
+            let size = CGFloat.random(in: 6...14)
+            let color = starColors.randomElement() ?? starColors[0]
+            let star = StarParticleView(size: size, color: color)
+            
+            let x = CGFloat.random(in: 20...(containerBounds.width - 20))
+            let y = CGFloat.random(in: 60...(containerBounds.height * 0.7))
+            star.center = CGPoint(x: x, y: y)
+            star.alpha = 0
+            
+            // Use confettiContainerView for stars
+            confettiContainerView.addSubview(star)
+            starParticles.append(star)
+        }
+    }
+    
+    // Show stars after confetti ends
+    private func showStars() {
+        for (index, star) in starParticles.enumerated() {
+            let delay = Double(index) * 0.08
+            UIView.animate(withDuration: 0.5, delay: delay, options: .curveEaseIn) {
+                star.alpha = 1.0
+            } completion: { _ in
+                star.startBlinking()
+            }
+        }
+    }
+    
     // MARK: - Coordinate Conversion
     private func convertLottiePoint(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
         let containerWidth = confettiContainerView.bounds.width
@@ -141,7 +248,8 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     private func convertLottieSize(_ size: CGFloat) -> CGFloat {
         let containerWidth = confettiContainerView.bounds.width
         let scale = containerWidth / lottieWidth
-        return size * scale
+        // REDUCED: Apply confetti size multiplier
+        return size * scale * confettiSizeMultiplier
     }
     
     // MARK: - Animation Sequence
@@ -267,6 +375,12 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         confettiParticles.forEach { $0.removeFromSuperview() }
         confettiParticles.removeAll()
         
+        // DARKEN: Animate gradient to darker blue
+        gradientView.transitionToDarkerGradient(duration: 0.8)
+        
+        // Show stars after confetti ends
+        showStars()
+        
         logoImageView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
         UIView.animate(
             withDuration: 0.8,
@@ -291,7 +405,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         createRippleWithNaturalDelay(at: 1.0)
         createRippleWithNaturalDelay(at: 2.1)
         
-        // Continuous loop with variation
         rippleTimer = Timer.scheduledTimer(withTimeInterval: 3.2, repeats: true) { [weak self] _ in
             guard let self = self, self.isAnimating else { return }
             let randomOffset = Double.random(in: 2.7...3.7)
@@ -302,12 +415,13 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     }
     
     private func createRippleWithNaturalDelay(at baseDelay: TimeInterval) {
-            guard isAnimating else { return }
-            let delay = baseDelay + Double.random(in: 0.0...0.5)
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-                self?.createSingleRipple()
-            }
+        guard isAnimating else { return }
+        let delay = baseDelay + Double.random(in: 0.0...0.5)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            self?.createSingleRipple()
         }
+    }
+    
     private func createSingleRipple() {
         guard isAnimating else { return }
         
@@ -344,7 +458,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             ripple.removeFromSuperview()
         }
     }
-
     
     // MARK: - Element Animations
     private func animateHeaderLabel() {
@@ -378,12 +491,13 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             self?.underlineView.alpha = 1
-            self?.underlineWidthConstraint.constant = 240
+            self?.underlineWidthConstraint.constant = 230
             UIView.animate(withDuration: 0.8, delay: 0, options: .curveEaseOut) {
                 self?.view.layoutIfNeeded()
             }
         }
     }
+    
     private func setColoredEmpoweringText() {
         let fullText = "Empowering 3000+ schools"
         let firstPart = "Empowering"
@@ -428,6 +542,12 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         rippleContainerView.subviews.forEach { $0.removeFromSuperview() }
         confettiParticles.forEach { $0.removeFromSuperview() }
         confettiParticles.removeAll()
+        
+        starParticles.forEach {
+            $0.layer.removeAllAnimations()
+            $0.removeFromSuperview()
+        }
+        starParticles.removeAll()
     }
     
     // MARK: - Developer Mode Check
@@ -443,13 +563,9 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             message: "This app cannot run in Developer Mode for security reasons.",
             preferredStyle: .alert
         )
-
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                exit(0)
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { exit(0) }
         })
-
         present(alert, animated: true)
     }
 
@@ -457,9 +573,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     private func checkBiometricStatus() {
         if BiometricAuthentication.shared.isBiometricEnabledInApp() && BiometricAuthentication.shared.isBiometricAvailable() {
             BiometricAuthentication.shared.authenticateUser(from: self) { [weak self] success in
-                DispatchQueue.main.async {
-                    self?.versionCheck()
-                }
+                DispatchQueue.main.async { self?.versionCheck() }
             }
         } else {
             versionCheck()
@@ -480,7 +594,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             token: ServiceUrl.token
         ) { [weak self] (result: Result<VersionCheckResponse, Error>) in
             guard let self = self else { return }
-            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
@@ -490,7 +603,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
                         }
-                        
                         if self.versionData?.update_available == true {
                             self.showUpdatePopup()
                         } else {
@@ -499,7 +611,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                     } else {
                         self.appFlowChecking()
                     }
-                    
                 case .failure(let error):
                     print("Version check error: \(error.localizedDescription)")
                     self.appFlowChecking()
@@ -528,7 +639,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             token: ServiceUrl.token
         ) { [weak self] (result: Result<UserValidationResponseSuc, Error>) in
             guard let self = self else { return }
-            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
@@ -536,10 +646,8 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                         self.navigateToLogin()
                         return
                     }
-                    
                     UserDefaultFileManager.saveUserDetails(data: userData)
                     self.navigateBasedOnUserRole(data: userData)
-                    
                 case .failure(let error):
                     print("Validation error: \(error.localizedDescription)")
                     self.navigateToLogin()
@@ -652,7 +760,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                 self?.openAppStore(link: versionData.app_store_link ?? "")
             })
         }
-        
         present(alert, animated: true)
     }
     
@@ -663,15 +770,10 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     
     // MARK: - Utility Methods
     private func showAlert(message: String) {
-        let alert = UIAlertController(
-            title: "Alert",
-            message: message,
-            preferredStyle: .alert
-        )
+        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-
     
     // MARK: - UIPopoverPresentationControllerDelegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -694,5 +796,71 @@ extension String {
 extension Bundle {
     var appVersion: String? {
         return infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+}
+
+// MARK: - GradientView with Transition Support
+class GradientView: UIView {
+    
+    private var gradientLayer: CAGradientLayer?
+    
+    // Light gradient colors (initial)
+    private let lightColors: [CGColor] = [
+        UIColor(hex: "#6EC9F5").cgColor,
+        UIColor(hex: "#B3E5FC").cgColor,
+        UIColor(hex: "#FFFFFF").cgColor
+    ]
+    
+    // Darker gradient colors (after ripple starts)
+    private let darkColors: [CGColor] = [
+        UIColor(hex: "#1E88E5").cgColor,  // Darker blue
+        UIColor(hex: "#64B5F6").cgColor,  // Medium blue
+        UIColor(hex: "#E3F2FD").cgColor   // Light blue-white
+    ]
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupGradient()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupGradient()
+    }
+    
+    private func setupGradient() {
+        let gradient = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = lightColors
+        gradient.locations = [0.0, 0.45, 1.0]
+        gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradient.cornerRadius = 10
+        gradient.masksToBounds = true
+        self.layer.insertSublayer(gradient, at: 0)
+        self.gradientLayer = gradient
+    }
+    
+    func transitionToDarkerGradient(duration: CFTimeInterval) {
+        guard let gradientLayer = gradientLayer else { return }
+        
+        let colorAnimation = CABasicAnimation(keyPath: "colors")
+        colorAnimation.fromValue = lightColors
+        colorAnimation.toValue = darkColors
+        colorAnimation.duration = duration
+        colorAnimation.fillMode = .forwards
+        colorAnimation.isRemovedOnCompletion = false
+        colorAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        
+        gradientLayer.add(colorAnimation, forKey: "colorChange")
+        gradientLayer.colors = darkColors
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer?.frame = self.bounds
+        gradientLayer?.cornerRadius = 10
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
     }
 }
