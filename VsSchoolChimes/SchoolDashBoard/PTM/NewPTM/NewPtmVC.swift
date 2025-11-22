@@ -21,6 +21,8 @@ import UIKit
 class NewPtmVC: UIViewController, Datepicker {
    
     
+   
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var selectDateBtn: UIButton!
@@ -240,7 +242,7 @@ class NewPtmVC: UIViewController, Datepicker {
                         
                         self.tv.reloadData()
                     }else {
-                        
+                        self.sections.removeAll()
                         self.nodataLbl.isHidden = false
                         self.noDataImage.isHidden = false
                         self.nodataLbl.text = success.message
@@ -248,6 +250,7 @@ class NewPtmVC: UIViewController, Datepicker {
                 
                     
                 case .failure(let failure):
+                    self.sections.removeAll()
                     self.nodataLbl.isHidden = false
                     self.noDataImage.isHidden = false
                     self.nodataLbl.text = failure.localizedDescription
@@ -493,15 +496,26 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
             
             let slot = sections[indexPath.section].events[indexPath.row] as? BookedSlot
+            let MeetingStatus = sections[indexPath.section].title
+            
+            cell.meetigModeLbl.isHidden = false
+            cell.meetigNameLbl.isHidden = false
+            cell.meetigNameLbl.text = slot?.event_name
+            cell.meetigModeLbl.text = slot?.event_mode
 
-            /*// MARK: - Basic Info
+            // MARK: - Basic Info
             cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
             cell.DurationLbl.text = "\(PTMString.duration) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes)"
-            cell.bookedByNameLbl.text = slot?.booked_by
+            cell.bookedByNameLbl.text = slot?.student_name
+            cell.fatherNameLbl.text = slot?.father_name
+            cell.motherNameLbl.text = slot?.mother_name
+            cell.standardLbl.text = "\(slot?.class_name ?? "") - \(slot?.section_name ?? "")"
 
             // MARK: - Image
             if let url = URL(string: slot?.profile_url ?? "") {
                 cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "interactProfile"))
+            }else{
+                cell.profileImage.image = UIImage(named: "interactProfile")
             }
 
             // MARK: - Options Button Logic
@@ -509,13 +523,16 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.edit(
                     edit: slot?.is_cancelled ?? false,
                     delete: !(slot?.is_cancelled ?? false),
-                    selectedId: slot?.slot_id ?? ""
+                    selectedId: slot?.id ?? ""
                 )
+                
 
-                if MeetingStatus == PTMString.completedMeetings {
+                if MeetingStatus == "Completed Slots" {
                     cell.optionsBtn.isHidden = true
-                } else if MeetingStatus == PTMString.todayMeetings {
+                } else if MeetingStatus == "Today Slots" {
                     cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
+                }else{
+                    cell.optionsBtn.isHidden = false
                 }
 
                 cell.delegate = self
@@ -529,7 +546,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             cell.WaitingLbl.text = nil
 
             // MARK: - Slot Status Handling
-            if slot?.status == "Expired" {
+            if slot?.slot_status == "Expired" {
 
                 cell.StatusBtn.backgroundColor = .systemGray5
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
@@ -587,7 +604,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemBlue
                 cell.WaitingLbl.text = "Waiting for Booking"
-            }*/
+            }
             
             
                cell.Collapsedelegate = self
@@ -596,6 +613,18 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                // update expansion
                let isExpanded = expandedIndex == indexPath
                cell.updateExpansion(isExpanded: isExpanded)
+            
+            cell.onCall = { [weak self] in
+                
+                self?.callButtonTapped(Mobile: slot?.mobile_no ?? "")
+            }
+            
+            cell.onJoin = {[weak self] in
+                self?.JoinButtonTapped(Link: slot?.event_link ?? "")
+            }
+            
+            cell.callImage.isHidden = !(slot?.event_mode == "Phone Call")
+            cell.LinkImage.isHidden = !(slot?.event_mode == "Virtual")
 
             return cell
             
@@ -623,9 +652,56 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func isCurrentTimeLater(than timeString: String) -> Bool {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let givenDate = formatter.date(from: timeString) else {
+            return false // invalid input
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // Extract hour and minute from given time
+        let components = calendar.dateComponents([.hour, .minute], from: givenDate)
+        
+        guard let givenTimeToday = calendar.date(bySettingHour: components.hour!,
+                                                 minute: components.minute!,
+                                                 second: 0,
+                                                 of: now) else {
+            return false
+        }
+        
+        return now > givenTimeToday
+    }
+    
+    func callButtonTapped(Mobile: String) {
+           if let url = URL(string: "tel://\(Mobile)"),
+              UIApplication.shared.canOpenURL(url) {
+               UIApplication.shared.open(url)
+           } else {
+               print("This device cannot make phone calls.")
+           }
+       }
+    
+    func JoinButtonTapped(Link: String) {
+        var fixedLink = Link
+        if !fixedLink.lowercased().hasPrefix("http") {
+            fixedLink = "https://" + fixedLink
+        }
+        
+        if let url = URL(string: fixedLink) {
+            UIApplication.shared.open(url)
+        } else {
+            print("Cannot open meeting link")
+        }
+    }
 }
 
-extension NewPtmVC: BookingCellDelegate {
+extension NewPtmVC: BookingCellDelegate, SelectedId {
 
     func didTapCollapse(cell: SlotListTV) {
         guard let indexPath = cell.indexPath else { return }
@@ -648,5 +724,13 @@ extension NewPtmVC: BookingCellDelegate {
         tv.reloadRows(at: [indexPath], with: .automatic)
 
         tv.endUpdates()
+    }
+    
+    func selectId(id: String?, edit: Bool?) {
+        if edit ?? false{
+            //Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
+        }else{
+            //cancel_and_close_slot_Api(SlotId: id ?? "")
+        }
     }
 }

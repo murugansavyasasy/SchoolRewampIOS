@@ -110,7 +110,7 @@ struct AlertstringFile{
     static let Select_from_history = "Select from history"
     static let Enter_the_new_password = "Enter the new password"
     static let Enterthe_confirm_password = "Enter the confirm password"
-    static let Enter_valid_Mobile = "Enter valid Mobile Number"
+    static let Enter_valid_Mobile = "Enter a valid Mobile Number"
     static let Invalid = "Invalid Password"
     static let Enter_the_10_digit = "Enter the 10 digit mobile number"
     static let Terms_And_Conditions = "Please agree to the terms and conditions"
