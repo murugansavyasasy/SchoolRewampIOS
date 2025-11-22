@@ -211,7 +211,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
                 cell.exportRecordBtn.isHidden = !(lsrw?.is_submitted ?? false)
-                cell.exportRecordBtn.setTitle("My Submission", for: .normal)
+                cell.exportRecordBtn.setTitle("My Submission".translated(), for: .normal)
                 cell.exportRecordBtn.addTarget(self, action: #selector(exportBtnTapped), for: .touchUpInside)
                 cell.delegate = self
                 return cell

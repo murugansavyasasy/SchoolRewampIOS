@@ -681,24 +681,23 @@ class GradientView: UIView {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
         gradientLayer.colors = [
-            UIColor(red: 147/255, green: 112/255, blue: 219/255, alpha: 1.0).cgColor, // Purple
-            UIColor.white.cgColor // White
+            UIColor.blue.withAlphaComponent(0.4).cgColor,
+            UIColor.white.cgColor
         ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // Top-center
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0) // Bottom-center
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.cornerRadius = 10 // Add corner radius to gradient layer
+        gradientLayer.cornerRadius = 10
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         if let gradientLayer = self.layer.sublayers?.first as? CAGradientLayer {
-            gradientLayer.frame = self.bounds // Ensure gradient resizes with view
-            gradientLayer.cornerRadius = 10 // Reapply corner radius on resize
-        }
-        self.layer.cornerRadius = 10 // Add corner radius to the view itself
-        self.clipsToBounds = true // Ensure corners are clipped
+            gradientLayer.frame = self.bounds
+            gradientLayer.cornerRadius = 10        }
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
     }
 }
 

@@ -109,7 +109,7 @@ class RecipientVc: UIViewController{
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
         selectLevel.isHidden = true
-        spaceView.isHidden = false
+        spaceView.isHidden = true
         getSubject.isHidden = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
@@ -136,6 +136,7 @@ class RecipientVc: UIViewController{
                 ],
                 for: .normal
             )
+        
         switch staff_role {
         case PriorityType.is_staff:
             cv_itemsarry = [
@@ -148,6 +149,8 @@ class RecipientVc: UIViewController{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
+            segmentName.isHidden = false
+            heightSegment.constant = 40
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             if Menu_id.event == Menu_id.staffSelectedMenuId {
                 cv_itemsarry = [
@@ -173,6 +176,7 @@ class RecipientVc: UIViewController{
                 )
             nodataFound.isHidden = false
             segmentName.isHidden = false
+            heightSegment.constant = 40
             nodataFound.image = ImageName.girl_and_boy_are
             noRecordLbl.isHidden = false
         default:
@@ -552,6 +556,7 @@ class RecipientVc: UIViewController{
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
+        vc.selected_subjectID = subjectId
         vc.AlertMessageContent = message
         vc.Common_request_params  = Common_request_params
         vc.accidmaticNAme = acidmicYrLbl.text
@@ -698,6 +703,9 @@ class RecipientVc: UIViewController{
                 speficBtnName.isHidden = true
             }
             
+            if Menu_id.staffSelectedMenuId == Menu_id.isAssaignment{
+                speficBtnName.isHidden = !(array_selectedId.count == 1)
+            }
             if Menu_id.staffSelectedMenuId == Menu_id.quiz{
                 
                 getQuizLevel(
@@ -885,19 +893,29 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz ||  Menu_id.staffSelectedMenuId == Menu_id.isAssaignment{
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
                     getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
-                        selectSubject.isHidden =  !getSubject.isHidden
+//                        selectSubject.isHidden =  !getSubject.isHidden
+                        selectSubject.isHidden = false
+                        getSubjectListAPI(sectionIds ?? "")
                     }else{
                         selectSubject.isHidden = true
                         subjectId = ""
                     }
                 }else{
-                    speficBtnName.isHidden = !(selectedSections.count == 1)
-                    speficBtnName.isEnabled = true
+                    if Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+                        speficBtnName.isHidden = !(selectedSections.count == 1)
+                        speficBtnName.isEnabled = true
+                        selectSubject.isHidden = false
+                        getSubjectListAPI(sectionIds ?? "")
+                    }else{
+                        speficBtnName.isHidden = !(selectedSections.count == 1)
+                        speficBtnName.isEnabled = true
+                    }
+                   
                 }
-                spaceView.isHidden = !selectSubject.isHidden
+                spaceView.isHidden = true
                 
             }
             
@@ -980,7 +998,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                spaceView.isHidden = !selectSubject.isHidden
+//                spaceView.isHidden = !selectSubject.isHidden
+                spaceView.isHidden = true
                 subjectId = selectedSections.count == 0 ? "" : subjectId
                 selectSubject.isHidden = subjectId == "" || subjectId == nil
                 getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
@@ -1014,7 +1033,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if successmessage.status == true{
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
-                            spaceView.isHidden = false
+//                            spaceView.isHidden = false
+                            spaceView.isHidden = true
                             groupDetails = successmessage.data
                             nodata(true, message: "")
                             if var students = groupDetails {
@@ -1050,7 +1070,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-                        spaceView.isHidden = false
+//                        spaceView.isHidden = false
+                        spaceView.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
                         nodata(true, message: "")
@@ -1137,7 +1158,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
-                            spaceView.isHidden = false
+//                            spaceView.isHidden = false
+                            spaceView.isHidden = true
                             sendbtnName.isHidden = true
                             tv.isHidden = true
                             
@@ -1199,6 +1221,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         tv.isHidden = false
+                        spaceView.isHidden = true
                         subjectDetails = successMessage.data
                         subjectDetails?.enumerated().forEach { index, student in
                             subjectList.append(student.name ?? "")
@@ -1222,7 +1245,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-                        spaceView.isHidden = false
+//                        spaceView.isHidden = false
+                        spaceView.isHidden = true
                     }
                 }
             case .failure(let error):

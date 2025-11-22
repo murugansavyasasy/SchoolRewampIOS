@@ -64,6 +64,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var AlertMessageContent:Bool?
     var accidmaticNAme:String?
     var Common_request_params : [String : Any] = [:]
+    var selected_subjectID : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         sendbtnName.layer.cornerRadius = 10
@@ -334,6 +335,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     via: comm,
                     url:  ServiceUrl.comm_attachment_send_attachment,
                     subjectId: ""
+                )
+            case Menu_id.isAssaignment:
+                sendAttachmentFlow(
+                    via: comm,
+                    url:  ServiceUrl.comm_assignment_send_assignment,
+                    subjectId: selected_subjectID ?? ""
                 )
                 
             default:

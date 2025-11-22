@@ -128,16 +128,16 @@
                                                     <rect key="frame" x="0.0" y="420.00000000000006" width="388" height="45"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ol1-z8-fYC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="82" height="45"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="165.66666666666666" height="45"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4K-Ve-VCM">
-                                                                    <rect key="frame" x="10" y="5" width="0.0" height="35"/>
+                                                                    <rect key="frame" x="10" y="5" width="83.666666666666671" height="35"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Yn-NB6">
-                                                                    <rect key="frame" x="30" y="12.666666666666629" width="30" height="20"/>
+                                                                    <rect key="frame" x="113.66666666666669" y="12.666666666666629" width="30" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="30" id="U3U-36-Ind"/>
                                                                         <constraint firstAttribute="height" constant="20" id="yKi-I9-ovN"/>
@@ -155,20 +155,20 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xkc-5F-NL0">
-                                                            <rect key="frame" x="92" y="0.0" width="126" height="45"/>
+                                                            <rect key="frame" x="175.66666666666666" y="0.0" width="122.66666666666666" height="45"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwy-7s-7Sr">
-                                                            <rect key="frame" x="228" y="0.0" width="50" height="45"/>
+                                                            <rect key="frame" x="308.33333333333331" y="0.0" width="79.666666666666686" height="45"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGw-9d-Qbc">
-                                                                    <rect key="frame" x="10" y="10" width="10" height="25"/>
+                                                                    <rect key="frame" x="10" y="10" width="39.666666666666664" height="25"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyc-bt-2qC">
-                                                                    <rect key="frame" x="20" y="12.666666666666629" width="20" height="20"/>
+                                                                    <rect key="frame" x="49.666666666666686" y="12.666666666666629" width="20" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="20" id="H1N-gY-4fQ"/>
                                                                         <constraint firstAttribute="height" constant="20" id="q8Q-bK-iTe"/>
@@ -187,8 +187,8 @@
                                                                 <constraint firstAttribute="trailing" secondItem="hyc-bt-2qC" secondAttribute="trailing" constant="10" id="gMy-GY-jeL"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrA-vO-QOb">
-                                                            <rect key="frame" x="288" y="0.0" width="100" height="45"/>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrA-vO-QOb">
+                                                            <rect key="frame" x="388" y="0.0" width="100" height="45"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="100" id="00T-3N-XaV"/>
@@ -389,7 +389,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

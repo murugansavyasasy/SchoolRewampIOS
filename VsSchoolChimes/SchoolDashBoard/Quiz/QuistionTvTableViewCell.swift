@@ -68,10 +68,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     
     
     @IBAction func correctAnsDropDown() {
-        // ✅ Dismiss keyboard first
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-
-        // ✅ Then show dropdown
         dropdown.anchorView = correctOptionView
         dropdown.dataSource = options
         dropdown.bottomOffset = CGPoint(x: 0, y: (dropdown.anchorView?.plainView.bounds.height) ?? 0)
@@ -163,7 +160,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         func textViewDidBeginEditing(_ textView: UITextView) {
             if textView.textColor == .lightGray {
                 textView.text = nil
-                textView.textColor = .label // normal text color (black/white depending on theme)
+                textView.textColor = .label
             }
         }
         
@@ -171,11 +168,11 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             if textView.text.isEmpty {
                 textView.textColor = .lightGray
                 switch textView {
-                case opATxtView: textView.text = "Enter Option A"
-                case opBTxtView: textView.text = "Enter Option B"
-                case opCTxtView: textView.text = "Enter Option C"
-                case opDTxtView: textView.text = "Enter Option D"
-                case questionTxtView: textView.text = "Enter Question here"
+                case opATxtView: textView.text = "Enter Option A".translated()
+                case opBTxtView: textView.text = "Enter Option B".translated()
+                case opCTxtView: textView.text = "Enter Option C".translated()
+                case opDTxtView: textView.text = "Enter Option D".translated()
+                case questionTxtView: textView.text = "Enter Question here".translated()
                 default: break
                 }
             }
@@ -199,7 +196,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
            answerIndex <= options.count {
             correctAnsLbl.text = options[answerIndex - 1]
         } else {
-            correctAnsLbl.text = "Select correct answer"
+            correctAnsLbl.text = "Select correct answer".translated()
         }
         if let attachments = model.file_path, !attachments.isEmpty {
             attachmentBtnName.setTitle("Attachment (\(attachments.count))", for: .normal)
@@ -207,7 +204,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             attachmentBtnName.isEnabled = false   // disable click
             attachmentBtnName.alpha = 0.6
         } else {
-            // no attachments → allow adding new one
             attachmentBtnName.setTitle("Add Attachment".translated(), for: .normal)
             attachmentBtnName.backgroundColor = .black
             attachmentBtnName.isEnabled = true
@@ -225,7 +221,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         checkBoxBtn.isHidden = true
         // Placeholder color setup
         [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
-            if tv?.text?.hasPrefix("Enter") == true {
+            if tv?.text?.hasPrefix("Enter".translated()) == true {
                 tv?.textColor = .lightGray
             } else {
                 tv?.textColor = .label
@@ -329,13 +325,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     
     func configureCell(isLast: Bool) {
         addAnotherName.isHidden = !isLast
-    }
-
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     @IBAction func AddAnotherAct(_ sender: UIButton) {

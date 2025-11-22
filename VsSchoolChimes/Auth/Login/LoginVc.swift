@@ -40,7 +40,8 @@ class LoginVc: UIViewController {
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
-        MobilTextFld.placeholder = menuname.MobileNumber.translated()
+        
+        MobilTextFld.placeholder = country_data?.mobile_no_hint
         passTextFld.placeholder = menuname.Password.translated()
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))

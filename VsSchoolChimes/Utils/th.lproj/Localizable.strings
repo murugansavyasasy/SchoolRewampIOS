@@ -145,7 +145,8 @@
 "No Data Found!" = "ไม่พบข้อมูล!";
 "Notice Active Period" = "ช่วงเวลาที่ประกาศใช้งาน";
 "All" = "ทั้งหมด";
-"NEXT" = "ถัดไป"; 
+"NEXT" = "ถัดไป";
+"Proceed" = "ดำเนินการต่อ";
 "Edit" = "แก้ไข";
 "Welcome" = "ยินดีต้อนรับ";
 "Change Language" = "เปลี่ยนภาษา";
@@ -230,12 +231,12 @@
 "Speaking" = "การพูด";
 "Reading" = "การอ่าน";
 "Writing" = "การเขียน";
-
+"My Submission" = "การส่งของฉัน";
 "Completed Tasks" = "งานที่เสร็จสมบูรณ์";
 "Active Tasks" = "งานที่กำลังดำเนินการ";
 "Dashboard Overview" = "ภาพรวมแดชบอร์ด";
 "New Task" = " งานใหม่";
-
+"START" = "เริ่มต้น";
 "All" = "ทั้งหมด";
 "Completed" = "เสร็จสมบูรณ์";
 "Pending" = "รอดำเนินการ";
@@ -618,4 +619,10 @@
 "Import from Question Bank" = "นำเข้าจากคลังคำถาม";
 "Question Limit: " = "จำกัดจำนวนคำถาม: ";
 "Missing Information" = "ข้อมูลขาดหาย";
-
+"Enter" = "ป้อน";
+"Add Question" = "เพิ่มคำถาม";
+"Submission Report" = "รายงานการส่ง";
+"Posted By:" = "โพสต์โดย:";
+"Sent at " = "ส่งเมื่อ ";
+"Level " = "ระดับ ";
+"Submission Report" = "รายงานการส่ง";
