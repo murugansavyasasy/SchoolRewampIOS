@@ -55,10 +55,10 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     @IBOutlet weak var dot2: UIView!
     @IBOutlet weak var dot3: UIView!
     @IBOutlet weak var confettiContainerView: UIView!
+    @IBOutlet weak var rippleContainerView: UIView!
     // MARK: - Properties
     private var confettiParticles: [ConfettiParticle] = []
     private var rippleTimer: Timer?
-    private var rippleContainerView: UIView!
     private var isAnimating = true
     private var dotAnimationTimers: [Timer] = []
     private var overlayView: UIView?
@@ -74,17 +74,18 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     private let frameRate: Double = 30.0
     private let lottieWidth: CGFloat = 400
     private let lottieHeight: CGFloat = 400
-    
+    private let sizeScaleDown: CGFloat = 0.6
+        private let speedMultiplier: Double = 0.75
+        private let extraRandomConfettiCount = 12
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupRippleContainer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkDeveloperMode()
+//        checkDeveloperMode()
         startSplashAnimation()
     }
     
@@ -100,23 +101,17 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     
     // MARK: - Setup
     private func setupUI() {
+        setColoredEmpoweringText()
         headerLabel.alpha = 0
         logoImageView.alpha = 0
         logoImageView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         empoweringLabel.alpha = 0
         underlineView.alpha = 0
+        underlineView.layer.cornerRadius = underlineView.frame.height/2
         underlineWidthConstraint.constant = 0
         dot1.alpha = 0
         dot2.alpha = 0
         dot3.alpha = 0
-    
-    }
-    
-    private func setupRippleContainer() {
-        rippleContainerView = UIView(frame: view.bounds)
-        rippleContainerView.backgroundColor = .clear
-        rippleContainerView.isUserInteractionEnabled = false
-        view.insertSubview(rippleContainerView, belowSubview: logoImageView)
     }
     
     private func setupDotCornerRadius() {
@@ -165,11 +160,11 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             self?.animateEmpoweringSection()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
             self?.animateDots()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) { [weak self] in
             self?.proceedWithAppFlow()
         }
     }
@@ -292,23 +287,32 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     private func startContinuousRippleAnimation() {
         guard isAnimating else { return }
         
-        for i in 0..<3 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 1.3) { [weak self] in
-                self?.createSingleRipple()
-            }
-        }
+        createRippleWithNaturalDelay(at: 0.0)
+        createRippleWithNaturalDelay(at: 1.0)
+        createRippleWithNaturalDelay(at: 2.1)
         
-        rippleTimer = Timer.scheduledTimer(withTimeInterval: 1.3, repeats: true) { [weak self] _ in
+        // Continuous loop with variation
+        rippleTimer = Timer.scheduledTimer(withTimeInterval: 3.2, repeats: true) { [weak self] _ in
             guard let self = self, self.isAnimating else { return }
-            self.createSingleRipple()
+            let randomOffset = Double.random(in: 2.7...3.7)
+            DispatchQueue.main.asyncAfter(deadline: .now() + randomOffset) {
+                self.createRippleWithNaturalDelay(at: 0.0)
+            }
         }
     }
     
+    private func createRippleWithNaturalDelay(at baseDelay: TimeInterval) {
+            guard isAnimating else { return }
+            let delay = baseDelay + Double.random(in: 0.0...0.5)
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                self?.createSingleRipple()
+            }
+        }
     private func createSingleRipple() {
         guard isAnimating else { return }
         
         let centerX = view.bounds.midX
-        let centerY = view.bounds.midY - 40
+        let centerY = view.bounds.midY
         let initialSize: CGFloat = 80
         
         let ripple = RippleRingView(frame: CGRect(
@@ -317,25 +321,20 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             width: initialSize,
             height: initialSize
         ))
-        ripple.alpha = 0.6
         
-        let colors: [UIColor] = [
-            UIColor(red: 0.29, green: 0.33, blue: 0.71, alpha: 0.5),
-            UIColor(red: 0.4, green: 0.45, blue: 0.8, alpha: 0.4),
-            UIColor(red: 0.2, green: 0.6, blue: 0.9, alpha: 0.35)
-        ]
-        
-        ripple.layer.borderColor = colors.randomElement()?.cgColor
-        ripple.layer.borderWidth = CGFloat.random(in: 1...1.5)
+        ripple.alpha = 0.5
+        ripple.layer.borderColor = UIColor.systemGray5.cgColor
+        ripple.layer.borderWidth = CGFloat.random(in: 1...1.3)
         
         rippleContainerView.addSubview(ripple)
-        
-        let finalSize: CGFloat = CGFloat.random(in: 250...350)
-        let duration = Double.random(in: 2...3.5)
-        
+
+        let finalSize: CGFloat = CGFloat.random(in: 260...360)
+        let duration = Double.random(in: 2.0...3.0)
+        let delay = Double.random(in: 0.2...0.5)
+
         UIView.animate(
             withDuration: duration,
-            delay: 0,
+            delay: delay,
             options: [.curveEaseOut, .allowUserInteraction]
         ) {
             let scale = finalSize / initialSize
@@ -345,6 +344,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
             ripple.removeFromSuperview()
         }
     }
+
     
     // MARK: - Element Animations
     private func animateHeaderLabel() {
@@ -378,50 +378,41 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             self?.underlineView.alpha = 1
-            self?.underlineWidthConstraint.constant = 200
+            self?.underlineWidthConstraint.constant = 240
             UIView.animate(withDuration: 0.8, delay: 0, options: .curveEaseOut) {
                 self?.view.layoutIfNeeded()
             }
         }
+    }
+    private func setColoredEmpoweringText() {
+        let fullText = "Empowering 3000+ schools"
+        let firstPart = "Empowering"
+        let secondPart = "3000+ schools"
+        
+        let attributed = NSMutableAttributedString(string: fullText)
+        
+        attributed.addAttribute(.foregroundColor,
+                                value: UIColor.darkGray,
+                                range: (fullText as NSString).range(of: firstPart))
+        
+        attributed.addAttribute(.foregroundColor,
+                                value: UIColor.systemPurple,
+                                range: (fullText as NSString).range(of: secondPart))
+        
+        empoweringLabel.attributedText = attributed
     }
     
     private func animateDots() {
         let dots = [dot1, dot2, dot3]
         
         for (index, dot) in dots.enumerated() {
-            guard let dot = dot else { continue }
-            
-            dot.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-            dot.alpha = 0
-            
-            let staggerDelay = Double(index) * 0.15
-            
-            UIView.animate(
-                withDuration: 0.5,
-                delay: staggerDelay,
-                usingSpringWithDamping: 0.5,
-                initialSpringVelocity: 0.8,
-                options: .curveEaseOut,
-                animations: {
-                    dot.alpha = 1.0
-                    dot.transform = .identity
+            let delay = Double(index) * 0.2
+            Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
+                UIView.animate(withDuration: 0.6, delay: 0, options: [.repeat, .autoreverse]) {
+                    dot?.alpha = 1.0
+                    dot?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                 }
-            )
-            
-            let timer = Timer.scheduledTimer(withTimeInterval: staggerDelay + 0.8, repeats: true) { [weak self] _ in
-                guard self?.isAnimating == true else { return }
-                
-                UIView.animate(
-                    withDuration: 0.5,
-                    delay: 0,
-                    options: [.repeat, .autoreverse, .curveEaseInOut],
-                    animations: {
-                        dot.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-                    }
-                )
             }
-            
-            dotAnimationTimers.append(timer)
         }
     }
     
@@ -519,16 +510,16 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     
     // MARK: - Validate User
     private func validateUser() {
-        guard let credentials = UserDefaultFileManager.getLoginCredentials() else {
-            appFlowChecking()
-            return
-        }
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
+        let password = UserDefaultFileManager.getLoginCredentials()?.pwd ?? ""
+        let secureID = SecureIDManager.getSecureID()
         
         let parameters: [String: Any] = [
-            "mobile_number": credentials.mobile_number,
-            "device_type": "ios",
-            "secure_id": SecureIDManager.getSecureID(),
-            "password": credentials.pwd]
+            mobileNumber.mobile_number: mobile_num,
+            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
+            mobileNumber.secure_id: secureID,
+            mobileNumber.password: password
+        ]
         
         APIService.shared.makeApi(
             url: ServiceUrl.validate_validate_user,
@@ -542,7 +533,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                 switch result {
                 case .success(let response):
                     guard response.status == true, let userData = response.data?.first else {
-                        self.showAlert(message: response.message ?? "Authentication failed")
                         self.navigateToLogin()
                         return
                     }
@@ -623,7 +613,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     
     private func proceedWithAppFlow() {
         let hasCompletedOnboarding = UserDefaults.standard.bool(forKey: "Onboarding")
-        
         if hasCompletedOnboarding {
             if let countryDetails = UserDefaultFileManager.getCountryDetails() {
                 countryId = countryDetails.id
