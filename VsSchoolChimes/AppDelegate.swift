@@ -19,19 +19,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
     var languages : String!
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         
         NetworkMonitor.shared.startMonitoring()
         FirebaseApp.configure()
+        
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            print("Permission granted: \(granted)")
+            print("Permission granted:", granted)
         }
+        
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
-        
+
+        // 🔥 Handle Notification Click When App Was Killed
+        if let remoteNotification = launchOptions?[.remoteNotification] as? [AnyHashable: Any] {
+            print("🔥 App opened from terminated state via notification")
+            handleNotificationTap(userInfo: remoteNotification)
+        }
+
         return true
     }
+
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(String(describing: fcmToken))")
@@ -70,62 +80,134 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    
-        print("willPresentwillPresent",notification.request.content.userInfo)
-        completionHandler([.alert,.sound]) // Use .badge and .banner based on your need
-    }
-    
- 
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        defer { completionHandler() } // Always call completionHandler at the end
-        
+    func handleNotificationTap(userInfo: [AnyHashable: Any]) {
+
         guard let rootVC = UIApplication.shared.windows.first?.rootViewController else { return }
-        
-        // ✅ Check Login
+
+        // Login Check
         guard let login = UserDefaultFileManager.getLoginCredentials(),
               !login.mobile_number.isEmpty,
               !login.pwd.isEmpty else {
+
             if #available(iOS 14.0, *) {
                 presentLogin(from: rootVC)
             }
             return
         }
-        
-        // ✅ Extract Notification Data
-        let userInfo = response.notification.request.content.userInfo
+
+        print("🔔 Notification tapped:", userInfo)
+
         let type = userInfo["type"] as? String
-        if type == "normal"{
+
+        if type == "normal" {
+
             let loginAs = userInfo["receiver_type"] as? String
-            
-            if loginAs == "student"{
+
+            if loginAs == "student" {
+
                 guard let menuId = userInfo["menu_id"] as? String,
                       let instituteId = userInfo["institute_id"] as? String,
-                      let childId = userInfo["receiver_id"] as? String ,
-                      let headerid = userInfo["header_id"] as? String else { return }
-                
+                      let childId = userInfo["receiver_id"] as? String,
+                      let headerId = userInfo["header_id"] as? String else { return }
+
                 guard let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
-                
-                
+
                 if #available(iOS 14.0, *) {
                     handleNavigation(
                         instituteId: instituteId,
                         childId: childId,
                         childDetails: childDetails,
-                        menuID: menuId, header_id: headerid, logintype: 2,
+                        menuID: menuId,
+                        header_id: headerId,
+                        logintype: 2,
                         from: rootVC
                     )
                 }
             }
-        }else if type == "call"{
+//            else if loginAs == "student" {
+            
+
+        } else if type == "call" {
             let vc = NotificationCallVC()
             vc.modalPresentationStyle = .fullScreen
             rootVC.present(vc, animated: true)
         }
     }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+
+        handleNotificationTap(userInfo: response.notification.request.content.userInfo)
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+
+        print("📩 Foreground notification:", notification.request.content.userInfo)
+        completionHandler([.alert,.sound])
+    }
+
+    
+    
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//    
+//        print("willPresentwillPresent",notification.request.content.userInfo)
+//        completionHandler([.alert,.sound]) // Use .badge and .banner based on your need
+//    }
+//    
+// 
+//    func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                didReceive response: UNNotificationResponse,
+//                                withCompletionHandler completionHandler: @escaping () -> Void) {
+//        
+//        defer { completionHandler() } // Always call completionHandler at the end
+//        
+//        guard let rootVC = UIApplication.shared.windows.first?.rootViewController else { return }
+//        
+//        // ✅ Check Login
+//        guard let login = UserDefaultFileManager.getLoginCredentials(),
+//              !login.mobile_number.isEmpty,
+//              !login.pwd.isEmpty else {
+//            if #available(iOS 14.0, *) {
+//                presentLogin(from: rootVC)
+//            }
+//            return
+//        }
+//        
+//        // ✅ Extract Notification Data
+//        let userInfo = response.notification.request.content.userInfo
+//        let type = userInfo["type"] as? String
+//        if type == "normal"{
+//            let loginAs = userInfo["receiver_type"] as? String
+//            
+//            if loginAs == "student"{
+//                guard let menuId = userInfo["menu_id"] as? String,
+//                      let instituteId = userInfo["institute_id"] as? String,
+//                      let childId = userInfo["receiver_id"] as? String ,
+//                      let headerid = userInfo["header_id"] as? String else { return }
+//                
+//                guard let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
+//                
+//                
+//                if #available(iOS 14.0, *) {
+//                    handleNavigation(
+//                        instituteId: instituteId,
+//                        childId: childId,
+//                        childDetails: childDetails,
+//                        menuID: menuId, header_id: headerid, logintype: 2,
+//                        from: rootVC
+//                    )
+//                }
+//            }
+//        }else if type == "call"{
+//            let vc = NotificationCallVC()
+//            vc.modalPresentationStyle = .fullScreen
+//            rootVC.present(vc, animated: true)
+//        }
+//    }
 
     @available(iOS 14.0, *)
     // MARK: - Handle Login

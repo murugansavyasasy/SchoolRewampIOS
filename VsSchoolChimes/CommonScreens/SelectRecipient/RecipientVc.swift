@@ -136,6 +136,7 @@ class RecipientVc: UIViewController{
                 ],
                 for: .normal
             )
+        
         switch staff_role {
         case PriorityType.is_staff:
             cv_itemsarry = [
@@ -148,6 +149,8 @@ class RecipientVc: UIViewController{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
+            segmentName.isHidden = false
+            heightSegment.constant = 40
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             if Menu_id.event == Menu_id.staffSelectedMenuId {
                 cv_itemsarry = [
@@ -173,6 +176,7 @@ class RecipientVc: UIViewController{
                 )
             nodataFound.isHidden = false
             segmentName.isHidden = false
+            heightSegment.constant = 40
             nodataFound.image = ImageName.girl_and_boy_are
             noRecordLbl.isHidden = false
         default:
