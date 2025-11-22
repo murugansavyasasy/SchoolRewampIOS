@@ -177,7 +177,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0J-yG-lGj">
                             <rect key="frame" x="0.0" y="708" width="393" height="85"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio" customClass="LocalizationButton" customModule="School_Chimes" customModuleProvider="target">
                                     <rect key="frame" x="96.666666666666686" y="10" width="200" height="35"/>
                                     <color key="backgroundColor" systemColor="systemBlueColor"/>
                                     <constraints>

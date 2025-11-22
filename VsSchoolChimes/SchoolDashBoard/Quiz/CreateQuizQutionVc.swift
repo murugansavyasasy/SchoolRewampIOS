@@ -32,9 +32,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata) {
         var existing = questions[indexPath.row]
 
-        // Preserve QuestionBank identifiers if they exist
         if let existingId = existing.id {
-            // This was imported from question bank → keep the id
             existing.id = existingId
         }
 
@@ -49,8 +47,6 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         if let newText = model.correct_answer_text, !newText.isEmpty {
             existing.correct_answer_text = newText
         }
-
-        // Now update editable fields from the UI model
         existing.chapter = model.chapter
         existing.question = model.question
         existing.a_option = model.a_option
