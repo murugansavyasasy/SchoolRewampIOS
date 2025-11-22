@@ -297,7 +297,14 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.NameLbl.text = staffDetails?[indexPath.row].name
             cell.RoleLbl.text = staffDetails?[indexPath.row].role
             cell.SchoolNamelbl.text = staffDetails?[indexPath.row].school_name
-            
+            cell.imgview.layer.cornerRadius = 8
+            cell.imgview.kf
+                .setImage(
+                    with: URL(
+                        string: staffDetails?[indexPath.row].school_logo ?? ""
+                    ),
+                    placeholder: UIImage(systemName: "schoolss")
+                )
             if (staffDetails?[indexPath.row].school_name_regional == "") {
                 cell.SchoolNameRegional.isHidden = true
             }else{

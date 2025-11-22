@@ -124,6 +124,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     )
                 }
             }
+//            else if loginAs == "student" {
+            
 
         } else if type == "call" {
             let vc = NotificationCallVC()
