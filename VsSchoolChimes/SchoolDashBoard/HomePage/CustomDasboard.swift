@@ -55,6 +55,9 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     var delegate: backNavigation?
     let transitionDelegate = TransitioningDelegate()
     var refreshCount = false
+    var pushNotificationId : String?
+    var PushNotificationMenuId : String?
+    var comeFormNotification : Bool = false
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,11 +85,25 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         Global_variabel()
         setupProfileImage()
         
-       
+        handleMenuSelection(
+            menuId: Int(PushNotificationMenuId ?? "-1") ?? -1,
+            PushNotiMsg : pushNotificationId ?? ""
+        )
         
         
     }
-    
+    init(
+        comefromNotification: Bool = false,
+        menuId : String = "" ,
+        messageId : String = "") {
+            self.comeFormNotification = comefromNotification
+            self.PushNotificationMenuId = menuId
+            self.pushNotificationId = messageId
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     @IBAction func notificationBtn(_ sender: UIButton) {
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.token = staffDetails?.access_token ?? ""
@@ -502,47 +519,125 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let selectedItem = collectionView == recentActiveMenuCollection ? recentMenuItems?[indexPath.row] : menu_details?[indexPath.row]
+//        guard let item = selectedItem else { return }
+//        
+//        Menu_id.staffSelectedMenuId = item.id ?? 0
+//        MenuStringFile.selectedMenuName = item.name ?? ""
+//        
+//        switch item.id {
+//        case 1: navigateOrSchoolList { MenuRedirect.senderAbsenteesReport(from: self) }
+//        case 2: navigateOrSchoolList { MenuRedirect.senderAssignmentNavigate(from: self) }
+//        case 3: navigateOrSchoolList { MenuRedirect.senderMarkAttendence(from: self) }
+//        case 5: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
+//        case 7: MenuRedirect.senderCommunicationNavigate(from: self)
+//        case 8: navigateOrSchoolList { MenuRedirect.senderDailyCollectionNavigate(from: self) }
+//        case 9: MenuRedirect.senderEventNavigate(from: self)
+//        case 14: navigateOrSchoolList { MenuRedirect.senderFeePendingNavigate(from: self) }
+//        case 15: navigateOrSchoolList { MenuRedirect.senderHomeWorkNavigate(from: self) }
+//        case 17: navigateOrSchoolList { MenuRedirect.Senderchat(from: self) }
+//        case 18: MenuRedirect.senderLeaveRequestNavigate(from: self)
+//        case 19: navigateOrSchoolList { MenuRedirect.senderLessonplanNavigate(from: self) }
+//        case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
+//        case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
+//        case 22: MenuRedirect.senderMgmt(from: self)
+//        case 23: noticeBordHistory{ MenuRedirect.senderNoticeboardNavigate(from: self)} 
+//        case 24: MenuRedirect.senderOnlineNavigate(from: self)
+//        case 26: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
+//        case 27: navigateOrSchoolList { MenuRedirect.senderQuiz(from: self) }
+//        case 28: MenuRedirect.senderLeaveRequestNavigate(from: self)
+//        case 29: navigateOrSchoolList { MenuRedirect.senderEventNavigate(from: self) }
+//        case 30: MenuRedirect.senderSchoolNeedsNavigate(from: self)
+//        case 31: navigateOrSchoolList { MenuRedirect.senderSchoolStrength(from: self) }
+//        case 33: navigateOrSchoolList { MenuRedirect.StaffWiseAttendance(from: self) }
+//        case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
+//        case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
+//        case 38: break
+//        case 39:MenuRedirect.senderAttachment(from: self)
+//        case 40:navigateOrSchoolList { MenuRedirect.receiverPauckt(from: self) }
+//        default: print("Unknown menuId:", item.id ?? 0)
+//        }
+//    }
+//
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItem = collectionView == recentActiveMenuCollection ? recentMenuItems?[indexPath.row] : menu_details?[indexPath.row]
+        
+        let selectedItem = collectionView == recentActiveMenuCollection
+            ? recentMenuItems?[indexPath.row]
+            : menu_details?[indexPath.row]
+
         guard let item = selectedItem else { return }
-        
+
         Menu_id.staffSelectedMenuId = item.id ?? 0
-        MenuStringFile.selectedMenuName = item.name ?? ""
-        
-        switch item.id {
-        case 1: navigateOrSchoolList { MenuRedirect.senderAbsenteesReport(from: self) }
-        case 2: navigateOrSchoolList { MenuRedirect.senderAssignmentNavigate(from: self) }
-        case 3: navigateOrSchoolList { MenuRedirect.senderMarkAttendence(from: self) }
-        case 5: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
-        case 7: MenuRedirect.senderCommunicationNavigate(from: self)
-        case 8: navigateOrSchoolList { MenuRedirect.senderDailyCollectionNavigate(from: self) }
-        case 9: MenuRedirect.senderEventNavigate(from: self)
-        case 14: navigateOrSchoolList { MenuRedirect.senderFeePendingNavigate(from: self) }
-        case 15: navigateOrSchoolList { MenuRedirect.senderHomeWorkNavigate(from: self) }
-        case 17: navigateOrSchoolList { MenuRedirect.Senderchat(from: self) }
-        case 18: MenuRedirect.senderLeaveRequestNavigate(from: self)
-        case 19: navigateOrSchoolList { MenuRedirect.senderLessonplanNavigate(from: self) }
-        case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
-        case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
-        case 22: MenuRedirect.senderMgmt(from: self)
-        case 23: noticeBordHistory{ MenuRedirect.senderNoticeboardNavigate(from: self)} 
-        case 24: MenuRedirect.senderOnlineNavigate(from: self)
-        case 26: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
-        case 27: navigateOrSchoolList { MenuRedirect.senderQuiz(from: self) }
-        case 28: MenuRedirect.senderLeaveRequestNavigate(from: self)
-        case 29: navigateOrSchoolList { MenuRedirect.senderEventNavigate(from: self) }
-        case 30: MenuRedirect.senderSchoolNeedsNavigate(from: self)
-        case 31: navigateOrSchoolList { MenuRedirect.senderSchoolStrength(from: self) }
-        case 33: navigateOrSchoolList { MenuRedirect.StaffWiseAttendance(from: self) }
-        case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
-        case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
-        case 38: break
-        case 39:MenuRedirect.senderAttachment(from: self)
-        case 40:navigateOrSchoolList { MenuRedirect.receiverPauckt(from: self) }
-        default: print("Unknown menuId:", item.id ?? 0)
+//        MenuStringFile.selectedMenuName = item.name ?? ""
+
+        self.handleMenuSelection(menuId: item.id ?? 0, PushNotiMsg: "")
+    }
+
+    
+    func handleMenuSelection(menuId: Int,PushNotiMsg : String) {
+
+        // MENU IDs that need navigateOrSchoolList check
+        let needSchoolCheck: Set<Int> = [
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40,18
+        ]
+
+        let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
+        MenuStringFile.selectedMenuName = menuName
+        // All actions with explicit self
+        let actions: [Int: () -> Void] = [
+            1: { self.MenuRedirect.senderAbsenteesReport(from: self) },
+            2: { self.MenuRedirect.senderAssignmentNavigate(from: self) },
+            3: { self.MenuRedirect.senderMarkAttendence(from: self) },
+            5: { self.MenuRedirect.senderPtmNavigate(from: self) },
+            7: { self.MenuRedirect.senderCommunicationNavigate(from: self) },
+            8: { self.MenuRedirect.senderDailyCollectionNavigate(from: self) },
+            9: { self.MenuRedirect.senderEventNavigate(from: self) },
+            14: { self.MenuRedirect.senderFeePendingNavigate(from: self) },
+            15: { self.MenuRedirect.senderHomeWorkNavigate(from: self) },
+            17: { self.MenuRedirect.Senderchat(from: self) },
+            18: {
+                self.MenuRedirect
+                    .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: PushNotiMsg)
+            },
+            19: { self.MenuRedirect.senderLessonplanNavigate(from: self) },
+            20: { self.MenuRedirect.SenderLSRWVCNavigate(from: self) },
+            21: { self.MenuRedirect.senderMarkAttendanceNavigate(from: self) },
+            22: {
+                self.MenuRedirect.senderMgmt(from: self, Notification_MsgId: PushNotiMsg)
+            },
+            23: { self.MenuRedirect.senderNoticeboardNavigate(from: self) },
+            24: { self.MenuRedirect.senderOnlineNavigate(from: self) },
+            26: { self.MenuRedirect.senderPtmNavigate(from: self) },
+            27: { self.MenuRedirect.senderQuiz(from: self) },
+            28: {
+                self.MenuRedirect
+                    .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: PushNotiMsg)
+            },
+            29: { self.MenuRedirect.senderEventNavigate(from: self) },
+            30: { self.MenuRedirect.senderSchoolNeedsNavigate(from: self) },
+            31: { self.MenuRedirect.senderSchoolStrength(from: self) },
+            33: { self.MenuRedirect.StaffWiseAttendance(from: self) },
+            35: { self.MenuRedirect.senderStudentreportNavigate(from: self) },
+            36: { self.MenuRedirect.senderImportantInfoNavigate(from: self) },
+            39: { self.MenuRedirect.senderAttachment(from: self) },
+            40: { self.MenuRedirect.receiverPauckt(from: self) }
+        ]
+
+        guard let action = actions[menuId] else {
+            print("Unknown menu id:", menuId)
+            return
+        }
+
+        // If item requires school selection → wrap with navigateOrSchoolList
+        if needSchoolCheck.contains(menuId) {
+            self.navigateOrSchoolList(action)
+        } else {
+            action()
         }
     }
-    
+
     // MARK: - Helpers
     func navigateOrSchoolList(_ defaultAction: () -> Void) {
         if checkMutipleSchool() {

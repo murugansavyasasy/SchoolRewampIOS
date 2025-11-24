@@ -78,7 +78,13 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     var menuId : String?
     var profile: Bool = false
     // MARK: - Navigation Wrapped Controllers
-    private lazy var firstVCNav = UINavigationController(rootViewController: CustomDasboard())
+    private lazy var firstVCNav = UINavigationController(
+        rootViewController: CustomDasboard(
+            comefromNotification: comfromNotification,
+            menuId: menuId ?? "",
+            messageId: messageId ?? ""
+        )
+    )
     private lazy var parentVCNav = UINavigationController(
         rootViewController: CustomParentDashboardVC(
             comefromNotification: comfromNotification,
