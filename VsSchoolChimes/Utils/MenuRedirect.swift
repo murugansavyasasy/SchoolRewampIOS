@@ -179,7 +179,9 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
-    func senderLeaveRequestNavigate(from viewController: UIViewController) {
+    func senderLeaveRequestNavigate(
+        from viewController: UIViewController,
+        PushnotiMsg_id : String) {
         let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -285,8 +287,9 @@ class MenuRedirectHandler {
         
     }
     
-    func senderMgmt(from viewController: UIViewController) {
+    func senderMgmt(from viewController: UIViewController,Notification_MsgId : String) {
         let vc = MessageFromManagementViewController(nibName: nil, bundle: nil)
+        vc.Pushnotification_msgId = Notification_MsgId
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         

@@ -222,16 +222,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empowering 3000+ schools" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3G-l1-ezg">
-                                <rect key="frame" x="20" y="626" width="362" height="21.666666666666629"/>
+                                <rect key="frame" x="20" y="627" width="362" height="21.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" red="0.32000000000000001" green="0.34999999999999998" blue="0.55000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8H-M7-WS5" customClass="GradientView" customModule="School_Chimes" customModuleProvider="target">
-                                <rect key="frame" x="201" y="655.66666666666663" width="0.0" height="4"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8H-M7-WS5">
+                                <rect key="frame" x="201" y="656.66666666666663" width="0.0" height="3"/>
                                 <color key="backgroundColor" red="0.28999999999999998" green="0.33000000000000002" blue="0.70999999999999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="luf-hs-C0p"/>
+                                    <constraint firstAttribute="height" constant="3" id="luf-hs-C0p"/>
                                     <constraint firstAttribute="width" id="nwV-u3-Uuu"/>
                                 </constraints>
                             </view>
@@ -298,6 +298,7 @@
                         <outlet property="dot2" destination="7F9-6g-9xh" id="PyJ-kb-ODS"/>
                         <outlet property="dot3" destination="lSn-iW-HOV" id="P58-yn-eeW"/>
                         <outlet property="empoweringLabel" destination="J3G-l1-ezg" id="MCP-nJ-Eze"/>
+                        <outlet property="gradientView" destination="zXf-yj-yJz" id="SPr-C4-ZWB"/>
                         <outlet property="headerLabel" destination="zFb-Nm-fLT" id="2ZP-Qi-jt8"/>
                         <outlet property="logoImageView" destination="Qpd-Dc-gnL" id="n2U-dV-6Bn"/>
                         <outlet property="rippleContainerView" destination="CLM-YS-aBw" id="U2Q-WS-tLt"/>
@@ -320,7 +321,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

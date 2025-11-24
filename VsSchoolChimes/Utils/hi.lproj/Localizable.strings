@@ -136,6 +136,8 @@
 "Create Leave Request" = "छुट्टी निवेदन बनाएँ";
 "LeaveRequestInfo" = "छुट्टी निवेदन जानकारी";
 "Student/Parent" = "छात्र/अभिभावक";
+"LoginAsStudentParent" = "छात्र/अभिभावक के रूप में लॉगिन करें";
+"ClickProceedToContinue" = "जारी रखने के लिए आगे क्लिक करें";
 "or Student/Parent" = "या छात्र/अभिभावक";
 "Principal" = "प्रधानाध्यापक";
 "Login As Teacher Or Parent" = "शिक्षक या अभिभावक के रूप में लॉगिन करें";
@@ -201,6 +203,7 @@
 "Logout" = "लॉगआउट";
 "Chapters Completed" = "अध्याय पूर्ण";
 "Proceed" = "जारी रखें";
+"Management" = "प्रबंधन";
 // MARK: Days
 "Sunday" = "रविवार";
 "Monday" = "सोमवार";
@@ -422,6 +425,8 @@
 "Submission" = "जमा करें";
 "Total" = "कुल";
 "View" = "देखें";
+"My Submission" = "मेरा सबमिशन";
+"Assignment Progress" = "असाइनमेंट प्रगति";
 
 //MARK: Sender side Events
 //Temp:
@@ -619,4 +624,21 @@
 "Sent at " = "भेजा गया समय: ";
 "Level " = "स्तर ";
 "Submission Report" = "प्रस्तुति रिपोर्ट";
+"Enter Chapter here" = "यहाँ अध्याय दर्ज करें";
+"Pick From Question Bank" = "प्रश्न बैंक से चुनें";
+"Select All" = "सब चुनें";
+"Import Question" = "प्रश्न आयात करें";
 
+//MARK: Fee Pending
+"CATEGORY_WISE" = "श्रेणी अनुसार";
+"CLASS_WISE" = "कक्षा अनुसार";
+"TOTAL_PENDING" = "कुल लंबित";
+"PAYMENT_HISTORY" = "भुगतान इतिहास";
+
+//MARK: DailyCollection
+"CATEGORY" = "श्रेणी";
+"CLASS" = "कक्षा";
+"MODE" = "मोड";
+"FROM_DATE" = " से तारीख";
+"TO_DATE" = " तक तारीख";
+"TOTAL_COLLECTION" = "कुल संग्रह";

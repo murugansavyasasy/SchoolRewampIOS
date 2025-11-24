@@ -86,6 +86,7 @@ struct UserDetails: Codable {
 
 struct StaffDetails: Codable {
     let name: String?
+    let staff_id: String?
     let emp_id: String?
     let mobile_no: String?
     let address: String?

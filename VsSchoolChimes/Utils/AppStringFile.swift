@@ -328,6 +328,7 @@ struct CommonStringFile {
     static let CreateLeaveRequest = "Create Leave Request"
     static let LeaveRequestInfo = "LeaveRequestInfo"
     static let Parent = "Student/Parent"
+    static let LoginAsStudentParent = "LoginAsStudentParent"
     static let OrParent = "or Student/Parent"
     static let Principal = "Principal"
     static let LoginAsTeacherOrParent = "Login As Teacher Or Parent"

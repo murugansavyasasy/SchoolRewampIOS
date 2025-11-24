@@ -91,6 +91,7 @@
 "Enter bugs" = "பிழைகளை உள்ளிடவும்";
 "Profile" = "சுயவிவரம்";
 "About Student" = "மாணவர் பற்றிய தகவல்";
+"ClickProceedToContinue" = "தொடரவும் கிளிக் செய்க"; 
 "About Staff" = "பணியாளர் பற்றிய தகவல்";
 "Contact details" = "தொடர்பு விவரங்கள்";
 "Register number" = "பதிவு எண்";
@@ -111,6 +112,7 @@
 "LeaveRequestInfo" = "விடுப்பு கோரிக்கை விவரம்";
 "Student/Parent" = "மாணவர் / பெற்றோர்";
 "or Student/Parent" = "அல்லது மாணவர் / பெற்றோர்";
+"LoginAsStudentParent" = "மாணவர்/பெற்றோர் என உள்நுழைக";
 "Principal" = "முதல்வர்";
 "Login As Teacher Or Parent" = "ஆசிரியர் அல்லது பெற்றோர் என உள்நுழைக";
 "Login As" = "உள்நுழைவு வகை";
@@ -132,6 +134,7 @@
 "The academic year configuration for your school are incorrect. Please contact  School Chimes at support@savyasasy.com" = "உங்கள் பள்ளியின் கல்வியாண்டு அமைப்பில் பிழை உள்ளது. தயவுசெய்து School Chimes-ஐ support@savyasasy.com-ல் தொடர்பு கொள்ளவும்.";
 "support@savyasasy.com" = "support@savyasasy.com";
 "Proceed" = "தொடரவும்";
+"Management" = "மேலாண்மை";
 "jpg" = "படம்";
 "IMAGE" = "படம்";
 "path" = "பாதை";
@@ -439,6 +442,8 @@
 "Submission" = "சமர்ப்பிப்பு";
 "Total" = "மொத்தம்";
 "View" = "பார்வையிடு";
+"My Submission" = "என் சமர்ப்பிப்பு";
+"Assignment Progress" = "பணிக்கான முன்னேற்றம்";
 
 //MARK: Sender side Events
 //MARK: Attendence
@@ -625,7 +630,7 @@
 "Enter Option D" = "விருப்பம் D ஐ உள்ளிடவும்";
 "Enter Question here" = "இங்கே கேள்வியை உள்ளிடவும்";
 "Drop Your Mark here" = "உங்கள் மதிப்பெண்களை இங்கே இடுக";
-"Send Quiz" = "வினாடி வினாவை அனுப்பவும்";
+"Send Quiz" = "வினா அனுப்பு";
 "Select correct answer" = "சரியான பதிலை தேர்வு செய்யவும்";
 "Import from Question Bank" = "கேள்வி வங்கியில் இருந்து இறக்கு";
 "Question Limit: " = "கேள்வி வரம்பு: ";
@@ -637,4 +642,21 @@
 "Sent at " = "அனுப்பிய நேரம்: ";
 "Level " = "நிலை ";
 "Submission Report" = "சமர்ப்பிப்பு அறிக்கை";
+"Enter Chapter here" = "இங்கே அத்தியாயத்தை உள்ளிடவும்";
+"Pick From Question Bank" = "கேள்வி வங்கியிலிருந்து தேர்வு செய்யவும்";
+"Select All" = "அனைத்தையும் தேர்வு செய்";
+"Import Question" = "கேள்வியை இறக்குமதி செய்";
 
+//MARK: FeePending
+"CATEGORY_WISE" = "வகைப்பிரிவு வாரியாக";
+"CLASS_WISE" = "வகுப்பு வாரியாக";
+"TOTAL_PENDING" = "மொத்த நிலுவை";
+"PAYMENT_HISTORY" = "கட்டணம் வரலாறு";
+
+//MARK: DailyCollection
+"CATEGORY" = "வகை";
+"CLASS" = "வகுப்பு";
+"MODE" = "முறை";
+"FROM_DATE" = " தொடக்க தேதி";
+"TO_DATE" = " முடிவு தேதி";
+"TOTAL_COLLECTION" = "மொத்த வசூல்";

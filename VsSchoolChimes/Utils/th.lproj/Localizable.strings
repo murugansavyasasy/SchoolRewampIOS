@@ -111,6 +111,8 @@
 "LeaveRequestInfo" = "ข้อมูลคำร้องขอ ลา";
 "Student/Parent" = "ผู้เรียน/ผู้ปกครอง";
 "or Student/Parent" = "หรือผู้เรียน/ผู้ปกครอง";
+"LoginAsStudentParent" = "เข้าสู่ระบบเป็นนักเรียน/ผู้ปกครอง";
+"ClickProceedToContinue" = "คลิกดำเนินการต่อเพื่อดำเนินการต่อ"; 
 "Principal" = "ผู้อำนวยการ";
 "Login As Teacher Or Parent" = "เข้าสู่ระบบในฐานะครูหรือผู้ปกครอง";
 "Login As" = "เข้าสู่ระบบเป็น";
@@ -147,6 +149,7 @@
 "All" = "ทั้งหมด";
 "NEXT" = "ถัดไป";
 "Proceed" = "ดำเนินการต่อ";
+"Management" = "การจัดการ";
 "Edit" = "แก้ไข";
 "Welcome" = "ยินดีต้อนรับ";
 "Change Language" = "เปลี่ยนภาษา";
@@ -428,6 +431,8 @@
 "Submission" = "การส่ง";
 "Total" = "รวมทั้งหมด";
 "View" = "ดู";
+"My Submission" = "การส่งงานของฉัน";
+"Assignment Progress" = "ความคืบหน้างานที่มอบหมาย";
 
 //MARK: Sender side Events
 //Temp:
@@ -626,3 +631,21 @@
 "Sent at " = "ส่งเมื่อ ";
 "Level " = "ระดับ ";
 "Submission Report" = "รายงานการส่ง";
+"Enter Chapter here" = "ป้อนบทที่นี่";
+"Pick From Question Bank" = "เลือกจากคลังข้อสอบ";
+"Select All" = "เลือกทั้งหมด";
+"Import Question" = "นำเข้าคำถาม";
+
+//MARK: FeePending
+"CATEGORY_WISE" = "ตามหมวดหมู่";
+"CLASS_WISE" = "ตามชั้นเรียน";
+"TOTAL_PENDING" = "ค้างชำระทั้งหมด";
+"PAYMENT_HISTORY" = "ประวัติการชำระเงิน";
+
+//MARK: DailyCollection
+"CATEGORY" = "หมวดหมู่";
+"CLASS" = "ชั้นเรียน";
+"MODE" = "โหมด";
+"FROM_DATE" = " วันที่เริ่มต้น";
+"TO_DATE" = " วันที่สิ้นสุด";
+"TOTAL_COLLECTION" = "ยอดรวมทั้งหมด";

@@ -531,7 +531,8 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     MenuRedirect.Senderchat(from: self)
                 }
             case 18:
-                MenuRedirect.senderLeaveRequestNavigate(from: self)
+//                MenuRedirect.senderLeaveRequestNavigate(from: self)
+                ""
             case 19:
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
@@ -548,7 +549,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
                 }else {
-                    MenuRedirect.senderMgmt(from: self)
+//                    MenuRedirect.senderMgmt(from: self)
                 }
             case 23:
                 MenuRedirect.senderNoticeboardNavigate(from: self)
@@ -557,7 +558,8 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 26:
                 MenuRedirect.senderPtmNavigate(from: self)
             case 28:
-                MenuRedirect.senderLeaveRequestNavigate(from: self)
+//                MenuRedirect.senderLeaveRequestNavigate(from: self)
+                ""
             case 29:
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)

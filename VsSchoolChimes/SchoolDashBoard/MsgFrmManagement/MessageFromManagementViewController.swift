@@ -51,7 +51,7 @@ class MessageFromManagementViewController: UIViewController {
     private let dropDown = DropDown()
     private var searchText = ""
     private var selectedSchoolId: String?
-    
+    var Pushnotification_msgId : String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,6 +185,13 @@ class MessageFromManagementViewController: UIViewController {
                         self.NoDataImage.isHidden = true
                         self.NoDataLbl.isHidden = true
                         self.schoolDropDown.isHidden = !self.hasMultipleSchools()
+                        
+                        if self.Pushnotification_msgId != ""{
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                self.scrollToClickedMessage()
+                            }
+
+                        }
                     }
                     
                     self.NoDataLbl.text = response.message
@@ -202,6 +209,29 @@ class MessageFromManagementViewController: UIViewController {
         }
     }
     
+    private func scrollToClickedMessage() {
+        guard let id = Pushnotification_msgId,
+              let index = filteredData.firstIndex(where: { $0.header_id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = tv.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
+                }
+            }
+        }
+    }
     private func fetchArchivedMessages() {
         
         SearchBar.searchTextField.text = ""
