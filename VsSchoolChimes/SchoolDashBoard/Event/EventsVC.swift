@@ -21,7 +21,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     func date(date: String) {
         setInitialButtonTitles(date: date)
     }
-
+    
     
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -90,6 +90,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         backBtn.configureAsBackTitle(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        eventTxt.placeholder = CommonStringFile.Title.translated()
         
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         dateView.layer.borderWidth = 0.5
@@ -124,7 +125,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         catagoryDropDownView.isUserInteractionEnabled = true
         catagoryDropDownView.addGestureRecognizer(tapGesture)
-        // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -140,16 +140,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         if let edit = editReport{
             fetchData(eventList: edit)
         }
-//        let title = "View History"
-//        let attributedString = NSAttributedString(
-//            string: title,
-//            attributes: [
-//                .underlineStyle: NSUnderlineStyle.single.rawValue,
-//                .foregroundColor: UIColor.systemBlue // optional – color
-//            ]
-//        )
-//        viewHisrtoryBtn.setAttributedTitle(attributedString, for: .normal)
-//        viewHisrtoryBtn.layer.cornerRadius = 10
         viewHisrtoryBtn.setShadow()
         let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
         dateSelectionView.isUserInteractionEnabled = true
@@ -165,7 +155,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.present(vc, animated: false)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         get_CatagoryListApi()
@@ -287,9 +277,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-            //            if imageItems.count != 0{
-            //                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-            //            }
             costomView.imageCollectionview.reloadData()
         }
         
@@ -297,7 +284,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             costomView.imageCollectionview.reloadData()
         }
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
@@ -312,13 +298,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                         VideoURl: data
                     )
                 )
-            //            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
             costomView.imageCollectionview.reloadData()
         }
     }
     
     @objc func catagoryTapped() {
-        print("Category View Tapped")
         dropDown.anchorView = catagoryDropDownView
         dropDown.show()
         dropDown.direction = .bottom
@@ -329,25 +313,31 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             
         }
     }
-
+    
     func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: localeID)
         let parser = DateFormatter()
         parser.locale = Locale(identifier: "en_US_POSIX")
         parser.dateFormat = inputFormat
+        
         let dateToUse: Date
-        if let dateString = dateString, let parsedDate = parser.date(from: dateString) {
-            dateToUse = parsedDate
+        if let dateString = dateString, let parsed = parser.date(from: dateString) {
+            dateToUse = parsed
         } else {
             dateToUse = Date()
         }
         let displayDateFormatter = DateFormatter()
-        displayDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayDateFormatter.locale = locale
         displayDateFormatter.dateFormat = "dd MMM yyyy"
+        
         let displayTimeFormatter = DateFormatter()
-        displayTimeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayTimeFormatter.locale = locale
         displayTimeFormatter.timeStyle = .short
+        
         let dayFormatter = DateFormatter()
-        dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dayFormatter.locale = locale
         dayFormatter.dateFormat = "EEEE"
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
         timeBtn.setTitle(displayTimeFormatter.string(from: dateToUse), for: .normal)
@@ -355,15 +345,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
         contentCount.applyRightTxt()
     }
-
-
     
     func StyleAndTranslate(){
-        
-        //MARK: UI Changes
-//        TxtOuterview.layer.cornerRadius = 10
-//        TxtOuterview.layer.borderWidth = 0.5
-//        TxtOuterview.layer.borderColor = UIColor.black.cgColor
         catagoryDropDownView.setShadow(cornerRadius: 8)
         fromLbl.setFont(style: .title, size: FontSize.TitleSize)
         addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -390,73 +373,29 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         costomView.imageCollectionview.dataSource = self
     }
     
-    
-    
-    func setFormattedDate(_ date: String, label: UILabel) {
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-        
-        // Function to create an attributed string from a given date
-        func createAttributedText(from date: String) -> NSMutableAttributedString {
-            let components = date.split(separator: " ")
-            guard components.count > 1 else {
-                print("Error: Invalid date format")
-                return NSMutableAttributedString()
-            }
-            
-            let day = components[0]
-            let month = components[1]
-            
-            let attributedText = NSMutableAttributedString()
-            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
-                .font: weekdayFont,
-                .foregroundColor: UIColor.darkGray
-            ]))
-            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
-                .font: dayFont,
-                .foregroundColor: UIColor.black
-            ]))
-            
-            // Set paragraph style for centered alignment
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
-            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-            
-            return attributedText
-        }
-        
-        // Create attributed text and set to label
-        label.attributedText = createAttributedText(from: date)
-        label.numberOfLines = 0
-    }
-    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
         contentTxtView.applyRightTxt()
         contentTxtView.applyRightTxt(with: placeholderLabel)
-        
         contentTxtView.addSubview(placeholderLabel)
-        placeholderLabel.isHidden = !contentTxtView.text.isEmpty // Hide if text exists
+        placeholderLabel.isHidden = !contentTxtView.text.isEmpty
     }
     
     func setupTimePicker() {
-        // Initialize the time picker
         timePicker = UIDatePicker()
         timePicker.datePickerMode = .time
         if #available(iOS 13.4, *) {
             timePicker.preferredDatePickerStyle = .wheels
         }
         timePicker.backgroundColor = .white
-        timePicker.isHidden = true // Initially hidden
+        timePicker.isHidden = true
         timePicker.minimumDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())
         self.view.addSubview(timePicker)
-        
-        // Initialize and configure Done button
         doneButton2 = UIButton(type: .system)
         doneButton2.setTitle(AlertstringFile.Done, for: .normal)
         doneButton2.isHidden = true
@@ -483,7 +422,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     
     func showTimePicker(for button: UIButton, date: Bool) {
         let buttonFrame = button.convert(button.bounds, to: self.view)
-        // Show the time picker
         timePicker.isHidden = false
         doneButton2.isHidden = false
         applyTimeRestrictionBasedOnSelectedDate()
@@ -501,24 +439,22 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     func applyTimeRestrictionBasedOnSelectedDate() {
         guard let selectedDateText = dateLbl.text else { return }
-
+        
         let df = DateFormatter()
         df.dateFormat = "dd MMM yyyy"
-
+        
         guard let selectedDate = df.date(from: selectedDateText) else { return }
-
+        
         let today = Date()
         let calendar = Calendar.current
-
+        
         if calendar.isDate(selectedDate, inSameDayAs: today) {
-            // Today → restrict past time
             timePicker.minimumDate = today
         } else {
-            // Future date → any time allowed
             timePicker.minimumDate = nil
         }
     }
-
+    
     @IBAction func ToTimeBtn(_ sender: UIButton) {
         showTimePicker(for: sender, date: false)
         dateSelection = true
@@ -569,7 +505,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                             
                             nextBtn.setTitle("Next", for: .normal)
                             updateTextViewHeight(contentTxtView)
-//                            delegate?.editDta(edit: nil)
                             self.dismiss(animated: true)
                         }
                     }
@@ -593,7 +528,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBAction func viewHistory(_ sender: UIButton) {
         let vc = EventHistoryVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true)
+        present(vc, animated: true)
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -610,8 +545,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // First cell is the "Add Attachment" button cell
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.AttachmentCVCell,
@@ -646,8 +579,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             }else{
                 cell.imageViews.image = nil
             }
-            
-            // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
@@ -657,8 +588,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (costomView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
-        
+        let width = (costomView.imageCollectionview.frame.width - 30) / 3
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -671,12 +601,9 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 
                 // Camera option
                 let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
-                    //
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
-                
-                // Gallery option
                 let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
                     selectImages()
                     //
@@ -689,7 +616,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video, style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
@@ -838,7 +765,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
 extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Calculate the new length of the text
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
@@ -856,8 +782,7 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
         placeholderLabel.isHidden = !textView.text.isEmpty
         let size = textView.contentSize
         if size.height > initialHeight {
-            // Update the height constraint based on content size
-            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            let newHeight = min(size.height, maxHeight)
             textViewHeightConstraint.constant = newHeight
         }
         
@@ -896,10 +821,9 @@ class HalfColorButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         let coloredLayer = CALayer()
-        coloredLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.4) // 60% height
+        coloredLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.4)
         coloredLayer.backgroundColor = UIColor.white.cgColor
         self.layer.sublayers?.removeAll(where: { $0 is CALayer })
-        // Add the 60% color layer
         self.layer.addSublayer(coloredLayer)
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true

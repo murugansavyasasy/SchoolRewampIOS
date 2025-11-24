@@ -6,39 +6,36 @@ import DropDown
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
     
     func date(date: String) {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
+        let inputFormatter = DateFormatter()
+        inputFormatter.locale = locale
+        inputFormatter.dateFormat = "dd MMM yyyy" // correct format
         
-//        if dateSelection {
-//            fromLbl.text = date
-//            if let toDateText = todateLbl.text,
-//               let fromDate = formatter.date(from: date),
-//               let toDate = formatter.date(from: toDateText),
-//               fromDate > toDate {
-//                todateLbl.text = date
-//            }
-//        } else {
-//            todateLbl.text = date
-//            if let fromDateText = fromLbl.text,
-//               let fromDate = formatter.date(from: fromDateText),
-//               let toDate = formatter.date(from: date),
-//               fromDate > toDate {
-//                todateLbl.text = fromDateText
-//            }
-//        }
+        let outputFormatter = DateFormatter()
+        outputFormatter.locale = locale
+        outputFormatter.dateFormat = "dd MMM yyyy"
+        
+        guard let parsedDate = inputFormatter.date(from: date) else {
+            print("❌ Could not parse: \(date)")
+            return
+        }
+        
+        let finalDateString = outputFormatter.string(from: parsedDate)
         
         if dateSelection {
-            fromLbl.text = date
-            from_date = formatter.date(from: date)
-            
-        }else{
-            todateLbl.text = date
-            To_date = formatter.date(from: date)
+            fromLbl.text = finalDateString
+            from_date = parsedDate
+        } else {
+            todateLbl.text = finalDateString
+            To_date = parsedDate
         }
         
         daily_collectionApi(type: String(segmentName.selectedSegmentIndex + 1))
     }
+    
     
     @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var toDateLbl: UILabel!
@@ -78,34 +75,62 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyShadowAndCornerRadius(to: calendarView,cornerRadius: 6)
+        
+        applyShadowAndCornerRadius(to: calendarView, cornerRadius: 6)
         Backbtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         toDateLbl.setFont(style: .title, size: FontSize.BodySize)
         fromDateLbl.setFont(style: .title, size: FontSize.BodySize)
-        Backbtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        applyShadowAndCornerRadius(to: TodateView,cornerRadius: 6)
+        
+        Backbtn.configureAsBackButton(
+            firstLine: MenuStringFile.selectedMenuName,
+            secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+        )
+        let items = ["CATEGORY".translated(), "CLASS".translated(), "MODE".translated()]
+        segmentName.removeAllSegments()
+
+        for (index, item) in items.enumerated() {
+            segmentName.insertSegment(withTitle: item, at: index, animated: false)
+        }
+
+        segmentName.selectedSegmentIndex = 0
+        applyShadowAndCornerRadius(to: TodateView, cornerRadius: 6)
         Backbtn.applyBackButton()
         norecordLbl.isHidden = true
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yyy"
-        let formattedDateTime = dateFormatter.string(from: currentDateTime)
-        currentdate = formattedDateTime
-        fromLbl.text = formattedDateTime
-        todateLbl.text = formattedDateTime
+        dateFormatter.locale = Locale(identifier: normalizedCode)
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        let formattedDate = dateFormatter.string(from: Date())
+        
+        currentdate = formattedDate
+        fromLbl.text = formattedDate
+        todateLbl.text = formattedDate
         from_date = Date()
         To_date = Date()
-        tv.register(UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeePendingTVC)
-        let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
-        calendarView.addGestureRecognizer(fromdateTap)
+        
+        tv.register(
+            UINib(nibName: CellConfingName.FeePendingTVC, bundle: nil),
+            forCellReuseIdentifier: CellConfingName.FeePendingTVC
+        )
+        
+        let fromTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
+        calendarView.addGestureRecognizer(fromTap)
+        
+        let toTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
+        TodateView.addGestureRecognizer(toTap)
+        
         segmentName.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
         segmentName.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         segmentName.selectedSegmentTintColor = .primery
-        let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
-        TodateView.addGestureRecognizer(todateTap)
+        
         tv.dataSource = self
         tv.delegate = self
+        
         daily_collectionApi(type: "1")
     }
+    
     override func viewDidLayoutSubviews() {
         totalCollectionView.layer.cornerRadius = 16
         totalCollectionView.layer.masksToBounds = false
@@ -113,9 +138,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         totalCollectionView.layer.shadowOpacity = 0.1
         totalCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
         totalCollectionView.layer.shadowRadius = 8
-        
     }
-
+    
     
     @IBAction func segmentActBtn(_ sender: Any) {
         
@@ -175,7 +199,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         cell.valueLbl.text = data.total
         cell.configure(with: data.fee_data ?? [])
         
-//        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
+        //        applyShadowAndCornerRadius(to: cell.outerView,backgroundColor:.systemGray6)
         return cell
     }
     
@@ -206,11 +230,11 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                         dailyCollectionData = successMessage.data?.first?.collections ?? []
                         totalAmountLbl.text = successMessage.data?.first?.total_collection
                         totalCollectionLblTitle.isHidden = successMessage.data?.count == 0
-//                        if let fromDate = parseDate(from: fromdate),
-//                           let toDate = parseDate(from: todate) {
-//                            totalCollectionLblTitle.text = "Total Collection \(getDateRangeLabel(from: fromDate, to: toDate))"
-//                        }
-//                        titleStack.isHidden = successMessage.data?.count == 0
+                        //                        if let fromDate = parseDate(from: fromdate),
+                        //                           let toDate = parseDate(from: todate) {
+                        //                            totalCollectionLblTitle.text = "Total Collection \(getDateRangeLabel(from: fromDate, to: toDate))"
+                        //                        }
+                        //                        titleStack.isHidden = successMessage.data?.count == 0
                         tv.isHidden = successMessage.data?.count == 0
                         tv.reloadData()
                         norecordLbl.isHidden = successMessage.data?.count != 0
@@ -236,159 +260,41 @@ import UIKit
 
 extension UIButton {
     
-    
-//        func configureAsBackButton(firstLine: String, secondLine: String) {
-//            let fullTitle = "\(firstLine)\n\(secondLine)"
-//            
-//            // Force Plain style (iOS 15+ only)
-//            if #available(iOS 15.0, *) {
-//                self.configuration = .plain()
-//                self.configuration?.contentInsets = .zero // remove default paddings
-//            }
-//            
-//            // Set the back arrow image
-//            let image = UIImage(systemName: "chevron.left")
-//            self.setImage(image, for: .normal)
-//            
-//            // Configure paragraph style
-//            let paragraphStyle = NSMutableParagraphStyle()
-//            paragraphStyle.alignment = .left
-//            paragraphStyle.lineSpacing = 1
-//            
-//            // Create attributed title
-//            let attributedTitle = NSMutableAttributedString(
-//                string: fullTitle,
-//                attributes: [
-//                    .font: UIFont(name: "Poppins-Medium", size: 13) as Any,
-//                    .paragraphStyle: paragraphStyle
-//                ]
-//            )
-//            
-//            // Apply style to second line
-//            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
-//            if secondLineRange.location != NSNotFound {
-//                attributedTitle.addAttributes([
-//                    .font: UIFont(name: "Poppins-Medium", size: 12) as Any
-//                ], range: secondLineRange)
-//            }
-//            
-//            // Configure title label
-//            self.titleLabel?.numberOfLines = 0
-//            self.titleLabel?.lineBreakMode = .byWordWrapping
-//            self.titleLabel?.textAlignment = .left
-//            
-//            // Apply attributed title
-//            self.setAttributedTitle(attributedTitle, for: .normal)
-//            
-//            // Adjust content and insets
-//            self.contentHorizontalAlignment = .left
-//            self.contentVerticalAlignment = .center
-//            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
-//            self.imageEdgeInsets = .zero
-//            self.contentEdgeInsets = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
-//        }
-    
     func configureAsBackButton(firstLine: String, secondLine: String) {
-            let fullTitle = "\(firstLine)\n\(secondLine)"
-            
-            // Don’t use UIButton.Configuration → gives us control
-           // self.configuration = nil
-            
-            // Set the back arrow image
-            let image = UIImage(systemName: "chevron.left")
-            self.setImage(image, for: .normal)
-            
-            // Configure paragraph style (reduce vertical space between lines)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .left
-            paragraphStyle.lineSpacing = 1  // tighter line spacing
-            
-            // Create attributed title
-            let attributedTitle = NSMutableAttributedString(
-                string: fullTitle,
-                attributes: [
-                    .font: UIFont(name: "Poppins-Bold", size: 15) as Any,
-                    .paragraphStyle: paragraphStyle
-                ]
-            )
-            
-            // Apply style to second line (smaller font)
-            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
-            if secondLineRange.location != NSNotFound {
-                attributedTitle.addAttributes([
-                    .font: UIFont(name: "Poppins-Bold", size: 11) as Any
-                ], range: secondLineRange)
-            }
-            
-            // Configure title label
-            self.titleLabel?.numberOfLines = 0
-            self.titleLabel?.lineBreakMode = .byWordWrapping
-            self.titleLabel?.textAlignment = .left
-            
-            // Apply attributed title
-            self.setAttributedTitle(attributedTitle, for: .normal)
-            
-            // Alignments
-            self.contentHorizontalAlignment = .left
-            self.contentVerticalAlignment = .center
-            
-            // Add more space between image and text
-            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-            self.imageEdgeInsets = .zero
-            self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+        let fullTitle = "\(firstLine)\n\(secondLine)"
+        let image = UIImage(systemName: "chevron.left")
+        self.setImage(image, for: .normal)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = 1
+        let attributedTitle = NSMutableAttributedString(
+            string: fullTitle,
+            attributes: [
+                .font: UIFont(name: "Poppins-Bold", size: 15) as Any,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+        let secondLineRange = (fullTitle as NSString).range(of: secondLine)
+        if secondLineRange.location != NSNotFound {
+            attributedTitle.addAttributes([
+                .font: UIFont(name: "Poppins-Bold", size: 11) as Any
+            ], range: secondLineRange)
         }
-
-//        func configureAsBackButton(firstLine: String, secondLine: String, colour: UIColor) {
-//            let fullTitle = "\(firstLine)\n\(secondLine)"
-//            
-//            // Set the back arrow image
-//            let image = UIImage(systemName: "chevron.left")
-//            self.setImage(image, for: .normal)
-//            
-//            // Configure paragraph style
-//            let paragraphStyle = NSMutableParagraphStyle()
-//            paragraphStyle.alignment = .left
-//            paragraphStyle.lineSpacing = 3
-//            paragraphStyle.lineBreakMode = .byWordWrapping
-//            
-//            // Create attributed title
-//            let attributedTitle = NSMutableAttributedString(
-//                string: fullTitle,
-//                attributes: [
-//                    .font: UIFont(name: "Poppins-Medium", size: 13)!,
-//                    .foregroundColor: colour,
-//                    .paragraphStyle: paragraphStyle
-//                ]
-//            )
-//            
-//            // Apply style to second line
-//            let secondLineRange = (fullTitle as NSString).range(of: secondLine)
-//            if secondLineRange.location != NSNotFound {
-//                attributedTitle.addAttributes([
-//                    .font: UIFont(name: "Poppins-Medium", size: 12)!,
-//                    .foregroundColor: colour.withAlphaComponent(0.8),
-//                    .paragraphStyle: paragraphStyle
-//                ], range: secondLineRange)
-//            }
-//            
-//            // Configure title label
-//            self.titleLabel?.numberOfLines = 0              // allow multiple lines
-//            self.titleLabel?.lineBreakMode = .byWordWrapping
-//            self.titleLabel?.textAlignment = .left
-//            
-//            // Apply attributed title
-//            self.setAttributedTitle(attributedTitle, for: .normal)
-//            
-//            // Adjust content and insets
-//            self.contentHorizontalAlignment = .left
-//            self.contentVerticalAlignment = .center
-//            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-//            self.imageEdgeInsets = .zero
-//            self.contentEdgeInsets = .zero
-//            
-//            // 🔑 Auto resize the button to fit multi-line text
-//            self.sizeToFit()
-//        }
-    
-
+        
+        // Configure title label
+        self.titleLabel?.numberOfLines = 0
+        self.titleLabel?.lineBreakMode = .byWordWrapping
+        self.titleLabel?.textAlignment = .left
+        self.setAttributedTitle(attributedTitle, for: .normal)
+        
+        // Alignments
+        self.contentHorizontalAlignment = .left
+        self.contentVerticalAlignment = .center
+        
+        // Add more space between image and text
+        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        self.imageEdgeInsets = .zero
+        self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+    }
+   
 }

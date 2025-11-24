@@ -431,6 +431,8 @@
 "Submission" = "การส่ง";
 "Total" = "รวมทั้งหมด";
 "View" = "ดู";
+"My Submission" = "การส่งงานของฉัน";
+"Assignment Progress" = "ความคืบหน้างานที่มอบหมาย";
 
 //MARK: Sender side Events
 //Temp:
@@ -629,3 +631,21 @@
 "Sent at " = "ส่งเมื่อ ";
 "Level " = "ระดับ ";
 "Submission Report" = "รายงานการส่ง";
+"Enter Chapter here" = "ป้อนบทที่นี่";
+"Pick From Question Bank" = "เลือกจากคลังข้อสอบ";
+"Select All" = "เลือกทั้งหมด";
+"Import Question" = "นำเข้าคำถาม";
+
+//MARK: FeePending
+"CATEGORY_WISE" = "ตามหมวดหมู่";
+"CLASS_WISE" = "ตามชั้นเรียน";
+"TOTAL_PENDING" = "ค้างชำระทั้งหมด";
+"PAYMENT_HISTORY" = "ประวัติการชำระเงิน";
+
+//MARK: DailyCollection
+"CATEGORY" = "หมวดหมู่";
+"CLASS" = "ชั้นเรียน";
+"MODE" = "โหมด";
+"FROM_DATE" = " วันที่เริ่มต้น";
+"TO_DATE" = " วันที่สิ้นสุด";
+"TOTAL_COLLECTION" = "ยอดรวมทั้งหมด";

@@ -413,6 +413,8 @@
 "Submission" = "Submission";
 "Total" = "Total";
 "View" = "View";
+"My Submission" = "My Submission";
+"Assignment Progress" = "Assignment Progress";
 
 //MARK: Sender side Events
 //MARK: Attendence
@@ -613,4 +615,22 @@
 "Sent at " = "Sent at ";
 "Level " = "Level ";
 "Submission Report" = "Submission Report";
+"Enter Chapter here" = "Enter Chapter here";
+"Pick From Question Bank" = "Pick From Question Bank";
+"Select All" = "Select All";
+"Import Question" = "Import Question";
+
+//MARK: FeePending
+"CATEGORY_WISE" = "Category Wise";
+"CLASS_WISE" = "Class Wise";
+"TOTAL_PENDING" = "Total Pending";
+"PAYMENT_HISTORY" = "Payment History";
+
+//MARK: DailyCollection
+"CATEGORY" = "Category";
+"CLASS" = "Class";
+"MODE" = "Mode";
+"FROM_DATE" = " From Date";
+"TO_DATE" = " To Date";
+"TOTAL_COLLECTION" = "Total Collection";
 

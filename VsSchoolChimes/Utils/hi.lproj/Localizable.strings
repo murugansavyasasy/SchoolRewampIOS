@@ -425,6 +425,8 @@
 "Submission" = "जमा करें";
 "Total" = "कुल";
 "View" = "देखें";
+"My Submission" = "मेरा सबमिशन";
+"Assignment Progress" = "असाइनमेंट प्रगति";
 
 //MARK: Sender side Events
 //Temp:
@@ -622,4 +624,21 @@
 "Sent at " = "भेजा गया समय: ";
 "Level " = "स्तर ";
 "Submission Report" = "प्रस्तुति रिपोर्ट";
+"Enter Chapter here" = "यहाँ अध्याय दर्ज करें";
+"Pick From Question Bank" = "प्रश्न बैंक से चुनें";
+"Select All" = "सब चुनें";
+"Import Question" = "प्रश्न आयात करें";
 
+//MARK: Fee Pending
+"CATEGORY_WISE" = "श्रेणी अनुसार";
+"CLASS_WISE" = "कक्षा अनुसार";
+"TOTAL_PENDING" = "कुल लंबित";
+"PAYMENT_HISTORY" = "भुगतान इतिहास";
+
+//MARK: DailyCollection
+"CATEGORY" = "श्रेणी";
+"CLASS" = "कक्षा";
+"MODE" = "मोड";
+"FROM_DATE" = " से तारीख";
+"TO_DATE" = " तक तारीख";
+"TOTAL_COLLECTION" = "कुल संग्रह";
