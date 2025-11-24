@@ -468,6 +468,12 @@
 "getAllStudent" = "सभी छात्रों को प्राप्त करें";
 "completed" = "पूर्ण";
 "pending" = "लंबित";
+"Ongoing Events" = "चल रहे कार्यक्रम";
+"Event Categories" = "कार्यक्रम श्रेणियाँ";
+"Upcoming Events" = "आगामी कार्यक्रम";
+"Completed Events" = "पूर्ण किए गए कार्यक्रम";
+"Your Attachment's" = "आपकी संलग्न फ़ाइलें";
+
 
 //MARK: Comunication
 "BackToTextMessage" = "टेक्स्ट संदेश पर वापस जाएं";
@@ -604,6 +610,8 @@
 "Level" = "स्तर";
 "Created date" = "निर्माण तिथि";
 "posted by" = "द्वारा पोस्ट किया गया";
+"Posted On" = "पोस्ट किया गया";
+
 "Play Now" = "अब खेलें";
 "Reports" = "रिपोर्ट्स";
 "Enter Option A" = "विकल्प A दर्ज करें";
@@ -642,3 +650,52 @@
 "FROM_DATE" = " से तारीख";
 "TO_DATE" = " तक तारीख";
 "TOTAL_COLLECTION" = "कुल संग्रह";
+
+//MARK: PunchAttendence
+"Today's Report" = "आज की रिपोर्ट";
+"Select staff" = "कर्मचारी चुनें";
+"Historical Data" = "ऐतिहासिक डेटा";
+
+"Enable Location" = "स्थान चालू करें";
+"Add Location" = "स्थान जोड़ें";
+"To enhance your experience and provide accurate location-based features, please enable GPS." = "अपने अनुभव को बेहतर बनाने और सटीक स्थान-आधारित सुविधाएँ प्रदान करने के लिए कृपया GPS सक्षम करें.";
+"Allow location access to mark your attendance !" = "अपनी उपस्थिति दर्ज करने के लिए स्थान एक्सेस की अनुमति दें!";
+
+"Punch In" = "पंच इन";
+"Reports" = "रिपोर्ट्स";
+"Tap to view location history" = "स्थान इतिहास देखने के लिए टैप करें";
+"Drop your distance" = "अपनी दूरी दर्ज करें";
+"Pin your location name" = "अपने स्थान का नाम दर्ज करें";
+"Location Name" = "स्थान का नाम";
+"Get Location" = "स्थान प्राप्त करें";
+"Distance" = "दूरी";
+
+"Important Notes" = "महत्वपूर्ण नोट्स";
+
+"Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." =
+"दिन की उपस्थिति दर्ज करने के लिए पंच बटन पर टैप करें। आपकी उपस्थिति सफलतापूर्वक दर्ज होने पर एक पुष्टि संदेश दिखाई देगा।";
+
+"Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." =
+"उपस्थिति केवल तभी दर्ज हो जब उपयोगकर्ता संस्थान के निर्धारित क्षेत्र के भीतर हों, यह सुनिश्चित करने के लिए सटीक स्थान सेटिंग्स आवश्यक हैं। कृपया सबमिट करने से पहले स्थान को दोबारा जांच लें।";
+
+"Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality." =
+"एक बार सहेजने के बाद, यह स्थान उपयोगकर्ताओं की उपस्थिति दर्ज करते समय उनकी निकटता को सत्यापित करने के लिए उपयोग किया जाएगा। सुनिश्चित करें कि स्थान सही है, क्योंकि यह उपस्थिति कार्यक्षमता को सीधे प्रभावित करेगा।";
+
+"Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." =
+"नोट: आप संस्थान की सीमा के बाहर हैं। आप अपनी उपस्थिति दर्ज नहीं कर पाएंगे।\n\nकृपया निर्धारित क्षेत्र के भीतर आने पर पुनः प्रयास करें।";
+"Meter(s)" = "मीटर(मी)";
+"Allow location acess to mark your attendance !" = "उपस्थिति दर्ज करने के लिए लोकेशन एक्सेस की अनुमति दें!";
+
+//MARK: SchoolStregnth
+"Girls" = "लड़कियाँ";
+"Total Students" = "कुल विद्यार्थी";
+"Standard" = "कक्षा";
+"Boys" = "लड़के";
+"STANDARD SECTION OVER VIEW" = "कक्षा अनुभाग विवरण";
+"SCHOOL STRENGTH VISUALIZATION" = "विद्यालय शक्ति का दृष्यांकन";
+"SUMMARY STATICS" = "सारांश सांख्यिकी";
+"Staffs" = "स्टाफ़";
+"Students" = "विद्यार्थी";
+"Male" = "पुरुष";
+"Female" = "महिला";
+"View Details" = "विवरण देखें";

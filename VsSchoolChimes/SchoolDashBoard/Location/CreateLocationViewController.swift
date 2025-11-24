@@ -42,6 +42,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         setupLocation()
         locationNameTxt.setPadding(left: 10, right: 10)
         distanceTxt.setPadding(left: 10)
+        locationNameTxt.placeholder = "Pin your location name".translated()
+        distanceTxt.placeholder = "Drop your distance".translated()
         distanceTxt.addDoneButton()
         locationNameTxt.addDoneButton()
         if !isManualLocationSet {
@@ -77,7 +79,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         locationNameTxt.layer.borderWidth = 1
         locationNameTxt.layer.borderColor = UIColor.lightGray.cgColor
         locationNameTxt.layer.cornerRadius = 4
-        instractionLbl.text = "\(CommonStringFile.add_location_firstMessage)\n\n\(CommonStringFile.add_location_secondMessage)"
+        instractionLbl.text = "\(CommonStringFile.add_location_firstMessage.translated())\n\n\(CommonStringFile.add_location_secondMessage.translated())"
         
         locationDefaultLbl.setRequiredText(CommonStringFile.Location_name)
         distaceDefaultLbl.setRequiredText(CommonStringFile.Distance)

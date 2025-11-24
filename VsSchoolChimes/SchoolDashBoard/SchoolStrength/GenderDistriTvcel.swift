@@ -46,8 +46,9 @@ class GenderDistriTvcel: UITableViewCell {
         let boysPercentage = (Double(boys) / Double(total)) * 100
         let girlsPercentage = (Double(girls) / Double(total)) * 100
 
-        boysLbl.text = "\(boys) Staffs (\(String(format: "%.1f", boysPercentage))%)"
-        girlsLbl.text = "\(girls) Students (\(String(format: "%.1f", girlsPercentage))%)"
+        boysLbl.text = "\(boys) \("Staffs".translated()) (\(String(format: "%.1f", boysPercentage))%)"
+        girlsLbl.text = "\(girls) \("Students".translated()) (\(String(format: "%.1f", girlsPercentage))%)"
+
     }
    
 //    func updateProgress(absentees: String, total: String) {
@@ -75,13 +76,4 @@ class GenderDistriTvcel: UITableViewCell {
         updateGenderLabels(boys: maleCount, girls: String(Int(total) - Int(male)))
     }
 
-
-    
-   
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

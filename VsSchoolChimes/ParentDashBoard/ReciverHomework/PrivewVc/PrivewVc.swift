@@ -121,12 +121,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     private func setupUI() {
         let displayText = selectedDate?.convertToTargetDateFormat() ?? ""
-        dateLbl.text = "Posted On : " + displayText
         titleLbl.text = titleString
         discreption.text = descriptionString
-        postedByLbl.text = "Posted By : " + (postedBy ?? "")
-        
-        
+        dateLbl.text = "\("Posted On".translated()) : \(displayText)"
+        postedByLbl.text = "\("posted by".translated()) : \(postedBy ?? "")"
+
         if is_unreadStatus ?? false{
             ReadStatusUpdateArchive(
                 type: "HOMEWORK",
@@ -272,7 +271,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 case .success(let res):
                     
                     if res.status == true{
-                        self.yourTargetLbl.text = res.data?.first?.type
+                        self.yourTargetLbl.text = res.data?.first?.type?.translated()
                         self.isStaffAndStudent = true
                         if res.data?.first?.type == "Message sent to STANDARD"{
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")

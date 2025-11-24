@@ -66,7 +66,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 secondLine: UserDefaultFileManager
                     .get_staff_Details()?.school_name ?? ""
             )
-        
+        let segments = ["Today's Report".translated(), "Historical Data".translated()]
+        SegmentControl.removeAllSegments()
+        segments.enumerated().forEach {
+            SegmentControl.insertSegment(withTitle: $1, at: $0, animated: false)
+        }
         applyShadowAndCornerRadius(to: yearsView)
         applyShadowAndCornerRadius(to: staffDropView)
         applyShadowAndCornerRadius(to: monthView)
@@ -386,13 +390,18 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     // MARK: - Helper Methods
     func getMonthNames(for selectedYear: String) -> [String] {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let monthFormatter = DateFormatter()
-        monthFormatter.locale = Locale.current
+        monthFormatter.locale = Locale(identifier: localeID)
         monthFormatter.dateFormat = "MMMM"
-        
+
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let currentMonth = Calendar.current.component(.month, from: Date())
+
         let selectedYearInt = Int(selectedYear) ?? 0
         let maxMonth = (selectedYearInt == currentYear) ? currentMonth : 12
-        
+
         return (1...maxMonth).compactMap { month in
             var components = DateComponents()
             components.year = 2000

@@ -174,14 +174,9 @@ class CertificateRequestVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                  //  self?.tv.isHidden = false
                     self?.certificates = response.data
                     self?.filteredCertificates = response.data
-                  //  self?.tv.reloadData()
                     self?.cv.reloadData()
-//                    self?.noDataImg.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
-//                    self?.noDataLbl.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
-//                    self?.noDataLbl.text = response.message
                 case .failure(let error):
                     print("API Error:", error)
                 }

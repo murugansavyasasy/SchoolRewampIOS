@@ -460,6 +460,13 @@
 "Enter your Text here..." = "Enter your Text here...";
 "eg. Yoga event" = "eg. Yoga event";
 "eg. Chennai" = "eg. Chennai";
+"Ongoing Events" = "Ongoing Events";
+"Event Categories" = "Event Categories";
+"Upcoming Events" = "Upcoming Events";
+"Completed Events" = "Completed Events";
+"Your Attachment's" = "Your Attachments";
+
+
 //MARK: Comunication
 "Back to Text Message" = "Back to Text Message";
 "Back to Voice Message" = "Back to Voice Message";
@@ -595,6 +602,7 @@
 "Level" = "Level";
 "Created date" = "Created date";
 "posted by" = "Posted by";
+"Posted On" = "Posted On";
 "Play Now" = "Play Now";
 "Reports" = "Reports";
 "Enter Option A" = "Enter Option A";
@@ -633,4 +641,51 @@
 "FROM_DATE" = " From Date";
 "TO_DATE" = " To Date";
 "TOTAL_COLLECTION" = "Total Collection";
+
+//MARK: PunchAttendence
+"Today's Report" = "Today's Report";
+"Select staff" = "Select staff";
+"Historical Data" = "Historical Data";
+
+"Enable Location" = "Enable Location";
+"Add Location" = "Add Location";
+"To enhance your experience and provide accurate location-based features, please enable GPS." = "To enhance your experience and provide accurate location-based features, please enable GPS.";
+"Allow location access to mark your attendance !" = "Allow location access to mark your attendance !";
+
+"Punch In" = "Punch In";
+"Reports" = "Reports";
+"Tap to view location history" = "Tap to view location history";
+"Drop your distance" = "Drop your distance";
+"Pin your location name" = "Pin your location name";
+"Location Name" = "Location Name";
+"Get Location" = "Get Location";
+"Distance" = "Distance";
+
+"Important Notes" = "Important Notes";
+
+"Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked.";
+
+"Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." = "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting.";
+
+"Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality." = "Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.";
+
+"Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." = "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area.";
+"Meter(s)" = "Meter(s)";
+"Allow location acess to mark your attendance !" = "Allow location access to mark your attendance!";
+//MARK: SchoolStregnth
+
+"Girls" = "Girls";
+"Total Students" = "Total Students";
+"Standard" = "Standard";
+"Boys" = "Boys";
+"STANDARD SECTION OVER VIEW" = "Standard Section Overview";
+"SCHOOL STRENGTH VISUALIZATION" = "School Strength Visualization";
+"SUMMARY STATICS" = "Summary Statics";
+
+"Staffs" = "Staffs";
+"Students" = "Students";
+"Male" = "Male";
+"Female" = "Female";
+"View Details" = "View Details";
+
 

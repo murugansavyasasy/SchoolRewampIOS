@@ -355,19 +355,11 @@ struct CommonStringFile {
     static let audio = "audio"
     static let Tap_on_the_punch = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
     
-    static let locationErrorMessage = """
-        Note: You are outside the institute's boundary. You will not be able to mark your attendance.
-
-        Please try again when you are within the designated area.
-        """
+    static let locationErrorMessage = "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area."
     
-    static let add_location_firstMessage = """
-        Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting.
-        """
+    static let add_location_firstMessage = "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting."
     
-    static let add_location_secondMessage = """
-        Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
-        """
+    static let add_location_secondMessage = "Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality."
     
     static let No_data_found = "No Data Found!"
     static let Notice_Display_Date_Range = "Notice Active Period"
