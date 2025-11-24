@@ -588,5 +588,30 @@ struct PTMString {
     static let min = "%d Minutes"
     static let custom = "Custom"
     static let minShort = "%d Min"
+    static let Select_Slot_Duration = "Select Slot Duration"
+    static let Meetings = "Meetings";
+    static let Booked_slots = "Booked Slots";
+    static let Today_slots = "Today Slots";
+    static let Upcoming_slots = "Upcoming Slots";
+    static let completed_slots = "Completed Slots";
+    static let All = "All";
+    static let Completed = "Completed";
+    static let Cancelled = "Cancelled";
+    static let Expired = "Expired";
+    static let Slot_Expired = "Slot Expired";
+    static let Slot_Cancelled = "Slot Cancelled";
+    static let Booked_by = "Booked by:";
+    static let Father_Name = "Father Name:";
+    static let Mother_Name = "Mother Name:";
+    static let Mode = "Mode";
+    static let Classes = "Classes";
+    static let Slot_Duration = "Slot Duration";
+    static let Booked = "Booked";
+    static let Available = "Available";
+    static let Waiting_for_Booking = "Waiting for Booking";
+    static let No_Slot_Booked_yet = "No Slot Booked yet";
+    static let Book_PTM_Slots = "Book PTM Slots";
+    static let Join = "Join";
+
 }
 

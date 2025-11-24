@@ -575,6 +575,32 @@
 "%d Minutes" = "%d Minutes";
 "Custom" = "Custom";
 "%d Min" = "%d Min";
+"Select Slot Duration" = "Select Slot Duration";
+"Meetings" = "Meetings";
+"Booked Slots" = "Booked Slots";
+"Today Slots" = "Today Slots";
+"Upcoming Slots" = "Upcoming Slots";
+"Completed Slots" = "Completed Slots";
+"Completed" = "Completed";
+"Cancelled" = "Cancelled";
+"Expired" = "Expired";
+"Slot Expired" = "Slot Expired";
+"Slot Cancelled" = "Slot Cancelled";
+"Booked by:" = "Booked by:";
+"Father Name:" = "Father Name:";
+"Mother Name:" = "Mother Name:";
+"Mode" = "Mode";
+"Classes" = "Classes";
+"Booked" = "Booked";
+"Slot Duration" = "Slot Duration";
+"Available" = "Available";
+"Waiting for Booking" = "Waiting for Booking";
+"No Slot Booked yet" = "No Slot Booked yet";
+"Book PTM Slots" = "Book PTM Slots";
+"Join" = "Join";
+
+
+
 //MARK: Quiz Page
 "No of question" = "No of question";
 "Check the box to continue next level" = "Check the box to continue next level";

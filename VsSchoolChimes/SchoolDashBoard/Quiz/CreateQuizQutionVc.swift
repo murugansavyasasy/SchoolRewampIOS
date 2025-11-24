@@ -432,7 +432,7 @@ class CreateQuizQutionVc: UIViewController {
         // 4. Dismiss popup
         popupBGview.isHidden = true
 
-        QuestionNoLbl.text = "Question Limit: \(questions.count)/\(noOfQuestion)"
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
     }
 
 
@@ -441,7 +441,7 @@ class CreateQuizQutionVc: UIViewController {
             selectedQuestionIds = Set(questions.compactMap { $0.id }) // reset to actual imported
             popupBGview.isHidden = true
             QuestionBankTv.reloadData()
-            QuestionNoLbl.text = "Question Limit: \(questions.count)/\(noOfQuestion)"
+            QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
     }
     
     @IBAction func selectAllAct(_ sender: Any) {
@@ -465,7 +465,7 @@ class CreateQuizQutionVc: UIViewController {
         }
         
         QuestionBankTv.reloadData()
-        QuestionNoLbl.text = "Question Limit: \(questions.count + selectedQuestionIds.count)/\(noOfQuestion)"
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count + selectedQuestionIds.count)/\(noOfQuestion)"
         updateSelectAllButtonState()
     }
 
@@ -479,7 +479,7 @@ class CreateQuizQutionVc: UIViewController {
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
         }
         
-        QuestionNoLbl.text = "Question Limit: \(questions.count + selected)/\(noOfQuestion)"
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count + selected)/\(noOfQuestion)"
     }
 
     

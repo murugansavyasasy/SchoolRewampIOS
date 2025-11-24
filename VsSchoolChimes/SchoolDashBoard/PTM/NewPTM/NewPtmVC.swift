@@ -49,7 +49,7 @@ class NewPtmVC: UIViewController, Datepicker {
     var sections: [SectionData] = []
     var Booked_slot_data: [BookedSlotsData] = []
     var tvHidden:Bool?
-    var MeetingDate = "ALL"
+    var MeetingDate = PTMString.All.translated()
     var selectedDate = ""
     //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
@@ -88,7 +88,9 @@ class NewPtmVC: UIViewController, Datepicker {
         AttendedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         plusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        plusBtn.setTitle(PTMString.create, for: .normal)
+        plusBtn.setTitle(PTMString.create.translated(), for: .normal)
+        meetingsBtn.setTitle(PTMString.Meetings.translated(), for: .normal)
+        bookedSlotsBtn.setTitle(PTMString.Booked_slots.translated(), for: .normal)
         
         meetingsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         bookedSlotsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -153,21 +155,21 @@ class NewPtmVC: UIViewController, Datepicker {
                         // Today
                         if let todayGroups = slotData.today, !todayGroups.isEmpty {
                             let events = todayGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.todayMeetings, type: .meetings, events: events))
-                            let message = String(format:PTMString.meetingsToday,self.sections.first?.events.count ?? 0)
+                            self.sections.append(SectionData(title: PTMString.todayMeetings.translated(), type: .meetings, events: events))
+                            let message = String(format:PTMString.meetingsToday.translated(),self.sections.first?.events.count ?? 0)
                             self.MeetingCountLbl.text = message
                         }
                         
                         // Upcoming
                         if let upcomingGroups = slotData.upcoming, !upcomingGroups.isEmpty {
                             let events = upcomingGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.upcomingMeetings, type: .meetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.upcomingMeetings.translated(), type: .meetings, events: events))
                         }
                         
                         // Completed
                         if let completedGroups = slotData.completed, !completedGroups.isEmpty {
                             let events = completedGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.completedMeetings, type: .meetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.completedMeetings.translated(), type: .meetings, events: events))
                         }
                        
 //                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
@@ -225,19 +227,19 @@ class NewPtmVC: UIViewController, Datepicker {
                         //Today
                         if let todaySlots = slotData.today, !todaySlots.isEmpty {
                             let slots = todaySlots.compactMap{$0}
-                            self.sections.append(SectionData(title: "Today Slots", type: .slots, events: slots))
+                            self.sections.append(SectionData(title: PTMString.Today_slots.translated(), type: .slots, events: slots))
                         }
                         
                         //Upcoming
                         if let upcomingSlots = slotData.upcoming, !upcomingSlots.isEmpty {
                             let slots = upcomingSlots.compactMap{$0}
-                            self.sections.append(SectionData(title: "Upcoming Slots", type: .slots, events: slots))
+                            self.sections.append(SectionData(title:  PTMString.Upcoming_slots.translated(), type: .slots, events: slots))
                         }
                         
                         //Completed
                         if let completedSlots = slotData.completed, !completedSlots.isEmpty {
                             let slots = completedSlots.compactMap{$0}
-                            self.sections.append(SectionData(title: "Completed Slots", type: .slots, events: slots))
+                            self.sections.append(SectionData(title:  PTMString.completed_slots.translated(), type: .slots, events: slots))
                         }
                         
                         self.tv.reloadData()
@@ -273,7 +275,7 @@ class NewPtmVC: UIViewController, Datepicker {
     
     @IBAction func removeDateAct(_ sender: Any) {
         
-        selectDateBtn.setTitle("All", for: .normal)
+        selectDateBtn.setTitle(PTMString.All.translated(), for: .normal)
         removeDateBtn.isHidden = true
         selectedDate = ""
         Get_Meetings_Api(EventDate: "ALL")
@@ -505,7 +507,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
             // MARK: - Basic Info
             cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
-            cell.DurationLbl.text = "\(PTMString.duration) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes)"
+            cell.DurationLbl.text = "\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
             cell.bookedByNameLbl.text = slot?.student_name
             cell.fatherNameLbl.text = slot?.father_name
             cell.motherNameLbl.text = slot?.mother_name
@@ -581,7 +583,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
 
-                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                let title = MeetingStatus == PTMString.completedMeetings.translated() ? "Completed" : "Booked"
                 cell.StatusBtn.setTitle(title, for: .normal)
 
                 cell.StatusBtn.tintColor = .aproved

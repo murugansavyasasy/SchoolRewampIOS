@@ -651,8 +651,10 @@ func getFileIconName(for fileURL: URL) -> String {
 
 extension String {
     func convertToTargetDateFormat(inputFormat: String? = nil) -> String? {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale(identifier: localeID)
         
         let possibleFormats = [
             "yyyy-MM-dd",

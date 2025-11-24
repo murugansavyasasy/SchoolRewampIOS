@@ -583,6 +583,31 @@
 "%d Minutes" = "%d मिनट";
 "Custom" = "कस्टम";
 "%d Min" = "%d मि";
+"Select Slot Duration" = "स्लॉट अवधि चुनें";
+"Meetings" = "बैठकें";
+"Booked Slots" = "बुक किए गए स्लॉट";
+"Today Slots" = "आज के स्लॉट";
+"Upcoming Slots" = "आगामी स्लॉट";
+"Completed Slots" = "पूर्ण स्लॉट";
+"Completed" = "पूर्ण";
+"Cancelled" = "रद्द";
+"Expired" = "समाप्त";
+"Slot Expired" = "स्लॉट समाप्त";
+"Slot Cancelled" = "स्लॉट रद्द";
+"Booked by:" = "बुक करने वाला:";
+"Father Name:" = "पिता का नाम:";
+"Mother Name:" = "माता का नाम:";
+"Mode" = "मोड";
+"Classes" = "कक्षाएँ";
+"Booked" = "बुक किया गया";
+"Slot Duration" = "स्लॉट समय";
+"Available" = "उपलब्ध";
+"Waiting for Booking" = "बुकिंग का इंतज़ार";
+"No Slot Booked yet" = "अभी तक कोई स्लॉट बुक नहीं हुआ";
+"Book PTM Slots" = "PTM स्लॉट बुक करें";
+"Join" = "जुड़ें";
+
+
 
 //MARK: Quiz Page
 "No of question" = "प्रश्नों की संख्या";

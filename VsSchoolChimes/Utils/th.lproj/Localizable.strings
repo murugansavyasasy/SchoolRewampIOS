@@ -590,6 +590,30 @@
 "%d Minutes" = "%d นาที";
 "Custom" = "กำหนดเอง";
 "%d Min" = "%d นาที";
+"Select Slot Duration" = "เลือกระยะเวลาของช่วงเวลา";
+"Meetings" = "การประชุม";
+"Booked Slots" = "ช่วงเวลาที่จองแล้ว";
+"Today Slots" = "ช่วงเวลาวันนี้";
+"Upcoming Slots" = "ช่วงเวลาที่กำลังจะมาถึง";
+"Completed Slots" = "ช่วงเวลาที่เสร็จสิ้น";
+"Completed" = "เสร็จสิ้น";
+"Cancelled" = "ยกเลิก";
+"Expired" = "หมดอายุ";
+"Slot Expired" = "ช่วงเวลาหมดอายุ";
+"Slot Cancelled" = "ช่วงเวลาถูกยกเลิก";
+"Booked by:" = "จองโดย:";
+"Father Name:" = "ชื่อบิดา:";
+"Mother Name:" = "ชื่อมารดา:";
+"Mode" = "โหมด";
+"Classes" = "ชั้นเรียน";
+"Booked" = "จองแล้ว";
+"Slot Duration" = "ช่วงเวลา";
+"Available" = "ว่าง";
+"Waiting for Booking" = "รอการจอง";
+"No Slot Booked yet" = "ยังไม่มีการจองช่วงเวลา";
+"Book PTM Slots" = "จองช่วงเวลา PTM";
+"Join" = "เข้าร่วม";
+
 
 //MARK: Quiz Page
 "No of question" = "จำนวนคำถาม";

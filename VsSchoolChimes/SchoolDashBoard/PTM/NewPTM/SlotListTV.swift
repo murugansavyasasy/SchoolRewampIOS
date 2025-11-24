@@ -64,6 +64,9 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
         bookedByNameLbl.setFont(style: .body, size: FontSize.BodySize)
         
+        TimeLbl.setFont(style: .body, size: FontSize.BodySize)
+        bookedByDefLbl.text = PTMString.Booked_by.translated()
+        
         BookingBaseview.layer.cornerRadius = 10
         BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.5)
         

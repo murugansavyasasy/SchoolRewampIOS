@@ -150,7 +150,6 @@
 "Notice Active Period" = "அறிவிப்பு செயல்பாட்டு காலம்";
 "All" = "அனைத்து";
 "NEXT" = "அடுத்து";
-"Edit" = "தொகு";
 "Welcome" = "வரவேற்பு";
 "Change Language" = "மொழியை மாற்று";
 "Home" = "முகப்பு";
@@ -601,6 +600,30 @@
 "%d Minutes" = "%d நிமிடங்கள்";
 "Custom" = "விருப்பத்தேர்வு";
 "%d Min" = "%d நிமி";
+"Select Slot Duration" = "ஸ்லாட் கால அளவைத் தேர்வு செய்க";
+"Meetings" = "கூட்டங்கள்";
+"Booked Slots" = "பதிவு செய்யப்பட்ட ஸ்லாட்கள்";
+"Today Slots" = "இன்றைய ஸ்லாட்கள்";
+"Upcoming Slots" = "வரவிருக்கும் ஸ்லாட்கள்";
+"Completed Slots" = "முடிந்த ஸ்லாட்கள்";
+"Completed" = "முடிந்தது";
+"Cancelled" = "ரத்துசெய்யப்பட்டது";
+"Expired" = "காலாவதியானது";
+"Slot Expired" = "ஸ்லாட் காலாவதியானது";
+"Slot Cancelled" = "ஸ்லாட் ரத்துசெய்யப்பட்டது";
+"Booked by:" = "பதிவு செய்தவர்:";
+"Father Name:" = "தந்தை பெயர்:";
+"Mother Name:" = "தாய் பெயர்:";
+"Mode" = "முறை";
+"Classes" = "வகுப்புகள்";
+"Booked" = "பதிவு செய்யப்பட்டது";
+"Slot Duration" = "ஸ்லாட் நேரம்";
+"Available" = "கிடைக்கும்";
+"Waiting for Booking" = "பதிவுக்காக காத்திருக்கிறது";
+"No Slot Booked yet" = "எந்த ஸ்லாடும் இன்னும் பதிவு செய்யப்படவில்லை";
+"Book PTM Slots" = "PTM ஸ்லாட் பதிவு";
+"Join" = "சேரவும்";
+
 
 //MARK: Quiz Page
 "No of question" = "கேள்விகளின் எண்ணிக்கை";

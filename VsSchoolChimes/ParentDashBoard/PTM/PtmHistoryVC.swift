@@ -276,7 +276,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.callBtn.isHidden = slot?.mode != "Phone Call"
         cell.JoinBtn.isHidden = slot?.mode != "Virtual"
         cell.cancelBtn.isHidden = slot?.status == "Completed"
-        cell.statusBtn.setTitle(slot?.status, for: .normal)
+        cell.statusBtn.setTitle(slot?.status?.translated(), for: .normal)
         cell.DateLbl.text = slot?.date?.convertToTargetDateFormat()
         cell.TimeLbl.text = slot?.time
         

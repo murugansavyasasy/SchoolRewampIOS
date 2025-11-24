@@ -31,8 +31,8 @@ class PtmNavigationVC: UIViewController {
         
         searchBtn.isHidden = true
         
-        scheduleMeetingBtn.setTitle("Book PTM Slots", for: .normal)
-        yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
+        scheduleMeetingBtn.setTitle(PTMString.Book_PTM_Slots.translated(), for: .normal)
+        yourMeetingBtn.setTitle(PTMString.yourMeetings.translated(), for: .normal)
         
         scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         yourMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)

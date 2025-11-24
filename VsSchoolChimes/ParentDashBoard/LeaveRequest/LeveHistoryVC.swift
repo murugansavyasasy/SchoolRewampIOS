@@ -68,10 +68,10 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         LeaveRequestsLbl.setFont(style: .header, size: 20)
         LeaveRequestsLbl.text = AttendanceString.leaveRequests
         
-        allBtn.setTitle(CommonStringFile.all, for: .normal)
-        rejectBtn.setTitle(AttendanceString.rejected, for: .normal)
-        approveBtn.setTitle(AttendanceString.approved, for: .normal)
-        waitingBtn.setTitle(AttendanceString.waiting, for: .normal)
+        allBtn.setTitle(CommonStringFile.all.translated(), for: .normal)
+        rejectBtn.setTitle(AttendanceString.rejected.translated(), for: .normal)
+        approveBtn.setTitle(AttendanceString.approved.translated(), for: .normal)
+        waitingBtn.setTitle(AttendanceString.waiting.translated(), for: .normal)
         
         allBtn.titleLabel?.numberOfLines = 0
         allBtn.titleLabel?.lineBreakMode = .byWordWrapping
@@ -84,7 +84,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         
         addUnderline(to: allBtn, unSelectedBtn: [rejectBtn, approveBtn, waitingBtn])
         NodataLbl.setFont(style: .title, size: FontSize.HeaderSize)
-        NodataLbl.text = CommonStringFile.No_data_found
+        NodataLbl.text = CommonStringFile.No_data_found.translated()
 
         TopInfoView.isHidden = true
         NodataImage.isHidden = true
@@ -93,7 +93,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         searchBar.isHidden = true
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
 
         historyTable.register(UINib(nibName: CellConfingName.LeaveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeaveHistoryTV)
@@ -408,19 +408,19 @@ extension LeveHistoryVC: UITableViewDelegate, UITableViewDataSource {
         case.approved:
             cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
             cell.StatusBtn.setTitleColor(.systemGreen, for: .normal)
-            cell.StatusBtn.setTitle(AttendanceString.approved, for: .normal)
+            cell.StatusBtn.setTitle(AttendanceString.approved.translated(), for: .normal)
             cell.OptionsBtn.isHidden = true
             cell.GetOutpassBtn.isHidden = false
         case.rejected:
             cell.StatusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
             cell.StatusBtn.setTitleColor(.red, for: .normal)
-            cell.StatusBtn.setTitle(AttendanceString.rejected, for: .normal)
+            cell.StatusBtn.setTitle(AttendanceString.rejected.translated(), for: .normal)
             cell.OptionsBtn.isHidden = true
             cell.GetOutpassBtn.isHidden = true
         case.waiting:
             cell.StatusBtn.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.3)
             cell.StatusBtn.setTitleColor(.brown, for: .normal)
-            cell.StatusBtn.setTitle(AttendanceString.awaiting, for: .normal)
+            cell.StatusBtn.setTitle(AttendanceString.awaiting.translated(), for: .normal)
             cell.OptionsBtn.isHidden = false
             cell.GetOutpassBtn.isHidden = true
         }
