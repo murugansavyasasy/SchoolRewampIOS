@@ -309,6 +309,8 @@
 		84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */; };
+		8449D8D22ED4646C00822FAC /* emergency_voice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8449D8D12ED4646C00822FAC /* emergency_voice.mp3 */; };
+		8449D8D42ED4647300822FAC /* normal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8449D8D32ED4647300822FAC /* normal.mp3 */; };
 		844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */; };
 		844DEDE52E549A0B0016A347 /* CreateQuizQutionVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */; };
 		844DEDE82E549C150016A347 /* QuistionTvTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DEDE62E549C150016A347 /* QuistionTvTableViewCell.swift */; };
@@ -1232,6 +1234,8 @@
 		84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
 		84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateProfileVC.xib; sourceTree = "<group>"; };
 		8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		8449D8D12ED4646C00822FAC /* emergency_voice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = emergency_voice.mp3; sourceTree = "<group>"; };
+		8449D8D32ED4647300822FAC /* normal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = normal.mp3; sourceTree = "<group>"; };
 		844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuizQutionVc.swift; sourceTree = "<group>"; };
 		844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQuizQutionVc.xib; sourceTree = "<group>"; };
 		844DEDE62E549C150016A347 /* QuistionTvTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuistionTvTableViewCell.swift; sourceTree = "<group>"; };
@@ -3472,6 +3476,8 @@
 				84A0D16D2DCA0E510037E1BF /* ImageCell.swift */,
 				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
 				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
+				8449D8D32ED4647300822FAC /* normal.mp3 */,
+				8449D8D12ED4646C00822FAC /* emergency_voice.mp3 */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4635,6 +4641,7 @@
 				FAFF9E092D6C7B7A00498368 /* SlotHeader.xib in Resources */,
 				84174EA92E717FA100AC7092 /* QuizSubmissionVc.xib in Resources */,
 				8420317A2D390FF3003C4076 /* TimetableTv.xib in Resources */,
+				8449D8D22ED4646C00822FAC /* emergency_voice.mp3 in Resources */,
 				84E12C3B2ECC71F200FF614B /* PopoverTVC.xib in Resources */,
 				84235A0E2E1E27F4002F2E1D /* RecorderTVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
@@ -4719,6 +4726,7 @@
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				FAF43B672E02A12A00F28A16 /* LessonEditTV.xib in Resources */,
 				84127DBC2E13EB260092159D /* interactTvcell.xib in Resources */,
+				8449D8D42ED4647300822FAC /* normal.mp3 in Resources */,
 				848047762E02A8090042BC5D /* AssignmentPageVC.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
 				8474CBA32D9A6F6000DA0951 /* RecipientCVcell.xib in Resources */,

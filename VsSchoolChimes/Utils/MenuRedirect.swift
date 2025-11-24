@@ -497,8 +497,11 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    func receiverAttendancereport(from viewController: UIViewController){
+    func receiverAttendancereport(
+        from viewController: UIViewController,
+        PushNotiMsg_id : String){
         let vc = ReciverAttendanceReportVC(nibName: nil, bundle: nil)
+        vc.pushNotiMsg_id = PushNotiMsg_id
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

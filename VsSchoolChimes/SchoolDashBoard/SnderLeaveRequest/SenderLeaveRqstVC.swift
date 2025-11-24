@@ -140,11 +140,11 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
                     filterBtnStack.isHidden = !(Success.status ?? true)
                     leaveRequestTable.reloadData()
                     
-//                    if self.pushnotificationMsg_id != ""{
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                            self.scrollToClickedMessage()
-//                        }
-//                    }
+                    if self.pushnotificationMsg_id != ""{
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.scrollToLeave(with: pushnotificationMsg_id ?? "")
+                        }
+                    }
                 }
                 
             case .failure(let error):
@@ -160,29 +160,36 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         }
     }
     
-//    private func scrollToClickedMessage() {
-//        guard let id = pushnotificationMsg_id,
-//              let index = filteredLeaveRecords?.firstIndex(where: { $0.id == id }) else {
-//            return
-//        }
-//
-//        let indexPath = IndexPath(row: index, section: 0)
-//        
-//        // Scroll to that cell smoothly
-//        leaveRequestTable.scrollToRow(at: indexPath, at: .middle, animated: true)
-//        
-//        // Optionally highlight the cell for 1 second
-//        if let cell = leaveRequestTable.cellForRow(at: indexPath) {
-//            UIView.animate(withDuration: 0.3, animations: {
-//                cell.contentView.backgroundColor = UIColor.lightGray
-//                    .withAlphaComponent(0.3)
-//            }) { _ in
-//                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
-//                    cell.contentView.backgroundColor = .white
-//                }
-//            }
-//        }
-//    }
+    private func scrollToLeave(with id: String) {
+
+        guard let data = filteredLeaveRecords else { return }
+
+        for (sectionIndex, month) in data.enumerated() {
+            if let rowIndex = month.details?.firstIndex(where: { $0.id == id }) {
+
+                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+
+                leaveRequestTable.scrollToRow(at: indexPath, at: .middle, animated: true)
+
+                highlightCell(at: indexPath)
+                return
+            }
+        }
+    }
+
+    
+    private func highlightCell(at indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            if let cell = self.leaveRequestTable.cellForRow(at: indexPath) {
+                cell.contentView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.4)
+                UIView.animate(withDuration: 0.5, delay: 1.0) {
+                    cell.contentView.backgroundColor = .white
+                }
+            }
+        }
+    }
+
+    
     //MARK: update staus Api call
     func Leave_Update_status(id: String, status: Bool, indexPath: IndexPath) {
         let param: [String: Any] = [

@@ -121,7 +121,7 @@ class ParentDashboardVc: UIViewController {
     }
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
-        MenuRedirect.receiverAttendancereport(from: self)
+        MenuRedirect.receiverAttendancereport(from: self, PushNotiMsg_id: "")
     }
     
     override func viewDidLayoutSubviews() {
@@ -371,7 +371,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 2:
                 MenuRedirect.receiverAssignmentNavigate(from: self)
             case 4:
-                MenuRedirect.receiverAttendancereport(from: self)
+                MenuRedirect
+                    .receiverAttendancereport(from: self, PushNotiMsg_id: "")
             case 5:
                 MenuRedirect.receiverCertificateRequest(from: self)
             case 6:

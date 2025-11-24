@@ -44,6 +44,7 @@ class ReciverAttendanceReportVC: UIViewController {
     var attendanceReportData : [StudentAttendance]?
     let dateFormatter = DateFormatter()
     var studentStats: [StudentStatistics]?
+    var pushNotiMsg_id : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +60,10 @@ class ReciverAttendanceReportVC: UIViewController {
         StyleAndTranslate()
         
         get_student_stats()
+        
+        if pushNotiMsg_id != ""{
+            LeaveHistoryAct()
+        }
     }
 
     
@@ -89,13 +94,13 @@ class ReciverAttendanceReportVC: UIViewController {
         
         WeekStatusDefBtn.setTitle(AttendanceString.thisWeekStatus, for: .normal)
         
-        AttendanceDefLbl.text = AttendanceString.attendance
-        LeaveTakenDefLbl.text = AttendanceString.leaveTaken
-        OngoingdaysDefLbl.text = AttendanceString.ongoingDays
-        askLeavesDefLbl.text = AttendanceString.askLeave
-        requestHistoryDefLbl.text = AttendanceString.leaveRequests
-        attendanceReportDefLbl.text = AttendanceString.LeaveHistory
-        holidaysDefLbl.text = AttendanceString.holidays
+        AttendanceDefLbl.text = AttendanceString.attendance.translated()
+        LeaveTakenDefLbl.text = AttendanceString.leaveTaken.translated()
+        OngoingdaysDefLbl.text = AttendanceString.ongoingDays.translated()
+        askLeavesDefLbl.text = AttendanceString.askLeave.translated()
+        requestHistoryDefLbl.text = AttendanceString.leaveRequests.translated()
+        attendanceReportDefLbl.text = AttendanceString.LeaveHistory.translated()
+        holidaysDefLbl.text = AttendanceString.holidays.translated()
         
         AttendanceDefLbl.setFont(style: .body, size: 10)
         LeaveTakenDefLbl.setFont(style: .body, size: 10)
@@ -486,9 +491,11 @@ class ReciverAttendanceReportVC: UIViewController {
     
     @IBAction func LeaveHistoryAct(){
         if #available(iOS 14.0, *) {
-            let vc = LeveHistoryVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                let vc = LeveHistoryVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
         }
     }
     

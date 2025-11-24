@@ -157,7 +157,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             
             cell.dateLbl.text = slotData?.date?.convertToTargetDateFormat()
             cell.meetingNameLbl.text = slotData?.event_name
-            cell.durationLbl.text = String(slotData?.meeting_duration ?? 0) + " " + PTMString.minutes
+            cell.durationLbl.text = String(slotData?.meeting_duration ?? 0) + " " + PTMString.minutes.translated()
             cell.modeLbl.text = slotData?.event_mode
             cell.JoinBtn.isHidden = slotData?.event_mode == "Virtual" ? false : true
             cell.TimeLbl.text = (slotData?.start_time ?? "") + " - " + (slotData?.end_time ?? "")
@@ -173,7 +173,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
             // MARK: - Basic Info
             cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
-            cell.DurationLbl.text = "\(PTMString.duration) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes)"
+            cell.DurationLbl.text = "\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
             cell.bookedByNameLbl.text = slot?.booked_by
 
             // MARK: - Image
@@ -189,9 +189,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                     selectedId: slot?.slot_id ?? ""
                 )
 
-                if MeetingStatus == PTMString.completedMeetings {
+                if MeetingStatus == PTMString.completedMeetings.translated() {
                     cell.optionsBtn.isHidden = true
-                } else if MeetingStatus == PTMString.todayMeetings {
+                } else if MeetingStatus == PTMString.todayMeetings.translated() {
                     cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
                 }
 
@@ -210,7 +210,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
                 cell.StatusBtn.backgroundColor = .systemGray5
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Expired", for: .normal)
+                cell.StatusBtn.setTitle(PTMString.Expired.translated(), for: .normal)
                 cell.StatusBtn.tintColor = .black
                 cell.StatusBtn.setTitleColor(.black, for: .normal)
 
@@ -218,14 +218,14 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .black
-                cell.WaitingLbl.text = "Slot Expired"
+                cell.WaitingLbl.text = PTMString.Slot_Expired.translated()
 
             }
             else if slot?.is_cancelled_by_staff == true {
 
                 cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Cancelled", for: .normal)
+                cell.StatusBtn.setTitle(PTMString.Cancelled.translated(), for: .normal)
                 cell.StatusBtn.tintColor = .red
                 cell.StatusBtn.setTitleColor(.red, for: .normal)
 
@@ -233,7 +233,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemRed
-                cell.WaitingLbl.text = "Slot Cancelled"
+                cell.WaitingLbl.text = PTMString.Slot_Cancelled.translated()
 
             }
             else if slot?.is_booked == true {
@@ -241,7 +241,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
 
-                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                let title = MeetingStatus == PTMString.completedMeetings.translated() ? PTMString.Completed.translated() : PTMString.Booked.translated()
                 cell.StatusBtn.setTitle(title, for: .normal)
 
                 cell.StatusBtn.tintColor = .aproved
@@ -255,7 +255,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
                 cell.StatusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.075)
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Available", for: .normal)
+                cell.StatusBtn.setTitle(PTMString.Available.translated(), for: .normal)
                 cell.StatusBtn.tintColor = .systemBlue
                 cell.StatusBtn.setTitleColor(.black, for: .normal)
 
@@ -263,7 +263,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemBlue
-                cell.WaitingLbl.text = "Waiting for Booking"
+                cell.WaitingLbl.text = PTMString.Waiting_for_Booking.translated()
             }
             cell.Collapsedelegate = self
             let isExpanded = expandedIndex == indexPath

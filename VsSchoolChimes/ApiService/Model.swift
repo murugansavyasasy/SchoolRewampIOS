@@ -1792,29 +1792,30 @@ struct BookedSlotsData: Codable {
 }
 
 struct BookedSlot: Codable {
-    let id: String?
-    let event_date: String?
-    let slot_from: String?
-    let slot_to: String?
-    let event_name: String?
-    let event_mode: String?
-    let event_link: String?
-    let sent_by: String?
-    let student_id: String?
-    let student_name: String?
-    let father_name: String?
-    let mother_name: String?
-    let mobile_no: String?
-    let class_id: String?
-    let section_id: String?
-    let class_name: String?
-    let section_name: String?
-    let slot_status: String?
-    let is_booked: Bool?
-    let profile_url: String?
-    let can_cancel: Bool?
-    let is_cancelled: Bool?
-    let is_cancelled_by_staff: Bool?
+    var id: String?
+        var date: String?
+        var from_time: String?
+        var to_time: String?
+        var event_name: String?
+        var event_mode: String?
+        var event_link: String?
+        var meeting_duration: Int?
+        var sent_by: String?
+        var student_id: String?
+        var student_name: String?
+        var father_name: String?
+        var mother_name: String?
+        var mobile_no: String?
+        var class_id: String?
+        var section_id: String?
+        var class_name: String?
+        var section_name: String?
+        var slot_status: String?
+        var is_booked: Bool?
+        var profile_url: String?
+        var can_cancel: Bool?
+        var is_cancelled: Bool?
+        var is_cancelled_by_staff: Bool?
 }
 
 

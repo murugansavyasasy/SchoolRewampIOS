@@ -2134,9 +2134,12 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func convertDateStrings(dates: [String]) -> [String] {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
+
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd MMM yyyy"
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        inputFormatter.locale = Locale(identifier: localeID)
         
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "dd-MM-yyyy"

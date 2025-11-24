@@ -43,9 +43,9 @@ class LeaveHistoryTV: UITableViewCell {
         DeleteBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        DeleteBtn.setTitle(AlertstringFile.delete, for: .normal)
-        EditBtn.setTitle(CommonStringFile.edit, for: .normal)
-        GetOutpassBtn.setTitle(AttendanceString.generateOutpass, for: .normal)
+        DeleteBtn.setTitle(AlertstringFile.delete.translated(), for: .normal)
+        EditBtn.setTitle(CommonStringFile.edit.translated(), for: .normal)
+        GetOutpassBtn.setTitle(AttendanceString.generateOutpass.translated(), for: .normal)
         OptionsBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
         popupView.setShadow()
         popupView.isHidden = true

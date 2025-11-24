@@ -56,6 +56,8 @@ class MeetingDetailTV: UITableViewCell, SelectedId, UIPopoverPresentationControl
         MeetingNameLbl.setFont(style: .title, size: 17)
         modeLbl.setFont(style: .body, size: FontSize.BodySize)
         
+        joinBtn.setTitle(PTMString.No_Slot_Booked_yet.translated(), for: .normal)
+        
         img1.layer.cornerRadius = img1.frame.width / 2
         img2.layer.cornerRadius = img1.frame.width / 2
         img3.layer.cornerRadius = img1.frame.width / 2

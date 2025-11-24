@@ -22,7 +22,7 @@ class HistoryTC: UITableViewCell {
     var playerItem: AVPlayerItem?
     var updateTimer: Timer?
     var isPlaying = false
-    var totalsecont = "03:00"
+    var totalsecont = "00:00"
     var lastPlayingduration = "00:00"
     var delegate: reloadDelegate?
     var ForwordDelegate : ForwordDelegate?

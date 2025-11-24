@@ -26,7 +26,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         
         questions.insert(QuizQuestiondata(), at: indexPath.row + 1)
         tv.reloadData()
-        self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
+        self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
     }
         
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata) {
@@ -62,7 +62,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
             guard questions.count > 1 else { return }
             questions.remove(at: indexPath.row)
             tv.reloadData()
-            self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
+            self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
         }
     
     func addAttachment(at indexPath: IndexPath, file: FilePaths) {
@@ -110,6 +110,10 @@ class CreateQuizQutionVc: UIViewController {
         ImportQuestionBtn.layer.cornerRadius = 10
         CancelBtn.layer.cornerRadius = 10
         sendQuizBtn.layer.cornerRadius = 10
+        
+        ImportQuestionBtn.setTitle(QuizListStringFile.Import_Question.translated(), for: .normal)
+        CancelBtn.setTitle(CommonStringFile.Cancel.translated(), for: .normal)
+        selectAllBtn.setTitle(QuizListStringFile.Select_All.translated(), for: .normal)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -172,7 +176,7 @@ class CreateQuizQutionVc: UIViewController {
                     } else {
                         self.questions = [QuizQuestiondata()] // fallback to one empty
                     }
-                    self.QuestionNoLbl.text = "Question Limit: " + String(self.questions.count) + "/" + String(self.noOfQuestion)
+                    self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
                     self.tv.reloadData()
                 case .failure:
                     DispatchQueue.main.async {
@@ -428,7 +432,7 @@ class CreateQuizQutionVc: UIViewController {
         // 4. Dismiss popup
         popupBGview.isHidden = true
 
-        QuestionNoLbl.text = "Question Limit: \(questions.count)/\(noOfQuestion)"
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
     }
 
 
@@ -437,7 +441,7 @@ class CreateQuizQutionVc: UIViewController {
             selectedQuestionIds = Set(questions.compactMap { $0.id }) // reset to actual imported
             popupBGview.isHidden = true
             QuestionBankTv.reloadData()
-            QuestionNoLbl.text = "Question Limit: \(questions.count)/\(noOfQuestion)"
+            QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
     }
     
     @IBAction func selectAllAct(_ sender: Any) {
@@ -461,7 +465,7 @@ class CreateQuizQutionVc: UIViewController {
         }
         
         QuestionBankTv.reloadData()
-        QuestionNoLbl.text = "Question Limit: \(questions.count + selectedQuestionIds.count)/\(noOfQuestion)"
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count + selectedQuestionIds.count)/\(noOfQuestion)"
         updateSelectAllButtonState()
     }
 
@@ -475,7 +479,7 @@ class CreateQuizQutionVc: UIViewController {
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
         }
         
-        QuestionNoLbl.text = "Question Limit: \(questions.count + selected)/\(noOfQuestion)"
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count + selected)/\(noOfQuestion)"
     }
 
     

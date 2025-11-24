@@ -21,6 +21,8 @@ import UIKit
 class NewPtmVC: UIViewController, Datepicker {
    
     
+   
+    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var selectDateBtn: UIButton!
@@ -47,7 +49,7 @@ class NewPtmVC: UIViewController, Datepicker {
     var sections: [SectionData] = []
     var Booked_slot_data: [BookedSlotsData] = []
     var tvHidden:Bool?
-    var MeetingDate = "ALL"
+    var MeetingDate = PTMString.All.translated()
     var selectedDate = ""
     //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
@@ -86,7 +88,9 @@ class NewPtmVC: UIViewController, Datepicker {
         AttendedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         plusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        plusBtn.setTitle(PTMString.create, for: .normal)
+        plusBtn.setTitle(PTMString.create.translated(), for: .normal)
+        meetingsBtn.setTitle(PTMString.Meetings.translated(), for: .normal)
+        bookedSlotsBtn.setTitle(PTMString.Booked_slots.translated(), for: .normal)
         
         meetingsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         bookedSlotsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -151,21 +155,21 @@ class NewPtmVC: UIViewController, Datepicker {
                         // Today
                         if let todayGroups = slotData.today, !todayGroups.isEmpty {
                             let events = todayGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.todayMeetings, type: .meetings, events: events))
-                            let message = String(format:PTMString.meetingsToday,self.sections.first?.events.count ?? 0)
+                            self.sections.append(SectionData(title: PTMString.todayMeetings.translated(), type: .meetings, events: events))
+                            let message = String(format:PTMString.meetingsToday.translated(),self.sections.first?.events.count ?? 0)
                             self.MeetingCountLbl.text = message
                         }
                         
                         // Upcoming
                         if let upcomingGroups = slotData.upcoming, !upcomingGroups.isEmpty {
                             let events = upcomingGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.upcomingMeetings, type: .meetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.upcomingMeetings.translated(), type: .meetings, events: events))
                         }
                         
                         // Completed
                         if let completedGroups = slotData.completed, !completedGroups.isEmpty {
                             let events = completedGroups.compactMap { $0.details }.flatMap { $0 }
-                            self.sections.append(SectionData(title: PTMString.completedMeetings, type: .meetings, events: events))
+                            self.sections.append(SectionData(title: PTMString.completedMeetings.translated(), type: .meetings, events: events))
                         }
                        
 //                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
@@ -223,24 +227,24 @@ class NewPtmVC: UIViewController, Datepicker {
                         //Today
                         if let todaySlots = slotData.today, !todaySlots.isEmpty {
                             let slots = todaySlots.compactMap{$0}
-                            self.sections.append(SectionData(title: "Today Slots", type: .slots, events: slots))
+                            self.sections.append(SectionData(title: PTMString.Today_slots.translated(), type: .slots, events: slots))
                         }
                         
                         //Upcoming
                         if let upcomingSlots = slotData.upcoming, !upcomingSlots.isEmpty {
                             let slots = upcomingSlots.compactMap{$0}
-                            self.sections.append(SectionData(title: "Upcoming Slots", type: .slots, events: slots))
+                            self.sections.append(SectionData(title:  PTMString.Upcoming_slots.translated(), type: .slots, events: slots))
                         }
                         
                         //Completed
                         if let completedSlots = slotData.completed, !completedSlots.isEmpty {
                             let slots = completedSlots.compactMap{$0}
-                            self.sections.append(SectionData(title: "Completed Slots", type: .slots, events: slots))
+                            self.sections.append(SectionData(title:  PTMString.completed_slots.translated(), type: .slots, events: slots))
                         }
                         
                         self.tv.reloadData()
                     }else {
-                        
+                        self.sections.removeAll()
                         self.nodataLbl.isHidden = false
                         self.noDataImage.isHidden = false
                         self.nodataLbl.text = success.message
@@ -248,6 +252,7 @@ class NewPtmVC: UIViewController, Datepicker {
                 
                     
                 case .failure(let failure):
+                    self.sections.removeAll()
                     self.nodataLbl.isHidden = false
                     self.noDataImage.isHidden = false
                     self.nodataLbl.text = failure.localizedDescription
@@ -270,7 +275,7 @@ class NewPtmVC: UIViewController, Datepicker {
     
     @IBAction func removeDateAct(_ sender: Any) {
         
-        selectDateBtn.setTitle("All", for: .normal)
+        selectDateBtn.setTitle(PTMString.All.translated(), for: .normal)
         removeDateBtn.isHidden = true
         selectedDate = ""
         Get_Meetings_Api(EventDate: "ALL")
@@ -493,15 +498,26 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.SlotListTV, for: indexPath) as! SlotListTV
             
             let slot = sections[indexPath.section].events[indexPath.row] as? BookedSlot
+            let MeetingStatus = sections[indexPath.section].title
+            
+            cell.meetigModeLbl.isHidden = false
+            cell.meetigNameLbl.isHidden = false
+            cell.meetigNameLbl.text = slot?.event_name
+            cell.meetigModeLbl.text = slot?.event_mode
 
-            /*// MARK: - Basic Info
+            // MARK: - Basic Info
             cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
-            cell.DurationLbl.text = "\(PTMString.duration) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes)"
-            cell.bookedByNameLbl.text = slot?.booked_by
+            cell.DurationLbl.text = "\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
+            cell.bookedByNameLbl.text = slot?.student_name
+            cell.fatherNameLbl.text = slot?.father_name
+            cell.motherNameLbl.text = slot?.mother_name
+            cell.standardLbl.text = "\(slot?.class_name ?? "") - \(slot?.section_name ?? "")"
 
             // MARK: - Image
             if let url = URL(string: slot?.profile_url ?? "") {
                 cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "interactProfile"))
+            }else{
+                cell.profileImage.image = UIImage(named: "interactProfile")
             }
 
             // MARK: - Options Button Logic
@@ -509,13 +525,16 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.edit(
                     edit: slot?.is_cancelled ?? false,
                     delete: !(slot?.is_cancelled ?? false),
-                    selectedId: slot?.slot_id ?? ""
+                    selectedId: slot?.id ?? ""
                 )
+                
 
-                if MeetingStatus == PTMString.completedMeetings {
+                if MeetingStatus == "Completed Slots" {
                     cell.optionsBtn.isHidden = true
-                } else if MeetingStatus == PTMString.todayMeetings {
+                } else if MeetingStatus == "Today Slots" {
                     cell.optionsBtn.isHidden = isCurrentTimeLater(than: slot?.from_time ?? "")
+                }else{
+                    cell.optionsBtn.isHidden = false
                 }
 
                 cell.delegate = self
@@ -529,7 +548,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             cell.WaitingLbl.text = nil
 
             // MARK: - Slot Status Handling
-            if slot?.status == "Expired" {
+            if slot?.slot_status == "Expired" {
 
                 cell.StatusBtn.backgroundColor = .systemGray5
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
@@ -564,7 +583,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
 
-                let title = MeetingStatus == PTMString.completedMeetings ? "Completed" : "Booked"
+                let title = MeetingStatus == PTMString.completedMeetings.translated() ? "Completed" : "Booked"
                 cell.StatusBtn.setTitle(title, for: .normal)
 
                 cell.StatusBtn.tintColor = .aproved
@@ -587,7 +606,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemBlue
                 cell.WaitingLbl.text = "Waiting for Booking"
-            }*/
+            }
             
             
                cell.Collapsedelegate = self
@@ -596,6 +615,18 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                // update expansion
                let isExpanded = expandedIndex == indexPath
                cell.updateExpansion(isExpanded: isExpanded)
+            
+            cell.onCall = { [weak self] in
+                
+                self?.callButtonTapped(Mobile: slot?.mobile_no ?? "")
+            }
+            
+            cell.onJoin = {[weak self] in
+                self?.JoinButtonTapped(Link: slot?.event_link ?? "")
+            }
+            
+            cell.callImage.isHidden = !(slot?.event_mode == "Phone Call")
+            cell.LinkImage.isHidden = !(slot?.event_mode == "Virtual")
 
             return cell
             
@@ -623,9 +654,56 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func isCurrentTimeLater(than timeString: String) -> Bool {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let givenDate = formatter.date(from: timeString) else {
+            return false // invalid input
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // Extract hour and minute from given time
+        let components = calendar.dateComponents([.hour, .minute], from: givenDate)
+        
+        guard let givenTimeToday = calendar.date(bySettingHour: components.hour!,
+                                                 minute: components.minute!,
+                                                 second: 0,
+                                                 of: now) else {
+            return false
+        }
+        
+        return now > givenTimeToday
+    }
+    
+    func callButtonTapped(Mobile: String) {
+           if let url = URL(string: "tel://\(Mobile)"),
+              UIApplication.shared.canOpenURL(url) {
+               UIApplication.shared.open(url)
+           } else {
+               print("This device cannot make phone calls.")
+           }
+       }
+    
+    func JoinButtonTapped(Link: String) {
+        var fixedLink = Link
+        if !fixedLink.lowercased().hasPrefix("http") {
+            fixedLink = "https://" + fixedLink
+        }
+        
+        if let url = URL(string: fixedLink) {
+            UIApplication.shared.open(url)
+        } else {
+            print("Cannot open meeting link")
+        }
+    }
 }
 
-extension NewPtmVC: BookingCellDelegate {
+extension NewPtmVC: BookingCellDelegate, SelectedId {
 
     func didTapCollapse(cell: SlotListTV) {
         guard let indexPath = cell.indexPath else { return }
@@ -648,5 +726,13 @@ extension NewPtmVC: BookingCellDelegate {
         tv.reloadRows(at: [indexPath], with: .automatic)
 
         tv.endUpdates()
+    }
+    
+    func selectId(id: String?, edit: Bool?) {
+        if edit ?? false{
+            //Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
+        }else{
+            //cancel_and_close_slot_Api(SlotId: id ?? "")
+        }
     }
 }

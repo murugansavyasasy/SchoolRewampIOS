@@ -257,9 +257,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.Senderchat(from: self)
             case Menu_id.AttachmentMenuId :
                 MenuRedirect.senderAttachment(from: self)
-            case 18 :
-                ""
-//               self.MenuRedirect.senderLeaveRequestNavigate(from: self)
+            case Menu_id.leaveReq :
+                MenuRedirect
+                    .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: "")
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

@@ -93,7 +93,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             DescriptionTextview.textColor = .black
             placeholderLabel?.isHidden = !DescriptionTextview.text.isEmpty
             adjustTextViewHeights()
-            submitBtn.setTitle("Update", for: .normal)
+            submitBtn.setTitle("Update".translated(), for: .normal)
             if let files = notice.file_path {
                 attachments = files.map { file in
                     let type = (file.type ?? "").lowercased()
@@ -600,10 +600,10 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 "file_size": file_size,
                 "file_path": uploadedFiles
             ]
-            let baseURL = (submitBtn.currentTitle == "Update")
+            let baseURL = (submitBtn.currentTitle == "Update".translated())
             ? ServiceUrl.comm_api_assignment_update_submission
             :ServiceUrl.comm_api_assignment_submit_assignment
-            let type = (submitBtn.currentTitle == "Update")
+            let type = (submitBtn.currentTitle == "Update".translated())
             ? ApitTypeSringFile.PUT
             :ApitTypeSringFile.POST
             APIService.shared.makeApi(
