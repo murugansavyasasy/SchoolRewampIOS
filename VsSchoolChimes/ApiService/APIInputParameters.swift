@@ -17,6 +17,7 @@ class COMMON_PARAMETER{
     static var  country_id = "country_id"
     static var  academic_year_id = "academic_year_id"
     static var section_ids = "section_ids"
+    static var old_password = "old_password"
 }
 
 class mobileNumber{
@@ -309,4 +310,25 @@ class PTMRequestStringFile{
     static let cancelled_reason = "cancelled_reason"
     static let slot_id = "slot_id"
     static let is_management = "is_management"
+}
+
+class createQuizStringFile{
+    
+    static let  target_type = "target_type"
+    static let  target_code = "target_code"
+    static let  subject_id = "subject_id"
+    static let  class_id = "class_id"
+}
+
+class addPonintsPackut{
+    
+    static let mobile_number = "mobile_number"
+    static let activity = "activity"
+    static let user_type = "user_type"
+    static let menu_id = "menu_id"
+}
+class get_quizLevel{
+    
+    static let class_id = "class_id"
+    static let subject_id = "subject_id"
 }

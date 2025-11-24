@@ -281,6 +281,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             
         case menuname.changePassword.translated():
             let vc = CreatePasswordVc()
+            vc.chnage_passwordPage = true
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             

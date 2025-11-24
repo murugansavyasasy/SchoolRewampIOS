@@ -265,6 +265,22 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "C0FFFB6E-DA00-4E8E-B46F-A5EDA7222E18"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/Auth/Splash/SplashViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
+            landmarkName = "validateUser()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             uuid = "FB6B6FF9-0D64-47A0-B6D9-413114C5A1E3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -326,28 +342,28 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "223C6C96-08E0-4DC3-831F-EED3B189E81C - 433b0bfd85906c12"
+                  uuid = "223C6C96-08E0-4DC3-831F-EED3B189E81C - ecf48d72aacd61bb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Swift.Result&lt;School_Chimes.TextDetailsResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ComunicationVC.get_Text_History() -&gt; ()"
                   moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1127"
                   endingLineNumber = "1127">
                </Location>
                <Location
-                  uuid = "223C6C96-08E0-4DC3-831F-EED3B189E81C - bf6921157563286f"
+                  uuid = "223C6C96-08E0-4DC3-831F-EED3B189E81C - 10a6a79a5a3e2500"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.TextDetailsResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ComunicationVC.get_Text_History() -&gt; ()"
                   moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+                  urlString = "file:///Users/admin/Desktop/NEW_SHOOL_REWARMP/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1128"
@@ -417,22 +433,6 @@
             startingLineNumber = "151"
             endingLineNumber = "151"
             landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9A08553A-AC99-4F70-9A92-54B9EAFA61DE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/AppDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "handleNotificationTap(userInfo:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

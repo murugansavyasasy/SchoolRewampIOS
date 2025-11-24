@@ -54,7 +54,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
     var delegate: EditObject?
     var selectedFilter: LeaveFilterType = .all
     var searchText: String = ""
-
+    var PushnotiMsg_id : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -250,6 +250,11 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
                         self.searchBtn.isHidden = isEmpty
                         self.applyFilter()
                         // self.historyTable.reloadData()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            self.scrollToLeave(with: self.PushnotiMsg_id ?? "")
+                        }
+
                     }else{
                         self.NodataImage.isHidden = false
                         self.NodataLbl.isHidden = false
@@ -267,6 +272,35 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
             }
         }
     }
+    
+    
+    private func scrollToLeave(with id: String) {
+        
+        for (sectionIndex, month) in filteredLeaveData.enumerated() {
+            if let rowIndex = month.details?.firstIndex(where: { $0.id == id }) {
+                
+                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                
+                historyTable.scrollToRow(at: indexPath, at: .middle, animated: true)
+                
+                highlightCell(at: indexPath)
+                return
+            }
+        }
+    }
+
+    private func highlightCell(at indexPath: IndexPath) {
+        guard let cell = historyTable.cellForRow(at: indexPath) else { return }
+
+        UIView.animate(withDuration: 0.3, animations: {
+            cell.contentView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+        }) { _ in
+            UIView.animate(withDuration: 0.6, delay: 1.0, options: []) {
+                cell.contentView.backgroundColor = .white
+            }
+        }
+    }
+
 
     func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
         ([selectedButton] + unSelectedBtn).forEach { button in

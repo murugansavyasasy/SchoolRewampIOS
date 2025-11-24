@@ -588,7 +588,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         // All actions with explicit self
         let actions: [Int: () -> Void] = [
             1: { self.MenuRedirect.senderAbsenteesReport(from: self) },
-            2: { self.MenuRedirect.senderAssignmentNavigate(from: self) },
+            2: { if PushNotiMsg != ""{
+                self.assigemtHistoryPage(pushNoti: PushNotiMsg)
+            }
+             self.MenuRedirect.senderAssignmentNavigate(from: self) },
             3: { self.MenuRedirect.senderMarkAttendence(from: self) },
             5: { self.MenuRedirect.senderPtmNavigate(from: self) },
             7: { self.MenuRedirect.senderCommunicationNavigate(from: self) },
@@ -597,17 +600,18 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             14: { self.MenuRedirect.senderFeePendingNavigate(from: self) },
             15: { self.MenuRedirect.senderHomeWorkNavigate(from: self) },
             17: { self.MenuRedirect.Senderchat(from: self) },
-            18: {
-                self.MenuRedirect
-                    .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: PushNotiMsg)
-            },
+            18: {self.MenuRedirect.senderLeaveRequestNavigate(from: self, PushnotiMsg_id: PushNotiMsg)},
             19: { self.MenuRedirect.senderLessonplanNavigate(from: self) },
             20: { self.MenuRedirect.SenderLSRWVCNavigate(from: self) },
             21: { self.MenuRedirect.senderMarkAttendanceNavigate(from: self) },
             22: {
                 self.MenuRedirect.senderMgmt(from: self, Notification_MsgId: PushNotiMsg)
             },
-            23: { self.MenuRedirect.senderNoticeboardNavigate(from: self) },
+            23: {
+                self.noticeBordHistory{
+                    self.MenuRedirect.senderNoticeboardNavigate(from: self)
+                }
+            },
             24: { self.MenuRedirect.senderOnlineNavigate(from: self) },
             26: { self.MenuRedirect.senderPtmNavigate(from: self) },
             27: { self.MenuRedirect.senderQuiz(from: self) },
@@ -631,11 +635,17 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
 
         // If item requires school selection → wrap with navigateOrSchoolList
-        if needSchoolCheck.contains(menuId) {
-            self.navigateOrSchoolList(action)
-        } else {
+        
+        if PushNotiMsg == ""{
+            if needSchoolCheck.contains(menuId) {
+                self.navigateOrSchoolList(action)
+            } else {
+                action()
+            }
+        }else{
             action()
         }
+        
     }
 
     // MARK: - Helpers
@@ -654,6 +664,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             defaultAction()
         }
+    }
+    
+    func assigemtHistoryPage(pushNoti:String){
+        let vc = AssignmentReport(nibName: nil, bundle: nil)
+        vc.pushNotiMsg_id = pushNoti
+        vc.modalPresentationStyle = .fullScreen
+       present(vc, animated: true)
     }
     func checkMutipleSchool() -> Bool {
         if staffDetailsCount?.count ?? 0 > 1 {

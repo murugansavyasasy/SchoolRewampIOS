@@ -44,6 +44,7 @@ class ReciverAttendanceReportVC: UIViewController {
     var attendanceReportData : [StudentAttendance]?
     let dateFormatter = DateFormatter()
     var studentStats: [StudentStatistics]?
+    var pushNotiMsg_id : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +60,10 @@ class ReciverAttendanceReportVC: UIViewController {
         StyleAndTranslate()
         
         get_student_stats()
+        
+        if pushNotiMsg_id != ""{
+            LeaveHistoryAct()
+        }
     }
 
     
@@ -486,9 +491,11 @@ class ReciverAttendanceReportVC: UIViewController {
     
     @IBAction func LeaveHistoryAct(){
         if #available(iOS 14.0, *) {
-            let vc = LeveHistoryVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                let vc = LeveHistoryVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
         }
     }
     
