@@ -317,10 +317,10 @@ class RecipientVc: UIViewController{
     func CreateQuiz(){
         
         let params: [String: Any] = [
-            "target_type": target_type ?? 0,
-            "target_code": array_selectedId,
-            "subject_id": subjectId ?? "",
-            "class_id": classID ?? ""
+            createQuizStringFile.target_type: target_type ?? 0,
+            createQuizStringFile.target_code: array_selectedId,
+            createQuizStringFile.subject_id : subjectId ?? "",
+            createQuizStringFile.class_id : classID ?? ""
         ]
         var finalParams = params
             finalParams.merge(Common_request_params ?? [:]) { (_, new) in new }
@@ -438,10 +438,11 @@ class RecipientVc: UIViewController{
 
                     if user_inputs.clearTempData(),activity != "" {
                         let params: [String: Any] = [
-                            "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                            "activity": activity,
-                            "user_type": 2,
-                            "menu_id": Menu_id.staffSelectedMenuId
+                            addPonintsPackut.mobile_number: UserDefaultFileManager
+                                .get_staff_Details()?.mobile_no ?? "",
+                            addPonintsPackut.activity : activity,
+                            addPonintsPackut.user_type : 2,
+                            addPonintsPackut.menu_id : Menu_id.staffSelectedMenuId
                         ]
                         paketApiCall(params: params)
                     }else{
@@ -1066,7 +1067,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
-                print("successsuccess",successMessage.data)
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
@@ -1177,8 +1177,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func getQuizLevel(SubjectId:String,ClassId:String,SectionId:String){
         levelDropDown.removeAll()
         APIService.shared.makeApi(url: ServiceUrl.check_level , parameters: [
-            "class_id" : ClassId,
-            "subject_id" : SubjectId,
+            get_quizLevel.class_id : ClassId,
+            get_quizLevel.subject_id : SubjectId,
 //            "section_id" : SectionId
         ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <checkQuizLevelSuc,Error>) in
             switch result {
@@ -1397,12 +1397,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     on: self
                                 ) {
                                     if user_inputs.clearTempData(){
-                                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                                       "activity": "SEND_TEXT",
-                                                       "user_type": 2,
-                                                      "menu_id": Menu_id.communicationMenuId]
-                                        self.paketApiCall(params:parms)
+                                        let params: [String: Any] = [
+                                            addPonintsPackut.mobile_number: UserDefaultFileManager
+                                                .get_staff_Details()?.mobile_no ?? "",
+                                            addPonintsPackut.activity : "SEND_TEXT",
+                                            addPonintsPackut.user_type : 2,
+                                            addPonintsPackut.menu_id : Menu_id.staffSelectedMenuId
+                                        ]
+                                        self.paketApiCall(params:params)
                                     }
+                                    
+                                    
                                     
                                 }
                             
@@ -1471,12 +1476,18 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     on: self
                                 ) { [self] in
                                     if user_inputs.clearTempData(){
-                                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                                       "activity": "SEND_VOICE",
-                                                       "user_type": 2,
-                                                      "menu_id": Menu_id.communicationMenuId]
-                                        self.paketApiCall(params:parms)
+                                        
+                                        let params: [String: Any] = [
+                                            addPonintsPackut.mobile_number: UserDefaultFileManager
+                                                .get_staff_Details()?.mobile_no ?? "",
+                                            addPonintsPackut.activity : "SEND_VOICE",
+                                            addPonintsPackut.user_type : 2,
+                                            addPonintsPackut.menu_id : Menu_id.staffSelectedMenuId
+                                        ]
+                                        self.paketApiCall(params:params)
                                     }
+                                    
+                                    
                                 }
                             
                         }

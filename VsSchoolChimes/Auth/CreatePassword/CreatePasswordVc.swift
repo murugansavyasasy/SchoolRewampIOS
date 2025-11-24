@@ -29,7 +29,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     var confirmPassText : String?
     var createNewPassword : Bool?
     var mobile_number : String?
-    
+    var chnage_passwordPage : Bool = false
+    let mobileNo = UserDefaultFileManager.getLoginCredentials()
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -66,6 +67,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         let NeweyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         NewPassEyeImage.addGestureRecognizer(NeweyeTap)
         NewPassEyeImage.isUserInteractionEnabled = true
+        
+        
     }
     
     func setUpUI(){
@@ -165,6 +168,15 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         }else{
             
             view.makeToast(AlertstringFile.Enter_the_new_password)
+            
+        }
+        
+        if chnage_passwordPage{
+            if createPassTextFLd.text != "" && confirmPassTextFld.text != ""{
+                changePassword()
+            }else{
+                view.makeToast(AlertstringFile.Enter_the_new_password)
+            }
             
         }
         
@@ -335,9 +347,6 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                     if successMessage.status == true {
                         
                         DispatchQueue.main.async { [self] in
-                            
-                            
-                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: "Success",
@@ -439,6 +448,95 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
+    
+    func changePassword(){
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number: mobileNo?.mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",COMMON_PARAMETER.old_password : createPassTextFLd.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                result: Result<ResetPasswordSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successMessage):
+                    
+                    if successMessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                        
+                            if #available(iOS 15.0, *) {
+                                let loginVC = LoginVc(nibName: nil, bundle: nil)
+                                let nav = UINavigationController(rootViewController: loginVC)
+                                nav.navigationBar.isHidden = true
+                                
+                                if let window = UIApplication.shared.connectedScenes
+                                    .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+                                    window.rootViewController = nav
+                                    window.makeKeyAndVisible()
+                                }
+                            }
+                        }
+                    }else{
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            alertModal.showAlert(title:"",message:successMessage.message ?? "" ,on: self)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+    }
+    
+    
+//    func Logout_Api(){
+//        
+//        if #available(iOS 15.0, *) {showActivityLoader() }
+//        
+//        
+//        print("secureIDsecureIDsecureID",secureID)
+//        let param : [String:Any] = [
+//            COMMON_PARAMETER.mobile_number : mobileNo?.mobile_number ?? "",
+//            COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
+//            "secure_id": secureID
+//        ]
+//        
+//        let token = (IsParent == true ? childDetails?.access_token : staffDetails?.access_token) ?? ""
+//        
+//        APIService.shared.makeApi(url: ServiceUrl.app_api_auth_logout, parameters: param, type: ApitTypeSringFile.POST, token: token) { [weak self] (result: Result<CommonApiSuc,Error>) in
+//            
+//            guard let self = self else {return}
+//            
+//            DispatchQueue.main.async {
+//                if #available(iOS 15.0, *) { self.hideActivityLoader() }
+//                switch result {
+//                case .success(let success):
+//                   
+//                    UserDefaultFileManager.removeLoginCredentials()
+//                        
+//                    if #available(iOS 15.0, *) {
+//                        let loginVC = LoginVc(nibName: nil, bundle: nil)
+//                        let nav = UINavigationController(rootViewController: loginVC)
+//                        nav.navigationBar.isHidden = true
+//                        
+//                        if let window = UIApplication.shared.connectedScenes
+//                            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+//                            window.rootViewController = nav
+//                            window.makeKeyAndVisible()
+//                        }
+//                    }
+//                    
+//                case .failure(let failure):
+//                    print("Error: ", failure.localizedDescription)
+//                }
+//            }
+//        }
+//    }
 }
 
 

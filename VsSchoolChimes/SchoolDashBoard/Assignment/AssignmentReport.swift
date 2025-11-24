@@ -56,6 +56,7 @@ class AssignmentReport: UIViewController, SelectedId {
     var academicYears: [String] = []
     var shouldShowFooter = true
     let transitionDelegate = TransitioningDelegate()
+    var pushNotiMsg_id : String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,10 +148,39 @@ class AssignmentReport: UIViewController, SelectedId {
                     self?.noDataLabel.text = isEmpty ? response.message : ""
                     self?.noRecordImage.isHidden = !isEmpty
                     self?.reportTable.reloadData()
-                    
+                    if self?.pushNotiMsg_id != ""{
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            self?.scrollToClickedMessage()
+                        }
+
+                    }
                 }
             case .failure(let error):
                 print("API Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func scrollToClickedMessage() {
+        guard let id = pushNotiMsg_id,
+              let index = filteredData.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        reportTable.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = reportTable.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
+                }
             }
         }
     }

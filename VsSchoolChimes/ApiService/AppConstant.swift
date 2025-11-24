@@ -246,6 +246,7 @@ struct Menu_id{
     static let  e_books = 25
     static let  Market_place = 30
     static let  Alert = 36
+    static let leaveReq = 18
     
     
 }
