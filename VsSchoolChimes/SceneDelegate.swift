@@ -12,65 +12,62 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
     var window: UIWindow?
     var languages :String!
 
-    // Called when the app is opened OR reopened
-       func scene(_ scene: UIScene,
+    func scene(_ scene: UIScene,
                   willConnectTo session: UISceneSession,
                   options connectionOptions: UIScene.ConnectionOptions) {
 
            UNUserNotificationCenter.current().delegate = self
 
-           // 🔥 When app is killed and launched by tapping notification
+           // 🔥 App launched from killed state by tapping notification
            if let response = connectionOptions.notificationResponse {
                let userInfo = response.notification.request.content.userInfo
-               print("🔥 SceneDelegate -> launched by notification (killed state)")
+               print("🔥 SceneDelegate → launched by notification (killed)")
                forwardToAppDelegate(userInfo)
            }
        }
 
-       // 🔥 Called when tapping a notification in:
-       // - Foreground
-       // - Background
-       // - Notification Center
+       // 🔥 Foreground → Background → Notification Center tap handler
        func userNotificationCenter(_ center: UNUserNotificationCenter,
                                    didReceive response: UNNotificationResponse,
                                    withCompletionHandler completionHandler: @escaping () -> Void) {
 
-           print("🔥 SceneDelegate: notification tapped (foreground/background)")
+           print("🔥 SceneDelegate → notification tapped (foreground/background)")
 
-           let userInfo = response.notification.request.content.userInfo
-           forwardToAppDelegate(userInfo)
-
+           forwardToAppDelegate(response.notification.request.content.userInfo)
            completionHandler()
        }
 
-       // 🔥 Show banner while in foreground (needed so user can tap)
+       // 🔥 Foreground banner
        func userNotificationCenter(_ center: UNUserNotificationCenter,
                                    willPresent notification: UNNotification,
                                    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 
            if #available(iOS 14.0, *) {
                completionHandler([.banner, .sound, .badge, .list])
+           } else {
+               // Fallback on earlier versions
            }
        }
 
-       // 🔥 Pass info to AppDelegate for navigation
+       // 🔥 Reset duplicate flag whenever app becomes active
+       func sceneDidBecomeActive(_ scene: UIScene) {
+           if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+               appDelegate.notificationAlreadyHandled = false
+           }
+           NetworkMonitor.shared.startMonitoring()
+       }
+
+       // 🔥 Forward the notification to AppDelegate handler
        private func forwardToAppDelegate(_ userInfo: [AnyHashable: Any]) {
            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                appDelegate.handleNotificationTap(userInfo: userInfo)
            }
        }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         print("sceneDidDisconnect")
     }
-    func sceneDidBecomeActive(_ scene: UIScene) {
-     // Called when the scene has moved from an inactive state to an active state.
-     // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        print("sceneDidBecomeActive")
-     NetworkMonitor.shared.startMonitoring()
-     
-     
-     }
+   
 
      func sceneWillResignActive(_ scene: UIScene) {
      // Called when the scene will move from an active state to an inactive state.

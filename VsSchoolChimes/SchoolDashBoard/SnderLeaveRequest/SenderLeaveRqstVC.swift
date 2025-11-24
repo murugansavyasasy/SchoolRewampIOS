@@ -63,7 +63,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     let alert = CustomAlert()
     var selectedFilter: LeaveFilterType = .all
     var searchText: String = ""
-    
+    var pushnotificationMsg_id : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -139,6 +139,12 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
                     searchBtn.isHidden = allLeaveRecords?.isEmpty ?? false
                     filterBtnStack.isHidden = !(Success.status ?? true)
                     leaveRequestTable.reloadData()
+                    
+//                    if self.pushnotificationMsg_id != ""{
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                            self.scrollToClickedMessage()
+//                        }
+//                    }
                 }
                 
             case .failure(let error):
@@ -154,6 +160,29 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         }
     }
     
+//    private func scrollToClickedMessage() {
+//        guard let id = pushnotificationMsg_id,
+//              let index = filteredLeaveRecords?.firstIndex(where: { $0.id == id }) else {
+//            return
+//        }
+//
+//        let indexPath = IndexPath(row: index, section: 0)
+//        
+//        // Scroll to that cell smoothly
+//        leaveRequestTable.scrollToRow(at: indexPath, at: .middle, animated: true)
+//        
+//        // Optionally highlight the cell for 1 second
+//        if let cell = leaveRequestTable.cellForRow(at: indexPath) {
+//            UIView.animate(withDuration: 0.3, animations: {
+//                cell.contentView.backgroundColor = UIColor.lightGray
+//                    .withAlphaComponent(0.3)
+//            }) { _ in
+//                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+//                    cell.contentView.backgroundColor = .white
+//                }
+//            }
+//        }
+//    }
     //MARK: update staus Api call
     func Leave_Update_status(id: String, status: Bool, indexPath: IndexPath) {
         let param: [String: Any] = [

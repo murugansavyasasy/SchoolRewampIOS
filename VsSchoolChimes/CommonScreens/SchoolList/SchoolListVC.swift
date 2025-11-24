@@ -243,7 +243,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             case Menu_id.LessonPlan:
                 MenuRedirect.senderLessonplanNavigate(from: self)
             case Menu_id.MessageFromManagement:
-                MenuRedirect.senderMgmt(from: self)
+                ""
+//                MenuRedirect.senderMgmt(from: self)
             case Menu_id.MessageFromManagement:
                  MenuRedirect.Senderchat(from: self)
             case Menu_id.ptm :
@@ -256,6 +257,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.Senderchat(from: self)
             case Menu_id.AttachmentMenuId :
                 MenuRedirect.senderAttachment(from: self)
+            case 18 :
+                ""
+//               self.MenuRedirect.senderLeaveRequestNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
