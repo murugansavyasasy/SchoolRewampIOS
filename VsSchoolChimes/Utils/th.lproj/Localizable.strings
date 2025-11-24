@@ -111,6 +111,8 @@
 "LeaveRequestInfo" = "ข้อมูลคำร้องขอ ลา";
 "Student/Parent" = "ผู้เรียน/ผู้ปกครอง";
 "or Student/Parent" = "หรือผู้เรียน/ผู้ปกครอง";
+"LoginAsStudentParent" = "เข้าสู่ระบบเป็นนักเรียน/ผู้ปกครอง";
+"ClickProceedToContinue" = "คลิกดำเนินการต่อเพื่อดำเนินการต่อ"; 
 "Principal" = "ผู้อำนวยการ";
 "Login As Teacher Or Parent" = "เข้าสู่ระบบในฐานะครูหรือผู้ปกครอง";
 "Login As" = "เข้าสู่ระบบเป็น";
@@ -145,7 +147,9 @@
 "No Data Found!" = "ไม่พบข้อมูล!";
 "Notice Active Period" = "ช่วงเวลาที่ประกาศใช้งาน";
 "All" = "ทั้งหมด";
-"NEXT" = "ถัดไป"; 
+"NEXT" = "ถัดไป";
+"Proceed" = "ดำเนินการต่อ";
+"Management" = "การจัดการ";
 "Edit" = "แก้ไข";
 "Welcome" = "ยินดีต้อนรับ";
 "Change Language" = "เปลี่ยนภาษา";
@@ -230,12 +234,12 @@
 "Speaking" = "การพูด";
 "Reading" = "การอ่าน";
 "Writing" = "การเขียน";
-
+"My Submission" = "การส่งของฉัน";
 "Completed Tasks" = "งานที่เสร็จสมบูรณ์";
 "Active Tasks" = "งานที่กำลังดำเนินการ";
 "Dashboard Overview" = "ภาพรวมแดชบอร์ด";
 "New Task" = " งานใหม่";
-
+"START" = "เริ่มต้น";
 "All" = "ทั้งหมด";
 "Completed" = "เสร็จสมบูรณ์";
 "Pending" = "รอดำเนินการ";
@@ -618,4 +622,10 @@
 "Import from Question Bank" = "นำเข้าจากคลังคำถาม";
 "Question Limit: " = "จำกัดจำนวนคำถาม: ";
 "Missing Information" = "ข้อมูลขาดหาย";
-
+"Enter" = "ป้อน";
+"Add Question" = "เพิ่มคำถาม";
+"Submission Report" = "รายงานการส่ง";
+"Posted By:" = "โพสต์โดย:";
+"Sent at " = "ส่งเมื่อ ";
+"Level " = "ระดับ ";
+"Submission Report" = "รายงานการส่ง";

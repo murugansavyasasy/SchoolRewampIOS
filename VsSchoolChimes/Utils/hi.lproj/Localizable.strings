@@ -136,6 +136,8 @@
 "Create Leave Request" = "छुट्टी निवेदन बनाएँ";
 "LeaveRequestInfo" = "छुट्टी निवेदन जानकारी";
 "Student/Parent" = "छात्र/अभिभावक";
+"LoginAsStudentParent" = "छात्र/अभिभावक के रूप में लॉगिन करें";
+"ClickProceedToContinue" = "जारी रखने के लिए आगे क्लिक करें";
 "or Student/Parent" = "या छात्र/अभिभावक";
 "Principal" = "प्रधानाध्यापक";
 "Login As Teacher Or Parent" = "शिक्षक या अभिभावक के रूप में लॉगिन करें";
@@ -200,7 +202,8 @@
 "Help" = "सहायता";
 "Logout" = "लॉगआउट";
 "Chapters Completed" = "अध्याय पूर्ण";
-
+"Proceed" = "जारी रखें";
+"Management" = "प्रबंधन";
 // MARK: Days
 "Sunday" = "रविवार";
 "Monday" = "सोमवार";
@@ -265,7 +268,8 @@
 "All" = "सभी";
 "Completed" = "पूर्ण";
 "Pending" = "लंबित";
-
+"My Submission" = "मेरा प्रस्तुतिकरण";
+"START" = "शुरू करें";
 
 // MARK: Dashboard
 "discussion" = "चर्चा";
@@ -611,4 +615,11 @@
 "Import from Question Bank" = "प्रश्न बैंक से आयात";
 "Question Limit: " = "प्रश्न सीमा: ";
 "Missing Information" = "जानकारी उपलब्ध नहीं है";
+"Enter" = "दर्ज करें";
+"Add Question" = "प्रश्न जोड़ें";
+"Submission Report" = "प्रस्तुति रिपोर्ट";
+"Posted By:" = "द्वारा पोस्ट किया गया:";
+"Sent at " = "भेजा गया समय: ";
+"Level " = "स्तर ";
+"Submission Report" = "प्रस्तुति रिपोर्ट";
 

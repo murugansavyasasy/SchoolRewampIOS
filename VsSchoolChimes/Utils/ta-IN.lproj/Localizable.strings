@@ -91,6 +91,7 @@
 "Enter bugs" = "பிழைகளை உள்ளிடவும்";
 "Profile" = "சுயவிவரம்";
 "About Student" = "மாணவர் பற்றிய தகவல்";
+"ClickProceedToContinue" = "தொடரவும் கிளிக் செய்க"; 
 "About Staff" = "பணியாளர் பற்றிய தகவல்";
 "Contact details" = "தொடர்பு விவரங்கள்";
 "Register number" = "பதிவு எண்";
@@ -111,6 +112,7 @@
 "LeaveRequestInfo" = "விடுப்பு கோரிக்கை விவரம்";
 "Student/Parent" = "மாணவர் / பெற்றோர்";
 "or Student/Parent" = "அல்லது மாணவர் / பெற்றோர்";
+"LoginAsStudentParent" = "மாணவர்/பெற்றோர் என உள்நுழைக";
 "Principal" = "முதல்வர்";
 "Login As Teacher Or Parent" = "ஆசிரியர் அல்லது பெற்றோர் என உள்நுழைக";
 "Login As" = "உள்நுழைவு வகை";
@@ -131,6 +133,8 @@
 "Tap SEND to share this message with everyone in the school." = "இந்த செய்தியை பள்ளியில் உள்ள அனைவருடனும் பகிர்வதற்காக அனுப்பு பொத்தானை தட்டவும்.";
 "The academic year configuration for your school are incorrect. Please contact  School Chimes at support@savyasasy.com" = "உங்கள் பள்ளியின் கல்வியாண்டு அமைப்பில் பிழை உள்ளது. தயவுசெய்து School Chimes-ஐ support@savyasasy.com-ல் தொடர்பு கொள்ளவும்.";
 "support@savyasasy.com" = "support@savyasasy.com";
+"Proceed" = "தொடரவும்";
+"Management" = "மேலாண்மை";
 "jpg" = "படம்";
 "IMAGE" = "படம்";
 "path" = "பாதை";
@@ -231,12 +235,12 @@
 "Speaking" = "பேசுதல்";
 "Reading" = "வாசித்தல்";
 "Writing" = "எழுத்து";
-
+"START" = "தொடங்கு";
 "Completed Tasks" = "முடிக்கப்பட்ட பணிகள்";
 "Active Tasks" = "செயலில் உள்ள பணிகள்";
 "Dashboard Overview" = "டாஷ்போர்டு கண்ணோட்டம்";
 "New Task" = " புதிய பணி";
-
+"My Submission" = "என்னுடைய சமர்ப்பிப்பு";
 "All" = "அனைத்தும்";
 "Completed" = "முடிந்தது";
 "Pending" = "நிலுவையில்";
@@ -629,4 +633,11 @@
 "Import from Question Bank" = "கேள்வி வங்கியில் இருந்து இறக்கு";
 "Question Limit: " = "கேள்வி வரம்பு: ";
 "Missing Information" = "தகவல் காணவில்லை";
+"Enter" = "உள்ளிடவும்";
+"Add Question" = "கேள்வியைச் சேர்க்கவும்";
+"Submission Report" = "சமர்ப்பிப்பு அறிக்கை";
+"Posted By:" = "பதிவு செய்தவர்:";
+"Sent at " = "அனுப்பிய நேரம்: ";
+"Level " = "நிலை ";
+"Submission Report" = "சமர்ப்பிப்பு அறிக்கை";
 

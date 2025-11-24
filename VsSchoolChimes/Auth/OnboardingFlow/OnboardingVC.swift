@@ -83,9 +83,10 @@ class OnboardingVC: UIViewController {
         self.present(vc, animated: true)
     }
 
-    /// Updates button visibility & title
+    // MARK: - Update UI
     private func updateUI() {
         pageControl.currentPage = currentPage
+
         onBoardingCV.scrollToItem(at: IndexPath(item: currentPage, section: 0),
                                   at: .centeredHorizontally,
                                   animated: true)
@@ -93,11 +94,16 @@ class OnboardingVC: UIViewController {
         let isLastPage = currentPage == dataResponse.count - 1
         skipBtn.isHidden = isLastPage
         nextBtn.setTitle(isLastPage ? "Let's Go" : "Next", for: .normal)
-    }
 
+        // Trigger animation after scroll completes
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            if let cell = self.onBoardingCV.cellForItem(at: IndexPath(item: self.currentPage, section: 0)) as? OnboardingCVC {
+                cell.animateStepByStep()
+            }
+        }
+    }
 }
 
-// MARK: - CollectionView Delegates
 extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -108,26 +114,30 @@ extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let cell = collectionView.dequeueReusableCell(
+        let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "OnboardingCVC",
-            for: indexPath) as? OnboardingCVC else {
-
-            return UICollectionViewCell()
-        }
+            for: indexPath
+        ) as! OnboardingCVC
 
         let item = dataResponse[indexPath.item]
+
         cell.headingLbl.text = item.title
-        if indexPath.item == 0 {
-            cell.descriptionLbl.text = ""
-        }else{
-            cell.descriptionLbl.text = item.description
-        }
+        cell.descriptionLbl.text = indexPath.item == 0 ? "" : item.description
+
         if let urlString = item.file_path?.first?.url,
            let url = URL(string: urlString) {
             cell.imgView.sd_setImage(with: url)
         }
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        if let onboardingCell = cell as? OnboardingCVC {
+            onboardingCell.animateStepByStep()
+        }
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -138,7 +148,9 @@ extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width,
-                      height: collectionView.frame.height)
+        return CGSize(
+            width: collectionView.frame.width,
+            height: collectionView.frame.height
+        )
     }
 }

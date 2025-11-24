@@ -29,13 +29,9 @@ class AudioCVC: UICollectionViewCell {
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
-            
-            // Check if it's a remote URL (http or https)
             if url.isFileURL {
-                // File URL - directly set to waveView
                 waveView.audioURL = url
             } else {
-                // Remote URL - download it first
                 downloadAndPrepareAudio(from: url)
             }
         }
@@ -77,7 +73,6 @@ class AudioCVC: UICollectionViewCell {
     }
     
     private func setupNotifications() {
-        // Listen for notifications to stop playback when other cells start playing
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(otherAudioStartedPlaying(_:)),
@@ -89,8 +84,6 @@ class AudioCVC: UICollectionViewCell {
     @objc private func otherAudioStartedPlaying(_ notification: Notification) {
         guard let playingCellIndex = notification.object as? Int,
               playingCellIndex != cellIndex else { return }
-        
-        // Stop this cell's playback if another cell started playing
         stopPlayback()
     }
     
@@ -171,6 +164,7 @@ class AudioCVC: UICollectionViewCell {
             startPlayback()
         }
     }
+    
     
     private func startPlayback() {
         // Check if audio is loaded

@@ -258,6 +258,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
 
                     let player = try AVAudioPlayer(contentsOf: url)
                     player.delegate = self
+                    audioPlayer?.delegate = self
                     player.prepareToPlay()
                     self.audioPlayer = player
 
@@ -346,10 +347,6 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         }
         
         updateWaveformColor(progress: progress)
-        
-        if player.currentTime >= player.duration {
-            reset()
-        }
     }
 
     private func updateWaveformColor(progress: Double) {
@@ -436,6 +433,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        
         DispatchQueue.main.async {
             self.reset()
             if let cell = self.parentCell as? AudioCVC {

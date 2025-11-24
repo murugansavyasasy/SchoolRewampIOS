@@ -33,6 +33,7 @@
 "You can only select up to 2 video files." = "You can only select up to 2 video files.";
 "Cancel" = "Cancel";
 "Camera" = "Camera";
+"Proceed" = "Proceed"; 
 "Document" = "Document";
 "Video" = "Video";
 "Photos" = "Photos";
@@ -110,10 +111,13 @@
 "Create Leave Request" = "Create Leave Request";
 "LeaveRequestInfo" = "Leave Request Info";
 "Student/Parent" = "Student/Parent";
+"LoginAsStudentParent" = "Login As Student/Parent";
+"ClickProceedToContinue" = "Click proceed to continue";
 "or Student/Parent" = "or Student/Parent";
 "Principal" = "Principal";
 "Login As Teacher Or Parent" = "Login as Teacher or Parent";
 "Login As" = "Login As";
+"Management" = "Management";
 "Choose Your Role" = "Choose Your Role";
 "Proceed" = "Proceed";
 "Create Event" = "Create Event";
@@ -232,16 +236,15 @@
 "Speaking" = "Speaking";
 "Reading" = "Reading";
 "Writing" = "Writing";
-
 "Completed Tasks" = "Completed Tasks";
 "Active Tasks" = "Active Tasks";
 "Dashboard Overview" = "Dashboard Overview";
 "New Task" = " New Task";
-
+"My Submission" = "My Submission";
 "All" = "All";
 "Completed" = "Completed";
 "Pending" = "Pending";
-
+"START" = "START";
 // MARK: Settings page
 "general" = "General";
 "notifications" = "Notifications";
@@ -603,4 +606,11 @@
 "Import from Question Bank" = "Import from Question Bank";
 "Question Limit: " = "Question Limit: ";
 "Missing Information" = "Missing Information";
+"Enter" = "Enter";
+"Add Question" = "Add Question";
+"Submission Report" = "Submission Report";
+"Posted By:" = "Posted By:";
+"Sent at " = "Sent at ";
+"Level " = "Level ";
+"Submission Report" = "Submission Report";
 

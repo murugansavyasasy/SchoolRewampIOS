@@ -452,50 +452,48 @@ func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, sha
     view.backgroundColor = backgroundColor
 }
 
-//func formattedDateStatus(from selectedDateString: String) -> String {
-//    let inputFormatter = DateFormatter()
-//    inputFormatter.dateFormat = "dd-MM-yyyy"
-//    inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-//    
-//    guard let selectedDate = inputFormatter.date(from: selectedDateString) else {
-//        return selectedDateString // Fallback if parsing fails
-//    }
-//    
-//    let calendar = Calendar.current
-//    let today = Date()
-//    
-//    if calendar.isDate(selectedDate, inSameDayAs: today) {
-//        return "Today"
-//    } else if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
-//              calendar.isDate(selectedDate, inSameDayAs: yesterday) {
-//        return "Yesterday"
-//    } else {
-//        let outputFormatter = DateFormatter()
-//        outputFormatter.dateFormat = "dd MMMM, yyyy" // e.g., 24 July, 2025
-//        return outputFormatter.string(from: selectedDate)
-//    }
-//}
-
-
 func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = false) -> String {
+    
+    let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+    let localeID = normalizedLocaleIdentifier(for: savedCode)
+    let todayText: String
+    let yesterdayText: String
+    
+    switch savedCode {
+    case "ta": // Tamil
+        todayText = "இன்று"
+        yesterdayText = "நேற்று"
+    case "hi": // Hindi
+        todayText = "आज"
+        yesterdayText = "कल"
+    case "th": // Thai
+        todayText = "วันนี้"
+        yesterdayText = "เมื่อวานนี้"
+    default: // English
+        todayText = "Today"
+        yesterdayText = "Yesterday"
+    }
+    
+    // Recognizable formats
     let possibleFormats = [
         // Date only
-        "dd-MM-yyyy", "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy",
-        "dd MMM yyyy", "dd MMMM yyyy", "yyyy/MM/dd", "MMM dd, yyyy",
+        "dd-MM-yyyy","yyyy-MM-dd","dd/MM/yyyy","MM/dd/yyyy",
+        "dd MMM yyyy","dd MMMM yyyy","yyyy/MM/dd","MMM dd, yyyy",
         
         // Date + Time
-        "dd-MM-yyyy HH:mm", "dd-MM-yyyy HH:mm:ss", "dd-MM-yyyy hh:mm a", "dd-MM-yyyy hh:mm:ss a",
-        "yyyy-MM-dd HH:mm", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd hh:mm a", "yyyy-MM-dd hh:mm:ss a",
-        "yyyy/MM/dd HH:mm:ss", "MM/dd/yyyy HH:mm", "MM/dd/yyyy hh:mm a",
-        "dd MMM yyyy HH:mm", "dd MMM yyyy hh:mm a",
-        "dd MMMM yyyy HH:mm", "dd MMMM yyyy hh:mm a",
-        "MMM dd, yyyy HH:mm", "MMM dd, yyyy hh:mm a"
+        "dd-MM-yyyy HH:mm","dd-MM-yyyy HH:mm:ss","dd-MM-yyyy hh:mm a","dd-MM-yyyy hh:mm:ss a",
+        "yyyy-MM-dd HH:mm","yyyy-MM-dd HH:mm:ss","yyyy-MM-dd hh:mm a","yyyy-MM-dd hh:mm:ss a",
+        "yyyy/MM/dd HH:mm:ss","MM/dd/yyyy HH:mm","MM/dd/yyyy hh:mm a",
+        "dd MMM yyyy HH:mm","dd MMM yyyy hh:mm a",
+        "dd MMMM yyyy HH:mm","dd MMMM yyyy hh:mm a",
+        "MMM dd, yyyy HH:mm","MMM dd, yyyy hh:mm a"
     ]
     
     let inputFormatter = DateFormatter()
     inputFormatter.locale = Locale(identifier: "en_US_POSIX")
     
     var selectedDate: Date?
+    
     for format in possibleFormats {
         inputFormatter.dateFormat = format
         if let date = inputFormatter.date(from: selectedDateString) {
@@ -504,30 +502,36 @@ func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = f
         }
     }
     
-    guard let date = selectedDate else { return selectedDateString }
+    guard let date = selectedDate else {
+        print("❌ No match for: \(selectedDateString)")
+        return selectedDateString
+    }
     
     let calendar = Calendar.current
     let today = Date()
     
+    // Output formatters
     let timeFormatter = DateFormatter()
+    timeFormatter.locale = Locale(identifier: localeID)
     timeFormatter.dateFormat = "h:mm a"
     
     let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: localeID)
     dateFormatter.dateFormat = "dd MMM yyyy"
     
     if calendar.isDate(date, inSameDayAs: today) {
-        return isTimeNeeded
-            ? "Today \(timeFormatter.string(from: date))"
-            : "Today"
-    } else if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
-              calendar.isDate(date, inSameDayAs: yesterday) {
-        return isTimeNeeded
-            ? "Yesterday \(timeFormatter.string(from: date))"
-            : "Yesterday"
-    } else {
-        return isTimeNeeded
-            ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
-            : dateFormatter.string(from: date)
+        return isTimeNeeded ? "\(todayText) \(timeFormatter.string(from: date))" : todayText
     }
+    
+    if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+       calendar.isDate(date, inSameDayAs: yesterday) {
+        return isTimeNeeded ? "\(yesterdayText) \(timeFormatter.string(from: date))" : yesterdayText
+    }
+    
+    // Normal date
+    return isTimeNeeded
+        ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
+        : dateFormatter.string(from: date)
 }
+
 

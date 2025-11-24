@@ -39,7 +39,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         numberOfQuestionText.keyboardType = .numberPad
         setupPlaceholder()
         numberOfQuestionText.placeholder = "No of question".translated()
-        titleText.text = MenuStringFile.Title.translated()
+        titleText.placeholder = MenuStringFile.Title.translated()
         noOfQuestionDefaultLbl.setRequiredText(noOfQuestionDefaultLbl.text ?? "")
         titleDefaultLbl.setRequiredText(MenuStringFile.Title)
         descrptionDefaultLbl.setRequiredText(MenuStringFile.description)

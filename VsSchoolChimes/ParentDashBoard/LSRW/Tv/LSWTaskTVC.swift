@@ -42,7 +42,7 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
         descriptionLbl.text = assignment.description
         // Icon button setup
         if let type = assignment.activity_type{
-            self.type.text = "\(type)"
+            self.type.text = "\(type)".translated()
             let iconConfig = getIconConfiguration(for: type)
             iconBtn.setTitle(type.icon, for: .normal)
             iconBtn.backgroundColor = iconConfig.backgroundColor

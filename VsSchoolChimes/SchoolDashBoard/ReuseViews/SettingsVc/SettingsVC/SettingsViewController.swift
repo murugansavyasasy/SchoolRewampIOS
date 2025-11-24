@@ -185,8 +185,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.imgView.tintColor = .black
         }
-
-        // ✅ App Version case
         if item == menuname.appVersion {
             cell.versionLbl.isHidden = false
             if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
@@ -198,8 +196,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.versionLbl.isHidden = true
         }
-
-        // ✅ RTL Support
         cell.arrowImg.applyRTLFlip(Language == "ar")
         cell.imgView.applyRTLFlip(Language == "ar")
 

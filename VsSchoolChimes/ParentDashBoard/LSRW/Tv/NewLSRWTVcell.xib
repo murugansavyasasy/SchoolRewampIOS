@@ -105,14 +105,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="G6b-2o-XY1">
                                         <rect key="frame" x="268" y="-5" width="70" height="35"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ptM-XM-OiG">
+                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ptM-XM-OiG" customClass="LocalizationButton" customModule="School_Chimes" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="Ax4-Nw-ipW"/>
                                                     <constraint firstAttribute="height" constant="35" id="RdD-OU-KzF"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="START ">
+                                                <state key="normal" title="START">
                                                     <color key="titleColor" systemColor="tintColor"/>
                                                 </state>
                                             </button>
@@ -187,7 +187,7 @@
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
