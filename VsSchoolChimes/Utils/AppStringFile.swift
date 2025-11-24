@@ -231,6 +231,10 @@ class QuizListStringFile{
     static let Option_D = "Option D"
     static let Correct_Ans = "Correct Ans"
     static let Mark = "Mark"
+    static let Question_Limit = "Question Limit: "
+    static let Import_Question = "Import Question"
+    static let Select_All = "Select All"
+    static let Pick_From_Question_Bank = "Pick From Question Bank"
 }
 
 struct CommonStringFile {

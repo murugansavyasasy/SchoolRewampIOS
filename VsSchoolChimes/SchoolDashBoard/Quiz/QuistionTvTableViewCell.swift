@@ -44,14 +44,14 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     @IBOutlet weak var addAnotherStack: UIStackView!
     @IBOutlet weak var dropdownImage: UIImageView!
     
-    
     weak var delegate: QuestionCellDelegate?
     var indexPath: IndexPath?
     var dropdown = DropDown()
     var questionId: String?
     var isChecked = false
-    var options = [ "Option A".translated(), "Option B".translated(), "Option C".translated(), "Option D".translated()]
+    var options = ["Option A".translated(), "Option B".translated(), "Option C".translated(), "Option D".translated()]
     var answerIndex: Int?
+    private var placeholderLabels: [UITextView: UILabel] = [:]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -98,6 +98,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         correctOptionView.layer.borderWidth = 0.5
         correctOptionView.layer.borderColor = UIColor.lightGray.cgColor
         addAnotherName.setTitleFont(style: .body, size: FontSize.BodySize)
+        addAnotherName.setTitle("Add Question".translated(), for: .normal)
         attachmentBtnName.layer.cornerRadius = 10
         attachmentBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         chapterDltLbl.setRequiredText(QuizListStringFile.Chapter)
@@ -109,6 +110,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         CorretDefaultLbl.setRequiredText(QuizListStringFile.Correct_Ans)
         markDefaultLbl.setRequiredText(QuizListStringFile.Mark)
         
+        markTxtFild.placeholder = "Drop Your Mark here".translated()
         markTxtFild.delegate = self
         ChapterTxtFld.delegate = self
         opDTxtView.delegate = self
@@ -139,44 +141,46 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opBTxtView.layer.cornerRadius = 5
         opATxtView.layer.cornerRadius = 5
         questionTxtView.layer.cornerRadius = 5
-        
-        setupTextView(opATxtView, placeholder: "Enter Option A")
-                setupTextView(opBTxtView, placeholder: "Enter Option B")
-                setupTextView(opCTxtView, placeholder: "Enter Option C")
-                setupTextView(opDTxtView, placeholder: "Enter Option D")
-                setupTextView(questionTxtView, placeholder: "Enter Question here")
     }
 
-   
+    
+    func setPlaceholder(_ placeholder: String, for textView: UITextView) {
+        if let existing = placeholderLabels[textView] {
+            existing.text = placeholder
+            return
+        }
+        
+        let label = UILabel()
+        label.text = placeholder
+        label.font = textView.font
+        label.textColor = .lightGray
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        textView.addSubview(label)
+        placeholderLabels[textView] = label
+        
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 6),
+            label.topAnchor.constraint(equalTo: textView.topAnchor, constant: 8),
+            label.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: -6)
+        ])
+    }
+    
+    func updatePlaceholderVisibility(for textView: UITextView) {
+        let label = placeholderLabels[textView]
+        label?.isHidden = !textView.text.isEmpty
+    }
 
-    private func setupTextView(_ textView: UITextView, placeholder: String) {
-            textView.delegate = self
-            textView.text = placeholder
-            textView.textColor = .lightGray
-        
-        }
-        
-        // MARK: - UITextViewDelegate
-        func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.textColor == .lightGray {
-                textView.text = nil
-                textView.textColor = .label
-            }
-        }
-        
-        func textViewDidEndEditing(_ textView: UITextView) {
-            if textView.text.isEmpty {
-                textView.textColor = .lightGray
-                switch textView {
-                case opATxtView: textView.text = "Enter Option A".translated()
-                case opBTxtView: textView.text = "Enter Option B".translated()
-                case opCTxtView: textView.text = "Enter Option C".translated()
-                case opDTxtView: textView.text = "Enter Option D".translated()
-                case questionTxtView: textView.text = "Enter Question here".translated()
-                default: break
-                }
-            }
-        }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        updatePlaceholderVisibility(for: textView)
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        updatePlaceholderVisibility(for: textView)
+    }
+
+    
     func configureCell(
         with model: QuizQuestiondata,
         isLast: Bool,
@@ -184,12 +188,24 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         totalQuestion:Int
     ) {
         ChapterTxtFld.text = model.chapter
-        markTxtFild.text   = model.mark == nil ? "" : "\(model.mark ?? 0)"
-        opATxtView.text    = model.a_option.isEmpty ? "Enter Option A".translated() : model.a_option
-        opBTxtView.text    = model.b_option.isEmpty ? "Enter Option B".translated() : model.b_option
-        opCTxtView.text    = model.c_option.isEmpty ? "Enter Option C".translated() : model.c_option
-        opDTxtView.text    = model.d_option.isEmpty ? "Enter Option D".translated() : model.d_option
-        questionTxtView.text = model.question.isEmpty ? "Enter Question here".translated() : model.question
+            markTxtFild.text   = model.mark == nil ? "" : "\(model.mark ?? 0)"
+
+            opATxtView.text = model.a_option
+            opBTxtView.text = model.b_option
+            opCTxtView.text = model.c_option
+            opDTxtView.text = model.d_option
+            questionTxtView.text = model.question
+
+            setPlaceholder("Enter Option A".translated(), for: opATxtView)
+            setPlaceholder("Enter Option B".translated(), for: opBTxtView)
+            setPlaceholder("Enter Option C".translated(), for: opCTxtView)
+            setPlaceholder("Enter Option D".translated(), for: opDTxtView)
+            setPlaceholder("Enter Question here".translated(), for: questionTxtView)
+        
+        [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach {
+            updatePlaceholderVisibility(for: $0)
+        }
+        
         if let answerStr = model.answer,
            let answerIndex = Int(answerStr),
            answerIndex > 0,
@@ -221,6 +237,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         checkBoxBtn.isHidden = true
         // Placeholder color setup
         [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
+            
             if tv?.text?.hasPrefix("Enter".translated()) == true {
                 tv?.textColor = .lightGray
             } else {
@@ -304,18 +321,21 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
 
     
     func textViewDidChange(_ textView: UITextView) {
+       
+        updatePlaceholderVisibility(for: textView)
         
         if let index = indexPath {
             delegate?.updateQuestion(at: index, model: captureModel())
         }
-            // Notify tableView to update layout
-            if let tableView = self.superview as? UITableView {
-                UIView.setAnimationsEnabled(false)
-                tableView.beginUpdates()
-                tableView.endUpdates()
-                UIView.setAnimationsEnabled(true)
-            }
+        // Notify tableView to update layout
+        if let tableView = self.superview as? UITableView {
+            UIView.setAnimationsEnabled(false)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            UIView.setAnimationsEnabled(true)
         }
+    }
+    
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let index = indexPath {
