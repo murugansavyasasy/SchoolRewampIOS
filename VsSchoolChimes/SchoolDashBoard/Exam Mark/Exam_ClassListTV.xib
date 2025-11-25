@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="115" id="KGk-i7-Jjw" customClass="Exam_ClassListTV" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="115"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="115"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EXg-3d-NtQ">
+                        <rect key="frame" x="10" y="10" width="300" height="95"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTW-vP-9AS">
+                                <rect key="frame" x="3" y="0.0" width="297" height="95"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ehi-yD-AZM">
+                                        <rect key="frame" x="10" y="15" width="277" height="60"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="tEL-Ai-G2U">
+                                                <rect key="frame" x="0.0" y="0.0" width="277" height="39.666666666666664"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade 10 - Section A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWt-3A-Isf">
+                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graduationcap" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-pF-2qd">
+                                                        <rect key="frame" x="242" y="1" width="35" height="37"/>
+                                                        <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="35" id="j9j-WZ-JJl"/>
+                                                            <constraint firstAttribute="height" constant="35" id="o1I-vi-IH4"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32 Students" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzC-bT-hSX">
+                                                <rect key="frame" x="0.0" y="39.666666666666671" width="277" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Ehi-yD-AZM" secondAttribute="bottom" constant="20" id="1Zz-V4-GaH"/>
+                                    <constraint firstItem="Ehi-yD-AZM" firstAttribute="leading" secondItem="dTW-vP-9AS" secondAttribute="leading" constant="10" id="89T-QC-8BP"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ehi-yD-AZM" secondAttribute="trailing" constant="10" id="BaU-SC-249"/>
+                                    <constraint firstItem="Ehi-yD-AZM" firstAttribute="top" secondItem="dTW-vP-9AS" secondAttribute="top" constant="15" id="X5E-Fj-8rc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dTW-vP-9AS" secondAttribute="trailing" id="AiK-SH-s5j"/>
+                            <constraint firstItem="dTW-vP-9AS" firstAttribute="top" secondItem="EXg-3d-NtQ" secondAttribute="top" id="JCu-mD-Rrg"/>
+                            <constraint firstItem="dTW-vP-9AS" firstAttribute="leading" secondItem="EXg-3d-NtQ" secondAttribute="leading" constant="3" id="a1o-0C-akj"/>
+                            <constraint firstAttribute="bottom" secondItem="dTW-vP-9AS" secondAttribute="bottom" id="z9e-wM-r4W"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="EXg-3d-NtQ" secondAttribute="trailing" constant="10" id="2LX-Xd-l2T"/>
+                    <constraint firstItem="EXg-3d-NtQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="IMx-dU-I39"/>
+                    <constraint firstItem="EXg-3d-NtQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="gqY-zy-GzV"/>
+                    <constraint firstAttribute="bottom" secondItem="EXg-3d-NtQ" secondAttribute="bottom" constant="10" id="pJj-Rc-h9m"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="Classview" destination="dTW-vP-9AS" id="cMx-n5-oaj"/>
+                <outlet property="baseView" destination="EXg-3d-NtQ" id="vEx-tB-hBW"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="129.92957746478874"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="graduationcap" catalog="system" width="128" height="107"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.55294117647058827" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
