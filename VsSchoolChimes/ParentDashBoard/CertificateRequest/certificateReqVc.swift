@@ -56,23 +56,6 @@ class certificateReqVc: UIViewController,UITableViewDelegate,UITableViewDataSour
               return cell
           }
     }
-    
-  
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.row == 0 {
-//            return UITableView.automaticDimension
-//        }else{
-//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "certificateHstryCell") as? certificateHstryCell else {
-//                return 100
-//            }
-//            cell.configure(with:filteredCertificates)
-//            return cell.collectionContentHeight() + 60
-//        }
-//        
-//    }
-
-
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var studentNameLbl: UILabel!
@@ -84,7 +67,6 @@ class certificateReqVc: UIViewController,UITableViewDelegate,UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
-        // Do any additional setup after loading the view.
         
         tv
             .register(
@@ -148,15 +130,9 @@ class certificateReqVc: UIViewController,UITableViewDelegate,UITableViewDataSour
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                  //  self?.tv.isHidden = false
                     self?.certificates = response.data
                     self?.filteredCertificates = response.data
-                  //  self?.tv.reloadData()
-                   
                     self?.tv.reloadData()
-//                    self?.noDataImg.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
-//                    self?.noDataLbl.isHidden = !(self?.filteredCertificates?.isEmpty ?? false)
-//                    self?.noDataLbl.text = response.message
                 case .failure(let error):
                     print("API Error:", error)
                 }

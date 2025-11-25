@@ -714,4 +714,12 @@
 "Female" = "Female";
 "View Details" = "View Details";
 
-
+//MARK: Certificate
+"Request Certificate" = "Request Certificate";
+"Select Certificate" = "Select Certificate";
+"Not Urgent" = "Not Urgent";
+"Urgent" = "Urgent";
+"Reason" = "Reason";
+"Certificate History" = "Certificate History";
+"Select Urgency Level" = "Select Urgency Level";
+"Enter your reason here..." = "Enter your reason here...";

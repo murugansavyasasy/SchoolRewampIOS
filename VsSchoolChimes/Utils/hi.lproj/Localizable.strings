@@ -724,3 +724,13 @@
 "Male" = "पुरुष";
 "Female" = "महिला";
 "View Details" = "विवरण देखें";
+
+//MARK: Certificate
+"Request Certificate" = "प्रमाणपत्र का अनुरोध";
+"Select Certificate" = "प्रमाणपत्र चुनें";
+"Not Urgent" = "ज़रूरी नहीं";
+"Urgent" = "ज़रूरी";
+"Reason" = "कारण";
+"Certificate History" = "प्रमाणपत्र इतिहास";
+"Select Urgency Level" = "अत्यावश्यकता स्तर चुनें";
+"Enter your reason here..." = "अपना कारण यहाँ दर्ज करें...";

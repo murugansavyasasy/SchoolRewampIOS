@@ -238,9 +238,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     func UiUpdate(){
-        
-        // Do any additional setup after loading the view.
-        
         let Name = studentDetails?.name ?? ""
         let Standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         studentNameLbl.configureAsBackTitle(firstLine: Name, secondLine: Standard)
@@ -286,6 +283,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func getAllPastDatesIncludingTodayForLastMonth() -> [CalendarItem] {
         var items: [CalendarItem] = []
+        
         let calendar = Calendar.current
         let today = Date()
         
@@ -353,7 +351,6 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                     self.NodataFoundLbl.isHidden = !isEmpty
                     
                     self.noDataImage.isHidden = !isEmpty
-                    //                    self.searchbar.isHidden = isEmpty
                     self.homeWorkDefaultLbl.isHidden = isEmpty
                     self.searchBtnName.isHidden = isEmpty
                     
@@ -484,26 +481,36 @@ extension homeWorkVc: UISearchBarDelegate{
 
 }
 
-
 struct CalendarItem {
     let date: Date
-    var hasHomework: Bool = false // new
-    
-    var dayString: String {
+    var hasHomework: Bool = false
+    private var locale: Locale {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        return Locale(identifier: localeID)
+    }
+    private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
+        formatter.locale = locale
+        return formatter
+    }
+
+    var dayString: String {
+        let formatter = dateFormatter
         formatter.dateFormat = "EEE"
         return formatter.string(from: date)
     }
-    
+
     var dateString: String {
-        let formatter = DateFormatter()
+        let formatter = dateFormatter
         formatter.dateFormat = "dd"
         return formatter.string(from: date)
     }
-    
+
     var monthString: String {
-        let formatter = DateFormatter()
+        let formatter = dateFormatter
         formatter.dateFormat = "MMM"
         return formatter.string(from: date)
     }
 }
+
