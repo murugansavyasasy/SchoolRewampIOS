@@ -808,6 +808,8 @@
 		FAB71B462ED480C500B3383E /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB71B432ED480C500B3383E /* ExamListVC.swift */; };
 		FAB71B4A2ED48BD200B3383E /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB71B492ED48BD200B3383E /* ExamListHeader.swift */; };
 		FAB71B4C2ED48BEA00B3383E /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB71B4B2ED48BEA00B3383E /* ExamListHeader.xib */; };
+		FABA69282ED5721500278807 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA69262ED5721500278807 /* ExamActivitiesCV.swift */; };
+		FABA69292ED5721500278807 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABA69272ED5721500278807 /* ExamActivitiesCV.xib */; };
 		FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = FACD4D692E30BE6D0084B125 /* FSCalendar */; };
 		FACD4D712E30F46F0084B125 /* TimetableBottomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */; };
 		FACD4D722E30F46F0084B125 /* TimetableBottomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD4D702E30F46F0084B125 /* TimetableBottomVC.xib */; };
@@ -1753,6 +1755,8 @@
 		FAB71B442ED480C500B3383E /* ExamListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListVC.xib; sourceTree = "<group>"; };
 		FAB71B492ED48BD200B3383E /* ExamListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListHeader.swift; sourceTree = "<group>"; };
 		FAB71B4B2ED48BEA00B3383E /* ExamListHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListHeader.xib; sourceTree = "<group>"; };
+		FABA69262ED5721500278807 /* ExamActivitiesCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitiesCV.swift; sourceTree = "<group>"; };
+		FABA69272ED5721500278807 /* ExamActivitiesCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitiesCV.xib; sourceTree = "<group>"; };
 		FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBottomVC.swift; sourceTree = "<group>"; };
 		FACD4D702E30F46F0084B125 /* TimetableBottomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableBottomVC.xib; sourceTree = "<group>"; };
 		FACD4D752E30F8B40084B125 /* TimetableTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTvCell.swift; sourceTree = "<group>"; };
@@ -4106,6 +4110,8 @@
 				FAB71B442ED480C500B3383E /* ExamListVC.xib */,
 				FAB71B492ED48BD200B3383E /* ExamListHeader.swift */,
 				FAB71B4B2ED48BEA00B3383E /* ExamListHeader.xib */,
+				FABA69262ED5721500278807 /* ExamActivitiesCV.swift */,
+				FABA69272ED5721500278807 /* ExamActivitiesCV.xib */,
 			);
 			path = "Exam Mark";
 			sourceTree = "<group>";
@@ -4605,6 +4611,7 @@
 				187CF5DC2D142D06001422CE /* CertificateRequestViewController.xib in Resources */,
 				84E0A9FE2E389432002BF40A /* AttachmentHeaderCell.xib in Resources */,
 				84EFF9D32CCC7CD000C11C26 /* SchoolDashboardVc.xib in Resources */,
+				FABA69292ED5721500278807 /* ExamActivitiesCV.xib in Resources */,
 				84B2C5502E2224C900A69A1B /* ExamCatogoryCVC.xib in Resources */,
 				845347FD2E5C64B600D47393 /* LessonPlanTVC.xib in Resources */,
 				84017BFD2E4079BB006CB477 /* AttachHistroyVC.xib in Resources */,
@@ -5218,6 +5225,7 @@
 				84174DF82E7006E300AC7092 /* QuizCompletedFirstTv.swift in Sources */,
 				84235A132E1E2819002F2E1D /* AddAttachmentTVC.swift in Sources */,
 				187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */,
+				FABA69282ED5721500278807 /* ExamActivitiesCV.swift in Sources */,
 				843BCD362E2E65ED00D4364A /* homeWorkVc.swift in Sources */,
 				FAB71B3A2ED4760300B3383E /* Exam_ClassListTV.swift in Sources */,
 				18D7189E2D0D477900E9EDA3 /* PunchHistTableViewCell.swift in Sources */,

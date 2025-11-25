@@ -13,16 +13,19 @@ class Exam_ExamListTV: UITableViewCell {
     @IBOutlet weak var ArrowBtn: UIButton!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var activitiesLbl: UILabel!
     
     var onExpand: (() -> Void)?
         let itemHeight: CGFloat = 80
         let itemsCount = 5
-
         var isExpanded: Bool = false {
             didSet {
                 updateCollectionView()
             }
         }
+    
+    var items = ["Math", "English", "Computer Science", "GK"]
+
 
         override func awakeFromNib() {
             super.awakeFromNib()
@@ -30,25 +33,24 @@ class Exam_ExamListTV: UITableViewCell {
             setupCollectionView()
 
             cv.isHidden = true
+            activitiesLbl.isHidden = true
             collectionViewHeight.constant = 0
         }
 
-        private func setupCollectionView() {
-            cv.delegate = self
-            cv.dataSource = self
+    private func setupCollectionView() {
+        cv.register(UINib(nibName: "ExamActivitiesCV", bundle: nil), forCellWithReuseIdentifier: "ExamActivitiesCV")
+        cv.delegate = self
+        cv.dataSource = self
+    }
 
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            layout.minimumLineSpacing = 10
-            layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: itemHeight)
-            cv.collectionViewLayout = layout
-        }
-
-        private func updateCollectionView() {
+    private func updateCollectionView() {
             cv.isHidden = !isExpanded
 
             if isExpanded {
-                collectionViewHeight.constant = CGFloat(itemsCount) * (itemHeight + 10)
+                // Height = (rows * itemHeight) + spacing
+                let totalHeight =
+                    CGFloat(items.count) * (itemHeight + 10)   // 10 = line spacing
+                collectionViewHeight.constant = totalHeight
             } else {
                 collectionViewHeight.constant = 0
             }
@@ -75,11 +77,25 @@ class Exam_ExamListTV: UITableViewCell {
 extension Exam_ExamListTV: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5  // or dynamic count
+        return items.count  // or dynamic count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YourCollectionCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExamActivitiesCV", for: indexPath) as! ExamActivitiesCV
+        cell.nameLbl.text = items[indexPath.item]
         return cell
     }
 }
+
+
+extension Exam_ExamListTV: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: collectionView.bounds.width, height: 40)
+    }
+
+}
+
