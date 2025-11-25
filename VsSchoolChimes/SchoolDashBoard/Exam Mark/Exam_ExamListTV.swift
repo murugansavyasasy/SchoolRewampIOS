@@ -16,10 +16,9 @@ class Exam_ExamListTV: UITableViewCell {
     @IBOutlet weak var activitiesLbl: UILabel!
     
     var onExpand: (() -> Void)?
-        let itemHeight: CGFloat = 80
-        let itemsCount = 5
         var isExpanded: Bool = false {
             didSet {
+                activitiesLbl.isHidden = false
                 updateCollectionView()
             }
         }
@@ -49,7 +48,7 @@ class Exam_ExamListTV: UITableViewCell {
             if isExpanded {
                 // Height = (rows * itemHeight) + spacing
                 let totalHeight =
-                    CGFloat(items.count) * (itemHeight + 10)   // 10 = line spacing
+                    CGFloat(items.count) * (40)   // 10 = line spacing
                 collectionViewHeight.constant = totalHeight
             } else {
                 collectionViewHeight.constant = 0
@@ -62,7 +61,7 @@ class Exam_ExamListTV: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        
     }
     
     @IBAction func expandAct(_ sender: UIButton) {
