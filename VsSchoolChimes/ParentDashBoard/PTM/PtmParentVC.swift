@@ -117,8 +117,10 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
         EventDate = formatter.string(from: Date())
-        
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let monthFormatter = DateFormatter(); monthFormatter.dateFormat = "MMM"
+        monthFormatter.locale = Locale(identifier: localeID)
         let dayFormatter = DateFormatter(); dayFormatter.dateFormat = "dd"
         let today = Calendar.current.startOfDay(for: Date())
         

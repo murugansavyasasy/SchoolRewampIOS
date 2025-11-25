@@ -30,7 +30,13 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var fatherNameStack: UIStackView!
     @IBOutlet weak var motherNAmeStack: UIStackView!
     @IBOutlet weak var collapseBtn: UIButton!
-    
+    @IBOutlet weak var fatherNameLbl: UILabel!
+    @IBOutlet weak var motherNameLbl: UILabel!
+    @IBOutlet weak var standardLbl: UILabel!
+    @IBOutlet weak var callImage: UIImageView!
+    @IBOutlet weak var LinkImage: UIImageView!
+    @IBOutlet weak var meetigNameLbl: UILabel!
+    @IBOutlet weak var meetigModeLbl: UILabel!
     
     var showpopup:ShowPopupDelegate?
     var edit:Bool?
@@ -40,6 +46,8 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     weak var Collapsedelegate: BookingCellDelegate?
     var isExpanded = false
     var indexPath: IndexPath?
+    var onCall : (() -> Void)?
+    var onJoin : (() -> Void)?
 
     
     override func awakeFromNib() {
@@ -56,6 +64,9 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
         bookedByNameLbl.setFont(style: .body, size: FontSize.BodySize)
         
+        TimeLbl.setFont(style: .body, size: FontSize.BodySize)
+        bookedByDefLbl.text = PTMString.Booked_by.translated()
+        
         BookingBaseview.layer.cornerRadius = 10
         BookingBaseview.backgroundColor = .systemGray5.withAlphaComponent(0.5)
         
@@ -67,6 +78,11 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         
         fatherNameStack.isHidden = true
         motherNAmeStack.isHidden = true
+        meetigModeLbl.isHidden = true
+        meetigNameLbl.isHidden = true
+        
+        callImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CallAct)))
+        LinkImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(JoinAct)))
     }
     
     func edit(edit:Bool,delete:Bool,selectedId:String){
@@ -86,6 +102,15 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
             fatherNameStack.isHidden = !isExpanded
             motherNAmeStack.isHidden = !isExpanded
         }
+    
+    @IBAction func CallAct(_ sender: Any) {
+        
+        onCall?()
+    }
+    
+    @IBAction func JoinAct(_ sender: Any) {
+        onJoin?()
+    }
     
     @IBAction func optionBtnAct(_ sender: UIButton) {
         

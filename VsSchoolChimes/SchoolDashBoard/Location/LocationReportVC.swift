@@ -142,8 +142,6 @@ class LocationReportVC: UIViewController{
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             MonthLbl.text = item
-            
-            // Convert index to two-digit month string
             SelectedMonthCode = String(format: "%02d", index + 1)
             Geometric_Staff_Attendance_Report()
         }
@@ -193,19 +191,21 @@ class LocationReportVC: UIViewController{
     }
     
     func getMonthNames(for selectedYear: String) -> [String] {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let monthFormatter = DateFormatter()
-        monthFormatter.locale = Locale.current
-        monthFormatter.dateFormat = "MMMM" // Use "LLL" for short month names
-        
+        monthFormatter.locale = Locale(identifier: localeID)
+        monthFormatter.dateFormat = "MMMM"
+
         let currentYear = Calendar.current.component(.year, from: Date())
         let currentMonth = Calendar.current.component(.month, from: Date())
-        
+
         let selectedYearInt = Int(selectedYear) ?? 0
         let maxMonth = (selectedYearInt == currentYear) ? currentMonth : 12
-        
+
         return (1...maxMonth).compactMap { month in
             var components = DateComponents()
-            components.year = 2000 // dummy year
+            components.year = 2000
             components.month = month
             if let date = Calendar.current.date(from: components) {
                 return monthFormatter.string(from: date)
@@ -213,7 +213,6 @@ class LocationReportVC: UIViewController{
             return nil
         }
     }
-    
     
 }
 

@@ -110,7 +110,7 @@ struct AlertstringFile{
     static let Select_from_history = "Select from history"
     static let Enter_the_new_password = "Enter the new password"
     static let Enterthe_confirm_password = "Enter the confirm password"
-    static let Enter_valid_Mobile = "Enter valid Mobile Number"
+    static let Enter_valid_Mobile = "Enter a valid Mobile Number"
     static let Invalid = "Invalid Password"
     static let Enter_the_10_digit = "Enter the 10 digit mobile number"
     static let Terms_And_Conditions = "Please agree to the terms and conditions"
@@ -231,6 +231,10 @@ class QuizListStringFile{
     static let Option_D = "Option D"
     static let Correct_Ans = "Correct Ans"
     static let Mark = "Mark"
+    static let Question_Limit = "Question Limit: "
+    static let Import_Question = "Import Question"
+    static let Select_All = "Select All"
+    static let Pick_From_Question_Bank = "Pick From Question Bank"
 }
 
 struct CommonStringFile {
@@ -355,19 +359,11 @@ struct CommonStringFile {
     static let audio = "audio"
     static let Tap_on_the_punch = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
     
-    static let locationErrorMessage = """
-        Note: You are outside the institute's boundary. You will not be able to mark your attendance.
-
-        Please try again when you are within the designated area.
-        """
+    static let locationErrorMessage = "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area."
     
-    static let add_location_firstMessage = """
-        Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting.
-        """
+    static let add_location_firstMessage = "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting."
     
-    static let add_location_secondMessage = """
-        Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
-        """
+    static let add_location_secondMessage = "Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality."
     
     static let No_data_found = "No Data Found!"
     static let Notice_Display_Date_Range = "Notice Active Period"
@@ -584,5 +580,30 @@ struct PTMString {
     static let min = "%d Minutes"
     static let custom = "Custom"
     static let minShort = "%d Min"
+    static let Select_Slot_Duration = "Select Slot Duration"
+    static let Meetings = "Meetings";
+    static let Booked_slots = "Booked Slots";
+    static let Today_slots = "Today Slots";
+    static let Upcoming_slots = "Upcoming Slots";
+    static let completed_slots = "Completed Slots";
+    static let All = "All";
+    static let Completed = "Completed";
+    static let Cancelled = "Cancelled";
+    static let Expired = "Expired";
+    static let Slot_Expired = "Slot Expired";
+    static let Slot_Cancelled = "Slot Cancelled";
+    static let Booked_by = "Booked by:";
+    static let Father_Name = "Father Name:";
+    static let Mother_Name = "Mother Name:";
+    static let Mode = "Mode";
+    static let Classes = "Classes";
+    static let Slot_Duration = "Slot Duration";
+    static let Booked = "Booked";
+    static let Available = "Available";
+    static let Waiting_for_Booking = "Waiting for Booking";
+    static let No_Slot_Booked_yet = "No Slot Booked yet";
+    static let Book_PTM_Slots = "Book PTM Slots";
+    static let Join = "Join";
+
 }
 

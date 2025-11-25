@@ -41,6 +41,12 @@ class MeetingDataTV: UITableViewCell {
         classBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         JoinBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        dateDefBtn.setTitle(PTMString.date.translated(), for: .normal)
+        TimeDefBtn.setTitle(PTMString.time.translated(), for: .normal)
+        modeDefBtn.setTitle(PTMString.Mode.translated(), for: .normal)
+        classBtn.setTitle(PTMString.Classes.translated(), for: .normal)
+        durationDefBtn.setTitle(PTMString.Slot_Duration.translated(), for: .normal)
+        
         JoinBtn.layer.cornerRadius = 10
     }
 

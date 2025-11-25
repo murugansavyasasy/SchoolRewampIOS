@@ -58,7 +58,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
 
         // MARK: - Common Setup
         let item = dispalyArray[indexPath.row]
-        cell.roles.text = item.name
+        cell.roles.text = item.name.translated()
         cell.updateProgress(
                 absentees: String(item.boys),
                 total: String(item.count)
@@ -70,7 +70,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
             switch item.name {
             case "Staff":
                 configureCell(cell, icon: "teachers", tint: .aproved,
-                              maleLabel: "Male", femaleLabel: "Female",
+                              maleLabel: "Male".translated(), femaleLabel: "Female".translated(),
                               progressTint: .maleClr, trackTint: .femaleClr,
                               present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
                 //            cell.updateProgress(
@@ -80,7 +80,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                 //            cell.OverAllcountLbl.text = "\(item.count)"
             case "Students":
                 configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
-                              maleLabel: "Boys", femaleLabel: "Girls",
+                              maleLabel: "Boys".translated(), femaleLabel: "Girls".translated(),
                               progressTint: .maleClr, trackTint: .femaleClr,
                               present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
                 //            cell.updateProgress(
@@ -91,7 +91,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                 //            cell.OverAllcountLbl.text = "\(item.count)"
             case "Total":
                 configureCell(cell, icon: "School Needs", tint: .button,
-                              maleLabel: "Staffs", femaleLabel: "Students",
+                              maleLabel: "Staffs".translated(), femaleLabel: "Students".translated(),
                               progressTint: .aproved.withAlphaComponent(0.7),
                               trackTint: .primery.withAlphaComponent(0.7),
                               present: item.count, previous: item.previousYear,girls: item.boys,boys: item.Girl,message: item.message)

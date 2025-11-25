@@ -53,8 +53,9 @@ class BookedSlotTV: UITableViewCell {
         DateDefLbl.text = PTMString.date
         timeDefLbl.text = PTMString.time
         
-        callBtn.setTitle(PTMString.call, for: .normal)
-        cancelBtn.setTitle(PTMString.cancel, for: .normal)
+        callBtn.setTitle(PTMString.call.translated(), for: .normal)
+        cancelBtn.setTitle(PTMString.cancel.translated(), for: .normal)
+        JoinBtn.setTitle(PTMString.Join.translated(), for: .normal)
         
         MeetingNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         staffNameLbl.setFont(style: .body, size: FontSize.BodySize)

@@ -242,10 +242,10 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         CheckSlotBtn.layer.cornerRadius = 12
         CheckSlotBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        let five = String(format: PTMString.minShort, 5)   // "5 Min"
-        let ten = String(format: PTMString.minShort, 10)   // "10 Min"
-        let fifteen = String(format: PTMString.minShort, 15) // "15 Min"
-        let thirty = String(format: PTMString.minShort, 30) // "30 Min"
+        let five = String(format: PTMString.minShort.translated(), 5)   // "5 Min"
+        let ten = String(format: PTMString.minShort.translated(), 10)   // "10 Min"
+        let fifteen = String(format: PTMString.minShort.translated(), 15) // "15 Min"
+        let thirty = String(format: PTMString.minShort.translated(), 30) // "30 Min"
 
         breakDuration = [five,ten,fifteen,thirty]
         
@@ -295,28 +295,28 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     func Translate(){
         
-        titleLbl.text = PTMString.createMeeting
-        purposeDefLbl.text = PTMString.purposeOfMeeting
-        ModeDefLbl.text = PTMString.selectMeetingMode
-        meetingLinkDefLbl.text = PTMString.pasteMeetingLink
-        selectClassDefLbl.text = PTMString.selectYourClasses
-        chooseAcademicyeardefLbl.text = PTMString.chooseAcademicYear
-        selectDateTimeDefLbl.text = PTMString.selectDateTime
-        dateLbl.text = PTMString.selectDates
-        fromTimeLbl.text = PTMString.startWith
-        toTimeLbl.text = PTMString.endWith
-        DurationAndBreakDefLbl.text = PTMString.durationAndBreak
-        durationLbl.text = "Select Slot Duration"//PTMString.duration
-        minutesDefLbl.text = PTMString.minutes
-        needBreakDefLbl.text = PTMString.needBreakBetweenSlots
-        breakAfterLbl.text = PTMString.breakAfter
-        afterSlotsDefLbl.text = PTMString.slot
-        BreakDurationDefLbl.text = PTMString.breakDuration
-        inpersonBtn.setTitle(PTMString.inPerson, for: .normal)
-        phonecallBtn.setTitle(PTMString.phoneCall, for: .normal)
-        onlineBtn.setTitle(PTMString.virtual, for: .normal)
-        CheckSlotBtn.setTitle(PTMString.checkSlotAvailability, for: .normal)
-        calendarDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        titleLbl.text = PTMString.createMeeting.translated()
+        purposeDefLbl.text = PTMString.purposeOfMeeting.translated()
+        ModeDefLbl.text = PTMString.selectMeetingMode.translated()
+        meetingLinkDefLbl.text = PTMString.pasteMeetingLink.translated()
+        selectClassDefLbl.text = PTMString.selectYourClasses.translated()
+        chooseAcademicyeardefLbl.text = PTMString.chooseAcademicYear.translated()
+        selectDateTimeDefLbl.text = PTMString.selectDateTime.translated()
+        dateLbl.text = PTMString.selectDates.translated()
+        fromTimeLbl.text = PTMString.startWith.translated()
+        toTimeLbl.text = PTMString.endWith.translated()
+        DurationAndBreakDefLbl.text = PTMString.durationAndBreak.translated()
+        durationLbl.text = PTMString.Select_Slot_Duration.translated()
+        minutesDefLbl.text = PTMString.minutes.translated()
+        needBreakDefLbl.text = PTMString.needBreakBetweenSlots.translated()
+        breakAfterLbl.text = PTMString.breakAfter.translated()
+        afterSlotsDefLbl.text = PTMString.slot.translated()
+        BreakDurationDefLbl.text = PTMString.breakDuration.translated()
+        inpersonBtn.setTitle(PTMString.inPerson.translated(), for: .normal)
+        phonecallBtn.setTitle(PTMString.phoneCall.translated(), for: .normal)
+        onlineBtn.setTitle(PTMString.virtual.translated(), for: .normal)
+        CheckSlotBtn.setTitle(PTMString.checkSlotAvailability.translated(), for: .normal)
+        calendarDoneBtn.setTitle(AlertstringFile.Done.translated(), for: .normal)
     }
 
     
@@ -671,12 +671,12 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     private func setupDropDown() {
         dropDown.anchorView = selectDurationView
         
-        let duration10 = String(format: PTMString.min, 10)
-        let duration15 = String(format: PTMString.min, 15)
-        let duration20 = String(format: PTMString.min, 20)
-        let duration30 = String(format: PTMString.min, 30)
+        let duration10 = String(format: PTMString.min.translated(), 10)
+        let duration15 = String(format: PTMString.min.translated(), 15)
+        let duration20 = String(format: PTMString.min.translated(), 20)
+        let duration30 = String(format: PTMString.min.translated(), 30)
 
-        dropDown.dataSource = [duration10, duration15, duration20, duration30, PTMString.custom]
+        dropDown.dataSource = [duration10, duration15, duration20, duration30, PTMString.custom.translated()]
 
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")

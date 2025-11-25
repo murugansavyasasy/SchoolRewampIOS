@@ -52,6 +52,12 @@ class LocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let segments = ["Punch In".translated(), "Reports".translated()]
+        SegmentControl.removeAllSegments()
+        segments.enumerated().forEach {
+            SegmentControl.insertSegment(withTitle: $1, at: $0, animated: false)
+        }
+        SegmentControl.selectedSegmentIndex = 0
         ViewAnimator.hideFade(LocationErrorStack)
         ViewAnimator.hideFade(punchStack)
         EnableLocationBtn.layer.cornerRadius = 10
@@ -76,7 +82,6 @@ class LocationViewController: UIViewController {
         PunchDescriptionLbl.setFont(style: .header, size: FontSize.HeaderSize)
         EnableLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TaptoPunchBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-//        addLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         if #available(iOS 15.0, *) {
             var config = UIButton.Configuration.plain()
             config.image = UIImage(systemName: "plus.circle.fill")
@@ -85,7 +90,7 @@ class LocationViewController: UIViewController {
             config.imagePadding = 8
             addlocationbtnName.configuration = config
         }
-
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -218,12 +223,10 @@ class LocationViewController: UIViewController {
         let status = CLLocationManager.authorizationStatus()
         
         if status == .authorizedAlways || status == .authorizedWhenInUse {
-            // ✅ Add delay for safety (system breathing time)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
                 call_locationManager()
             }
         } else {
-            print("❗️ Location permission not granted yet.")
             checkLocationAuthorization()
         }
     }
@@ -240,7 +243,7 @@ class LocationViewController: UIViewController {
             addLocationEnabel(Show: false )
             addChildViewControllerToContainer()
         }else{
-           
+            
             addLocationEnabel(Show: add_location_enabel ?? false )
             removeChildVC()
             checkLocationAuthorization()
@@ -249,7 +252,7 @@ class LocationViewController: UIViewController {
     
     @IBAction func PunchBtnAct(_ sender: Any) {
         checkAuthenticationAvailability()
-//        Punch_Api()
+        //        Punch_Api()
     }
     
     @IBAction func AddLocationAct(_ sender: Any) {
@@ -326,12 +329,9 @@ class LocationViewController: UIViewController {
         let context = LAContext()
         var error: NSError?
         let policy: LAPolicy = .deviceOwnerAuthentication
-        // Check if biometric authentication or passcode is available
         if context.canEvaluatePolicy(policy, error: &error) {
-            // Attempt to authenticate using biometrics or passcode
             authenticateUser(context: context, policy: policy)
         } else {
-            // Neither biometric authentication nor passcode is available
             print("No biometric authentication or passcode is set.")
             punch_type = 1
             Punch_Api()
@@ -444,19 +444,6 @@ extension LocationViewController:CLLocationManagerDelegate{
         checkLocationAuthorization()
     }
     
-    //    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    //        switch status {
-    //        case .authorizedWhenInUse, .authorizedAlways:
-    //            locationManager.startUpdatingLocation()
-    //        case .denied, .restricted:
-    //            print("Location access denied or restricted.")
-    //        case .notDetermined:
-    //            locationManager.requestWhenInUseAuthorization()
-    //        @unknown default:
-    //            break
-    //        }
-    //    }
-    //
     func Punch_Api(){
         
         APIService.shared
@@ -539,16 +526,11 @@ extension LocationViewController:CLLocationManagerDelegate{
                                 lon2: currentLong
                             )
                             
-                            print("Checking location \(location.location ?? "")")
-                            print("Distance to location: \(calculatedDistance) meters")
-                            
                             if calculatedDistance <= Double(allowedDistance) {
                                 isInsideAllowedArea = true
-                                break // Stop at first match
+                                break
                             }
                         }
-                        
-                        // ✅ Only update UI if the status has changed
                         if self.lastIsInsideAllowedArea != isInsideAllowedArea {
                             self.lastIsInsideAllowedArea = isInsideAllowedArea
                             DispatchQueue.main.async {
@@ -587,7 +569,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
         ViewAnimator.hideFade(LocationErrorStack)
-        PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch
+        PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch.translated()
         PunchThumbnail.image = UIImage(named: "PunchAttenace")
         punchStack.backgroundColor = .white
         PunchDescriptionLbl.textColor = .black
@@ -601,7 +583,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         punchStack.layer.cornerRadius = 10
         punchStack.backgroundColor = UIColor(named: "errorColor")
         PunchDescriptionLbl.textColor = .white
-        PunchDescriptionLbl.text = CommonStringFile.locationErrorMessage
+        PunchDescriptionLbl.text = CommonStringFile.locationErrorMessage.translated()
     }
     
     
@@ -665,26 +647,3 @@ extension LocationViewController:CLLocationManagerDelegate{
     }
     
 }
-
-// MARK: To save the present absent person's :
-
-
-//       @objc func savePDF() {
-//           guard let pdfData = AttPDFGenerator.generateAttendancePDF(from: attendanceRecords,meetingTitle: "Sports day meeting",watermarkImageName: "SavayasasyLogo") else { return }
-//
-//           let fileName = "AttendanceReport.pdf"
-//           let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//           let filePath = documentDirectory.appendingPathComponent(fileName)
-//
-//           do {
-//               try pdfData.write(to: filePath)
-//               showPDFPreview(filePath: filePath)
-//           } catch {
-//               print("Failed to save PDF:", error)
-//           }
-//       }
-//
-//       func showPDFPreview(filePath: URL) {
-//           let previewVC = PDFsPreviewVC(pdfURL: filePath)
-//           navigationController?.pushViewController(previewVC, animated: true)
-//       }

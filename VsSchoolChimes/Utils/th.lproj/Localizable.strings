@@ -475,6 +475,12 @@
 "EnterTextHere" = "กรอกข้อความของคุณที่นี่...";
 "egYogaEvent" = "เช่น กิจกรรมโยคะ";
 "egChennai" = "เช่น เชนไน";
+"Ongoing Events" = "กิจกรรมที่กำลังดำเนินอยู่";
+"Event Categories" = "หมวดหมู่กิจกรรม";
+"Upcoming Events" = "กิจกรรมที่จะเกิดขึ้น";
+"Completed Events" = "กิจกรรมที่เสร็จสิ้นแล้ว";
+"Your Attachment's" = "ไฟล์แนบของคุณ";
+
 //MARK: Comunication
 "BackToTextMessage" = "กลับไปที่ข้อความตัวอักษร";
 "BackToVoiceMessage" = "กลับไปที่ข้อความเสียง";
@@ -590,6 +596,30 @@
 "%d Minutes" = "%d นาที";
 "Custom" = "กำหนดเอง";
 "%d Min" = "%d นาที";
+"Select Slot Duration" = "เลือกระยะเวลาของช่วงเวลา";
+"Meetings" = "การประชุม";
+"Booked Slots" = "ช่วงเวลาที่จองแล้ว";
+"Today Slots" = "ช่วงเวลาวันนี้";
+"Upcoming Slots" = "ช่วงเวลาที่กำลังจะมาถึง";
+"Completed Slots" = "ช่วงเวลาที่เสร็จสิ้น";
+"Completed" = "เสร็จสิ้น";
+"Cancelled" = "ยกเลิก";
+"Expired" = "หมดอายุ";
+"Slot Expired" = "ช่วงเวลาหมดอายุ";
+"Slot Cancelled" = "ช่วงเวลาถูกยกเลิก";
+"Booked by:" = "จองโดย:";
+"Father Name:" = "ชื่อบิดา:";
+"Mother Name:" = "ชื่อมารดา:";
+"Mode" = "โหมด";
+"Classes" = "ชั้นเรียน";
+"Booked" = "จองแล้ว";
+"Slot Duration" = "ช่วงเวลา";
+"Available" = "ว่าง";
+"Waiting for Booking" = "รอการจอง";
+"No Slot Booked yet" = "ยังไม่มีการจองช่วงเวลา";
+"Book PTM Slots" = "จองช่วงเวลา PTM";
+"Join" = "เข้าร่วม";
+
 
 //MARK: Quiz Page
 "No of question" = "จำนวนคำถาม";
@@ -611,6 +641,7 @@
 "Level" = "ระดับ";
 "Created date" = "วันที่สร้าง";
 "posted by" = "โพสต์โดย";
+"Posted On" = "โพสต์เมื่อ";
 "Play Now" = "เล่นตอนนี้";
 "Reports" = "รายงาน";
 "Enter Option A" = "กรอกตัวเลือก A";
@@ -649,3 +680,52 @@
 "FROM_DATE" = " วันที่เริ่มต้น";
 "TO_DATE" = " วันที่สิ้นสุด";
 "TOTAL_COLLECTION" = "ยอดรวมทั้งหมด";
+
+//MARK: PunchAttendence
+"Today's Report" = "รายงานวันนี้";
+"Select staff" = "เลือกพนักงาน";
+"Historical Data" = "ข้อมูลย้อนหลัง";
+"Enable Location" = "เปิดใช้งานตำแหน่ง";
+"Add Location" = "เพิ่มตำแหน่ง";
+"To enhance your experience and provide accurate location-based features, please enable GPS." = "เพื่อประสบการณ์ที่ดีขึ้นและฟีเจอร์ที่แม่นยำ โปรดเปิดใช้งาน GPS";
+"Allow location access to mark your attendance !" = "อนุญาตการเข้าถึงตำแหน่งเพื่อบันทึกการเข้าร่วมของคุณ!";
+
+"Punch In" = "บันทึกเข้างาน";
+"Reports" = "รายงาน";
+"Tap to view location history" = "แตะเพื่อดูประวัติตำแหน่ง";
+"Drop your distance" = "ระบุระยะทางของคุณ";
+"Pin your location name" = "ระบุชื่อสถานที่ของคุณ";
+"Location Name" = "ชื่อสถานที่";
+"Get Location" = "ดึงตำแหน่ง";
+"Distance" = "ระยะทาง";
+
+"Important Notes" = "หมายเหตุสำคัญ";
+
+"Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." =
+"แตะปุ่มบันทึกเข้างานเพื่อบันทึกการเข้าร่วมของคุณในวันนี้ เมื่อบันทึกสำเร็จจะมีข้อความยืนยันปรากฏขึ้น";
+
+"Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." =
+"การตั้งค่าตำแหน่งที่แม่นยำเป็นสิ่งสำคัญเพื่อให้แน่ใจว่าการบันทึกเข้าร่วมทำได้เฉพาะเมื่อผู้ใช้อยู่ในพื้นที่ที่กำหนด โปรดตรวจสอบตำแหน่งอีกครั้งก่อนส่ง";
+
+"Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality." =
+"เมื่อบันทึกแล้ว ตำแหน่งนี้จะถูกใช้เพื่อตรวจสอบความใกล้เคียงของผู้ใช้ขณะบันทึกการเข้าร่วม โปรดตรวจสอบให้แน่ใจว่าตำแหน่งถูกต้อง เพราะจะส่งผลต่อการทำงานของระบบบันทึกเข้าร่วมโดยตรง";
+
+"Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." =
+"หมายเหตุ: คุณอยู่นอกเขตของสถาบัน ไม่สามารถบันทึกการเข้าร่วมได้\n\nโปรดลองอีกครั้งเมื่ออยู่ในพื้นที่ที่กำหนด";
+"Meter(s)" = "เมตร";
+"Allow location acess to mark your attendance !" = "โปรดอนุญาตการเข้าถึงตำแหน่งเพื่อบันทึกการเข้างานของคุณ!";
+
+//MARK: SchoolStregnth
+
+"Girls" = "เด็กผู้หญิง";
+"Total Students" = "จำนวนนักเรียนทั้งหมด";
+"Standard" = "ระดับชั้น";
+"Boys" = "เด็กผู้ชาย";
+"STANDARD SECTION OVER VIEW" = "ภาพรวมของระดับชั้น";
+"SCHOOL STRENGTH VISUALIZATION" = "การแสดงจำนวนผู้เรียนของโรงเรียน";
+"SUMMARY STATICS" = "สถิติโดยสรุป";
+"Staffs" = "เจ้าหน้าที่";
+"Students" = "นักเรียน";
+"Male" = "ชาย";
+"Female" = "หญิง";
+"View Details" = "ดูรายละเอียด";

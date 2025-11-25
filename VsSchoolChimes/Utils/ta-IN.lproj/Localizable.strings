@@ -150,7 +150,6 @@
 "Notice Active Period" = "அறிவிப்பு செயல்பாட்டு காலம்";
 "All" = "அனைத்து";
 "NEXT" = "அடுத்து";
-"Edit" = "தொகு";
 "Welcome" = "வரவேற்பு";
 "Change Language" = "மொழியை மாற்று";
 "Home" = "முகப்பு";
@@ -485,6 +484,12 @@
 "egChennai" = "உதா. சென்னை";
 "completed" = "முடிந்தது";
 "pending" = "நிலுவையில் உள்ளது";
+"Ongoing Events" = "நடந்து கொண்டிருக்கும் நிகழ்வுகள்";
+"Event Categories" = "நிகழ்வு பிரிவுகள்";
+"Upcoming Events" = "வரவிருக்கும் நிகழ்வுகள்";
+"Completed Events" = "நிறைவுற்ற நிகழ்வுகள்";
+"Your Attachment's" = "உங்கள் இணைப்புகள்";
+
 
 //MARK: Comunication
 "BackToTextMessage" = "உரைச் செய்திக்கு திரும்பு";
@@ -601,6 +606,30 @@
 "%d Minutes" = "%d நிமிடங்கள்";
 "Custom" = "விருப்பத்தேர்வு";
 "%d Min" = "%d நிமி";
+"Select Slot Duration" = "ஸ்லாட் கால அளவைத் தேர்வு செய்க";
+"Meetings" = "கூட்டங்கள்";
+"Booked Slots" = "பதிவு செய்யப்பட்ட ஸ்லாட்கள்";
+"Today Slots" = "இன்றைய ஸ்லாட்கள்";
+"Upcoming Slots" = "வரவிருக்கும் ஸ்லாட்கள்";
+"Completed Slots" = "முடிந்த ஸ்லாட்கள்";
+"Completed" = "முடிந்தது";
+"Cancelled" = "ரத்துசெய்யப்பட்டது";
+"Expired" = "காலாவதியானது";
+"Slot Expired" = "ஸ்லாட் காலாவதியானது";
+"Slot Cancelled" = "ஸ்லாட் ரத்துசெய்யப்பட்டது";
+"Booked by:" = "பதிவு செய்தவர்:";
+"Father Name:" = "தந்தை பெயர்:";
+"Mother Name:" = "தாய் பெயர்:";
+"Mode" = "முறை";
+"Classes" = "வகுப்புகள்";
+"Booked" = "பதிவு செய்யப்பட்டது";
+"Slot Duration" = "ஸ்லாட் நேரம்";
+"Available" = "கிடைக்கும்";
+"Waiting for Booking" = "பதிவுக்காக காத்திருக்கிறது";
+"No Slot Booked yet" = "எந்த ஸ்லாடும் இன்னும் பதிவு செய்யப்படவில்லை";
+"Book PTM Slots" = "PTM ஸ்லாட் பதிவு";
+"Join" = "சேரவும்";
+
 
 //MARK: Quiz Page
 "No of question" = "கேள்விகளின் எண்ணிக்கை";
@@ -622,6 +651,7 @@
 "Level" = "நிலை";
 "Created date" = "உருவாக்கிய தேதி";
 "posted by" = "பதிவிட்டவர்";
+"Posted On" = "பதியப்பட்டது";
 "Play Now" = "இப்போது விளையாடு";
 "Reports" = "அறிக்கைகள்";
 "Enter Option A" = "விருப்பம் A ஐ உள்ளிடவும்";
@@ -660,3 +690,52 @@
 "FROM_DATE" = " தொடக்க தேதி";
 "TO_DATE" = " முடிவு தேதி";
 "TOTAL_COLLECTION" = "மொத்த வசூல்";
+
+//MARK: PunchAttendence
+"Today's Report" = "இன்றைய அறிக்கை";
+"Select staff" = "பணியாளரை தேர்ந்தெடுக்கவும்";
+"Historical Data" = "வரலாற்று தரவு";
+
+"Enable Location" = "இருப்பிடத்தை இயக்கு";
+"Add Location" = "இருப்பிடத்தைச் சேர்க்கவும்";
+"To enhance your experience and provide accurate location-based features, please enable GPS." = "உங்கள் அனுபவத்தை மேம்படுத்தவும், துல்லியமான இருப்பிடம் அடிப்படையிலான அம்சங்களை வழங்கவும், தயவுசெய்து GPS-ஐ இயக்கவும்.";
+"Allow location access to mark your attendance !" = "உங்கள் வருகையை பதிவு செய்ய இருப்பிட அணுகலை அனுமதிக்கவும்!";
+
+"Punch In" = "பஞ்ச் இன்";
+"Reports" = "அறிக்கைகள்";
+"Tap to view location history" = "இருப்பிட வரலாறைக் காண தட்டவும்";
+"Drop your distance" = "உங்கள் தூரத்தை உள்ளிடவும்";
+"Pin your location name" = "உங்கள் இருப்பிடப் பெயரை உள்ளிடவும்";
+"Location Name" = "இருப்பிடத்தின் பெயர்";
+"Get Location" = "இருப்பிடத்தைப் பெறவும்";
+"Distance" = "தூரம்";
+
+"Important Notes" = "முக்கிய குறிப்புகள்";
+
+"Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." =
+"இன்றைய வருகையை பதிவு செய்ய பஞ்ச் பொத்தானை தட்டவும். உங்கள் வருகை வெற்றிகரமாக பதிவானதும் ஒரு உறுதிப்படுத்தல் செய்தி தோன்றும்.";
+
+"Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." =
+"பயனர்கள் நிறுவனம் குறிப்பிட்ட பகுதிக்குள் இருந்தால் மட்டுமே வருகை பதிவு செய்யப்படுவதற்காக துல்லியமான இருப்பிடம் அமைப்புகள் மிக முக்கியம். சமர்ப்பிப்பதற்கு முன் இருப்பிடத்தை இருமுறை சரிபார்க்கவும்.";
+
+"Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality." =
+"ஒருமுறை சேமிக்கப்பட்ட பிறகு, பயனர்கள் வருகையைப் பதிவு செய்யும் போது அவர்கள் அருகில் உள்ளார்களா என்பதை சரிபார்க்க இந்த இருப்பிடம் பயன்படுத்தப்படும். இது வருகை செயல்பாட்டை நேரடியாக பாதிக்கும் என்பதால் இருப்பிடம் சரியாக உள்ளதா என்பதை உறுதிப்படுத்தவும்.";
+
+"Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." =
+"குறிப்பு: நீங்கள் நிறுவனம் குறிப்பிட்ட எல்லைக்குப் புறத்தில் உள்ளீர்கள். வருகையை பதிவு செய்ய முடியாது.\n\nதயவுசெய்து குறிப்பிட்ட பகுதியிற்குள் இருக்கும் போது மீண்டும் முயற்சிக்கவும்.";
+"Meter(s)" = "மீட்டர்(கள்)";
+"Allow location acess to mark your attendance !" = "உங்கள் வருகையை பதிவு செய்ய இருப்பிட அணுகலை அனுமதிக்கவும்!";
+
+//MARK: SchoolStregnth
+"Girls" = "பெண்கள்";
+"Total Students" = "மொத்த மாணவர்கள்";
+"Standard" = "தரம்";
+"Boys" = "ஆண் குழந்தைகள்";
+"STANDARD SECTION OVER VIEW" = "தரவு பிரிவு முன்னோட்டம்";
+"SCHOOL STRENGTH VISUALIZATION" = "பள்ளி மாணவர் எண்ணிக்கை காட்சி";
+"SUMMARY STATICS" = "சுருக்க புள்ளிவிவரங்கள்";
+"Staffs" = "பணியாளர்கள்";
+"Students" = "மாணவர்கள்";
+"Male" = "ஆண்";
+"Female" = "பெண்";
+"View Details" = "விவரங்களைப் பார்க்க";

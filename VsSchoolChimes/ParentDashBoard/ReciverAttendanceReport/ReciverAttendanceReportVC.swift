@@ -94,13 +94,13 @@ class ReciverAttendanceReportVC: UIViewController {
         
         WeekStatusDefBtn.setTitle(AttendanceString.thisWeekStatus, for: .normal)
         
-        AttendanceDefLbl.text = AttendanceString.attendance
-        LeaveTakenDefLbl.text = AttendanceString.leaveTaken
-        OngoingdaysDefLbl.text = AttendanceString.ongoingDays
-        askLeavesDefLbl.text = AttendanceString.askLeave
-        requestHistoryDefLbl.text = AttendanceString.leaveRequests
-        attendanceReportDefLbl.text = AttendanceString.LeaveHistory
-        holidaysDefLbl.text = AttendanceString.holidays
+        AttendanceDefLbl.text = AttendanceString.attendance.translated()
+        LeaveTakenDefLbl.text = AttendanceString.leaveTaken.translated()
+        OngoingdaysDefLbl.text = AttendanceString.ongoingDays.translated()
+        askLeavesDefLbl.text = AttendanceString.askLeave.translated()
+        requestHistoryDefLbl.text = AttendanceString.leaveRequests.translated()
+        attendanceReportDefLbl.text = AttendanceString.LeaveHistory.translated()
+        holidaysDefLbl.text = AttendanceString.holidays.translated()
         
         AttendanceDefLbl.setFont(style: .body, size: 10)
         LeaveTakenDefLbl.setFont(style: .body, size: 10)

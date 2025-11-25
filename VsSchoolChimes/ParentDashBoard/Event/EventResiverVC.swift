@@ -444,10 +444,10 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         switch filteredSections[section] {
-        case .featured: label.text = "Ongoing Events"
-        case .categories: label.text = "Event Categories"
-        case .upcoming: label.text = "Upcoming Events"
-        case .completed: label.text = "Completed Events"
+        case .featured: label.text = "Ongoing Events".translated()
+        case .categories: label.text = "Event Categories".translated()
+        case .upcoming: label.text = "Upcoming Events".translated()
+        case .completed: label.text = "Completed Events".translated()
         case .nodata:label.text = ""
         }
         

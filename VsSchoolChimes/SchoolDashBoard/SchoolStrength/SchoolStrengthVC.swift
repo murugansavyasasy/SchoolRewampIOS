@@ -47,8 +47,6 @@ class SchoolStrengthVC: UIViewController {
         Tv.register(UINib(nibName: "SummerizeTvCel", bundle: nil), forCellReuseIdentifier: "SummerizeTvCel")
         Tv.register(UINib(nibName: "GenderDistriTvcel", bundle: nil), forCellReuseIdentifier: "GenderDistriTvcel")
         Tv.register(UINib(nibName: "LblTvCell", bundle: nil), forCellReuseIdentifier: "LblTvCell")
-        
-      
         Tv.estimatedRowHeight = 100
         Tv.rowHeight = UITableView.automaticDimension
 
@@ -72,11 +70,6 @@ class SchoolStrengthVC: UIViewController {
         let totalPreviousYear = Int(previousData?.total_student_strength ?? "0") ?? 0 + (
             Int(previousData?.total_staff_strength ?? "0") ?? 0
         )
-        
-       
-        
-        
-        
         list
             .append(
                 StrengthDisplayModel(
@@ -124,7 +117,7 @@ class SchoolStrengthVC: UIViewController {
                     message: previousData?.message ?? ""
                 )
             )
-       
+        
         
         return list
     }
@@ -174,7 +167,6 @@ class SchoolStrengthVC: UIViewController {
                     self.previousData = response.data?.first?.previous
                     if let firstData = response.data?.first {
                         let strengthList = self.createStrengthList(from: firstData)
-                        print("✅ Strength List:", strengthList)
                         self.displayArray = strengthList
                     }
     
@@ -193,7 +185,6 @@ class SchoolStrengthVC: UIViewController {
                         self.Tv.dataSource = self
                         self.Tv.reloadData()
                     }else{
-                        
                         self.Tv.isHidden = true
                     }
                     
@@ -216,14 +207,10 @@ class SchoolStrengthVC: UIViewController {
 extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-//        return (SchoolStrength?.isEmpty ?? true) ? 1 : 2
-        
         return 4
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return section == 0 ? SchoolStrength?.count ?? 0 : (SchoolStrength?.first?.standards?.count ?? 0)
-        
         if section == 0 {
             
             return 1
@@ -282,12 +269,12 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
           
             cell.configure(standard.sections)
             cell.updateProgress(boys: standard.boys_count ?? "0", girls: standard.girls_count ?? "0")
-//            cell.boycount = String(standard.boys_count ?? 0)
-//            cell.girlscount = String(standard.girls_count ?? 0)
-            cell.standardLbl.text = "Standard  " + (standard.name ?? "")
-            cell.boysCountLbl.text = "Boys : \(standard.boys_count ?? "")"
-            cell.girlsCountLbl.text = "Girls : \(standard.girls_count ?? "")"
-            cell.countLbl.text = "Total Students: \(standard.total_students ?? "")"
+            cell.standardLbl.text = "Standard  ".translated() + (standard.name ?? "")
+            cell.boysCountLbl.text = "\("Boys".translated()): \(standard.boys_count ?? "")"
+            cell.girlsCountLbl.text = "\("Girls".translated()): \(standard.girls_count ?? "")"
+
+            cell.countLbl.text = "\("Total Students".translated()): \(standard.total_students ?? "")"
+
 
             if standard.girls_count == "0" && standard.boys_count  == "0"{
                 cell.femaleImgView.isHidden = true
