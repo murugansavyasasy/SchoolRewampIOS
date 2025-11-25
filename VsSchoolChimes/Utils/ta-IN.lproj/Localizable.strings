@@ -739,3 +739,13 @@
 "Male" = "ஆண்";
 "Female" = "பெண்";
 "View Details" = "விவரங்களைப் பார்க்க";
+
+//MARK: Certificate
+"Request Certificate" = "சான்றிதழ் கோரிக்கை";
+"Select Certificate" = "சான்றிதழை தேர்வு செய்யவும்";
+"Not Urgent" = "அவசரம் இல்லை";
+"Urgent" = "அவசரம்";
+"Reason" = "காரணம்";
+"Certificate History" = "சான்றிதழ் வரலாறு";
+"Select Urgency Level" = "அவசர நிலையை தேர்வு செய்யவும்";
+"Enter your reason here..." = "உங்கள் காரணத்தை இங்கே உள்ளிடவும்...";

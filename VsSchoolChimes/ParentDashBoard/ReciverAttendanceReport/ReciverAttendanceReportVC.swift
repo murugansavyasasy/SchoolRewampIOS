@@ -92,7 +92,7 @@ class ReciverAttendanceReportVC: UIViewController {
         percentagesBaseView.layer.shadowRadius = 4
         percentagesBaseView.layer.masksToBounds = false
         
-        WeekStatusDefBtn.setTitle(AttendanceString.thisWeekStatus, for: .normal)
+        WeekStatusDefBtn.setTitle(AttendanceString.thisWeekStatus.translated(), for: .normal)
         
         AttendanceDefLbl.text = AttendanceString.attendance.translated()
         LeaveTakenDefLbl.text = AttendanceString.leaveTaken.translated()
@@ -109,16 +109,6 @@ class ReciverAttendanceReportVC: UIViewController {
         requestHistoryDefLbl.setFont(style: .body, size: 10)
         attendanceReportDefLbl.setFont(style: .body, size: 10)
         holidaysDefLbl.setFont(style: .body, size: 10)
-
-//        MenusStack.layer.cornerRadius = 10
-//        MenusStack.layer.borderWidth = 0.2
-//        MenusStack.layer.borderColor = UIColor.systemGray4.cgColor
-//        MenusStack.layer.shadowColor = UIColor.black.cgColor
-//        MenusStack.layer.shadowOpacity = 0.2
-//        MenusStack.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        MenusStack.layer.shadowRadius = 4
-//        MenusStack.layer.masksToBounds = false
-        
         MenusView.layer.cornerRadius = 10
         MenusView.layer.borderWidth = 0.2
         MenusView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -139,43 +129,32 @@ class ReciverAttendanceReportVC: UIViewController {
         let today = Date()
 
         DateLbl.attributedText = getDayWithSuffix(from: today)
-       
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
 
         let dayFormatter = DateFormatter()
-        dayFormatter.dateFormat = "EEEE" // Full day name, e.g. "Wednesday"
+        dayFormatter.locale = Locale(identifier: localeID)
+        dayFormatter.dateFormat = "EEEE"
         let dayName = dayFormatter.string(from: today)
-
         let monthFormatter = DateFormatter()
-        monthFormatter.dateFormat = "LLLL yyyy" // Full month + year, e.g. "July 2025"
+        monthFormatter.locale = Locale(identifier: localeID)
+        monthFormatter.dateFormat = "LLLL yyyy"
         let monthYear = monthFormatter.string(from: today)
-
         let fullText = "\(dayName)\n\(monthYear)"
         let attributedString = NSMutableAttributedString(string: fullText)
-
-        // Apply bold font to day name
         attributedString.addAttributes([
             .font: UIFont(name: "Poppins-Medium", size: 15)!
         ], range: (fullText as NSString).range(of: dayName))
 
-        // Apply medium font to month + year
         attributedString.addAttributes([
             .font: UIFont(name: "Poppins-Medium", size: 10)!
         ], range: (fullText as NSString).range(of: monthYear))
-
-        DayAndMonthLbl.numberOfLines = 0 // Allow line break
+        DayAndMonthLbl.numberOfLines = 0
         DayAndMonthLbl.attributedText = attributedString
         
-        
         setupPieChart(AttendencePercentage)
-        //setProgress(on: AttendencePercentage, to: 75)
-        
         setupPieChart(LeaveTakenview)
-        //setProgress(on: LeaveTakenview, to: 50)
-        
         setupPieChart(OngoingDaysView)
-        //setProgress(on: OngoingDaysView, to: 90)
-        
-        
         AskLeaveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(AskLeaveAct)))
         LeaveHistoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LeaveHistoryAct)))
         AttendanceReportView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(AttendanceReportAct)))
