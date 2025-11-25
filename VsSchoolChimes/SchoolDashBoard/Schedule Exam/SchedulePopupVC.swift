@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DropDown
+//import DropDown
 protocol ScheduleDelegate{
     func schedulSubject(ExamsSchedule:[ExamsSchedule],delete:Bool,index:Int)
 }

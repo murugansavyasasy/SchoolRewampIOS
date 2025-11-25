@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DropDown
 
 // MARK: - Protocols
 protocol ReadUpdatesManagement: AnyObject {

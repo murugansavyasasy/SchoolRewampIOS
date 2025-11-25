@@ -8,8 +8,7 @@
 
 import UIKit
 //import ObjectMapper
-import DropDown
-import Alamofire
+//import DropDown
 struct Item {
     let title: String
     var isExpanded: Bool

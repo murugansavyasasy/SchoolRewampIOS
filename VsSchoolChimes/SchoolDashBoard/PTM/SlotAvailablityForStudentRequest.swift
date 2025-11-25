@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import KRProgressHUD
-
 
 class SlotAvailablityForStudentRequest{
 

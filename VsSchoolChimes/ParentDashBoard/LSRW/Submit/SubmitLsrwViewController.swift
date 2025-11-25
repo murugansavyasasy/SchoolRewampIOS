@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import DropDown
+//import DropDown
 import PhotosUI
-import Alamofire
+//import Alamofire
 import AVFoundation
 //import ObjectMapper
-import KRProgressHUD
+//import KRProgressHUD
 
 class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate,UITextViewDelegate {
     

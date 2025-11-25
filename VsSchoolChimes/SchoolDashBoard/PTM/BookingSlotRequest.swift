@@ -1,6 +1,5 @@
 
 import Foundation
-import KRProgressHUD
 class BookSlotsForStudentRequest{
 
 //    static func call_request(param : String, completion_handler : @escaping(String)->()) {

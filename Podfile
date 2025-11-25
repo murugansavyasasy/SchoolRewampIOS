@@ -1,17 +1,13 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'VsSchoolChimes' do
+target 'School Chimes' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for VsSchoolChimes
 
-pod 'DropDown'
 pod 'FirebaseMessaging'
-pod 'Firebase/Core'
-pod 'Fabric'
-pod 'Crashlytics'
 pod 'Firebase/Analytics'
 pod 'FirebaseCore'
 pod 'AWSS3'
@@ -19,13 +15,14 @@ pod 'AWSCognito'
 pod 'AWSCore'
 pod 'Charts'
 pod 'Firebase/Database'
-
-  target 'VsSchoolChimesTests' do
+pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+  target 'School ChimesTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'VsSchoolChimesUITests' do
+  target 'School ChimesUITests' do
     # Pods for testing
   end
 

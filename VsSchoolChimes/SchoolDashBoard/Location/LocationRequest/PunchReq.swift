@@ -1,13 +1,6 @@
 //
-//  PunchReq.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 31/08/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
-//
 
 import Foundation
-import KRProgressHUD
 class PunchRequest{
 
 

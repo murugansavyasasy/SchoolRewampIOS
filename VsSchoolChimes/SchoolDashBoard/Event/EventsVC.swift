@@ -9,7 +9,6 @@ import UIKit
 import AWSCore
 import AWSS3
 import AVFoundation
-import DropDown
 import AVKit
 
 protocol DeleteImge{

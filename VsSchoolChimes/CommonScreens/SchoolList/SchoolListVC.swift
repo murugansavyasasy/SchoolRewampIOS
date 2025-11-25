@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DropDown
+//import DropDown
 import SDWebImage
 @available(iOS 14.0, *)
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{

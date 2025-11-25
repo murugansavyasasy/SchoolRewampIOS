@@ -424,7 +424,7 @@ open class PieChartView: PieRadarChartViewBase
                 attrString = NSMutableAttributedString(string: newValue!)
                 attrString?.setAttributes([
                     .foregroundColor: NSUIColor.labelOrBlack,
-                    .font: NSUIFont.systemFont(ofSize: 11.0),
+                    .font: NSUIFont.systemFont(ofSize: 12.0),
                     .paragraphStyle: paragraphStyle
                     ], range: NSMakeRange(0, attrString!.length))
             }

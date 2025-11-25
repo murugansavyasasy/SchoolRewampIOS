@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DropDown
+//import DropDown
 import AVFoundation
 
 class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate{

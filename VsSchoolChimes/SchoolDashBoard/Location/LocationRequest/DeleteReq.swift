@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import KRProgressHUD
+
 class DeleteRequest{
 
 

@@ -7,7 +7,6 @@
 
 import UIKit
 import PhotosUI
-import DropDown
 
 @available(iOS 14.0, *)
 class ReportBugVcViewController: UIViewController, UITextViewDelegate, DeleteImge {

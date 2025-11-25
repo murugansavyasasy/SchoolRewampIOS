@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DropDown
 
 class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
