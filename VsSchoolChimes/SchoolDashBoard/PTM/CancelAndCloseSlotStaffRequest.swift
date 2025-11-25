@@ -7,9 +7,6 @@
 //
 
 import Foundation
-import KRProgressHUD
-
-
 class CancelAndCloseSlotStaffRequest{
 
 //    static func call_request(param : String, completion_handler : @escaping(String)->()) {

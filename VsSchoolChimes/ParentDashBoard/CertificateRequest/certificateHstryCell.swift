@@ -26,7 +26,7 @@ class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollect
         // Setup search bar
         searchBar.isHidden = true
         searchBar.delegate = self
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
         

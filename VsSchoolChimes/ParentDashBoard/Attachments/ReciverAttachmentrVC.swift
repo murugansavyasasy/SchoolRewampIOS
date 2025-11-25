@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DropDown
 import AVKit
 
 protocol ReadUpades{

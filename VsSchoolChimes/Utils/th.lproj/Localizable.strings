@@ -729,3 +729,13 @@
 "Male" = "ชาย";
 "Female" = "หญิง";
 "View Details" = "ดูรายละเอียด";
+
+//MARK: Certificate
+"Request Certificate" = "ขอใบรับรอง";
+"Select Certificate" = "เลือกใบรับรอง";
+"Not Urgent" = "ไม่เร่งด่วน";
+"Urgent" = "เร่งด่วน";
+"Reason" = "เหตุผล";
+"Certificate History" = "ประวัติใบรับรอง";
+"Select Urgency Level" = "เลือกระดับความเร่งด่วน";
+"Enter your reason here..." = "กรอกเหตุผลของคุณที่นี่...";

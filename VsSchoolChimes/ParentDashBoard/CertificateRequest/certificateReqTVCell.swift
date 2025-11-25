@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import DropDown
 
 protocol certificateRequest{
     
@@ -34,7 +33,7 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
     var textChanged: ((String) -> Void)? // callback to controller
     var delegate : certificateRequest?
     var urgetStatus = "Not Urgent"
-    var placeHolderName = "Enter your reason here..."
+    var placeHolderName = "Enter your reason here...".translated()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -95,20 +94,6 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
                     .text)
         
     }
-
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if textView.textColor == UIColor.lightGray {
-//            textView.text = nil
-//            textView.textColor = UIColor.black
-//        }
-//    }
-//
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        if textView.text.isEmpty {
-//            textView.text = placeHolderName
-//            textView.textColor = UIColor.lightGray
-//        }
-//    }
     func textViewDidChange(_ textView: UITextView) {
             textChanged?(textView.text) // callback to controller
             placeholderLabel.isHidden = !ResontextView.text.isEmpty

@@ -7,11 +7,7 @@ target 'VsSchoolChimes' do
 
   # Pods for VsSchoolChimes
 
-pod 'DropDown'
 pod 'FirebaseMessaging'
-pod 'Firebase/Core'
-pod 'Fabric'
-pod 'Crashlytics'
 pod 'Firebase/Analytics'
 pod 'FirebaseCore'
 pod 'AWSS3'
@@ -19,7 +15,8 @@ pod 'AWSCognito'
 pod 'AWSCore'
 pod 'Charts'
 pod 'Firebase/Database'
-
+pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
   target 'VsSchoolChimesTests' do
     inherit! :search_paths
     # Pods for testing

@@ -163,47 +163,6 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         calanderCollectionView.layer.borderWidth = 0.5
         calanderCollectionView.layer.borderColor = UIColor.lightGray.cgColor
     }
-
-//    private func setupCalendarDates() {
-//        daysInMonth.removeAll()
-//        var calendar = Calendar.current
-//        calendar.firstWeekday = 1
-//        
-//        guard let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate)),
-//              let range = calendar.range(of: .day, in: .month, for: currentDate) else { return }
-//        
-//        let firstWeekday = calendar.component(.weekday, from: monthStart)
-//        let offset = (firstWeekday - 1 + 7) % 7
-//        let totalDateCells = 42
-//        daysInMonth = Array(repeating: Date.distantPast, count: totalDateCells)
-//        
-//        for day in 0..<range.count {
-//            if let date = calendar.date(byAdding: .day, value: day, to: monthStart) {
-//                let index = offset + day
-//                if index < totalDateCells {
-//                    daysInMonth[index] = date
-//                }
-//            }
-//        }
-//        
-//        for i in 0..<offset {
-//            if let date = calendar.date(byAdding: .day, value: -(offset - i), to: monthStart) {
-//                daysInMonth[i] = date
-//            }
-//        }
-//
-//        let lastDayIndex = offset + range.count
-//        if lastDayIndex < totalDateCells {
-//            let nextMonthStart = calendar.date(byAdding: .month, value: 1, to: monthStart)!
-//            for i in (lastDayIndex + 1)..<totalDateCells {
-//                let dayOffset = i - lastDayIndex
-//                if let date = calendar.date(byAdding: .day, value: dayOffset, to: nextMonthStart) {
-//                    daysInMonth[i] = date
-//                }
-//            }
-//        }
-//            calanderCollectionView.reloadData()
-//    }
     private func setupCalendarDates() {
         daysInMonth.removeAll()
         var calendar = Calendar.current
@@ -264,21 +223,6 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         formatter.dateFormat = "MMMM yyyy"
         selectedMonthLbl.text = formatter.string(from: currentDate)
     }
-    
-//    private func updateFilteredHolidays() {
-//        let calendar = Calendar.current
-//        let components = calendar.dateComponents([.year, .month], from: currentDate)
-//        
-//        guard let startOfMonth = calendar.date(from: components),
-//              let endOfMonth = calendar.date(byAdding: .month, value: 1, to: startOfMonth) else { return }
-//        noHolidayLbl.text = "Holidays for \(formatter.string(from: currentDate))"
-//        filteredHolidays = (eventHolidayData ?? []).filter {
-//            guard let holidayDate = $0.date?.dateFromISO8601 else { return false }
-//            return holidayDate >= startOfMonth && holidayDate < endOfMonth
-//        }.sorted { ($0.date ?? "") < ($1.date ?? "") }
-//        noHolidayLbl.isHidden = !filteredHolidays.isEmpty
-//        leaveListTable.reloadData()
-//    }
 
     // MARK: - Gestures
     private func addSwipeGestures() {

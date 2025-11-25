@@ -114,12 +114,12 @@ class MenuRedirectHandler {
     
     
     //MARK: SenderSideMenuViewContoller Starts
-    
-    func senderVideoNavigate(from viewController: UIViewController) {
-        let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-    }
+//    
+//    func senderVideoNavigate(from viewController: UIViewController) {
+//        let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+//    }
     
     func senderHomeWorkNavigate(from viewController: UIViewController) {
 //        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)

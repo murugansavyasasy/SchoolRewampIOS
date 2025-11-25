@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PTMViewController" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PTMViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="arS-Si-7W3" id="tah-SE-NNH"/>
                 <outlet property="ButtonStack" destination="nVI-Ha-FUV" id="tj4-QW-acG"/>
@@ -39,7 +39,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AUo-KO-xfg">
-                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
+                    <rect key="frame" x="0.0" y="168" width="393" height="616"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nVI-Ha-FUV">
                             <rect key="frame" x="5" y="5" width="383" height="50"/>
@@ -102,7 +102,7 @@
                                     </constraints>
                                 </imageView>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7u6-04-jpa">
-                                    <rect key="frame" x="5" y="30.333333333333343" width="363" height="100"/>
+                                    <rect key="frame" x="5" y="30.333333333333314" width="363" height="100"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="FM7-ST-sKv"/>
@@ -127,7 +127,7 @@
                                 <constraint firstAttribute="trailing" secondItem="u1A-ze-BhL" secondAttribute="trailing" constant="8" id="nj4-Yh-QXb"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gA7-as-Xvq" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gA7-as-Xvq" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
                             <rect key="frame" x="10" y="204" width="373" height="40"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Y9s-g3-C5N">
@@ -176,14 +176,14 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Nodata2" translatesAutoresizingMaskIntoConstraints="NO" id="cLF-1R-len">
-                            <rect key="frame" x="0.0" y="244" width="393" height="465"/>
+                            <rect key="frame" x="0.0" y="244" width="393" height="372"/>
                         </imageView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gfI-mQ-gsY">
-                            <rect key="frame" x="10" y="252" width="373" height="449"/>
+                            <rect key="frame" x="10" y="252" width="373" height="356"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQn-Rg-CGq">
-                            <rect key="frame" x="253" y="649" width="130" height="35"/>
+                            <rect key="frame" x="253" y="556" width="130" height="35"/>
                             <color key="backgroundColor" red="0.87058823529999996" green="0.54901960780000003" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="7hf-NF-8ZC"/>
@@ -225,7 +225,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mEJ-kT-jbj">
-                    <rect key="frame" x="0.0" y="59" width="393" height="50"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="50"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hCA-7f-QyL">
                             <rect key="frame" x="220.66666666666663" y="0.0" width="167.33333333333337" height="45.666666666666664"/>
@@ -237,7 +237,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gca-t1-9UZ">
-                                    <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="20.333333333333329"/>
+                                    <rect key="frame" x="0.0" y="25.333333333333343" width="167.33333333333334" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -358,7 +358,7 @@
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <namedColor name="ParentClr">
-            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
