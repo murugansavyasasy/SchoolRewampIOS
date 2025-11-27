@@ -19,7 +19,24 @@ enum LsrwDisplaySection {
     case completed([LSRWTask])
 }
 
-class LSRWVC: UIViewController, FilterDelegate {
+class LSRWVC: UIViewController, FilterDelegate, SelectedId {
+    func selectId(id: String?, edit: Bool?) {
+        
+        if !(edit ?? false){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.deleteEvent(id: id)
+            }
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                if #available(iOS 15.0, *) {
+                    let vc = SenderLSRWVC()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+            }
+        }
+    }
+    
 
     @IBOutlet weak var lsrwTable: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -34,7 +51,7 @@ class LSRWVC: UIViewController, FilterDelegate {
     private var activeTask: [LSRWTask] = []
     private var completedTask: [LSRWTask] = []
     private var selectedIndex = 0
-
+    let alert = CustomAlert()
     private let filterArray = [
         "All".translated(), "Listening".translated(), "Speaking".translated(), "Reading".translated(), "Writing".translated(), "Completed".translated(), "Active".translated()
     ]
@@ -68,6 +85,85 @@ class LSRWVC: UIViewController, FilterDelegate {
 
         BackBtn.configureAsBackButton(firstLine: "LSRW", secondLine: "Listening, Speaking, Reading, Writing")
     }
+    func deleteEvent(id: String?) {
+        guard let targetID = id, !targetID.isEmpty else {
+            print("Invalid task ID")
+            return
+        }
+
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm,
+            message: AlertstringFile.deletemessage,
+            actionLbl1: AlertstringFile.delete,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+
+                APIService.shared.makeApi(
+                    url: ServiceUrl.lms_api_lsrw_delete,
+                    parameters: ["id": targetID],
+                    type: ApitTypeSringFile.PUT,
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+
+                        switch result {
+                        case .success(let successResponse):
+                            if successResponse.status == true {
+
+                                CustomAlert.showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                ) {
+                                    self.activeTask.removeAll { $0.id == targetID }
+                                    self.completedTask.removeAll { $0.id == targetID }
+                                    self.recentTasks = []
+                                    self.recentTasks.append(.overview(self.dashboardData))
+
+                                    if !self.activeTask.isEmpty {
+                                        self.recentTasks.append(.active(self.activeTask))
+                                    }
+                                    if !self.completedTask.isEmpty {
+                                        self.recentTasks.append(.completed(self.completedTask))
+                                    }
+                                    if !self.activeTask.isEmpty || !self.completedTask.isEmpty {
+                                        self.recentTasks.insert(.filterArray(self.filterArray), at: 1)
+                                    }
+                                    self.filterTask = self.recentTasks
+                                    let hasData = !self.activeTask.isEmpty || !self.completedTask.isEmpty
+                                    self.nodataImg.isHidden = hasData
+                                    self.nodataLbl.isHidden = hasData
+
+                                    if !hasData {
+                                        self.nodataLbl.text = "No tasks available"
+                                    }
+                                    self.lsrwTable.reloadData()
+                                }
+                            } else {
+                                self.alert.showAlert(
+                                    title: AlertstringFile.Failed,
+                                    message: successResponse.message ?? "",
+                                    on: self
+                                )
+                            }
+
+                        case .failure(let error):
+                            print("Delete Error: \(error.localizedDescription)")
+                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
+                        }
+                    }
+                }
+
+            },
+            onNo: {
+                print("User cancelled delete")
+            }
+        )
+    }
+
 
     // MARK: - API
     func getLSRW() {
@@ -239,6 +335,7 @@ extension LSRWVC: UITableViewDataSource {
         case .active(let tasks), .completed(let tasks):
             let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
             cell.configure(with: tasks[indexPath.row])
+            cell.delegate = self
             return cell
         }
     }

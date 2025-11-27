@@ -461,7 +461,7 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
                 file_path: student.file_path,
                 test: nil,
                 submittedCount: student.submitted_count,
-                totalCount: student.member_count,
+                totalCount: student.member_count, can_delete: nil,
                 submitted_average: student.submitted_average
             )
             cell.configure(with: task)
@@ -548,7 +548,7 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
                 file_path: student.file_path,
                 test: nil,
                 submittedCount: student.submitted_count,
-                totalCount: student.member_count,
+                totalCount: student.member_count, can_delete: nil,
                 submitted_average: student.submitted_average
             )
             navigateToTaskDetail(task: task)

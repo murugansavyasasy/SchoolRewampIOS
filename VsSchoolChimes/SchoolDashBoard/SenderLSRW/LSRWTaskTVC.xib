@@ -77,22 +77,35 @@
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jcn-zD-7z3">
-                                        <rect key="frame" x="40" y="2.6666666666666679" width="334" height="37.666666666666657"/>
+                                        <rect key="frame" x="40" y="2.6666666666666679" width="294" height="37.666666666666657"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9o-Mu-Teh">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="294" height="17"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qL6-qg-KHQ">
-                                                <rect key="frame" x="0.0" y="21.999999999999996" width="334" height="15.666666666666668"/>
+                                                <rect key="frame" x="0.0" y="21.999999999999996" width="294" height="15.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" systemColor="systemBlueColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fg9-q0-gBb">
+                                        <rect key="frame" x="344" y="6.3333333333333321" width="30" height="29.999999999999996"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="IXx-3m-SO9"/>
+                                            <constraint firstAttribute="height" constant="30" id="mmb-FU-lxp"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                        <state key="normal" image="dots"/>
+                                        <connections>
+                                            <action selector="editBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="O1Y-7o-sNH"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -121,6 +134,7 @@
             <connections>
                 <outlet property="dateLbl" destination="mNA-Tz-awe" id="MaY-SG-wjO"/>
                 <outlet property="descriptionLbl" destination="Ahx-9J-4Ht" id="zec-aa-pX9"/>
+                <outlet property="editBtn" destination="fg9-q0-gBb" id="cbM-P0-dDy"/>
                 <outlet property="iconBtn" destination="mxv-Lh-zaO" id="CVf-vi-ASk"/>
                 <outlet property="outerView" destination="IeK-J7-wa2" id="WWZ-e0-E0f"/>
                 <outlet property="subjectLbl" destination="a9o-Mu-Teh" id="USj-PA-UVu"/>
@@ -133,6 +147,7 @@
     </objects>
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="dots" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

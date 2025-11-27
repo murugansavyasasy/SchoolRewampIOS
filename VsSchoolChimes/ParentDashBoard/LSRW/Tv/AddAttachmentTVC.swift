@@ -32,9 +32,9 @@ class AddAttachmentTVC: UITableViewCell,
     var Adddelegate: EditObjectDelegate?
     var taskType: LSRWType?
     
-    private let maxAttachments = 5
+    private let maxAttachments = 10
     private var lastAttachmentCount = 0
-    private var isReloading = false // Prevent concurrent reloads
+    private var isReloading = false
     
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -51,7 +51,7 @@ class AddAttachmentTVC: UITableViewCell,
         // Stop all audio playback before reuse
         stopAllAudioPlayback()
     }
-
+    
     func config(_ attachment: [AttachmentItem], task: LSRWType?) {
         attachments = attachment
         taskType = task
@@ -117,11 +117,7 @@ class AddAttachmentTVC: UITableViewCell,
         }
         
         print("🔄 Reloading with \(attachments.count) attachments")
-        
-        // Invalidate layout first
         collectionView.collectionViewLayout.invalidateLayout()
-        
-        // Perform reload on main thread with proper animation
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -129,19 +125,14 @@ class AddAttachmentTVC: UITableViewCell,
                 collectionView.reloadData()
                 collectionView.layoutIfNeeded()
             }
-            
-            // Adjust height after reload completes
             DispatchQueue.main.async {
                 self.adjustCollectionViewHeight()
-                
-                // Notify parent if items changed
                 if self.lastAttachmentCount != self.attachments.count {
                     self.lastAttachmentCount = self.attachments.count
                     self.Adddelegate?.editDta(edit: self.attachments)
                 }
                 
                 self.isReloading = false
-                print("✅ Reload complete")
             }
         }
     }
@@ -225,22 +216,22 @@ class AddAttachmentTVC: UITableViewCell,
         PhotoPickerManager.shared.onFilePicked = nil
         PhotoPickerManager.shared.onVideoPicked = nil
     }
-
+    
     // MARK: - CV Helpers
     private func getCellType(at index: Int) -> String {
         if index == 0 { return "add_button" }
-
+        
         let realIndex = index - 1
-
+        
         // Prevent crash
         guard realIndex >= 0, realIndex < attachments.count else {
             print("❌ getCellType out of range → index: \(index), attachments: \(attachments.count)")
             return "invalid"
         }
-
+        
         return attachments[realIndex].fileType.lowercased() == "audio" ? "audio" : "non_audio"
     }
-
+    
     
     // MARK: - DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -438,7 +429,7 @@ class AddAttachmentTVC: UITableViewCell,
         
         getCurrentViewController()?.present(alert, animated: true)
     }
-
+    
     // MARK: - Picking Helpers
     func VideoPick() {
         guard let vc = getCurrentViewController() else { return }
@@ -453,26 +444,49 @@ class AddAttachmentTVC: UITableViewCell,
     
     private func handleGallerySelection() {
         guard let vc = getCurrentViewController() else { return }
-        PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: maxAttachments), from: vc)
+        let limit = max(0, maxAttachments - attachments.count)
+        guard limit > 0 else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
+            return
+        }
+        PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: limit), from: vc)
     }
     
     private func handleCameraSelection() {
         guard let vc = getCurrentViewController() else { return }
+        guard attachments.count < maxAttachments else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
+            return
+        }
         PhotoPickerManager.shared.presentPicker(ofType: .camera, from: vc)
     }
     
     private func handlePDFSelection() {
-        guard let vc = getCurrentViewController() else { return }
+        guard let vc = getCurrentViewController() else {
+            return
+        }
+        
+        let remaining = max(0, maxAttachments - attachments.count)
+        guard remaining > 0 else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
+            return
+        }
+        PhotoPickerManager.shared.limiSelection = remaining
         PhotoPickerManager.shared.presentPicker(ofType: .file, from: vc)
     }
     
-    // MARK: - DocumentPicker
+    // optional: handle cancel
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let fileURL = urls.first else { return }
         attachments.append(.init(image: nil, imageURL: fileURL.absoluteString, fileType: CommonStringFile.audio))
         reloadAttachments()
     }
-    
     // MARK: - Current VC
     func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes

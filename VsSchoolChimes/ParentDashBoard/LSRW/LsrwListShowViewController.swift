@@ -141,12 +141,23 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         cell.readVieaw.isHidden = !(item.is_unread ?? false)
         cell.startBtn.tag = indexPath.row
         cell.starticon.tag = indexPath.row
-        cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
-        cell.starticon.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
+//        cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
+//        cell.starticon.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
         
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedTask = filteredTasks[indexPath.row]
+        if #available(iOS 15.0, *) {
+            let vc = LSRWActivitesVC(nibName: nil, bundle: nil)
+            vc.lsrw = selectedTask
+            vc.onDismiss = { [weak self] in
+                self?.SkillListApi()
+            }
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

@@ -38,12 +38,15 @@ class AWSUploadManager {
     ) {
         var fileURL: URL?
         var contentType = ""
-        var fileName = "\(UUID().uuidString)"
+        var fileName = ""
         
         switch file {
+            
+        // ---------------- IMAGE ----------------
         case let image as UIImage:
             contentType = "image/jpeg"
-            fileName += ".jpg"
+            fileName = UUID().uuidString + ".jpg"
+            
             fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
             guard let data = image.jpegData(compressionQuality: 0.9) else {
                 completion(nil)
@@ -51,21 +54,35 @@ class AWSUploadManager {
             }
             try? data.write(to: fileURL!)
             
+        // ---------------- RAW DATA ----------------
         case let data as Data:
             contentType = "application/octet-stream"
-            fileName += ".bin"
+            fileName = UUID().uuidString + ".bin"
+            
             fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
             try? data.write(to: fileURL!)
             
+        // ---------------- FILE URL ----------------
         case let url as URL:
             guard FileManager.default.fileExists(atPath: url.path) else {
                 completion(nil)
                 return
             }
-            fileURL = url
-            let time = Int(Date().timeIntervalSince1970)
-            fileName = "audio_\(time).\(url.lastPathComponent)"
-            contentType = getContentType(from: fileName)
+            
+            // AUDIO → ALWAYS WAV
+            if isAudioFile(url: url) {
+                let time = Int(Date().timeIntervalSince1970)
+                fileName = "audio_\(time).wav"
+                contentType = "audio/wav"
+                fileURL = url   // Upload original audio file
+            }
+            else {
+                // Non-audio files
+                let time = Int(Date().timeIntervalSince1970)
+                fileName = "file_\(time).\(url.pathExtension)"
+                contentType = getContentType(from: fileName)
+                fileURL = url
+            }
             
         default:
             completion(nil)
@@ -77,9 +94,10 @@ class AWSUploadManager {
             return
         }
         
+        // ---------------- FETCH PRESIGNED URL ----------------
         AWSPreSignedURL.shared.fetchPresignedURL(
             bucket: bucketName,
-            fileName: finalURL,
+            fileName: fileName,     // MUST send string
             bucketPath: bucketPath,
             fileType: contentType
         ) { result in
@@ -103,8 +121,11 @@ class AWSUploadManager {
                 let delegate = UploadTaskDelegate()
                 delegate.progressHandler = progressHandler
                 
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+                let session = URLSession(
+                    configuration: .default,
+                    delegate: delegate,
+                    delegateQueue: nil
+                )
                 
                 let uploadTask = session.uploadTask(with: request, from: fileData) { _, response, error in
                     DispatchQueue.main.async {
@@ -114,11 +135,13 @@ class AWSUploadManager {
                             return
                         }
                         
-                        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                            self.deleteFile(at:finalURL)
+                        if let httpResponse = response as? HTTPURLResponse,
+                           httpResponse.statusCode == 200 {
+                            
+                            self.deleteIfRecordedAudioFile(at: finalURL)
                             completion(respons.data?.fileUrl ?? presignedURL)
                         } else {
-                            print("Upload failed with status code: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+                            print("Upload failed with status → \((response as? HTTPURLResponse)?.statusCode ?? -1)")
                             completion(nil)
                         }
                     }
@@ -127,14 +150,19 @@ class AWSUploadManager {
                 uploadTask.resume()
                 
             case .failure(let error):
-                print("Failed to get presigned URL: \(error.localizedDescription)")
+                print("Failed presigned URL: \(error.localizedDescription)")
                 completion(nil)
             }
         }
     }
-    
+
+    func isAudioFile(url: URL) -> Bool {
+        let audioExtensions = ["m4a", "mp3", "wav", "aac", "flac", "amr", "ogg"]
+        return audioExtensions.contains(url.pathExtension.lowercased())
+    }
     private func getContentType(from filename: String) -> String {
         let ext = (filename as NSString).pathExtension.lowercased()
+        
         switch ext {
         case "jpg", "jpeg": return "image/jpeg"
         case "png": return "image/png"
@@ -146,26 +174,35 @@ class AWSUploadManager {
         case "pptx": return "application/vnd.openxmlformats-officedocument.presentationml.presentation"
         case "xls": return "application/vnd.ms-excel"
         case "xlsx": return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        case "mp3": return "audio/mpeg"
-        case "m4a": return "audio/x-m4a"
-        case "wav": return "audio/wav"
+        case "mp3", "m4a", "wav":
+            return "audio/wav"
         case "mp4": return "video/mp4"
         case "mov": return "video/quicktime"
         default: return "application/octet-stream"
         }
     }
-    func deleteFile(at url: URL) {
+
+    func deleteIfRecordedAudioFile(at url: URL) {
+        let fileName = url.lastPathComponent
+        let isRecordedFile =
+            fileName == "RecordedAudio.m4a" ||
+            fileName.hasPrefix("RecordedAudio_") && fileName.hasSuffix(".m4a")
+        
+        guard isRecordedFile else {
+            return
+        }
         if FileManager.default.fileExists(atPath: url.path) {
             do {
                 try FileManager.default.removeItem(at: url)
-                print("✅ File deleted successfully")
+                print("✅ Deleted -> \(fileName)")
             } catch {
-                print("❌ Error deleting file: \(error.localizedDescription)")
+                print("❌ Failed to delete -> \(error.localizedDescription)")
             }
         } else {
-            print("⚠️ File does not exist at path: \(url.path)")
+            print("⚠️ File does not exist -> \(url.path)")
         }
     }
+
 }
 
 // MARK: - AWS Presigned URL Fetcher
@@ -175,14 +212,14 @@ class AWSPreSignedURL {
     
     func fetchPresignedURL(
         bucket: String,
-        fileName: URL,
+        fileName: String,
         bucketPath: String,
         fileType: String,
         completion: @escaping (Result<AwsResps, Error>) -> Void
     ) {
-        let fileBaseName = fileName.lastPathComponent
-        let fname = fileName.lastPathComponent
-        print("fname \(fname)")
+        let fileBaseName = (fileName as NSString).lastPathComponent
+        print("fname \(fileBaseName)")
+        
         var components = URLComponents(string: "https://api.schoolchimes.com/nodejs/api/MergedApi/get-s3-presigned-url")!
         components.queryItems = [
             URLQueryItem(name: "bucket", value: bucket),
@@ -192,7 +229,8 @@ class AWSPreSignedURL {
         ]
         
         guard let url = components.url else {
-            completion(.failure(NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+            completion(.failure(NSError(domain: "", code: 400,
+                                        userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
         }
         
@@ -206,7 +244,8 @@ class AWSPreSignedURL {
             }
             
             guard let data = data else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Empty response"])))
+                completion(.failure(NSError(domain: "", code: -1,
+                                            userInfo: [NSLocalizedDescriptionKey: "Empty response"])))
                 return
             }
             
@@ -218,14 +257,13 @@ class AWSPreSignedURL {
             }
         }.resume()
     }
+
     
     func deleteFileFromS3(withURL urlString: String) {
         guard let url = URL(string: urlString) else {
             print("❌ Invalid URL")
             return
         }
-        
-        // ✅ Extract the S3 object key from the URL
         guard let key = url.pathComponents.dropFirst().joined(separator: "/").removingPercentEncoding else {
             print("❌ Could not extract key from URL")
             return

@@ -17,13 +17,15 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     private var configType: PopoverType?
     
     var itemCount: Int { configData?.count ?? 0 }
-    
+    var delegate: SelectedId?
+    var selectedId:String?
+    var delete:Bool?
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 17.4, *) {
-               view.backgroundColor = .clear
-               self.popoverPresentationController?.backgroundColor = .white
-           }
+            view.backgroundColor = .clear
+            self.popoverPresentationController?.backgroundColor = .white
+        }
         view.layer.cornerRadius = 14
         view.clipsToBounds = true
         listTable.showsHorizontalScrollIndicator = false
@@ -99,6 +101,13 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return 30
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if configData?[indexPath.row].title == "Delete"{
+            delegate?.selectId(id: selectedId, edit: false)
+        }else{
+            delegate?.selectId(id: selectedId, edit: true)
+        }
+        
         dismiss(animated: true)
     }
 }
