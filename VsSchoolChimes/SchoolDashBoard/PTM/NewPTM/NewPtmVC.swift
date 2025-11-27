@@ -55,7 +55,7 @@ class NewPtmVC: UIViewController, Datepicker {
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
     var expandedIndex: IndexPath?
-    
+    var pushNotiMsgId:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,7 +96,11 @@ class NewPtmVC: UIViewController, Datepicker {
         bookedSlotsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
-        addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
+        
+       
+            addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
+        
+       
         
 //        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
 //        cv.delegate = self
@@ -113,16 +117,23 @@ class NewPtmVC: UIViewController, Datepicker {
 //                    layout.minimumLineSpacing = 8
 //                    layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 //                }
+        
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
-        if selectedDate == ""{
-            Get_Meetings_Api(EventDate: "ALL")
-        }else {
-            Get_Meetings_Api(EventDate: selectedDate)
+        if pushNotiMsgId != ""{
+            bookedSlots()
+        }else{
+            
+            if selectedDate == ""{
+                Get_Meetings_Api(EventDate: "ALL")
+            }else {
+                Get_Meetings_Api(EventDate: selectedDate)
+            }
         }
     }
 
@@ -208,7 +219,7 @@ class NewPtmVC: UIViewController, Datepicker {
         
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_datewise_booked_slots, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<BookedSlotsResponse,Error>) in
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 guard let self = self else {return}
                 if #available(iOS 15.0, *){self.hideActivityLoader()}
                 
@@ -241,8 +252,13 @@ class NewPtmVC: UIViewController, Datepicker {
                             let slots = completedSlots.compactMap{$0}
                             self.sections.append(SectionData(title:  PTMString.completed_slots.translated(), type: .slots, events: slots))
                         }
-                        
                         self.tv.reloadData()
+                        if self.pushNotiMsgId != ""{
+                            DispatchQueue.main.async {
+                                self.scrollToNotificationIfNeeded()
+                                self.pushNotiMsgId = ""
+                            }
+                        }
                     }else {
                         self.sections.removeAll()
                         self.nodataLbl.isHidden = false
@@ -261,6 +277,42 @@ class NewPtmVC: UIViewController, Datepicker {
         }
     }
     
+
+    private func scrollToNotificationIfNeeded() {
+        guard let id = pushNotiMsgId else { return }
+
+        for (sectionIndex, section) in sections.enumerated() {
+            if let rowIndex = section.events.firstIndex(where: {
+                ($0 as? BookedSlot)?.slot_id == id
+            }) {
+                scrollAndHighlight(IndexPath(row: rowIndex, section: sectionIndex))
+            }
+
+        }
+    }
+
+
+
+    func scrollAndHighlight(_ indexPath: IndexPath) {
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            guard let self = self else { return }
+
+            if let cell = self.tv.cellForRow(at: indexPath) {
+                UIView.animate(withDuration: 0.25) {
+                    cell.contentView.backgroundColor =  UIColor.lightGray
+                        .withAlphaComponent(0.3)
+                } completion: { _ in
+                    UIView.animate(withDuration: 0.7, delay: 0.8) {
+                        cell.contentView.backgroundColor = .clear
+                    }
+                }
+            }
+        }
+    }
+    
+
     @available(iOS 14.0, *)
     @IBAction func createAct(_ sender: Any) {
         let vc = CreateMeetingVc(nibName: nil, bundle: nil)
@@ -328,6 +380,11 @@ class NewPtmVC: UIViewController, Datepicker {
     }
     
     @IBAction func bookedSlotsBtn(_ sender: Any) {
+        bookedSlots()
+    }
+    
+    
+    func bookedSlots(){
         addUnderline(to: bookedSlotsBtn, unSelectedBtn: [meetingsBtn])
         
         if selectedDate == ""{
@@ -336,7 +393,6 @@ class NewPtmVC: UIViewController, Datepicker {
             Get_bookedSlots_Api(EventDate: selectedDate)
         }
     }
-    
     
     func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
         ([selectedButton] + unSelectedBtn).forEach { button in
@@ -526,7 +582,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.edit(
                     edit: slot?.is_cancelled ?? false,
                     delete: !(slot?.is_cancelled ?? false),
-                    selectedId: slot?.id ?? ""
+                    selectedId: slot?.slot_id ?? ""
                 )
                 
 
