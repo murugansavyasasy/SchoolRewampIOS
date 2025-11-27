@@ -19,13 +19,14 @@ class RateUsViewController: UIViewController {
     @IBOutlet weak var tableview: UITableView!
 
     var isSelected: Bool = false
-    var passValue = 1
-    var submit: Bool? = false
+    var submit: Bool = false
 
     weak var delegate: ViewAttachments?
 
     private var selectedRating = 0
     private var descriptionContent = ""
+
+    var categorySections: CategoriesSection?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,96 @@ class RateUsViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    // MARK: - CATEGORY SETUPS
+
+    private func loadCategories(for rating: Int) {
+        switch rating {
+        case 1: setupRating1Categories()
+        case 2: setupRating2Categories()
+        case 3: setupRating3Categories()
+        case 4: setupRating4Categories()
+        case 5: setupRating5Categories()
+        default: setupDefaultCategories()
+        }
+    }
+
+    private func setupRating1Categories() {
+        categorySections = CategoriesSection(
+            name: "What went wrong?",
+            category: [
+                Categories(name: "Limited amenities"),
+                Categories(name: "Limited facilities"),
+                Categories(name: "Unmaintained facilities"),
+                Categories(name: "Irrelevant curriculum"),
+                Categories(name: "Inexperienced"),
+                Categories(name: "Extra fees")
+            ]
+        )
+    }
+
+    private func setupRating2Categories() {
+        categorySections = CategoriesSection(
+            name: "What went wrong?",
+            category: [
+                Categories(name: "Inadequate security"),
+                Categories(name: "Unmaintained facilities"),
+                Categories(name: "Limited facilities"),
+                Categories(name: "Less/No evaluation"),
+                Categories(name: "Extra fees"),
+                Categories(name: "Not specialised")
+            ]
+        )
+    }
+
+    private func setupRating3Categories() {
+        categorySections = CategoriesSection(
+            name: "What did you like and dislike?",
+            category: [
+                Categories(name: "AC classrooms"),
+                Categories(name: "Cafeteria"),
+                Categories(name: "Limited amenities"),
+                Categories(name: "Limited facilities"),
+                Categories(name: "Reasonably priced"),
+                Categories(name: "Highly priced")
+            ]
+        )
+    }
+
+    private func setupRating4Categories() {
+        categorySections = CategoriesSection(
+            name: "What did you like and dislike?",
+            category: [
+                Categories(name: "AC classrooms"),
+                Categories(name: "Multiple facilities"),
+                Categories(name: "Limited amenities"),
+                Categories(name: "Limited facilities"),
+                Categories(name: "Reasonable fees"),
+                Categories(name: "High fee structure")
+            ]
+        )
+    }
+
+    private func setupRating5Categories() {
+        categorySections = CategoriesSection(
+            name: "What did you love?",
+            category: [
+                Categories(name: "Resourceful library"),
+                Categories(name: "Sports"),
+                Categories(name: "Relevant curriculum"),
+                Categories(name: "Adequate security"),
+                Categories(name: "Expert faculty"),
+                Categories(name: "Reasonable fees")
+            ]
+        )
+    }
+
+    private func setupDefaultCategories() {
+        categorySections = CategoriesSection(name: nil, category: [])
+    }
+
+
+    // MARK: - UI SETUP
+
     private func setupUI() {
         tableview.register(UINib(nibName: CellConfingName.BanerTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.BanerTableViewCell)
         tableview.register(UINib(nibName: CellConfingName.RatingTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.RatingTableViewCell)
@@ -47,18 +138,16 @@ class RateUsViewController: UIViewController {
 
         tableview.delegate = self
         tableview.dataSource = self
-        tableview.rowHeight = UITableView.automaticDimension
-        tableview.estimatedRowHeight = 100
     }
 
-    // MARK: - Keyboard Handler
+    // MARK: - KEYBOARD
+
     private func registerKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.scrollToBottom()
         }
@@ -70,47 +159,32 @@ class RateUsViewController: UIViewController {
     }
 
     private func scrollToBottom() {
-        tableview.layoutIfNeeded()
-
+        guard tableview.numberOfSections > 0 else { return }
         let lastSection = tableview.numberOfSections - 1
-        guard lastSection >= 0 else { return }
-
+        guard tableview.numberOfRows(inSection: lastSection) > 0 else { return }
         let lastRow = tableview.numberOfRows(inSection: lastSection) - 1
-        guard lastRow >= 0 else { return }
-
-        let indexPath = IndexPath(row: lastRow, section: lastSection)
-        tableview.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        tableview.scrollToRow(at: IndexPath(row: lastRow, section: lastSection), at: .bottom, animated: true)
     }
 }
 
-// MARK: - Rating Popup Callback
+
+// MARK: - Rating Delegate
 extension RateUsViewController: RatingDelegate {
 
     func rating(_ ratingcount: Int) {
         selectedRating = ratingcount
-        let showSection3 = ratingcount > 0
-        let previousValue = isSelected
-        isSelected = showSection3
-
-        tableview.beginUpdates()
-        if !previousValue && showSection3 {
-            tableview.insertSections(IndexSet(integer: 2), with: .fade)
-        } else if previousValue && !showSection3 {
-            tableview.deleteSections(IndexSet(integer: 2), with: .fade)
-        }
-        tableview.endUpdates()
+        isSelected = ratingcount > 0
+        loadCategories(for: ratingcount)
+        tableview.reloadData()
         delegate?.viewAttachment(sender: UIButton())
     }
 
     func Submit(_ category: Set<String>, suggessions: String) {
-        print("📌 Selected Issue Types:", category)
-        print("📝 Description:", suggessions)
-
         submit = true
         isSelected = false
+
         saveRatingToBackend(rating: selectedRating, description: suggessions)
         tableview.reloadData()
-        delegate?.viewAttachment(sender: UIButton())
     }
 
     func getReview() {
@@ -128,41 +202,37 @@ extension RateUsViewController: RatingDelegate {
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
+                    if let review = response.data?.first {
+                        self.descriptionContent = review.description ?? ""
+                        self.selectedRating = review.rating ?? 0
+                        self.isSelected = self.selectedRating > 0
 
-                    if let reviewData = response.data?.first {
-
-                        self.descriptionContent = reviewData.description ?? ""
-                        self.selectedRating = reviewData.rating ?? 0
-                        self.tableview.beginUpdates()
-                        if let ratingCell = self.tableview.cellForRow(at: IndexPath(row: 0, section: 1)) as? RatingTableViewCell {
-                            ratingCell.updateRating(self.selectedRating)
+                        self.loadCategories(for: self.selectedRating)
+                        self.tableview.reloadData()
+                        self.tableview.layoutIfNeeded()
+                        UIView.performWithoutAnimation {
+                            self.tableview.beginUpdates()
+                            self.tableview.endUpdates()
                         }
-
-                        if self.descriptionContent != "" && self.tableview.numberOfSections == 2 {
-                            self.isSelected = true
-                            self.tableview.insertSections(IndexSet(integer: 2), with: .fade)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.delegate?.viewAttachment(sender: UIButton())
                         }
-                        if let descriptionCell = self.tableview.cellForRow(at: IndexPath(row: 0, section: 2)) as? RatingTypeTableViewCell {
-                            descriptionCell.suggestContetTxtView.text = self.descriptionContent
-                        }
-                        self.tableview.endUpdates()
-                        self.delegate?.viewAttachment(sender: UIButton())
                     }
                 }
 
+
             case .failure(let error):
-                print("❌ API error:", error.localizedDescription)
+                print("API error: \(error.localizedDescription)")
             }
         }
     }
-
 }
 
-// MARK: - Backend API
+
+// MARK: - BACKEND
 extension RateUsViewController {
 
     func saveRatingToBackend(rating: Int, description: String?) {
-
         let mobile = UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
 
         let params: [String: Any] = [
@@ -191,7 +261,7 @@ extension RateUsViewController {
                 }
 
             case .failure(let error):
-                print("❌ API error:", error.localizedDescription)
+                print("API error: \(error.localizedDescription)")
             }
         }
     }
@@ -204,11 +274,12 @@ extension RateUsViewController {
     }
 }
 
-// MARK: - TableView Delegates
+
+// MARK: - TABLEVIEW
 extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return submit == true ? 1 : (isSelected ? 3 : 2)
+        return submit ? 1 : (isSelected ? 3 : 2)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -217,7 +288,7 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        if submit == true {
+        if submit {
             return tableview.dequeueReusableCell(withIdentifier: CellConfingName.SuccesseRatusTVC, for: indexPath)
         }
 
@@ -235,10 +306,14 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTypeTableViewCell, for: indexPath) as! RatingTypeTableViewCell
             cell.ratingDelegate = self
             cell.suggestContetTxtView.text = descriptionContent
+            cell.configure(names: categorySections)
             return cell
 
         default:
             return UITableViewCell()
         }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

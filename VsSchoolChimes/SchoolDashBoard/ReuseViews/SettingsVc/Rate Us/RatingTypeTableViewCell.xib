@@ -21,18 +21,14 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="elr-WS-GKD">
                         <rect key="frame" x="16" y="10" width="661" height="742"/>
                         <subviews>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSu-TF-Qvb">
-                                <rect key="frame" x="0.0" y="-1" width="661" height="1"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="eoN-xR-Rlt"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What went wrong?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSu-TF-Qvb">
+                                <rect key="frame" x="0.0" y="0.0" width="661" height="20.333333333333332"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="o5S-ck-yDX">
-                                <rect key="frame" x="0.0" y="0.0" width="661" height="201"/>
+                                <rect key="frame" x="0.0" y="124" width="661" height="201"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="201" id="A5c-GE-pBX"/>
@@ -45,7 +41,7 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwH-HA-lme">
-                                <rect key="frame" x="0.0" y="206.66666666666666" width="661" height="1"/>
+                                <rect key="frame" x="0.0" y="330.33333333333331" width="661" height="1"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="L3w-XI-1SI"/>
@@ -55,7 +51,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Any other suggestions? (optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="So9-Ge-gsW">
-                                <rect key="frame" x="0.0" y="366.66666666666669" width="661" height="20"/>
+                                <rect key="frame" x="0.0" y="428.33333333333331" width="661" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="20R-PT-JsV"/>
                                 </constraints>
@@ -119,7 +115,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="AnySuggestionsLbl" destination="So9-Ge-gsW" id="nV0-XT-e4r"/>
+                <outlet property="AnySuggestionsLbl" destination="qSu-TF-Qvb" id="vue-N1-J7b"/>
                 <outlet property="SubmitBtn" destination="IKB-ZF-dKc" id="gqT-sq-YaE"/>
                 <outlet property="collectionview" destination="o5S-ck-yDX" id="bsU-lo-6Dq"/>
                 <outlet property="collectionviewheight" destination="A5c-GE-pBX" id="QeP-xn-EXJ"/>
