@@ -201,22 +201,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0B6F2456-33D2-479E-BDAB-74C383DD91F4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/LSRW/Tv/RecorderTVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
-            landmarkName = "AudioManager"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3D41EB39-2655-4ECC-9630-4665B6C45D6B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -291,22 +275,6 @@
             startingLineNumber = "64"
             endingLineNumber = "64"
             landmarkName = "removeAbsentStudent(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "956BDF77-E744-409E-8FB4-851EEFB14798"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1563"
-            endingLineNumber = "1563"
-            landmarkName = "enabelVoice_view(isforward:voiceUrl:title:durations:url:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -388,6 +356,50 @@
             endingLineNumber = "383"
             landmarkName = "paketApiCall(params:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FAA12577-5537-40D1-AA39-C49F7C8A2B36 - e4166d43ca698050"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.EventResponse, Swift.Error&gt;) -&gt; () in School_Chimes.RecipientVc.paketApiCall(params: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "385"
+                  endingLineNumber = "385">
+               </Location>
+               <Location
+                  uuid = "FAA12577-5537-40D1-AA39-C49F7C8A2B36 - e4166d43ca698050"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.EventResponse, Swift.Error&gt;) -&gt; () in School_Chimes.RecipientVc.paketApiCall(params: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "385"
+                  endingLineNumber = "385">
+               </Location>
+               <Location
+                  uuid = "FAA12577-5537-40D1-AA39-C49F7C8A2B36 - e4166d43ca698050"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.EventResponse, Swift.Error&gt;) -&gt; () in School_Chimes.RecipientVc.paketApiCall(params: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "385"
+                  endingLineNumber = "385">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -403,6 +415,22 @@
             startingLineNumber = "391"
             endingLineNumber = "391"
             landmarkName = "paketApiCall(params:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F780286-3A71-4D75-BDD8-6DB4F6A93884"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/SenderLSRW/LSRWVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "deleteEvent(id:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

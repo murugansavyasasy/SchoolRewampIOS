@@ -27,7 +27,6 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     @IBOutlet weak var SettingspageHeading: UILabel!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var topView: UIView!
-    
     // MARK: - Properties
     var menuname = SettingStringFile()
     var section: [Section]?
@@ -69,7 +68,6 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
             items: [
                 menuname.reportABug,
                 menuname.feedback,
-                menuname.appVersion,
                 menuname.logout
             ]
         )
@@ -84,12 +82,12 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
         ]),
         Image(title: "Preference", Imageitems: [
             "bell",
-            "character.bubble.ja"
+            "globe"
         ]),
         Image(title: "Support & Information", Imageitems: [
-            "person.crop.circle.badge.questionmark.fill",
+            "faq",
             "phone.arrow.up.right.circle.fill",
-            "chart.line.uptrend.xyaxis",
+            "list.bullet.clipboard.fill",
             "shield.lefthalf.filled",
             "info.circle.fill",
             "questionmark.circle",
@@ -98,7 +96,6 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
         Image(title: "Feedback", Imageitems: [
             "questionmark.diamond.fill",
             "paperplane.fill",
-            "number.square.fill",
             "iphone.and.arrow.forward"
         ])
     ]
@@ -156,7 +153,41 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+
+        // Only last section should show footer
+        if section == sections.count - 1 {
+            let footer = UIView()
+            footer.backgroundColor = .clear
+
+            let label = UILabel()
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+               let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+                label.text = "App Version - \(version) (\(build))"
+            }
+            label.textColor = .secondaryLabel
+            label.font = UIFont.systemFont(ofSize: 14)
+            label.textAlignment = .center
+
+            footer.addSubview(label)
+            label.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                label.leadingAnchor.constraint(equalTo: footer.leadingAnchor, constant: 0),
+                label.trailingAnchor.constraint(equalTo: footer.trailingAnchor, constant: 0),
+                label.topAnchor.constraint(equalTo: footer.topAnchor, constant: 8),
+                label.bottomAnchor.constraint(equalTo: footer.bottomAnchor, constant: -8)
+            ])
+
+            return footer
+        }
+
+        return nil
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return section == sections.count - 1 ? 60 : 0
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].items.count
     }
@@ -243,7 +274,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case menuname.reportABug.translated():
             let vc = ReportBugVcViewController()
             vc.modalPresentationStyle = .overFullScreen
-            vc.passValue = passVale
+//            vc.passValue = passVale
             present(vc, animated: true)
             
         case menuname.feedback.translated():

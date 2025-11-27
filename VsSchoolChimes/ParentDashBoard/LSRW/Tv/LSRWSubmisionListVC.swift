@@ -103,30 +103,28 @@ class LSRWSubmisionListVC: UIViewController,
     private func prepareAttachments() {
         filterSection.removeAll()
         
-        let videos = attachment?.filter { $0.type?.lowercased() == "video" } ?? []
-        let images = attachment?.filter {
-            ["image", "pdf"].contains($0.type?.lowercased() ?? "")
-        } ?? []
-        
-        let media = videos + images
+        guard let attachment = attachment else { return }
+        let audioExtensions = ["m4a", "mp3", "wav", "aac", "caf", "flac", "ogg","audio"]
+        let media = attachment.filter { item in
+            guard let type = item.type?.lowercased() else { return false }
+            return !audioExtensions.contains { type.contains($0) }
+        }
         
         if !media.isEmpty {
             filterSection.append(.media(media))
         }
         
-        let audioExtensions = ["m4a", "mp3", "wav", "aac", "caf", "flac", "ogg"]
-
-        let audios = attachment?.filter { item in
+        // 2️⃣ AUDIO SECTION (only audio files)
+        let audios = attachment.filter { item in
             guard let type = item.type?.lowercased() else { return false }
-            return audioExtensions.contains(where: { type.contains($0) })
-            
-        } ?? []
-
+            return audioExtensions.contains { type.contains($0) }
+        }
+        
         if !audios.isEmpty {
             filterSection.append(.audios(audios))
         }
-
     }
+    
     
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -252,7 +250,31 @@ class LSRWSubmisionListVC: UIViewController,
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CellConfingName.ImagePdfCvCell,
                     for: indexPath) as! ImagePdfCvCell
-                cell.imageView.kf.setImage(with: URL(string: file.url ?? ""))
+                if file.type?.uppercased() == CommonStringFile.IMAGE{
+                    cell.imageView.isHidden = false
+                    cell.webView.isHidden = true
+                    
+                    if let urlStr = file.url, let url = URL(string: urlStr) {
+                        cell.imageView.kf.setImage(with: url)
+                    }
+                }else{
+                    cell.imageView.isHidden = true
+                    cell.webView.isHidden = false
+                    
+                    if let urlStr = file.url, let url = URL(string: urlStr) {
+
+                        var request = URLRequest(url: url)
+                        request.cachePolicy = .reloadIgnoringLocalCacheData
+                        request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+                        request.setValue("no-store", forHTTPHeaderField: "Pragma")
+                        request.setValue("no-cache, no-store, must-revalidate", forHTTPHeaderField: "Cache-Control")
+                        request.setValue("0", forHTTPHeaderField: "Expires")
+
+                        cell.webView.load(request)
+                    }
+
+                }
+                
                 return cell
             }
             

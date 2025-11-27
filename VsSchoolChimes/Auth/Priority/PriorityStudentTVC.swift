@@ -57,16 +57,32 @@ class PriorityStudentTVC: UITableViewCell {
     }
     func applyGradient() {
         guard gradientColors.isEmpty == false else { return }
+
+        // Remove old gradients
         Cellview.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        // Create new gradient layer
+
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = gradientColors
+
+        gradientLayer.colors = gradientColors.compactMap {
+            UIColor(cgColor: $0).withAlphaComponent(0.65).cgColor
+        }
+
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         gradientLayer.frame = Cellview.bounds
         gradientLayer.cornerRadius = Cellview.layer.cornerRadius
-        gradientLayer.masksToBounds = true
+
         Cellview.layer.insertSublayer(gradientLayer, at: 0)
+
+        Cellview.layer.masksToBounds = true
+        Cellview.layer.borderWidth = 0.5
+        Cellview.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        Cellview.layer.shadowColor = UIColor.black.cgColor
+        Cellview.layer.shadowOpacity = 0.05
+        Cellview.layer.shadowRadius = 4
+        Cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
+
+
 }
 

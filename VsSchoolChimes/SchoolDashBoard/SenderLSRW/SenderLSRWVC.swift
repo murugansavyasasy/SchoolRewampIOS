@@ -83,14 +83,13 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
     var placeholderLabel: UILabel!
-    // Audio Properties
     private var recordingTimer: Timer?
     private var recordingStartTime: Date?
     private var isRecording = false
     private let audioManager = AudioManager()
     private var audioURL: URL?
     private var isRemoteAudio = false
-    
+    var editReport:LSRWTask?
     let taskTypes = [
         ("Listening".translated(), "headphones"),
         ("Speaking".translated(), "mic"),
@@ -114,9 +113,43 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         dateView.addGestureRecognizer(tapGesture)
         
         setupTaskTypesCollectionView()
+        if let edit = editReport{
+            fetchData(notice: edit)
+        }
     }
+    func fetchData(notice: LSRWTask?) {
+        attachments.removeAll()
+        
+        if let notice = notice {
+            TitleTxtfield.text = notice.title
+            DetailsTxtview.text = notice.description
+            DetailsTxtview.textColor = .black
+            placeholderLabel?.isHidden = !DetailsTxtview.text.isEmpty
+            
+            if let files = notice.file_path {
+                attachments = files.map { file in
+                    let type = (file.type ?? "").lowercased()
+                    return AttachmentItem(
+                        image: nil,
+                        imageURL: type != "video" ? file.url : nil,
+                        fileType: type,
+                        VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
+                    )
+                }
+            }
+            updateTextViewHeight()
+        } else {
+            TitleTxtfield.text = ""
+            DetailsTxtview.text = CommonStringFile.Description.translated()
+            DetailsTxtview.textColor = .lightGray
+            placeholderLabel?.isHidden = false
+            
+            attachments.removeAll()
+        }
+        uploadAttachmentView.imageCollectionview.reloadData()
+    }
+    
     private func setupPlaceholderIfNeeded() {
-        // Create placeholder label for UITextView instead of seeding the textview with the placeholder string
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = DetailsTxtview.font
@@ -248,9 +281,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         
         RecipientBtn.layer.cornerRadius = 10
-        // Leave DetailsTxtview text blank and rely on placeholderLabel
-        // DetailsTxtview.text = CommonStringFile.Description
-        // DetailsTxtview.textColor = .lightGray
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         // Label Font Style
