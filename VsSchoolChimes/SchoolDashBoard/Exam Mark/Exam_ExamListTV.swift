@@ -9,83 +9,144 @@ import UIKit
 
 class Exam_ExamListTV: UITableViewCell {
 
-    
     @IBOutlet weak var ArrowBtn: UIButton!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var activitiesLbl: UILabel!
-    
+
+    var onHeightChanged: (() -> Void)?
     var onExpand: (() -> Void)?
-        var isExpanded: Bool = false {
-            didSet {
-                activitiesLbl.isHidden = false
-                updateCollectionView()
-            }
-        }
-    
+    private var isExpanded: Bool = false
+
     var items = ["Math", "English", "Computer Science", "GK"]
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
 
-        override func awakeFromNib() {
-            super.awakeFromNib()
+        selectionStyle = .none
 
-            setupCollectionView()
-
-            cv.isHidden = true
-            activitiesLbl.isHidden = true
-            collectionViewHeight.constant = 0
-        }
-
-    private func setupCollectionView() {
-        cv.register(UINib(nibName: "ExamActivitiesCV", bundle: nil), forCellWithReuseIdentifier: "ExamActivitiesCV")
+        cv.register(
+            UINib(nibName: "ExamActivitiesCV", bundle: nil),
+            forCellWithReuseIdentifier: "ExamActivitiesCV"
+        )
+        
+        let layout = LeftAlignedFlowLayout()
+        layout.minimumInteritemSpacing = 0 // Customize spacing between items
+        layout.minimumLineSpacing = 0 // Customize line spacing
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        cv.collectionViewLayout = layout
+        
         cv.delegate = self
         cv.dataSource = self
+        cv.isScrollEnabled = false
+
+        cv.isHidden = true
+        activitiesLbl.isHidden = true
+        collectionViewHeight.constant = 0
     }
 
-    private func updateCollectionView() {
-            cv.isHidden = !isExpanded
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        configureExpansionState(false, animated: false)
+    }
 
-            if isExpanded {
-                // Height = (rows * itemHeight) + spacing
-                let totalHeight =
-                    CGFloat(items.count) * (40)   // 10 = line spacing
-                collectionViewHeight.constant = totalHeight
-            } else {
-                collectionViewHeight.constant = 0
+    // ⭐ FINAL FIXED VERSION
+    func configureExpansionState(_ expanded: Bool, animated: Bool = true) {
+        isExpanded = expanded
+        ArrowBtn.setImage(UIImage(systemName: expanded ? "chevron.down" : "chevron.right"),
+                          for: .normal)
+
+        activitiesLbl.isHidden = !expanded
+        cv.isHidden = !expanded
+
+        if expanded {
+
+            cv.reloadData()
+            cv.layoutIfNeeded()       // 1st pass
+
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+
+                self.cv.layoutIfNeeded()    // 2nd pass
+
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+
+                    self.cv.layoutIfNeeded()   // FINAL 3rd pass (needed for flow layout)
+
+                    let height = self.cv.collectionViewLayout.collectionViewContentSize.height
+                    print("FINAL CV HEIGHT =", height)
+
+                    if height > 0 {
+                        self.collectionViewHeight.constant = height
+                    }
+
+                    // ⭐ Critical: expand container cell, not only this cell
+                    if animated {
+                        UIView.animate(withDuration: 0.25) {
+                            self.contentView.layoutIfNeeded()
+                            self.superview?.layoutIfNeeded()
+                            self.superview?.superview?.layoutIfNeeded()
+                        }
+                    } else {
+                        self.contentView.layoutIfNeeded()
+                        self.superview?.layoutIfNeeded()
+                        self.superview?.superview?.layoutIfNeeded()
+                    }
+
+                    self.onHeightChanged?()
+
+                    if let parentTable = self.superview as? UITableView {
+                        parentTable.beginUpdates()
+                        parentTable.endUpdates()
+                    }
+
+                }
             }
 
-            layoutIfNeeded()
-            cv.reloadData()
+        } else {
+            collectionViewHeight.constant = 0
+
+            if animated {
+                UIView.animate(withDuration: 0.25) {
+                    self.contentView.layoutIfNeeded()
+                    self.superview?.layoutIfNeeded()
+                    self.superview?.superview?.layoutIfNeeded()
+                }
+            } else {
+                self.contentView.layoutIfNeeded()
+                self.superview?.layoutIfNeeded()
+                self.superview?.superview?.layoutIfNeeded()
+            }
+
+            onHeightChanged?()
         }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        
     }
-    
+
     @IBAction func expandAct(_ sender: UIButton) {
-        
         onExpand?()
-        
     }
-    
-    
 }
 
 extension Exam_ExamListTV: UICollectionViewDelegate, UICollectionViewDataSource {
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count  // or dynamic count
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        items.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExamActivitiesCV", for: indexPath) as! ExamActivitiesCV
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "ExamActivitiesCV",
+            for: indexPath
+        ) as! ExamActivitiesCV
+
         cell.nameLbl.text = items[indexPath.item]
         return cell
     }
 }
-
 
 extension Exam_ExamListTV: UICollectionViewDelegateFlowLayout {
 
@@ -93,8 +154,22 @@ extension Exam_ExamListTV: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: collectionView.bounds.width, height: 40)
+        let text = items[indexPath.item]  // your data source
+
+        let font = UIFont.systemFont(ofSize: 17)
+        let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
+        let horizontalPadding: CGFloat = 30
+        
+        let label = UILabel()
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        
+        let width = label.frame.width + 40
+
+        let finalWidth = textWidth + horizontalPadding
+
+        return CGSize(width: width, height: 50)
     }
 
 }
-

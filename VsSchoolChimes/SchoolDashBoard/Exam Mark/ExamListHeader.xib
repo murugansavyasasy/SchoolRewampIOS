@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +21,7 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="exx-3l-Fzy">
                             <rect key="frame" x="0.0" y="0.0" width="5" height="163"/>
-                            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                            <color key="backgroundColor" name="staffExamColour"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="5" id="fkI-Ux-Orl"/>
                             </constraints>
@@ -34,7 +35,7 @@
                                         <constraint firstAttribute="width" constant="35" id="SIb-Mp-dqI"/>
                                         <constraint firstAttribute="height" constant="35" id="h7X-ap-hYE"/>
                                     </constraints>
-                                    <color key="tintColor" systemColor="systemOrangeColor"/>
+                                    <color key="tintColor" name="staffExamColour"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="circle.inset.filled" catalog="system"/>
                                 </button>
@@ -103,11 +104,11 @@
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="circle.inset.filled" catalog="system" width="128" height="123"/>
+        <namedColor name="staffExamColour">
+            <color red="0.92941176470588238" green="0.44313725490196076" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

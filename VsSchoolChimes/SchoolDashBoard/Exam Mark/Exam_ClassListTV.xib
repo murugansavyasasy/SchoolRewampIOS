@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,7 +39,7 @@
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graduationcap" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-pF-2qd">
                                                         <rect key="frame" x="242" y="1" width="35" height="37"/>
-                                                        <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                        <color key="tintColor" name="staffExamColour"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="j9j-WZ-JJl"/>
                                                             <constraint firstAttribute="height" constant="35" id="o1I-vi-IH4"/>
@@ -64,7 +65,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <color key="backgroundColor" name="staffExamColour"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dTW-vP-9AS" secondAttribute="trailing" id="AiK-SH-s5j"/>
                             <constraint firstItem="dTW-vP-9AS" firstAttribute="top" secondItem="EXg-3d-NtQ" secondAttribute="top" id="JCu-mD-Rrg"/>
@@ -90,11 +91,11 @@
     </objects>
     <resources>
         <image name="graduationcap" catalog="system" width="128" height="107"/>
+        <namedColor name="staffExamColour">
+            <color red="1" green="0.40392156862745099" blue="0.0039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.55294117647058827" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

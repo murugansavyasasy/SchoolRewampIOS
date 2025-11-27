@@ -92,7 +92,7 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
         )
     )
     //private lazy var secondVCNav = UINavigationController(rootViewController: HelpVc())
-    private lazy var secondVCNav = UINavigationController(rootViewController: HolidayVC())
+    private lazy var secondVCNav = UINavigationController(rootViewController: staffExamMarkVC())
     private lazy var thirdVCNav = UINavigationController(rootViewController: SettingsViewController())
     private lazy var fourthVCNav = UINavigationController(rootViewController: UpdateProfileVC(isStudent: login_astype == 2))
     

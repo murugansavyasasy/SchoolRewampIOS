@@ -15,7 +15,7 @@ class ExamActivitiesCV: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cellView.layer.cornerRadius = 12
+        cellView.layer.cornerRadius = 15
         
     }
 

@@ -1992,6 +1992,7 @@ struct LSRWTask: Codable {
     var test: [TestQuestion]?
     let submittedCount: Int?
     let totalCount: Int?
+    let can_delete: Bool?
     let submitted_average: String?
 }
 

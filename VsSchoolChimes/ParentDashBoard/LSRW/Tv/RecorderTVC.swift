@@ -330,37 +330,7 @@ class AudioManager: NSObject {
             throw error
         }
     }
-    
-//    private func setupRecorder() -> Bool {
-//        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-//        let timestamp = Int(Date().timeIntervalSince1970)
-//        let fileURL = documentsPath.appendingPathComponent("RecordedAudio.m4a")
-//        
-//        if FileManager.default.fileExists(atPath: fileURL.path) {
-//            try? FileManager.default.removeItem(at: fileURL)
-//        }
-//        
-//        audioURL = fileURL
-//        
-//        let settings: [String: Any] = [
-//            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-//            AVSampleRateKey: 44100,
-//            AVNumberOfChannelsKey: 1,
-//            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue,
-//            AVEncoderBitRateKey: 64000
-//        ]
-//        
-//        do {
-//            audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
-//            audioRecorder?.delegate = self
-//            audioRecorder?.isMeteringEnabled = true
-//            audioRecorder?.prepareToRecord()
-//            return true
-//        } catch {
-//            print("AudioRecorder setup error: \(error.localizedDescription)")
-//            return false
-//        }
-//    }
+
     private func setupRecorder() -> Bool {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let timestamp = Int(Date().timeIntervalSince1970) // unique name
