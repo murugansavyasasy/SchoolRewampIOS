@@ -96,6 +96,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="ArrowBtn" destination="qi4-KW-fFI" id="TTQ-MB-puW"/>
+                <outlet property="activitiesLbl" destination="yIb-cv-QHK" id="tEF-M2-g8I"/>
                 <outlet property="collectionViewHeight" destination="HeN-4I-pj5" id="R2P-QQ-im2"/>
                 <outlet property="cv" destination="D9q-qZ-H6C" id="6dG-wm-fZO"/>
             </connections>

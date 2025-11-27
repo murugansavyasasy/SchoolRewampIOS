@@ -264,8 +264,6 @@ class AWSPreSignedURL {
             print("❌ Invalid URL")
             return
         }
-        
-        // ✅ Extract the S3 object key from the URL
         guard let key = url.pathComponents.dropFirst().joined(separator: "/").removingPercentEncoding else {
             print("❌ Could not extract key from URL")
             return

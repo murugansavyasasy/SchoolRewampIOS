@@ -268,6 +268,7 @@ class NewPtmVC: UIViewController, Datepicker {
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: true)
     }
+    
     @IBAction func backAct(_ sender: Any) {
         
         dismiss(animated: true)
