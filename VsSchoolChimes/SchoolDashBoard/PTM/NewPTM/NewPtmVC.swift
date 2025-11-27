@@ -96,7 +96,13 @@ class NewPtmVC: UIViewController, Datepicker {
         bookedSlotsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
-        addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
+        
+        if pushNotiMsgId != ""{
+            bookedSlots()
+        }else{
+            addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
+        }
+       
         
 //        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
 //        cv.delegate = self
@@ -114,9 +120,7 @@ class NewPtmVC: UIViewController, Datepicker {
 //                    layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 //                }
         
-        if pushNotiMsgId != ""{
-            bookedSlots()
-        }
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -283,13 +287,17 @@ class NewPtmVC: UIViewController, Datepicker {
 
         for sec in sections {
             if let idx = sec.list?.firstIndex(where: { $0.slot_id == id }) {
-                scrollTo(IndexPath(row: idx, section: sec.section))
+                scrollAndHighlight(IndexPath(row: idx, section: sec.section))
                 return
             }
         }
     }
 
-    func scrollTo(_ indexPath: IndexPath) {
+    func scrollAndHighlight(_ indexPath: IndexPath) {
+
+        // Make sure layout is finished
+        tv.layoutIfNeeded()
+
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
@@ -297,15 +305,17 @@ class NewPtmVC: UIViewController, Datepicker {
 
             if let cell = self.tv.cellForRow(at: indexPath) {
                 UIView.animate(withDuration: 0.25) {
-                    cell.contentView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+                    cell.contentView.backgroundColor =  UIColor.lightGray
+                        .withAlphaComponent(0.3)
                 } completion: { _ in
-                    UIView.animate(withDuration: 0.7, delay: 0.8, options: []) {
+                    UIView.animate(withDuration: 0.7, delay: 0.8) {
                         cell.contentView.backgroundColor = .white
                     }
                 }
             }
         }
     }
+
 
 
     @available(iOS 14.0, *)
