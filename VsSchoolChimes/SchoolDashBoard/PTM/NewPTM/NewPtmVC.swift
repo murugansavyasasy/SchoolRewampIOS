@@ -55,7 +55,7 @@ class NewPtmVC: UIViewController, Datepicker {
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
     var expandedIndex: IndexPath?
-    
+    var pushNotiMsgId:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,6 +113,10 @@ class NewPtmVC: UIViewController, Datepicker {
 //                    layout.minimumLineSpacing = 8
 //                    layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 //                }
+        
+        if pushNotiMsgId != ""{
+            bookedSlots()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -208,7 +212,7 @@ class NewPtmVC: UIViewController, Datepicker {
         
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_datewise_booked_slots, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<BookedSlotsResponse,Error>) in
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 guard let self = self else {return}
                 if #available(iOS 15.0, *){self.hideActivityLoader()}
                 
@@ -243,6 +247,11 @@ class NewPtmVC: UIViewController, Datepicker {
                         }
                         
                         self.tv.reloadData()
+                        if self.pushNotiMsgId != ""{
+                            DispatchQueue.main.async {
+                                self.scrollToNotificationIfNeeded()
+                            }
+                        }
                     }else {
                         self.sections.removeAll()
                         self.nodataLbl.isHidden = false
@@ -261,6 +270,44 @@ class NewPtmVC: UIViewController, Datepicker {
         }
     }
     
+
+    private func scrollToNotificationIfNeeded() {
+        guard let id = pushNotiMsgId,
+              let data = Booked_slot_data.first else { return }
+
+        let sections: [(list: [BookedSlot]?, section: Int)] = [
+            (data.today,     0),
+            (data.upcoming,  1),
+            (data.completed, 2)
+        ]
+
+        for sec in sections {
+            if let idx = sec.list?.firstIndex(where: { $0.slot_id == id }) {
+                scrollTo(IndexPath(row: idx, section: sec.section))
+                return
+            }
+        }
+    }
+
+    func scrollTo(_ indexPath: IndexPath) {
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            guard let self = self else { return }
+
+            if let cell = self.tv.cellForRow(at: indexPath) {
+                UIView.animate(withDuration: 0.25) {
+                    cell.contentView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+                } completion: { _ in
+                    UIView.animate(withDuration: 0.7, delay: 0.8, options: []) {
+                        cell.contentView.backgroundColor = .white
+                    }
+                }
+            }
+        }
+    }
+
+
     @available(iOS 14.0, *)
     @IBAction func createAct(_ sender: Any) {
        // let vc = CreateMeetingVc(nibName: nil, bundle: nil)
@@ -329,6 +376,11 @@ class NewPtmVC: UIViewController, Datepicker {
     }
     
     @IBAction func bookedSlotsBtn(_ sender: Any) {
+        bookedSlots()
+    }
+    
+    
+    func bookedSlots(){
         addUnderline(to: bookedSlotsBtn, unSelectedBtn: [meetingsBtn])
         
         if selectedDate == ""{
@@ -337,7 +389,6 @@ class NewPtmVC: UIViewController, Datepicker {
             Get_bookedSlots_Api(EventDate: selectedDate)
         }
     }
-    
     
     func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
         ([selectedButton] + unSelectedBtn).forEach { button in
@@ -527,7 +578,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.edit(
                     edit: slot?.is_cancelled ?? false,
                     delete: !(slot?.is_cancelled ?? false),
-                    selectedId: slot?.id ?? ""
+                    selectedId: slot?.slot_id ?? ""
                 )
                 
 

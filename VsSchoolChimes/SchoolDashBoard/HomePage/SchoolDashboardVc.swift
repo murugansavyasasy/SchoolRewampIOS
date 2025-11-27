@@ -499,7 +499,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     MenuRedirect.senderMarkAttendence(from: self)
                 }
             case 5:
-                MenuRedirect.senderPtmNavigate(from: self)
+                MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: "")
             case 7:
                 MenuRedirect.senderCommunicationNavigate(from: self)
                 
@@ -556,7 +556,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 24:
                 MenuRedirect.senderOnlineNavigate(from: self)
             case 26:
-                MenuRedirect.senderPtmNavigate(from: self)
+                MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: "")
             case 28:
 //                MenuRedirect.senderLeaveRequestNavigate(from: self)
                 ""

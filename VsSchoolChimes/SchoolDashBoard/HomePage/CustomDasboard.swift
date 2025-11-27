@@ -593,7 +593,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
              self.MenuRedirect.senderAssignmentNavigate(from: self) },
             3: { self.MenuRedirect.senderMarkAttendence(from: self) },
-            5: { self.MenuRedirect.senderPtmNavigate(from: self) },
+            5: { self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg) },
             7: { self.MenuRedirect.senderCommunicationNavigate(from: self) },
             8: { self.MenuRedirect.senderDailyCollectionNavigate(from: self) },
             9: { self.MenuRedirect.senderEventNavigate(from: self) },
@@ -613,7 +613,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
             },
             24: { self.MenuRedirect.senderOnlineNavigate(from: self) },
-            26: { self.MenuRedirect.senderPtmNavigate(from: self) },
+            26: { self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg) },
             27: { self.MenuRedirect.senderQuiz(from: self) },
             28: {
                 self.MenuRedirect

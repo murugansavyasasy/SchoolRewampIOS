@@ -1792,7 +1792,7 @@ struct BookedSlotsData: Codable {
 }
 
 struct BookedSlot: Codable {
-    var id: String?
+        var slot_id : String?
         var date: String?
         var from_time: String?
         var to_time: String?
