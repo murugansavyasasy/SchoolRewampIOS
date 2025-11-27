@@ -71,6 +71,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         segments.enumerated().forEach {
             SegmentControl.insertSegment(withTitle: $1, at: $0, animated: false)
         }
+        SegmentControl.selectedSegmentIndex = 0
         applyShadowAndCornerRadius(to: yearsView)
         applyShadowAndCornerRadius(to: staffDropView)
         applyShadowAndCornerRadius(to: monthView)

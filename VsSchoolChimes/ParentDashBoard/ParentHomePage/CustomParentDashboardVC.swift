@@ -94,8 +94,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             setupLabels()
             setupProfileImage()
             Global_variabel()
-        
-        handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
+        if let id = messageId ,id != "" {
+            handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
+        }
     }
     
     init(
@@ -401,7 +402,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             let item = menu_details[indexPath.item]
             if let id = item.id {
                 let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == id }
-                let img = UIImage(named: filteredItems.first?.name ?? "")
+                let img = UIImage(named: filteredItems.first?.name ?? "school_chimes 2")
                 cell.iconBtn.setImage(img, for: .normal)
                 cell.imenuName.text = item.name
                 cell.menuCondent.text = item.description ?? ""
@@ -453,7 +454,20 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 39: MenuRedirect.receiverAttachment(from: self, notificationId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
-        default: break
+        default:
+            let alert = UIAlertController(
+                title: nil,
+                message: nil,
+                preferredStyle: .alert
+            )
+            alert.addIconTitleMessage(
+                icon: UIImage(named: "school_chimes 2"),
+                title: "Coming Soon",
+                message: "This feature is under development."
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
         }
     }
 

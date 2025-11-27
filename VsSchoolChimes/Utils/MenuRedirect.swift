@@ -160,9 +160,10 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
-    func senderPtmNavigate(from viewController: UIViewController) {
+    func senderPtmNavigate(from viewController: UIViewController,PushNotiMsgId : String) {
         //let vc = StaffPtmViewController(nibName: nil, bundle: nil)
         let vc = NewPtmVC(nibName: nil, bundle: nil)
+        vc.pushNotiMsgId = PushNotiMsgId
         vc.modalPresentationStyle = .fullScreen
         
         let transition = CATransition()

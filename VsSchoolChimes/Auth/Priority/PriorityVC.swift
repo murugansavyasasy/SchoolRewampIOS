@@ -339,14 +339,14 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.bloodLbl.text = childDetails?[indexPath.row].blood_group
             cell.StudentImage.kf.setImage(with: URL(string: childDetails?[indexPath.row].profile ?? ""),placeholder: UIImage(systemName: "person.fill"))
             if #available(iOS 15.0, *) {
-                let gradientSets: [[CGColor]] = [
-                    [UIColor(hex: "#7FD1FA").cgColor, UIColor(hex: "#7FE8FA").cgColor],
-                    [UIColor(hex: "#D7A5FA").cgColor, UIColor(hex: "#FAA5D7").cgColor],
-                    [UIColor(hex: "#FAC97F").cgColor, UIColor(hex: "#FA9A7F").cgColor],
-                    [UIColor(hex: "#7FFAAF").cgColor, UIColor(hex: "#A5FAE8").cgColor],
-                    [UIColor(hex: "#A5A5FA").cgColor, UIColor(hex: "#7FC4FA").cgColor]
-                ]
-//                let gradientSets: [[CGColor]] = [ [UIColor.systemBlue.cgColor, UIColor.systemTeal.cgColor], [UIColor.systemPurple.cgColor, UIColor.systemPink.cgColor], [UIColor.systemOrange.cgColor, UIColor.systemRed.cgColor], [UIColor.systemGreen.cgColor, UIColor.systemMint.cgColor], [UIColor.systemIndigo.cgColor, UIColor.systemBlue.cgColor] ]
+//                let gradientSets: [[CGColor]] = [
+//                    [UIColor(hex: "#7FD1FA").cgColor, UIColor(hex: "#7FE8FA").cgColor],
+//                    [UIColor(hex: "#D7A5FA").cgColor, UIColor(hex: "#FAA5D7").cgColor],
+//                    [UIColor(hex: "#FAC97F").cgColor, UIColor(hex: "#FA9A7F").cgColor],
+//                    [UIColor(hex: "#7FFAAF").cgColor, UIColor(hex: "#A5FAE8").cgColor],
+//                    [UIColor(hex: "#A5A5FA").cgColor, UIColor(hex: "#7FC4FA").cgColor]
+//                ]
+                let gradientSets: [[CGColor]] = [ [mixWithWhite(UIColor.systemBlue.cgColor), mixWithWhite(UIColor.systemTeal.cgColor)], [mixWithWhite(UIColor.systemPurple.cgColor), mixWithWhite(UIColor.systemPink.cgColor)], [mixWithWhite(UIColor.systemOrange.cgColor), mixWithWhite(UIColor.systemRed.cgColor)], [mixWithWhite(UIColor.systemGreen.cgColor), mixWithWhite(UIColor.systemMint.cgColor)], [mixWithWhite(UIColor.systemIndigo.cgColor), mixWithWhite(UIColor.systemBlue.cgColor)] ]
                 
                 let colors = gradientSets[indexPath.row % gradientSets.count]
                 cell.setGradientColors(colors)
@@ -363,6 +363,12 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
     }
+    func mixWithWhite(_ color: CGColor, white: CGFloat = 0.45) -> CGColor {
+        return UIColor(cgColor: color)
+            .withAlphaComponent(white)   // soft white tint
+            .cgColor
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if login_astype  == 2 {
