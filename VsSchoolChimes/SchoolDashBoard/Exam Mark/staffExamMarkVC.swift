@@ -20,6 +20,10 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         tv.dataSource = self
     }
 
+    @IBAction func BackAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10

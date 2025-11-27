@@ -815,6 +815,10 @@
 		FABA6E812ED5776B00278807 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA6E6D2ED5776B00278807 /* Exam_ClassListTV.swift */; };
 		FABA6E822ED5776B00278807 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA6E752ED5776B00278807 /* ExamActivitiesCV.swift */; };
 		FABA6E832ED5776B00278807 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA6E6B2ED5776B00278807 /* staffExamMarkVC.swift */; };
+		FABA6E862ED5AB8A00278807 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABA6E852ED5AB8A00278807 /* ExamListCell.xib */; };
+		FABA6E872ED5AB8A00278807 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA6E842ED5AB8A00278807 /* ExamListCell.swift */; };
+		FABA6E8A2ED5D2F700278807 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABA6E892ED5D2F700278807 /* ExamImgUploadVC.xib */; };
+		FABA6E8B2ED5D2F700278807 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABA6E882ED5D2F700278807 /* ExamImgUploadVC.swift */; };
 		FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = FACD4D692E30BE6D0084B125 /* FSCalendar */; };
 		FACD4D712E30F46F0084B125 /* TimetableBottomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */; };
 		FACD4D722E30F46F0084B125 /* TimetableBottomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FACD4D702E30F46F0084B125 /* TimetableBottomVC.xib */; };
@@ -848,6 +852,12 @@
 		FAF4C7AE2E54614E0092B938 /* MeetingDataTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF4C7AC2E54614E0092B938 /* MeetingDataTV.xib */; };
 		FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */; };
 		FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */; };
+		FAFB40B92ED6D9F800783142 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFB40B82ED6D9F800783142 /* ExamActivitySelectionVC.xib */; };
+		FAFB40BA2ED6D9F800783142 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFB40B72ED6D9F800783142 /* ExamActivitySelectionVC.swift */; };
+		FAFB40BD2ED6E75A00783142 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFB40BC2ED6E75A00783142 /* SubjectsTVCell.xib */; };
+		FAFB40BE2ED6E75A00783142 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFB40BB2ED6E75A00783142 /* SubjectsTVCell.swift */; };
+		FAFB40C12ED6FA2000783142 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */; };
+		FAFB40C22ED6FA2000783142 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */; };
 		FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */; };
 		FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */; };
 		FAFF9DD42D6C7B7A00498368 /* SltoCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D982D6C7B7A00498368 /* SltoCreationViewController.swift */; };
@@ -1767,6 +1777,10 @@
 		FABA6E742ED5776B00278807 /* ExamListHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListHeader.xib; sourceTree = "<group>"; };
 		FABA6E752ED5776B00278807 /* ExamActivitiesCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitiesCV.swift; sourceTree = "<group>"; };
 		FABA6E762ED5776B00278807 /* ExamActivitiesCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitiesCV.xib; sourceTree = "<group>"; };
+		FABA6E842ED5AB8A00278807 /* ExamListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListCell.swift; sourceTree = "<group>"; };
+		FABA6E852ED5AB8A00278807 /* ExamListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListCell.xib; sourceTree = "<group>"; };
+		FABA6E882ED5D2F700278807 /* ExamImgUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamImgUploadVC.swift; sourceTree = "<group>"; };
+		FABA6E892ED5D2F700278807 /* ExamImgUploadVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamImgUploadVC.xib; sourceTree = "<group>"; };
 		FACD4D6F2E30F46F0084B125 /* TimetableBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBottomVC.swift; sourceTree = "<group>"; };
 		FACD4D702E30F46F0084B125 /* TimetableBottomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableBottomVC.xib; sourceTree = "<group>"; };
 		FACD4D752E30F8B40084B125 /* TimetableTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTvCell.swift; sourceTree = "<group>"; };
@@ -1799,6 +1813,12 @@
 		FAF4C7AC2E54614E0092B938 /* MeetingDataTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingDataTV.xib; sourceTree = "<group>"; };
 		FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportVC.swift; sourceTree = "<group>"; };
 		FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationReportVC.xib; sourceTree = "<group>"; };
+		FAFB40B72ED6D9F800783142 /* ExamActivitySelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitySelectionVC.swift; sourceTree = "<group>"; };
+		FAFB40B82ED6D9F800783142 /* ExamActivitySelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitySelectionVC.xib; sourceTree = "<group>"; };
+		FAFB40BB2ED6E75A00783142 /* SubjectsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectsTVCell.swift; sourceTree = "<group>"; };
+		FAFB40BC2ED6E75A00783142 /* SubjectsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectsTVCell.xib; sourceTree = "<group>"; };
+		FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTVCell.swift; sourceTree = "<group>"; };
+		FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivitiesTVCell.xib; sourceTree = "<group>"; };
 		FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTv.swift; sourceTree = "<group>"; };
 		FAFF9D8F2D6C7B7A00498368 /* CheckAviableTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableTv.xib; sourceTree = "<group>"; };
 		FAFF9D902D6C7B7A00498368 /* CheckAviableTvHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTvHeader.swift; sourceTree = "<group>"; };
@@ -4159,6 +4179,16 @@
 				FABA6E742ED5776B00278807 /* ExamListHeader.xib */,
 				FABA6E752ED5776B00278807 /* ExamActivitiesCV.swift */,
 				FABA6E762ED5776B00278807 /* ExamActivitiesCV.xib */,
+				FABA6E842ED5AB8A00278807 /* ExamListCell.swift */,
+				FABA6E852ED5AB8A00278807 /* ExamListCell.xib */,
+				FABA6E882ED5D2F700278807 /* ExamImgUploadVC.swift */,
+				FABA6E892ED5D2F700278807 /* ExamImgUploadVC.xib */,
+				FAFB40B72ED6D9F800783142 /* ExamActivitySelectionVC.swift */,
+				FAFB40B82ED6D9F800783142 /* ExamActivitySelectionVC.xib */,
+				FAFB40BB2ED6E75A00783142 /* SubjectsTVCell.swift */,
+				FAFB40BC2ED6E75A00783142 /* SubjectsTVCell.xib */,
+				FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */,
+				FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */,
 			);
 			path = "Exam Mark";
 			sourceTree = "<group>";
@@ -4631,6 +4661,7 @@
 				18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */,
 				84BB5EB32D1133AA00AD0C87 /* ExamsListTVCell.xib in Resources */,
 				84A271822CEDAB9F0033EB02 /* ImagePdfCvCell.xib in Resources */,
+				FABA6E862ED5AB8A00278807 /* ExamListCell.xib in Resources */,
 				FACD4D782E30F8B40084B125 /* TimetableTvCell.xib in Resources */,
 				849AD0002D1A8369002DEC07 /* ReciverAttendanceReportVC.xib in Resources */,
 				FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */,
@@ -4646,6 +4677,7 @@
 				FAD4D7302E606449007A3FC0 /* PtmParentVC.xib in Resources */,
 				84BCE9182E9E5270002C8068 /* GenderDistriTvcel.xib in Resources */,
 				843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */,
+				FAFB40C12ED6FA2000783142 /* ActivitiesTVCell.xib in Resources */,
 				84017C012E4082D8006CB477 /* AttachCommonPage.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
 				849507312DAE3EDD004343C4 /* loader (2).json in Resources */,
@@ -4678,6 +4710,7 @@
 				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
 				FABA6E782ED5776B00278807 /* staffExamMarkVC.xib in Resources */,
 				FABA6E792ED5776B00278807 /* ExamActivitiesCV.xib in Resources */,
+				FAFB40B92ED6D9F800783142 /* ExamActivitySelectionVC.xib in Resources */,
 				FABA6E7A2ED5776B00278807 /* Exam_ExamListTV.xib in Resources */,
 				FABA6E7B2ED5776B00278807 /* ExamListVC.xib in Resources */,
 				FABA6E7C2ED5776B00278807 /* ExamListHeader.xib in Resources */,
@@ -4724,6 +4757,8 @@
 				FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */,
 				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
+				FAFB40BD2ED6E75A00783142 /* SubjectsTVCell.xib in Resources */,
+				FABA6E8A2ED5D2F700278807 /* ExamImgUploadVC.xib in Resources */,
 				84235A122E1E2819002F2E1D /* AddAttachmentTVC.xib in Resources */,
 				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
 				FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */,
@@ -5098,6 +5133,7 @@
 				846BDD752DB60387001DB91A /* TAttacmentTVC.swift in Sources */,
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,
 				84A0D1162DC8E3F60037E1BF /* PinterestLayout.swift in Sources */,
+				FABA6E872ED5AB8A00278807 /* ExamListCell.swift in Sources */,
 				FAFFBD072E336F8600F8B150 /* ExamListTV.swift in Sources */,
 				84FBAA872E3BA05300A3FC31 /* CustomMenuCVC.swift in Sources */,
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
@@ -5252,6 +5288,7 @@
 				8476882B2D88316C00EAB9DB /* userDefaultFileManager.swift in Sources */,
 				849AD0072D1A837A002DEC07 /* ReciverHomeworkVC.swift in Sources */,
 				849AD0082D1A837A002DEC07 /* ReciverHomeworkHeader.swift in Sources */,
+				FABA6E8B2ED5D2F700278807 /* ExamImgUploadVC.swift in Sources */,
 				84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */,
 				84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */,
 				18D718992D0D477900E9EDA3 /* EditLocReq.swift in Sources */,
@@ -5415,6 +5452,7 @@
 				846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */,
 				84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */,
 				846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */,
+				FAFB40BE2ED6E75A00783142 /* SubjectsTVCell.swift in Sources */,
 				187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */,
 				849ACFFE2D1A8369002DEC07 /* ReciverAttendanceReportVC.swift in Sources */,
 				849ACFFF2D1A8369002DEC07 /* ReciverAttendReportTV.swift in Sources */,
@@ -5453,6 +5491,7 @@
 				84E0AA012E3894CB002BF40A /* AttachmentHeaderCell.swift in Sources */,
 				FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */,
 				FA7C7BAF2E55B55B009BD4CF /* CreateSlotsBottomVC.swift in Sources */,
+				FAFB40C22ED6FA2000783142 /* ActivitiesTVCell.swift in Sources */,
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */,
 				FACD4D772E30F8B40084B125 /* TimetableTvCell.swift in Sources */,
@@ -5487,6 +5526,7 @@
 				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
 				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,
 				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
+				FAFB40BA2ED6D9F800783142 /* ExamActivitySelectionVC.swift in Sources */,
 				FAD4D72F2E606449007A3FC0 /* PtmParentVC.swift in Sources */,
 				84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */,
 				84C82A0C2D086A490024A46A /* CircleColorSparkView.swift in Sources */,

@@ -18,43 +18,32 @@
                 <rect key="frame" x="0.0" y="0.0" width="227" height="63"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="za4-TH-CGJ">
-                        <rect key="frame" x="5" y="5" width="217" height="53"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yOn-mk-pZd">
+                        <rect key="frame" x="8" y="8" width="211" height="47"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yOn-mk-pZd">
-                                <rect key="frame" x="0.0" y="0.0" width="167" height="53"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbi-wa-Fif">
-                                        <rect key="frame" x="10" y="5" width="147" height="43"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="xbi-wa-Fif" secondAttribute="bottom" constant="5" id="EPX-7z-SBX"/>
-                                    <constraint firstItem="xbi-wa-Fif" firstAttribute="top" secondItem="yOn-mk-pZd" secondAttribute="top" constant="5" id="YcV-uj-862"/>
-                                    <constraint firstItem="xbi-wa-Fif" firstAttribute="leading" secondItem="yOn-mk-pZd" secondAttribute="leading" constant="10" id="YwT-X7-d0l"/>
-                                    <constraint firstAttribute="trailing" secondItem="xbi-wa-Fif" secondAttribute="trailing" constant="10" id="ge5-9f-3a9"/>
-                                </constraints>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8F0-62-snD">
-                                <rect key="frame" x="167" y="0.0" width="50" height="53"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbi-wa-Fif">
+                                <rect key="frame" x="8" y="5" width="195" height="37"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                    </stackView>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="xbi-wa-Fif" secondAttribute="bottom" constant="5" id="EPX-7z-SBX"/>
+                            <constraint firstItem="xbi-wa-Fif" firstAttribute="top" secondItem="yOn-mk-pZd" secondAttribute="top" constant="5" id="YcV-uj-862"/>
+                            <constraint firstItem="xbi-wa-Fif" firstAttribute="leading" secondItem="yOn-mk-pZd" secondAttribute="leading" constant="8" id="YwT-X7-d0l"/>
+                            <constraint firstAttribute="trailing" secondItem="xbi-wa-Fif" secondAttribute="trailing" constant="8" id="ge5-9f-3a9"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="za4-TH-CGJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="40c-Bz-6V2"/>
-                <constraint firstItem="za4-TH-CGJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="7So-za-Khc"/>
-                <constraint firstAttribute="bottom" secondItem="za4-TH-CGJ" secondAttribute="bottom" constant="5" id="HjW-xC-5tu"/>
-                <constraint firstAttribute="trailing" secondItem="za4-TH-CGJ" secondAttribute="trailing" constant="5" id="srO-4m-fKA"/>
+                <constraint firstAttribute="bottom" secondItem="yOn-mk-pZd" secondAttribute="bottom" constant="8" id="4Qe-Ia-jst"/>
+                <constraint firstAttribute="trailing" secondItem="yOn-mk-pZd" secondAttribute="trailing" constant="8" id="Zl6-cs-Urw"/>
+                <constraint firstItem="yOn-mk-pZd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="st4-wV-rd6"/>
+                <constraint firstItem="yOn-mk-pZd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="v49-ja-b6W"/>
             </constraints>
             <size key="customSize" width="227" height="63"/>
             <connections>
@@ -65,8 +54,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
