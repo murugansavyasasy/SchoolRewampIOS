@@ -15,11 +15,12 @@ class SubjectsTVCell: UITableViewCell {
     @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var expandIconBtn: UIButton!
-    @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var tableview: ContentSizedTableView!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     
-    var isExpand = false
-    var onInnerHeightChanged: (() -> Void)?
+    var isExpanded = false
+    var onHeightChange: (() -> Void)?
+    var activitiesCount = 2
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,14 +47,31 @@ class SubjectsTVCell: UITableViewCell {
         
         tableview.delegate = self
         tableview.dataSource = self
+        
+        tableview.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
-    func updateInnerHeight() {
-        DispatchQueue.main.async {
-            self.tableview.layoutIfNeeded()
-            self.tableviewHeight.constant = self.tableview.contentSize.height
+    deinit {
+        tableview.removeObserver(self, forKeyPath: "contentSize")
         }
-    }
+    
+//    func updateInnerHeight() {
+//        DispatchQueue.main.async {
+//            self.tableview.layoutIfNeeded()
+//            self.tableviewHeight.constant = self.tableview.contentSize.height
+//        }
+//    }
+    
+    override func observeValue(forKeyPath keyPath: String?,
+                                  of object: Any?,
+                                  change: [NSKeyValueChangeKey : Any]?,
+                                  context: UnsafeMutableRawPointer?) {
+
+           if keyPath == "contentSize" && isExpanded {
+               tableviewHeight.constant = tableview.contentSize.height
+               onHeightChange?()
+           }
+       }
 
     func notifyParentToUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
@@ -64,43 +82,73 @@ class SubjectsTVCell: UITableViewCell {
         }
     }
     
+//    func configureExpandState() {
+//
+//        if isExpand {
+//            
+//            tableview.isHidden = false
+//            tableview.reloadData()
+//
+//            updateInnerHeight()
+//            notifyParentToUpdate()
+//
+//        } else {
+//            
+//            tableview.isHidden = true
+//            tableviewHeight.constant = 0
+//            notifyParentToUpdate()
+//        }
+//    }
+    
     func configureExpandState() {
 
-        if isExpand {
-            
-            tableview.isHidden = false
-            tableview.reloadData()
+            if isExpanded {
+                expandIconBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
 
-            updateInnerHeight()
-            notifyParentToUpdate()
+                tableview.isHidden = false
+                tableview.reloadData()
 
-        } else {
-            
-            tableview.isHidden = true
-            tableviewHeight.constant = 0
-            notifyParentToUpdate()
+                DispatchQueue.main.async {
+                    self.tableviewHeight.constant = self.tableview.contentSize.height
+                    self.onHeightChange?()
+                }
+
+            } else {
+                expandIconBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+
+                tableview.isHidden = true
+                tableviewHeight.constant = 0
+
+                onHeightChange?()
+            }
         }
-    }
-
 }
 
 extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return activitiesCount
     }
 
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell",
                                                  for: indexPath) as! ActivitiesTVCell
         return cell
     }
-    
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
-        // Handle inner selection if needed
+}
+
+
+class ContentSizedTableView: UITableView {
+    override var contentSize: CGSize {
+        didSet {
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        layoutIfNeeded()
+        return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
     }
 }

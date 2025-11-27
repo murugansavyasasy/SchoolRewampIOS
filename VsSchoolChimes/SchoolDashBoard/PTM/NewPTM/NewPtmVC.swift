@@ -542,7 +542,6 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             } else {
                 cell.optionsBtn.isHidden = true
             }
-
             // MARK: - Reset common UI
             cell.BookedStatusView.isHidden = true
             cell.WaitingLbl.isHidden = true
