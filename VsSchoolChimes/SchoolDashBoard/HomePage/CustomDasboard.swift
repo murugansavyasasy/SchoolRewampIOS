@@ -84,11 +84,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         setupHeaderView()
         Global_variabel()
         setupProfileImage()
+        if let id = pushNotificationId ,id != "" {
+            handleMenuSelection(
+                menuId: Int(PushNotificationMenuId ?? "-1") ?? -1,
+                PushNotiMsg : pushNotificationId ?? ""
+            )
+        }
         
-        handleMenuSelection(
-            menuId: Int(PushNotificationMenuId ?? "-1") ?? -1,
-            PushNotiMsg : pushNotificationId ?? ""
-        )
         
         
     }

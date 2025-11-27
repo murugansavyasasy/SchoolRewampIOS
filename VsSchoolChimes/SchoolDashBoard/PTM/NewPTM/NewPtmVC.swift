@@ -97,11 +97,9 @@ class NewPtmVC: UIViewController, Datepicker {
         
         //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
         
-        if pushNotiMsgId != ""{
-            bookedSlots()
-        }else{
+       
             addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
-        }
+        
        
         
 //        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
@@ -127,10 +125,15 @@ class NewPtmVC: UIViewController, Datepicker {
         
         super.viewWillAppear(animated)
         
-        if selectedDate == ""{
-            Get_Meetings_Api(EventDate: "ALL")
-        }else {
-            Get_Meetings_Api(EventDate: selectedDate)
+        if pushNotiMsgId != ""{
+            bookedSlots()
+        }else{
+            
+            if selectedDate == ""{
+                Get_Meetings_Api(EventDate: "ALL")
+            }else {
+                Get_Meetings_Api(EventDate: selectedDate)
+            }
         }
     }
 
@@ -249,11 +252,11 @@ class NewPtmVC: UIViewController, Datepicker {
                             let slots = completedSlots.compactMap{$0}
                             self.sections.append(SectionData(title:  PTMString.completed_slots.translated(), type: .slots, events: slots))
                         }
-                        
                         self.tv.reloadData()
                         if self.pushNotiMsgId != ""{
                             DispatchQueue.main.async {
                                 self.scrollToNotificationIfNeeded()
+                                self.pushNotiMsgId = ""
                             }
                         }
                     }else {
@@ -276,28 +279,21 @@ class NewPtmVC: UIViewController, Datepicker {
     
 
     private func scrollToNotificationIfNeeded() {
-        guard let id = pushNotiMsgId,
-              let data = Booked_slot_data.first else { return }
+        guard let id = pushNotiMsgId else { return }
 
-        let sections: [(list: [BookedSlot]?, section: Int)] = [
-            (data.today,     0),
-            (data.upcoming,  1),
-            (data.completed, 2)
-        ]
-
-        for sec in sections {
-            if let idx = sec.list?.firstIndex(where: { $0.slot_id == id }) {
-                scrollAndHighlight(IndexPath(row: idx, section: sec.section))
-                return
+        for (sectionIndex, section) in sections.enumerated() {
+            if let rowIndex = section.events.firstIndex(where: {
+                ($0 as? BookedSlot)?.slot_id == id
+            }) {
+                scrollAndHighlight(IndexPath(row: rowIndex, section: sectionIndex))
             }
+
         }
     }
 
+
+
     func scrollAndHighlight(_ indexPath: IndexPath) {
-
-        // Make sure layout is finished
-        tv.layoutIfNeeded()
-
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
@@ -309,14 +305,13 @@ class NewPtmVC: UIViewController, Datepicker {
                         .withAlphaComponent(0.3)
                 } completion: { _ in
                     UIView.animate(withDuration: 0.7, delay: 0.8) {
-                        cell.contentView.backgroundColor = .white
+                        cell.contentView.backgroundColor = .clear
                     }
                 }
             }
         }
     }
-
-
+    
 
     @available(iOS 14.0, *)
     @IBAction func createAct(_ sender: Any) {

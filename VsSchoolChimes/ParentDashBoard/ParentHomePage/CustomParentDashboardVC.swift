@@ -94,8 +94,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             setupLabels()
             setupProfileImage()
             Global_variabel()
-        
-        handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
+        if let id = messageId ,id != "" {
+            handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
+        }
     }
     
     init(
