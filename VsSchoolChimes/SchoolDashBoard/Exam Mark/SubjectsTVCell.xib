@@ -75,11 +75,11 @@
                                     <constraint firstItem="nrM-kM-ObC" firstAttribute="top" secondItem="a4p-lN-FLk" secondAttribute="top" constant="15" id="bIo-Pk-Uh9"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FK9-p7-qed">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FK9-p7-qed" customClass="ContentSizedTableView" customModule="School_Chimes" customModuleProvider="target">
                                 <rect key="frame" x="5" y="76" width="290" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="R4g-fH-y8f"/>
+                                    <constraint firstAttribute="height" constant="80" id="E5v-Qi-zpv"/>
                                 </constraints>
                             </tableView>
                         </subviews>
@@ -110,8 +110,8 @@
                 <outlet property="statusLbl" destination="NWd-Pt-yrm" id="cZ3-eB-pV0"/>
                 <outlet property="subjectLbl" destination="A09-ag-wPb" id="e3f-MI-OHJ"/>
                 <outlet property="subjectView" destination="a4p-lN-FLk" id="Ra5-pi-coe"/>
-                <outlet property="tableview" destination="FK9-p7-qed" id="r2a-WQ-bf7"/>
-                <outlet property="tableviewHeight" destination="R4g-fH-y8f" id="BNB-sM-tcj"/>
+                <outlet property="tableview" destination="FK9-p7-qed" id="zXe-Hg-xpQ"/>
+                <outlet property="tableviewHeight" destination="E5v-Qi-zpv" id="jaR-SR-MCA"/>
             </connections>
             <point key="canvasLocation" x="138.93129770992365" y="148.2394366197183"/>
         </tableViewCell>

@@ -346,6 +346,13 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
+    func senderExamMarkNavigate(from viewController: UIViewController) {
+        
+        let vc = staffExamMarkVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
     
     //MARK: ResiverSideMenuViewContoller Starts
     
