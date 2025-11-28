@@ -2814,4 +2814,16 @@ struct Review: Codable {
     let description: String?
     let created_on: String?
     let updated_on: String?
+    let remarks:[CategoriesSection]?
+}
+// MARK: - Models
+struct CategoriesSection:Codable{
+    let name: String?
+    let rating: Int?
+    let category: [Categories]?
+}
+
+struct Categories:Codable{
+    let name: String?
+    var selected: Bool?
 }
