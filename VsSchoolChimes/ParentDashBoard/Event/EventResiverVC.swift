@@ -179,6 +179,7 @@ class EventResiverVC: UIViewController {
             }
         }
     }
+    
     func paketApiCall(params:[String:Any]){
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_pauket_add_points,

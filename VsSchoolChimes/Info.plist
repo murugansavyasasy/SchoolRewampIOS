@@ -13,8 +13,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>We need access to fetch your email accounts</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlegmail</string>
