@@ -36,7 +36,8 @@ class PriorityStudentTVC: UITableViewCell {
         super.layoutSubviews()
         gradientLayer?.frame = Cellview.bounds
         DispatchQueue.main.async {
-            self.applyGradient()
+//            self.applyGradient()
+            self.applyGradientGlassEffect()
         }
     }
     
@@ -53,7 +54,8 @@ class PriorityStudentTVC: UITableViewCell {
     }
     func setGradientColors(_ colors: [CGColor]) {
         gradientColors = colors
-        applyGradient()
+//        applyGradient()
+        applyGradientGlassEffect()
     }
     func applyGradient() {
         guard gradientColors.isEmpty == false else { return }
@@ -82,7 +84,35 @@ class PriorityStudentTVC: UITableViewCell {
         Cellview.layer.shadowRadius = 4
         Cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
+    func applyGradientGlassEffect() {
+        Cellview.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+        Cellview.subviews.filter { $0 is UIVisualEffectView }.forEach { $0.removeFromSuperview() }
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = Cellview.bounds
+        blurView.layer.cornerRadius = Cellview.layer.cornerRadius
+        blurView.clipsToBounds = true
+        Cellview.insertSubview(blurView, at: 0)
+        guard gradientColors.isEmpty == false else { return }
 
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors.map {
+            UIColor(cgColor: $0).cgColor
+        }
 
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientLayer.frame = Cellview.bounds
+        gradientLayer.cornerRadius = Cellview.layer.cornerRadius
+        Cellview.layer.insertSublayer(gradientLayer, above: blurView.layer)
+        Cellview.layer.borderWidth = 0.7
+        Cellview.layer.borderColor = UIColor.white.withAlphaComponent(0.28).cgColor
+        Cellview.layer.shadowColor = UIColor.black.cgColor
+        Cellview.layer.shadowOpacity = 0.10
+        Cellview.layer.shadowRadius = 6
+        Cellview.layer.shadowOffset = CGSize(width: 0, height: 3)
+
+        Cellview.layer.masksToBounds = false
+    }
 }
 

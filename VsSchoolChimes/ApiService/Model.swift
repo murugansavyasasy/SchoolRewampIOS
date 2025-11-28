@@ -2814,4 +2814,52 @@ struct Review: Codable {
     let description: String?
     let created_on: String?
     let updated_on: String?
+    let remarks:[CategoriesSection]?
+}
+// MARK: - Models
+struct CategoriesSection:Codable{
+    let name: String?
+    let rating: Int?
+    let category: [Categories]?
+}
+
+struct Categories:Codable{
+    let name: String?
+    var selected: Bool?
+}
+
+// MARK: - staff Exam mark
+
+struct StaffExamListResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StaffExamData]?
+}
+
+struct StaffExamData: Codable {
+    let id: String?
+    let name: String?
+    let date: String?
+    let ref_flag: Int?
+}
+
+struct SubjectWiseExamResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SubjectExamData]?
+}
+
+struct SubjectExamData: Codable {
+    let section_id: String?
+    let section_name: String?
+    let class_id: String?
+    let class_name: String?
+    let subject_id: String?
+    let subject_name: String?
+    let splitup_details: [SplitDetail]?
+}
+
+struct SplitDetail: Codable {
+    let id: String?
+    let name: String?
 }

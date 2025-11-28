@@ -33,6 +33,8 @@ class ActivitiesTVCell: UITableViewCell {
         ActivityStatusView.layer.borderWidth = 0.5
         ActivityStatusView.layer.borderColor = UIColor.lightGray.cgColor
         
+        ActivityStatusView.isHidden = true
+        
         dropdownView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showDropdown)))
         
         setupDropdown()
@@ -56,27 +58,30 @@ class ActivitiesTVCell: UITableViewCell {
     
     @IBAction func showDropdown(){
         
-        // Get the key window safely for iOS 13+
         guard let window = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .flatMap({ $0.windows })
-            .first(where: { $0.isKeyWindow }) else { return }
-        
-        // Convert dropdownView frame to window coordinates
-        let dropdownFrame = dropdownView.convert(dropdownView.bounds, to: window)
-        let screenHeight = UIScreen.main.bounds.height
-        
-        // Decide direction manually
-        if dropdownFrame.maxY > screenHeight * 0.7 {
-            dropdown.direction = .top    // opens upward
-        } else {
-            dropdown.direction = .bottom // opens downward
-        }
-        
-        dropdown.show()
-        
-        dropdown.selectionAction = { [weak self] (index, item) in
-            self?.dropdownLbl.text = item
-        }
+                    .compactMap({ $0 as? UIWindowScene })
+                    .flatMap({ $0.windows })
+                    .first(where: { $0.isKeyWindow }) else { return }
+                
+                // Convert dropdownView frame to window coords
+                let frame = dropdownView.convert(dropdownView.bounds, to: window)
+                let screenHeight = UIScreen.main.bounds.height
+                
+                // Set direction manually
+                dropdown.direction = (frame.maxY > screenHeight * 0.7) ? .top : .bottom
+
+                // Handle selection
+                dropdown.selectionAction = { [weak self] (index, item) in
+                    guard let self = self else { return }
+
+                    self.dropdownLbl.text = item
+                    self.ActivityStatusView.isHidden = false
+                    if let parentTable = self.superview as? UITableView {
+                        parentTable.beginUpdates()
+                        parentTable.endUpdates()
+                    }
+                }
+
+                dropdown.show()
     }
 }

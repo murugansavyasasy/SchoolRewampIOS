@@ -28,17 +28,17 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ehi-yD-AZM">
                                         <rect key="frame" x="10" y="15" width="277" height="60"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="tEL-Ai-G2U">
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tEL-Ai-G2U">
                                                 <rect key="frame" x="0.0" y="0.0" width="277" height="39.666666666666664"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade 10 - Section A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWt-3A-Isf">
-                                                        <rect key="frame" x="0.0" y="0.0" width="242" height="20.333333333333332"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade 10 - Section A" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWt-3A-Isf">
+                                                        <rect key="frame" x="0.0" y="9.6666666666666625" width="242" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="graduationcap" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-pF-2qd">
-                                                        <rect key="frame" x="242" y="1" width="35" height="37"/>
+                                                        <rect key="frame" x="242" y="3.3333333333333321" width="35" height="37"/>
                                                         <color key="tintColor" name="staffExamColour"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="j9j-WZ-JJl"/>
@@ -47,7 +47,7 @@
                                                     </imageView>
                                                 </subviews>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32 Students" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzC-bT-hSX">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32 Students" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzC-bT-hSX">
                                                 <rect key="frame" x="0.0" y="39.666666666666671" width="277" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -85,6 +85,8 @@
             <connections>
                 <outlet property="Classview" destination="dTW-vP-9AS" id="cMx-n5-oaj"/>
                 <outlet property="baseView" destination="EXg-3d-NtQ" id="vEx-tB-hBW"/>
+                <outlet property="classNameLbl" destination="rWt-3A-Isf" id="hJm-3Z-mQY"/>
+                <outlet property="studentCountLbl" destination="PzC-bT-hSX" id="YLe-D5-ZaZ"/>
             </connections>
             <point key="canvasLocation" x="138.93129770992365" y="129.92957746478874"/>
         </tableViewCell>

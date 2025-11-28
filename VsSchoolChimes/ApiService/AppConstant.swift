@@ -193,6 +193,8 @@ struct ServiceUrl{
     static let dashboard_api_reviews_list = "dashboard/api/reviews/list"
     static let dashboard_api_reviews_add = "dashboard/api/reviews/add"
     static let ptm_api_ptm_schedule_datewise_booked_slots = "ptm/api/ptm-schedule/datewise-booked-slots"
+    static let exam_api_exam_get_staff_wise_exam = "exam/api/exam/get-staff-wise-exam"
+    static let exam_get_subject_wise_activities = "exam/api/exam/get-subject-wise-activities"
 }
 
 struct localData{
@@ -248,6 +250,7 @@ struct Menu_id{
     static let  Market_place = 30
     static let  Alert = 36
     static let leaveReq = 18
+    static let Upload_Marks = 41
     
     
 }

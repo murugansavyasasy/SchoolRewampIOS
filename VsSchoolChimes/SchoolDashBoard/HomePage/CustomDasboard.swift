@@ -511,7 +511,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMenuCVC", for: indexPath) as! CustomMenuCVC
             if let item = menu_details?[indexPath.item] {
                 let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == item.id }
-                let img = UIImage(named: filteredItems.first?.name ?? "")
+                let img = UIImage(named: filteredItems.first?.name ?? "school_chimes 2")
                 cell.iconBtn.setImage(img, for: .normal)
                 cell.imenuName.text = item.name
                 cell.menuCondent.text = item.description
@@ -585,7 +585,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40,18
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40, 18, 41
         ]
 
         print("menuIdmenuIdmenuId",menuId)
@@ -631,13 +631,28 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             35: { self.MenuRedirect.senderStudentreportNavigate(from: self) },
             36: { self.MenuRedirect.senderImportantInfoNavigate(from: self) },
             39: { self.MenuRedirect.senderAttachment(from: self) },
-            40: { self.MenuRedirect.receiverPauckt(from: self) }
+            40: { self.MenuRedirect.receiverPauckt(from: self) },
+            41: { self.MenuRedirect.senderExamMarkNavigate(from: self) },
         ]
 
         guard let action = actions[menuId] else {
-            print("Unknown menu id:", menuId)
+            
+            let alert = UIAlertController(
+                title: nil,
+                message: nil,
+                preferredStyle: .alert
+            )
+            alert.addIconTitleMessage(
+                icon: UIImage(named: "school_chimes 2"),
+                title: "Coming Soon",
+                message: "This feature is under development."
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            
             return
         }
+
 
         // If item requires school selection → wrap with navigateOrSchoolList
         
@@ -719,4 +734,44 @@ struct DashboardMenu {
     let icon: String
     let title: String
     let subtitle: String
+}
+extension UIAlertController {
+    func addIconTitleMessage(icon: UIImage?, title: String, message: String) {
+
+        // Resize icon
+        let iconAttachment = NSTextAttachment()
+        iconAttachment.image = icon
+        iconAttachment.bounds = CGRect(x: 0, y: -10, width: 35, height: 35)
+
+        // Icon + Newline
+        let iconString = NSAttributedString(attachment: iconAttachment)
+        let newline = NSAttributedString(string: "\n\n")
+
+        // Title attributed
+        let titleAttr = NSAttributedString(
+            string: title + "\n",
+            attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 17),
+                .foregroundColor: UIColor.label
+            ]
+        )
+
+        // Message attributed
+        let messageAttr = NSAttributedString(
+            string: message,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 14),
+                .foregroundColor: UIColor.secondaryLabel
+            ]
+        )
+
+        // Combine all
+        let final = NSMutableAttributedString()
+        final.append(iconString)
+        final.append(newline)
+        final.append(titleAttr)
+        final.append(messageAttr)
+
+        self.setValue(final, forKey: "attributedTitle")
+    }
 }

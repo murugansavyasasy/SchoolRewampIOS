@@ -15,7 +15,9 @@ class ExamActivitySelectionVC: UIViewController {
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     
-    var selectedRow: IndexPath? = nil
+    var expandedIndex: IndexPath?
+    var didInitialHeightSet = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +42,22 @@ class ExamActivitySelectionVC: UIViewController {
         tableview.dataSource = self
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        DispatchQueue.main.async {
-            self.updateTableHeight()
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+//            self.updateMainHeight()
+//        }
+//    }
+
+
     
-    func updateTableHeight() {
-        DispatchQueue.main.async {
-            self.tableview.layoutIfNeeded()
-            self.tableviewHeight.constant = self.tableview.contentSize.height
-            self.view.layoutIfNeeded()
-        }
-    }
+    private func updateMainHeight() {
+           DispatchQueue.main.async {
+               self.tableview.layoutIfNeeded()
+               self.tableviewHeight.constant = self.tableview.contentSize.height
+           }
+       }
     
     @IBAction func continueAct(_ sender: Any) {}
     
@@ -64,51 +67,64 @@ class ExamActivitySelectionVC: UIViewController {
 }
 
 extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-    
+
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableview.dequeueReusableCell(withIdentifier: "SubjectsTVCell",
-                                                 for: indexPath) as! SubjectsTVCell
-        
-        cell.isExpand = (selectedRow == indexPath)
+
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "SubjectsTVCell",
+            for: indexPath
+        ) as! SubjectsTVCell
+
+        cell.isExpanded = (expandedIndex == indexPath)
         cell.configureExpandState()
-        
-        // Notify parent VC when child height changes
-        cell.onInnerHeightChanged = { [weak self] in
-            self?.updateTableHeight()
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let previous = selectedRow
-        selectedRow = indexPath
-
-        var rows = [indexPath]
-        if let prev = previous, prev != indexPath {
-            rows.append(prev)
-        }
-
-        tableview.reloadRows(at: rows, with: .automatic)
-
-        // 🔥 FINAL FIX — second layout cycle
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+        cell.onHeightChange = { [weak self] in
+            guard let self = self else { return }
             self.tableview.beginUpdates()
             self.tableview.endUpdates()
-            self.updateTableHeight()
+            self.updateMainHeight()
+        }
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+
+        let previous = expandedIndex
+
+        if previous == indexPath {
+            expandedIndex = nil
+        } else {
+            expandedIndex = indexPath
+        }
+
+        var rows = [indexPath]
+        if let previous = previous, previous != indexPath {
+            rows.append(previous)
+        }
+
+        tableView.reloadRows(at: rows, with: .automatic)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.updateMainHeight()
         }
     }
 
-    
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.updateMainHeight()
+        }
     }
 }
