@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCrashlytics
 
 @available(iOS 14.0, *)
 class PriorityVC: UIViewController {
@@ -370,7 +371,6 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if login_astype  == 2 {
             if let data = childDetails?[indexPath.row]{
                 UserDefaultFileManager.saveChildDetails(data: data)}

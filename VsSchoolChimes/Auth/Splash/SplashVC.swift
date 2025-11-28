@@ -601,9 +601,12 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                     if response.status ?? false {
                         self.versionData = response.data?.first
                         if let countryDetails = self.versionData?.country_details {
+                            
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
                         }
+                       
+
                         if self.versionData?.update_available == true {
                             self.showUpdatePopup()
                         } else {
