@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import VisionKit
 
 @available(iOS 14.0, *)
 class ExamImgUploadVC: UIViewController {
@@ -102,7 +103,8 @@ class ExamImgUploadVC: UIViewController {
         // Camera option
         let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
            
-            openCamera()
+            //openCamera()
+            openDocumentScanner(from: self)
         }
         alertController.addAction(cameraAction)
         
@@ -142,6 +144,13 @@ class ExamImgUploadVC: UIViewController {
             
         }
     }
+    
+    func openDocumentScanner(from viewController: UIViewController) {
+        let scanner = VNDocumentCameraViewController()
+        scanner.delegate = self
+        viewController.present(scanner, animated: true)
+    }
+
     
     func imageSelection(){
         
@@ -228,6 +237,36 @@ class ExamImgUploadVC: UIViewController {
     }
     
 }
+
+@available(iOS 14.0, *)
+extension ExamImgUploadVC: VNDocumentCameraViewControllerDelegate {
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController,
+                                      didFinishWith scan: VNDocumentCameraScan) {
+        
+        var scannedImages: [UIImage] = []
+        
+        for i in 0..<scan.pageCount {
+            let image = scan.imageOfPage(at: i)
+            scannedImages.append(image)
+        }
+
+        // handle scannedImages here
+
+        controller.dismiss(animated: true)
+    }
+
+    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+        controller.dismiss(animated: true)
+    }
+
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController,
+                                      didFailWithError error: Error) {
+        controller.dismiss(animated: true)
+        print("Document scan failed: \(error.localizedDescription)")
+    }
+}
+
 
 
 class DashedView: UIView {

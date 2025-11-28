@@ -65,7 +65,6 @@
                     <color key="backgroundColor" name="BackGroundClr"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Lq4-Y0-tIt" secondAttribute="trailing" constant="10" id="LZw-TQ-6EE"/>
-                        <constraint firstAttribute="height" constant="183" id="XtK-gY-gUT"/>
                         <constraint firstAttribute="bottom" secondItem="Lq4-Y0-tIt" secondAttribute="bottom" constant="20" id="ZhT-eB-KqR"/>
                         <constraint firstItem="Lq4-Y0-tIt" firstAttribute="leading" secondItem="g30-NM-pff" secondAttribute="leading" constant="10" id="yea-NY-1Ce"/>
                     </constraints>
@@ -437,10 +436,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.55294117647058827" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

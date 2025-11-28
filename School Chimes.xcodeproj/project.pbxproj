@@ -5872,7 +5872,7 @@
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your contacts to get your phone number.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
@@ -5915,7 +5915,7 @@
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your contacts to get your phone number.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";

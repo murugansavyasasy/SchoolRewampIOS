@@ -47,6 +47,8 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     var selectedVideoURL: URL?
     var vimeoUploader: VimeoUploader?
     var editReport : Submission?
+    let today_date = AwsCurrentDateString()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let studentName = studentDetails?.name ?? ""
@@ -499,8 +501,8 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                     // 🖼 Local image → upload to AWS
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
-                        bucketPath: "uploads/images/",
-                        bucketName: "schoolchimes-communication",
+                        bucketPath: "\(Awsmenu.assignment)/\(studentDetails?.school_id ?? "")/\(today_date)",
+                        bucketName: BucketName.schoolchimes_activities,
                         progressHandler: nil
                     ) { url in
                         if let uploadedURL = url {
@@ -561,8 +563,8 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                             
                             AWSUploadManager.shared.uploadFileToAWS(
                                 file: fileURL,
-                                bucketPath: path,
-                                bucketName: "schoolchimes-communication",
+                                bucketPath: "\(Awsmenu.assignment)/\(studentDetails?.school_id ?? "")/\(today_date)",
+                                bucketName: BucketName.schoolchimes_activities,
                                 progressHandler: nil
                             ) { url in
                                 if let uploadedURL = url {

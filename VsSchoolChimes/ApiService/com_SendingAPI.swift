@@ -665,6 +665,25 @@ class  commonApi_forSending {
         }
     }
     
-    
+    func getBucketPath() -> String {
+        
+        let today_date = AwsCurrentDateString()
+        let school_id = UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
+        
+        switch Menu_id.staffSelectedMenuId {
+            
+        case Menu_id.homeWorkMenuId:
+            return "\(Awsmenu.homework)/\(school_id)/\(today_date)"
+            
+        case Menu_id.isAssaignment:
+            return "\(Awsmenu.assignment)/\(school_id)/\(today_date)"
+            
+        case Menu_id.lsrw:
+            return "\(Awsmenu.skills)/\(school_id)/\(today_date)"
+            
+        default:
+            return ""
+        }
+    }
     
 }
