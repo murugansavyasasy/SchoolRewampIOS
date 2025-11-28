@@ -472,6 +472,7 @@ class ReciverAttendanceReportVC: UIViewController {
         if #available(iOS 14.0, *) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 let vc = LeveHistoryVC(nibName: nil, bundle: nil)
+                vc.PushnotiMsg_id = self.pushNotiMsg_id
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }

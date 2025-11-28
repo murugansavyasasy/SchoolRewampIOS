@@ -682,7 +682,7 @@ class MarkAttendenceVC: UIViewController {
                                    scrollingLbl.speed = .duration(18.0)   // Slower scroll
                                    scrollingLbl.fadeLength = 10.0
                                    scrollingLbl.trailingBuffer = 30.0
-                                   scrollingLbl.text = "📢Important Note: " + message
+                                   scrollingLbl.text = "📢 " + message
                             }
                         }
 

@@ -580,13 +580,16 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func handleMenuSelection(menuId: Int,PushNotiMsg : String) {
 
+        let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
+        MenuStringFile.selectedMenuName = menuName
+        
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
             1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40, 18, 41
         ]
 
-        let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
-        MenuStringFile.selectedMenuName = menuName
+        print("menuIdmenuIdmenuId",menuId)
+        print("menuNamemenuNamemenuNamemenuName",menuName)
         // All actions with explicit self
         let actions: [Int: () -> Void] = [
             1: { self.MenuRedirect.senderAbsenteesReport(from: self) },

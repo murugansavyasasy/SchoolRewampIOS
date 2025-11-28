@@ -147,6 +147,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Bundle.main.appVersion ?? "1.0")
         setupUI()
         createStars()
     }
@@ -582,9 +583,9 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     
     private func versionCheck() {
         let params: [String: Any] = [
-            "device_type": "ios",
-            "version_code": Bundle.main.appVersion ?? "1.0",
-            "country_id": countryId ?? 0
+            COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
+            COMMON_PARAMETER.version_code: API_PARAMS_HOTCODE.Version_Code,
+            COMMON_PARAMETER.country_id: countryId ?? 0
         ]
         
         APIService.shared.makeApi(

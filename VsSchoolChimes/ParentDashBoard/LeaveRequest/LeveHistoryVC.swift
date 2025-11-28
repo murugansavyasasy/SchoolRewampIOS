@@ -250,9 +250,10 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
                         self.searchBtn.isHidden = isEmpty
                         self.applyFilter()
                         // self.historyTable.reloadData()
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            self.scrollToLeave(with: self.PushnotiMsg_id ?? "")
+                        if self.PushnotiMsg_id != ""{
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                self.scrollToLeave(with: self.PushnotiMsg_id ?? "")
+                            }
                         }
 
                     }else{
@@ -293,10 +294,10 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         guard let cell = historyTable.cellForRow(at: indexPath) else { return }
 
         UIView.animate(withDuration: 0.3, animations: {
-            cell.contentView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+            cell.contentView.backgroundColor = UIColor.lightGray
         }) { _ in
             UIView.animate(withDuration: 0.6, delay: 1.0, options: []) {
-                cell.contentView.backgroundColor = .white
+                cell.contentView.backgroundColor = .clear
             }
         }
     }
