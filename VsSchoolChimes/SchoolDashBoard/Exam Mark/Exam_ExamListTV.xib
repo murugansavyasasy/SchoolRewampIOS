@@ -104,6 +104,7 @@
                 <outlet property="activitiesLbl" destination="yIb-cv-QHK" id="tEF-M2-g8I"/>
                 <outlet property="collectionViewHeight" destination="HeN-4I-pj5" id="R2P-QQ-im2"/>
                 <outlet property="cv" destination="D9q-qZ-H6C" id="6dG-wm-fZO"/>
+                <outlet property="subjectNameLbl" destination="hs4-k9-sd6" id="JuY-6v-vxB"/>
             </connections>
             <point key="canvasLocation" x="138.93129770992365" y="351.40845070422534"/>
         </tableViewCell>

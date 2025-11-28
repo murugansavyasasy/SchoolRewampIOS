@@ -13,12 +13,12 @@ class Exam_ExamListTV: UITableViewCell {
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var activitiesLbl: UILabel!
+    @IBOutlet weak var subjectNameLbl: UILabel!
 
     var onHeightChanged: (() -> Void)?
     var onExpand: (() -> Void)?
     private var isExpanded: Bool = false
-
-    var items = ["Math", "English", "Computer Science", "GK"]
+    var Activities : [SplitDetail] = []
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -132,7 +132,7 @@ extension Exam_ExamListTV: UICollectionViewDelegate, UICollectionViewDataSource 
 
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        items.count
+        Activities.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -143,7 +143,7 @@ extension Exam_ExamListTV: UICollectionViewDelegate, UICollectionViewDataSource 
             for: indexPath
         ) as! ExamActivitiesCV
 
-        cell.nameLbl.text = items[indexPath.item]
+        cell.nameLbl.text = Activities[indexPath.item].name
         return cell
     }
 }
@@ -154,7 +154,7 @@ extension Exam_ExamListTV: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let text = items[indexPath.item]  // your data source
+        let text = Activities[indexPath.item].name ?? ""  // your data source
 
         let font = UIFont.systemFont(ofSize: 17)
         let textWidth = (text as NSString).size(withAttributes: [.font: font]).width

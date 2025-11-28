@@ -260,6 +260,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             case Menu_id.leaveReq :
                 MenuRedirect
                     .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: "")
+            case Menu_id.Upload_Marks:
+                MenuRedirect.senderExamMarkNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

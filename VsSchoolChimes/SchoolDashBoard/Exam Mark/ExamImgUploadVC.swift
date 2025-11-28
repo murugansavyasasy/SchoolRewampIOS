@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class ExamImgUploadVC: UIViewController {
     
     
@@ -23,6 +24,7 @@ class ExamImgUploadVC: UIViewController {
     @IBOutlet weak var uploadIconImage: UIImageView!
     @IBOutlet weak var documentIcon: UIImageView!
     
+    var attachments: [AttachmentItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +64,8 @@ class ExamImgUploadVC: UIViewController {
         cancelBtn.layer.borderColor = UIColor.staffExamColour.cgColor
         ContinueManuallyBtn.layer.cornerRadius = 10
         
+        imageSelection()
+        
     }
    
     @IBAction func AiTap(){
@@ -93,6 +97,95 @@ class ExamImgUploadVC: UIViewController {
     
     @IBAction func UploadTap(){
         
+        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+        
+        // Camera option
+        let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+           
+            openCamera()
+        }
+        alertController.addAction(cameraAction)
+        
+        // Gallery option
+        let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+            selectImages()
+            //
+        }
+        alertController.addAction(galleryAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func selectImages() {
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if attachments.count != 10{
+            PhotoPickerManager.shared
+                .presentPicker(
+                    ofType: .gallery(selectionLimit: 10 - attachments.count),
+                    from: self
+                )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+        
+    }
+    func openCamera(){
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if attachments.count != 10{
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+    }
+    
+    func imageSelection(){
+        
+        // handle picked image from camera
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+        }
+        
+        // handle picked image from gallery
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
+            }
+            attachments.append(contentsOf: imageItems)
+            
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            
+        }
+        
+        // handle picked PDF
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
+           
+            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            
+        }
+        
+        // handle picked video
+        PhotoPickerManager.shared.onVideoPicked = { [self] data in
+            
+            user_inputs.selectedFileType = CommonStringFile.VIDEO
+            attachments.append(AttachmentItem(
+                image:nil,
+                imageURL: nil,
+                fileType: CommonStringFile.VIDEO,
+                VideoURl: data
+            )
+            )
+        }
     }
     
     

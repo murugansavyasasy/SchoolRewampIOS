@@ -582,7 +582,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40,18
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40, 18, 41
         ]
 
         let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
@@ -628,7 +628,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             35: { self.MenuRedirect.senderStudentreportNavigate(from: self) },
             36: { self.MenuRedirect.senderImportantInfoNavigate(from: self) },
             39: { self.MenuRedirect.senderAttachment(from: self) },
-            40: { self.MenuRedirect.receiverPauckt(from: self) }
+            40: { self.MenuRedirect.receiverPauckt(from: self) },
+            41: { self.MenuRedirect.senderExamMarkNavigate(from: self) },
         ]
 
         guard let action = actions[menuId] else {

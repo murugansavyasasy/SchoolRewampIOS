@@ -17,12 +17,14 @@ class ExamListCell: UITableViewCell {
     @IBOutlet weak var checkCircleBtn: UIButton!
     @IBOutlet weak var selectioView: UIView!
     @IBOutlet weak var examNameLbl: UILabel!
+    @IBOutlet weak var examDateLbl: UILabel!
     
 
     var onExpand: (() -> Void)?
     var onInnerHeightChanged: (() -> Void)?
     var expandedRow: IndexPath?
     var isExpanded = false
+    var subjectList: [SubjectExamData] = []
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,6 +40,9 @@ class ExamListCell: UITableViewCell {
         
         selectioView.layer.cornerRadius = 10
         selectioView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        examNameLbl.setFont(style: .body, size: 17)
+        examNameLbl.setFont(style: .body, size: 13)
         
         selectionStyle = .none
         tableview.isScrollEnabled = false
@@ -122,17 +127,18 @@ class ExamListCell: UITableViewCell {
 
 extension ExamListCell: UITableViewDataSource, UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int { 3 }
+    func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
+        return subjectList.count
+    }
 
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: "Exam_ExamListTV",
-            for: indexPath
-        ) as! Exam_ExamListTV
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Exam_ExamListTV",for: indexPath) as! Exam_ExamListTV
 
+        cell.subjectNameLbl.text = subjectList[indexPath.row].subject_name
+        
+        cell.Activities = subjectList[indexPath.row].splitup_details ?? []
+        
         cell.configureExpansionState(expandedRow == indexPath, animated: false)
 
         // INNER EXPAND
