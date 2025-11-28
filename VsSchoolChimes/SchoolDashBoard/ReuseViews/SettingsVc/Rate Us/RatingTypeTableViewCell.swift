@@ -1,138 +1,138 @@
-
+//
 //  RatingTypeTableViewCell.swift
 //  VoiceSnap
 //
-//  Created by Chandhru veeramalai on 05/11/24.
+//  Created by Chandhru Veeramalai on 05/11/24.
 //
 
 import UIKit
 
-class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate {
-    
-    
+class RatingTypeTableViewCell: UITableViewCell,
+                               UICollectionViewDelegate,
+                               UICollectionViewDataSource,
+                               UICollectionViewDelegateFlowLayout,
+                               UITextViewDelegate {
+
     @IBOutlet weak var AnySuggestionsLbl: UILabel!
-    
     @IBOutlet weak var collectionviewheight: NSLayoutConstraint!
     @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var collectionview: UICollectionView!
-    
     @IBOutlet weak var suggestContetTxtView: UITextView!
     @IBOutlet weak var SubmitBtn: UIButton!
-    var ratingDelegate : RatingDelegate?
-    var load = false
-    var names = [Categories(name: "App UI interface", selected: false),
-                 Categories(name: "Watch UI", selected: false),
-                 Categories(name: "Pricing", selected: false),
-                 Categories(name: "Connection Stability", selected: false),
-                 Categories(name: "Paring Experience", selected: false),
-                 Categories(name: "Watch faces", selected: false),
-                 Categories(name: "Watch Hardware", selected: false),
-                 Categories(name: "Alumni Assistance", selected: false),
-                 Categories(name: "User Login", selected: false),
-                 Categories(name: "Registration", selected: false)]
+
+    var ratingDelegate: RatingDelegate?
+    var names: [Categories] = []
     var SelectedCategory = Set<String>()
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        Uiupdate()
+        setupUI()
+    }
+
+    // MARK: - UI Setup
+    func setupUI() {
+        AnySuggestionsLbl.setFont(style: .body, size: FontSize.BodySize)
+        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         textview.delegate = self
         collectionview.delegate = self
         collectionview.dataSource = self
-        // Initialization code
+
         textview.layer.cornerRadius = Colornames.CORadius10
-        SubmitBtn.layer.cornerRadius = SubmitBtn.frame.height/2
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.lightGray.cgColor
         textview.addDoneButton()
-    }
 
-    func Uiupdate(){
-        
-        AnySuggestionsLbl.setFont(style: .body, size: FontSize.BodySize)
-        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        collectionview.register(UINib(nibName: CellConfingName.SuggestionsCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell)
+        SubmitBtn.layer.cornerRadius = SubmitBtn.frame.height / 2
+
+        // Register Cell
+        collectionview.register(
+            UINib(nibName: CellConfingName.SuggestionsCollectionViewCell, bundle: nil),
+            forCellWithReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell
+        )
+
         let layout = LeftAlignedFlowLayout()
-        layout.minimumInteritemSpacing = 10 // Customize spacing between items
-        layout.minimumLineSpacing = 10 // Customize line spacing
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
         collectionview.collectionViewLayout = layout
+        collectionview.layoutIfNeeded()
     }
-    
+
+    // MARK: - Configure
+    func configure(names: CategoriesSection?) {
+        self.names = names?.category ?? []
+        AnySuggestionsLbl.text = names?.name ?? ""
+        collectionview.reloadData()
+        collectionview.layoutIfNeeded()
+        updateCollectionViewHeight()
+    }
+
+    // MARK: - CollectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return names.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell, for: indexPath) as! SuggestionsCollectionViewCell
-        cell.layer.cornerRadius = 20
-        
+        cell.layer.cornerRadius = 10
         cell.backgroundColor = names[indexPath.row].selected ?? false ?  .gradient1 :UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
         
         cell.name.text = names[indexPath.item].name
         cell.name.textColor = names[indexPath.item].selected ?? false ?  .black :.black
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let titleString = names[indexPath.item].name
-        let font = UIFont.systemFont(ofSize: 14) // Customize as needed
-        let titleWidth = titleString?.size(withAttributes: [NSAttributedString.Key.font: font]).width ?? 0
-        return CGSize(width: titleWidth + 40, height: 40) // Add padding if needed
-        
+
+    // Dynamic cell width
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let title = names[indexPath.item].name ?? ""
+        let font = UIFont.systemFont(ofSize: 13)
+        let width = title.size(withAttributes: [.font: font]).width
+
+        return CGSize(width: width + 40, height: 40)
     }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        names[indexPath.item].selected?.toggle()
-        if names[indexPath.item].selected == true {
+        let newValue = !(names[indexPath.item].selected ?? false)
+        names[indexPath.item].selected = newValue
+        if newValue == true {
             SelectedCategory.insert(names[indexPath.item].name ?? "")
         } else {
-            if let name = names[indexPath.item].name {
-                if let index = SelectedCategory.firstIndex(of: name) {
-                    SelectedCategory.remove(at: index)
-                }
-            }
+            SelectedCategory.remove(names[indexPath.item].name ?? "")
         }
-        
-        collectionview.reloadData()
+        names.sort { ($0.selected ?? false) && !($1.selected ?? false) }
+
+        collectionView.reloadData()
     }
+
+
+    // MARK: - Update Height
     override func layoutSubviews() {
         super.layoutSubviews()
         updateCollectionViewHeight()
     }
-    
-    // Height update method for accurate collection view height
+
     func updateCollectionViewHeight() {
         collectionview.layoutIfNeeded()
-        let collectionViewContentHeight = collectionview.collectionViewLayout.collectionViewContentSize.height
-        collectionviewheight.constant = collectionViewContentHeight
-        
+        let height = collectionview.collectionViewLayout.collectionViewContentSize.height
+        collectionviewheight.constant = height
     }
-    
-    
+    // MARK: - Submit
     @IBAction func submit(_ sender: Any) {
         ratingDelegate?.Submit(SelectedCategory, suggessions: suggestContetTxtView.text)
     }
-    
-    
 }
-//class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
-//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-//        let attributes = super.layoutAttributesForElements(in: rect)
-//        var leftMargin = sectionInset.left
-//        var maxY: CGFloat = -1.0
-//        
-//        attributes?.forEach { layoutAttribute in
-//            if layoutAttribute.representedElementCategory == .cell {
-//                if layoutAttribute.frame.origin.y >= maxY {
-//                    leftMargin = sectionInset.left
-//                }
-//                
-//                layoutAttribute.frame.origin.x = leftMargin
-//                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
-//                maxY = max(layoutAttribute.frame.maxY, maxY)
-//            }
-//        }
-//        return attributes
-//    }
-//}
-struct Categories{
-    let name:String?
-    var selected : Bool?
+
+// MARK: - Models
+struct CategoriesSection {
+    let name: String?
+    let category: [Categories]?
+}
+
+struct Categories {
+    let name: String?
+    var selected: Bool?
 }

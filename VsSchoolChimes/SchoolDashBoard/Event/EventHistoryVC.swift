@@ -54,6 +54,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     let dropDown = DropDown()
     var delegate:EditObjectDelegate?
     var SchoolId : String?
+    var pushNotiMsg_id : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn
@@ -250,7 +251,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     self.nodataImg.isHidden = hasData
                     self.searchBtn.isHidden = !hasData
                     self.historyTable.reloadData()
-                    
+                    self.scrollToClickedMessage()
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.noDataLbl.text = error.localizedDescription
@@ -261,6 +262,42 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             }
         }
     }
+    private func scrollToClickedMessage() {
+        guard let id = pushNotiMsg_id else { return }
+        var targetIndexPath: IndexPath?
+        for (sectionIndex, section) in filteredSections.enumerated() {
+            switch section {
+            case .featured(let events),
+                 .upcoming(let events),
+                 .completed(let events):
+
+                if let rowIndex = events.firstIndex(where: { $0.id == id }) {
+                    targetIndexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                }
+
+            default:
+                continue
+            }
+        }
+
+        guard let indexPath = targetIndexPath else { return }
+        DispatchQueue.main.async {
+            self.historyTable.scrollToRow(at: indexPath, at: .middle, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                if let cell = self.historyTable.cellForRow(at: indexPath) {
+                    let originalColor = cell.contentView.backgroundColor ?? .clear
+                    UIView.animate(withDuration: 0.3, animations: {
+                        cell.contentView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.35)
+                    }) { _ in
+                        UIView.animate(withDuration: 0.5, delay: 1.0, animations: {
+                            cell.contentView.backgroundColor = originalColor
+                        })
+                    }
+                }
+            }
+        }
+    }
+
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
         cell.imgCount.isHidden = true
