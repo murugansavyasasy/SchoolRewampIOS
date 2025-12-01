@@ -54,24 +54,9 @@ class EventResiverVC: UIViewController {
         setupUI()
         registerTableView()
         GetEvent()
-        if clickedMessageId != nil{
-            loadDataAndScrollIfNeeded()
-        }
-        scrollCellToCenter(indexPath: IndexPath(row: 9, section: 0), animated: true)
         
     }
     
-    func scrollCellToCenter(indexPath: IndexPath, animated: Bool) {
-        if let cellRect = tableview.rectForRow(at: indexPath) as CGRect? {
-            let tableViewHeight = tableview.bounds.height
-            let contentOffsetY = cellRect.midY - tableViewHeight / 2
-            let maxOffsetY = tableview.contentSize.height - tableViewHeight
-            let minOffsetY: CGFloat = 0
-            
-            let finalOffsetY = max(minOffsetY, min(contentOffsetY, maxOffsetY))
-            tableview.setContentOffset(CGPoint(x: 0, y: finalOffsetY), animated: animated)
-        }
-    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         filteredSections = allEventSections
@@ -164,7 +149,7 @@ class EventResiverVC: UIViewController {
                     self.noDataImg.isHidden = self.filteredSections.count != 0
                     self.tableview.isHidden = false
                     self.tableview.reloadData()
-                    
+                    self.scrollToClickedMessage()
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.noDataLbl.text = error.localizedDescription
@@ -228,7 +213,42 @@ class EventResiverVC: UIViewController {
         }
         
     }
-    
+    private func scrollToClickedMessage() {
+        guard let id = clickedMessageId else { return }
+        var targetIndexPath: IndexPath?
+        for (sectionIndex, section) in filteredSections.enumerated() {
+            switch section {
+            case .featured(let events),
+                 .upcoming(let events),
+                 .completed(let events):
+
+                if let rowIndex = events.firstIndex(where: { $0.id == id }) {
+                    targetIndexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                }
+
+            default:
+                continue
+            }
+        }
+
+        guard let indexPath = targetIndexPath else { return }
+        DispatchQueue.main.async {
+            self.tableview.scrollToRow(at: indexPath, at: .middle, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                if let cell = self.tableview.cellForRow(at: indexPath) {
+                    let originalColor = cell.contentView.backgroundColor ?? .clear
+                    UIView.animate(withDuration: 0.3, animations: {
+                        cell.contentView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.35)
+                    }) { _ in
+                        UIView.animate(withDuration: 0.5, delay: 1.0, animations: {
+                            cell.contentView.backgroundColor = originalColor
+                        })
+                    }
+                }
+            }
+        }
+    }
+
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
         cell.imgCount.isHidden = true
@@ -267,41 +287,6 @@ class EventResiverVC: UIViewController {
 // MARK: - UITableViewDelegate & DataSource
 @available(iOS 14.0, *)
 extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
-    
-    func loadDataAndScrollIfNeeded() {
-        // API Call → update attachmentHeaders → reloadData
-        tableview.reloadData()
-        
-        if let messageId = clickedMessageId,
-           !messageId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            scrollToHeaderMessageId(messageId)
-            clickedMessageId = nil
-        }
-    }
-    
-    func scrollToHeaderMessageId(_ messageId: String) {
-        if let targetSection = filteredSections.firstIndex(where: { section in
-            switch section {
-            case .upcoming(let events), .completed(let events):
-                return events.contains { "\($0.id)" == messageId }
-            default:
-                return false
-            }
-        }) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                let headerRect = self.tableview.rectForHeader(
-                    inSection: targetSection
-                )
-                self.tableview.scrollRectToVisible(headerRect, animated: true)
-            }
-        } else {
-            print("⚠️ Message ID \(messageId) not found in filteredSections")
-        }
-    }
-    
-    
-    
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return filteredSections.count

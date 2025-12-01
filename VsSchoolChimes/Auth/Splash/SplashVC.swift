@@ -15,7 +15,7 @@ class ConfettiParticle: UIView {
     var startPosition: CGPoint = .zero
     var endPosition: CGPoint = .zero
     var animationDelay: Double = 0
-    var animationDuration: Double = 3.0
+    var animationDuration: Double = 2.0
     var fadeStartTime: Double = 0.8
     var rotation: CGFloat = 0
     

@@ -1887,6 +1887,7 @@
 		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
 		845AB85F2EC1A786003C22E1 /* OnboardingFlow */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingFlow; sourceTree = "<group>"; };
 		845CF1202E81737E001B2147 /* What'sNewVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "What'sNewVC"; sourceTree = "<group>"; };
+		846F7A7D2EDD4E0300C2D827 /* TestCollectionview */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TestCollectionview; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
@@ -3616,6 +3617,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				846F7A7D2EDD4E0300C2D827 /* TestCollectionview */,
 				FAD4D72C2E60640C007A3FC0 /* PTM */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				84127AC72E03C8F00092159D /* Pauckt */,
@@ -4416,6 +4418,7 @@
 				843BCD752E2E71EA00D4364A /* CalanderCv */,
 				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
 				845CF1202E81737E001B2147 /* What'sNewVC */,
+				846F7A7D2EDD4E0300C2D827 /* TestCollectionview */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,

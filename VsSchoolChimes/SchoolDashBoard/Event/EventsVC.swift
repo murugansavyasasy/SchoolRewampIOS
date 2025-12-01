@@ -83,6 +83,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var editId: String?
     let dropDown = DropDown()
     var editReport:EventList?
+    var categoryId:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.layer.cornerRadius = 20
@@ -309,7 +310,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             selectedCatagoryImg.kf.setImage(with: URL(string: images[index]))
             selecctedCatagory.text = item
-            
+            categoryId = eventListRespons?.filter{$0.name == item}.first?.id
         }
     }
     
@@ -471,7 +472,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
                 assignmentResquestStringKey.event_time: timeBtn.titleLabel?.text ?? "",
                 assignmentResquestStringKey.event_date:date ?? "",
-                assignmentResquestStringKey.category:selecctedCatagory.text ?? ""
+                assignmentResquestStringKey.category:categoryId ?? 0
             ]
             if sender.titleLabel?.text == "Update"{
                 let com = commonApi_forSending()
