@@ -9,6 +9,7 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 import AWSCore
+import FirebaseCrashlytics
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
     func application(_ application: UIApplication,
                         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
            FirebaseApp.configure()
+//        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
            UNUserNotificationCenter.current().delegate = self
            application.registerForRemoteNotifications()
            Messaging.messaging().delegate = self

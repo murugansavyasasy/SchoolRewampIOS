@@ -399,7 +399,6 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if login_astype  == 2 {
             if let data = childDetails?[indexPath.row]{
                 UserDefaultFileManager.saveChildDetails(data: data)}
