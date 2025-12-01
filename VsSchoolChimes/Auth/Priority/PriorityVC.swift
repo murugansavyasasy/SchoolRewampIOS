@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseCrashlytics
 
 @available(iOS 14.0, *)
 class PriorityVC: UIViewController {

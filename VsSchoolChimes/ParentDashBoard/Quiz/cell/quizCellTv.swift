@@ -28,7 +28,7 @@ class quizCellTv: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        applyCardShadow(to: parentFullview)
+          applyCardShadow(to: parentFullview)
             applyCardShadow(to: child1View)
             applyCardShadow(to: child2View)
         playBtn.layer.shadowColor = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1).cgColor // #007AFF

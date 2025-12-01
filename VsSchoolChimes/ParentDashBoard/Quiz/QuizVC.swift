@@ -92,6 +92,8 @@ class QuizVC: UIViewController, UISearchBarDelegate {
                     print("Error fetching notices: \(error.localizedDescription)")
                     self.NoDataImage.isHidden = false
                     self.NoDataLbl.isHidden = false
+                    self.get_QuizDetails = []
+                    self.tv.reloadData()
                     self.NoDataLbl.text = error.localizedDescription
                 }
             }
@@ -290,7 +292,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         cell.NoOfQuestionLbl.text = String(filteredExams[indexPath.row].no_of_questions ?? 0)
         cell.createdDateLbl.text = "Created on ".translated() + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
         cell.PostByLbl.text = "Posted By".translated() + ": " + (
-            filteredExams[indexPath.row].SentBy ?? ""
+            filteredExams[indexPath.row].sent_by ?? ""
         )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
         cell.playBtn.setImage(imgae, for: .normal)
