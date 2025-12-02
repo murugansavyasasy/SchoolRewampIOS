@@ -285,11 +285,11 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         containerStack.spacing = 8
         containerStack.translatesAutoresizingMaskIntoConstraints = false
         containerStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
-
+        
         var currentLineStack = createHorizontalStack()
         var currentLineWidth: CGFloat = 0
         let maxLineWidth = UIScreen.main.bounds.width - 64
-
+        
         for tag in tags {
             if let pill = createPill(for: tag) {
                 let estimatedPillWidth = estimateWidth(for: pill) + 8
@@ -303,15 +303,15 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
                 currentLineWidth += estimatedPillWidth
             }
         }
-
+        
         if !currentLineStack.arrangedSubviews.isEmpty {
             currentLineStack.addArrangedSubview(createFlexibleSpacer())
             containerStack.addArrangedSubview(currentLineStack)
         }
-
+        
         return containerStack
     }
-
+    
     func createHorizontalStack() -> UIStackView {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -320,31 +320,31 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         stack.distribution = .fill
         return stack
     }
-
+    
     func createPill(for category: SubCategories) -> UIView? {
         guard !category.name.isEmpty else { return nil }
-
+        
         let pillView = UIView()
         pillView.backgroundColor = category.backgroundColor
         pillView.layer.cornerRadius = 8
         pillView.layer.masksToBounds = true
-
+        
         let iconView = UIImageView()
         configureIcon(iconView, with: category.icon)
         iconView.tintColor = category.textColor
-
+        
         let label = UILabel()
         label.text = category.name
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = category.textColor
         label.numberOfLines = 1
-
+        
         let hStack = UIStackView(arrangedSubviews: [iconView, label])
         hStack.axis = .horizontal
         hStack.spacing = 4
         hStack.alignment = .center
         hStack.translatesAutoresizingMaskIntoConstraints = false
-
+        
         pillView.addSubview(hStack)
         NSLayoutConstraint.activate([
             hStack.topAnchor.constraint(equalTo: pillView.topAnchor, constant: 6),
@@ -352,22 +352,22 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             hStack.leadingAnchor.constraint(equalTo: pillView.leadingAnchor, constant: 8),
             hStack.trailingAnchor.constraint(equalTo: pillView.trailingAnchor, constant: -8)
         ])
-
+        
         return pillView
     }
-
+    
     func configureIcon(_ iconView: UIImageView, with systemName: String) {
         let image = UIImage(systemName: systemName) ?? UIImage(systemName: "tag.fill")
         iconView.image = image
         iconView.contentMode = .scaleAspectFit
         iconView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             iconView.widthAnchor.constraint(equalToConstant: 14),
             iconView.heightAnchor.constraint(equalToConstant: 14)
         ])
     }
-
+    
     func estimateWidth(for view: UIView) -> CGFloat {
         view.setNeedsLayout()
         view.layoutIfNeeded()
@@ -378,7 +378,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         )
         return size.width
     }
-
+    
     func createFlexibleSpacer() -> UIView {
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)

@@ -400,8 +400,6 @@
 		847F62B52E12ADAA00EE5180 /* LSRWActivitesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847F62B22E12ADAA00EE5180 /* LSRWActivitesVC.swift */; };
 		848047712E02A7D90042BC5D /* AssignmentReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480476F2E02A7D90042BC5D /* AssignmentReport.swift */; };
 		848047722E02A7D90042BC5D /* AssignmentReport.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848047702E02A7D90042BC5D /* AssignmentReport.xib */; };
-		848047752E02A8090042BC5D /* AssignmentPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848047732E02A8090042BC5D /* AssignmentPageVC.swift */; };
-		848047762E02A8090042BC5D /* AssignmentPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848047742E02A8090042BC5D /* AssignmentPageVC.xib */; };
 		848047792E02DE920042BC5D /* SubmitedAssignmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848047772E02DE920042BC5D /* SubmitedAssignmentVC.swift */; };
 		8480477A2E02DE920042BC5D /* SubmitedAssignmentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848047782E02DE920042BC5D /* SubmitedAssignmentVC.xib */; };
 		8480477D2E02DF6E0042BC5D /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
@@ -1359,8 +1357,6 @@
 		847F62B32E12ADAA00EE5180 /* LSRWActivitesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWActivitesVC.xib; sourceTree = "<group>"; };
 		8480476F2E02A7D90042BC5D /* AssignmentReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentReport.swift; sourceTree = "<group>"; };
 		848047702E02A7D90042BC5D /* AssignmentReport.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentReport.xib; sourceTree = "<group>"; };
-		848047732E02A8090042BC5D /* AssignmentPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentPageVC.swift; sourceTree = "<group>"; };
-		848047742E02A8090042BC5D /* AssignmentPageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentPageVC.xib; sourceTree = "<group>"; };
 		848047772E02DE920042BC5D /* SubmitedAssignmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitedAssignmentVC.swift; sourceTree = "<group>"; };
 		848047782E02DE920042BC5D /* SubmitedAssignmentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitedAssignmentVC.xib; sourceTree = "<group>"; };
 		8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitedStudentTVC.swift; sourceTree = "<group>"; };
@@ -3285,8 +3281,6 @@
 				849AD0412D1A858D002DEC07 /* SenderAssignmentTextViewController.xib */,
 				8480476F2E02A7D90042BC5D /* AssignmentReport.swift */,
 				848047702E02A7D90042BC5D /* AssignmentReport.xib */,
-				848047732E02A8090042BC5D /* AssignmentPageVC.swift */,
-				848047742E02A8090042BC5D /* AssignmentPageVC.xib */,
 				848047772E02DE920042BC5D /* SubmitedAssignmentVC.swift */,
 				848047782E02DE920042BC5D /* SubmitedAssignmentVC.xib */,
 				8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */,
@@ -4861,7 +4855,6 @@
 				FAF43B672E02A12A00F28A16 /* LessonEditTV.xib in Resources */,
 				84127DBC2E13EB260092159D /* interactTvcell.xib in Resources */,
 				8449D8D42ED4647300822FAC /* normal.mp3 in Resources */,
-				848047762E02A8090042BC5D /* AssignmentPageVC.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
 				8474CBA32D9A6F6000DA0951 /* RecipientCVcell.xib in Resources */,
 				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
@@ -5388,7 +5381,6 @@
 				84FBAA832E3B7EC100A3FC31 /* CustomDasboard.swift in Sources */,
 				18D718B32D0D477900E9EDA3 /* HistoryReq.swift in Sources */,
 				842031782D390FE9003C4076 /* TimetableTv.swift in Sources */,
-				848047752E02A8090042BC5D /* AssignmentPageVC.swift in Sources */,
 				84EFFA392CCCB44300C11C26 /* ContactUsVc.swift in Sources */,
 				840A7CEC2D24FDAA0061EAEA /* ExamMarkTV.swift in Sources */,
 				840A7CED2D24FDAA0061EAEA /* MarkTvCell.swift in Sources */,

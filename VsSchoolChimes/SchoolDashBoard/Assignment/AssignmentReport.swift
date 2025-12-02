@@ -13,7 +13,6 @@ class AssignmentReport: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedNotice = self.filteredData.first(where: { $0.id == id }) {
-//                delegate?.editDta(edit: selectedNotice)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     if #available(iOS 14.0, *) {
                         let vc = SenderAssignmentTextViewController()
@@ -152,7 +151,7 @@ class AssignmentReport: UIViewController, SelectedId {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             self?.scrollToClickedMessage()
                         }
-
+                        
                     }
                 }
             case .failure(let error):
@@ -166,13 +165,8 @@ class AssignmentReport: UIViewController, SelectedId {
               let index = filteredData.firstIndex(where: { $0.id == id }) else {
             return
         }
-
         let indexPath = IndexPath(row: index, section: 0)
-        
-        // Scroll to that cell smoothly
         reportTable.scrollToRow(at: indexPath, at: .middle, animated: true)
-        
-        // Optionally highlight the cell for 1 second
         if let cell = reportTable.cellForRow(at: indexPath) {
             UIView.animate(withDuration: 0.3, animations: {
                 cell.contentView.backgroundColor = UIColor.lightGray
@@ -209,29 +203,26 @@ class AssignmentReport: UIViewController, SelectedId {
         academicDropView.layer.borderWidth = 1
         academicDropView.layer.borderColor = UIColor.white.cgColor
         let tap = UITapGestureRecognizer(target: self, action: #selector(academicDropViewTapped))
-           academicDropView.isUserInteractionEnabled = true
-           academicDropView.addGestureRecognizer(tap)
-    }
-    func searchHide(hide: Bool) {
-       
+        academicDropView.isUserInteractionEnabled = true
+        academicDropView.addGestureRecognizer(tap)
     }
     @IBAction func search(_ sender: UIButton) {
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
-            searchBar?.isHidden = !sender.isSelected
-            if sender.isSelected {
-                searchBar?.becomeFirstResponder()
-            } else {
-                searchBar?.resignFirstResponder()
-                filteredData = data
-                let noResults = filteredData.isEmpty
-                noDataLabel.text = noResults ? "No Records Found" : ""
-                noDataLabel.isHidden = !noResults
-                noRecordImage.isHidden = !noResults
-                searchBar.searchTextField.text = ""
-                reportTable.reloadData()
-            }
+        searchBar?.isHidden = !sender.isSelected
+        if sender.isSelected {
+            searchBar?.becomeFirstResponder()
+        } else {
+            searchBar?.resignFirstResponder()
+            filteredData = data
+            let noResults = filteredData.isEmpty
+            noDataLabel.text = noResults ? "No Records Found" : ""
+            noDataLabel.isHidden = !noResults
+            noRecordImage.isHidden = !noResults
+            searchBar.searchTextField.text = ""
+            reportTable.reloadData()
+        }
     }
     @objc func deletedTapped(_ sender: UIButton) {
         let index = sender.tag
@@ -272,7 +263,6 @@ class AssignmentReport: UIViewController, SelectedId {
         )
     }
     // MARK: - File Handling
-    
     @IBAction func createAssignment(_ sender: UIButton) {
         if #available(iOS 14.0, *) {
             let vc = SenderAssignmentTextViewController()
@@ -311,7 +301,6 @@ extension AssignmentReport: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTVC", for: indexPath) as? AssignmentTVC else {
             return UITableViewCell()
         }
-        
         let report = filteredData[indexPath.row]
         cell.configure(with: report)
         cell.loadFiles(into: cell, files: report.file_path ?? [])
@@ -362,7 +351,6 @@ extension AssignmentReport: UISearchBarDelegate {
                     item.category?.lowercased(),
                     "\(item.submitted_count ?? 0)"
                 ]
-                
                 return values.contains { $0?.contains(query) == true }
             }
         }

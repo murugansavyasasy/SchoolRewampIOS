@@ -161,8 +161,6 @@ class SenderAssignmentTextViewController: UIViewController,
         setInitialButtonTitles(date: date)
     }
     func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
-        
-        // 🔥 Get selected app language
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let localeID = normalizedLocaleIdentifier(for: savedCode)
         let locale = Locale(identifier: localeID)
@@ -188,21 +186,12 @@ class SenderAssignmentTextViewController: UIViewController,
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
         dayLbl.text = dayFormatter.string(from: dateToUse)
     }
-
-
-    // MARK: - DeleteImge (custom)
     func deleteImage(index: Int) {
         guard attachments.indices.contains(index) else { return }
         attachments.remove(at: index)
         selectImgPdfview.imageCollectionview.reloadData()
         updateCollectionHeight()
     }
-    
-    // MARK: - Popover
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        .none
-    }
-    
     // MARK: - Setup UI/Styles
     func StyleAndTranslater() {
         self.selectImgPdfview.imageCollectionview.backgroundColor = .clear
@@ -409,7 +398,6 @@ class SenderAssignmentTextViewController: UIViewController,
             }
             
         }else{
-            
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
@@ -430,7 +418,6 @@ class SenderAssignmentTextViewController: UIViewController,
         delegate?.editDta(edit: nil)
     }
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
-        // Title + Description validation
         let title = assignTitleTxtFld.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
         guard !title.isEmpty, contentTextView.text?.count != 0 else {
@@ -439,8 +426,6 @@ class SenderAssignmentTextViewController: UIViewController,
                                               on: self)
             return
         }
-        
-        // Convert DateBtn title to request format if needed
         let dateBtnTitle = dateLbl.text ?? ""
         let submissionDate = ConvertDateStringSmart(dateBtnTitle) // Kept as your helper
         
@@ -484,7 +469,6 @@ class SenderAssignmentTextViewController: UIViewController,
                         chooseRecipientsBtn.setTitle("Next", for: .normal)
                         cancelBtn.isHidden = true
                         updateTextViewHeight(contentTextView)
-//                        delegate?.editDta(edit: nil)
                         self.dismiss(animated: true)
                     }
                 }
@@ -550,13 +534,7 @@ class SenderAssignmentTextViewController: UIViewController,
     }
 
     func updateCollectionHeight() {
-        // 0 = "Add" cell, >0 = attachments
         let totalItems = attachments.count
-//        if VideoView.isHidden == false {
-//            collectionViewHeght.constant = 0
-//        } else {
-//            collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
-//        }
         addphotosheight.constant = totalItems > 0 ? 20 : 20 // keep visible as per your original
         view.layoutIfNeeded()
     }
@@ -570,18 +548,14 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
                                               UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 1 (add cell) + attachments.count
         return 1 + attachments.count
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell,
-                                                          for: indexPath) as! AttachmentCVCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell,for: indexPath) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
         } else {
@@ -589,12 +563,10 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
                 withReuseIdentifier: CellConfingName.ImageCvCell,
                 for: indexPath
             ) as! ImageCvCell
-            
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
-            
             if let image = item.image {
                 cell.imageViews.image = image
             } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
@@ -607,12 +579,9 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             } else if let vido = item.VideoURl{
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
-                
             }else{
                 cell.imageViews.image = nil
             }
-            
-            // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
@@ -666,18 +635,10 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
 // MARK: - UITextViewDelegate
 @available(iOS 14.0, *)
 extension SenderAssignmentTextViewController: UITextViewDelegate {
-    
-    
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
-        // If you want to enforce a hard limit uncomment:
-        // let current = textView.text ?? ""
-        // let newText = (current as NSString).replacingCharacters(in: range, with: text)
-        // letterscountLbl.text = "\(min(newText.count, 500)) / 500"
-        // return newText.count <= 500
         updateTextViewHeight(textView)
-        
         return true
     }
     
@@ -687,8 +648,9 @@ extension SenderAssignmentTextViewController: UITextViewDelegate {
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        
         scrollToView(textView)
     }
-    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        .none
+    }
 }
