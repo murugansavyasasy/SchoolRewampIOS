@@ -518,6 +518,7 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
                             newFilteredSections.append(.upcoming(matched))
                         }
                         
+                        
                     case .completed(let events):
                         let matched = events.filter {
                             ($0.title?.localizedCaseInsensitiveContains(searchText) ?? false) ||
