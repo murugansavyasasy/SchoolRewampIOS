@@ -121,7 +121,7 @@ class ParentDashboardVc: UIViewController {
     }
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
-        MenuRedirect.receiverAttendancereport(from: self, PushNotiMsg_id: "")
+        MenuRedirect.receiverAttendancereport(from: self, PushNotiMsgId: "")
     }
     
     override func viewDidLayoutSubviews() {
@@ -369,18 +369,20 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
              
             switch menuItem {
             case 2:
-                MenuRedirect.receiverAssignmentNavigate(from: self)
+                ""
+//                MenuRedirect.receiverAssignmentNavigate(from: self)
             case 4:
-                MenuRedirect
-                    .receiverAttendancereport(from: self, PushNotiMsg_id: "")
+//                MenuRedirect
+//                    .receiverAttendancereport(from: self, PushNotiMsg_id: "")
+                ""
             case 5:
                 MenuRedirect.receiverCertificateRequest(from: self)
             case 6:
                 MenuRedirect.receiverclassTimeTable(from: self)
             case 7:
-                MenuRedirect.receiverCommunicationNavigate(from: self)
+              ""
             case 9:
-                MenuRedirect.receiverEvent(from: self)
+               ""
             case 10:
                 MenuRedirect.resiverExamMark(from: self)
             case 12:
@@ -388,13 +390,13 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 13:
                 break    //fee payment
             case 15:
-                MenuRedirect.receiverHomework(from: self)
+               ""
             case 16:
                 MenuRedirect.receiverchat(from: self)
             case 20:
-                MenuRedirect.receiverLsrwNavigate(from: self)
+               ""
             case 23:
-                MenuRedirect.receiverNoticeBoardNavigate(from: self)
+               ""
             case 24:
                 MenuRedirect.receiverOnlineNavigate(from: self)
             case 25:
@@ -402,13 +404,13 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 26:
                 MenuRedirect.receiverPtmNavigate(from: self)
             case 27:
-                MenuRedirect.QuizExam(from: self)
+              ""
             case 28:
                 MenuRedirect.LeaveRquest(from: self)
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39:
-                MenuRedirect.receiverAttachment(from: self, notificationId: "")
+               ""
             case 40:
                 MenuRedirect.receiverPauckt(from: self)
             default:
@@ -417,14 +419,14 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         }
     }
     @IBAction func assignment(_ sender: UIButton) {
-        MenuRedirect.receiverAssignmentNavigate(from: self)
+        MenuRedirect.receiverAssignmentNavigate(from: self, PushNotiMsgId: "")
     }
     @IBAction func onlineMeeting(_ sender: UIButton) {
         MenuRedirect.receiverOnlineNavigate(from: self)
     }
     
     @IBAction func homeWork(_ sender: UIButton) {
-        MenuRedirect.receiverNoticeBoardNavigate(from: self)
+        MenuRedirect.receiverNoticeBoardNavigate(from: self, PushNotiMsgId: "")
     }
     
 }

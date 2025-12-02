@@ -431,28 +431,28 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 
     private func handleMenuSelection(menuId: Int, messageId : String) {
         switch menuId {
-        case 2:  MenuRedirect.receiverAssignmentNavigate(from: self)
+        case 2:  MenuRedirect.receiverAssignmentNavigate(from: self, PushNotiMsgId: messageId)
         case 4:  MenuRedirect.receiverAttendancereport(
             from: self,
-            PushNotiMsg_id: messageId)
+            PushNotiMsgId: messageId)
         case 5:  MenuRedirect.receiverCertificateRequest(from: self)
         case 6:  MenuRedirect.receiverclassTimeTable(from: self)
-        case 7:  MenuRedirect.receiverCommunicationNavigate(from: self)
-        case 9:  MenuRedirect.receiverEvent(from: self)
+        case 7:  MenuRedirect.receiverCommunicationNavigate(from: self,PushNotiMsgId: messageId)
+        case 9:  MenuRedirect.receiverEvent(from: self,PushNotiMsgId: messageId)
         case 10: MenuRedirect.resiverExamMark(from: self)
         case 12: MenuRedirect.receiverFeeDetails(from: self)
-        case 15: MenuRedirect.receiverHomework(from: self)
+        case 15: MenuRedirect.receiverHomework(from: self,PushNotiMsgId: messageId)
         case 16: MenuRedirect.receiverchat(from: self)
-        case 20: MenuRedirect.receiverLsrwNavigate(from: self)
-        case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self)
+        case 20: MenuRedirect.receiverLsrwNavigate(from: self,PushNotiMsgId: messageId)
+        case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self,PushNotiMsgId: messageId)
         case 24: MenuRedirect.receiverOnlineNavigate(from: self)
         case 25: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 26: MenuRedirect.receiverPtmNavigate(from: self)
-        case 27: MenuRedirect.QuizExam(from: self)
+        case 27: MenuRedirect.QuizExam(from: self,PushNotiMsgId: messageId)
         case 28: MenuRedirect.LeaveRquest(from: self)
         case 30: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
-        case 39: MenuRedirect.receiverAttachment(from: self, notificationId: messageId)
+        case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
         default:
             let alert = UIAlertController(
