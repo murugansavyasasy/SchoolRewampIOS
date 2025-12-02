@@ -86,6 +86,8 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
                    case 1:
                        self.webOuterView.isHidden = true
                        self.tableOuterView.isHidden = false
+                       LoadingView.isHidden = true
+                       ActivityIndicator.stopAnimating()
                        Get_Fee_Invoice_Api()
                    default:
                        break
@@ -175,7 +177,7 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
 
         cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoice_no ?? "")"
         let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
-        cell.invoceDate.text = "Invoice Date: \(result.date ?? "")"
+        cell.invoceDate.text = "\(result.date ?? "") \(result.time ?? "")"
         cell.timeLbl.text = result.time
         cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoice_amount ?? "")"
       
@@ -205,7 +207,7 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         }
 
         // Format date
-        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.dateFormat = "dd MMM yyyy"
         let dateString = formatter.string(from: dateObject)
 
         // Format time

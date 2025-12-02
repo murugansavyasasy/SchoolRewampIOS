@@ -180,6 +180,9 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             if let url = URL(string: slot?.profile_url ?? "") {
                 cell.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "interactProfile"))
             }
+            
+            cell.fatherNameLbl.text = slot?.father_name
+            cell.motherNameLbl.text = slot?.mother_name
 
             // MARK: - Options Button Logic
             if slot?.can_cancel == true {
@@ -268,9 +271,43 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             cell.Collapsedelegate = self
             let isExpanded = expandedIndex == indexPath
                 cell.updateExpansion(isExpanded: isExpanded)
+            
+            cell.onCall = { [weak self] in
+                
+                self?.callButtonTapped(Mobile: slot?.mobile_no ?? "")
+            }
+            
+            cell.onJoin = {[weak self] in
+                self?.JoinButtonTapped(Link: slot?.event_link ?? "")
+            }
+            
+            cell.callImage.isHidden = !(slot?.event_mode == "Phone Call")
+            cell.LinkImage.isHidden = !(slot?.event_mode == "Virtual")
 
             return cell
 
+        }
+    }
+    
+    func callButtonTapped(Mobile: String) {
+           if let url = URL(string: "tel://\(Mobile)"),
+              UIApplication.shared.canOpenURL(url) {
+               UIApplication.shared.open(url)
+           } else {
+               print("This device cannot make phone calls.")
+           }
+       }
+    
+    func JoinButtonTapped(Link: String) {
+        var fixedLink = Link
+        if !fixedLink.lowercased().hasPrefix("http") {
+            fixedLink = "https://" + fixedLink
+        }
+        
+        if let url = URL(string: fixedLink) {
+            UIApplication.shared.open(url)
+        } else {
+            print("Cannot open meeting link")
         }
     }
     

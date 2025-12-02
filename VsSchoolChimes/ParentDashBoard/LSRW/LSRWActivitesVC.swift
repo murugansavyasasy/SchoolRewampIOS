@@ -71,7 +71,6 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     var vimeoUploader: VimeoUploader?
     var onDismiss: (() -> Void)?
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    let today_date = AwsCurrentDateString()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -457,8 +456,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 if let image = item.image {
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
-                        bucketPath: "\(Awsmenu.skills)/\(studentDetails?.school_id ?? "")/\(today_date)",
-                        bucketName: BucketName.schoolchimes_activities,
                         progressHandler: { progress in
                             currentProgressValues[index] = progress / 100
                             updateAndCheckCompletion(total: total)
@@ -522,8 +519,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
 
                             AWSUploadManager.shared.uploadFileToAWS(
                                 file: fileURL,
-                                bucketPath: "\(Awsmenu.skills)/\(studentDetails?.school_id ?? "")/\(today_date)",
-                                bucketName: BucketName.schoolchimes_activities,
                                 progressHandler: { progress in
                                     currentProgressValues[index] = progress / 100
                                     updateAndCheckCompletion(total: total)

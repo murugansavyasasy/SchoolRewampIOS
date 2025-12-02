@@ -104,4 +104,5 @@ struct editLeave{
     var Tosession:String
     var NoOfDays:String
     var LeaveType:String
+    var LeaveTypeId:Int
 }

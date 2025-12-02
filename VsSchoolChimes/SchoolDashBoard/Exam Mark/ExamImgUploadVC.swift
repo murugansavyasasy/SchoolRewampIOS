@@ -205,6 +205,10 @@ class ExamImgUploadVC: UIViewController {
     }
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
+        
+        let vc = EnterMarkVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     

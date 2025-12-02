@@ -904,6 +904,17 @@ struct AbsentisReportStudent: Codable {
 //    var updated_on: String
 //}
 
+struct LeaveTypesResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [LeaveType]?
+}
+
+struct LeaveType : Codable {
+    var id: Int?
+    var name:String?
+}
+
 struct LeaveInfoResponse: Codable {
     var status: Bool?
     var message: String?
@@ -931,6 +942,7 @@ struct LeaveInfo: Codable {
     var to_session: String?
     var approved_by: String?
     var leave_type: String?
+    var leave_type_id: Int?
 }
 
 ////MARK: ASSIGINMENT LIST
