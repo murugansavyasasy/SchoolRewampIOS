@@ -22,6 +22,7 @@ class QuizCompletedVc: UIViewController {
     var not_ans: String = ""
     var subjet_name : String = ""
     var completed_date : String = ""
+    var message : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +61,7 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCompletedFirstTv", for: indexPath) as! QuizCompletedFirstTv
             cell.subjectQuiz.text = subjet_name
             cell.completedAtLbl.text = "Completed at: " + formattedDateStatus(from: completed_date, isTimeNeeded: true)
+            cell.wishesLbl.text = message
             let parts = correct_ans.split(separator: "/")
                    if parts.count == 2,
                       let correct = Double(parts[0]),
@@ -147,7 +149,9 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                         cell.Button4.backgroundColor = .systemGreen.withAlphaComponent(0.3)
                     }
                     
-                    cell.correctAnswerStack.isHidden  = true
+                    cell.correctAnsStack.isHidden  = true
+                    cell.yourAnsStack.isHidden = true
+                    cell.lineView.isHidden = true
                 } else {
                     // ❌ Wrong → Red for student's choice, Green for correct answer
                     if cell.Button1.title(for: .normal) == studentAnswer {
@@ -173,7 +177,9 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                     }
 
                     // 🔎 Show label with correct answer (if needed)
-                    cell.correctAnswerStack.isHidden  = false
+                    cell.correctAnsStack.isHidden  = false
+                    cell.yourAnsStack.isHidden = false
+                    cell.lineView.isHidden = false
                     cell.crtAnsLbl.text = correctAnswer
                     cell.yourAnsLbl.text = studentAnswer
                 }
@@ -213,6 +219,7 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                     if successResponse.status == true{
                         
                         self.correct_ans = successResponse.data?.first?.right_answer ?? ""
+                        self.message = successResponse.data?.first?.message ?? ""
                         self.worng_ans = successResponse.data?.first?.wrong_answer ?? ""
                         self.not_ans = successResponse.data?.first?.un_answer ?? ""
                         self.get_QuizDetails = successResponse.data ?? []

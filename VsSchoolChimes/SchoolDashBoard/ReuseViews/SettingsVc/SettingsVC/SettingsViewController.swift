@@ -240,8 +240,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedItem = sections[indexPath.section].items[indexPath.row].translated()
         switch selectedItem {
         case menuname.contactUs.translated():
-            let vc = ContactUsVc()
-            vc.passValue = passVale
+            let vc = TestCollectionVC()
+//            vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             

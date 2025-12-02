@@ -25,7 +25,9 @@ class StudentTVCell: UITableViewCell {
     @IBOutlet weak var innerView: UIView!
     
     private var gradientLayer: CAGradientLayer?
+    private var blurView: UIVisualEffectView?
     private var gradientColors: [CGColor] = []
+    private var TopbotomgradientColors: [CGColor] = []
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -33,22 +35,25 @@ class StudentTVCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        // Remove existing gradient layer and reapply
         gradientLayer?.removeFromSuperlayer()
         gradientLayer = nil
-        applyGradient()
     }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        // Update gradient layer frame to match Cellview's bounds
+        gradientLayer?.frame = Cellview.bounds
         DispatchQueue.main.async {
-            self.applyGradient()
+            self.applyGradientWithGlassEffect()
             self.TopView.applyCustomCorners(topLeft: 0, topRight: 10, bottomLeft: 20, bottomRight: 0)
             self.BottomView.applyCustomCorners(topLeft: 0, topRight: 20, bottomLeft: 10, bottomRight: 0)
+            self.applyViewGradient(
+                view: self.TopView,
+                colors: self.TopbotomgradientColors
+                )
+            self.applyViewGradient(
+                view: self.BottomView,
+                colors: self.TopbotomgradientColors
+                )
         }
-        
     }
     
     private func setupUI() {
@@ -66,22 +71,78 @@ class StudentTVCell: UITableViewCell {
         StudentImage.layer.borderColor = UIColor.systemIndigo.withAlphaComponent(0.5).cgColor
     }
     
-    private func applyGradient() {
-        guard gradientColors.isEmpty == false else { return }
-        
-        // Remove existing gradient layers if any
-        Cellview.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        // Create new gradient layer
+    func applyViewGradient(view: UIView, colors: [CGColor]) {
+
+        // Remove old gradients
+        view.layer.sublayers?
+            .filter { $0 is CAGradientLayer }
+            .forEach { $0.removeFromSuperlayer() }
+
+        // Remove old blur
+        view.subviews
+            .filter { $0 is UIVisualEffectView }
+            .forEach { $0.removeFromSuperview() }
+
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor(hex: "#1E3A8A").cgColor, UIColor(hex: "#3B82F6").cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gradientLayer.frame = Cellview.bounds
-        gradientLayer.cornerRadius = Cellview.layer.cornerRadius
-        
-        // Insert gradient layer
-        Cellview.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint   = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.frame = view.bounds
+        gradientLayer.cornerRadius = view.layer.cornerRadius
+
+        // Light blur
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = view.bounds
+        blurView.clipsToBounds = true
+        blurView.alpha = 0.25
+
+        view.insertSubview(blurView, at: 0)
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
+    func setGradientColors(_ colors: [CGColor], topColors: [CGColor]) {
+        gradientColors = colors
+        TopbotomgradientColors = topColors
+        applyGradientWithGlassEffect()
+    }
+
+    private func applyGradientWithGlassEffect() {
+        // Remove previous layers
+        gradientLayer?.removeFromSuperlayer()
+        blurView?.removeFromSuperview()
+
+        guard !gradientColors.isEmpty else { return }
+        let newGradientLayer = CAGradientLayer()
+        let finalColors: [CGColor]
+        if !TopbotomgradientColors.isEmpty {
+            finalColors = TopbotomgradientColors
+        } else {
+            finalColors = gradientColors
+        }
+
+        newGradientLayer.colors = finalColors.map {
+            UIColor(cgColor: $0).withAlphaComponent(0.85).cgColor
+        }
+        newGradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        newGradientLayer.endPoint   = CGPoint(x: 0.5, y: 1.0)
+
+        newGradientLayer.frame = Cellview.bounds
+        newGradientLayer.cornerRadius = Cellview.layer.cornerRadius
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let newBlurView = UIVisualEffectView(effect: blurEffect)
+        newBlurView.frame = Cellview.bounds
+        newBlurView.layer.cornerRadius = Cellview.layer.cornerRadius
+        newBlurView.clipsToBounds = true
+        newBlurView.alpha = 0.3
+        Cellview.insertSubview(newBlurView, at: 0)
+        Cellview.layer.insertSublayer(newGradientLayer, at: 0)
+
+        gradientLayer = newGradientLayer
+        blurView = newBlurView
+        Cellview.layer.borderWidth = 1
+        Cellview.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+    }
+
 }
 
 // Extension for custom corner radius and shadow

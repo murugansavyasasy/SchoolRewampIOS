@@ -2256,6 +2256,7 @@ struct MyQuizSuc: Codable {
 }
 
 struct myQuizDetails : Codable  {
+    var message : String?
     var student_id : String?
     var right_answer : String?
     var wrong_answer : String?

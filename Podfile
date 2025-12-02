@@ -16,7 +16,7 @@ pod 'AWSCore'
 pod 'Charts'
 pod 'Firebase/Database'
 pod 'Firebase/Analytics'
-  pod 'Firebase/Crashlytics'
+pod 'Firebase/Crashlytics'
   target 'VsSchoolChimesTests' do
     inherit! :search_paths
     # Pods for testing

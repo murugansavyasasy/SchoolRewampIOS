@@ -15,7 +15,7 @@ class ConfettiParticle: UIView {
     var startPosition: CGPoint = .zero
     var endPosition: CGPoint = .zero
     var animationDelay: Double = 0
-    var animationDuration: Double = 3.0
+    var animationDuration: Double = 2.0
     var fadeStartTime: Double = 0.8
     var rotation: CGFloat = 0
     
@@ -601,9 +601,12 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                     if response.status ?? false {
                         self.versionData = response.data?.first
                         if let countryDetails = self.versionData?.country_details {
+                            
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
                         }
+                       
+
                         if self.versionData?.update_available == true {
                             self.showUpdatePopup()
                         } else {

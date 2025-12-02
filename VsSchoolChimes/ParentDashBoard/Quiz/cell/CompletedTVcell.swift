@@ -9,6 +9,9 @@ import UIKit
 
 class CompletedTVcell: UITableViewCell,UIScrollViewDelegate {
 
+    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var yourAnsStack: UIStackView!
+    @IBOutlet weak var correctAnsStack: UIStackView!
     @IBOutlet weak var crtAnsLbl: UILabel!
     @IBOutlet weak var pageControls: UIPageControl!
     @IBOutlet weak var cv: UICollectionView!
