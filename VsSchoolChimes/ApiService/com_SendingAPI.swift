@@ -499,10 +499,6 @@ class  commonApi_forSending {
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath:  "communication" + "/" + (UserDefaultFileManager
-                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
-                ,
-                bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     //                    CircularProgressLoader.shared.updateProgress(to: progress)
                 },
@@ -538,8 +534,6 @@ class  commonApi_forSending {
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
-                    bucketPath: "uploads/images/",
-                    bucketName: "schoolchimes-communication",
                     progressHandler: { progress in
                         // Optional: Update progress per file individually if you want
                     },
@@ -580,8 +574,6 @@ class  commonApi_forSending {
                 }
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: PdfURL,
-                    bucketPath: "uploads/Documents/",
-                    bucketName: "schoolchimes-communication",
                     progressHandler: { progress in
                         // Optional: Update progress per file individually if you want
                     },
@@ -620,8 +612,6 @@ class  commonApi_forSending {
                     // 🖼️ Upload local image
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
-                        bucketPath: "uploads/images/",
-                        bucketName: "schoolchimes-communication",
                         progressHandler: nil,
                         completion: { url in
                             if let uploadedURL = url {
@@ -641,8 +631,6 @@ class  commonApi_forSending {
                         
                         AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,
-                            bucketPath: path,
-                            bucketName: "schoolchimes-communication",
                             progressHandler: nil,
                             completion: { url in
                                 if let uploadedURL = url {
@@ -664,7 +652,5 @@ class  commonApi_forSending {
             return
         }
     }
-    
-    
     
 }

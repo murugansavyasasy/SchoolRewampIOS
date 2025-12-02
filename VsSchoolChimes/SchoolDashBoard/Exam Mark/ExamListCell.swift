@@ -35,11 +35,14 @@ class ExamListCell: UITableViewCell {
         baseView.layer.shadowRadius = 4
         baseView.layer.shadowOffset = CGSize(width: 0, height: 2)
         
-        sideColourView.layer.cornerRadius = 10
+        sideColourView.layer.cornerRadius = 6
         sideColourView.layer.maskedCorners = [.layerMinXMinYCorner]
         
         selectioView.layer.cornerRadius = 10
         selectioView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        tableview.layer.cornerRadius = 10
+        tableview.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         examNameLbl.setFont(style: .body, size: 17)
         examNameLbl.setFont(style: .body, size: 13)
@@ -135,11 +138,14 @@ extension ExamListCell: UITableViewDataSource, UITableViewDelegate {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Exam_ExamListTV",for: indexPath) as! Exam_ExamListTV
 
+        cell.separatorview.isHidden = indexPath.row == subjectList.count - 1
+        
         cell.subjectNameLbl.text = subjectList[indexPath.row].subject_name
         
         cell.Activities = subjectList[indexPath.row].splitup_details ?? []
         
         cell.configureExpansionState(expandedRow == indexPath, animated: false)
+        
 
         // INNER EXPAND
         cell.onExpand = { [weak self, weak tableView] in

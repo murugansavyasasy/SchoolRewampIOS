@@ -14,7 +14,9 @@ class Exam_ExamListTV: UITableViewCell {
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var activitiesLbl: UILabel!
     @IBOutlet weak var subjectNameLbl: UILabel!
-
+    @IBOutlet weak var separatorview: UIView!
+    @IBOutlet weak var subjectView: UIView!
+    
     var onHeightChanged: (() -> Void)?
     var onExpand: (() -> Void)?
     private var isExpanded: Bool = false
@@ -29,6 +31,8 @@ class Exam_ExamListTV: UITableViewCell {
             UINib(nibName: "ExamActivitiesCV", bundle: nil),
             forCellWithReuseIdentifier: "ExamActivitiesCV"
         )
+        
+        subjectView.backgroundColor = .systemGray6.withAlphaComponent(0.3)
         
         let layout = LeftAlignedFlowLayout()
         layout.minimumInteritemSpacing = 0 // Customize spacing between items

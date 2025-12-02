@@ -10,11 +10,11 @@ import UIKit
 class MarkListVC: UIViewController {
 
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var RoundView: UIView!
     @IBOutlet weak var NewTv: UITableView!
+    @IBOutlet weak var nodataImage: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     
     var subject_marks: [SubjectMark]?
     var assessments: [Assessment]?
@@ -33,16 +33,14 @@ class MarkListVC: UIViewController {
         
         BackBtn.configureAsBackButton(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        nodataImage.isHidden = true
+        nodataLbl.isHidden = true
         
         NewTv.showsVerticalScrollIndicator = false
         NewTv.showsHorizontalScrollIndicator = false
         
         RoundView.layer.cornerRadius = RoundView.frame.width / 2
-
-        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
-        NameLbl.text = studentDetails?.name ?? ""
 
         tv.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
         tv.register(UINib(nibName: CellConfingName.ExammarkFooterView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ExammarkFooterView)
@@ -81,6 +79,9 @@ class MarkListVC: UIViewController {
                     self?.NewTv.reloadData()
                 case .failure(let error):
                     print("API Error:", error)
+                    self?.nodataImage.isHidden = false
+                    self?.nodataLbl.isHidden = false
+                    self?.nodataLbl.text = error.localizedDescription
                 }
             }
         }

@@ -67,7 +67,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     let dropDown = DropDown()
     let dropDown2 = DropDown()
     let options = [AttendanceString.firstHalf, AttendanceString.secondHalf]
-    var leaveTypes : [String] = []
+    var leaveTypes : [LeaveType] = []
+    var selectedLeaveType : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +82,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
         LeaveTypeBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowTypeDropdown)))
         
         LeaveTypeBtn.isUserInteractionEnabled = true
-        
-        setupDropDowns()
         
         dropDown.dataSource = options
 
@@ -124,6 +123,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             ApplyLeaveBtn.setTitle(daysText, for: .normal)
             FromDatePicker.date = dateFormatter.date(from: leave.fromDate.convertToTargetDateFormat() ?? "") ?? Date()
             toDatePicker.date = dateFormatter.date(from: leave.toDate.convertToTargetDateFormat() ?? "") ?? Date()
+            selectedLeaveType = leave.LeaveTypeId
         }
         
         ApplyLeaveBtn.backgroundColor = validateInputs() ? .backGroundClr : .systemGray4
@@ -240,12 +240,14 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     
     func setupDropDowns() {
         // DropDown for Label One
+        dropDown2.dataSource = leaveTypes.compactMap{$0.name}
         dropDown2.anchorView = LeaveTypeBtn
         dropDown2.bottomOffset = CGPoint(x: -20, y: LeaveTypeBtn.bounds.height - 10)
         dropDown2.width = LeaveTypeBtn.bounds.width
         dropDown2.selectionAction = { [weak self] index, item in
             self?.LeaveTypeBtn.setTitleColor(.black, for: .normal)
             self?.LeaveTypeBtn.setTitle(item, for: .normal)
+            self?.selectedLeaveType = self?.leaveTypes[index].id
             self?.calculateDays()
         }
     }
@@ -325,7 +327,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
     
     func Get_Leave_Categories(){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_leave_categories, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_leave_categories, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<LeaveTypesResponse,Error>) in
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -336,7 +338,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
                 case .success(let success):
                     
                     self.leaveTypes = success.data ?? []
-                    dropDown2.dataSource = leaveTypes
+                    setupDropDowns()
                     
                 case .failure(let error):
                     print("Error: ",error.localizedDescription)
@@ -371,7 +373,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
 
         print("LeaveFrom",LeaveFrom)
         print("LeaveTo",LeaveTo)
-        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session:toSessionCode, LeaveRequestStringFile.leave_type:LeaveTypeBtn.title(for: .normal) ?? ""]
+        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session:toSessionCode, LeaveRequestStringFile.leave_type: selectedLeaveType ?? 0]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
                               
@@ -457,7 +459,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate{
             }
         }
         
-        let param: [String:Any] = [LeaveRequestStringFile.id:editLeaveData?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session: toSessionCode,LeaveRequestStringFile.leave_type:LeaveTypeBtn.title(for: .normal) ?? ""]
+        let param: [String:Any] = [LeaveRequestStringFile.id:editLeaveData?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session: toSessionCode,LeaveRequestStringFile.leave_type: selectedLeaveType ?? 0]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
                               

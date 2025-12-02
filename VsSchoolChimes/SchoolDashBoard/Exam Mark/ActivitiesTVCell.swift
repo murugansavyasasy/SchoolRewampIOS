@@ -17,14 +17,21 @@ class ActivitiesTVCell: UITableViewCell {
     
     let dropdown = DropDown()
     
+    let items: [String] = [
+        "HEADER_ACTIONS",
+        "🚫 Ignore (Skip this activity)",
+        "✏️ Enter marks manually",
+        "SEPARATOR",
+        "HEADER_COLUMNS",
+        "Student_Name",
+        "Roll_No",
+        "Algebra",
+        "Geometry"
+    ]
+    
     override func awakeFromNib() {
         super.awakeFromNib()
        
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
         dropdownView.layer.cornerRadius = 10
         dropdownView.layer.borderWidth = 0.5
         dropdownView.layer.borderColor = UIColor.lightGray.cgColor
@@ -40,20 +47,94 @@ class ActivitiesTVCell: UITableViewCell {
         setupDropdown()
     }
     
+    func confugure(value:Int){
+        
+        switch value{
+            
+        case 0:
+            ActivityStatusView.isHidden = true
+            
+        case 1:
+            ActivityStatusView.isHidden = false
+            ActivityStatusView.backgroundColor = .staffExamColour.withAlphaComponent(0.06)
+            
+        case 2:
+            ActivityStatusView.isHidden = false
+            ActivityStatusView.backgroundColor = .systemBlue.withAlphaComponent(0.06)
+            
+        default:
+            ActivityStatusView.isHidden = true
+            
+        }
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+    }
+    
     func setupDropdown() {
             dropdown.anchorView = dropdownView
             
-            dropdown.dataSource = [
-                "Pending",
-                "In Progress",
-                "Completed"
-            ]
+            dropdown.dataSource = items
             
             dropdown.backgroundColor = .white
             dropdown.cornerRadius = 10
 
             // Automatically chooses up or down depending on available space
             dropdown.direction = .any
+        
+        dropdown.customCellConfiguration = { [weak self] index, item, cell in
+            
+            // Clear default styling
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 5000, bottom: 0, right: 0)
+
+            // ===== HEADER: ACTIONS =====
+            if item == "HEADER_ACTIONS" {
+                cell.optionLabel.text = "ACTIONS"
+                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 14)
+                cell.optionLabel.textColor = .systemGray
+                cell.isUserInteractionEnabled = false
+
+                // Extra top padding for header
+                cell.layoutMargins.top = 8
+                cell.layoutMargins.bottom = 4
+                return
+            }
+            
+            // ===== HEADER: Columns =====
+            if item == "HEADER_COLUMNS" {
+                cell.optionLabel.text = "📄 Columns from uploaded image"
+                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 14)
+                cell.optionLabel.textColor = .staffExamColour
+                cell.isUserInteractionEnabled = false
+                
+                cell.layoutMargins.top = 4
+                cell.layoutMargins.bottom = 4
+                return
+            }
+            
+            // ===== SECTION SEPARATOR =====
+            if item == "SEPARATOR" {
+                cell.optionLabel.text = ""   // hide text
+                cell.isUserInteractionEnabled = false
+                
+                // Draw a custom separator
+                let line = UIView(frame: CGRect(x: 16, y: 4, width: cell.frame.width - 32, height: 1))
+                line.backgroundColor = UIColor.systemGray4
+                cell.addSubview(line)
+                
+                return
+            }
+
+            // ===== NORMAL SELECTABLE ITEMS =====
+            cell.optionLabel.text = item
+            cell.optionLabel.font = UIFont.systemFont(ofSize: 14)
+            cell.optionLabel.textColor = .label
+            cell.isUserInteractionEnabled = true
+        }
+
+        
         }
     
     @IBAction func showDropdown(){

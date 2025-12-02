@@ -4,6 +4,12 @@
 //
 //  Created by Lakshmanan on 26/11/25.
 //
+struct activity {
+    var name: String
+    var value: Int
+}
+
+
 
 import UIKit
 
@@ -21,6 +27,13 @@ class SubjectsTVCell: UITableViewCell {
     var isExpanded = false
     var onHeightChange: (() -> Void)?
     var activitiesCount = 2
+    
+    let samples: [activity] = [
+        activity(name: "Alpha", value: 0),
+        activity(name: "Beta", value: 0),
+        activity(name: "Gamma", value: 0),
+        activity(name: "Delta", value: 0)
+    ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -126,15 +139,16 @@ class SubjectsTVCell: UITableViewCell {
 
 extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        return activitiesCount
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return samples.count
     }
 
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell",
-                                                 for: indexPath) as! ActivitiesTVCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell", for: indexPath) as! ActivitiesTVCell
+        
+        let data = samples[indexPath.row]
+        cell.confugure(value: data.value)
+        
         return cell
     }
 }

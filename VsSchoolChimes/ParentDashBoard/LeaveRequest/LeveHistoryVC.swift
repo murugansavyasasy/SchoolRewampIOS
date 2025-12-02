@@ -155,7 +155,8 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
                         fromSession: leave.from_session ?? "",
                         Tosession: leave.to_session ?? "",
                         NoOfDays: leave.no_of_days ?? "",
-                        LeaveType: leave.leave_type ?? ""
+                        LeaveType: leave.leave_type ?? "",
+                        LeaveTypeId: leave.leave_type_id ?? 0,
                     )
                 
                 vc.modalPresentationStyle = .fullScreen

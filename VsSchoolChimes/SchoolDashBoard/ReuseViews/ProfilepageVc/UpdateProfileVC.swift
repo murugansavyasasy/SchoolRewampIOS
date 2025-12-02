@@ -85,6 +85,7 @@ class UpdateProfileVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        Menu_id.staffSelectedMenuId = -1
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
@@ -509,10 +510,9 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
     
     
     private func uploadProfileImage(_ image: UIImage, completion: @escaping (String?) -> Void) {
+        AWSUploadManager.iSprofile = true
         AWSUploadManager.shared.uploadFileToAWS(
             file: image,
-            bucketPath: "uploads/images/",
-            bucketName: "schoolchimes-communication",
             progressHandler: nil
         ) { url in
             completion(url)
@@ -647,10 +647,9 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
             for item in uploadableItems {
                 if let image = item.image {
                     // Upload local image to AWS
+                    AWSUploadManager.iSprofile = false
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
-                        bucketPath: "uploads/images/",
-                        bucketName: "schoolchimes-communication",
                         progressHandler: nil
                     ) { url in
                         if let uploadedURL = url {
@@ -674,10 +673,9 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                         updateAndCheckCompletion(total: total)
                     } else if let fileURL = URL(string: fileURLStr) {
                         let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
+                        AWSUploadManager.iSprofile = false
                         AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,
-                            bucketPath: path,
-                            bucketName: "schoolchimes-communication",
                             progressHandler: nil
                         ) { url in
                             if let uploadedURL = url {

@@ -20,9 +20,6 @@ import UIKit
 
 class NewPtmVC: UIViewController, Datepicker {
    
-    
-   
-    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var selectDateBtn: UIButton!
@@ -51,6 +48,7 @@ class NewPtmVC: UIViewController, Datepicker {
     var tvHidden:Bool?
     var MeetingDate = PTMString.All.translated()
     var selectedDate = ""
+    var isBookedSlots = false
     //let colours: [UIColor] = [.systemIndigo, .cyan, .systemPink, .systemGreen,UIColor(hex: "#E1E0F9")]
     let colours: [UIColor] = [UIColor(hex: "#E1E0F9"),UIColor(hex: "#DCEBFB"),UIColor(hex: "#F4E1FA"),UIColor(hex: "#E5FBE7")]
     
@@ -203,6 +201,7 @@ class NewPtmVC: UIViewController, Datepicker {
                     self.noDataImage.isHidden = false
                     self.nodataLbl.isHidden = false
                     self.nodataLbl.text = error.localizedDescription
+                    self.tv.reloadData()
                 }
             }
         }
@@ -264,6 +263,7 @@ class NewPtmVC: UIViewController, Datepicker {
                         self.nodataLbl.isHidden = false
                         self.noDataImage.isHidden = false
                         self.nodataLbl.text = success.message
+                        self.tv.reloadData()
                     }
                 
                     
@@ -272,6 +272,7 @@ class NewPtmVC: UIViewController, Datepicker {
                     self.nodataLbl.isHidden = false
                     self.noDataImage.isHidden = false
                     self.nodataLbl.text = failure.localizedDescription
+                    self.tv.reloadData()
                 }
             }
         }
@@ -331,7 +332,12 @@ class NewPtmVC: UIViewController, Datepicker {
         selectDateBtn.setTitle(PTMString.All.translated(), for: .normal)
         removeDateBtn.isHidden = true
         selectedDate = ""
-        Get_Meetings_Api(EventDate: "ALL")
+        
+        if isBookedSlots{
+            Get_bookedSlots_Api(EventDate: "ALL")
+        }else{
+            Get_Meetings_Api(EventDate: "ALL")
+        }
     }
     
     
@@ -351,7 +357,12 @@ class NewPtmVC: UIViewController, Datepicker {
         selectDateBtn.setTitle(date, for: .normal)
         removeDateBtn.isHidden = false
         selectedDate = convertDate(date) ?? ""
-        Get_Meetings_Api(EventDate: convertDate(date) ?? "")
+        
+        if isBookedSlots{
+            Get_bookedSlots_Api(EventDate: convertDate(date) ?? "")
+        }else{
+            Get_Meetings_Api(EventDate: convertDate(date) ?? "")
+        }
     }
     
     @IBAction func allAct(_ sender: Any) {
@@ -370,6 +381,7 @@ class NewPtmVC: UIViewController, Datepicker {
     
     @IBAction func MeetingsBtn(_ sender: Any) {
         
+        isBookedSlots = false
         addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
         
         if selectedDate == ""{
@@ -380,6 +392,7 @@ class NewPtmVC: UIViewController, Datepicker {
     }
     
     @IBAction func bookedSlotsBtn(_ sender: Any) {
+        isBookedSlots = true
         bookedSlots()
     }
     

@@ -25,6 +25,12 @@ class FeedetailTVC: UITableViewCell {
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
+        
+        dowloadBtn.layer.cornerRadius = 10
+        dowloadBtn.layer.borderWidth = 1
+        dowloadBtn.layer.borderColor = UIColor.systemBlue.cgColor
+        
+        timeLbl.isHidden = true
 
     }
 

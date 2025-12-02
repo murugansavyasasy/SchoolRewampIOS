@@ -457,10 +457,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath:  "communication" + "/" + (UserDefaultFileManager
-                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
-                ,
-                bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
                 },
@@ -497,8 +493,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
-                    bucketPath: "uploads/images/",
-                    bucketName: "schoolchimes-communication",
                     progressHandler: { progress in
                         // Optional: Update progress per file individually if you want
                     },
@@ -540,8 +534,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 }
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: PdfURL,
-                    bucketPath: "uploads/Documents/",
-                    bucketName: "schoolchimes-communication",
                     progressHandler: { progress in
                         // Optional: Update progress per file individually if you want
                     },

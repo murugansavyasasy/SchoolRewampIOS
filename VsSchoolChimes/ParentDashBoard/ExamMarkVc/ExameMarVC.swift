@@ -109,7 +109,7 @@ class ExameMarVC: UIViewController {
             parameters: ["exam_id": exam_id],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
+        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             
             guard let self = self else {return}
             
@@ -166,6 +166,8 @@ class ExameMarVC: UIViewController {
         } else {
             vc.fileURL = [FilePath(url: url, type: "pdf")]
         }
+        
+        vc.index = 0
         
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
