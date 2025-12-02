@@ -372,13 +372,13 @@ func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())
 }
-func AwsCurrentDateString(format: String = "YYYY-MM-DD") -> String {
+
+func AwsCurrentDateString(format: String = "dd-MM-yyyy") -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())
-    
-   
 }
+
 func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") -> String {
     guard let date = date else { return "" }
     let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"

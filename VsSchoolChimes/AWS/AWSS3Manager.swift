@@ -27,12 +27,13 @@ class UploadTaskDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelega
 class AWSUploadManager {
     
     static let shared = AWSUploadManager()
+    
+    static var iSprofile = false
+    
     private init() {}
     
     func uploadFileToAWS(
         file: Any,
-        bucketPath: String,
-        bucketName: String,
         progressHandler: ((Double) -> Void)? = nil,
         completion: @escaping (String?) -> Void
     ) {
@@ -95,10 +96,13 @@ class AWSUploadManager {
         }
         
         // ---------------- FETCH PRESIGNED URL ----------------
+        
+        let BucketDetails = getBucketDetails()
+        
         AWSPreSignedURL.shared.fetchPresignedURL(
-            bucket: bucketName,
+            bucket: BucketDetails.BucketName,
             fileName: fileName,     // MUST send string
-            bucketPath: bucketPath,
+            bucketPath: BucketDetails.Path,
             fileType: contentType
         ) { result in
             switch result {
@@ -202,6 +206,65 @@ class AWSUploadManager {
             print("⚠️ File does not exist -> \(url.path)")
         }
     }
+    
+    func getBucketDetails() -> (BucketName: String, Path: String) {
+        
+        let today_date = AwsCurrentDateString()
+        let school_id = UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
+        
+        var Bucket = ""
+        var Path = ""
+        
+        switch Menu_id.staffSelectedMenuId {
+            
+        case Menu_id.communicationMenuId:
+            Bucket = BucketName.schoolchimes_communication
+            Path = "\(Awsmenu.voice)/\(school_id)/\(today_date)"
+           
+        case Menu_id.AttachmentMenuId:
+            Bucket = BucketName.schoolchimes_communication
+            Path = "\(Awsmenu.files)/\(school_id)/\(today_date)"
+            
+        case Menu_id.noticeboardMenuId:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.noticeboard)/\(school_id)/\(today_date)"
+            
+        case Menu_id.homeWorkMenuId:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.homework)/\(school_id)/\(today_date)"
+            
+        case Menu_id.isAssaignment:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.assignment)/\(school_id)/\(today_date)"
+            
+        case Menu_id.lsrw:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.skills)/\(school_id)/\(today_date)"
+            
+        case Menu_id.event:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.events)/\(school_id)/\(today_date)"
+            
+        case Menu_id.Upload_Marks:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.marksheets)/\(school_id)/\(today_date)"
+            
+        case -1:
+            if AWSUploadManager.iSprofile{
+                Bucket = BucketName.schoolchimes_studentphotos
+            }else{
+                Bucket = BucketName.schoolchimes_schooldocs
+            }
+            
+            Path = "\(school_id)/\(today_date)"
+            
+        default:
+            break
+        }
+        
+        return (Bucket, Path)
+    }
+
 
 }
 
@@ -285,3 +348,13 @@ class AWSPreSignedURL {
     }
     
 }
+
+
+//MARK: Sample Aws Url Links
+
+/*
+ https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/7044/01-12-2025/audio_1764565674.wav
+
+ https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/files/7044/01-12-2025/D9A58808-726D-4C62-9915-374310C81170.jpj  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/homework/7044/01-12-2025/8D059096-2149-44B8-9E25-03342241A568.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/noticeboard/7044/01-12-2025/BCCF9B7C-34CD-4947-9D99-061606B7B703.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/assignment/7044/01-12-2025/8199229E-D095-4501-9076-9400EC2A903A.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/skills/7044/01-12-2025/audio_1764566311.wav  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/events/7044/01-12-2025/1B8E8F7B-A566-4DF6-9DB4-C71F725F58CE.jpg
+  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/events/7044/01-12-2025/C88E8321-FECD-46C0-B7A7-146A2AF5A0ED.jpg
+ */

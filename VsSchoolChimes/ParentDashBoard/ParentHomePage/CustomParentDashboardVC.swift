@@ -430,6 +430,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
 
     private func handleMenuSelection(menuId: Int, messageId : String) {
+        Menu_id.staffSelectedMenuId = menuId
         switch menuId {
         case 2:  MenuRedirect.receiverAssignmentNavigate(from: self, PushNotiMsgId: messageId)
         case 4:  MenuRedirect.receiverAttendancereport(

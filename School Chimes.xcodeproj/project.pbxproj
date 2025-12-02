@@ -771,6 +771,8 @@
 		FA4709542E39FF1000764E28 /* WeeklyReportTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */; };
 		FA48A6982E754AA7004E10C7 /* QuizSubmisionTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */; };
 		FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
+		FA68BBBB2EDD77640051EF7A /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA68BBB92EDD77640051EF7A /* EnterMarkVC.swift */; };
+		FA68BBBC2EDD77640051EF7A /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA68BBBA2EDD77640051EF7A /* EnterMarkVC.xib */; };
 		FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */; };
 		FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */; };
 		FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */; };
@@ -1733,6 +1735,8 @@
 		FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyReportTV.xib; sourceTree = "<group>"; };
 		FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSubmisionTvCell.swift; sourceTree = "<group>"; };
 		FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizSubmisionTvCell.xib; sourceTree = "<group>"; };
+		FA68BBB92EDD77640051EF7A /* EnterMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterMarkVC.swift; sourceTree = "<group>"; };
+		FA68BBBA2EDD77640051EF7A /* EnterMarkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterMarkVC.xib; sourceTree = "<group>"; };
 		FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTvCell.swift; sourceTree = "<group>"; };
 		FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTvCell.xib; sourceTree = "<group>"; };
 		FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceReportVc.swift; sourceTree = "<group>"; };
@@ -1887,7 +1891,6 @@
 		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
 		845AB85F2EC1A786003C22E1 /* OnboardingFlow */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingFlow; sourceTree = "<group>"; };
 		845CF1202E81737E001B2147 /* What'sNewVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "What'sNewVC"; sourceTree = "<group>"; };
-		846F7A7D2EDD4E0300C2D827 /* TestCollectionview */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TestCollectionview; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
@@ -3617,7 +3620,6 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
-				846F7A7D2EDD4E0300C2D827 /* TestCollectionview */,
 				FAD4D72C2E60640C007A3FC0 /* PTM */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				84127AC72E03C8F00092159D /* Pauckt */,
@@ -4191,6 +4193,8 @@
 				FAFB40BC2ED6E75A00783142 /* SubjectsTVCell.xib */,
 				FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */,
 				FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */,
+				FA68BBB92EDD77640051EF7A /* EnterMarkVC.swift */,
+				FA68BBBA2EDD77640051EF7A /* EnterMarkVC.xib */,
 			);
 			path = "Exam Mark";
 			sourceTree = "<group>";
@@ -4419,7 +4423,6 @@
 				843BCD752E2E71EA00D4364A /* CalanderCv */,
 				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
 				845CF1202E81737E001B2147 /* What'sNewVC */,
-				846F7A7D2EDD4E0300C2D827 /* TestCollectionview */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
@@ -4633,6 +4636,7 @@
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				84C08C692EB396E9009F657B /* PopoverViewVC.xib in Resources */,
 				187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */,
+				FA68BBBC2EDD77640051EF7A /* EnterMarkVC.xib in Resources */,
 				849F313F2D00631600BACEC7 /* EventHistoryVC.xib in Resources */,
 				848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */,
 				84AC7F102E3C8EED0022BD63 /* SideMenuVC.xib in Resources */,
@@ -5222,6 +5226,7 @@
 				843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */,
 				844DEDE82E549C150016A347 /* QuistionTvTableViewCell.swift in Sources */,
 				FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */,
+				FA68BBBB2EDD77640051EF7A /* EnterMarkVC.swift in Sources */,
 				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
 				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
 				FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */,

@@ -588,6 +588,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40, 18, 41
         ]
 
+        Menu_id.staffSelectedMenuId = menuId
         print("menuIdmenuIdmenuId",menuId)
         print("menuNamemenuNamemenuNamemenuName",menuName)
         // All actions with explicit self

@@ -97,21 +97,29 @@ class LogoutViewController: UIViewController {
                 switch result {
                 case .success(let success):
                    
-                    UserDefaultFileManager.removeLoginCredentials()
+                    if success.status == true{
                         
-                    if #available(iOS 15.0, *) {
-                        let loginVC = LoginVc(nibName: nil, bundle: nil)
-                        let nav = UINavigationController(rootViewController: loginVC)
-                        nav.navigationBar.isHidden = true
+                        UserDefaultFileManager.removeLoginCredentials()
                         
-                        if let window = UIApplication.shared.connectedScenes
-                            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
-                            window.rootViewController = nav
-                            window.makeKeyAndVisible()
+                        if #available(iOS 15.0, *) {
+                            let loginVC = LoginVc(nibName: nil, bundle: nil)
+                            let nav = UINavigationController(rootViewController: loginVC)
+                            nav.navigationBar.isHidden = true
+                            
+                            if let window = UIApplication.shared.connectedScenes
+                                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
+                                window.rootViewController = nav
+                                window.makeKeyAndVisible()
+                            }
                         }
+                    }else{
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {}
+                        print("Error: ", success.message ?? "")
                     }
                     
                 case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {}
                     print("Error: ", failure.localizedDescription)
                 }
             }

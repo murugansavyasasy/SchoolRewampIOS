@@ -441,10 +441,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             AWSUploadManager.shared.uploadFileToAWS(
                
                 file: audioURL,
-                bucketPath:  "communication" + "/" + (UserDefaultFileManager
-                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
-                    ,
-                bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
                 },
@@ -481,8 +477,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
-                    bucketPath: "uploads/images/",
-                    bucketName: "schoolchimes-communication",
                     progressHandler: { progress in
                         // Optional: Update progress per file individually if you want
                     },
@@ -524,8 +518,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     }
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: PdfURL,
-                        bucketPath: "uploads/Documents/",
-                        bucketName: "schoolchimes-communication",
                         progressHandler: { progress in
                             // Optional: Update progress per file individually if you want
                         },
@@ -565,8 +557,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     // 🖼️ Upload local image
                     AWSUploadManager.shared.uploadFileToAWS(
                         file: image,
-                        bucketPath: "uploads/images/",
-                        bucketName: "schoolchimes-communication",
                         progressHandler: nil,
                         completion: { url in
                             if let uploadedURL = url {
@@ -600,8 +590,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         
                         AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,
-                            bucketPath: path,
-                            bucketName: "schoolchimes-communication",
                             progressHandler: nil,
                             completion: { url in
                                 if let uploadedURL = url {

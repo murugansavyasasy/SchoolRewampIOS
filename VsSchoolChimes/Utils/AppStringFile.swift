@@ -607,3 +607,22 @@ struct PTMString {
 
 }
 
+struct BucketName {
+    
+    static let schoolchimes_communication = "schoolchimes-communication";
+    static let schoolchimes_activities = "schoolchimes-activities";
+    static let schoolchimes_studentphotos = "schoolchimes-studentphotos";
+    static let schoolchimes_schooldocs = "schoolchimes-schooldocs";
+}
+
+struct Awsmenu{
+    
+    static let voice = "voice";
+    static let files = "files";
+    static let noticeboard = "noticeboard";
+    static let homework = "homework";
+    static let assignment = "assignment";
+    static let skills = "skills";
+    static let events = "events";
+    static let marksheets = "marksheets";
+}

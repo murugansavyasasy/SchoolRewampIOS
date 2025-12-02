@@ -59,7 +59,11 @@ class ExamActivitySelectionVC: UIViewController {
            }
        }
     
-    @IBAction func continueAct(_ sender: Any) {}
+    @IBAction func continueAct(_ sender: Any) {
+        let vc = EnterMarkVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
