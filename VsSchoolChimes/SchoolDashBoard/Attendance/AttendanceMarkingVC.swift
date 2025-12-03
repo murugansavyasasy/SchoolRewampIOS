@@ -11,27 +11,6 @@ import UIKit
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
     
     func markAsAbsent(AbsentStudent: [AttendanceStudentListDetails], CallAttendaceApi: Bool) {
-//        if CallAttendaceApi{
-//            user_inputs.all_present = "T"
-//            filterData = AbsentStudent
-//            studentsDetails = AbsentStudent
-//            MakeAbsentId = studentsDetails?.filter{ $0.isAbsent == false }.compactMap{ Student in
-//                print("Absent Studets: ", Student.name ?? "")
-//                if let id =  Student.id{
-//                    user_inputs.all_present = "F"
-//                    return ["ID":id]
-//                }
-//                return nil
-//            } ?? []
-//            
-//            self.markAttendaceApi()
-//            
-//        }else{
-//            filterData = AbsentStudent
-//            studentsDetails = AbsentStudent
-//            tv.reloadData()
-//        }
-        
         if CallAttendaceApi {
             user_inputs.all_present = areAllStudentsPresent() ? "T" : "F"
             self.markAttendaceApi()
@@ -100,7 +79,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     var searchQuery: String = ""
     var selectedSort = CommonStringFile.NameASC
     var isAllAbsent = false
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +89,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         TitleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: standard)
         
         confirmBtn.layer.cornerRadius = 10
-
+        
         PresentCountView.layer.cornerRadius = 5
         PresentCountView.layer.borderWidth = 0.3
         PresentCountView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -152,7 +131,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         tv.dataSource = self
         Get_student_List_Api()
     }
-
+    
     func StyleAndTranslater() {
         
         //MARK: Label And Button Font Style
@@ -201,15 +180,15 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                         self.tv.reloadData()
                         
                         // Check if all students are absent
-                           let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
-                           
-                           if allAbsent {
-                               
-                               self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-                           } else {
-                               
-                               self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
-                           }
+                        let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
+                        
+                        if allAbsent {
+                            
+                            self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                        } else {
+                            
+                            self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+                        }
                         
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
@@ -230,7 +209,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     
     func markAttendaceApi(){
-
+        
         let payload = student_List?.map {
             getSpecialAttendanceType(for: $0)
         } ?? []
@@ -240,7 +219,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         APIService.shared
             .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
                 
-               // MarkAttendenceStringFile.student_id: MakeAbsentId,
+                // MarkAttendenceStringFile.student_id: MakeAbsentId,
                 MarkAttendenceStringFile.class_id: user_inputs.class_id,
                 MarkAttendenceStringFile.section_id: user_inputs.section_id,
                 MarkAttendenceStringFile.all_present: user_inputs.all_present,
@@ -312,9 +291,9 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-
+                
                 guard let self = self else { return }
-
+                
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {
@@ -334,23 +313,20 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         guard let students = student_List else {
             return //(0, 0, 0)
         }
-
+        
         // Transform each student into their spl_attendance_type
         let statuses: [String] = students.map { student in
             let components = student.att_status?.split(separator: "/").map(String.init) ?? []
             var value = ""
-
+            
             // Determine session value
             if user_inputs.session_type == "FH" {
                 value = components.first ?? ""
             } else if user_inputs.session_type == "SH" {
                 value = components.count > 1 ? components[1] : (components.first ?? "")
             } else {
-                // fallback for full day
                 value = components.first ?? ""
             }
-
-            // Normalize to one of: PRESENT, ABSENT, OD
             switch value {
             case "OD":
                 return "OD"
@@ -360,24 +336,16 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 return "PRESENT"
             }
         }
-
+        
         // Count occurrences
         let presentCount = statuses.filter { $0 == "PRESENT" }.count
         let absentCount = statuses.filter { $0 == "ABSENT" }.count
         let odCount = statuses.filter { $0 == "OD" }.count
-        
-        
-//        PresentCountLbl.text = String(presentCount)
-//        AbsentCountLbl.text = String(absentCount)
-//        OdCountLbl.text = String(odCount)
-        
         PresentCountLbl.text = formatCount(presentCount)
-           AbsentCountLbl.text = formatCount(absentCount)
-           OdCountLbl.text = formatCount(odCount)
-        
-//        return (presentCount, absentCount, odCount)
+        AbsentCountLbl.text = formatCount(absentCount)
+        OdCountLbl.text = formatCount(odCount)
     }
-
+    
     
     func attendaceGoBackDashBoard(){
         switch staff_role {
@@ -404,79 +372,70 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
             studentsDetails?[originalIndex].isAbsent = status
             filterData?[index].isAbsent = status
-//            abseentessData?[index].isAbsent = status
+            //            abseentessData?[index].isAbsent = status
             // Count of students marked as absent
             totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
             let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-//            PresentCountLbl.text = String(PresenrCount)
-//            AbsentCountLbl.text = String(totalcount)
+            //            PresentCountLbl.text = String(PresenrCount)
+            //            AbsentCountLbl.text = String(totalcount)
             
             PresentCountLbl.text = formatCount(PresenrCount)
-                AbsentCountLbl.text = formatCount(totalcount)
-
-//                OdCountLbl.text = String(format: "%02d", odCount)
+            AbsentCountLbl.text = formatCount(totalcount)
+            
+            //                OdCountLbl.text = String(format: "%02d", odCount)
             let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
             selectAllBtn.setImage(image, for: .normal)
         }
     }
     
     func formatCount(_ count: Int) -> String {
-            if count == 0 {
-                return "0"
-            } else if count < 10 {
-                return String(format: "0%d", count)
-            } else {
-                return String(count)
-            }
+        if count == 0 {
+            return "0"
+        } else if count < 10 {
+            return String(format: "0%d", count)
+        } else {
+            return String(count)
         }
+    }
     @IBAction func selectAllAct(_ sender: UIButton) {
         
-            // Toggle the state
-            isAllAbsent.toggle()
-            
-            // Update button UI
-            if isAllAbsent {
-                sender.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-            } else {
-                sender.setImage(UIImage(systemName: "square"), for: .normal)
-            }
-
-            // Update all students
-        guard var students = student_List else { return }
-
-            for i in 0..<students.count {
-                var components = students[i].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-
-                if user_inputs.attendance_type == "H" {
-                    // Half day logic
-                    if user_inputs.session_type == "FH" {
-                        components[0] = isAllAbsent ? "A" : "P"
-                    } else {
-                        if components.count > 1 {
-                            components[1] = isAllAbsent ? "A" : "P"
-                        } else {
-                            // If only one component exists, pad it
-                            components.append(isAllAbsent ? "A" : "P")
-                        }
-                    }
-                } else {
-                    // Full day logic → both sessions same
-                    components = [isAllAbsent ? "A" : "P", isAllAbsent ? "A" : "P"]
-                }
-
-                // Update student data
-                students[i].att_status = components.joined(separator: "/")
-            }
-
-            // Assign updated list back
-            student_List = students
-            Filtered_stuent_Listt = students
-            getAttendanceCounts()
+        // Toggle the state
+        isAllAbsent.toggle()
         
-            // Refresh UI
-            tv.reloadData()
-        
+        // Update button UI
+        if isAllAbsent {
+            sender.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        } else {
+            sender.setImage(UIImage(systemName: "square"), for: .normal)
         }
+        
+        // Update all students
+        guard var students = student_List else { return }
+        
+        for i in 0..<students.count {
+            var components = students[i].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+            
+            if user_inputs.attendance_type == "H" {
+                if user_inputs.session_type == "FH" {
+                    components[0] = isAllAbsent ? "A" : "P"
+                } else {
+                    if components.count > 1 {
+                        components[1] = isAllAbsent ? "A" : "P"
+                    } else {
+                        components.append(isAllAbsent ? "A" : "P")
+                    }
+                }
+            } else {
+                components = [isAllAbsent ? "A" : "P", isAllAbsent ? "A" : "P"]
+            }
+            students[i].att_status = components.joined(separator: "/")
+        }
+        student_List = students
+        Filtered_stuent_Listt = students
+        getAttendanceCounts()
+        tv.reloadData()
+        
+    }
     
     @IBAction func BackAct(_ sender: Any) {
         
@@ -484,7 +443,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     }
     
     @IBAction func submitAttendanceAct(_ sender: Any) {
-
+        
         if areAllStudentsPresent(){
             user_inputs.all_present = "T"
             let alert = CustomAlert()
@@ -498,21 +457,18 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             vc.StudentList = self.student_List
             vc.delegate = self
             vc.modalPresentationStyle = .formSheet
-            // ✅ Prevent drag-down dismiss
             vc.isModalInPresentation = true
             present(vc, animated: true)
         }
         
     }
-
+    
     func areAllStudentsPresent() -> Bool {
         guard let students = Filtered_stuent_Listt else { return false }
-
+        
         return students.allSatisfy { student in
             let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
             var value = ""
-
-            // Check correct session value
             if user_inputs.attendance_type == "H" {
                 if user_inputs.session_type == "FH" {
                     value = components.first ?? ""
@@ -520,15 +476,12 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                     value = components.count > 1 ? components[1] : (components.first ?? "")
                 }
             } else {
-                // For full day — both sessions must be "P"
                 return components.allSatisfy { $0 == "P" || $0 == "P~" }
             }
-
-            // For half day — this session must be "P" or "P~"
             return value == "P" || value == "P~"
         }
     }
-
+    
     
     
     func getSpecialAttendanceType(for student: AttendanceStudentListDetails) -> [String: String] {
@@ -541,7 +494,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         } else if user_inputs.session_type == "SH" {
             value = components.count > 1 ? components[1] : (components.first ?? "")
         } else {
-            // fallback if session_type is not FH or SH
             value = components.first ?? ""
         }
         
@@ -562,12 +514,12 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             "spl_attendance_type": splType
         ]
     }
-
+    
     
     func applyFilterAndSort() {
         
         var result = student_List ?? []
-
+        
         if !searchQuery.isEmpty {
             let query = searchQuery.lowercased()
             result = result.filter { student in
@@ -576,31 +528,29 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 (student.admission_no?.lowercased().contains(query) ?? false)
             }
         }
-
-            switch selectedSort {
-            case CommonStringFile.RollNoASC:
-                result.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
-            case CommonStringFile.RollNoDESC:
-                result.sort { ($0.roll_no ?? "") > ($1.roll_no ?? "") }
-            case CommonStringFile.NameASC:
-                result.sort { ($0.name ?? "") < ($1.name ?? "") }
-            case CommonStringFile.NameDESC:
-                result.sort { ($0.name ?? "") > ($1.name ?? "") }
-            case CommonStringFile.AdmissionNoASC:
-                result.sort { ($0.admission_no ?? "") < ($1.admission_no ?? "") }
-            case CommonStringFile.AdmissionNoDESC:
-                result.sort { ($0.admission_no ?? "") > ($1.admission_no ?? "") }
-            default:
-                break
-            }
         
-        // 4️⃣ Update the filtered data source
+        switch selectedSort {
+        case CommonStringFile.RollNoASC:
+            result.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
+        case CommonStringFile.RollNoDESC:
+            result.sort { ($0.roll_no ?? "") > ($1.roll_no ?? "") }
+        case CommonStringFile.NameASC:
+            result.sort { ($0.name ?? "") < ($1.name ?? "") }
+        case CommonStringFile.NameDESC:
+            result.sort { ($0.name ?? "") > ($1.name ?? "") }
+        case CommonStringFile.AdmissionNoASC:
+            result.sort { ($0.admission_no ?? "") < ($1.admission_no ?? "") }
+        case CommonStringFile.AdmissionNoDESC:
+            result.sort { ($0.admission_no ?? "") > ($1.admission_no ?? "") }
+        default:
+            break
+        }
         Filtered_stuent_Listt = result
         noDataLbl.isHidden = !(Filtered_stuent_Listt?.isEmpty ?? false)
         noDataImage.isHidden = !(Filtered_stuent_Listt?.isEmpty ?? false)
         tv.reloadData()
     }
-
+    
     
     @IBAction func searchBtnCilck(_ sender: UIButton) {
         sender.isSelected.toggle()
@@ -630,8 +580,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             self.filterBtn.setTitle(item.translated(), for: .normal)
-            
-            // Save selected sort
             self.selectedSort =  item
             
             applyFilterAndSort()
@@ -645,7 +593,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
         selectAllBtn.isHidden = !searchText.isEmpty
     }
-
+    
 }
 
 extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
@@ -722,12 +670,6 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
             cell.OnLateBtn.setImage(UIImage(systemName: "square"), for: .normal)
             cell.ODSwitch.isOn = false
         }
-        
-//        cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
-//        cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
-//        cell.phnBtn.tag = indexPath.row
-//        cell.phnBtn.isHidden = true
-//        cell.custSwitch.index = indexPath.row
         cell.studentId = student_data?.id
         cell.delegate = self
         return cell
@@ -737,29 +679,26 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
 }
-    
-extension AttendanceMarkingVC: studentAttenance {
 
+extension AttendanceMarkingVC: studentAttenance {
+    
     func didTapPresentAbsent(for id: String) {
         
         guard let filteredList = Filtered_stuent_Listt,
               let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
         
         var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-    
-        // Toggle only the relevant session
-               if user_inputs.attendance_type == "H" {
-                   if user_inputs.session_type == "FH" {
-                       components[0] = (components.first == "P" || components.first == "P~") ? "A" : "P"
-                   } else {
-                       if components.count > 1 {
-                           components[1] = (components[1] == "P" || components[1] == "P~") ? "A" : "P"
-                       }
-                   }
-               } else {
-                   components[0] = (components.first == "P" || components.first == "P~") ? "A" : "P"
-               }
-        
+        if user_inputs.attendance_type == "H" {
+            if user_inputs.session_type == "FH" {
+                components[0] = (components.first == "P" || components.first == "P~") ? "A" : "P"
+            } else {
+                if components.count > 1 {
+                    components[1] = (components[1] == "P" || components[1] == "P~") ? "A" : "P"
+                }
+            }
+        } else {
+            components[0] = (components.first == "P" || components.first == "P~") ? "A" : "P"
+        }
         Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
         
         if let mainList = student_List,
@@ -771,12 +710,12 @@ extension AttendanceMarkingVC: studentAttenance {
         tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }
     
-
+    
     func didTapLate(for id: String) {
         
         guard let filteredList = Filtered_stuent_Listt,
               let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
-
+        
         var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
         
         if user_inputs.attendance_type == "H" {
@@ -790,24 +729,24 @@ extension AttendanceMarkingVC: studentAttenance {
         } else {
             components[0] = (components.first == "P~") ? "P" : "P~"
         }
-
-
+        
+        
         Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
-       
+        
         if let mainList = student_List,
            let index = mainList.firstIndex(where: { $0.id == id }) {
             student_List?[index].att_status = components.joined(separator: "/")
         }
-
+        
         getAttendanceCounts()
         tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }
-
+    
     func didToggleOD(for id: String, isOn: Bool) {
         
         guard let filteredList = Filtered_stuent_Listt,
               let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
-
+        
         let newType = isOn ? "OD" : "P"
         
         var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
@@ -825,12 +764,12 @@ extension AttendanceMarkingVC: studentAttenance {
         }
         
         Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
-
+        
         if let mainList = student_List,
            let index = mainList.firstIndex(where: { $0.id == id }) {
             student_List?[index].att_status = components.joined(separator: "/")
         }
-
+        
         getAttendanceCounts()
         tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }

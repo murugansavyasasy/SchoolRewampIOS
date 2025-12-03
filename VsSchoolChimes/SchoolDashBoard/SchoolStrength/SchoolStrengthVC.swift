@@ -41,9 +41,7 @@ class SchoolStrengthVC: UIViewController {
             )
 
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
-        let nib1 = UINib(nibName: CellConfingName.SectionStregnthTVC, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
-        Tv.register(nib1, forCellReuseIdentifier: CellConfingName.SectionStregnthTVC)
         Tv.register(UINib(nibName: "SummerizeTvCel", bundle: nil), forCellReuseIdentifier: "SummerizeTvCel")
         Tv.register(UINib(nibName: "GenderDistriTvcel", bundle: nil), forCellReuseIdentifier: "GenderDistriTvcel")
         Tv.register(UINib(nibName: "LblTvCell", bundle: nil), forCellReuseIdentifier: "LblTvCell")
@@ -186,15 +184,6 @@ class SchoolStrengthVC: UIViewController {
                         self.Tv.reloadData()
                     }else{
                         self.Tv.isHidden = true
-                    }
-                    
-                    if hasData {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                            let indexPath = IndexPath(row: 0, section: 0)
-                            if let cell = self.Tv.cellForRow(at: indexPath) as? SectionStregnthTVC {
-                                cell.schoolStrength = self.SchoolStrength?.first
-                            }
-                        }
                     }
                 }
             case .failure(let error):

@@ -240,31 +240,31 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         }
         if isParent{
             switch menuItem {
-            case 2:  MenuRedirect.receiverAssignmentNavigate(from: self)
+            case 2:  MenuRedirect.receiverAssignmentNavigate(from: self, PushNotiMsgId: "")
             case 4:  MenuRedirect.receiverAttendancereport(
                 from: self,
-                PushNotiMsg_id: ""
+                PushNotiMsgId: ""
             )
             case 5:  MenuRedirect.receiverCertificateRequest(from: self)
             case 6:  MenuRedirect.receiverclassTimeTable(from: self)
-            case 7:  MenuRedirect.receiverCommunicationNavigate(from: self)
-            case 9:  MenuRedirect.receiverEvent(from: self)
+            case 7:  MenuRedirect.receiverCommunicationNavigate(from: self,PushNotiMsgId: "")
+            case 9:  MenuRedirect.receiverEvent(from: self,PushNotiMsgId: "")
             case 10: MenuRedirect.resiverExamMark(from: self)
             case 12: MenuRedirect.receiverFeeDetails(from: self)
-            case 15: MenuRedirect.receiverHomework(from: self)
+            case 15: MenuRedirect.receiverHomework(from: self,PushNotiMsgId: "")
             case 16: MenuRedirect.receiverchat(from: self)
-            case 20: MenuRedirect.receiverLsrwNavigate(from: self)
-            case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self)
+            case 20: MenuRedirect.receiverLsrwNavigate(from: self,PushNotiMsgId: "")
+            case 23: MenuRedirect.receiverNoticeBoardNavigate(from: self,PushNotiMsgId: "")
             case 24: MenuRedirect.receiverOnlineNavigate(from: self)
             case 25: MenuRedirect.receiverFeeDetails(from: self)
             case 26: MenuRedirect.receiverPtmNavigate(from: self)
-            case 27: MenuRedirect.QuizExam(from: self)
+            case 27: MenuRedirect.QuizExam(from: self,PushNotiMsgId: "")
             case 28: MenuRedirect.LeaveRquest(from: self)
             case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39:
                 MenuRedirect.receiverAttachment(
                     from: self,
-                    notificationId: tvheadernotidata[indexPath.section].details?[indexPath.row].header_id ?? ""
+                    PushNotiMsgId: tvheadernotidata[indexPath.section].details?[indexPath.row].header_id ?? ""
                 )
             case 40: MenuRedirect.receiverPauckt(from: self)
             default: break

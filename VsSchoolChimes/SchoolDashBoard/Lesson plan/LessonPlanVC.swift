@@ -80,9 +80,6 @@ class LessonPlanVC: UIViewController {
         let nib2 = UINib(nibName: CellConfingName.LessonDashboardTv, bundle: nil)
         tableview.register(nib2, forCellReuseIdentifier: CellConfingName.LessonDashboardTv)
         
-        let nib3 = UINib(nibName: "LessonViewTvCell", bundle: nil)
-        tableview.register(nib3, forCellReuseIdentifier: "LessonViewTvCell")
-        
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
