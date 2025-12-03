@@ -26,8 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
            FirebaseApp.configure()
 //        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
            UNUserNotificationCenter.current().delegate = self
-           application.registerForRemoteNotifications()
+//           application.registerForRemoteNotifications()
            Messaging.messaging().delegate = self
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+                print("Permission granted: \(granted)")
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
            return true
        }
 
@@ -71,7 +78,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func handleNotificationTap(userInfo: [AnyHashable: Any]) {
 
-        guard let rootVC = UIApplication.shared.windows.first?.rootViewController else { return }
+        guard let topVC = UIApplication.topViewController() else {
+            print("❌ No top visible view controller")
+            return
+        }
 
         // Login Check
         guard let login = UserDefaultFileManager.getLoginCredentials(),
@@ -79,7 +89,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
               !login.pwd.isEmpty else {
 
             if #available(iOS 14.0, *) {
-                presentLogin(from: rootVC)
+                presentLogin(from: topVC)
             }
             return
         }
@@ -93,7 +103,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 notificationAlreadyHandled = true
         
         let type = userInfo["type"] as? String
-
+        let voiceUrl = userInfo["voice_url"] as? String ?? ""
         if type == "normal" {
             let loginAs = userInfo["receiver_type"] as? String
             if loginAs == "student" {
@@ -112,7 +122,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         menuID: menuId,
                         header_id: headerId,
                         logintype: 2,
-                        from: rootVC
+                        from: topVC
                     )
                 }
             }
@@ -134,7 +144,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         menuID: menuId,
                         header_id: headerId,
                         logintype: 1,
-                        from: rootVC
+                        from: topVC
                     )
                 }
                 
@@ -142,8 +152,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             
         } else if type == "call" {
             let vc = NotificationCallVC()
+            vc.voiceUrl = voiceUrl
             vc.modalPresentationStyle = .fullScreen
-            rootVC.present(vc, animated: true)
+            topVC.present(vc, animated: true)
         }
     }
 

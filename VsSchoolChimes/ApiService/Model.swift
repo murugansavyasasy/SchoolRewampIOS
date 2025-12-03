@@ -615,6 +615,7 @@ struct Notice: Codable {
     let can_edit: Bool?
     let can_delete: Bool?
     let school_id: String?
+    let school_name: String?
 }
 
 //MARK: Attendence

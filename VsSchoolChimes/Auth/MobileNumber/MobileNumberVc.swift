@@ -98,7 +98,7 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
         WelcomeLbl.setFont(style: .title, size: 16)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         LoginTitleLbl.setFont(style: .header, size: 16)
-        MobilenumLabel.setFont(style: .body, size: FontSize.TitleSize)
+        MobilenumLabel.setFont(style: .body, size: 13)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         addPadding(to: MobilTextFld, amount: 10)
         
@@ -127,6 +127,8 @@ class MobileNumberVc: UIViewController,UITextFieldDelegate {
     
     @IBAction func continueBtn(_ sender: Any) {
         
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         guard let button = sender as? UIButton else { return }
 
           // Animate the button when it is tapped

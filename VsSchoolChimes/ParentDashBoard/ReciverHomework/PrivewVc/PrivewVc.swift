@@ -48,7 +48,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var is_unreadStatus : Bool?
     var buttonTitle:String?
     var targetCvdata : [targetInfoData] = []
-    
+    var ComFromNoticeBoard : Bool = false
     var targetId : String?
     var EndUrl : String?
     var isStaffAndStudent : Bool = false
@@ -112,10 +112,22 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         setupUI()
         setupCollectionView()
         if EndUrl == "" || EndUrl == nil {
-            targetFullView.isHidden = true
+                targetFullView.isHidden = true
         }else{
             targetFullView.isHidden = false
             getTargetReport(EndUrl: EndUrl ?? "", params: params)
+        }
+        
+        if ComFromNoticeBoard{
+            yourTargetLbl.text = "Message sent to SCHOOL"
+            targetFullView.isHidden = false
+            cv.delegate = self
+            cv.dataSource = self
+            cv.reloadData()
+            DispatchQueue.main.async {
+                self.reloadss()
+            }
+            ComFromNoticeBoard = false
         }
     }
     
@@ -123,7 +135,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         let displayText = selectedDate?.convertToTargetDateFormat() ?? ""
         titleLbl.text = titleString
         discreption.text = descriptionString
-        dateLbl.text = "\("Posted On".translated()) : \(displayText)"
+        dateLbl.text = "\("posted on".translated()) : \(displayText)"
         postedByLbl.text = "\("posted by".translated()) : \(postedBy ?? "")"
 
         if is_unreadStatus ?? false{

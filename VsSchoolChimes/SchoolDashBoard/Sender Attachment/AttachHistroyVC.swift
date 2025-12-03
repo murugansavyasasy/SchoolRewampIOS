@@ -60,7 +60,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     let alert = CustomAlert()
     var Scholldetails = UserDefaultFileManager.getUserDetails()
     let transitionDelegate = TransitioningDelegate()
-    var filterSchoolId: String? = "All"
+    var filterSchoolId: String? = "All Schools"
     override func viewDidLoad() {
         super.viewDidLoad()
         localData.editToken = ""
@@ -87,10 +87,10 @@ class AttachHistroyVC: UIViewController, SelectedId {
                 let matchedSchoolName = school_details?
                     .first?
                     .school_name
-                schoolName.text = "All"
+                schoolName.text = "All Schools"
                 
                 schoolList = school_details?.compactMap { $0.school_name }
-                schoolList?.insert("All", at: 0)
+                schoolList?.insert("All Schools", at: 0)
                 self.dropDown.dataSource = self.schoolList ?? []
             }else{
                 schoolDropDownFullview.isHidden = true
@@ -168,9 +168,9 @@ class AttachHistroyVC: UIViewController, SelectedId {
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
-            if item == "All"{
-                filterSchoolId = "All"
-                filterUsingSchoolId("All")
+            if item == "All Schools"{
+                filterSchoolId = "All Schools"
+                filterUsingSchoolId("All Schools")
                 searchBar.text = ""
             }else{
                 if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
@@ -184,7 +184,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     }
     
     func filterUsingSchoolId(_ schoolId: String) {
-        if schoolId == "All" {
+        if schoolId == "All Schools" {
             filteredAttachments = attachmentData
         } else {
             filteredAttachments = attachmentData.filter { $0.school_id == schoolId }
@@ -374,8 +374,8 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: "Posted on : " + displayText,
-                sendBy:  "Posted by :  " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
+                date: "posted on - " + displayText,
+                sendBy:  "posted by -  " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false,
                 parentTableView: tv
             )
@@ -436,13 +436,13 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
     
     private func filterAttachments(with searchText: String) {
         let lowerSearch = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        let selectedSchoolId = filterSchoolId ?? "All"
+        let selectedSchoolId = filterSchoolId ?? "All Schools"
         
         // Step 1: Start from full data
         var results = attachmentData
         
         // Step 2: Apply school filter
-        if selectedSchoolId != "All" {
+        if selectedSchoolId != "All Schools" {
             results = results.filter { $0.school_id == selectedSchoolId }
         }
         

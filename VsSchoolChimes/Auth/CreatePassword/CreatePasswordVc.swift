@@ -45,7 +45,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
             createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_new_password
             ConfirmPassLabel.localizationKey = ChangePasswordStringFile.confirm_password
             titleLbl.localizationKey = ChangePasswordStringFile.Reset_password
-            confirmPassBtnNam.localizationKey = ChangePasswordStringFile.change_password
+            confirmPassBtnNam.localizationKey = ChangePasswordStringFile.Reset_password
+            confirmPassBtnNam.setTitle(ChangePasswordStringFile.Reset_password, for: .normal)
         }
         
         createPassTextFLd.delegate = self
@@ -67,7 +68,13 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         let NeweyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         NewPassEyeImage.addGestureRecognizer(NeweyeTap)
         NewPassEyeImage.isUserInteractionEnabled = true
-        
+        if chnage_passwordPage{
+            createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_old_password
+            ConfirmPassLabel.localizationKey = ChangePasswordStringFile.Enter_the_New_password
+            titleLbl.localizationKey = ChangePasswordStringFile.change_password
+            confirmPassBtnNam.localizationKey = ChangePasswordStringFile.change_password
+            confirmPassBtnNam.setTitle(ChangePasswordStringFile.change_password, for: .normal)
+        }
         
     }
     
@@ -81,7 +88,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
         BottomView.layer.cornerRadius = 40
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        confirmPassBtnNam.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+//        confirmPassBtnNam.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
         confirmPassBtnNam.layer.cornerRadius = 15
         confirmPassBtnNam.layer.masksToBounds = false
         
@@ -141,11 +148,19 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     
     
     @IBAction func backBtn(_ sender: Any) {
+        if chnage_passwordPage{
+            self.presentingViewController?.dismiss(animated: true)
+        }else{
+            self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+        }
         
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+        
     }
     
     @IBAction func confirmBtn(_ sender: Any) {
+        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         
         if createPassTextFLd.text != "" {
             
