@@ -21,26 +21,18 @@ class RatingTableViewCell: UITableViewCell {
 
     // MARK: - Variables
     weak var delegate: RatingCellDelegate?
-    weak var RatingDelegate: RatingDelegate?   // 👉 fixed: weak to avoid retain cycle
+    weak var RatingDelegate: RatingDelegate?
 
     private var currentRating = 0
 
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-
-//        HowSatisfiedLbl.setFont(style: .title, size: FontSize.TitleSize)
-
         RatingValue.setTitleFont(style: .body, size: 18)
         RatingValue.layer.borderWidth = 1
         RatingValue.layer.borderColor = UIColor.orange.cgColor
         RatingValue.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-
-        // Gesture
         setupGesture()
-
-        // Debug
-        print("groupButtons count:", groupButtons.count)
     }
 
     override func layoutSubviews() {

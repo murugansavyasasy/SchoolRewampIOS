@@ -142,13 +142,6 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
-    
-    func senderImgPDfNavigate(from viewController: UIViewController) {
-        let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-    }
-    
     func senderNoticeboardNavigate(from viewController: UIViewController) {
 //        let vc = EventPageVC(nibName: nil, bundle: nil)
         let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
@@ -461,13 +454,6 @@ class MenuRedirectHandler {
         vc.clickedMessageId = PushNotiMsgId
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-    }
-    
-    func LeaveRquest(from viewController: UIViewController){
-        let vc = NavigationVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-        
     }
     func receiverEvent(from viewController: UIViewController,PushNotiMsgId:String){
 

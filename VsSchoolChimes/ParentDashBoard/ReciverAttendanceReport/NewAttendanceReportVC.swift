@@ -89,10 +89,6 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         NoDataImage.isHidden = true
         NoDataLbl.isHidden = true
         
-//        tv.register(UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil), forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
-//        tv.delegate = self
-//        tv.dataSource = self
-        
         cv.register(
                 UINib(nibName: "AttendanceRepCv", bundle: nil),
                 forCellWithReuseIdentifier: "AttendanceRepCv")
@@ -187,46 +183,3 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     
 }
 
-
-extension NewAttendanceReportVC : UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return attendanceReportData?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! attendanceRepTv
-        
-        let dateStr = attendanceReportData?[indexPath.row].date ?? ""
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "dd-MM-yyyy"
-        
-        if let date = inputFormatter.date(from: dateStr) {
-            let outputFormatter = DateFormatter()
-            
-            // Get full month name
-            outputFormatter.dateFormat = "MMM"
-            let monthName = outputFormatter.string(from: date)
-            
-            
-            // Get day only
-            let calendar = Calendar.current
-            let day = calendar.component(.day, from: date)
-            //            cell.dayLbl.text = "\(day)"
-            cell.datelbl.text = "\(monthName) \n \(day)"
-        }
-        
-        let formattedDateString = dateFormatter.convertDate(
-            attendanceReportData?[indexPath.row].date ?? ""
-        ) ?? ""
-        cell.dateYrLbl.text = formattedDateString
-        cell.dayLbl.text = attendanceReportData?[indexPath.row].day
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return UITableView.automaticDimension
-    }
-}
