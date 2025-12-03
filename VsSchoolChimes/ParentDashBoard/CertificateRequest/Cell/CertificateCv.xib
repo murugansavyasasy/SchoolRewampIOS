@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -128,7 +128,6 @@
                 <outlet property="CertificateName" destination="zpB-hO-SFv" id="55M-ba-eaV"/>
                 <outlet property="CertificateView" destination="tGb-Le-m3n" id="02r-pU-wbl"/>
                 <outlet property="DateLbl" destination="hZ6-lj-Yzv" id="BrB-2R-BOc"/>
-                <outlet property="Folderview" destination="JfV-K4-y7A" id="Hnn-OQ-EFT"/>
                 <outlet property="reasonLbl" destination="XDS-TD-oAC" id="DIg-cN-qLB"/>
             </connections>
             <point key="canvasLocation" x="257.25190839694653" y="54.929577464788736"/>

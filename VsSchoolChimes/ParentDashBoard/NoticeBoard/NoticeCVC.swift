@@ -7,6 +7,11 @@
 import UIKit
 import EventKit
 
+protocol SelectNotice: AnyObject {
+    
+    func didTapButton(title: String, content: String, items: [FilePath],editId:String)
+}
+
 class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, TimePicker, SelectedId {
     func selectId(id: String?,edit:Bool?) {
         delegate?.selectId(id: id, edit: edit)

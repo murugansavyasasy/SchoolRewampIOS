@@ -535,11 +535,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+//        view.applyGradient(
+//            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
     }
     
     
@@ -2183,5 +2183,11 @@ extension ComunicationVC: UITextFieldDelegate, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         activeField = nil
+    }
+}
+
+extension AVPlayer {
+    var isPlaying: Bool {
+        return self.rate != 0 && self.error == nil
     }
 }

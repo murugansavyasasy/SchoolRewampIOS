@@ -127,23 +127,23 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
         tableview.reloadData()
     }
     
-    override func viewDidLayoutSubviews() {
-        if passvalue == 2 {
-            view.applyGradient(
-                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-           
-           
-        }else {
-            view.applyGradient(
-                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }
-    }
+//    override func viewDidLayoutSubviews() {
+//        if passvalue == 2 {
+//            view.applyGradient(
+//                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+//                startPoint: CGPoint(x: 1, y: 0.5),
+//                endPoint: CGPoint(x: 0, y: 0.5)
+//            )
+//           
+//           
+//        }else {
+//            view.applyGradient(
+//                colors: [Colornames.stafGradient, Colornames.stafGradient1],
+//                startPoint: CGPoint(x: 1, y: 0.5),
+//                endPoint: CGPoint(x: 0, y: 0.5)
+//            )
+//        }
+//    }
     
     deinit {
         // Remove observers

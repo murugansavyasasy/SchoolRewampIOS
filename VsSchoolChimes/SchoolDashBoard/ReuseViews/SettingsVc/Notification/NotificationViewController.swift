@@ -259,7 +259,6 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
             case 25: MenuRedirect.receiverFeeDetails(from: self)
             case 26: MenuRedirect.receiverPtmNavigate(from: self)
             case 27: MenuRedirect.QuizExam(from: self,PushNotiMsgId: "")
-            case 28: MenuRedirect.LeaveRquest(from: self)
             case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39:
                 MenuRedirect.receiverAttachment(

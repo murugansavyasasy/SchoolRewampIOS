@@ -350,11 +350,7 @@ class MenuRedirectHandler {
     //MARK: ResiverSideMenuViewContoller Starts
     
     
-    func receiverVideoNavigate(from viewController: UIViewController) {
-        let vc = VideoVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-    }
+   
     
     func receiverCommunicationNavigate(from viewController: UIViewController,PushNotiMsgId:String) {
         
@@ -366,12 +362,7 @@ class MenuRedirectHandler {
         }
     }
     
-    func receiverImgPdfNavigate(from viewController: UIViewController) {
-        let vc = ReciverAttachmentrVC(nibName: nil, bundle: nil)
-//        vc.passValue = 0
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-    }
+    
     
     func receiverPtmNavigate(from viewController: UIViewController) {
        // let vc = PTMViewController(nibName: nil, bundle: nil)

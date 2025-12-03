@@ -127,9 +127,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func takeReadingSkill() {
-        let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+//        let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     
     @IBAction func search(_ sender: UIButton) {

@@ -28,6 +28,10 @@ enum LeaveStatus: String {
     }
 }
 
+protocol EditObject{
+    func edit(edit:editLeave?)
+}
+
 class LeveHistoryVC: UIViewController, EditDeleteDelegate {
 
     @IBOutlet weak var LeaveRequestsLbl: UILabel!

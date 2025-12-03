@@ -213,11 +213,11 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     ) {
         
         // Adjust colors for lightening and opacity
-        let adjustedColors = gradientColors.map { color in
-            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
-        }
+//        let adjustedColors = gradientColors.map { color in
+//            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
+//        }
         
-        gradientcolours(button: button, colours: adjustedColors)
+       // gradientcolours(button: button, colours: adjustedColors)
     }
     
     @IBAction func UpcomingAct(_ sender: Any) {

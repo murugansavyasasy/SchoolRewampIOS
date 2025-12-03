@@ -10,7 +10,7 @@ import UIKit
 class CertificateCv: UICollectionViewCell {
 
     @IBOutlet weak var CertificateView: UIView!
-    @IBOutlet weak var Folderview: FolderView!
+    //@IBOutlet weak var Folderview: UIView!
     
     @IBOutlet weak var CertificateName: UILabel!
     @IBOutlet weak var reasonLbl: UILabel!

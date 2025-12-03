@@ -97,29 +97,31 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SideTvcell",
-                                                 for: indexPath) as! SideTvcell
-        let item = menuArray[indexPath.row]
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "SideTvcell",
+//                                                 for: indexPath) as! SideTvcell
+//        let item = menuArray[indexPath.row]
+//        
+//        cell.ExameLbl.text = item.name
+//        
+//        if let iconName = item.icon {
+//            if let systemImage = UIImage(systemName: iconName) {
+//                cell.iconBtn.setImage(systemImage, for: .normal)
+//            } else {
+//                cell.iconBtn.setImage(UIImage(named: iconName), for: .normal)
+//            }
+//        }
+//        
+//        if item.name == "Logout".translated() {
+//            cell.ExameLbl.textColor = .red
+//            cell.iconBtn.tintColor = .red
+//        }else{
+//            cell.ExameLbl.textColor = .label
+//            cell.iconBtn.tintColor = .link
+//        }
+//        
+//        return cell
         
-        cell.ExameLbl.text = item.name
-        
-        if let iconName = item.icon {
-            if let systemImage = UIImage(systemName: iconName) {
-                cell.iconBtn.setImage(systemImage, for: .normal)
-            } else {
-                cell.iconBtn.setImage(UIImage(named: iconName), for: .normal)
-            }
-        }
-        
-        if item.name == "Logout".translated() {
-            cell.ExameLbl.textColor = .red
-            cell.iconBtn.tintColor = .red
-        }else{
-            cell.ExameLbl.textColor = .label
-            cell.iconBtn.tintColor = .link
-        }
-        
-        return cell
+        return UITableViewCell()
     }
     
     // MARK: - TableView Delegate

@@ -450,7 +450,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 25: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 26: MenuRedirect.receiverPtmNavigate(from: self)
         case 27: MenuRedirect.QuizExam(from: self,PushNotiMsgId: messageId)
-        case 28: MenuRedirect.LeaveRquest(from: self)
         case 30: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)

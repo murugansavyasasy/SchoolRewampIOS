@@ -12,6 +12,10 @@ import PDFKit
 import AVFoundation
 import AVKit
 
+protocol HistorySelectDelegate {
+    func select(Title: String, Description: String, Images: [UIImage], pdf: String)
+}
+
 @available(iOS 14.0, *)
 class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, UITextFieldDelegate {
     func didTapButton(title: String, content: String, items: [FilePath],editId:String) {

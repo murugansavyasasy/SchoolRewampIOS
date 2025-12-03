@@ -7,6 +7,10 @@ import UIKit
 import SDWebImage
 import WebKit
 
+protocol DidSelectDelegate: AnyObject {
+    func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String)
+}
+
 enum MediaType: String {
     case image
     case video
