@@ -647,7 +647,11 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                 switch result {
                 case .success(let response):
                     guard response.status == true, let userData = response.data?.first else {
-                        self.navigateToLogin()
+//                        CustomAlert.showAlertWithOkAction(title: "Alert", message: response.message ?? "Something went wrong", on: self) {
+                            let vc = LoginVc(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+//                        }
                         return
                     }
                     UserDefaultFileManager.saveUserDetails(data: userData)
