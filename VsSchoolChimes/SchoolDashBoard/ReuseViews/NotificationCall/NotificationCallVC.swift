@@ -38,7 +38,7 @@ class NotificationCallVC: UIViewController {
     private var ringtoneTimeoutTimer: Timer?
     private var vibrationTimer: Timer?
     
-    var voiceUrl: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7045/2025-09-266/RecordedAudio.m4a"
+    var voiceUrl: String = ""
     var ringTone: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7043/2025-10-23/Communication_20251023_161939.wav"
     
     private var audioPlayer: AVAudioPlayer?

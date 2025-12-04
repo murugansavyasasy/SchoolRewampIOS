@@ -374,10 +374,11 @@ struct CommonStringFile {
 
 
 struct ChangePasswordStringFile{
-    static let Enter_the_new_password = "Enter the new password"
+    static let Enter_the_new_password = "New password"
     static let Enter_the_old_password = "Enter the old password"
+    static let Enter_the_New_password = "Enter the New password"
     static let create_newpassword = "Create the new password"
-    static let confirm_password = "Re-enter the new  password"
+    static let confirm_password = "Confirm the new  password"
     static let change_password = "Change password"
     static let Reset_password = "Reset password"
 }

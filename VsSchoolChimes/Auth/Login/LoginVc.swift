@@ -126,6 +126,8 @@ class LoginVc: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         validateMobileAndPassword()
     }
     

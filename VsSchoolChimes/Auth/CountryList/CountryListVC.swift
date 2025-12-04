@@ -107,7 +107,7 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     @IBAction func TermsCheckAct(_ sender: UIButton) {
         
         termsCheckBtn.isSelected.toggle()
-        let image = termsCheckBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(named: "CheckCircle")
+        let image = termsCheckBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(systemName: "circle")
         termsCheckBtn.setImage(image, for: .normal)
     }
     
@@ -123,6 +123,8 @@ class CountryListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     // MARK: - Next Action
     @available(iOS 14.0, *)
     @IBAction func nextAct(_ sender: Any) {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         
         if termsCheckBtn.isSelected{
             

@@ -431,10 +431,28 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
         let notice = searchData[indexPath.item]
         guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
         let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
+        
+        let data1 = targetInfoData(
+            institute: [""],
+            standard: [""],
+            group: [""],
+            section: [""],
+            name: notice.school_name,
+            role: "",
+            sec: "",
+            std: "",
+            mobile: ""
+        )
+
+    
+
         let detailVC = PrivewVc()
+        
         detailVC.attachmetList = notice.file_path
         detailVC.selectedDate  = notice.created_on
         detailVC.titleString  = notice.title
+        detailVC.targetCvdata.append(data1)
+        detailVC.ComFromNoticeBoard = true
         detailVC.descriptionString  = notice.description
         //        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
         detailVC.subject_name = "Notice Board".translated()

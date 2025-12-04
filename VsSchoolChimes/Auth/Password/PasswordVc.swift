@@ -117,6 +117,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         validateBtnName.layer.shadowRadius = 2
     }
     @IBAction func forgetClick() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         if mobile_number != ""  {
             //call forgot api and then navigate to the OTP screen
             ForgotPasswordAPIcall()
@@ -151,7 +153,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func ValidatePassBtn(_ sender: Any) {
-        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         if passwordTxtFld.text == nil{
             AlertModal
                 .showAlert(

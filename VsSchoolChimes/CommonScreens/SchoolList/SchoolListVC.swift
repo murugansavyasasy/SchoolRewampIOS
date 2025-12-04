@@ -74,11 +74,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             ViewAnimator.hideFade(acidamicYrDropView)
             getacadmicYr()
             for i in 0..<(school_details?.count ?? 0) {
-                school_details?[i].isSelected = true
-                if let school_id = school_details?[i].school_id{
-                    array_selectedSchoolId
-                        .append(school_id)
-                }
+                school_details?[i].isSelected = false
+//                if let school_id = school_details?[i].school_id{
+//                    array_selectedSchoolId
+//                        .append(school_id)
+//                }
             }
             
             if Menu_id.staffSelectedMenuId == Menu_id.noticeboardMenuId{
