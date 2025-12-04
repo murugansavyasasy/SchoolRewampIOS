@@ -419,7 +419,7 @@ class MessageFromManagementViewController: UIViewController {
     @objc private func showSchoolDropDown() {
         guard let details = school_details else { return }
         
-        let schoolNames = ["All"] + details.compactMap { $0.school_name }
+        let schoolNames = ["All Schools"] + details.compactMap { $0.school_name }
         
         dropDown.dataSource = schoolNames
         dropDown.anchorView = schoolDropDown
@@ -475,6 +475,7 @@ extension MessageFromManagementViewController: UITableViewDataSource {
         cell.alphbetLbl.text = shortName(from: message.sent_by ?? "")
         cell.readView.isHidden = !(message.is_unread ?? false)
         cell.rollBtn.setTitle(message.role?.capitalized, for: .normal)
+        cell.schoolNameLbl.text = message.school_name
         cell.viewBtn.tag = index
         cell.delegate = self
     }

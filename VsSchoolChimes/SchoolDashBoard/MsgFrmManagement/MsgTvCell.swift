@@ -19,6 +19,9 @@ class MsgTvCell: UITableViewCell {
     @IBOutlet weak var alphbetView: UIView!
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var viewBtn: UIButton!
+    @IBOutlet weak var schoolNameLbl: UILabel!
+    
+    
     var delegate : ViewAttachments?
     
     override func awakeFromNib() {
