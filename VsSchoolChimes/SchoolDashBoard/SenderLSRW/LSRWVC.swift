@@ -257,8 +257,6 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
                 }
             }
         }
-
-        // ✅ Handle No Data state
         let hasData = filterTask.contains { section in
             switch section {
             case .active(let list), .completed(let list):

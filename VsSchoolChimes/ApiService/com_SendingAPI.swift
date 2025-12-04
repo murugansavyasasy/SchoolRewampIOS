@@ -604,9 +604,6 @@ class  commonApi_forSending {
                 completion()
                 return
             }
-            //            CircularProgressLoader.shared.show(style: .circle)
-            //            CircularProgressLoader.shared.updateProgress(to: 0)
-            //
             for item in uploadableItems {
                 if let image = item.image {
                     // 🖼️ Upload local image

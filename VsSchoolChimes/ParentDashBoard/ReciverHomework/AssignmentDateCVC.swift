@@ -16,7 +16,6 @@ class AssignmentDateCVC: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         outerView.layer.cornerRadius = 25
-//        outerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         outerView.layer.masksToBounds = true
         statusView.layer.cornerRadius = statusView.frame.height / 2
     }
@@ -27,16 +26,14 @@ class AssignmentDateCVC: UICollectionViewCell {
         let weekday = calendar.shortWeekdaySymbols[weekdayIndex]
         let day = calendar.component(.day, from: date)
         dateLabl.text = "\(weekday)\n\(day)"
-        // Weekend styling
-        if weekdayIndex == 0 { // Sunday
+        if weekdayIndex == 0 {
             dateLabl.textColor = UIColor.systemPink
-        } else if weekdayIndex == 6 { // Saturday
+        } else if weekdayIndex == 6 {
             dateLabl.textColor = UIColor.systemPink.withAlphaComponent(0.7)
         } else {
             dateLabl.textColor = UIColor.label
         }
-
-        // Selected date styling
+        
         if isSelected {
             outerView.backgroundColor = Colornames.primeryColor
             dateLabl.textColor = .white
@@ -44,7 +41,6 @@ class AssignmentDateCVC: UICollectionViewCell {
             outerView.backgroundColor = .clear
         }
 
-        // Dot status
         if let status = status {
             statusView.backgroundColor = (status == .red) ? .red : .green
         }else{

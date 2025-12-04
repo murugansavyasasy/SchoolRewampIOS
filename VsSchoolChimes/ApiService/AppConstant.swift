@@ -27,7 +27,6 @@ struct ServiceUrl{
     static let global_global_variables   = "app/api/global/global-variables"
     static let auth_device_token        = "app/api/auth/device-token"
     static let app_api_auth_logout        = "app/api/auth/logout"
-//    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
     static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
     static let  dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
     static let recipient_get_group_list  = "comm/api/recipient/get-group-list"

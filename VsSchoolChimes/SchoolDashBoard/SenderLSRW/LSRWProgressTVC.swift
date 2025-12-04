@@ -34,13 +34,11 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
 
         progressCV.delegate = self
         progressCV.dataSource = self
-
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 4
         layout.minimumInteritemSpacing = 4
         layout.sectionInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-
         progressCV.collectionViewLayout = layout
         progressCV.showsHorizontalScrollIndicator = false
         progressCV.backgroundColor = .clear

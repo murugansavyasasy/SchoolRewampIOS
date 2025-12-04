@@ -383,27 +383,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             self.updateTableviewHeight()
         }
     }
-
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        guard !filteredHolidays.isEmpty else { return nil }
-//        formatter.dateFormat = "MMMM yyyy"
-////        return "Holidays"
-//        return "Holidays for \(formatter.string(from: currentDate))"
-//    }
-//    
-//     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        if let header = view as? UITableViewHeaderFooterView {
-//            // Customize font
-//            header.textLabel?.font = UIFont(name: "Poppins-Bold", size: 13)
-//            
-//            // Customize color
-//            header.textLabel?.textColor = .black.withAlphaComponent(0.8)
-//            
-//            // Optional: background color
-//            header.contentView.backgroundColor = .clear
-//        }
-//    }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView()

@@ -127,7 +127,6 @@ class LSRWTaskTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
             dateText = "--/--/----"
         }
         
-        // --- Date label with SF Symbol ---
         let calendarAttachment = NSTextAttachment()
         calendarAttachment.image = UIImage(systemName: "calendar")?.withRenderingMode(.alwaysTemplate)
         calendarAttachment.bounds = CGRect(x: 0, y: -2, width: 16, height: 16)
@@ -137,7 +136,6 @@ class LSRWTaskTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         dateLbl.attributedText = dateAttrString
         dateLbl.textColor = .secondaryLabel
         
-        // --- Submitted count label with SF Symbol ---
         let personAttachment = NSTextAttachment()
         personAttachment.image = UIImage(systemName: "person.2")?.withRenderingMode(.alwaysTemplate)
         personAttachment.bounds = CGRect(x: 0, y: -2, width: 16, height: 16)
@@ -147,16 +145,12 @@ class LSRWTaskTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         submitedCountLbl.attributedText = submittedAttrString
         submitedCountLbl.textColor = .secondaryLabel
         if let type = task.activity_type{
-            // Icon button setup
             let iconConfig = getIconConfiguration(for: type)
             iconBtn.setTitle(type.icon, for: .normal)
             iconBtn.backgroundColor = iconConfig.backgroundColor
             iconBtn.setTitleColor(iconConfig.textColor, for: .normal)
         }
-        // Description
         descriptionLbl.text = task.description
-        
-        // Animate
         animateConfiguration()
     }
 
