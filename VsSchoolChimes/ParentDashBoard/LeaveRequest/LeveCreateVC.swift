@@ -5,6 +5,19 @@
 //  Created by admin on 19/12/24.
 //
 
+struct editLeave{
+    let id :String?
+    var fromDate:String
+    var toDate:String
+    var reson:String
+    var fromSession:String
+    var Tosession:String
+    var NoOfDays:String
+    var LeaveType:String
+    var LeaveTypeId:Int
+}
+
+
 import UIKit
 import FSCalendar
 @available(iOS 14.0, *)

@@ -14,14 +14,7 @@ protocol studentAttenance: AnyObject{
 class AttendenceTVC: UITableViewCell, Attendence {
     func statusUpdate(status: Bool, index: Int) {
         ""
-    }
-    
-    
-//    func statusUpdate(status: Bool, index: Int) {
-//        delegate?.statusUpdate(status: status, index: index)
-//        hideLbl(isAbsent: status)
-//    }
-//    
+    } 
     @IBOutlet weak var admissionlbl: UILabel!
     @IBOutlet weak var phnBtn: UIButton!
     @IBOutlet weak var outerView: UIView!

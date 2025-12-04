@@ -194,7 +194,12 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let id = feeDetailsList[indexPath.row].id ?? ""
-        Get_Invoice_Receipt_Api(invoiceId: id)
+       // Get_Invoice_Receipt_Api(invoiceId: id)
+        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
+        let fileURL = URL(fileURLWithPath: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//Get_Started_With_Smallpdf.pdf")
+        ViewPaymentVC.documentURL = fileURL
+        ViewPaymentVC.modalPresentationStyle = .fullScreen
+        self.present(ViewPaymentVC, animated: true)
     }
 
     func extractDateAndTime(from input: String) -> (date: String?, time: String?) {

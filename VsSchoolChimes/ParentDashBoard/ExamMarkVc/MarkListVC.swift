@@ -58,9 +58,6 @@ class MarkListVC: UIViewController {
         markListApi(exam_id: examId ?? "")
     }
 
-    override func viewDidLayoutSubviews() {
-       view.applyGradient(colors: [Colornames.gradientBlue, Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5), endPoint: CGPoint(x: 0, y: 0.5))
-    }
 
     func markListApi(exam_id: String) {
         APIService.shared.makeApi(

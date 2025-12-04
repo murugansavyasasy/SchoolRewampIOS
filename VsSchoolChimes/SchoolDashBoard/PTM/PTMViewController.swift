@@ -151,9 +151,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         tv.delegate = self
         tv.reloadData()
     }
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
+   
     func generateDates() {
            let currentDate = Date()
            for i in 0..<366 {
@@ -1668,34 +1666,34 @@ class LinkSClicks : UITapGestureRecognizer{
 
 import UIKit
 
-extension UIView {
-    /// Applies a gradient with colors that are lightened and adjusted for alpha.
-    func applyGradientWithAdjustedColors(
-        gradientColors: [UIColor],
-        lightenFactor: CGFloat = 0.3, // Factor to lighten colors (0 = no change, 1 = full white)
-        opacity: CGFloat = 0.5,      // Opacity for the gradient
-        startPoint: CGPoint = CGPoint(x: 1, y: 0.5),
-        endPoint: CGPoint = CGPoint(x: 0, y: 0.5)
-    ) {
-        // Adjust colors: lighten them and apply the desired opacity
-        let adjustedColors = gradientColors.map { color in
-            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
-        }
-        
-        // Apply gradient with the adjusted colors
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = adjustedColors.map { $0.cgColor }
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        gradientLayer.frame = self.bounds
-        
-        // Remove any existing gradient layers to avoid overlap
-        self.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-        
-        // Add the new gradient layer
-        self.layer.insertSublayer(gradientLayer, at: 0)
-    }
-}
+//extension UIView {
+//    /// Applies a gradient with colors that are lightened and adjusted for alpha.
+//    func applyGradientWithAdjustedColors(
+//        gradientColors: [UIColor],
+//        lightenFactor: CGFloat = 0.3, // Factor to lighten colors (0 = no change, 1 = full white)
+//        opacity: CGFloat = 0.5,      // Opacity for the gradient
+//        startPoint: CGPoint = CGPoint(x: 1, y: 0.5),
+//        endPoint: CGPoint = CGPoint(x: 0, y: 0.5)
+//    ) {
+//        // Adjust colors: lighten them and apply the desired opacity
+//        let adjustedColors = gradientColors.map { color in
+//           // color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+//        }
+//        
+//        // Apply gradient with the adjusted colors
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+//        gradientLayer.startPoint = startPoint
+//        gradientLayer.endPoint = endPoint
+//        gradientLayer.frame = self.bounds
+//        
+//        // Remove any existing gradient layers to avoid overlap
+//        self.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+//        
+//        // Add the new gradient layer
+//        self.layer.insertSublayer(gradientLayer, at: 0)
+//    }
+//}
 
 extension UIColor {
     /// Blends the color with white by a specific factor.

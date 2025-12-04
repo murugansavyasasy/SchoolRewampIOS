@@ -25,7 +25,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     var instituteId = Int()
     var studentId = String()
     var childDetails = UserDefaultFileManager.get_child_Details()
-    
+    var PushNotiMsgId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,7 +84,11 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
                     self?.nodataLbl.isHidden = !(self?.filteredTasks.isEmpty ?? true)
                     self?.nodataLbl.text = response.message ?? ""
                     self?.tv.reloadData()
-                    
+                    if self?.PushNotiMsgId != ""{
+                        DispatchQueue.main.async {
+                            self?.scrollToClickedMessage()
+                        }
+                    }
                 case .failure(let error):
                     print("API Error:", error)
                     self?.nodataImg.isHidden = !(self?.filteredTasks.isEmpty ?? true)
@@ -94,16 +98,38 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
     }
-    
+    private func scrollToClickedMessage() {
+        guard let id = PushNotiMsgId,
+              let index = filteredTasks.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = tv.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
+                }
+            }
+        }
+    }
     // MARK: - Actions
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
     @IBAction func takeReadingSkill() {
-        let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+//        let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     
     @IBAction func search(_ sender: UIButton) {

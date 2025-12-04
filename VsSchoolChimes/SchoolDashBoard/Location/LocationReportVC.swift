@@ -43,9 +43,6 @@ class LocationReportVC: UIViewController{
         
         let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
         Tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
-        
-        let rowNib1 = UINib(nibName: "punchIntTvcellTableViewCell", bundle: nil)
-        Tv.register(rowNib1, forCellReuseIdentifier: "punchIntTvcellTableViewCell")
         Tv.delegate = self
         Tv.dataSource = self
     }

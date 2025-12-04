@@ -76,8 +76,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var doneButton: UIButton!
     var activeButton: UIButton?
     var isScheduleSelected = false
-    let backgroundcolor = Colornames.topBackgroundCLr1
-    let tapColor = Colornames.topBackgroundCLr1
+    let backgroundcolor: UIColor = .backGroundClr//Colornames.topBackgroundCLr1
+    let tapColor: UIColor = .backGroundClr
     var placeholderLabel: UILabel!
     let alert = CustomAlert()
     var activeField: UIView?
@@ -535,11 +535,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+//        view.applyGradient(
+//            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
     }
     
     
@@ -2183,5 +2183,11 @@ extension ComunicationVC: UITextFieldDelegate, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         activeField = nil
+    }
+}
+
+extension AVPlayer {
+    var isPlaying: Bool {
+        return self.rate != 0 && self.error == nil
     }
 }

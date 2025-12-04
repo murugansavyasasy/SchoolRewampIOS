@@ -92,3 +92,13 @@ class customView:UIView{
         self.backgroundColor = .systemGray6
     }
 }
+
+extension UIImage {
+    func resizeTo(size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        self.draw(in: CGRect(origin: .zero, size: size))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizedImage
+    }
+}

@@ -107,11 +107,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+//        view.applyGradient(
+//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
     }
     
     func StyleAndTranslater() {
@@ -122,7 +122,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func registerCell(){
         historyTable.register(UINib(nibName: CellConfingName.SpecificStudentTvcell, bundle: nil), forCellReuseIdentifier: CellConfingName.SpecificStudentTvcell)
         historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
-        historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
         
     }
     

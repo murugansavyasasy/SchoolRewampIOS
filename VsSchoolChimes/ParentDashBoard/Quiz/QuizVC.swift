@@ -38,7 +38,7 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     let images = ["Quiz1", "Quiz2", "Quiz3"]
     var stausType   = "1"
     var searchText = ""
-    
+    var PushNotiMsgId : String?
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -86,7 +86,11 @@ class QuizVC: UIViewController, UISearchBarDelegate {
                         self.NoDataImage.isHidden = !isempty
                         self.NoDataLbl.isHidden = !isempty
                         self.NoDataLbl.text = successResponse.message ?? ""
-                    
+                    if  self.PushNotiMsgId != ""{
+                        DispatchQueue.main.async {
+                            self.scrollToClickedMessage()
+                        }
+                    }
                     
                 case .failure(let error):
                     print("Error fetching notices: \(error.localizedDescription)")
@@ -99,6 +103,31 @@ class QuizVC: UIViewController, UISearchBarDelegate {
             }
         }
     }
+    
+    private func scrollToClickedMessage() {
+        guard let id = PushNotiMsgId,
+              let index = filteredExams.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        // Scroll to that cell smoothly
+        tv.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+        // Optionally highlight the cell for 1 second
+        if let cell = tv.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.contentView.backgroundColor = UIColor.lightGray
+                    .withAlphaComponent(0.3)
+            }) { _ in
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                    cell.contentView.backgroundColor = .white
+                }
+            }
+        }
+    }
+
  
     func StyleAndTranslate(){
         
@@ -184,11 +213,11 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     ) {
         
         // Adjust colors for lightening and opacity
-        let adjustedColors = gradientColors.map { color in
-            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
-        }
+//        let adjustedColors = gradientColors.map { color in
+//            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
+//        }
         
-        gradientcolours(button: button, colours: adjustedColors)
+       // gradientcolours(button: button, colours: adjustedColors)
     }
     
     @IBAction func UpcomingAct(_ sender: Any) {

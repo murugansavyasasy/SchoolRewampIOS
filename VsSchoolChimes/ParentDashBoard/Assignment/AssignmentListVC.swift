@@ -1,3 +1,7 @@
+protocol SumitionDelegate{
+    func sumition(index:Int)
+}
+
 import UIKit
 
 class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{

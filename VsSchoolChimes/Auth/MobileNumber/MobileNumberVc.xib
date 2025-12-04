@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -31,10 +31,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKe-o9-HBg">
-                    <rect key="frame" x="0.0" y="129" width="393" height="723"/>
+                    <rect key="frame" x="0.0" y="188" width="393" height="664"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0K-gO-C65" userLabel="ContentView">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="565.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="588"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to School Chimes!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NL1-JG-Aoo">
                                     <rect key="frame" x="18" y="20" width="365" height="25.333333333333329"/>
@@ -57,19 +57,19 @@ Your updates, communication, and school life—all in one place.</string>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to stay connected!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWJ-XV-fGn">
-                                    <rect key="frame" x="18" y="311.33333333333331" width="360" height="26.333333333333314"/>
+                                    <rect key="frame" x="18" y="311.33333333333331" width="360" height="25.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AK-Tf-xK4">
-                                    <rect key="frame" x="18" y="362.66666666666669" width="360" height="18"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                    <rect key="frame" x="18" y="356.66666666666663" width="360" height="16.333333333333314"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DJ6-9D-m5D">
-                                    <rect key="frame" x="18" y="395.66666666666663" width="357" height="45"/>
+                                    <rect key="frame" x="18" y="388" width="357" height="45"/>
                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="3s2-Wt-nHL"/>
@@ -78,20 +78,41 @@ Your updates, communication, and school life—all in one place.</string>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dh-zK-b8o">
-                                    <rect key="frame" x="18" y="470.66666666666663" width="357" height="45"/>
+                                    <rect key="frame" x="18" y="463" width="357" height="45"/>
                                     <color key="backgroundColor" name="BackGroundClr"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="Q7U-Vj-Yqe"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title="Continue ">
+                                    <state key="normal" title="Next">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
                                         <action selector="continueBtn:" destination="-1" eventType="touchUpInside" id="ig9-xE-Pvc"/>
                                     </connections>
                                 </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cv7-aT-eu6">
+                                    <rect key="frame" x="106.33333333333333" y="532" width="180.66666666666669" height="40"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="savyasasy" translatesAutoresizingMaskIntoConstraints="NO" id="VEC-PE-1qY">
+                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="Ikz-HK-mOt"/>
+                                                <constraint firstAttribute="width" constant="40" id="NJa-HJ-zhI"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by savyasasy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vAC-R3-h0Y">
+                                            <rect key="frame" x="41.000000000000014" y="0.0" width="139.66666666666669" height="40"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <color key="textColor" systemColor="systemGray3Color"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="NnA-Zl-Xai"/>
+                                    </constraints>
+                                </stackView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -101,6 +122,7 @@ Your updates, communication, and school life—all in one place.</string>
                                 <constraint firstItem="DJ6-9D-m5D" firstAttribute="top" secondItem="6AK-Tf-xK4" secondAttribute="bottom" constant="15" id="HrX-1N-V23"/>
                                 <constraint firstItem="ECU-F4-X0C" firstAttribute="top" secondItem="NL1-JG-Aoo" secondAttribute="bottom" constant="15" id="IGm-Tf-4cW"/>
                                 <constraint firstAttribute="trailing" secondItem="6AK-Tf-xK4" secondAttribute="trailing" constant="15" id="IsI-bG-sUo"/>
+                                <constraint firstAttribute="bottom" secondItem="Cv7-aT-eu6" secondAttribute="bottom" constant="16" id="M05-iD-7S8"/>
                                 <constraint firstItem="IHZ-uP-8kp" firstAttribute="leading" secondItem="Q0K-gO-C65" secondAttribute="leading" constant="30" id="Oiw-ja-8dB"/>
                                 <constraint firstAttribute="trailing" secondItem="IHZ-uP-8kp" secondAttribute="trailing" constant="30" id="UIP-t0-LQK"/>
                                 <constraint firstAttribute="trailing" secondItem="DJ6-9D-m5D" secondAttribute="trailing" constant="18" id="XlL-Fw-doK"/>
@@ -108,13 +130,14 @@ Your updates, communication, and school life—all in one place.</string>
                                 <constraint firstAttribute="trailing" secondItem="NL1-JG-Aoo" secondAttribute="trailing" constant="10" id="c6I-IK-QMI"/>
                                 <constraint firstItem="NL1-JG-Aoo" firstAttribute="top" secondItem="Q0K-gO-C65" secondAttribute="top" constant="20" id="cKq-c5-fwd"/>
                                 <constraint firstItem="IWJ-XV-fGn" firstAttribute="leading" secondItem="Q0K-gO-C65" secondAttribute="leading" constant="18" id="cRO-5Z-1q6"/>
-                                <constraint firstItem="6AK-Tf-xK4" firstAttribute="top" secondItem="IWJ-XV-fGn" secondAttribute="bottom" constant="25" id="eHz-TU-NLc"/>
-                                <constraint firstAttribute="bottom" secondItem="1dh-zK-b8o" secondAttribute="bottom" constant="50" id="eYN-re-8Mg"/>
+                                <constraint firstItem="6AK-Tf-xK4" firstAttribute="top" secondItem="IWJ-XV-fGn" secondAttribute="bottom" constant="20" id="eHz-TU-NLc"/>
                                 <constraint firstItem="DJ6-9D-m5D" firstAttribute="leading" secondItem="Q0K-gO-C65" secondAttribute="leading" constant="18" id="gLU-kC-Jfk"/>
                                 <constraint firstItem="NL1-JG-Aoo" firstAttribute="leading" secondItem="Q0K-gO-C65" secondAttribute="leading" constant="18" id="hHX-6H-G3q"/>
                                 <constraint firstItem="1dh-zK-b8o" firstAttribute="top" secondItem="DJ6-9D-m5D" secondAttribute="bottom" constant="30" id="jJe-dH-qkK"/>
+                                <constraint firstItem="Cv7-aT-eu6" firstAttribute="top" secondItem="1dh-zK-b8o" secondAttribute="bottom" constant="24" id="jL9-do-iGl"/>
                                 <constraint firstItem="6AK-Tf-xK4" firstAttribute="leading" secondItem="Q0K-gO-C65" secondAttribute="leading" constant="18" id="wTx-t7-9Rd"/>
                                 <constraint firstItem="IHZ-uP-8kp" firstAttribute="top" secondItem="ECU-F4-X0C" secondAttribute="bottom" constant="20" id="xGO-Uh-DFK"/>
+                                <constraint firstItem="Cv7-aT-eu6" firstAttribute="centerX" secondItem="Q0K-gO-C65" secondAttribute="centerX" id="xm8-Kf-R8C"/>
                                 <constraint firstAttribute="trailing" secondItem="1dh-zK-b8o" secondAttribute="trailing" constant="18" id="yJX-IB-xS7"/>
                                 <constraint firstAttribute="trailing" secondItem="ECU-F4-X0C" secondAttribute="trailing" constant="15" id="z22-0y-0it"/>
                             </constraints>
@@ -130,7 +153,7 @@ Your updates, communication, and school life—all in one place.</string>
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0LT-LF-lbC">
-                    <rect key="frame" x="10" y="69" width="40" height="40"/>
+                    <rect key="frame" x="10" y="128" width="40" height="40"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="5nh-7K-ApT"/>
@@ -158,15 +181,19 @@ Your updates, communication, and school life—all in one place.</string>
                 <constraint firstAttribute="bottom" secondItem="NKe-o9-HBg" secondAttribute="bottom" id="kaV-a4-8Vy"/>
                 <constraint firstItem="0LT-LF-lbC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="rpx-Fo-iKi"/>
             </constraints>
-            <point key="canvasLocation" x="207" y="6"/>
+            <point key="canvasLocation" x="206.87022900763358" y="5.6338028169014089"/>
         </view>
     </objects>
     <resources>
-        <image name="MobileScreen" width="4239.6689453125" height="2817.0869140625"/>
+        <image name="MobileScreen" width="3180" height="2113"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="savyasasy" width="1368" height="1536"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
