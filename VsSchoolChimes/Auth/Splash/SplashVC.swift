@@ -653,7 +653,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewA
 //                        }
                         return
                     }
-                    if self.versionData?.ratus ?? true {
+                    if self.versionData?.ratus ?? false {
                         self.presentPopover()
                     }else{
                         UserDefaultFileManager.saveUserDetails(data: userData)

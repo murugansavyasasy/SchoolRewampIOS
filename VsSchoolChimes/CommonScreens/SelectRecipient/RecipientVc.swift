@@ -894,7 +894,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
                 if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
-                    getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
+//                    getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
 //                        selectSubject.isHidden =  !getSubject.isHidden
                         selectSubject.isHidden = false
@@ -1001,8 +1001,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
 //                spaceView.isHidden = !selectSubject.isHidden
                 spaceView.isHidden = true
                 subjectId = selectedSections.count == 0 ? "" : subjectId
-                selectSubject.isHidden = subjectId == "" || subjectId == nil
-                getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
+                selectSubject.isHidden = sectionIds == "" || sectionIds == nil
+                if sectionIds?.count != 0{
+                    getSubjectListAPI(sectionIds ?? "")
+                }
             }
             
         case recipeint_tabBarName.Staff:
@@ -1124,7 +1126,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         noRecordLbl.isHidden = ishide
         noRecordLbl.text = message
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
-            getSubject.isHidden = !ishide
+//            getSubject.isHidden = !ishide
         }
         
     }
