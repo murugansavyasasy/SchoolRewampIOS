@@ -8,8 +8,6 @@
 import UIKit
 
 class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatTableViewCellDelegate,UITextFieldDelegate, UITextViewDelegate {
-    
-
     @IBOutlet weak var noRecordlbl: UILabel!
     @IBOutlet weak var replayStackView: UIStackView!
     @IBOutlet weak var subjectLbl: UILabel!
@@ -22,96 +20,66 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     @IBOutlet weak var blockedBtn: UIButton!
     @IBOutlet weak var blockedLbl: UILabel!
     @IBOutlet weak var blockedView: UIView!
-    
-       var getValue = 1
-       private var messages: [(text: String, isSender: Bool)] = [
-           ("Hello!", true),
-           (
-            "Hi there! How are you?jksfvnjkjkzbvuibskvbkdbvkbdkvbkdbkjvbjkbjvkzjkbvbjksbcvjkbjkcvbjkabvkjbkjdbvkjadbfkvbkdbvjksbdjkvbakdbvkbzdkjbvkjzdbjkvbkzdbvkdzbkbkzdbvkx",
-            true
-           ),
-           ("I'm good, thanks! What about you?fjjkbdfbkb", true),
-           ("Doing great, thanks for asking.", false)
-       ]
- 
+    var getValue = 1
     var staffMembersData = StaffMember()
     var childDetails = UserDefaultFileManager.get_child_Details()
     var chatDataDetails : [ChatMessage]?
-    
-       override func viewDidLoad() {
-           super.viewDidLoad()
-           
-           profileImage.layer.cornerRadius = profileImage.frame.size.width/2
-           teacherLbl.text = staffMembersData.name
-           subjectLbl.text = staffMembersData.subject_name
-           blockedView.isHidden = true
-           
-           teacherLbl.setFont(style: .title, size: 15)
-           subjectLbl.setFont(style: .title, size: 11)
-           
-           if staffMembersData.is_blocked == true {
-               blockedView.isHidden = false
-               TextViewFullView.isHidden = true
-           }else{
-               blockedView.isHidden = true
-               TextViewFullView.isHidden = false
-           }
-           
-           //blockedBtn.layer.cornerRadius = 10
-           blockedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-           blockedLbl.setFont(style: .body, size: FontSize.BodySize)
-           
-           MessgeTextview.addDoneButton()
-           let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
-           tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
-           ReplyTextFild.layer.cornerRadius = Colornames.CORadius5
-           ReplyTextFild.layer.masksToBounds = true
-           ReplyTextFild.layer.borderColor = UIColor.lightGray.cgColor
-           tableView.dataSource = self
-           tableView.delegate = self
-           tableView.separatorStyle = .none
-           tableView.rowHeight = UITableView.automaticDimension
-           tableView.estimatedRowHeight = 44
-           TextViewFullView.layer.cornerRadius = Colornames.CORadius5
-           TextViewFullView.layer.masksToBounds = true
-           TextViewFullView.layer.borderColor = UIColor.lightGray.cgColor
-           TextViewFullView.layer.borderWidth = 0.5
-//           let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-//           tableView.addGestureRecognizer(longPressGesture)
-           
-           ReplyTextFild.delegate = self
-           
-           tableView.showsVerticalScrollIndicator = false
-           tableView.showsHorizontalScrollIndicator = false
-           
-           NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-           MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-           MessgeTextview.textColor = .lightGray
-           
-           MessgeTextview.delegate = self
-          
-           getStaff()
-       }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        profileImage.layer.cornerRadius = profileImage.frame.size.width/2
+        teacherLbl.text = staffMembersData.name
+        subjectLbl.text = staffMembersData.subject_name
+        blockedView.isHidden = true
+        teacherLbl.setFont(style: .title, size: 15)
+        subjectLbl.setFont(style: .title, size: 11)
+        if staffMembersData.is_blocked == true {
+            blockedView.isHidden = false
+            TextViewFullView.isHidden = true
+        }else{
+            blockedView.isHidden = true
+            TextViewFullView.isHidden = false
+        }
+        blockedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        blockedLbl.setFont(style: .body, size: FontSize.BodySize)
+        MessgeTextview.addDoneButton()
+        let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
+        ReplyTextFild.layer.cornerRadius = Colornames.CORadius5
+        ReplyTextFild.layer.masksToBounds = true
+        ReplyTextFild.layer.borderColor = UIColor.lightGray.cgColor
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
+        TextViewFullView.layer.cornerRadius = Colornames.CORadius5
+        TextViewFullView.layer.masksToBounds = true
+        TextViewFullView.layer.borderColor = UIColor.lightGray.cgColor
+        TextViewFullView.layer.borderWidth = 0.5
+        ReplyTextFild.delegate = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
+        MessgeTextview.textColor = .lightGray
+        MessgeTextview.delegate = self
+        getStaff()
+    }
     
     func scrollToBottom() {
         let lastSection = tableView.numberOfSections - 1
         guard lastSection >= 0 else { return }
-
         let lastRow = tableView.numberOfRows(inSection: lastSection) - 1
         guard lastRow >= 0 else { return }
-
         let indexPath = IndexPath(row: lastRow, section: lastSection)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     @objc func keyboardWillShow(notification: NSNotification) {
-      
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height
@@ -119,56 +87,38 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
             }
         }
     }
-
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
         }
     }
-    
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-           print("Clear button tapped!")
-//        textField.resignFirstResponder() // Hides the keyboard for the specific textField
-//           view.endEditing(true)
         ReplyTextFild.isUserInteractionEnabled = false
         ReplyTextFild.text = ""
         replayStackView.isHidden = true
-           return true
-       }
+        return true
+    }
     
     @IBAction func backBtn(_ sender: Any) {
-        
-        
         dismiss(animated: true)
     }
     
     @IBAction func addAttachmenAction(_ sender: Any) {
-        
         if #available(iOS 14.0, *) {
             MediaPickerManager.shared.pickedMedia = []
-        } else {
-            // Fallback on earlier versions
-        } // reset if needed
+        }
         if #available(iOS 14.0, *) {
             MediaPickerManager.shared.onMediaPicked = { picked in
-                
                 if let firstMedia = picked.first {
                     CustomAlert.showMediaAlert(for: firstMedia, in: self) {
-                        print("Send action tapped")
-                        // Proceed with upload/send here
                     }
                 }
             }
-        } else {
-            // Fallback on earlier versions
         }
         if #available(iOS 14.0, *) {
             MediaPickerManager.shared.showPicker(from: self)
-        } else {
-            // Fallback on earlier versions
         }
     }
-    
     
     @IBAction func sendBtnAction(_ sender: Any) {
         sendChat()
@@ -179,17 +129,14 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTVCell", for: indexPath) as! ChatTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ChatTVCell, for: indexPath) as! ChatTVCell
         let message = chatDataDetails?[indexPath.row]
-        
-        
         if message?.my_question == false{
             cell.myQuestionView.isHidden = true
             cell.othersQuestionView.isHidden = false
             cell.studentNameLbl.isHidden = false
             cell.othersQuestionLbl.text = message?.question
             cell.studentNameLbl.text = "Asked by ~ \(message?.student_name ?? "")"
-           
         }else{
             cell.myQuestionView.isHidden = false
             cell.othersQuestionView.isHidden = true
@@ -197,67 +144,12 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
             cell.messageLabel.text = message?.question
             cell.timeStampLbl.text = formattedDateStatus(from: message?.asked_on ?? "", isTimeNeeded: true)
         }
-        
         if message?.answered_on?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
             cell.answerView.isHidden = true
         }else{
-            
             cell.answerLbl.text = message?.answer
             cell.anseredOnLbl.text = formattedDateStatus(from: message?.answered_on ?? "", isTimeNeeded: true)
         }
-        
-//        if message?.ans_file_path?.count == 0 {
-//            if message?.answer != "Not answered yet"{
-//                
-//                cell
-//                    .configure(
-//                        with: message?.answer ?? "", timeStamp: message?.answered_on ?? "",
-//                        isSender: false
-//                    )
-//            }
-//        }else{
-//            
-//            cell.messageLabel.isHidden = true
-//            cell.timeStampLbl.isHidden = true
-//            cell.imageStack.isHidden = false
-//            cell.imageConficure(with:message?.ans_file_path?.first?.url )
-//            
-//           
-//
-//        }
-        
-        
-        
-//        if message?.ques_file_path?.count == 0 {
-//            if message?.question != ""{
-//                cell.imageStack.isHidden = true
-//                cell.messageLabel.isHidden = false
-//                cell.timeStampLbl.isHidden = false
-//                cell
-//                    .configure(
-//                        with: message?.question ?? "",
-//                        timeStamp: formattedDateStatus(
-//                            from: message?.created_on ?? ""
-//                        ) ,
-//                        isSender: true, studentName: ""
-//                    )
-//            }
-            
-//            if message?.answer != "Not answered yet"{
-//                
-//                cell
-//                    .configure(
-//                        with: message?.answer ?? "", timeStamp: message?.answer_on ?? "",
-//                        isSender: true, studentName: ""
-//                    )
-//            }
-//        }else{
-//            
-//            cell.messageLabel.isHidden = true
-//            cell.timeStampLbl.isHidden = true
-//            cell.imageStack.isHidden = false
-//            cell.imageConficure(with:message?.ques_file_path?.first?.url)
-//        }
         cell.delegate = self
         return cell
     }
@@ -265,96 +157,49 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     // MARK: - ChatTableViewCellDelegate
     func didSlideToReply(for message: String,studentName: String) {
         print("Reply to: \(message)")
-        
-        // Show a reply indicator (e.g., move focus to an input field with the selected message)
-        //           messageHeight.constant = 190
-        
-        //           ReplyTextFild.isUserInteractionEnabled = false
         replayStackView.isHidden = false
         ReplyTextFild.text = message
         
-        //
-        //           let alert = UIAlertController(title: "Reply", message: "Replying to: \(message)", preferredStyle: .alert)
-        //           alert.addTextField { textField in
-        //               textField.placeholder = "Write your reply..."
-        //           }
-        //           alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
-        //               // Handle sending the reply here
-        //           }))
-        //           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        //           present(alert, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    // MARK: - Long Press Gesture Handler
-       @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-           guard gesture.state == .began else { return }
-           
-           let location = gesture.location(in: tableView)
-           if let indexPath = tableView.indexPathForRow(at: location) {
-               let message = messages[indexPath.row]
-               
-               // Only enable delete for receiver-side messages
-               if message.isSender {
-                   showDeleteAction(for: indexPath)
-               }
-           }
-       }
-
     private func showDeleteAction(for indexPath: IndexPath) {
         let alert = UIAlertController(
-            title: "Message Options",
-            message: "Choose an action for this message",
+            title: AlertstringFile.MessageOptions,
+            message: AlertstringFile.Choose_an_action_for_this_message,
             preferredStyle: .actionSheet
         )
-        
         // Delete action
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: AlertstringFile.delete, style: .destructive, handler: { _ in
             // Remove the message from the data source and refresh the table view
-            self.messages.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }))
-        
         // Block action
-        alert.addAction(UIAlertAction(title: "Block", style: .default, handler: { _ in
-            // Handle blocking logic here
-            print("Block button tapped")
-            // Example: Show a confirmation message or block the user
-            let blockAlert = UIAlertController(title: "Blocked", message: "You have blocked this user.", preferredStyle: .alert)
-            blockAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: AlertstringFile.Block, style: .default, handler: { _ in
+            let blockAlert = UIAlertController(title: AlertstringFile.Block, message: AlertstringFile.You_have_blocked_this_user, preferredStyle: .alert)
+            blockAlert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: nil))
             self.present(blockAlert, animated: true, completion: nil)
         }))
-        
         // Cancel action
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil))
         
         // Present the alert
         present(alert, animated: true, completion: nil)
     }
-    
-    
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if MessgeTextview.text == TexviewStringFile.Enter_Chat_Description {
             MessgeTextview.text = ""
             MessgeTextview.textColor = .black
         }
-        
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
             MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
             MessgeTextview.textColor = .lightGray
         }
     }
-
-    
     func getStaff(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: ["staff_id" : staffMembersData.id ?? "","subject_id":staffMembersData.subject_id ?? "","offset":0,"is_class_teacher":staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: [ChatAPIKeys.staffId : staffMembersData.id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
                 result:Result <ChatMessageSuc,Error>
             ) in
                 switch result {
@@ -373,7 +218,6 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                         DispatchQueue.main.async { [self] in
                             noRecordlbl.isHidden = false
                             noRecordlbl.text = successMessage.message ?? ""
-                            //                            TextViewFullView.isHidden = true
                         }
                     }
                 case .failure(let error):
@@ -386,13 +230,12 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let parameters: [String: Any] = [
-                "staff_id": self.staffMembersData.id ?? "",
-                "subject_id": self.staffMembersData.subject_id  ?? "",
-                "question": self.MessgeTextview.text?.removingExtraSpaces() ?? "",
-                "is_class_teacher": self.staffMembersData.is_class_teacher ?? false,
-                "file_path": []
+                ChatAPIKeys.staffId: self.staffMembersData.id ?? "",
+                ChatAPIKeys.subjectId: self.staffMembersData.subject_id  ?? "",
+                ChatAPIKeys.question: self.MessgeTextview.text?.removingExtraSpaces() ?? "",
+                ChatAPIKeys.isClassTeacher: self.staffMembersData.is_class_teacher ?? false,
+                ChatAPIKeys.filePath: []
             ]
-            
             APIService.shared.makeApi(
                 url: ServiceUrl.interaction_student_ask_question,
                 parameters: parameters,
@@ -416,17 +259,12 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         }
         
     }
-    
-    
     func resetTextView() {
         MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
         MessgeTextview.textColor = .lightGray
         MessgeTextview.resignFirstResponder()
     }
-    
-    
-    
-   }
+}
 
 extension String {
     func removingExtraSpaces() -> String {

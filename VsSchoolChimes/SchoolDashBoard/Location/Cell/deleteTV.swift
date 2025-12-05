@@ -35,20 +35,7 @@ class deleteTV: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         outerView.setShadow()
-//        setupActions()
     }
-    
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        locationLbl.text = nil
-//        coordinatesLbl.text = nil
-//        distanceLbl.text = nil
-//        placeLbl.text = nil
-//        visitLbl.text = nil
-//        timeLbl.text = nil
-//        locationData = nil
-//        indexPath = nil
-//    }
     
     // MARK: - Setup Methods
     private func setupUI() {
@@ -60,29 +47,22 @@ class deleteTV: UITableViewCell {
         placeView.layer.cornerRadius = 10
         editBtn.clipsToBounds = true
         deleteBtn.clipsToBounds = true
-        
-        // Add press animations
         [editBtn, deleteBtn].forEach { btn in
             btn?.addTarget(self, action: #selector(buttonTouchDown(_:)), for: .touchDown)
             btn?.addTarget(self, action: #selector(buttonTouchUp(_:)), for: [.touchUpInside, .touchUpOutside, .touchCancel])
         }
     }
     
-
-    
     // MARK: - Configuration
     func configure(with locationData: GeometricLocation, at indexPath: IndexPath) {
         self.locationData = locationData
         self.indexPath = indexPath
-        
         // Set location label
         locationLbl.text = locationData.location?.trimmingCharacters(in: .whitespacesAndNewlines)
-        
         // Coordinates label
         if let lat = Double(locationData.latitude ?? ""),
            let lng = Double(locationData.longitude ?? "") {
             coordinatesLbl.text = String(format: "%.6f, %.6f", lat, lng)
-            
             // Get the location name from coordinates
             getLocationName(latitude: lat, longitude: lng) { locationName in
                 DispatchQueue.main.async {
@@ -109,16 +89,13 @@ class deleteTV: UITableViewCell {
         } else {
             visitLbl.text = nil
         }
-        
         // Time label
         timeLbl.text = /*locationData.time */ "2 hours ago"
-        
         setupAccessibility()
     }
     
     private func setupAccessibility() {
         guard let location = locationData else { return }
-        
         accessibilityLabel = """
         Location: \(location.location ?? ""),
         Coordinates: \(coordinatesLbl.text ?? "") - 
@@ -127,23 +104,6 @@ class deleteTV: UITableViewCell {
         editBtn.accessibilityLabel = "Edit location \(location.location ?? "")"
         deleteBtn.accessibilityLabel = "Delete location \(location.location ?? "")"
     }
-    
-//    // MARK: - Button Actions
-//    @objc private func editButtonTapped() {
-//        guard let locationData = locationData,
-//              let indexPath = indexPath else { return }
-//        
-//        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//        delegate?.didTapEditButton(for: locationData, at: indexPath)
-//    }
-    
-//    @objc private func deleteButtonTapped() {
-//        guard let locationData = locationData,
-//              let indexPath = indexPath else { return }
-//        
-//        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-//        delegate?.didTapDeleteButton(for: locationData, at: indexPath)
-//    }
     
     // MARK: - Button Animation
     @objc private func buttonTouchDown(_ sender: UIButton) {
@@ -163,14 +123,12 @@ class deleteTV: UITableViewCell {
 func getLocationName(latitude: Double, longitude: Double, completion: @escaping (String?) -> Void) {
     let geocoder = CLGeocoder()
     let location = CLLocation(latitude: latitude, longitude: longitude)
-    
     geocoder.reverseGeocodeLocation(location) { placemarks, error in
         if let error = error {
             print("Reverse geocoding error: \(error.localizedDescription)")
             completion(nil)
             return
         }
-        
         if let placemark = placemarks?.first {
             let name = placemark.name ?? ""
             let locality = placemark.locality ?? ""

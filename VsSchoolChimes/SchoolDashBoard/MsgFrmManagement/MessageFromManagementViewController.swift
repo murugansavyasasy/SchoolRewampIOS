@@ -77,10 +77,8 @@ class MessageFromManagementViewController: UIViewController {
     }
     
     private func setupTableView() {
-        tv.register(UINib(nibName: "MsgTvCell", bundle: nil),
-                   forCellReuseIdentifier: "MsgTvCell")
-        tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil),
-                   forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
+        tv.register(UINib(nibName: CellConfingName.MsgTvCell, bundle: nil),
+                    forCellReuseIdentifier: CellConfingName.MsgTvCell)
         tv.dataSource = self
         tv.delegate = self
         tv.rowHeight = UITableView.automaticDimension
@@ -110,8 +108,8 @@ class MessageFromManagementViewController: UIViewController {
         
         switch details.first?.priority_level {
         case PriorityType.is_principal,
-             PriorityType.is_grouphead,
-             PriorityType.is_admin:
+            PriorityType.is_grouphead,
+            PriorityType.is_admin:
             return true
         default:
             return false
@@ -124,8 +122,6 @@ class MessageFromManagementViewController: UIViewController {
             let matchesSearch = searchText.isEmpty || matchesSearchQuery(message)
             return matchesSchool && matchesSearch
         }
-        
-//        print("filteredDatafilteredData",filteredData.)
         updateNoDataUI(isEmpty: filteredData.isEmpty)
         tv.reloadData()
     }
@@ -184,17 +180,13 @@ class MessageFromManagementViewController: UIViewController {
                         self.NoDataImage.isHidden = true
                         self.NoDataLbl.isHidden = true
                         self.schoolDropDown.isHidden = !self.hasMultipleSchools()
-                        
                         if self.Pushnotification_msgId != ""{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 self.scrollToClickedMessage()
                             }
-
                         }
                     }
-                    
                     self.NoDataLbl.text = response.message
-                    
                 case .failure(let error):
                     self.NoDataLbl.text = error.localizedDescription
                     self.searchBtn.isHidden = true
@@ -202,7 +194,6 @@ class MessageFromManagementViewController: UIViewController {
                     self.NoDataImage.isHidden = false
                     self.NoDataLbl.isHidden = false
                 }
-                
                 self.tv.reloadData()
             }
         }
@@ -213,12 +204,9 @@ class MessageFromManagementViewController: UIViewController {
               let index = filteredData.firstIndex(where: { $0.header_id == id }) else {
             return
         }
-
         let indexPath = IndexPath(row: index, section: 0)
-        
         // Scroll to that cell smoothly
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
-        
         // Optionally highlight the cell for 1 second
         if let cell = tv.cellForRow(at: indexPath) {
             UIView.animate(withDuration: 0.3, animations: {
@@ -232,20 +220,16 @@ class MessageFromManagementViewController: UIViewController {
         }
     }
     private func fetchArchivedMessages() {
-        
         SearchBar.searchTextField.text = ""
         searchText = ""
         let token = staffDetails?.access_token ?? ""
-        
         APIService.shared.makeApi(
             url: ServiceUrl.comm_api_msg_from_management_get_messages_staff_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: token
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
-           
             guard let self = self else { return }
-            
             DispatchQueue.main.async {
                 
                 switch result{
@@ -282,8 +266,8 @@ class MessageFromManagementViewController: UIViewController {
     
     private func updateReadStatus(type: String, detailId: String, isArchived: Bool) {
         let url = isArchived ?
-            ServiceUrl.comm_communication_read_status_update_archive :
-            ServiceUrl.comm_communication_read_status_update
+        ServiceUrl.comm_communication_read_status_update_archive :
+        ServiceUrl.comm_communication_read_status_update
         
         let parameters = [
             ReadStatusUpdateStringFile.type: type,
@@ -348,7 +332,7 @@ class MessageFromManagementViewController: UIViewController {
                 self.searchBtn.isHidden = true
             }
             
-           
+            
             self.tv.reloadData()
         }
     }
@@ -399,13 +383,10 @@ class MessageFromManagementViewController: UIViewController {
     
     @IBAction private func searchBtnAct(_ sender: UIButton) {
         sender.isSelected.toggle()
-        
         let imageName = sender.isSelected ?
-            "magnifyingglass.circle.fill" : "magnifyingglass"
+        "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
-        
         SearchBar.isHidden = !sender.isSelected
-        
         if sender.isSelected {
             SearchBar.becomeFirstResponder()
         } else {
@@ -418,20 +399,15 @@ class MessageFromManagementViewController: UIViewController {
     
     @objc private func showSchoolDropDown() {
         guard let details = school_details else { return }
-        
-        let schoolNames = ["All Schools"] + details.compactMap { $0.school_name }
-        
+        let schoolNames = [MenuStringFile.All_Schools] + details.compactMap { $0.school_name }
         dropDown.dataSource = schoolNames
         dropDown.anchorView = schoolDropDown
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
-        
         dropDown.selectionAction = { [weak self] (index, item) in
-            
             self?.SearchBar.searchTextField.text = ""
             self?.searchText = ""
             self?.handleSchoolSelection(index: index, item: item, schoolDetails: details)
         }
-        
         dropDown.show()
     }
     
@@ -455,7 +431,7 @@ extension MessageFromManagementViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MsgTvCell", for: indexPath) as? MsgTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MsgTvCell, for: indexPath) as? MsgTvCell else {
             return UITableViewCell()
         }
         
@@ -466,7 +442,6 @@ extension MessageFromManagementViewController: UITableViewDataSource {
     
     private func configureCell(_ cell: MsgTvCell, with message: ManagemantMessageData, at index: Int) {
         let displayText = formattedDateStatus(from: message.date ?? "")
-        
         cell.senderNamelbl.text = message.sent_by
         cell.timeAndDateLbl.text = "\(displayText)  \(message.time ?? "")"
         cell.titleLbl.text = message.title
@@ -484,7 +459,6 @@ extension MessageFromManagementViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 @available(iOS 14.0, *)
 extension MessageFromManagementViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -505,9 +479,8 @@ extension MessageFromManagementViewController: UITableViewDelegate {
     private func addArchiveButton(to view: UIView) {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         let attributedTitle = NSAttributedString(
-            string: "See Archived Messages",
+            string: MenuStringFile.See_Archived_Messages,
             attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
                 .foregroundColor: UIColor.systemBlue,
@@ -546,7 +519,6 @@ extension MessageFromManagementViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return (shouldShowFooter || shouldShowFooterLabel) ? UITableView.automaticDimension : 0.01
     }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.01
     }
@@ -584,23 +556,17 @@ extension MessageFromManagementViewController: ViewAttachments {
         popoverVC.MsgFromManagmentData = message
         popoverVC.file_path = message.file_path
         popoverVC.delegate = self
-        
         popoverVC.loadViewIfNeeded()
         popoverVC.view.layoutIfNeeded()
-        
         let scrollContentHeight = popoverVC.scrollView.contentSize.height
         let paddingX: CGFloat = 20
         let width = view.frame.width - (paddingX * 2)
         let height = min(scrollContentHeight, view.frame.height)
-        
         popoverVC.preferredContentSize = CGSize(width: width, height: height)
-        
         let originX = (view.frame.width - width) / 2
         let originY = (view.frame.height - height) / 2
         let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
-        
         addPopoverOverlay()
-        
         if let popover = popoverVC.popoverPresentationController {
             popover.sourceView = self.view
             popover.backgroundColor = .white
@@ -608,7 +574,6 @@ extension MessageFromManagementViewController: ViewAttachments {
             popover.permittedArrowDirections = []
             popover.delegate = self
         }
-        
         present(popoverVC, animated: true)
     }
     
@@ -687,31 +652,31 @@ extension MessageFromManagementViewController {
     
     private func addPopoverOverlay() {
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-
+        
         let overlay = UIView(frame: window.bounds)
         overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         overlay.alpha = 0
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopoverOverlay))
         overlay.addGestureRecognizer(tapGesture)
-
+        
         window.addSubview(overlay)
         popoverOverlayView = overlay
-
+        
         UIView.animate(withDuration: 0.2) {
             overlay.alpha = 1
         }
     }
-
+    
     @objc private func dismissPopoverOverlay() {
         removePopoverOverlay()
         dismiss(animated: true)
     }
-
+    
     private func removePopoverOverlay() {
         guard let overlay = popoverOverlayView else { return }
-
+        
         UIView.animate(withDuration: 0.2, animations: {
             overlay.alpha = 0
         }, completion: { _ in
@@ -726,7 +691,7 @@ extension MessageFromManagementViewController: UIPopoverPresentationControllerDe
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
-
+    
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
         removePopoverOverlay()
     }

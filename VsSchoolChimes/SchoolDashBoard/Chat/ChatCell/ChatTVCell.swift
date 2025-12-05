@@ -27,11 +27,6 @@ class ChatTVCell: UITableViewCell {
     @IBOutlet weak var anseredOnLbl: UILabel!
     @IBOutlet weak var othersQuestionLbl: UILabel!
     @IBOutlet weak var othersQuestionView: UIView!
-    
-    
-//    @IBOutlet weak var bubbleLeadingConstraint: NSLayoutConstraint!
-    //@IBOutlet weak var bubbleTrailingConstraint: NSLayoutConstraint!
-       
        weak var delegate: ChatTableViewCellDelegate?
        private var panGestureRecognizer: UIPanGestureRecognizer!
        private var originalCenter: CGPoint = .zero
@@ -43,17 +38,13 @@ class ChatTVCell: UITableViewCell {
            bubbleView.layer.cornerRadius = 15
            bubbleView.clipsToBounds = true
            bubbleView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
-           
            answerBubbleView.layer.cornerRadius = 15
            answerBubbleView.clipsToBounds = true
            answerBubbleView.backgroundColor = .systemGray5
-           
            othersQuestionView.layer.cornerRadius = 10
            othersQuestionView.backgroundColor = .systemGray6
-           
            messageLabel.setFont(style: .body, size: FontSize.BodySize)
            timeStampLbl.setFont(style: .body, size: 11)
-           
            othersQuestionLbl.setFont(style: .body, size: 11)
            studentNameLbl.setFont(style: .body, size: 11)
            answerLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -70,46 +61,7 @@ class ChatTVCell: UITableViewCell {
                 )
         }
     }
-//    func configure(with message: String, timeStamp: String, isSender: Bool,studentName:String) {
-//        messageLabel.text = message
-//        timeStampLbl.text = timeStamp
-//            self.studName = studentName
-//        let totalLength = message.count + timeStamp.count
-//
-//        // Optional: adjust based on total character count
-//        var leadingConstant: CGFloat = 130
-//        let trailingConstant: CGFloat = 16
-//
-//        if totalLength <= 20 {
-//            leadingConstant = 200
-//        } else if totalLength <= 40 {
-//            leadingConstant = 150
-//        } else {
-//            leadingConstant = 100
-//        }
-//
-//        if isSender {
-////            cell.StatusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
-//            bubbleView.backgroundColor = .parentClr.withAlphaComponent(0.2)
-//            bubbleTrailingConstraint.constant = trailingConstant
-//            bubbleLeadingConstraint.constant = leadingConstant
-//        } else {
-//            bubbleView.backgroundColor = .systemGray4.withAlphaComponent(0.2)
-//            bubbleTrailingConstraint.constant = leadingConstant
-//            bubbleLeadingConstraint.constant = trailingConstant
-//        }
-//
-//        // Common shadow styling
-////        bubbleView.layer.shadowOpacity = 2
-////        bubbleView.layer.shadowColor = UIColor.systemGray3.cgColor
-////        bubbleView.layer.shadowRadius = 1
-////        bubbleView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-//
-//        // Only receiver (e.g. staff) allows swipe gesture
-//        //panGestureRecognizer.isEnabled = !isSender
-//    }
 
-    
     func configure(with message: String, timeStamp: String, isSender: Bool, studentName: String) {
         messageLabel.text = message
         timeStampLbl.text = timeStamp

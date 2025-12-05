@@ -24,26 +24,14 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
         webView.navigationDelegate = self
-        
         menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: Child_details?.school_name ?? "")
-        
         webkitLoading()
     }
 
-    override func viewDidLayoutSubviews() {
-        
-//        view.applyGradient(
-//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
-    }
    
     @IBAction func backAct() {
         dismiss(animated: true)
@@ -58,8 +46,6 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
         }else if Menu_id.Market_place == Menu_id.staffSelectedMenuId{
             Weburl = global?.market_place_url ?? ""
         }
-        
-        print("WeburlWeburl",Weburl)
         let url = URL (string: Weburl)
                let requestObj = URLRequest(url: url!)
                webView.load(requestObj)

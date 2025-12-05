@@ -18,17 +18,22 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     @IBOutlet weak var standardFullview: UIView!
     @IBOutlet weak var girlsCountLbl: UILabel!
     @IBOutlet weak var boysCountLbl: UILabel!
-  
+    
     @IBOutlet weak var sectionCollertionView: UICollectionView!
-   
+    
     @IBOutlet weak var countLbl: UILabel!
-   
+    
     @IBOutlet weak var barchartHeight: NSLayoutConstraint!
     @IBOutlet weak var cellview: UIView!
     var hasAnimatedProgress = false
     var sections: [SectionList]?
     var boycount : String?
     var girlscount : String?
+    let Section = "Section "
+    let Boys  = "Boys : "
+    let Girls  = "Girls : "
+    let Unspecified  = "Unspecified : "
+    let TotalStudents  = "Total Students"
     override func awakeFromNib() {
         super.awakeFromNib()
         standardFullview.setShadow(cornerRadius:5)
@@ -41,12 +46,8 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         cellview.layer.cornerRadius = 10
         sectionCollertionView.delegate = self
         sectionCollertionView.dataSource = self
-        sectionCollertionView.register(UINib(nibName: "SectionStregnthCVC", bundle: nil), forCellWithReuseIdentifier: "SectionStregnthCVC")
-        
+        sectionCollertionView.register(UINib(nibName: CellConfingName.SectionStregnthCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SectionStregnthCVC)
     }
-
-
-
     func updateProgress(boys: String, girls: String) {
         let boysCount = Int(boys) ?? 0
         let girlsCount = Int(girls) ?? 0
@@ -55,9 +56,7 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
             progressView.progress = 0
             return
         }
-
         let boysPercent = Float(boysCount) / Float(total)
-
         if !hasAnimatedProgress {
             progressView.setProgress(boysPercent, animated: true)
             hasAnimatedProgress = true
@@ -65,66 +64,57 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
             progressView.setProgress(boysPercent, animated: false)
         }
     }
-    
     func configure(_ sections: [SectionList]?) {
         self.sections = sections
         sectionCollertionView.reloadData()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sections?.count ?? 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let section = sections?[indexPath.item],
-              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SectionStregnthCVC", for: indexPath) as? SectionStregnthCVC else {
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SectionStregnthCVC, for: indexPath) as? SectionStregnthCVC else {
             return UICollectionViewCell()
         }
-        
         cell.layer.cornerRadius = 10
-        cell.standardName.text = "Section " + (section.name ?? "")
+        cell.standardName.text = Section + (section.name ?? "")
         cell.standardName.setFont(style: .body, size: FontSize.TitleSize)
-        
         // Boys
         setTwoPartAttributedText(label: cell.boysCountLbl,
-                                 firstText: "Boys : ",
+                                 firstText: Boys,
                                  firstColor: .darkGray,
                                  secondText: "\(section.boys_count ?? "")",
                                  secondColor: .black)
-        
         // Girls
         setTwoPartAttributedText(label: cell.girlsCountLbl,
-                                 firstText: "Girls : ",
+                                 firstText: Girls,
                                  firstColor: .darkGray,
                                  secondText: "\(section.girls_count ?? "")",
                                  secondColor: .black)
-
         // Others
         setTwoPartAttributedText(label: cell.otersCountLbl,
-                                 firstText: "Unspecified : ",
+                                 firstText: Unspecified,
                                  firstColor: .darkGray,
                                  secondText: "\(section.other_count ?? "0")",
                                  secondColor: .black)
         
         // Student Count Button Title
-        let title =  "Total Students " + "\(section.total_students ?? "")"
+        let title =  TotalStudents + "\(section.total_students ?? "")"
         let font = UIFont.systemFont(ofSize: 10, weight: .semibold)
         let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let textWidth = (title as NSString).size(withAttributes: attributes).width
         let padding: CGFloat = 20
-        
         cell.studentCount.setTitle(title, for: .normal)
         cell.studentCount.titleLabel?.font = font
         cell.studentCount.layer.cornerRadius = 8
         cell.btnWidth.constant = textWidth + padding
-        
-        // Styling
         cell.outerView.layer.cornerRadius = 10
         cell.outerView.clipsToBounds = true
-        
         return cell
     }
-
+    
     func setTwoPartAttributedText(label: UILabel,
                                   firstText: String,
                                   firstColor: UIColor,
@@ -134,17 +124,15 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
             .font: UIFont.systemFont(ofSize: 11),
             .foregroundColor: firstColor
         ]
-        
         let secondAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.boldSystemFont(ofSize: 11),
             .foregroundColor: secondColor
         ]
-        
         let attributedText = NSMutableAttributedString(string: firstText, attributes: firstAttributes)
         attributedText.append(NSAttributedString(string: secondText, attributes: secondAttributes))
         label.attributedText = attributedText
     }
-
+    
     // Collection Cell Size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 100)

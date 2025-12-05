@@ -8,7 +8,7 @@
 import UIKit
 
 class InteractionVC: UIViewController {
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var FullView: UIView!
     @IBOutlet weak var tv: UITableView!
@@ -26,7 +26,6 @@ class InteractionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         FullView.layer.cornerRadius = 30
         FullView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         FullView.layer.masksToBounds = true
@@ -50,7 +49,6 @@ class InteractionVC: UIViewController {
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         searchBtn.setImage(UIImage(systemName: icon), for: .normal)
-        
         searchBar.isHidden = !sender.isSelected
         if sender.isSelected {
             searchBar.becomeFirstResponder()
@@ -66,17 +64,16 @@ class InteractionVC: UIViewController {
     }
     
     @IBAction func backBtnAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
- 
+    
 }
 
 extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filterData?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CellConfingName.interactTvcell,
@@ -88,34 +85,29 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
         if let datas = filterData?[indexPath.row] {
             cell.nameLbl.text = datas.name ?? ""
             cell.subjectLbl.text = datas.subject_name ?? ""
-            
             // Unread count handling
             let unreadCount = datas.unread_count ?? 0
             cell.unReadCountBtn.isHidden = unreadCount == 0
             cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
-            cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
+            cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : MenuStringFile.No_messages_yet
             // Last update time
             if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
                 let (timeAgo, _) = submittedDate
                 cell.lastUpdateTimeLbl.text = timeAgo
-                cell.lastUpdateTimeLbl.isHidden = timeAgo == "Invalid time"
-                cell.iconBtn.isHidden = timeAgo == "Invalid time"
+                cell.lastUpdateTimeLbl.isHidden = timeAgo == AlertstringFile.Invalid_time
+                cell.iconBtn.isHidden = timeAgo == AlertstringFile.Invalid_time
             } else {
                 cell.lastUpdateTimeLbl.isHidden = true
                 cell.iconBtn.isHidden = true
             }
-            
             cell.userImg.isHidden = datas.profile?.isEmpty ?? true
             cell.userBtn.isHidden = !cell.userImg.isHidden
             if let name = datas.name, !name.isEmpty {
                 let parts = name.split(separator: " ")
                 if let firstWord = parts.first {
                     let firstLetter = String(firstWord.prefix(1)).uppercased()
-                    
                     if let lastWord = parts.last {
                         let lastLetter = String(lastWord.suffix(1)).uppercased()
-                        
-                        // If only one word, avoid duplication
                         if parts.count == 1 {
                             cell.userBtn.setTitle(firstLetter, for: .normal)
                         } else {
@@ -126,30 +118,26 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
             } else {
                 cell.userBtn.setTitle("-", for: .normal) // fallback
             }
-
+            
         }
         return cell
         
     }
-
+    
     func tableView(
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        
         let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         if let datas = filterData?[indexPath.row]{
             vc.staffMembersData = datas
         }
-       
         // vc.getValue = getValue
         present(vc, animated: true)
-        
-        
     }
     
-
+    
     func getStaff(){
         APIService.shared
             .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? ""){ [self] (

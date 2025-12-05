@@ -47,7 +47,7 @@ class LocationViewController: UIViewController {
     var childVC: LocationReportVC?
     let add_location_enabel = UserDefaultFileManager.get_staff_Details()?.biometric_enable
     private var lastIsInsideAllowedArea: Bool?
-    
+    var staff = "staff"
     var urlss : String?
     
     override func viewDidLoad() {
@@ -93,18 +93,8 @@ class LocationViewController: UIViewController {
         
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        view.applyGradient(
-//            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         addLocationEnabel(Show: add_location_enabel ?? false )
         NotificationCenter.default.addObserver(self, selector: #selector(checkAndFetchLocationData), name: UIApplication.didBecomeActiveNotification, object: nil)
         checkLocationAuthorization()
@@ -114,11 +104,8 @@ class LocationViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    
     func addLocationEnabel(Show:Bool){
-        
         addlocationbtnName.isHidden = !Show
-        
     }
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
@@ -211,7 +198,6 @@ class LocationViewController: UIViewController {
             "iPad7,6": "iPad (6th generation, WiFi+Cellular)",
             
         ]
-        
         return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
     }
     @objc private func appDidBecomeActive() {
@@ -221,7 +207,6 @@ class LocationViewController: UIViewController {
     
     @objc func checkAndFetchLocationData() {
         let status = CLLocationManager.authorizationStatus()
-        
         if status == .authorizedAlways || status == .authorizedWhenInUse {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
                 call_locationManager()
@@ -231,14 +216,11 @@ class LocationViewController: UIViewController {
         }
     }
     
-    
     @IBAction func backBtn(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     
     @IBAction func SegmentAction(_ sender: Any) {
-        
         if SegmentControl.selectedSegmentIndex == 1{
             addLocationEnabel(Show: false )
             addChildViewControllerToContainer()
@@ -252,11 +234,9 @@ class LocationViewController: UIViewController {
     
     @IBAction func PunchBtnAct(_ sender: Any) {
         checkAuthenticationAvailability()
-        //        Punch_Api()
     }
     
     @IBAction func AddLocationAct(_ sender: Any) {
-        
         let vc = CreateLocationViewController(nibName: nil, bundle: nil)
         vc.longitude = currentLogi ?? ""
         vc.latitude = currentLat ?? ""
@@ -299,7 +279,6 @@ class LocationViewController: UIViewController {
                 locationManager.requestWhenInUseAuthorization()
             }
         case .restricted, .denied:
-            
             DispatchQueue.main.async { [self] in
                 ViewAnimator.showFade(LocationErrorStack)
                 ViewAnimator.hideFade(punchStack)
@@ -325,14 +304,12 @@ class LocationViewController: UIViewController {
     }
     
     func checkAuthenticationAvailability() {
-        
         let context = LAContext()
         var error: NSError?
         let policy: LAPolicy = .deviceOwnerAuthentication
         if context.canEvaluatePolicy(policy, error: &error) {
             authenticateUser(context: context, policy: policy)
         } else {
-            print("No biometric authentication or passcode is set.")
             punch_type = 1
             Punch_Api()
         }
@@ -340,10 +317,8 @@ class LocationViewController: UIViewController {
     
     func authenticateUser(context: LAContext, policy: LAPolicy) {
         context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
-            
             DispatchQueue.main.async { [self] in
                 if success {
-                    print("Authentication successful")
                     punch_type = 3
                     Punch_Api()
                 } else {
@@ -359,14 +334,11 @@ class LocationViewController: UIViewController {
     }
 }
 extension LocationViewController:CLLocationManagerDelegate{
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let clError = error as? CLError {
             switch clError.code {
             case .denied:
-                print("Location access denied by user.")
             case .locationUnknown:
-                print("Location could not be determined.")
             default:
                 print("Location Manager error: \(clError.localizedDescription)")
             }
@@ -375,20 +347,14 @@ extension LocationViewController:CLLocationManagerDelegate{
         }
     }
     
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
-            
-            print("Latitude: \(latitude), Longitude: \(longitude)")
-            
             currentLat = String(latitude)
             currentLogi = String(longitude)
-            
             let targetLocation = CLLocation(latitude:Double(latitude) , longitude: Double(longitude))
             let distanceInMeters = location.distance(from: targetLocation)
-            
             let location = CLLocation(latitude: latitude, longitude: longitude)
             convertCoordinatesToAddress(location: location)
             locationManager.stopUpdatingLocation()
@@ -408,8 +374,6 @@ extension LocationViewController:CLLocationManagerDelegate{
                 print("Error in reverse geocoding: \(error.localizedDescription)")
             } else if let placemarks = placemarks, let placemark = placemarks.first {
                 let address = self.formatAddress(from: placemark)
-                print("Address: \(address)")
-                
                 RefrenceAddress = address
             }
         }
@@ -417,7 +381,6 @@ extension LocationViewController:CLLocationManagerDelegate{
     
     func formatAddress(from placemark: CLPlacemark) -> String {
         var address = ""
-        
         if let name = placemark.name {
             address += name
         }
@@ -445,15 +408,13 @@ extension LocationViewController:CLLocationManagerDelegate{
     }
     
     func Punch_Api(){
-        
         APIService.shared
             .makeApi(url: ServiceUrl.staff_attd_geometric_entry_using_app, parameters:[
                 
                 PunchStringFile.device_id : SecureIDManager.getSecureID(),
                 PunchStringFile.device_model : device,
                 PunchStringFile.punch_type : punch_type,
-                PunchStringFile.staff_or_student : "staff"
-                
+                PunchStringFile.staff_or_student : staff
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -462,16 +423,12 @@ extension LocationViewController:CLLocationManagerDelegate{
                 case.success(let succesmessage) :
                     if succesmessage.status == true {
                         DispatchQueue.main.async { [self] in
-                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: AlertstringFile.Success,
                                     message:succesmessage.message ?? "" ,
-                                    on: self
-                                )
-                        }
+                                    on: self)}
                     }else {
-                        
                         DispatchQueue.main.async {
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -505,27 +462,23 @@ extension LocationViewController:CLLocationManagerDelegate{
                 if response.status == true {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
                         var isInsideAllowedArea = false
-                        
                         guard let currentLat = Double(currentLatitude),
                               let currentLong = Double(currentLongitude) else {
                             print("Invalid current coordinates")
                             return
                         }
-                        
                         for location in response.data ?? [] {
                             guard let lat1 = Double(location.latitude ?? ""),
                                   let lon1 = Double(location.longitude ?? ""),
                                   let allowedDistance = Int(location.distance ?? "") else {
                                 continue
                             }
-                            
                             let calculatedDistance = self.haversineDistance(
                                 lat1: lat1,
                                 lon1: lon1,
                                 lat2: currentLat,
                                 lon2: currentLong
                             )
-                            
                             if calculatedDistance <= Double(allowedDistance) {
                                 isInsideAllowedArea = true
                                 break
@@ -536,8 +489,6 @@ extension LocationViewController:CLLocationManagerDelegate{
                             DispatchQueue.main.async {
                                 self.updatePunchUI(isInside: isInsideAllowedArea)
                             }
-                        } else {
-                            print("🔁 Skipped UI update, no change in punch status.")
                         }
                     }
                 } else {
@@ -557,13 +508,11 @@ extension LocationViewController:CLLocationManagerDelegate{
     
     private func updatePunchUI(isInside: Bool) {
         if isInside {
-            
             showInsideBoundaryUI()
         } else {
             showOutsideBoundaryUI()
         }
     }
-    
     
     private func showInsideBoundaryUI() {
         ViewAnimator.showFade(TaptoPunchBtn)
@@ -588,7 +537,6 @@ extension LocationViewController:CLLocationManagerDelegate{
     
     
     private func errorLocation(alertMessage: String) {
-        
         addLocationEnabel(Show: add_location_enabel ?? false)
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -600,15 +548,12 @@ extension LocationViewController:CLLocationManagerDelegate{
     
     func locationCheck() {
         guard let distanceString = ExstingDistance else {
-            print("Error: Distance string is nil")
             return
         }
         let cleanedDistance = distanceString.replacingOccurrences(of: " m", with: "")
         guard let distanceInt = Int(cleanedDistance) else {
-            print("Error: Unable to convert distance to Int")
             return
         }
-        
         guard let exLatString = ExstingLat,
               let crntLatString = currentLat,
               let ExtLogiString = ExstingLogi,
@@ -617,21 +562,10 @@ extension LocationViewController:CLLocationManagerDelegate{
               let crntLat = Double(crntLatString),
               let ExtLogi = Double(ExtLogiString),
               let crntLogi = Double(crntLogiString) else {
-            print("Error: Invalid latitude/longitude values")
             return
         }
-        
         let distance = haversineDistance(lat1: exLat, lon1: ExtLogi, lat2: crntLat, lon2: crntLogi)
-        
-        if distance <= Double(distanceInt) {
-            print("The existing location is within \(distanceInt) meters of the current location.")
-            
-        } else {
-            print("The existing location is more than \(distanceInt) meters away.")
-            
-        }
     }
-    
     func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
         let earthRadiusKm: Double = 6371.0
         let dLat = degreesToRadians(lat2 - lat1)

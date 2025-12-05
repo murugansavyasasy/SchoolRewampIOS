@@ -9,14 +9,14 @@ import UIKit
 import Charts
 
 class SchoolStrengthVC: UIViewController {
-
+    
     @IBOutlet weak var norecordLbl: UILabel!
     @IBOutlet weak var norecordImg: UIImageView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var acodomicYearLbl: UILabel!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var academicyearDrp: UIView!
-
+    
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var SchoolStrength: [SchoolStrength]?
     var AcadimicYearDatas: [AcadimicYearData] = []
@@ -29,37 +29,37 @@ class SchoolStrengthVC: UIViewController {
     var totalBoys : String?
     var totalgirls : String?
     var previousData : Previous?
+    let Total = "Total"
+    let Students = "Students"
+    let Staff = "Staff"
+    let Standard = "Standard "
+    let Boys = "Boys"
+    let Girls = "Girls"
+    let TotalStudents = "Total Students"
     override func viewDidLoad() {
         super.viewDidLoad()
-
         UIupdate()
         BackBtn.applyBackButton()
         BackBtn
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
-                secondLine: staffDetails?.school_name ?? ""
-            )
-
+                secondLine: staffDetails?.school_name ?? "")
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
-        Tv.register(UINib(nibName: "SummerizeTvCel", bundle: nil), forCellReuseIdentifier: "SummerizeTvCel")
-        Tv.register(UINib(nibName: "GenderDistriTvcel", bundle: nil), forCellReuseIdentifier: "GenderDistriTvcel")
-        Tv.register(UINib(nibName: "LblTvCell", bundle: nil), forCellReuseIdentifier: "LblTvCell")
+        Tv.register(UINib(nibName: CellConfingName.SummerizeTvCel, bundle: nil), forCellReuseIdentifier: CellConfingName.SummerizeTvCel)
+        Tv.register(UINib(nibName: CellConfingName.GenderDistriTvcel, bundle: nil), forCellReuseIdentifier: CellConfingName.GenderDistriTvcel)
+        Tv.register(UINib(nibName: CellConfingName.LblTvCell, bundle: nil), forCellReuseIdentifier: CellConfingName.LblTvCell)
         Tv.estimatedRowHeight = 100
         Tv.rowHeight = UITableView.automaticDimension
-
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
         academicyearDrp.addGestureRecognizer(tapGesture)
-
         if localData.accidamic_year_data?.data?.isEmpty == false {
             getacadmicYr()
         }
     }
-
     
     func createStrengthList(from data: SchoolStrength) -> [StrengthDisplayModel] {
         var list: [StrengthDisplayModel] = []
-        
         let totalStudent = Int(data.total_student_strength ?? "0") ?? 0
         let totalStaff = Int(data.total_staff_strength ?? "0") ?? 0
         let total = totalStudent + totalStaff + (Int(
@@ -68,62 +68,53 @@ class SchoolStrengthVC: UIViewController {
         let totalPreviousYear = Int(previousData?.total_student_strength ?? "0") ?? 0 + (
             Int(previousData?.total_staff_strength ?? "0") ?? 0
         )
-        list
-            .append(
-                StrengthDisplayModel(
-                    count: total,
-                    name: "Total",
-                    previousYear: totalPreviousYear,
-                    Girl:Int(data.total_staff_strength ?? "0") ?? 0,
-                    boys:  Int(
-                        data.total_student_strength ?? "0"
-                    ) ?? 0,
-                    message: previousData?.message ?? ""
-                )
+        list.append(
+            StrengthDisplayModel(
+                count: total,
+                name: Total,
+                previousYear: totalPreviousYear,
+                Girl:Int(data.total_staff_strength ?? "0") ?? 0,
+                boys:  Int(
+                    data.total_student_strength ?? "0"
+                ) ?? 0,
+                message: previousData?.message ?? ""))
+        list.append(
+            StrengthDisplayModel(
+                count: totalStudent,
+                name: Students,
+                previousYear: Int(
+                    previousData?.total_student_strength ?? ""
+                ) ?? 0,
+                Girl: Int(data.total_girls_strength ?? "0") ?? 0,
+                boys: Int(
+                    data.total_boys_strength ?? "0"
+                ) ?? 0,
+                message: previousData?.message ?? ""
             )
-        
-        list
-            .append(
-                StrengthDisplayModel(
-                    count: totalStudent,
-                    name: "Students",
-                    previousYear: Int(
-                        previousData?.total_student_strength ?? ""
-                    ) ?? 0,
-                    Girl: Int(data.total_girls_strength ?? "0") ?? 0,
-                    boys: Int(
-                        data.total_boys_strength ?? "0"
-                    ) ?? 0,
-                    message: previousData?.message ?? ""
-                )
+        )
+        list.append(
+            StrengthDisplayModel(
+                count: totalStaff,
+                name: Staff,
+                previousYear: Int(
+                    previousData?.total_staff_strength ?? ""
+                ) ?? 0,
+                Girl: Int(
+                    data.total_female_staffs_strength ?? "0"
+                ) ?? 0,
+                boys: Int(
+                    data.total_male_staffs_strength ?? "0"
+                ) ?? 0,
+                message: previousData?.message ?? ""
             )
-        
-        list
-            .append(
-                StrengthDisplayModel(
-                    count: totalStaff,
-                    name: "Staff",
-                    previousYear: Int(
-                        previousData?.total_staff_strength ?? ""
-                    ) ?? 0,
-                    Girl: Int(
-                        data.total_female_staffs_strength ?? "0"
-                    ) ?? 0,
-                    boys: Int(
-                        data.total_male_staffs_strength ?? "0"
-                    ) ?? 0,
-                    message: previousData?.message ?? ""
-                )
-            )
-        
-        
+        )
         return list
     }
-
+    
     func UIupdate() {
         academicyearDrp.setShadow()
     }
-
+    
     @IBAction func academicYearDrop_action() {
         acidamicdrops.anchorView = academicyearDrp
         acidamicdrops.dataSource = accadimYr
@@ -136,18 +127,18 @@ class SchoolStrengthVC: UIViewController {
             self.Get_School_Strength()
         }
     }
-
+    
     func getacadmicYr() {
         accadimYr = localData.accidamic_year_data?.data?.compactMap { $0.year } ?? []
         acodomicYearLbl.text = accadimYr.last ?? ""
         acodemicId = localData.accidamic_year_data?.data?.last?.id ?? 0
         Get_School_Strength()
     }
-
+    
     @IBAction func BackbtnAct(_ sender: Any) {
         dismiss(animated: true)
     }
-
+    
     func Get_School_Strength() {
         displayArray.removeAll()
         APIService.shared.makeApi(
@@ -157,7 +148,7 @@ class SchoolStrengthVC: UIViewController {
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<SchoolStrengthResponse, Error>) in
             guard let self = self else { return }
-
+            
             switch result {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
@@ -167,8 +158,6 @@ class SchoolStrengthVC: UIViewController {
                         let strengthList = self.createStrengthList(from: firstData)
                         self.displayArray = strengthList
                     }
-    
-                    
                     self.selectedIndexPath = nil
                     self.chartSet = false
                     self.totalBoys = response.data?.first?.total_student_strength ?? "0"
@@ -194,14 +183,11 @@ class SchoolStrengthVC: UIViewController {
 }
 
 extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            
             return 1
         }else if section == 1 {
             return 1
@@ -209,29 +195,23 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         else{
-            
             return SchoolStrength?.first?.standards?.count ?? 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SummerizeTvCel", for: indexPath) as? SummerizeTvCel else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SummerizeTvCel, for: indexPath) as? SummerizeTvCel else {
                 return UITableViewCell()
             }
             cell.dispalyArray = displayArray
             return cell
-
         }
         else if indexPath.section == 1 {
-            
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "GenderDistriTvcel", for: indexPath) as? GenderDistriTvcel else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.GenderDistriTvcel, for: indexPath) as? GenderDistriTvcel else {
                 return UITableViewCell()
             }
-    
             let boys = (Int(totalBoys ?? "0") ?? 0) + (Int(totalgirls ?? "0") ?? 0)
-
             cell
                 .updateProgress(
                     maleCount:totalBoys ?? "",
@@ -239,14 +219,10 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
                 )
             return cell
         }
-        
         else if indexPath.section == 2{
-            
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "LblTvCell", for: indexPath) as? LblTvCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LblTvCell, for: indexPath) as? LblTvCell else {
                 return UITableViewCell()
             }
-            
-            
             return cell
         }
         else {
@@ -254,31 +230,23 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
                   let standard = SchoolStrength?.first?.standards?[indexPath.row] else {
                 return UITableViewCell()
             }
-            
-          
             cell.configure(standard.sections)
             cell.updateProgress(boys: standard.boys_count ?? "0", girls: standard.girls_count ?? "0")
-            cell.standardLbl.text = "Standard  ".translated() + (standard.name ?? "")
-            cell.boysCountLbl.text = "\("Boys".translated()): \(standard.boys_count ?? "")"
-            cell.girlsCountLbl.text = "\("Girls".translated()): \(standard.girls_count ?? "")"
-
-            cell.countLbl.text = "\("Total Students".translated()): \(standard.total_students ?? "")"
-
-
+            cell.standardLbl.text = Standard.translated() + (standard.name ?? "")
+            cell.boysCountLbl.text = "\(Boys.translated()): \(standard.boys_count ?? "")"
+            cell.girlsCountLbl.text = "\(Girls.translated()): \(standard.girls_count ?? "")"
+            cell.countLbl.text = "\(TotalStudents.translated()): \(standard.total_students ?? "")"
             if standard.girls_count == "0" && standard.boys_count  == "0"{
                 cell.femaleImgView.isHidden = true
                 cell.maleImageView.isHidden = true
                 cell.progressView.tintColor = .lightGray
-                
             }
             else if standard.girls_count == "0"{
                 cell.femaleImgView.image = UIImage(named: "males")
                 cell.femaleImgView.tintColor = .maleClr
                 cell.maleImageView.image = UIImage(named: "males")
                 cell.maleImageView.tintColor = .maleClr
-                
             }
-            
             else if standard.boys_count  == "0"{
                 cell.femaleImgView.image = UIImage(named: "females")
                 cell.femaleImgView.tintColor = .femaleClr
@@ -299,19 +267,17 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             cell.cellview.layer.shadowRadius = 4
             cell.cellview.layer.shouldRasterize = true
             cell.cellview.layer.rasterizationScale = UIScreen.main.scale
-
+            
             return cell
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section != 1  ||  indexPath.section != 0 {
             selectedIndexPath = (selectedIndexPath == indexPath) ? nil : indexPath
             chartSet = true
-            tableView.reloadData()
-        }
+            tableView.reloadData()}
     }
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section{
         case 0 : return 190
@@ -320,10 +286,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
         default:
             return UITableView.automaticDimension
         }
-        
     }
-    
-    
 }
 
 struct StrengthDisplayModel {
