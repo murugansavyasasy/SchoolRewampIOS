@@ -74,98 +74,91 @@ class HistoryTC: UITableViewCell {
         player = nil
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         // Invalidate timer if it's active
         updateTimer?.invalidate()
         updateTimer = nil
-        
         // Reset player and wave view state
         player?.pause()
         player = nil
         playerItem = nil
         isPlaying = false
-        
         // Reset UI: hide wave view and total time until intentionally set
         playerView.progress = 0.0
         playerView.isHidden = true
         totaltime.isHidden = true
-        
         // Optionally reset button image to default play
         playBtn.setImage(ImageName.playbutton, for: .normal)
     }
     
-
+    
     
     @IBAction func play(_ sender: UIButton) {
         sender.isSelected.toggle()
-               delegate?.reload(index: sender.tag)
+        delegate?.reload(index: sender.tag)
     }
     
     func updatePlayState(isPlaying: Bool, url: String?) {
-            self.isPlaying = isPlaying
+        self.isPlaying = isPlaying
+        if isPlaying {
+            if player == nil {
+                guard let urlString = url,
+                      let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                      let audioURL = URL(string: encodedURLString) else { return }
+                playerItem = AVPlayerItem(url: audioURL)
+                player = AVPlayer(playerItem: playerItem)
+                // Observe playback finished
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(playerDidFinishPlaying),
+                                                       name: .AVPlayerItemDidPlayToEndTime,
+                                                       object: playerItem)}
+            player?.play()
+            playBtn.setImage(ImageName.pausebutton, for: .normal)
             
-            if isPlaying {
-                if player == nil {
-                    guard let urlString = url,
-                          let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                          let audioURL = URL(string: encodedURLString) else { return }
-                    
-                    playerItem = AVPlayerItem(url: audioURL)
-                    player = AVPlayer(playerItem: playerItem)
-                    
-                    // Observe playback finished
-                    NotificationCenter.default.addObserver(self,
-                                                           selector: #selector(playerDidFinishPlaying),
-                                                           name: .AVPlayerItemDidPlayToEndTime,
-                                                           object: playerItem)}
-                player?.play()
-                playBtn.setImage(ImageName.pausebutton, for: .normal)
-                
-                // Start timer
-                updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                   target: self,
-                                                   selector: #selector(updateSlider),
-                                                   userInfo: nil,
-                                                   repeats: true)
-                updateTimeDisplay()
-                
-            } else {
-                player?.pause()
-                playerView.updateWithLevel(0.0)
-                playBtn.setImage(ImageName.playbutton, for: .normal)
-                updateTimer?.invalidate()
-                updateTimer = nil
-                updateTimeDisplay()
-            }
+            // Start timer
+            updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
+                                               target: self,
+                                               selector: #selector(updateSlider),
+                                               userInfo: nil,
+                                               repeats: true)
+            updateTimeDisplay()
+            
+        } else {
+            player?.pause()
+            playerView.updateWithLevel(0.0)
+            playBtn.setImage(ImageName.playbutton, for: .normal)
+            updateTimer?.invalidate()
+            updateTimer = nil
+            updateTimeDisplay()
         }
-
+    }
+    
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?,
-                              change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+                               change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "status" {
             if player?.currentItem?.status == .failed {
                 print("Playback failed: \(String(describing: player?.currentItem?.error))")
             }
         }
     }
-
-        @objc func updateSlider() {
-            guard let audioPlayer = player, let currentItem = audioPlayer.currentItem else { return }
-            let totalDuration = CMTimeGetSeconds(currentItem.duration)
-            let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-            guard totalDuration.isFinite && elapsedTime.isFinite else { return }
-            let currentFormatted = formatTime(elapsedTime)
-            let totalFormatted = formatTime(totalDuration)
-            lastPlayingduration = currentFormatted
-            totaltime.text = "\(currentFormatted) / \(totalFormatted)"
-            let progress = CGFloat(elapsedTime / totalDuration)
-            playerView.progress = progress
-            playerView.updateWithLevel(CGFloat(sin(progress * .pi)))
-            playerView.setNeedsDisplay()
-        }
-
+    @objc func updateSlider() {
+        guard let audioPlayer = player, let currentItem = audioPlayer.currentItem else { return }
+        let totalDuration = CMTimeGetSeconds(currentItem.duration)
+        let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+        guard totalDuration.isFinite && elapsedTime.isFinite else { return }
+        let currentFormatted = formatTime(elapsedTime)
+        let totalFormatted = formatTime(totalDuration)
+        lastPlayingduration = currentFormatted
+        totaltime.text = "\(currentFormatted) / \(totalFormatted)"
+        let progress = CGFloat(elapsedTime / totalDuration)
+        playerView.progress = progress
+        playerView.updateWithLevel(CGFloat(sin(progress * .pi)))
+        playerView.setNeedsDisplay()
+    }
+    
     @objc func playerDidFinishPlaying() {
         playBtn.setImage(ImageName.playbutton, for: .normal)
         isPlaying = false
@@ -175,29 +168,29 @@ class HistoryTC: UITableViewCell {
         FinishPlayingdelegate?.didFinishPlaying(at: playBtn.tag)
         player?.seek(to: .zero)
     }
-
-        private func updateTimeDisplay() {
-            guard let currentItem = player?.currentItem,
-                  let currentTime = player?.currentTime() else { return }
-            let totalDuration = CMTimeGetSeconds(currentItem.duration)
-            let elapsedTime = CMTimeGetSeconds(currentTime)
-            if totalDuration.isFinite && elapsedTime.isFinite {
-                let currentFormatted = formatTime(elapsedTime)
-                let totalFormatted = formatTime(totalDuration)
-                totalsecont = totalFormatted
-                totaltime.text = "\(currentFormatted) / \(totalFormatted)"
-            } else {
-                let currentFormatted = formatTime(elapsedTime)
-                totaltime.text = "\(currentFormatted) / \(totalsecont)"
-            }
+    
+    private func updateTimeDisplay() {
+        guard let currentItem = player?.currentItem,
+              let currentTime = player?.currentTime() else { return }
+        let totalDuration = CMTimeGetSeconds(currentItem.duration)
+        let elapsedTime = CMTimeGetSeconds(currentTime)
+        if totalDuration.isFinite && elapsedTime.isFinite {
+            let currentFormatted = formatTime(elapsedTime)
+            let totalFormatted = formatTime(totalDuration)
+            totalsecont = totalFormatted
+            totaltime.text = "\(currentFormatted) / \(totalFormatted)"
+        } else {
+            let currentFormatted = formatTime(elapsedTime)
+            totaltime.text = "\(currentFormatted) / \(totalsecont)"
         }
-
-        private func formatTime(_ seconds: Double) -> String {
-            let minutes = Int(seconds) / 60
-            let seconds = Int(seconds) % 60
-            return String(format: CommonStringFile.Time_formate, minutes, seconds)
-        }
-
+    }
+    
+    private func formatTime(_ seconds: Double) -> String {
+        let minutes = Int(seconds) / 60
+        let seconds = Int(seconds) % 60
+        return String(format: CommonStringFile.Time_formate, minutes, seconds)
+    }
+    
     func configureShimmer() {
         outerview.removeShimmer()
         datelbl.removeShimmer()
@@ -219,7 +212,6 @@ class HistoryTC: UITableViewCell {
         updateTimer?.invalidate()
         updateTimer = nil
         isPlaying = false
-
         // Reset UI
         playBtn.setImage(ImageName.playbutton, for: .normal)
         totaltime.text = "00:00 / 00:00"
@@ -229,23 +221,20 @@ class HistoryTC: UITableViewCell {
     }
     
     func updatePlayState(isPlaying: Bool, url: String?, messageId: String) {
-            self.messageId = messageId
-            
-            if isPlaying, let url = url {
-                AudioPlaybackManager.shared.play(url: url, messageId: messageId)
-                playBtn.setImage(ImageName.pausebutton, for: .normal)
-            } else {
-                AudioPlaybackManager.shared.pause()
-                playBtn.setImage(ImageName.playbutton, for: .normal)
-            }
+        self.messageId = messageId
+        if isPlaying, let url = url {
+            AudioPlaybackManager.shared.play(url: url, messageId: messageId)
+            playBtn.setImage(ImageName.pausebutton, for: .normal)
+        } else {
+            AudioPlaybackManager.shared.pause()
+            playBtn.setImage(ImageName.playbutton, for: .normal)
         }
-        
-        func stopAudioPlay_back() {
-            if let id = messageId, AudioPlaybackManager.shared.currentMessageId == id {
-                AudioPlaybackManager.shared.stop()
-            }
+    }
+    func stopAudioPlay_back() {
+        if let id = messageId, AudioPlaybackManager.shared.currentMessageId == id {
+            AudioPlaybackManager.shared.stop()
         }
-    
+    }
 }
 
 extension HistoryTC {
@@ -268,10 +257,8 @@ import AVFoundation
 
 class AudioPlaybackManager {
     static let shared = AudioPlaybackManager()
-    
     private var player: AVPlayer?
     private(set) var currentMessageId: String?
-    
     func play(url: String, messageId: String) {
         if currentMessageId != messageId {
             // New audio, reset player
@@ -280,17 +267,14 @@ class AudioPlaybackManager {
         }
         player?.play()
     }
-    
     func pause() {
         player?.pause()
     }
-    
     func stop() {
         player?.pause()
         player = nil
         currentMessageId = nil
     }
-    
     func currentTime() -> CMTime? {
         return player?.currentTime()
     }

@@ -83,6 +83,9 @@ struct MenuStringFile{
     static let  Absent_students_list   = "👨🏻‍🎓 Absent  students list"
     static let  Pin_your_location_name   = "Pin your location name"
     static let  Drop_your_distance   = "Drop your distance"
+    static let  Invalid_time_selection   = "Invalid time selection."
+    static let  You_cannot_select_a_past_time_for_today_date   = "You cannot select a past time for today's date."
+    static let  End_time_must_be_greater_than_start_time   = "End time must be greater than start time."
     
 }
 

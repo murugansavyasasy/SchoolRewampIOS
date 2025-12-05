@@ -8,8 +8,6 @@
 import Foundation
 
 class API_PARAMS_HOTCODE {
-    
-    
     static var device_type = "Iphone"
     static var Version_Code =  82
     static var staff = "staff"

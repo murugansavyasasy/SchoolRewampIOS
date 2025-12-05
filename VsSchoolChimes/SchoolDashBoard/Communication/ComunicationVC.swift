@@ -165,7 +165,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var accadimYrIDs :[Int] = []
     var accadmicDefaultYrName : String?
     var forWardVoiceDuraction : Int?
-    
+    var Defaultdurations = "00:00/00:30"
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -195,25 +195,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         informationcontent.addDoneButton()
         setInitialButtonTitles()
         StyleAndTranslater()
-       
         [voiceTitleeTxt, TxtTitle, TextMsgTittle].forEach {$0?.delegate = self}
         informationcontent.delegate = self
-        
         if emengencyCall.isOn{
             isEmergencyVoice = true
-            //            enableDisable()
         }
         else{
             isEmergencyVoice = false
-            //            enableDisable()
         }
-        
         if staff_role == "p3"{
             seduleClickView.isHidden = true
         }else{
             seduleClickView.isHidden = false
         }
-        
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
         historytable.delegate = self
@@ -236,8 +230,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     
-    
-    
     func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
         view.layer.cornerRadius = cornerRadius
         view.layer.shadowColor = shadowColor.cgColor
@@ -251,14 +243,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         AudioServicesPlaySystemSound(1004)
         let popoverVC = EmergencyInfoPopoverVCViewController()
         popoverVC.modalPresentationStyle = .popover
-        
         if let popover = popoverVC.popoverPresentationController {
             popover.sourceView = EnableCallLbl
             popover.sourceRect = EnableCallLbl.bounds
             popover.permittedArrowDirections = .up
             popover.delegate = self
         }
-        
         self.present(popoverVC, animated: true) {
             // Auto dismiss after 5 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
@@ -271,23 +261,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             staff_role == PriorityType.is_grouphead ||
             staff_role == PriorityType.is_principal || VoiceHistory != nil || TextHistory != nil{
             if isScheduleSelected{
-                
                 ViewAnimator.hideFade(EnableCallLbl)
                 ViewAnimator.hideFade(emengencyCall)
             }else{
-                
                 if staff_role == PriorityType.is_staff{
-                    
                     ViewAnimator.hideFade(EnableCallLbl)
                     ViewAnimator.hideFade(emengencyCall)
                 }else{
                     ViewAnimator.showFade(emengencyCall)
                     ViewAnimator.showFade(EnableCallLbl)
                 }
-                
             }
             staffDetails = staffDetailsCount?.first
-            
         } else {
             ViewAnimator.hideFade(EnableCallLbl)
             ViewAnimator.hideFade(emengencyCall)
@@ -295,25 +280,20 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     @IBAction func switchAction(_ sender: Any) {
-        
         if emengencyCall.isOn{
             stopRecording()
             if let url = URL(string:AudioPlayUrl ?? ""){
                 deletRecoding()
             }
             isEmergencyVoice = true
-            Timinglbl.text = "00:00/00:30"
+            Timinglbl.text = Defaultdurations
             Enabel_buble()
         }
         else{
             isEmergencyVoice = false
-            Timinglbl.text = "00:00/03:00"
+            Timinglbl.text = Defaultdurations
         }
-        
-        
     }
-    
-    
     
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
         ScheduleSelectedDate.removeAll()
@@ -323,21 +303,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             let formattedDate = dateFormatter.string(from: selectedDates[i])
             ScheduleSelectedDate.append(formattedDate)
         }
-        
         let today_date = getCurrentDateString()
-        
         guard AudioPlayUrl != "", let voiceTitle = voiceTitleeTxt.text, !voiceTitle.isEmpty else {
             alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
             return
         }
-        
         user_inputs.voice_link = AudioPlayUrl!
         user_inputs.description = voiceTitle
         user_inputs.duration = voiceRecordedDuration ?? forWardVoiceDuraction ?? 0
         user_inputs.is_schedule = isScheduleSelected
         user_inputs.is_emergency = isEmergencyVoice ?? false
         user_inputs.file_name = "sss-" + today_date + ".mp3"
-        
         // If emergency or not scheduling, send immediately
         if emengencyCall.isOn || !isScheduleSelected {
             user_inputs.schedule_date = [today_date]
@@ -346,21 +322,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             recienpient_validation(isVoice: true)
             return
         }
-        
         // --- Schedule Validation ---
         guard ScheduleSelectedDate.count != 0 else {
             alert.showAlert(title: "", message: AlertstringFile.select_date, on: self)
             return
         }
-        
         // Convert date strings
         let convertedDates = convertDateStrings(dates: ScheduleSelectedDate)
         ScheduleSelectedDate = convertedDates
         user_inputs.schedule_date = ScheduleSelectedDate
-        
         guard let fromTimeText = fromTime.titleLabel?.text,
               let toTimeText = toTime.titleLabel?.text else {
-            alert.showAlert(title: "", message: "Invalid time selection.", on: self)
+            alert.showAlert(title: "", message: MenuStringFile.Invalid_time_selection, on: self)
             return
         }
         
@@ -369,7 +342,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
               let fromDateSample = combineDateAndTime(date: sampleDate, timeString: fromTimeText),
               let toDateSample = combineDateAndTime(date: sampleDate, timeString: toTimeText),
               toDateSample > fromDateSample else {
-            alert.showAlert(title: "", message: "End time must be greater than start time.", on: self)
+            alert.showAlert(title: "", message: MenuStringFile.End_time_must_be_greater_than_start_time, on: self)
             return
         }
         
@@ -380,21 +353,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             if calendar.isDateInToday(selectedDate),
                let fromDate = combineDateAndTime(date: selectedDate, timeString: fromTimeText),
                fromDate < now {
-                alert.showAlert(title: "", message: "You cannot select a past time for today's date.", on: self)
+                alert.showAlert(title: "", message: MenuStringFile.You_cannot_select_a_past_time_for_today_date, on: self)
                 return
             }
         }
-        
         // ✅ All good — proceed
         user_inputs.start_time = fromTimeText
         user_inputs.end_time = toTimeText
         recienpient_validation(isVoice: true)
     }
-
-
+    
+    
     
     @IBAction func text_sendActionBtn(_ sender: UIButton) {
-        
         if  informationcontent.text != "" && TextMsgTittle.text != ""{
             user_inputs.description = informationcontent.text!
             user_inputs.title = TextMsgTittle.text!
@@ -407,9 +378,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     message: AlertstringFile.enter_title_description,
                     on: self)}
     }
-
+    
     func recienpient_validation(isVoice : Bool){
-        
         if(staffDetailsCount?.count ?? 0 > 1){
             if(isVoice == true){
                 if(staff_role == PriorityType.is_principal || staff_role == PriorityType
@@ -479,8 +449,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         
     }
-    
-    
     func combineDateAndTime(date: Date, timeString: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a" // match your button format (e.g. "2:30 PM")
@@ -488,7 +456,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             let calendar = Calendar.current
             let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
             let timeComponents = calendar.dateComponents([.hour, .minute], from: timeDate)
-            
             var combinedComponents = DateComponents()
             combinedComponents.year = dateComponents.year
             combinedComponents.month = dateComponents.month
@@ -500,10 +467,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         return nil
     }
-
-    
     func StyleAndTranslater() {
-        
         //MARK: Translate
         fromDateLbl.text = CommonStringFile.FromTime.translated()
         ScheduleLbl.text = CommonStringFile.Schedule.translated()
@@ -576,26 +540,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         informationcontent.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !informationcontent.text.isEmpty // Hide if text exists
     }
-   
+    
     @objc func keyboardWillShow(_ notification: Notification) {
-           guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-           guard let activeField = activeField else { return }
-           let keyboardTop = view.frame.height - keyboardFrame.height
-           let activeFieldBottom = activeField.convert(activeField.bounds, to: view).maxY
-           if activeFieldBottom > keyboardTop {
-               let offset = activeFieldBottom - keyboardTop + 16 // 16pt padding
-               UIView.animate(withDuration: 0.3) {
-                   self.view.transform = CGAffineTransform(translationX: 0, y: -offset)
-               }
-               isKeyboardVisible = true
-           }
-       }
-       @objc func keyboardWillHide(_ notification: Notification) {
-           UIView.animate(withDuration: 0.3) {
-               self.view.transform = .identity
-           }
-           isKeyboardVisible = false
-       }
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let activeField = activeField else { return }
+        let keyboardTop = view.frame.height - keyboardFrame.height
+        let activeFieldBottom = activeField.convert(activeField.bounds, to: view).maxY
+        if activeFieldBottom > keyboardTop {
+            let offset = activeFieldBottom - keyboardTop + 16 // 16pt padding
+            UIView.animate(withDuration: 0.3) {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -offset)
+            }
+            isKeyboardVisible = true
+        }
+    }
+    @objc func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.transform = .identity
+        }
+        isKeyboardVisible = false
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty
@@ -763,9 +727,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if FileManager.default.fileExists(atPath: url.path) {
             do {
                 try FileManager.default.removeItem(at: url)
-                print("✅ File deleted successfully")
             } catch {
-                print("❌ Error deleting file: \(error.localizedDescription)")
             }
         } else {
             print("⚠️ File does not exist at path: \(url.path)")
@@ -781,7 +743,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         AudioPlayUrl = filePath.absoluteString
         return filePath
     }
-
+    
     //MARK: Setup Audio Session
     func setupAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
@@ -805,9 +767,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                     AVSampleRateKey: 44100,
                     AVNumberOfChannelsKey: 2,
-                    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-                ]
-                
+                    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
                 let fileURL = getFileUrl()
                 audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
                 audioRecorder?.delegate = self
@@ -842,8 +802,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                             .showAlert(
                                 title: AlertstringFile.Alert_title,
                                 message: AlertstringFile.Audio_file_should80,
-                                on: self
-                            )
+                                on: self)
                         return
                     }
                 }else{
@@ -900,7 +859,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let asset = AVAsset(url: fileURL)
         let duration = asset.duration
         let durationInSeconds = CMTimeGetSeconds(duration)
-        
         guard durationInSeconds.isFinite else { return nil }
         let minutes = Int(durationInSeconds) / 60
         let seconds = Int(durationInSeconds) % 60
@@ -995,26 +953,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 result : Result<TextDetailsResponse,
                 Error>
             ) in switch result {
-                case.success(let succesmessage) :
-                    if succesmessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            no_recordLbl.isHidden = true
-                            TextHistory = succesmessage.data
-                            historytable.reloadData()
-                        }
-                    }else{
-                        DispatchQueue.main.async { [self] in
-                            TextHistory = []
-                            no_recordLbl.isHidden = false
-                            no_recordLbl.text = succesmessage.message
-                            historytable.reloadData()
-                        }
+            case.success(let succesmessage) :
+                if succesmessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        no_recordLbl.isHidden = true
+                        TextHistory = succesmessage.data
+                        historytable.reloadData()
                     }
-                case.failure(let error) :
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
+                }else{
+                    DispatchQueue.main.async { [self] in
+                        TextHistory = []
+                        no_recordLbl.isHidden = false
+                        no_recordLbl.text = succesmessage.message
+                        historytable.reloadData()
                     }
                 }
+            case.failure(let error) :
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
             }
     }
     //MARK: DELETE RECORDING
@@ -1029,9 +987,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         AudioPlayUrl = ""
         playerheight.constant = 0
         if emengencyCall.isOn{
-            Timinglbl.text = "00:00/00:30"
+            Timinglbl.text = Defaultdurations
         }else{
-            Timinglbl.text = "00:00/03:00"
+            Timinglbl.text = Defaultdurations
         }
         moveTextmessage.isHidden = false
         voiceTitleeTxt.text = ""
@@ -1074,7 +1032,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let durationString =  voiceTiming.text ?? ""
                 let totalSeconds = convertTimeStringToSeconds(durationString)
                 voiceRecordedDuration = totalSeconds
-               
+                
             }
             // Set message send time
             let formatter = DateFormatter()
@@ -1311,9 +1269,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func doneSelection(_ sender: Any) {
-       ViewAnimator.animateConstraintChange { [self] in
-                reloadCollectionAndUpdateHeight()
-            }
+        ViewAnimator.animateConstraintChange { [self] in
+            reloadCollectionAndUpdateHeight()
+        }
         dateBtn.isSelected = false
         ViewAnimator.hideFade(calanderOuter)
     }
@@ -1356,9 +1314,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
-                for i in 0..<selectedDates.count {
-                            DateSelection.deselect(selectedDates[i])
-                        }
+        for i in 0..<selectedDates.count {
+            DateSelection.deselect(selectedDates[i])
+        }
         DateSelection.reloadData()
         playbackOff()
         selectedDates.removeAll()
@@ -1496,68 +1454,68 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         durations: Int,
         url: String){
             
-        emengencyCall.isOn = false
-        if isforward {
-            recordImgHeightCon.constant = 0
-            waveView.progress = 0
-            btnplay.setImage(ImageName.playbutton, for: .normal)
-            Timinglbl.isHidden = true
-            addfile.isHidden = true
-            AudioPlayUrl = url
-            voiceTileTextFldCount.isHidden = true
-            let formatted = formatDuration(durations)
-            voiceTiming.text = "00:00 / \(formatted)"
-            AudioPlayUrl = voiceUrl
-            forWardVoiceDuraction = durations
+            emengencyCall.isOn = false
+            if isforward {
+                recordImgHeightCon.constant = 0
+                waveView.progress = 0
+                btnplay.setImage(ImageName.playbutton, for: .normal)
+                Timinglbl.isHidden = true
+                addfile.isHidden = true
+                AudioPlayUrl = url
+                voiceTileTextFldCount.isHidden = true
+                let formatted = formatDuration(durations)
+                voiceTiming.text = "00:00 / \(formatted)"
+                AudioPlayUrl = voiceUrl
+                forWardVoiceDuraction = durations
+                ViewAnimator.animateConstraintChange { [self] in
+                    playerheight.constant = 60
+                    self.view.layoutIfNeeded()
+                }
+                ViewAnimator.showFade(voiceStackview)
+                ViewAnimator.showFade(dltbtn)
+                recoderbtn.isEnabled = false
+                if let audioUrl = URL(string: voiceUrl) {
+                    playerItem = AVPlayerItem(url: audioUrl)
+                    player = AVPlayer(playerItem: playerItem)
+                }
+            } else {
+                recordImgHeightCon.constant = 80
+                Timinglbl.isHidden = false
+                recrdimg.image = ImageName.mic1
+                audioRecorder?.stop()
+                isRecording = false
+                recordingTimer?.invalidate()
+                recordingTimer = nil
+                deletRecoding()
+                voiceTiming.text = "00:00 / 03:00"
+            }
+            
+            isScheduleSelected = true
+            updateEmergencyCallVisibility(staff_role)
+            scheduleBtn.backgroundColor = backgroundcolor
+            textClickView.backgroundColor = .white
+            voiceClickView.backgroundColor = .white
+            seduleClickView.backgroundColor = tapColor
+            showVoiceMessageView()
+            ViewAnimator.showFade(schedulCallView)
+            ViewAnimator.hideFade(textmessageview)
             ViewAnimator.animateConstraintChange { [self] in
-                playerheight.constant = 60
+                timePickerHeight.constant = 141
                 self.view.layoutIfNeeded()
             }
-            ViewAnimator.showFade(voiceStackview)
-            ViewAnimator.showFade(dltbtn)
-            recoderbtn.isEnabled = false
-            if let audioUrl = URL(string: voiceUrl) {
-                playerItem = AVPlayerItem(url: audioUrl)
-                player = AVPlayer(playerItem: playerItem)
-            }
-        } else {
-            recordImgHeightCon.constant = 80
-            Timinglbl.isHidden = false
-            recrdimg.image = ImageName.mic1
-            audioRecorder?.stop()
-            isRecording = false
-            recordingTimer?.invalidate()
-            recordingTimer = nil
-            deletRecoding()
-            voiceTiming.text = "00:00 / 03:00"
+            textBtn.backgroundColor = .white
+            voiceBtn.backgroundColor = .white
+            tittlemessage.text = CommonStringFile.ScheduleCall.translated()
+            clickVoiceLbl.textColor = .black
+            clickTextView.textColor = .black
+            clickSchedule.textColor = .white
+            voiceBtn.tintColor = .white
+            textBtn.tintColor = .black
+            scheduleBtn.tintColor = .white
+            voiceBtn.tintColor = .black
+            ViewAnimator.hideFade(emengencyCall)
+            ViewAnimator.hideFade(EnableCallLbl)
         }
-        
-        isScheduleSelected = true
-        updateEmergencyCallVisibility(staff_role)
-        scheduleBtn.backgroundColor = backgroundcolor
-        textClickView.backgroundColor = .white
-        voiceClickView.backgroundColor = .white
-        seduleClickView.backgroundColor = tapColor
-        showVoiceMessageView()
-        ViewAnimator.showFade(schedulCallView)
-        ViewAnimator.hideFade(textmessageview)
-        ViewAnimator.animateConstraintChange { [self] in
-            timePickerHeight.constant = 141
-            self.view.layoutIfNeeded()
-        }
-        textBtn.backgroundColor = .white
-        voiceBtn.backgroundColor = .white
-        tittlemessage.text = CommonStringFile.ScheduleCall.translated()
-        clickVoiceLbl.textColor = .black
-        clickTextView.textColor = .black
-        clickSchedule.textColor = .white
-        voiceBtn.tintColor = .white
-        textBtn.tintColor = .black
-        scheduleBtn.tintColor = .white
-        voiceBtn.tintColor = .black
-        ViewAnimator.hideFade(emengencyCall)
-        ViewAnimator.hideFade(EnableCallLbl)
-    }
     
     // Record Button Action
     @IBAction func recordButtonTapped(_ sender: UIButton) {
@@ -1879,33 +1837,13 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         DateSelection.deselect(dateToRemove)
         DateSelection.reloadData()
         reloadCollectionAndUpdateHeight()
-//        // Update height based on count
-//        var newHeight: CGFloat = 0
-//        if selectedDates.count == 0 {
-//            newHeight = 0
-//        } else if selectedDates.count <= 3 {
-//            newHeight = 64
-//        } else if selectedDates.count <= 6{
-//            newHeight = 128
-//        }else{
-//            newHeight = 200
-//        }
-//        
-//        // Animate constraint change
-//        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-////            self.dateSelectedViewHeight.constant = self.dateCV.collectionViewLayout.collectionViewContentSize.height
-//            self.dateSelectedViewHeight.constant = newHeight
-//            self.view.layoutIfNeeded()
-//        }
-//        
-//        dateCV.reloadData()
     }
     
     
     func reloadCollectionAndUpdateHeight() {
         dateCV.reloadData()
         dateCV.layoutIfNeeded()
-       
+        
         DispatchQueue.main.async {
             let contentHeight = self.dateCV.collectionViewLayout.collectionViewContentSize.height
             self.dateSelectedViewHeight.constant = contentHeight
@@ -1978,7 +1916,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func convertDateStrings(dates: [String]) -> [String] {
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let localeID = normalizedLocaleIdentifier(for: savedCode)
-
+        
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd MMM yyyy"
         inputFormatter.locale = Locale(identifier: localeID)

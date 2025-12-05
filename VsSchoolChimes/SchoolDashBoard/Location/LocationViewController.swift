@@ -338,7 +338,9 @@ extension LocationViewController:CLLocationManagerDelegate{
         if let clError = error as? CLError {
             switch clError.code {
             case .denied:
+                ""
             case .locationUnknown:
+                ""
             default:
                 print("Location Manager error: \(clError.localizedDescription)")
             }

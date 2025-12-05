@@ -55,10 +55,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     let menuName = MenuStringFile()
     var classId:String?
     var sectionId:String?
-   // var selection:String?
+    // var selection:String?
     var showSearch:Bool = false
     var academicId = 0
     var noRecord:Bool = false
+    var Allstudents  = "All students"
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -66,10 +67,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         searchBar.applyRightTxt()
         getacadmicYr()
         uiConfic()
-        
         let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)
         FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
-        
         if #available(iOS 14.0, *) {
             FilterCV.dataSource = self
             FilterCV.delegate = self
@@ -79,12 +78,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             searchBar.delegate = self
         }
     }
-    
-    
-    
     func uiConfic(){
         reportTable.register(UINib(nibName: CellConfingName.ReportStudentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.ReportStudentTVC)
-        
         GenderBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         GenderBtn.layer.cornerRadius = 10
         sectionView.layer.cornerRadius = 10
@@ -110,7 +105,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         selectedType.backgroundColor = .white
         classView.layer.shadowOpacity = 0.5
         classView.layer.shadowRadius = 4
-//        searchHidBtn.isHidden = true
         //MARK: Label Font
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -135,7 +129,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             nodataLbl.isHidden = true
             filterStudent = studentList
             reportTable.reloadData()
-           
+            
             
         }
     }
@@ -149,58 +143,45 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         nodataLbl.isHidden = true
         filterStudent = studentList
         reportTable.reloadData()
-//        searchHidBtn.isHidden = !showSearch
     }
     
     @IBAction func sortArray(_ sender: UISegmentedControl) {
         guard let sortedStudent = sortedStudent else { return }
-        
         switch sender.selectedSegmentIndex {
         case 0:
             // Sort by name ascending (A-Z)
             filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
-            
         case 1:
             // Sort by name descending (Z-A)
             filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedDescending }
-            
         case 2:
             // Sort by admission_no ascending
             filterStudent = sortedStudent.sorted { $0.admission_no < $1.admission_no }
-            
         case 3:
             // Sort by admission_no descending
             filterStudent = sortedStudent.sorted { $0.admission_no > $1.admission_no }
-            
         default:
             // Default fallback: sort by name descending
             filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedDescending }
         }
-        
         reportTable.reloadData()
     }
     
     
     @IBAction func filterStudent(_ sender: UIButton) {
-        
         fillterDropdown.dataSource = Filters
         fillterDropdown.anchorView = filterView
         fillterDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         fillterDropdown.direction = .bottom
-        
         fillterDropdown.show()
         fillterDropdown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
-            
             if !noRecord  {
                 switch index{
                 case 0:
-                    
                     getStanderd.isHidden = true
                     getStudentAPI()
-                  
                 case 1:
-                    
                     if sectionArray.first != "All" {
                         sectionArray.insert("All", at: 0)
                     }
@@ -209,21 +190,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     sectionSelection.isHidden = false
                     classId = standardDetails?.first?.id
                     getStudentAPI(class_id:classId)
-                    
                 default:
                     getStanderd.isHidden = true
                     getStudentAPI()
                 }
-                
                 reportTable.reloadData()
-                //self.filterBtn.setTitle(item.translated(), for: .normal)
             }
-            }
-            
+        }
+        
     }
     @IBAction func selectCatagory(_ sender: UIButton) {
         AcodemicDropdown.dataSource = accadimYr
-        
         AcodemicDropdown.anchorView = selectedType
         AcodemicDropdown.bottomOffset = CGPoint(x: 0, y: selectedType.bounds.height)
         AcodemicDropdown.direction = .bottom
@@ -245,7 +222,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func section(_ sender: UIButton) {
         sectionDropdown.dataSource = sectionArray
-        
         sectionDropdown.anchorView = sectionView
         sectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
         sectionDropdown.direction = .bottom
@@ -263,50 +239,40 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     @IBAction func classSelection(_ sender: UIButton) {
-        // Configuring the dropdown
         classDropdown.dataSource = standerdArray
         classDropdown.anchorView = classView
         classDropdown.bottomOffset = CGPoint(x: 0, y: classView.bounds.height)
         classDropdown.direction = .bottom
         classDropdown.width = classView.bounds.width
-        // Show the dropdown
         classDropdown.show()
         classDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             sectionsDetails = standardDetails?[index].sections
-            
             sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
             if sectionArray.first != "All" {
-                   sectionArray.insert("All", at: 0)
-               }
+                sectionArray.insert("All", at: 0)
+            }
             self.clsBtn.setTitle(item.translated(), for: .normal)
             self.sectionBtn.setTitle(sectionArray.first, for: .normal)
             classId = standardDetails?[index].id ?? ""
             sectionId = standardDetails?[index].sections?.first?.id ?? ""
-//            if selection == CommonStringFile.getStanderd_Section.translated(){
-//                getStudentAPI(class_id:classId,section_id:sectionId)
-//            }else{
-                getStudentAPI(class_id:standardDetails?[index].id ?? "")
-           //}
+            getStudentAPI(class_id:standardDetails?[index].id ?? "")
         }
     }
     
     @IBAction func GenderSelection(_ sender: UIButton) {
-        
         GenderDropdown.dataSource = Gender
-           GenderDropdown.anchorView = GenderBtn
-           GenderDropdown.bottomOffset = CGPoint(x: 0, y: GenderBtn.bounds.height)
-           GenderDropdown.width = GenderBtn.bounds.width
-
-           GenderDropdown.selectionAction = { [weak self] (index: Int, selectedGender: String) in
-               guard let self = self else { return }
-               searchBar.text = ""
-               self.GenderBtn.setTitle(selectedGender, for: .normal)
-               self.filterStudents(by: selectedGender)
-               self.reportTable.reloadData()
-           }
-
-           GenderDropdown.show()
+        GenderDropdown.anchorView = GenderBtn
+        GenderDropdown.bottomOffset = CGPoint(x: 0, y: GenderBtn.bounds.height)
+        GenderDropdown.width = GenderBtn.bounds.width
+        GenderDropdown.selectionAction = { [weak self] (index: Int, selectedGender: String) in
+            guard let self = self else { return }
+            searchBar.text = ""
+            self.GenderBtn.setTitle(selectedGender, for: .normal)
+            self.filterStudents(by: selectedGender)
+            self.reportTable.reloadData()
+        }
+        GenderDropdown.show()
     }
     
     private func filterStudents(by gender: String) {
@@ -314,42 +280,31 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             filterStudent = []
             return
         }
-
         switch gender.lowercased() {
         case "male":
             filterStudent = students.filter { $0.gender.lowercased() == "male" }
-
         case "female":
             filterStudent = students.filter { $0.gender.lowercased() == "female" }
-
         case "others":
             filterStudent = students.filter {
                 let g = $0.gender.lowercased()
-                return g != "male" && g != "female"
-            }
-
+                return g != "male" && g != "female"}
         case "all":
             filterStudent = students
-
         default:
             filterStudent = students
         }
-        
         selectedIndex = IndexPath(item: 0, section: 0)
         FilterCV.reloadData()
         self.sortedStudent = self.filterStudent?.sorted {
             $0.name.localizedCompare($1.name) == .orderedAscending
         }
-        
         self.filterStudent = self.sortedStudent
         nodataImg.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.text = "No data found"
-
         print("Filtered student count: \(filterStudent?.count ?? 0)")
     }
-
-    
     func getStandardsAPI(academic_year_id:Int){
         standerdArray.removeAll()
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
@@ -367,15 +322,12 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         standerdArray = standardDetails?.compactMap { $0.name } ?? []
                         sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
                         clsBtn.setTitle(standardDetails?.first?.name, for: .normal)
-                        //sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
                         classId = standardDetails?.first?.id
                         sectionId = sectionsDetails?.first?.id
-//                        classId = ""
-//                        sectionId = ""
                         searchBtn.isHidden = false
                         getStanderd.isHidden = true
                         noRecord = false
-                        self.filterBtn.setTitle("All students", for: .normal)
+                        self.filterBtn.setTitle(Allstudents, for: .normal)
                         getStudentAPI()
                     }
                 }else{
@@ -385,7 +337,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         studentList?.removeAll()
                         filterStudent?.removeAll()
                         getStanderd.isHidden = true
-                        self.filterBtn.setTitle("All students", for: .normal)
+                        self.filterBtn.setTitle(Allstudents, for: .normal)
                         nodataImg.isHidden = false
                         searchBtn.isHidden = true
                         nodataLbl.isHidden = false
@@ -393,11 +345,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         FilterCV.isHidden = true
                         GenderBtn.isHidden = true
                         noRecord = true
-//                        Filters.removeLast()
-//                        Filters.removeAll()
                         FilterCV.reloadData()
                         reportTable.reloadData()
-                       // getStudentAPI()
                     }
                 }
             case .failure(let error):
@@ -434,25 +383,20 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     if response.status == true {
                         self.studentList = response.data
                         self.filterStudent = self.studentList
-                      
                         if let gender = self.GenderDropdown.selectedItem {
                             self.filterStudents(by: gender)
                         }else {
                             self.filterStudents(by: self.Gender.first ?? "All")
                         }
-                        
                         self.sortedStudent = self.filterStudent?.sorted {
                             $0.name.localizedCompare($1.name) == .orderedAscending
                         }
-                        
                         self.filterStudent = self.sortedStudent
-                        
                         self.selectedIndex = IndexPath(item: 0, section: 0)
                         self.nodataImg.isHidden = !(self.filterStudent?.isEmpty ?? false)
                         self.nodataLbl.isHidden = !(self.filterStudent?.isEmpty ?? false)
                         self.FilterCV.isHidden = (self.filterStudent?.isEmpty ?? false)
                         self.GenderBtn.isHidden = (self.filterStudent?.isEmpty ?? false)
-                        //self.reportSegment.isHidden = false
                         self.searchBtn.isHidden = false
                         self.FilterCV.reloadData()
                     } else {
@@ -466,7 +410,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.FilterCV.isHidden = true
                         self.GenderBtn.isHidden = true
                         self.searchBtn.isHidden = true
-                        //                    self.reportSegment.isHidden = true
                     }
                     self.reportTable.reloadData()
                     
@@ -501,7 +444,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                                 if localData.accidamic_year_data?
                                     .data?[i].current_academic_year ?? false == true{
                                     selectedType.setTitle((localData.accidamic_year_data?
-                                    .data?[i].year ?? ""), for: .normal)
+                                        .data?[i].year ?? ""), for: .normal)
                                     academicId = localData.accidamic_year_data?
                                         .data?[i].id ?? 0
                                     getStandardsAPI(academic_year_id: localData.accidamic_year_data?
@@ -523,23 +466,18 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = reportTable.dequeueReusableCell(withIdentifier: CellConfingName.ReportStudentTVC, for: indexPath) as! ReportStudentTVC 
+        let cell = reportTable.dequeueReusableCell(withIdentifier: CellConfingName.ReportStudentTVC, for: indexPath) as! ReportStudentTVC
         cell.smsBtn.tag = indexPath.row
         cell.mobleNo.tag = indexPath.row
         cell.emailBtn.tag = indexPath.row
-        
         if let studentDetail = filterStudent?[indexPath.row]{
-            
             let trimmedMobile = studentDetail.primary_mobile?.trimmingCharacters(in: .whitespacesAndNewlines)
             cell.CallBtn.isHidden = trimmedMobile?.isEmpty ?? true
             cell.SmsNewBtn.isHidden = trimmedMobile?.isEmpty ?? true
-
             let trimmedEmail = (studentDetail.email ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
             cell.EmailNewBtn.isHidden = trimmedEmail.isEmpty
-
             cell.smsNumber = studentDetail.primary_mobile ?? ""
             cell.Email = studentDetail.email ?? ""
-            
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.rollNo.text = studentDetail.roll_no
             cell.admissionLbl.text = studentDetail.admission_no
@@ -574,14 +512,9 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
-        
         cell.FilterLbl.text = Sorting[indexPath.item]
         let isSelected = indexPath == selectedIndex
-        
         cell.cellView.backgroundColor = isSelected ? UIColor.countryClr  : UIColor.systemGray5
-        //        cell.cellView.layer.cornerRadius = 12
-        //        cell.cellView.layer.borderWidth = isSelected ? 1 : 0
-        //        cell.cellView.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.clear.cgColor
         cell.cellView.layer.masksToBounds = false
         
         // Shadow settings
@@ -603,45 +536,45 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         guard let sortedStudent = filterStudent else { return }
         
         switch selectedFilter {
-            case Sorting[0]:   // Name A-Z
-                filterStudent = sortedStudent.sorted {
-                    $0.name.localizedCompare($1.name) == .orderedAscending
-                }
-                
-            case Sorting[1]:   // Name Z-A
-                filterStudent = sortedStudent.sorted {
-                    $0.name.localizedCompare($1.name) == .orderedDescending
-                }
-                
-            case Sorting[2]:   // Roll no ascending
-                filterStudent = sortedStudent.sorted {
-                    $0.roll_no < $1.roll_no
-                    
-                }
-                
-            case Sorting[3]:   // Roll no descending
-                filterStudent = sortedStudent.sorted {
-                    $0.roll_no > $1.roll_no
-                }
-
-            case Sorting[4]:   // Admission no ascending
-                filterStudent = sortedStudent.sorted {
-                    $0.admission_no.compare($1.admission_no,
-                                             options: [.numeric, .caseInsensitive]) == .orderedAscending
-                }
-
-            case Sorting[5]:   // Admission no descending
-                filterStudent = sortedStudent.sorted {
-                    $0.admission_no.compare($1.admission_no,
-                                             options: [.numeric, .caseInsensitive]) == .orderedDescending
-                }
-
-            default:
-                filterStudent = sortedStudent
+        case Sorting[0]:   // Name A-Z
+            filterStudent = sortedStudent.sorted {
+                $0.name.localizedCompare($1.name) == .orderedAscending
             }
             
-            FilterCV.reloadData()
-            reportTable.reloadData()
+        case Sorting[1]:   // Name Z-A
+            filterStudent = sortedStudent.sorted {
+                $0.name.localizedCompare($1.name) == .orderedDescending
+            }
+            
+        case Sorting[2]:   // Roll no ascending
+            filterStudent = sortedStudent.sorted {
+                $0.roll_no < $1.roll_no
+                
+            }
+            
+        case Sorting[3]:   // Roll no descending
+            filterStudent = sortedStudent.sorted {
+                $0.roll_no > $1.roll_no
+            }
+            
+        case Sorting[4]:   // Admission no ascending
+            filterStudent = sortedStudent.sorted {
+                $0.admission_no.compare($1.admission_no,
+                                        options: [.numeric, .caseInsensitive]) == .orderedAscending
+            }
+            
+        case Sorting[5]:   // Admission no descending
+            filterStudent = sortedStudent.sorted {
+                $0.admission_no.compare($1.admission_no,
+                                        options: [.numeric, .caseInsensitive]) == .orderedDescending
+            }
+            
+        default:
+            filterStudent = sortedStudent
+        }
+        
+        FilterCV.reloadData()
+        reportTable.reloadData()
     }
     
     
