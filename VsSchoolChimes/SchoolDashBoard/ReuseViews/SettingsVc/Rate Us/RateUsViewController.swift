@@ -9,8 +9,9 @@ import StoreKit
 
 protocol RatingDelegate: AnyObject {
     func rating(_ ratingcount: Int)
-    func Submit(_ category: Set<String>, suggessions: String)
+    func Submit(_ category: CategoriesSection, suggessions: String)
 }
+
 
 class RateUsViewController: UIViewController {
     
@@ -77,6 +78,7 @@ class RateUsViewController: UIViewController {
 
 // MARK: - Rating Delegate
 extension RateUsViewController: RatingDelegate {
+    
     func rating(_ ratingcount: Int) {
         selectedRating = ratingcount
         isSelected = ratingcount > 0
@@ -84,7 +86,10 @@ extension RateUsViewController: RatingDelegate {
         delegate?.viewAttachment(sender: UIButton())
     }
     
-    func Submit(_ category: Set<String>, suggessions: String) {
+    func Submit(_ category: CategoriesSection, suggessions: String) {
+        if let index = categorySections?.firstIndex(where: { $0.rating == category.rating }) {
+            categorySections?[index] = category
+        }
         submit = true
         isSelected = false
         tableview.reloadData()
@@ -131,6 +136,7 @@ extension RateUsViewController: RatingDelegate {
             }
         }
     }
+
 }
 
 
@@ -139,22 +145,25 @@ extension RateUsViewController {
     
     func saveRatingToBackend(rating: Int, description: String?) {
         let mobile = UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
-        let filtered = categorySections?.filter { $0.rating == selectedRating }
-        let categories = filtered?
-            .first?
-            .category?
-            .filter { $0.selected == true }
-            .compactMap { item in
-                return [
-                    "name": item.name ?? "",
-                    "selected": item.selected ?? false
-                ]
-            }
+        
+        let formattedCategories = categorySections?.map { section in
+            return [
+                "name": section.name ?? "",
+                "rating": section.rating ?? 0,
+                "category": section.category?.map { cat in
+                    return [
+                        "name": cat.name ?? "",
+                        "selected": cat.selected ?? false
+                    ]
+                } ?? []
+            ] as [String : Any]
+        }
 
         let params: [String: Any] = [
             "mobile_number": mobile,
             "rating": rating,
-            "description": description ?? ""
+            "description": description ?? "",
+            "categories":formattedCategories ?? []
         ]
         
         APIService.shared.makeApi(
@@ -222,7 +231,7 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.ratingDelegate = self
             cell.suggestContetTxtView.text = descriptionContent
             let filtered = categorySections?.filter { $0.rating == selectedRating }
-            cell.configure(names: filtered?.first)
+            cell.configure(names: filtered?.first, rating: selectedRating)
             return cell
             
         default:

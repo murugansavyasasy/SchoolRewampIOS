@@ -103,7 +103,8 @@ class RippleRingView: UIView {
 
 // MARK: - SplashVC
 @available(iOS 14.0, *)
-class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
+class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewAttachments {
+    
     
     // MARK: - IBOutlets
     @IBOutlet weak var gradientView: GradientView!
@@ -125,7 +126,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
     private var isAnimating = true
     private var dotAnimationTimers: [Timer] = []
     private var overlayView: UIView?
-    
+    private var popoverOverlayView: UIView?
     private var countryId: Int?
     private var versionData: VersionData?
     
@@ -605,13 +606,11 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
                         }
-                       
-
-                        if self.versionData?.update_available == true {
-                            self.showUpdatePopup()
-                        } else {
-                            self.appFlowChecking()
-                        }
+                            if self.versionData?.update_available == true {
+                                self.showUpdatePopup()
+                            } else {
+                                self.appFlowChecking()
+                            }
                     } else {
                         self.appFlowChecking()
                     }
@@ -654,8 +653,12 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
 //                        }
                         return
                     }
-                    UserDefaultFileManager.saveUserDetails(data: userData)
-                    self.navigateBasedOnUserRole(data: userData)
+                    if self.versionData?.ratus ?? true {
+                        self.presentPopover()
+                    }else{
+                        UserDefaultFileManager.saveUserDetails(data: userData)
+                        self.navigateBasedOnUserRole(data: userData)
+                    }
                 case .failure(let error):
                     print("Validation error: \(error.localizedDescription)")
                     self.navigateToLogin()
@@ -783,11 +786,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
         present(alert, animated: true)
     }
     
-    // MARK: - UIPopoverPresentationControllerDelegate
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-    
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return false
     }
@@ -866,5 +864,118 @@ class GradientView: UIView {
         gradientLayer?.cornerRadius = 10
         self.layer.cornerRadius = 10
         self.clipsToBounds = true
+    }
+}
+@available(iOS 14.0, *)
+extension SplashVC {
+    func viewAttachment(sender: UIButton) {
+        updatePopoverHeight()
+    }
+    
+    func dismiss(_: Bool) {
+        versionData?.ratus = false
+        removePopoverOverlay()
+        validateUser()
+    }
+    private func presentPopover() {
+        let popoverVC = RateUsViewController()
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.delegate = self
+        popoverVC.loadViewIfNeeded()
+        popoverVC.view.layoutIfNeeded()
+        
+        let scrollContentHeight = popoverVC.tableview.contentSize.height
+        let paddingX: CGFloat = 20
+        let width = view.frame.width - (paddingX * 2)
+        let height = min(scrollContentHeight, view.frame.height)
+        
+        popoverVC.preferredContentSize = CGSize(width: width, height: height)
+        
+        let originX = (view.frame.width - width) / 2
+        let originY = (view.frame.height - height) / 2
+        let sourceRect = CGRect(x: originX, y: originY, width: width, height: height)
+        
+        addPopoverOverlay()
+        
+        if let popover = popoverVC.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.backgroundColor = .white
+            popover.sourceRect = sourceRect
+            popover.permittedArrowDirections = []
+            popover.delegate = self
+        }
+        
+        present(popoverVC, animated: true)
+    }
+    private func addPopoverOverlay() {
+        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+
+        let overlay = UIView(frame: window.bounds)
+        overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlay.alpha = 0
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopoverOverlay))
+        overlay.addGestureRecognizer(tapGesture)
+
+        window.addSubview(overlay)
+        popoverOverlayView = overlay
+
+        UIView.animate(withDuration: 0.2) {
+            overlay.alpha = 1
+        }
+    }
+    func updatePopoverHeight() {
+        guard let presentedVC = presentedViewController as? RateUsViewController else { return }
+
+        presentedVC.loadViewIfNeeded()
+        presentedVC.view.layoutIfNeeded()
+
+        let scrollContentHeight = presentedVC.tableview.contentSize.height
+        let paddingX: CGFloat = 20
+        let width = view.frame.width - (paddingX * 2)
+        let height = min(scrollContentHeight, view.frame.height * 0.85)
+
+        presentedVC.preferredContentSize = CGSize(width: width, height: height)
+
+        if let popover = presentedVC.popoverPresentationController {
+            popover.sourceRect = CGRect(
+                x: (view.frame.width - width) / 2,
+                y: (view.frame.height - height) / 2,
+                width: width,
+                height: height
+            )
+        }
+    }
+    @objc private func dismissPopoverOverlay() {
+        guard let popoverVC = presentedViewController else { return }
+        popoverVC.dismiss(animated: true) {
+            self.validateUser()
+        }
+        removePopoverOverlay()
+    }
+
+
+    private func removePopoverOverlay() {
+        guard let overlay = popoverOverlayView else { return }
+
+        UIView.animate(withDuration: 0.2, animations: {
+            overlay.alpha = 0
+        }, completion: { _ in
+            overlay.removeFromSuperview()
+            self.popoverOverlayView = nil
+        })
+    }
+}
+
+@available(iOS 14.0, *)
+extension SplashVC: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        removePopoverOverlay()
+        self.validateUser()
     }
 }

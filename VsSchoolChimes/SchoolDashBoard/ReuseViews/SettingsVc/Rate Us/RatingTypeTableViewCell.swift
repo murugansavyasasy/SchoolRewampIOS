@@ -21,7 +21,7 @@ class RatingTypeTableViewCell: UITableViewCell,
     
     var ratingDelegate: RatingDelegate?
     var names: [Categories] = []
-    var SelectedCategory = Set<String>()
+    var SelectedCategory : CategoriesSection?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,7 +59,8 @@ class RatingTypeTableViewCell: UITableViewCell,
     }
     
     // MARK: - Configure
-    func configure(names: CategoriesSection?) {
+    func configure(names: CategoriesSection?,rating:Int) {
+        SelectedCategory = names
         self.names = names?.category ?? []
         AnySuggestionsLbl.text = names?.name ?? ""
         AnySuggestionsLbl.isHidden = self.names.isEmpty
@@ -96,17 +97,18 @@ class RatingTypeTableViewCell: UITableViewCell,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         let newValue = !(names[indexPath.item].selected ?? false)
         names[indexPath.item].selected = newValue
-        if newValue == true {
-            SelectedCategory.insert(names[indexPath.item].name ?? "")
-        } else {
-            SelectedCategory.remove(names[indexPath.item].name ?? "")
+        if SelectedCategory?.category != nil {
+            SelectedCategory?.category?[indexPath.item].selected = newValue
         }
         names.sort { ($0.selected ?? false) && !($1.selected ?? false) }
-        
+        SelectedCategory?.category = names
+
         collectionView.reloadData()
     }
+
     
     
     // MARK: - Update Height
@@ -122,7 +124,9 @@ class RatingTypeTableViewCell: UITableViewCell,
     }
     // MARK: - Submit
     @IBAction func submit(_ sender: Any) {
-        ratingDelegate?.Submit(SelectedCategory, suggessions: suggestContetTxtView.text)
+        if let ctegory = SelectedCategory{
+            ratingDelegate?.Submit(ctegory, suggessions: suggestContetTxtView.text)
+        }
     }
 }
 
