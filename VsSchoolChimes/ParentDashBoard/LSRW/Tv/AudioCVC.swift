@@ -7,7 +7,6 @@
 
 import UIKit
 
-// MARK: - Protocol for managing audio playback across cells
 @available(iOS 15.0, *)
 protocol AudioPlaybackDelegate: AnyObject {
     func audioCell(_ cell: AudioCVC, willStartPlayingAtIndex index: Int)
@@ -192,8 +191,6 @@ class AudioCVC: UICollectionViewCell {
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
-        
-        // Notify delegate
         audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
     }
     
