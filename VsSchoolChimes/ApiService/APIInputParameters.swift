@@ -93,6 +93,13 @@ class send_voicemeassageStringFile {
   
 }
 
+class homeWorkViewStringFile {
+    static let id = "id"
+    static let section_id = "section_id"
+    static let date = "date"
+    static let academic_year_id = "academic_year_id"
+}
+
 class ReadStatusUpdateStringFile {
     
     static var type = "type"
@@ -182,7 +189,6 @@ class punchHistoryStringFile {
 }
 
 class StaffAttendanceReportStringFile {
-    
     static var attendance_dt = "attendance_dt"
 }
 
@@ -370,4 +376,13 @@ class QuizKeys {
 
     // Bank keys
     static let subject_id = "subject_id"
+}
+
+class ChatAPIKeys {
+    static let staffId = "staff_id"
+    static let subjectId = "subject_id"
+    static let question = "question"
+    static let isClassTeacher = "is_class_teacher"
+    static let filePath = "file_path"
+    static let offset = "offset"
 }

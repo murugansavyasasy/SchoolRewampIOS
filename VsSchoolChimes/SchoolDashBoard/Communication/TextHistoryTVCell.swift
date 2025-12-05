@@ -22,7 +22,6 @@ class TextHistoryTVCell: UITableViewCell {
     @IBOutlet weak var sendBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var DateLabel: ShimmerLabel!
     @IBOutlet weak var MessageTitle: ShimmerLabel!
-    
     @IBOutlet weak var descriptContent: ShimmerLabel!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
@@ -30,13 +29,10 @@ class TextHistoryTVCell: UITableViewCell {
     var ExpandDelegate: TextExpandCellDelegate?
     private var isExpanded = false
     private var fullText: String = ""
-    
     var descriptiontext = ""
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
         outerview.layer.shadowColor = UIColor.black.cgColor
         outerview.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerview.layer.shadowRadius = 5
@@ -56,19 +52,12 @@ class TextHistoryTVCell: UITableViewCell {
         super.layoutSubviews()
         // Assuming 'myLabel' is your UILabel
         descriptContent.preferredMaxLayoutWidth = descriptContent.frame.width
-        
         configureShimmer()
     }
     
     @IBAction func Select(_ sender: UIButton) {
         delegate?.select(Tittle: MessageTitle.text ?? "selectedText", descriptContent: descriptiontext)
     }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     func configureShimmer() {
         MessageTitle.removeShimmer()
         DateLabel.removeShimmer()
@@ -78,41 +67,41 @@ class TextHistoryTVCell: UITableViewCell {
     }
     
     func configure(with text: String, expanded: Bool, isUnread: Bool) {
-            self.fullText = text
-            self.isExpanded = expanded
-            self.descriptContent.attributedText = getAttributedText(for: text, expanded: expanded)
-            self.descriptContent.numberOfLines = expanded ? 0 : (text.count > 120 ? 3 : 0)
-            self.NewImageView.isHidden = !isUnread
+        self.fullText = text
+        self.isExpanded = expanded
+        self.descriptContent.attributedText = getAttributedText(for: text, expanded: expanded)
+        self.descriptContent.numberOfLines = expanded ? 0 : (text.count > 120 ? 3 : 0)
+        self.NewImageView.isHidden = !isUnread
         self.newImageOuterView.isHidden = !isUnread
-        }
-
-        private func setupTapGesture() {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
-            descriptContent.isUserInteractionEnabled = true
-            descriptContent.addGestureRecognizer(tap)
-        }
-
+    }
+    
+    private func setupTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
+        descriptContent.isUserInteractionEnabled = true
+        descriptContent.addGestureRecognizer(tap)
+    }
+    
     @objc private func handleLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let text = descriptContent.attributedText?.string else { return }
-
+        
         // Check which keyword to respond to
         let keyword = isExpanded
-            ? (text.count > 120 ? "Hide" : nil)  // Only react to "Hide" for long text
-            : "View"
-
+        ? (text.count > 120 ? "Hide" : nil)  // Only react to "Hide" for long text
+        : "View"
+        
         guard let target = keyword else { return }
-
+        
         let tapRange = (text as NSString).range(of: target)
         if gesture.didTapAttributedTextInLabel(label: descriptContent, inRange: tapRange) {
             ExpandDelegate?.didTapExpand(in: self)
         }
     }
-
-
+    
+    
     private func getAttributedText(for text: String, expanded: Bool) -> NSAttributedString {
         let threshold = 120
         let attributed = NSMutableAttributedString()
-
+        
         if text.count > threshold {
             if expanded {
                 let full = text + " Hide"
@@ -136,8 +125,8 @@ class TextHistoryTVCell: UITableViewCell {
                 attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
             }
         }
-
+        
         return attributed
     }
-
+    
 }

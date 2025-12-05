@@ -19,7 +19,6 @@ class DateCVC: UICollectionViewCell {
         dateView.layer.shadowOffset = CGSize(width: 0, height: 2)
         dateView.layer.shadowRadius = 2
         dateView.layer.shadowOpacity = 0.2
-        
         dateLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     @IBAction func deleteBtn(_ sender: UIButton) {

@@ -231,7 +231,9 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             cell.imageView.isHidden = false
             cell.webview.isHidden = true
             cell.imageView.image = UIImage(named: "video (1)")
-//            cell.outerView.setShadow()
+//            cell.imageView.image = UIImage(systemName: "play.square.fill")
+            cell.imageView.tintColor = .black
+            cell.outerView.setShadow()
             cell.outerView.backgroundColor = .white
 
         default:

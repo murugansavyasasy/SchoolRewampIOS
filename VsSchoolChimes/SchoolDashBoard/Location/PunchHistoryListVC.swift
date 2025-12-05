@@ -34,8 +34,8 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
         // Register cells
         let rowNib = UINib(nibName: CellConfingName.PunchHistTableViewCell, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: CellConfingName.PunchHistTableViewCell)
-        tv.register(UINib(nibName: "PunchUserDetailsTVC", bundle: nil),
-                    forCellReuseIdentifier: "PunchUserDetailsTVC")
+        tv.register(UINib(nibName: CellConfingName.PunchUserDetailsTVC, bundle: nil),
+                    forCellReuseIdentifier: CellConfingName.PunchUserDetailsTVC)
         
         noRecordLbl.isHidden = true
         
@@ -121,7 +121,7 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PunchUserDetailsTVC", for: indexPath) as! PunchUserDetailsTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchUserDetailsTVC, for: indexPath) as! PunchUserDetailsTVC
             cell.configureWithDetails(
                 institutionName: staffdetails?.school_name ?? "",
                 staffName: staffdetails?.name ?? "",
@@ -132,9 +132,6 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
             if let punch = PunchDetails?[indexPath.row] {
-//                cell.timing.text = punch.time
-//                cell.punchType.text = punch.punch_type?.value
-//                cell.phoneModel.text = punch.device_model
                 cell.configure(with: punch)
             }
             return cell
@@ -144,78 +141,38 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
     // MARK: - Helper (Custom Header View)
     private func makeAttendanceHeaderView() -> UIView {
         let headerView = UIView()
         headerView.backgroundColor = .clear
-        
         // Title
         let titleLabel = UILabel()
         titleLabel.text = "History"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
-        
         let dateLabel = UILabel()
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, dd MMM yyyy"
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd-MM-yyyy"
-
+        
         if let date = inputFormatter.date(from: selectedDate) {
             dateLabel.text = formatter.string(from: date)
         } else {
             dateLabel.text = formatter.string(from: Date())
         }
-
+        
         dateLabel.font = UIFont.systemFont(ofSize: 14)
         dateLabel.textColor = .darkGray
-        
-//        // Status
-//        let statusView = UIView()
-//        statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
-//        statusView.layer.cornerRadius = 8
-//        
-//        let dot = UIView()
-//        dot.backgroundColor = .systemGreen
-//        dot.layer.cornerRadius = 4
-        
-//        let statusLabel = UILabel()
-//        statusLabel.text = "Active"
-//        statusLabel.font = UIFont.boldSystemFont(ofSize: 14)
-//        statusLabel.textColor = .systemGreen
-        
-        // Add subviews
         headerView.addSubview(titleLabel)
         headerView.addSubview(dateLabel)
-//        headerView.addSubview(statusView)
-//        statusView.addSubview(dot)
-//        statusView.addSubview(statusLabel)
-        
-        // Constraints
         [titleLabel, dateLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
-            
             dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             dateLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8),
-            
-//            statusView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-//            statusView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-//            statusView.heightAnchor.constraint(equalToConstant: 30),
-//            statusView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
-//            
-//            dot.leadingAnchor.constraint(equalTo: statusView.leadingAnchor, constant: 8),
-//            dot.centerYAnchor.constraint(equalTo: statusView.centerYAnchor),
-//            dot.widthAnchor.constraint(equalToConstant: 8),
-//            dot.heightAnchor.constraint(equalToConstant: 8),
-//            
-//            statusLabel.leadingAnchor.constraint(equalTo: dot.trailingAnchor, constant: 6),
-//            statusLabel.centerYAnchor.constraint(equalTo: dot.centerYAnchor),
-//            statusLabel.trailingAnchor.constraint(equalTo: statusView.trailingAnchor, constant: -8),
         ])
         
         return headerView

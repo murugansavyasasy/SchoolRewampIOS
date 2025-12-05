@@ -6,13 +6,10 @@
 //
 
 import UIKit
-//import DropDown
-
 class AttachHistroyVC: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedEvent = Attachments(withId: id ?? "") {
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     if #available(iOS 14.0, *) {
                         let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
@@ -72,9 +69,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
         }else{
             if school_details?.count ?? 0 > 1 {
                 schoolDropDownFullview.isHidden = false
-                let matchedSchoolName = school_details?
-                    .first?
-                    .school_name
                 schoolName.text = MenuStringFile.All_Schools
                 schoolList = school_details?.compactMap { $0.school_name }
                 schoolList?.insert(MenuStringFile.All_Schools, at: 0)
@@ -98,15 +92,10 @@ class AttachHistroyVC: UIViewController, SelectedId {
         searchBar.delegate = self
         tv.delegate = self
         tv.dataSource = self
-        tv.register(
-                UINib(nibName: "AttachTvHeader", bundle: nil),
-                forHeaderFooterViewReuseIdentifier: "AttachTvHeader")
-        tv.register(UINib(nibName: "ContentCell", bundle: nil), forCellReuseIdentifier: "ContentCell")
+        tv.register(UINib(nibName: CellConfingName.ContentCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ContentCell)
         tv.estimatedRowHeight = 100
         tv.rowHeight = UITableView.automaticDimension
     }
-
-    
     func checkMutipleSchool() -> Bool {
         let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
         if staffCount > 1 {
@@ -132,7 +121,6 @@ class AttachHistroyVC: UIViewController, SelectedId {
                     ) == .orderedSame}),
                let accessToken = matchedStaff.access_token {
                 localData.editToken = accessToken}}
-        
         fetchAttachments()
     }
     @objc func catagoryTapped() {
@@ -176,7 +164,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true)
     }
-   
+    
     @IBAction func searchBtnCilck(_ sender: UIButton) {
         sender.isSelected.toggle()
         if sender.isSelected{
@@ -198,7 +186,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     @available(iOS 14.0, *)
     @IBAction func createBtnAct(_ sender: Any) {
         let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
-         vc.editId = ""
+        vc.editId = ""
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -219,14 +207,14 @@ class AttachHistroyVC: UIViewController, SelectedId {
                 }
                 switch result {
                 case .success(let response):
-                        self.attachmentData = response.data ?? []
-                        self.filteredAttachments = response.data
-                        self.SearchAttachments = response.data
+                    self.attachmentData = response.data ?? []
+                    self.filteredAttachments = response.data
+                    self.SearchAttachments = response.data
                     self.noDataLabel.isHidden = !(response.data?.isEmpty ?? false)
                     self.noDataImg.isHidden = !(response.data?.isEmpty ?? false)
-                        self.tv.reloadData()
+                    self.tv.reloadData()
                 case .failure(_):
-                    self.noDataLabel.text = "Something went wrong"
+                    self.noDataLabel.text = MenuStringFile.Something_went_wrong
                     self.noDataLabel.isHidden = false
                 }
             }
@@ -246,7 +234,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
             onOk: {
                 APIService.shared.makeApi(
                     url: ServiceUrl.comm_api_attachment_delete,
-                    parameters: ["id": attachmentId],
+                    parameters: [SendAttachmentStringFile.id: attachmentId],
                     type: ApitTypeSringFile.PUT,
                     token: self.staffdetails?.access_token ?? ""
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
@@ -266,8 +254,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
                                     message: successResponse.message ?? "",
                                     on: self)}
                         case .failure(let error):
-                            print("Error deleting notice: \(error.localizedDescription)")
-                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)}}}},onNo: {
+                            self.alert.showAlert(title: AlertstringFile.Error, message: error.localizedDescription, on: self)}}}},onNo: {
                                 print("User canceled deletion")
                             }
         )
@@ -287,7 +274,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         if isEmpty {
             noDataLabel.isHidden = false
             noDataImg.isHidden = false
-            noDataLabel.text = "There are no attachments posted yet."
+            noDataLabel.text = MenuStringFile.There_are_no_attachments_posted_yet
         } else {
             noDataLabel.isHidden = true
             noDataImg.isHidden = true
@@ -301,7 +288,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
     }
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath) as? ContentCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContentCell, for: indexPath) as? ContentCell else {
             return UITableViewCell()
         }
         let displayText = formattedDateStatus(from: filteredAttachments?[indexPath.row].date ?? "")
@@ -310,8 +297,8 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: "posted on - " + displayText,
-                sendBy:  "posted by -  " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
+                date: MenuStringFile.posted_on + displayText,
+                sendBy:MenuStringFile.Posted_By + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false,
                 parentTableView: tv
             )
@@ -321,7 +308,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                 edit: filteredAttachments?[indexPath.row].can_edit ?? false,
                 delete:  filteredAttachments?[indexPath.row].can_delete ?? false,
                 selectedId: filteredAttachments?[indexPath.row].id ?? ""
-                   )
+            )
         cell.delegate = self
         cell.descriptionLbl
             .setupExpandable(
@@ -335,7 +322,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         return cell
     }
     
-  func tableView(
+    func tableView(
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
@@ -349,8 +336,8 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         detailVC.descriptionString = attach.description
         detailVC.postedBy = attach.sent_by
         detailVC.params = [
-            "id": attach.id ?? "",
-            "target_type" : attach.target_type ?? ""
+            SendAttachmentStringFile.id: attach.id ?? "",
+            SendAttachmentStringFile.target_type : attach.target_type ?? ""
         ]
         detailVC.EndUrl = ServiceUrl.attachment_target_details
         detailVC.subject_name = MenuStringFile.selectedMenuName.translated()
@@ -359,7 +346,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         detailVC.transitioningDelegate = transitionDelegate
         present(detailVC, animated: true)
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterAttachments(with: searchText)
     }
@@ -385,7 +372,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         let isEmpty = filteredAttachments?.isEmpty ?? true
         noDataLabel.isHidden = !isEmpty
         noDataImg.isHidden = !isEmpty
-        noDataLabel.text = isEmpty ? "No Attachment Found" : ""
+        noDataLabel.text = isEmpty ? MenuStringFile.No_Attachment_Found : ""
     }
 }
 

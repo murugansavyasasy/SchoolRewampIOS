@@ -291,9 +291,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-                
                 guard let self = self else { return }
-                
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {

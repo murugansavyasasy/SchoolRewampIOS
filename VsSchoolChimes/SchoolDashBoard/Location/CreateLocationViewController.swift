@@ -42,8 +42,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         setupLocation()
         locationNameTxt.setPadding(left: 10, right: 10)
         distanceTxt.setPadding(left: 10)
-        locationNameTxt.placeholder = "Pin your location name".translated()
-        distanceTxt.placeholder = "Drop your distance".translated()
+        locationNameTxt.placeholder = MenuStringFile.Pin_your_location_name.translated()
+        distanceTxt.placeholder = MenuStringFile.Drop_your_distance.translated()
         distanceTxt.addDoneButton()
         locationNameTxt.addDoneButton()
         if !isManualLocationSet {
@@ -51,7 +51,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
             updateMapToManualLocation(lat:Double(latitude) ?? 0.0, lon: Double(longitude) ?? 0.0)
             locationManager.stopUpdatingLocation()
         }
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapTapped))
         mapView.addGestureRecognizer(tapGesture)
         
@@ -61,11 +60,9 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     
     @objc func mapTapped() {
         let coordinate = CLLocationCoordinate2D(latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0) // Example coordinate (San Francisco)
-        
         let placemark = MKPlacemark(coordinate: coordinate)
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = Pinned_Location
-        
         // Open in Apple Maps
         mapItem.openInMaps(launchOptions: [
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
@@ -80,7 +77,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         locationNameTxt.layer.borderColor = UIColor.lightGray.cgColor
         locationNameTxt.layer.cornerRadius = 4
         instractionLbl.text = "\(CommonStringFile.add_location_firstMessage.translated())\n\n\(CommonStringFile.add_location_secondMessage.translated())"
-        
         locationDefaultLbl.setRequiredText(CommonStringFile.Location_name)
         distaceDefaultLbl.setRequiredText(CommonStringFile.Distance)
         getLocationDefaultLbl.setRequiredText(CommonStringFile.Get_Location)
@@ -93,7 +89,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         mapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
         if #available(iOS 14.0, *) {
             switch locationManager.authorizationStatus {
             case .notDetermined:
@@ -164,17 +159,14 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
             let region = MKCoordinateRegion(center: currentLocation.coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
             mapView.setRegion(region, animated: true)
         }
-        
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         self.latitude = "\(lat)"
         self.longitude = "\(lon)"
         self.latlongLbl.text = "Lat: \(lat.rounded(toPlaces: 6)), Long: \(lon.rounded(toPlaces: 6))"
-        
         fetchAddress(from: currentLocation) { [weak self] address in
             self?.adressLbl.text = address
         }
-        
         showPinAndRadius(at: currentLocation.coordinate, radius: 10)
     }
     
@@ -266,11 +258,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
             if item == "Custom" {
                 distanceTxt.isUserInteractionEnabled = true
                 distanceTxt.text = ""
-                
             }
         }
-        
-        
     }
     @IBAction func history(_ sender: UIButton) {
         let vc = AddLocationHistory(nibName: nil, bundle: nil)
@@ -278,16 +267,12 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         self.present(vc, animated: true)
     }
     @IBAction func saveLocation(_ sender: UIButton) {
-        
-        
         if  9 >= Int(distanceTxt.text!) ?? 0  && locationNameTxt.text?.isEmpty ?? true {
-            
             let refreshAlert = UIAlertController(
                 title: "",
                 message: AlertstringFile.Enter_location_name + AlertstringFile.Distance_Should ,
                 preferredStyle: UIAlertController.Style.alert
             )
-            
             refreshAlert
                 .addAction(
                     UIAlertAction(
@@ -301,9 +286,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                         })
                 )
             present(refreshAlert, animated: true, completion: nil)
-            
-            
-            
         }else{
             if locationNameTxt.text != "" && longitude != "" && latitude != "" && distanceTxt.text != ""{
                 if #available(iOS 15.0, *) {
@@ -323,7 +305,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                         if #available(iOS 15.0, *) {
                             self.hideActivityLoader()
                         }
-                        
                         switch result {
                         case .success(let response):
                             

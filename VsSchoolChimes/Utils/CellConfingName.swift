@@ -64,6 +64,7 @@ class CellConfingName {
     static let SlotsCollectionViewCell = "SlotsCollectionViewCell"
     static let PaymentListTableViewCell = "PaymentListTableViewCell"
     static let PunchHistTableViewCell = "PunchHistTableViewCell"
+    static let PunchUserDetailsTVC = "PunchUserDetailsTVC"
     static let StaffPtmTableViewCell = "StaffPtmTableViewCell"
     static let TimeHeader = "TimeHeader"
     static let cancelTableViewCell = "cancelTableViewCell"
@@ -122,5 +123,12 @@ class CellConfingName {
     static let  TopCVCell = "TopCVCell"
     static let  CustomMenuCVC = "CustomMenuCVC"
     static let  QuistionTvTableViewCell = "QuistionTvTableViewCell"
+    static let  ReportAttCell = "ReportAttCell"
+    static let  SummerizeTvCel = "SummerizeTvCel"
+    static let  GenderDistriTvcel = "GenderDistriTvcel"
+    static let  LblTvCell = "LblTvCell"
+    static let  SectionStregnthCVC = "SectionStregnthCVC"
+    static let  MsgTvCell = "MsgTvCell"
+    static let  MsgVoiceCvCell = "MsgVoiceCvCell"
     
 }

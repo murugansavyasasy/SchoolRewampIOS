@@ -10,6 +10,7 @@ import Foundation
 struct MenuStringFile{
     
     static let Communication = "Communication"
+    static let Remove = "Remove"
     static let No_of_question = "No of question"
     static let ImagePdf = "Image/Pdf"
     static let VideoUpload = "Video Upload"
@@ -59,7 +60,7 @@ struct MenuStringFile{
     static let enterOptionD = "Enter Option D"
     static let enterQuestionHere = "Enter Question here"
     static let Sent_at = "Sent at "
-    static let Posted_By = "Posted By - "
+    static let Posted_By = "posted by - "
     static let Level = "Level "
     static let Submitted = "Submitted"
     static let Pending = "Pending"
@@ -67,6 +68,25 @@ struct MenuStringFile{
     static let Create_new = "Create new "
     static let Update_Existing = "Update Existing "
     static let All_Schools = "All Schools"
+    static let There_are_no_attachments_posted_yet = "There are no attachments posted yet."
+    static let No_Attachment_Found = "No Attachment Found"
+    static let posted_on  = "posted on - "
+    static let Something_went_wrong  = "Something went wrong"
+    static let Roll_No   = "Roll No : "
+    static let admission_no   = "admission no : "
+    static let perentage   = "%.1f%%"
+    static let No_Student_Data_Found   = "No Student Data Found"
+    static let No_home_work_found   = "No home work found"
+    static let See_Archived_Messages   = "See Archived Messages"
+    static let No_messages_yet   = "No messages yet"
+    static let  No_Absentees_Report_from_this_date   = "No Absentees Report from this date"
+    static let  Absent_students_list   = "👨🏻‍🎓 Absent  students list"
+    static let  Pin_your_location_name   = "Pin your location name"
+    static let  Drop_your_distance   = "Drop your distance"
+    static let  Invalid_time_selection   = "Invalid time selection."
+    static let  You_cannot_select_a_past_time_for_today_date   = "You cannot select a past time for today's date."
+    static let  End_time_must_be_greater_than_start_time   = "End time must be greater than start time."
+    
 }
 
 struct ReceiverMenuItems {
@@ -96,6 +116,11 @@ struct ReceiverMenuItems {
 struct AlertstringFile{
     
     static let title = "Confirm Action"
+    static let Block = "Block"
+    static let You_have_blocked_this_user = "You have blocked this user."
+    
+    static let MessageOptions = "Message Options"
+    static let Error = "Error"
     static let You_can_only_select_up_to_video_files = "You can only select up to 2 video files."
     static let Choose_file_type = "Choose file type"
     static let addAttachment = "Add Attachment"
@@ -193,6 +218,8 @@ struct AlertstringFile{
     static let Mark_All_as_Presents = "Mark All as Present"
     static let Oops = "Oops!"
     static let No_Data_Found = "No Data Found"
+    static let Invalid_time = "Invalid time"
+    static let Choose_an_action_for_this_message = "Choose an action for this message"
 }
 
 struct classTimeTableStrings {

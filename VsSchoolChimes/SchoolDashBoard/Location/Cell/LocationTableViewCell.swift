@@ -20,9 +20,7 @@ class LocationTableViewCell: UITableViewCell {
     @IBOutlet weak var namelbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         dateView.setShadow(cornerRadius: dateView.frame.width/2)
-        
         statusBtn.layer.cornerRadius = 8
         statusBtn.clipsToBounds = true
 

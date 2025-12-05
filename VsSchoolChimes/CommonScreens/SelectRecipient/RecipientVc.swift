@@ -67,14 +67,17 @@ class RecipientVc: UIViewController{
     var accadimYrIDs :[Int] = []
     var accadmicDefaultYrName : String?
     var accedmicYrEligible = false
-    let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var vimeoUploader: VimeoUploader?
     var Common_request_params: [String:Any] = [:]
     var sectionName:String?
     var levelDropDown: [String] = []
+    var SEND_ATTACHMENT = "SEND_ATTACHMENT"
+    var SEND_HOMEWORK = "SEND_HOMEWORK"
+    var SEND_ASSIGNMENT = "SEND_ASSIGNMENT"
+    var SEND_TEXT = "SEND_TEXT"
+    var SEND_VOICE = "SEND_VOICE"
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         nodataFound.isHidden = true
         noRecordLbl.isHidden = true
         speficBtnName.isHidden = true
@@ -84,7 +87,6 @@ class RecipientVc: UIViewController{
                 UserDefaultFileManager.get_staff_Details()?.school_name,
                 for: .normal)
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
-        
         getacadmicYr{
             self.homeWorkShowProps{ succes in
                 if !succes{
@@ -92,12 +94,9 @@ class RecipientVc: UIViewController{
                 }
             }
         }
-        
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
         tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
-        
-        
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
         getSubject.layer.cornerRadius = 10
@@ -119,11 +118,7 @@ class RecipientVc: UIViewController{
         selectSubject.addGestureRecognizer(tap3)
         selectLevel.addGestureRecognizer(tap4)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-       
-        
     }
-    
-    
     func configureRecipientTabs() {
         segmentName.removeAllSegments()
         cv_itemsarry.removeAll()
@@ -181,22 +176,17 @@ class RecipientVc: UIViewController{
         default:
             print("Unhandled staff role")
         }
-        
         // Add segments from updated array
         for (index, title) in cv_itemsarry.enumerated() {
             segmentName.insertSegment(withTitle: title, at: index, animated: false)
         }
-        
         segmentName.selectedSegmentIndex = 0
-        
-        
     }
     func homeWorkShowProps(onSuccess: @escaping (Bool) -> Void) {
         guard accedmicYrEligible else { return }
         nodataFound.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
             let isAssignmentOrHomework = Menu_id.staffSelectedMenuId == Menu_id.isAssaignment || Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId || Menu_id.staffSelectedMenuId == Menu_id.lsrw || Menu_id.staffSelectedMenuId == Menu_id.quiz
-            
             if isAssignmentOrHomework {
                 segmentName.isHidden = true
                 nodataFound.isHidden = true
@@ -243,12 +233,9 @@ class RecipientVc: UIViewController{
         }
         
         let comm = commonApi_forSending()
-        
         switch Menu_id.staffSelectedMenuId {
-            
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
-            
         case Menu_id.homeWorkMenuId, Menu_id.isAssaignment:
             guard let subjectId = subjectId, !subjectId.isEmpty else {
                 alert.showAlert(
@@ -273,19 +260,15 @@ class RecipientVc: UIViewController{
                 alert.showAlert(
                     title: AlertstringFile.Alert_title,
                     message: AlertstringFile.Choose_any_section,
-                    on: self
-                )
-                return
-            }
-            
+                    on: self)
+                return}
             CreateQuiz()
             
         case Menu_id.AttachmentMenuId:
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.comm_attachment_send_attachment,
-                subjectId: subjectId ?? ""
-            )
+                subjectId: subjectId ?? "")
         case Menu_id.lsrw:
             guard let subjectId = subjectId, !subjectId.isEmpty else {
                 alert.showAlert(
@@ -304,8 +287,7 @@ class RecipientVc: UIViewController{
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.api_school_event_send_event,
-                subjectId: subjectId ?? ""
-            )
+                subjectId: subjectId ?? "")
             
         default:
             print("⚠️ Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
@@ -322,21 +304,16 @@ class RecipientVc: UIViewController{
             createQuizStringFile.class_id : classID ?? ""
         ]
         var finalParams = params
-            finalParams.merge(Common_request_params ?? [:]) { (_, new) in new }
+        finalParams.merge(Common_request_params ?? [:]) { (_, new) in new }
         APIService.shared
             .makeApi(url: ServiceUrl.quiz_create_quiz, parameters: finalParams
-                
-               , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                result : Result<CommonApiSuc,
-                Error>
-            ) in
-                
+                     , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                        result : Result<CommonApiSuc,
+                        Error>
+                     ) in
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -345,12 +322,9 @@ class RecipientVc: UIViewController{
                                     on: self
                                 ) {
                                     self.gotoDashboard()
-                                    
                                 }
-                            
                         }
                     }else {
-                        
                         DispatchQueue.main.async {
                             self.alert
                                 .showAlert(
@@ -366,11 +340,9 @@ class RecipientVc: UIViewController{
                         print(error.localizedDescription)
                     }
                 }
-                
             }
-        
     }
-
+    
     func paketApiCall(params:[String:Any]) {
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_pauket_add_points,
@@ -380,14 +352,12 @@ class RecipientVc: UIViewController{
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-
                 switch result {
                 case .success(let response):
                     self.gotoDashboard()
                     if let window = UIApplication.shared.windows.first {
                         window.makeToast(response.message, duration: 2.0, position: .bottom)
                     }
-                    
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.gotoDashboard()
@@ -398,7 +368,7 @@ class RecipientVc: UIViewController{
             }
         }
     }
-
+    
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
         url baseURL: String,
@@ -421,20 +391,18 @@ class RecipientVc: UIViewController{
                     message: response.message,
                     on: self
                 ) { [self] in
-                    
                     Common_request_params.removeAll()
                     var activity = ""
                     switch Menu_id.staffSelectedMenuId {
                     case Menu_id.AttachmentMenuId:
-                        activity = "SEND_ATTACHMENT"
+                        activity = SEND_ATTACHMENT
                     case Menu_id.homeWorkMenuId:
-                        activity = "SEND_HOMEWORK"
+                        activity = SEND_HOMEWORK
                     case Menu_id.isAssaignment:
-                        activity = "SEND_ASSIGNMENT"
+                        activity = SEND_ASSIGNMENT
                     default:
                         activity = ""
                     }
-
                     if user_inputs.clearTempData(),activity != "" {
                         let params: [String: Any] = [
                             addPonintsPackut.mobile_number: UserDefaultFileManager
@@ -453,14 +421,10 @@ class RecipientVc: UIViewController{
         }
     }
     
-    
-    
-    
     func acidmicYearOrNotAlertMessage() -> String{
         var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
         
         if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
-            
             selectedTabItem = "Section"
         }
         var message : String?
@@ -481,8 +445,6 @@ class RecipientVc: UIViewController{
             if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                 getSubjectListAPI(finalSectionIds)
             }
-            
-            
         }
         selectSubject.isHidden = !(selectedSections.count >= 1)
         getSubject.isHidden = true
@@ -492,7 +454,6 @@ class RecipientVc: UIViewController{
     }
     
     private func SendingCommunicationFlow() {
-        
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
@@ -505,7 +466,6 @@ class RecipientVc: UIViewController{
                 case screenType.communication_text:
                     sendtextmessage_communication()
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
-                    
                     if user_inputs.voice_link.contains("https:") { // MARK: FORWARD VOICE
                         sendVoiceMessage_communication()
                     } else {
@@ -529,8 +489,6 @@ class RecipientVc: UIViewController{
     
     
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
-        
-        print("array_selectedIdarray_selectedId",array_selectedId)
         guard  array_selectedId.count > 0 else {
             self.alert
                 .showAlert(
@@ -538,7 +496,6 @@ class RecipientVc: UIViewController{
                     message: AlertstringFile.Choose_any_standard_section ,
                     on: self
                 )
-            
             return
         }
         var message : Bool?
@@ -547,12 +504,9 @@ class RecipientVc: UIViewController{
         }else{
             message = false
         }
-        
         let selectedSectionName = sectionsDetails?
             .first(where: {$0.isSelect == true })?
             .name
-        
-        
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
@@ -576,7 +530,6 @@ class RecipientVc: UIViewController{
             return
         }
         let selectedTitle = cv_itemsarry[segment_selected_index ?? 0]
-        
         switch selectedTitle {
         case recipeint_tabBarName.Entier_School:
             array_selectedId.append( UserDefaultFileManager.get_staff_Details()?.school_id ?? "")
@@ -589,22 +542,18 @@ class RecipientVc: UIViewController{
             nodataFound.image = ImageName.girl_and_boy_are
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-            
-            
         case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
             circular_types =  circular_type.group
             getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-            
         case recipeint_tabBarName.Standard:
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-            
         case recipeint_tabBarName.Section_Student:
             target_type = TargetTypes.section
             circular_types =  circular_type.section
@@ -614,14 +563,12 @@ class RecipientVc: UIViewController{
             )
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
-            
         case recipeint_tabBarName.Staff:
             target_type = TargetTypes.staff
             circular_types =  circular_type.staff
             getStaffListAPI()
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
-            
         default:
             print("Unhandled tab selection: \(selectedTitle)")
         }
@@ -702,7 +649,6 @@ class RecipientVc: UIViewController{
                 subjectId = subjectDetails?[index].id ?? ""
                 speficBtnName.isHidden = true
             }
-            
             if Menu_id.staffSelectedMenuId == Menu_id.isAssaignment{
                 speficBtnName.isHidden = !(array_selectedId.count == 1)
             }
@@ -724,7 +670,6 @@ class RecipientVc: UIViewController{
         let yeardId = localData.accidamic_year_data?.data?.compactMap{ $0.id}
         accadimYr = yearname ?? []
         accadimYrIDs = yeardId ?? []
-       
         acidamicdrops.anchorView = acidamicYrDropView
         acidamicdrops.dataSource = accadimYr
         acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
@@ -751,12 +696,10 @@ class RecipientVc: UIViewController{
 
 
 extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let head = tableView.dequeueReusableHeaderFooterView(
             withIdentifier: CellConfingName.Std_Grp_header
         ) as! Std_Grp_header
-        
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             head.HeaderLabel.text = recipeint_tabBarName.Group
@@ -808,14 +751,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             cell.checkboxImg.image = allSelected ? ImageName.checkedSquares : ImageName.uncheckedSquares
             return cell
         }
-        
         let dataIndex = indexPath.row - 1
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
-            
                 cell.createdOnlbl.text =  item.created_on?
                     .convertToTargetDateFormat() ?? ""
                 cell.createdOnlbl.textAlignment = .right
@@ -841,13 +782,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if ((item.designation?.isEmpty) != nil) && (
                     (item.emp_id?.isEmpty) != nil
                 ){
-                    
                     cell.createdOnlbl.isHidden = true
                 }else{
                     cell.isHidden = false
                     cell.createdOnlbl.text = "\(item.designation ?? "") - \(item.emp_id ?? "")"
                 }
-                
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         default:
@@ -894,9 +833,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
                 if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
-//                    getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
                     if (selectedSections.count >= 1){
-//                        selectSubject.isHidden =  !getSubject.isHidden
                         selectSubject.isHidden = false
                         getSubjectListAPI(sectionIds ?? "")
                     }else{
@@ -913,10 +850,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         speficBtnName.isHidden = !(selectedSections.count == 1)
                         speficBtnName.isEnabled = true
                     }
-                   
                 }
                 spaceView.isHidden = true
-                
             }
             
         case recipeint_tabBarName.Staff:
@@ -925,11 +860,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 staffDetails?[dataIndex].isSelect = item.isSelect
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
             }
-            
         default:
             break
         }
-        
         tableView.reloadData()
     }
     
@@ -964,7 +897,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     func handleSelectAllToggle() {
         let selecting = !isAllSelected()
-        
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             groupDetails = groupDetails?.map {
@@ -973,7 +905,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? groupDetails?.compactMap { $0.id } ?? [] : []
-            
         case recipeint_tabBarName.Standard:
             standardDetails = standardDetails?.map {
                 var item = $0
@@ -981,7 +912,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? standardDetails?.compactMap { $0.id } ?? [] : []
-            
         case recipeint_tabBarName.Section_Student:
             sectionsDetails = sectionsDetails?.map {
                 var item = $0
@@ -989,16 +919,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? sectionsDetails?.compactMap { $0.id } ?? [] : []
-            
             sectionIds = array_selectedId.joined(separator: ",")
-            
             if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
                 sectionIds = ""
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-//                spaceView.isHidden = !selectSubject.isHidden
                 spaceView.isHidden = true
                 subjectId = selectedSections.count == 0 ? "" : subjectId
                 selectSubject.isHidden = sectionIds == "" || sectionIds == nil
@@ -1006,7 +933,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     getSubjectListAPI(sectionIds ?? "")
                 }
             }
-            
         case recipeint_tabBarName.Staff:
             staffDetails = staffDetails?.map {
                 var item = $0
@@ -1035,7 +961,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if successmessage.status == true{
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
-//                            spaceView.isHidden = false
+                            //                            spaceView.isHidden = false
                             spaceView.isHidden = true
                             groupDetails = successmessage.data
                             nodata(true, message: "")
@@ -1071,7 +997,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-//                        spaceView.isHidden = false
                         spaceView.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
@@ -1087,7 +1012,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             }
                         }
                         selectStandardDropDown.isHidden = cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Standard
-                        
                         getSubject.isHidden = true
                         drpodonLbl.text = standardDetails?.first?.name
                         drpodonLbl.text = standardDetails?.first?.name
@@ -1126,9 +1050,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         noRecordLbl.isHidden = ishide
         noRecordLbl.text = message
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz{
-//            getSubject.isHidden = !ishide
         }
-        
     }
     func getStaffListAPI(){
         APIService.shared
@@ -1159,11 +1081,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
-//                            spaceView.isHidden = false
                             spaceView.isHidden = true
                             sendbtnName.isHidden = true
                             tv.isHidden = true
-                            
                             nodata(false, message: successMessage.message ?? "")
                         }
                     }
@@ -1179,8 +1099,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         levelDropDown.removeAll()
         APIService.shared.makeApi(url: ServiceUrl.check_level , parameters: [
             get_quizLevel.class_id : ClassId,
-            get_quizLevel.subject_id : SubjectId,
-//            "section_id" : SectionId
+            get_quizLevel.subject_id : SubjectId
         ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <checkQuizLevelSuc,Error>) in
             switch result {
             case .success(let successMessage):
@@ -1189,13 +1108,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         if let quizData = successMessage.data {
                             levelDropDown = quizData.compactMap { item in
                                 item.level.map { "Level \($0)" }
-                            }
-                        }
-
+                            }}
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
-                        
                         if let quizData = successMessage.data {
                             for item in quizData {
                                 levelDropDown.append(String(item.level ?? 0))
@@ -1209,11 +1125,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         }
         
         
-       
+        
     }
     func getSubjectListAPI(_ id:String){
         subjectList.removeAll()
-        
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: [
             COMMON_PARAMETER.section_ids: id
         ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
@@ -1227,26 +1142,20 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         subjectDetails?.enumerated().forEach { index, student in
                             subjectList.append(student.name ?? "")
                         }
-                        
                         if let label = self.selectSubject.subviews.first(where: { $0 is UILabel }) as? UILabel {
                             label.text = subjectDetails?.first?.name
                             subjectId =  subjectDetails?.first?.id ?? ""
                         }
-                        
-                        
                         if Menu_id.quiz == Menu_id.staffSelectedMenuId{
                             getQuizLevel(
                                 SubjectId: subjectId ?? "",
                                 ClassId: classID ?? "",
-                                SectionId: String(sectionId ?? 0)
-                            )
+                                SectionId: String(sectionId ?? 0))
                         }
-                        
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-//                        spaceView.isHidden = false
                         spaceView.isHidden = true
                     }
                 }
@@ -1254,13 +1163,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 print(error.localizedDescription)
             }
         }
-        
-        
     }
     
-  
+    
     func getacadmicYr(onComplete:  @escaping() -> Void){
-        
         if localData.accidamic_year_data?.status == true{
             DispatchQueue.main.async { [weak self] in
                 var hasCurrentYear = false
@@ -1283,7 +1189,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if !hasCurrentYear {
                     self?.segmentName.isUserInteractionEnabled = false
                     self?.nodata(false, message: "")
-                    
                     self?.nodataFound.isHidden = false
                     self?.nodataFound.image = ImageName.customer_support
                     self?.acidamicYrDropView.isUserInteractionEnabled = false
@@ -1294,19 +1199,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     self?.selectStandardDropDown.isHidden = true
                     let fullText = CommonStringFile.Your_academic_year_configuration
                     let attributedString = NSMutableAttributedString(string: fullText)
-                    
                     let email = CommonStringFile.support_savyasasy_com
                     if let range = fullText.range(of: email) {
                         let nsRange = NSRange(range, in: fullText)
-                        
                         // Color and underline
                         attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
                         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
                     }
-                    
                     self?.noRecordLbl.attributedText = attributedString
                     self?.noRecordLbl.isUserInteractionEnabled = true
-                    
                     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.handleEmailTap(_:)))
                     self?.noRecordLbl.addGestureRecognizer(tapGesture)
                     
@@ -1318,7 +1219,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             DispatchQueue.main.async {
                 self.alert
                     .showAlert(
-                        title: "Error",
+                        title: AlertstringFile.Error,
                         message: localData.accidamic_year_data?.message ?? "" ,
                         on: self
                     )
@@ -1330,31 +1231,24 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
         guard let text = noRecordLbl.attributedText?.string else { return }
         let email = CommonStringFile.support_savyasasy_com
-        
         if let range = text.range(of: email) {
             let nsRange = NSRange(range, in: text)
-            
             let tapLocation = gesture.location(in: noRecordLbl)
             let layoutManager = NSLayoutManager()
             let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
             let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
-            
             textContainer.lineFragmentPadding = 0
             textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
             textContainer.lineBreakMode = noRecordLbl.lineBreakMode
             layoutManager.addTextContainer(textContainer)
             textStorage.addLayoutManager(layoutManager)
-            
             let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-            
             if NSLocationInRange(index, nsRange) {
                 let subject = "Request to configure communication academic year"
                 let body = "Dear School Chimes Team,\n\n Please configure communication academic year  as 20xx - 20xx for any queries contact .\n\n Your name,\nMobile No"
-                
                 // URL encode
                 let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                 let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-                
                 // Try Gmail URL
                 if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
                    UIApplication.shared.canOpenURL(gmailURL) {
@@ -1372,74 +1266,56 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func sendtextmessage_communication(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
-                
                 send_textmessageStringFile.description : user_inputs.description,
                 send_textmessageStringFile.message : user_inputs.title,
                 send_textmessageStringFile.target_code: array_selectedId,
                 send_textmessageStringFile.target_type: target_type ?? 0,
                 send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
-                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
-            ) in
-                
-                switch result {
-                    
-                case.success(let succesmessage) :
-                    
-                    if succesmessage.status == true {
-                        
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    if user_inputs.clearTempData(){
-                                        let params: [String: Any] = [
-                                            addPonintsPackut.mobile_number: UserDefaultFileManager
-                                                .get_staff_Details()?.mobile_no ?? "",
-                                            addPonintsPackut.activity : "SEND_TEXT",
-                                            addPonintsPackut.user_type : 2,
-                                            addPonintsPackut.menu_id : Menu_id.staffSelectedMenuId
-                                        ]
-                                        self.paketApiCall(params:params)
-                                    }
-                                    
-                                    
-                                    
+            ) in switch result {
+            case.success(let succesmessage) :
+                if succesmessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Success,
+                                message: succesmessage.message ?? "",
+                                on: self
+                            ) {
+                                if user_inputs.clearTempData(){
+                                    let params: [String: Any] = [
+                                        addPonintsPackut.mobile_number: UserDefaultFileManager
+                                            .get_staff_Details()?.mobile_no ?? "",
+                                        addPonintsPackut.activity : self.SEND_TEXT ,
+                                        addPonintsPackut.user_type : 2,
+                                        addPonintsPackut.menu_id : Menu_id.staffSelectedMenuId
+                                    ]
+                                    self.paketApiCall(params:params)
                                 }
-                            
-                        }
-                    }else {
-                        
-                        DispatchQueue.main.async {
-                            self.alert
-                                .showAlert(
-                                    title: AlertstringFile.Alert_title,
-                                    message: succesmessage.message ?? "" ,
-                                    on: self)
-                        }
+                            }
                     }
-                    
-                case.failure(let error) :
-                    
+                }else {
                     DispatchQueue.main.async {
-                        print(error.localizedDescription)
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Alert_title,
+                                message: succesmessage.message ?? "" ,
+                                on: self)
                     }
                 }
                 
+            case.failure(let error) :
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
             }
-        
-        
+            }
     }
     
     
     func sendVoiceMessage_communication() {
-        
-        print("user_inputs.duration",user_inputs.duration)
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
                 
@@ -1469,7 +1345,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if succesmessage.status == true {
                         DispatchQueue.main.async { [self] in
                             CircularProgressLoader.shared.hide()
-                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: AlertstringFile.Success,
@@ -1477,23 +1352,18 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     on: self
                                 ) { [self] in
                                     if user_inputs.clearTempData(){
-                                        
                                         let params: [String: Any] = [
                                             addPonintsPackut.mobile_number: UserDefaultFileManager
                                                 .get_staff_Details()?.mobile_no ?? "",
-                                            addPonintsPackut.activity : "SEND_VOICE",
+                                            addPonintsPackut.activity : SEND_VOICE,
                                             addPonintsPackut.user_type : 2,
                                             addPonintsPackut.menu_id : Menu_id.staffSelectedMenuId
                                         ]
                                         self.paketApiCall(params:params)
                                     }
-                                    
-                                    
                                 }
-                            
                         }
                     }else {
-                        
                         DispatchQueue.main.async {
                             CircularProgressLoader.shared.hide()
                             self.alert
@@ -1507,7 +1377,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 case.failure(let error) :
-                    
                     DispatchQueue.main.async {
                         CircularProgressLoader.shared.hide()
                         print(error.localizedDescription)
@@ -1536,9 +1405,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 default:
                     print("Unhandled staff role")
                 }
-                
-                // Add segments from updated array
-            
             }
             else if Menu_id.staffSelectedMenuId == Menu_id.lsrw{
                 switch staff_role {
@@ -1555,16 +1421,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 default:
                     print("Unhandled staff role")
                 }
-                
             }
             
-            
             else{
-                
                 switch staff_role {
                 case PriorityType.is_staff:
                     self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                    
                 case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
                     if (staffDetailsCount?.count ?? 0) > 1 {
                         self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
@@ -1575,14 +1437,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 default:
                     print("Unhandled staff role")
                 }
-                
-                // Add segments from updated array
             }
-            }
+        }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }

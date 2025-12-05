@@ -291,6 +291,15 @@ class FileTypeConstants {
 struct DateInputs{
     
     static let dd_MM_yyyy =  "dd-MM-yyyy"
+    static let MMMM_yyyy =  "MMMM yyyy"
+    static let dd_MMM_yy =  "dd MMM yy"
+    static let dd_MMM_yyyy =  "dd MMM yyyy"
+    
+}
+struct DateOutPut{
+    static let EE_MMM_dd_yyyy =  "EE MMM dd, yyyy"
+    static let EEEE =  "EEEE"
+    static let EEEE_d =  "EEE d"
 }
 
 struct user_inputs {

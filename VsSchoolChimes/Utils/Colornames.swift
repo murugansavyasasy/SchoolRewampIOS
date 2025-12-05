@@ -17,7 +17,6 @@ class Colornames {
     static  var CORadius5 : CGFloat = 5
     static  var CORadius10 : CGFloat = 10
     static  var CORadius15 : CGFloat = 15
-    
     static  var shim1 =  UIColor(named: "ShimCl1")
     static  var shim2 =  UIColor(named: "ShimCl2")
     static  var ClickClr =  UIColor(named: "ClickClr")
