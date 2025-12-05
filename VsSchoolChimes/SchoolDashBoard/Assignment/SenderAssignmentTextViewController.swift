@@ -125,12 +125,8 @@ class SenderAssignmentTextViewController: UIViewController,
         dateBtn.layer.cornerRadius = 8
         dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
         setInitialButtonTitles(date:nil)
-        
-        // Gestures
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
-        
-        // CollectionView
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         cancelBtn.isHidden = true
@@ -526,7 +522,7 @@ class SenderAssignmentTextViewController: UIViewController,
     }
     func updateTextViewHeight(_ textView: UITextView) {
         let size = textView.contentSize
-        let newHeight = max(60, min(size.height, maxHeight)) // Min = 60, Max = maxHeight
+        let newHeight = max(60, min(size.height, maxHeight))
         TextviewHeight.constant = newHeight
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -535,7 +531,7 @@ class SenderAssignmentTextViewController: UIViewController,
 
     func updateCollectionHeight() {
         let totalItems = attachments.count
-        addphotosheight.constant = totalItems > 0 ? 20 : 20 // keep visible as per your original
+        addphotosheight.constant = totalItems > 0 ? 20 : 20
         view.layoutIfNeeded()
     }
     

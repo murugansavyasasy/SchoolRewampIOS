@@ -329,7 +329,6 @@ class addPonintsPackut{
     static let menu_id = "menu_id"
 }
 class get_quizLevel{
-    
     static let class_id = "class_id"
     static let subject_id = "subject_id"
 }

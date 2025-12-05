@@ -205,7 +205,6 @@ class EventResiverVC: UIViewController {
             searchbar.becomeFirstResponder()
         } else {
             filteredSections = baseSection
-            let hasData = !self.filteredSections.isEmpty
             self.tableview.reloadData()
             searchbar.searchTextField.text = ""
             searchbar?.resignFirstResponder()
@@ -253,12 +252,9 @@ class EventResiverVC: UIViewController {
         cell.imgCount.isHidden = true
         
         for (index, item) in files.enumerated() {
-            // Only process first 3 files for display
             guard index < 3 else { break }
             
             guard let urlString = item.url, let url = URL(string: urlString) else { continue }
-            
-            // Safe array access
             let imageViews = [cell.img1, cell.img2, cell.img3]
             guard index < imageViews.count, let imageView = imageViews[index] else { continue }
             
@@ -271,8 +267,6 @@ class EventResiverVC: UIViewController {
                 imageView.kf.setImage(with: url)
             }
         }
-        
-        // Handle extra files count display
         if files.count > 3 {
             let extraCount = files.count - 3
             if let button = cell.imgCount as? UIButton {

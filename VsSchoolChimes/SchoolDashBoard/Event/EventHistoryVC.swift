@@ -12,7 +12,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedEvent = event(withId: id ?? "") {
-                //                delegate?.editDta(edit: selectedEvent)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     let vc = EventsVC()
                     
@@ -21,8 +20,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     self.present(vc, animated: true)
                 }
             }
-            
-            
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.deleteEvent(id:id ?? "")
@@ -125,7 +122,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                         
                     }
                 }
-                
             }
         }
     }
@@ -210,7 +206,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
         APIService.shared.makeApi(
             url: ServiceUrl.admin_api_school_event_report,
             parameters: [:],
@@ -222,7 +217,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                 if #available(iOS 15.0, *) {
                     self.hideActivityLoader()
                 }
-                
                 switch result {
                 case .success(let response):
                     self.allEventSections.removeAll()
@@ -268,18 +262,18 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         for (sectionIndex, section) in filteredSections.enumerated() {
             switch section {
             case .featured(let events),
-                 .upcoming(let events),
-                 .completed(let events):
-
+                    .upcoming(let events),
+                    .completed(let events):
+                
                 if let rowIndex = events.firstIndex(where: { $0.id == id }) {
                     targetIndexPath = IndexPath(row: rowIndex, section: sectionIndex)
                 }
-
+                
             default:
                 continue
             }
         }
-
+        
         guard let indexPath = targetIndexPath else { return }
         DispatchQueue.main.async {
             self.historyTable.scrollToRow(at: indexPath, at: .middle, animated: true)
@@ -297,7 +291,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             }
         }
     }
-
+    
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }
         cell.imgCount.isHidden = true
@@ -393,11 +387,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                 return section
             }
         }
-        
-        // Remove from filteredSections
         filteredSections = filteredSections.compactMap { removeEvent(from: $0) }
-        
-        // Remove from allEventSections (for reset support)
         allEventSections = allEventSections.compactMap { removeEvent(from: $0) }
         let hasData = !self.allEventSections.isEmpty
         self.noDataLbl.isHidden = hasData
@@ -547,7 +537,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         case .upcoming(let events), .completed(let events):
             selectedEvent = events[indexPath.row]
         default:
-            return // Don't handle tap for featured/categories
+            return
         }
         
         guard let event = selectedEvent,
@@ -567,7 +557,6 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
         detailVC.transitioningDelegate = transitionDelegate
-        
         present(detailVC, animated: true)
     }
     
@@ -615,11 +604,6 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
 // MARK: - UISearchBarDelegate
 @available(iOS 14.0, *)
 extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
-    
-    //    func filterCatagories(name: String) {
-    //        self.filteredSections = filterEventListsByTitle(searchText: name)
-    //        self.historyTable.reloadData()
-    //    }
     func filterCatagories(name: String) {
         if name != "All"{
             self.filteredSections = filterEventListsByTitle(searchText: name)
@@ -704,8 +688,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
         var filteredSections: [EventDisplaySection] = []
         let lowercasedSearchText = searchText.lowercased()
         
-        var hasEventMatches = false   // --> track event matches (featured/upcoming/completed)
-        
+        var hasEventMatches = false
         for section in allEventSections {
             switch section {
                 
@@ -720,9 +703,7 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
                 }
                 
             case .categories(let categories):
-                // Category should always be shown, never filtered
                 filteredSections.append(.categories(categories))
-                
                 if let index = categories.firstIndex(where: {
                     $0.name?.lowercased() == lowercasedSearchText
                 }) {
@@ -760,7 +741,6 @@ extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
         if !hasEventMatches {
             filteredSections.append(.nodata(["nodata"]))
         }
-        
         return filteredSections
     }
     

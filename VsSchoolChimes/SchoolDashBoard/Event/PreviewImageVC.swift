@@ -17,8 +17,7 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var pdfView: WKWebView!
-    
-    @IBOutlet weak var scrollView: UIScrollView! // ✅ Add this in storyboard & connect outlet
+    @IBOutlet weak var scrollView: UIScrollView!
 
     var img: UIImage?
     var selectedFileURL: URL?
@@ -58,13 +57,9 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
             if let url = selectedFileURL {
                 loadPDF(from: url.absoluteString)
             }
-            //            if let url = selectedFileURL {
-            //                loadPDF(from: url.absoluteString)
-            //            }
         }
     }
     
-    // Zoom delegate
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imgView
     }
@@ -87,17 +82,13 @@ class PreviewImageVC: UIViewController, WKNavigationDelegate, UIScrollViewDelega
             // Local PDF
             if FileManager.default.fileExists(atPath: url.path) {
                 pdfView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
-                print("📄 Loaded local PDF: \(url.path)")
             } else {
                 print("❌ Local file does not exist: \(url.path)")
             }
             
         } else if url.scheme == "http" || url.scheme == "https" {
-            // Remote PDF
             let request = URLRequest(url: url)
             pdfView.load(request)
-            print("🌐 Loaded remote PDF: \(url)")
-            
         } else {
             print("⚠️ Unsupported URL scheme: \(url.scheme ?? "nil")")
         }

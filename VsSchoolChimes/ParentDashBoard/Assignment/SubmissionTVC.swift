@@ -45,12 +45,6 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 4
         outerView.layer.masksToBounds = false
-        // Fonts
-//        assignmentTitle.setFont(style: .body, size: FontSize.TitleSize)
-//        subjectName.setFont(style: .body, size: FontSize.BodySize)
-//        date.setFont(style: .body, size: FontSize.BodySize)
-//        descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
-//        timeLeft.setFont(style: .body, size: FontSize.BodySize)
         EditBtn.isHidden = true
         EditBtn1.isHidden = true
         [img1, img2, img3, imgCount].forEach { $0?.isHidden = true }
@@ -140,85 +134,3 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         return .none
     }
 }
-//extension SubmissionTVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        
-//        return FilesUrl?.count ?? 0
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        
-//        let cell = sumisionCollectionView.dequeueReusableCell(
-//            withReuseIdentifier: CellConfingName.ImagePdfCvCell,
-//            for: indexPath
-//        ) as! ImagePdfCvCell
-//
-//        if let img = FilesUrl?[indexPath.row],
-//           let urlString = img.url,
-//           let url = URL(string: urlString) {
-//
-//            let fileType = img.type?.uppercased() ?? ""
-//            
-//            switch fileType {
-//            case "IMAGE":
-//                // Show actual image
-//                cell.webView.isHidden = true
-//                cell.imageView.isHidden = false
-//                cell.imageView.sd_setImage(with: url, placeholderImage: ImageName.placeholder)
-//                cell.IndicaterImageView.image = UIImage(named: "")
-//                cell.hide = false
-//                
-//            case "VIDEO":
-//                // Show video icon
-//                cell.webView.isHidden = true
-//                cell.imageView.isHidden = false
-//                cell.imageView.image = UIImage(named: "video (1)")
-//                cell.IndicaterImageView.image = UIImage(named: "video (1)")
-//                cell.hide = true
-//                
-//            default:
-//                // PDF / Docs / Unknown
-//                cell.hide = false
-//                cell.webView.isHidden = false
-//                cell.imageView.isHidden = true
-//                cell.webView.isUserInteractionEnabled = false
-//                cell.webView.scrollView.isScrollEnabled = false
-//                let request = URLRequest(url: url)
-//                cell.webView.load(request)
-//                let iconName = getFileIconName(for: url)
-//                cell.IndicaterImageView.image = UIImage(named: iconName)
-//            }
-//
-//        } else {
-//            // Fallback if URL is invalid
-//            cell.webView.isHidden = true
-//            cell.imageView.isHidden = false
-//            cell.imageView.image = UIImage(named: "placeholder") // placeholder image
-//            cell.IndicaterImageView.image = UIImage(named: "placeholder")
-//            cell.hide = false
-//        }
-//
-//        return cell
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 100, height: 100)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print("didSelectItemAt")
-//        guard let file = FilesUrl?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
-//        let fileExtension = url.pathExtension.lowercased()
-//        
-//        let vc = getCurrentViewController()
-//            let vcc = ImageShowVc(nibName: nil, bundle: nil)
-//            var homeworkDocs = FilesUrl ?? []
-//            vcc.fileURL =  homeworkDocs
-//            vcc.scrollIndex = indexPath
-//            vcc.index = indexPath.row
-//            vcc.modalPresentationStyle = .fullScreen
-//            vc?.present(vcc, animated: true)
-//    }
-//   
-
-//}

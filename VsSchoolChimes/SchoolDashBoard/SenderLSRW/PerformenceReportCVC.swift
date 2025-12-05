@@ -16,7 +16,7 @@ class PerformenceReportCVC: UICollectionViewCell {
     
     private var weeklyReport: [PerformanceReport] = []
     private var topPerformance: [TopReport] = []
-    private var isWeekly: Bool = true   // To know which section we are loading
+    private var isWeekly: Bool = true
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -647,7 +647,11 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate {
                 switch result {
                 case .success(let response):
                     guard response.status == true, let userData = response.data?.first else {
-                        self.navigateToLogin()
+//                        CustomAlert.showAlertWithOkAction(title: "Alert", message: response.message ?? "Something went wrong", on: self) {
+                            let vc = LoginVc(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+//                        }
                         return
                     }
                     UserDefaultFileManager.saveUserDetails(data: userData)
@@ -807,19 +811,15 @@ extension Bundle {
 class GradientView: UIView {
     
     private var gradientLayer: CAGradientLayer?
-    
-    // Light gradient colors (initial)
     private let lightColors: [CGColor] = [
         UIColor(hex: "#6EC9F5").cgColor,
         UIColor(hex: "#B3E5FC").cgColor,
         UIColor(hex: "#FFFFFF").cgColor
     ]
-    
-    // Darker gradient colors (after ripple starts)
     private let darkColors: [CGColor] = [
-        UIColor(hex: "#1E88E5").cgColor,  // Darker blue
-        UIColor(hex: "#64B5F6").cgColor,  // Medium blue
-        UIColor(hex: "#E3F2FD").cgColor   // Light blue-white
+        UIColor(hex: "#1E88E5").cgColor,
+        UIColor(hex: "#64B5F6").cgColor,
+        UIColor(hex: "#E3F2FD").cgColor
     ]
     
     override init(frame: CGRect) {

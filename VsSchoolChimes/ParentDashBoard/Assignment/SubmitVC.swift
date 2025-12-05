@@ -513,14 +513,11 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                           let fileURL = URL(string: fileURLStr) {
                     
                     if item.fileType.uppercased() == CommonStringFile.VIDEO {
-                        // 🎥 Handle Videos
                         if fileURLStr.contains("vimeo.com") {
-                            // Already Vimeo → just append
                             uploadedURLs.append(fileURLStr)
                             completed += 1
                             updateAndCheckCompletion(total: total)
                         } else {
-                            // 🚀 Upload video (even AWS URLs) to Vimeo
                             CircularProgressLoader.shared.show()
                             vimeoUploader = VimeoUploader(
                                 accessToken: YOUR_VIMEO_TOKEN,
@@ -553,7 +550,6 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                             completed += 1
                             updateAndCheckCompletion(total: total)
                         } else {
-                            // Local/Other file → upload to AWS
                             let path = item.fileType.uppercased() != CommonStringFile.IMAGE
                             ? "uploads/Documents/"
                             : "uploads/images/"

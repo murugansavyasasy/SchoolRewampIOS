@@ -35,7 +35,6 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
         self.category = category
         self.onGoing = onGoing
         self.selectedIndex = index
-//        pageController.isHidden = type && onGoing?.count ?? 0<1
         self.type = type
         collectionView.isPagingEnabled = !type
         collectionView.reloadData()
@@ -56,12 +55,6 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                     }
                 }
             }
-
-            // Track selection and refresh visuals
-//            selectedIndex = indexPath.item
-//            collectionView.reloadData()
-
-            // Delegate should be called after reload is applied
             DispatchQueue.main.async {
                 self.delegate?.filterCatagories(name: self.category?[indexPath.item].name ?? "")
             }
@@ -94,8 +87,6 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                 return UICollectionViewCell()
             }
             let isSelected = indexPath.item == selectedIndex
-
-            // Shadow and border for selected cell
             if isSelected {
                 cell.iconView.setShadow(shadowColor: UIColor(hex: "377DF4"), shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
                 cell.iconView.layer.borderColor = UIColor(hex: "377DF4").cgColor
@@ -105,7 +96,6 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
                 cell.iconView.layer.borderColor = UIColor.lightGray.cgColor
                 cell.iconView.layer.borderWidth = 1
             }
-//            cell.iconheight.constant = categoryItem.url == "" ? 0:50
             cell.titleLbl.font = categoryItem.url == "" ? UIFont.systemFont(ofSize: 14, weight: .medium):UIFont.systemFont(ofSize: 11, weight: .medium)
             cell.titleLbl.text = categoryItem.name ?? ""
             cell.iconImg.kf.setImage(with: URL(string: categoryItem.url ?? ""),placeholder: UIImage(named: "ImagePdf"))
@@ -157,7 +147,6 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             }
         }
         
-        // Handle extra files count display
         if files.count > 3 {
             let extraCount = files.count - 3
             if let button = cell.imgCount as? UIButton {
@@ -171,8 +160,6 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             let pageWidth = scrollView.frame.size.width
             let currentPage = Int((scrollView.contentOffset.x + pageWidth / 2) / pageWidth)
             pageController.currentPage = currentPage
-
-            // Zoom animation on center cell
             let centerX = scrollView.contentOffset.x + (scrollView.frame.width / 2)
             for cell in collectionView.visibleCells {
                 let basePosition = cell.convert(cell.bounds, to: self.contentView)

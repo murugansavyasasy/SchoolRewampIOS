@@ -18,8 +18,6 @@ class HolidayTVC: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         cellView.layer.cornerRadius = 10
-//        cellView.layer.borderWidth = 0.3
-//        cellView.layer.borderColor = UIColor.systemGray4.cgColor
         cellView.layer.shadowColor = UIColor.black.cgColor
         cellView.layer.shadowOpacity = 0.2
         cellView.layer.shadowRadius = 0.2

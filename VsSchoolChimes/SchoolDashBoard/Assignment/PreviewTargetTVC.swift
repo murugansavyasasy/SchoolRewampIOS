@@ -16,11 +16,9 @@ class PreviewTargetTVC: UITableViewCell {
     
     var targetCvdata: [targetInfoData] = []
     var standarSenction: [String] = []
-    
     var targetId: String?
     var targetType: String?
     var isStaffAndStudent: Bool = false
-    
     private let staffDetails = UserDefaultFileManager.get_staff_Details()
     
     override func awakeFromNib() {
@@ -30,7 +28,6 @@ class PreviewTargetTVC: UITableViewCell {
                           forCellWithReuseIdentifier: "TargetCvCell")
         targetCv.delegate = self
         targetCv.dataSource = self
-        
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2

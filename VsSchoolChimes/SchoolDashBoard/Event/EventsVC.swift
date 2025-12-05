@@ -613,8 +613,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                     selectPDF()
                 }
                 alertController.addAction(pdfAction)
-                
-                //   VIDEO option
                 let VideoAction = UIAlertAction(title:
                                                     CommonStringFile.Video, style: .default) { [self] _ in
                     
@@ -638,7 +636,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                     }
                 }
                 alertController.addAction(VideoAction)
-                // Cancel action
                 let cancelAction = UIAlertAction(
                     title: CommonStringFile.Cancel,
                     style: .cancel,
@@ -728,37 +725,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         controller.dismiss(animated: true, completion: nil)
         
     }
-    
-    // MARK: This method is called when the user has picked a video
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let videoURL = info[.mediaURL] as? URL {
-            print("Selected video URL: \(videoURL)")
-            generateThumbnail(from: videoURL)
-        }
-        
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK: This method is called when the user cancels the picker
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK: Function to generate thumbnail from the video URL
-    func generateThumbnail(from videoURL: URL){
-        let asset = AVAsset(url: videoURL)
-        let imageGenerator = AVAssetImageGenerator(asset: asset)
-        imageGenerator.appliesPreferredTrackTransform = true
-        do {
-            let cgImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
-            let thumbnail = UIImage(cgImage: cgImage)
-            attachments.append(AttachmentItem(image: thumbnail, imageURL: "\(videoURL)", fileType: "video"))
-        } catch {
-            print("Error generating thumbnail: \(error)")
-        }
-    }
-    
-    
 }
 //MARK: Text view delegate Functions
 @available(iOS 14.0, *)
@@ -785,8 +751,6 @@ extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
             let newHeight = min(size.height, maxHeight)
             textViewHeightConstraint.constant = newHeight
         }
-        
-        // Animate the change for smoother UI
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }

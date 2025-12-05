@@ -165,8 +165,6 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
-    // MARK: - Search Delegate
     func searchText(_ searchText: String) {
         print(searchText)
         
@@ -199,8 +197,6 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
-    // MARK: - TableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return reciver ? 1 : 4
     }
@@ -210,7 +206,6 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             return 1
         } else {
             if section == 3 {
-                // ✅ If no data, show one "No Data Found" cell
                 return filterAssignment.isEmpty ? 1 : filterAssignment.count
             } else {
                 return 1
