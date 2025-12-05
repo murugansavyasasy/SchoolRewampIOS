@@ -369,7 +369,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 cell.outerView.backgroundColor = .white
             case CommonStringFile.VIDEO:
                 cell.imageView.image = UIImage(named: "video (1)")
-//                cell.imageView.image = UIImage(systemName: "play.square.fill")
                 cell.imageView.tintColor = .black
                 cell.outerView.setShadow()
                 cell.outerView.backgroundColor = .white

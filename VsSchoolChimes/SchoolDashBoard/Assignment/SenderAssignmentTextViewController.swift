@@ -563,6 +563,7 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             let item = attachments[adjustedIndex]
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
+            cell.imageViews.tintColor = .clear
             if let image = item.image {
                 cell.imageViews.image = image
             } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
@@ -575,6 +576,7 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             } else if let vido = item.VideoURl{
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
+                cell.imageViews.tintColor = .black
             }else{
                 cell.imageViews.image = nil
             }

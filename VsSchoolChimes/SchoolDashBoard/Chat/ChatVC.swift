@@ -121,7 +121,12 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     }
     
     @IBAction func sendBtnAction(_ sender: Any) {
+        let text = MessgeTextview.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !text.isEmpty, text != TexviewStringFile.Enter_Chat_Description else {
+            return
+        }
         sendChat()
+
     }
     // MARK: - UITableView DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

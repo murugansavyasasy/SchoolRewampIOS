@@ -424,6 +424,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             let item = attachments[adjustedIndex]
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
+            cell.imageViews.tintColor = .clear
             if let image = item.image {
                 cell.imageViews.image = image
             } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
@@ -436,7 +437,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             } else if let vido = item.VideoURl{
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
-                
+                cell.imageViews.tintColor = .black
             }
             else if let vido = URL(string: item.VimeoVideoURL ?? ""){
                 let iconName = getFileIconName(for: vido)

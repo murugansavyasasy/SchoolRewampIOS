@@ -256,7 +256,6 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
      } // reset if needed
      if #available(iOS 14.0, *) {
          MediaPickerManager.shared.onMediaPicked = { picked in
-             
              if let firstMedia = picked.first {
                  CustomAlert.showMediaAlert(for: firstMedia, in: self) {
                      print("Send action tapped")
