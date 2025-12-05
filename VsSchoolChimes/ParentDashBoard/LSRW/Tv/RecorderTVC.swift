@@ -149,7 +149,7 @@ class RecorderTVC: UITableViewCell {
     private func formatTime(_ seconds: Double) -> String {
         let mins = Int(seconds) / 60
         let secs = Int(seconds) % 60
-        return String(format: "%02d:%02d", mins, secs)
+        return String(format: CommonStringFile.Time_formate, mins, secs)
     }
 
     private func showMicPermissionAlert() {

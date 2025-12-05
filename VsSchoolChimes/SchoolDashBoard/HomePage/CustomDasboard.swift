@@ -10,9 +10,7 @@ import UIKit
 class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate, SwitchRollDelegate {
     func didTapProfileImage(from imageView: UIImageView?) {
         guard let tappedImageView = imageView else { return }
-        
         let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
-        
         let vc = PreviewImageVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = transitionDelegate
@@ -62,8 +60,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Register cells
-        recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
-        MenuCollection.register(UINib(nibName: "CustomMenuCVC", bundle: nil), forCellWithReuseIdentifier: "CustomMenuCVC")
+        recentActiveMenuCollection.register(UINib(nibName: CellConfingName.TopCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.TopCVCell)
+        MenuCollection.register(UINib(nibName: CellConfingName.CustomMenuCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CustomMenuCVC)
         
         if checkMutipleSchool() {
             profileImageView.isHidden = true
@@ -90,9 +88,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 PushNotiMsg : pushNotificationId ?? ""
             )
         }
-        
-        
-        
     }
     init(
         comefromNotification: Bool = false,
@@ -161,7 +156,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "staff", "mobile_number": mobile_num ?? ""],
+            parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
             token:token
         ) { [weak self] (result: Result<MenuResponse, Error>) in
@@ -176,19 +171,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.isEmpty ?? true
-                        
-//                        self.pagecontroller.isHidden = details.frequently_used?.count ?? 0 < 2
-//                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
                         self.recentActiveMenuCollection.reloadData()
                         user_inputs.menuList = self.menu_details?.compactMap{$0.name} ?? []
                         if details.is_birthday ?? false{
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
                                 vc.modalPresentationStyle = .formSheet
-                                self.present(vc, animated: true)
-                            }
-                        }
-                        
+                                self.present(vc, animated: true)}}
                     } else {
                         self.menu_details = []
                         self.MenuCollection.reloadData()
@@ -206,7 +195,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     func get_MenuCount() {
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
-            parameters: ["member_type": "staff"],
+            parameters: [COMMON_PARAMETER.member_type:API_PARAMS_HOTCODE.staff],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
@@ -224,7 +213,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         
                         for indexPath in safeIndexPaths {
                             guard let item = self.menu_details?[indexPath.item] else { continue }
-                            
                             if let cell = self.MenuCollection.cellForItem(at: indexPath) as? CustomMenuCVC {
                                 if item.id == Menu_id.MessageFromManagement {
                                     cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
@@ -298,6 +286,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             deviceToken = appDelegate.DeviceToken
         }
+        let model = UIDevice.current.modelName
         
         APIService.shared.makeApi(
             url: ServiceUrl.auth_device_token,
@@ -307,10 +296,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
                 DeviceTokenStringFile.secure_id: secureID,
                 DeviceTokenStringFile.device_info: [
-                    DeviceTokenStringFile.manufacturer: "iPhone",
-                    DeviceTokenStringFile.model: "iPhone12",
-                    DeviceTokenStringFile.device: "iPhone",
-                    DeviceTokenStringFile.brand: "iPhone",
+                    DeviceTokenStringFile.manufacturer: API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.model: model,
+                    DeviceTokenStringFile.device: API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.brand: API_PARAMS_HOTCODE.device_type,
                     DeviceTokenStringFile.os_version: UIDevice.current.systemVersion,
                     DeviceTokenStringFile.app_version: 1
                 ]
@@ -344,13 +333,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 if successMessage.status == true {
                     if let respo = successMessage.data?.first {
                         UserDefaultFileManager
-                            .save_global_Selection(data: respo)
-                        print("resporespo",respo)}
-                    
-                    
-                    else {
-                        print("Device token registration failed")
-                    }
+                            .save_global_Selection(data: respo)}
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -502,13 +485,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == recentActiveMenuCollection {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCVCell", for: indexPath) as! TopCVCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.TopCVCell, for: indexPath) as! TopCVCell
             if let item = recentMenuItems?[indexPath.item] {
                 cell.configure(with: item)
             }
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMenuCVC", for: indexPath) as! CustomMenuCVC
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CustomMenuCVC, for: indexPath) as! CustomMenuCVC
             if let item = menu_details?[indexPath.item] {
                 let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == item.id }
                 let img = UIImage(named: filteredItems.first?.name ?? "school_chimes 2")
@@ -521,47 +504,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let selectedItem = collectionView == recentActiveMenuCollection ? recentMenuItems?[indexPath.row] : menu_details?[indexPath.row]
-//        guard let item = selectedItem else { return }
-//        
-//        Menu_id.staffSelectedMenuId = item.id ?? 0
-//        MenuStringFile.selectedMenuName = item.name ?? ""
-//        
-//        switch item.id {
-//        case 1: navigateOrSchoolList { MenuRedirect.senderAbsenteesReport(from: self) }
-//        case 2: navigateOrSchoolList { MenuRedirect.senderAssignmentNavigate(from: self) }
-//        case 3: navigateOrSchoolList { MenuRedirect.senderMarkAttendence(from: self) }
-//        case 5: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
-//        case 7: MenuRedirect.senderCommunicationNavigate(from: self)
-//        case 8: navigateOrSchoolList { MenuRedirect.senderDailyCollectionNavigate(from: self) }
-//        case 9: MenuRedirect.senderEventNavigate(from: self)
-//        case 14: navigateOrSchoolList { MenuRedirect.senderFeePendingNavigate(from: self) }
-//        case 15: navigateOrSchoolList { MenuRedirect.senderHomeWorkNavigate(from: self) }
-//        case 17: navigateOrSchoolList { MenuRedirect.Senderchat(from: self) }
-//        case 18: MenuRedirect.senderLeaveRequestNavigate(from: self)
-//        case 19: navigateOrSchoolList { MenuRedirect.senderLessonplanNavigate(from: self) }
-//        case 20: navigateOrSchoolList { MenuRedirect.SenderLSRWVCNavigate(from: self) }
-//        case 21: navigateOrSchoolList { MenuRedirect.senderMarkAttendanceNavigate(from: self) }
-//        case 22: MenuRedirect.senderMgmt(from: self)
-//        case 23: noticeBordHistory{ MenuRedirect.senderNoticeboardNavigate(from: self)} 
-//        case 24: MenuRedirect.senderOnlineNavigate(from: self)
-//        case 26: navigateOrSchoolList { MenuRedirect.senderPtmNavigate(from: self) }
-//        case 27: navigateOrSchoolList { MenuRedirect.senderQuiz(from: self) }
-//        case 28: MenuRedirect.senderLeaveRequestNavigate(from: self)
-//        case 29: navigateOrSchoolList { MenuRedirect.senderEventNavigate(from: self) }
-//        case 30: MenuRedirect.senderSchoolNeedsNavigate(from: self)
-//        case 31: navigateOrSchoolList { MenuRedirect.senderSchoolStrength(from: self) }
-//        case 33: navigateOrSchoolList { MenuRedirect.StaffWiseAttendance(from: self) }
-//        case 35: navigateOrSchoolList { MenuRedirect.senderStudentreportNavigate(from: self) }
-//        case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
-//        case 38: break
-//        case 39:MenuRedirect.senderAttachment(from: self)
-//        case 40:navigateOrSchoolList { MenuRedirect.receiverPauckt(from: self) }
-//        default: print("Unknown menuId:", item.id ?? 0)
-//        }
-//    }
-//
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -570,10 +513,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             : menu_details?[indexPath.row]
 
         guard let item = selectedItem else { return }
-
         Menu_id.staffSelectedMenuId = item.id ?? 0
-//        MenuStringFile.selectedMenuName = item.name ?? ""
-
         self.handleMenuSelection(menuId: item.id ?? 0, PushNotiMsg: "")
     }
 
@@ -582,15 +522,11 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
         MenuStringFile.selectedMenuName = menuName
-        
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
             1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 40, 18, 41
         ]
-
         Menu_id.staffSelectedMenuId = menuId
-        print("menuIdmenuIdmenuId",menuId)
-        print("menuNamemenuNamemenuNamemenuName",menuName)
         // All actions with explicit self
         let actions: [Int: () -> Void] = [
             1: { self.MenuRedirect.senderAbsenteesReport(from: self) },
@@ -611,12 +547,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             20: { self.MenuRedirect.SenderLSRWVCNavigate(from: self) },
             21: { self.MenuRedirect.senderMarkAttendanceNavigate(from: self) },
             22: {
-                self.MenuRedirect.senderMgmt(from: self, Notification_MsgId: PushNotiMsg)
-            },
+                self.MenuRedirect.senderMgmt(from: self, Notification_MsgId: PushNotiMsg)},
             23: {
                 self.noticeBordHistory{
-                    self.MenuRedirect.senderNoticeboardNavigate(from: self)
-                }
+                    self.MenuRedirect.senderNoticeboardNavigate(from: self)}
             },
             24: { self.MenuRedirect.senderOnlineNavigate(from: self) },
             26: { self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg) },
@@ -704,14 +638,6 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         return false
     }
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        if scrollView == recentActiveMenuCollection {
-//            let visibleIndexes = recentActiveMenuCollection.indexPathsForVisibleItems.map { $0.item }
-//            if let maxIndex = visibleIndexes.max() {
-//                pagecontroller.currentPage = maxIndex
-//            }
-//        }
-//    }
 }
 
 @available(iOS 14.0, *)
@@ -774,5 +700,57 @@ extension UIAlertController {
         final.append(messageAttr)
 
         self.setValue(final, forKey: "attributedTitle")
+    }
+}
+extension UIDevice {
+    var modelIdentifier: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        return withUnsafePointer(to: &systemInfo.machine.0) { ptr in
+            String(cString: ptr)
+        }
+    }
+
+    var modelName: String {
+        let identifier = self.modelIdentifier
+
+        let map: [String: String] = [
+            // iPhone 8 → iPhone 17 Pro Max
+            "iPhone10,1": "iPhone 8", "iPhone10,4": "iPhone 8",
+            "iPhone10,2": "iPhone 8 Plus", "iPhone10,5": "iPhone 8 Plus",
+            "iPhone10,3": "iPhone X", "iPhone10,6": "iPhone X",
+            "iPhone11,8": "iPhone XR",
+            "iPhone11,2": "iPhone XS",
+            "iPhone11,6": "iPhone XS Max", "iPhone11,4": "iPhone XS Max",
+            "iPhone12,1": "iPhone 11",
+            "iPhone12,3": "iPhone 11 Pro",
+            "iPhone12,5": "iPhone 11 Pro Max",
+            "iPhone13,1": "iPhone 12 mini",
+            "iPhone13,2": "iPhone 12",
+            "iPhone13,3": "iPhone 12 Pro",
+            "iPhone13,4": "iPhone 12 Pro Max",
+            "iPhone14,4": "iPhone 13 mini",
+            "iPhone14,5": "iPhone 13",
+            "iPhone14,2": "iPhone 13 Pro",
+            "iPhone14,3": "iPhone 13 Pro Max",
+            "iPhone14,7": "iPhone 14",
+            "iPhone14,8": "iPhone 14 Plus",
+            "iPhone15,2": "iPhone 14 Pro",
+            "iPhone15,3": "iPhone 14 Pro Max",
+            "iPhone15,4": "iPhone 15",
+            "iPhone15,5": "iPhone 15 Plus",
+            "iPhone16,1": "iPhone 15 Pro",
+            "iPhone16,2": "iPhone 15 Pro Max",
+            "iPhone17,1": "iPhone 16",
+            "iPhone17,2": "iPhone 16 Plus",
+            "iPhone17,3": "iPhone 16 Pro",
+            "iPhone17,4": "iPhone 16 Pro Max",
+            "iPhone18,1": "iPhone 17",
+            "iPhone18,2": "iPhone 17 Plus",
+            "iPhone18,3": "iPhone 17 Pro",
+            "iPhone18,4": "iPhone 17 Pro Max"
+        ]
+
+        return map[identifier] ?? identifier
     }
 }

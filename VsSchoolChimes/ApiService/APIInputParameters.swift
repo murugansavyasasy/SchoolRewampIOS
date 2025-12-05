@@ -18,6 +18,7 @@ class COMMON_PARAMETER{
     static var  academic_year_id = "academic_year_id"
     static var section_ids = "section_ids"
     static var old_password = "old_password"
+    static var member_type = "member_type"
 }
 
 class mobileNumber{
@@ -330,5 +331,44 @@ class addPonintsPackut{
 class get_quizLevel{
     
     static let class_id = "class_id"
+    static let subject_id = "subject_id"
+}
+
+class QuizRequestStringFile{
+    static let title = "title"
+    static let description = "description"
+    static let no_of_question = "no_of_question"
+    static let level = "level"
+    static let level_flag = "level_flag"
+}
+
+class QuizKeys {
+    static let quiz_id = "quiz_id"
+    static let questions = "questions"
+    static let max_mark = "max_mark"
+    static let ok_flag = "ok_flag"
+    static let update_question_bank = "update_question_bank"
+
+    // Question keys
+    static let ques_no = "ques_no"
+    static let chapter = "chapter"
+    static let question = "question"
+    static let a_option = "a_option"
+    static let b_option = "b_option"
+    static let c_option = "c_option"
+    static let d_option = "d_option"
+    static let answer = "answer"
+    static let mark = "mark"
+
+    // File keys
+    static let iframe = "iframe"
+    static let file_size = "file_size"
+    static let thumbnail = "thumbnail"
+    static let file_path = "file_path"
+    static let url = "url"
+    static let type = "type"
+    static let id = "id"
+
+    // Bank keys
     static let subject_id = "subject_id"
 }

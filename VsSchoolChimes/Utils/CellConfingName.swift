@@ -119,5 +119,8 @@ class CellConfingName {
     static let  SlotListTV = "SlotListTV"
     static let  MeetingDataTV = "MeetingDataTV"
     static let  FeedetailTVC = "FeedetailTVC"
+    static let  TopCVCell = "TopCVCell"
+    static let  CustomMenuCVC = "CustomMenuCVC"
+    static let  QuistionTvTableViewCell = "QuistionTvTableViewCell"
     
 }

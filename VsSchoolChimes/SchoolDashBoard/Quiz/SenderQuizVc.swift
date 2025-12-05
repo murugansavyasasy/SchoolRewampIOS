@@ -38,15 +38,13 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         numberOfQuestionText.addDoneButton()
         numberOfQuestionText.keyboardType = .numberPad
         setupPlaceholder()
-        numberOfQuestionText.placeholder = "No of question".translated()
+        numberOfQuestionText.placeholder = MenuStringFile.No_of_question.translated()
         titleText.placeholder = MenuStringFile.Title.translated()
         noOfQuestionDefaultLbl.setRequiredText(noOfQuestionDefaultLbl.text ?? "")
         titleDefaultLbl.setRequiredText(MenuStringFile.Title)
         descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
-        
         nextBtn.layer.cornerRadius = 10
         discriptionsTextFild.layer.cornerRadius = 10
-        
         checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
         checkBox.isUserInteractionEnabled = true
     }
@@ -112,11 +110,11 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         print("Title: \(trimmedTitle), Description: \(trimmedDescription), Count: \(questionCount)")
 
         let params: [String: Any] = [
-            "title": trimmedTitle,
-            "description": trimmedDescription,
-            "no_of_question": questionCount,
-            "level": user_inputs.level,
-            "level_flag": isChecked
+            QuizRequestStringFile.title: trimmedTitle,
+            QuizRequestStringFile.description: trimmedDescription,
+            QuizRequestStringFile.no_of_question: questionCount,
+            QuizRequestStringFile.level: user_inputs.level,
+            QuizRequestStringFile.level_flag: isChecked
         ]
 
         let vc = RecipientVc(nibName: nil, bundle: nil)
