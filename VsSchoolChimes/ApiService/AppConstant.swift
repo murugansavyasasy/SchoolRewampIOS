@@ -250,11 +250,8 @@ struct Menu_id{
     static let  Alert = 36
     static let leaveReq = 18
     static let Upload_Marks = 41
-    
-    
 }
 struct TargetTypes{
-    
     static let school = 1
     static let standard = 2
     static let section = 3
@@ -285,6 +282,12 @@ struct Filecount{
 
 }
 
+class FileTypeConstants {
+    static let publicData = "public.data"
+    static let publicContent = "public.content"
+    static let adobePDF = "com.adobe.pdf"
+    static let publicText = "public.text"
+}
 struct DateInputs{
     
     static let dd_MM_yyyy =  "dd-MM-yyyy"
@@ -443,7 +446,7 @@ class DateFormatterHelpers {
 func formatDuration(_ duration: Int) -> String {
     let minutes = duration / 60
     let seconds = duration % 60
-    return String(format: "%02d:%02d", minutes, seconds)
+    return String(format: CommonStringFile.Time_formate, minutes, seconds)
 }
 
 

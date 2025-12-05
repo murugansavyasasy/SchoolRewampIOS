@@ -17,7 +17,7 @@ protocol HistoryFinishPalyingDelegate: AnyObject {
 }
 class HistoryTC: UITableViewCell {
     
-    var audioPlayUrl = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav"
+    var audioPlayUrl = ""
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
     var updateTimer: Timer?
@@ -39,11 +39,9 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var outerview: ShimmerView2!
     @IBOutlet weak var emergencyMessageBtn: UIButton!
     
-    
     var playIndex: Int? = nil
     weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
     var messageId: String?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -52,9 +50,7 @@ class HistoryTC: UITableViewCell {
         outerview.layer.shadowRadius = 5
         outerview.layer.shadowOpacity = 0.3
         outerview.layer.cornerRadius = 20
-        
         sendbtn.layer.cornerRadius = 4
-        
         datelbl.setFont(style: .body, size: FontSize.BodySize)
         contentlbl.setFont(style: .title, size: FontSize.TitleSize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
@@ -62,7 +58,6 @@ class HistoryTC: UITableViewCell {
         emergencyMessageBtn.isHidden = true
         playerView.isHidden = true
         totaltime.isHidden = true
-       // NewImageView.isHidden = true
         sendbtn.isHidden = true
     }
     
@@ -80,8 +75,6 @@ class HistoryTC: UITableViewCell {
         NotificationCenter.default.removeObserver(self)
     }
 
-    
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         // Invalidate timer if it's active
@@ -103,13 +96,7 @@ class HistoryTC: UITableViewCell {
         playBtn.setImage(ImageName.playbutton, for: .normal)
     }
     
-//    func setupPlayer(with url: URL) {
-//        player = AVPlayer(url: url)
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(playerDidFinishPlaying),
-//                                               name: .AVPlayerItemDidPlayToEndTime,
-//                                               object: player?.currentItem)
-//    }
+
     
     @IBAction func play(_ sender: UIButton) {
         sender.isSelected.toggle()
@@ -132,9 +119,7 @@ class HistoryTC: UITableViewCell {
                     NotificationCenter.default.addObserver(self,
                                                            selector: #selector(playerDidFinishPlaying),
                                                            name: .AVPlayerItemDidPlayToEndTime,
-                                                           object: playerItem)
-                }
-                
+                                                           object: playerItem)}
                 player?.play()
                 playBtn.setImage(ImageName.pausebutton, for: .normal)
                 
@@ -168,16 +153,12 @@ class HistoryTC: UITableViewCell {
 
         @objc func updateSlider() {
             guard let audioPlayer = player, let currentItem = audioPlayer.currentItem else { return }
-
             let totalDuration = CMTimeGetSeconds(currentItem.duration)
             let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-
             guard totalDuration.isFinite && elapsedTime.isFinite else { return }
-
             let currentFormatted = formatTime(elapsedTime)
             let totalFormatted = formatTime(totalDuration)
             lastPlayingduration = currentFormatted
-
             totaltime.text = "\(currentFormatted) / \(totalFormatted)"
             let progress = CGFloat(elapsedTime / totalDuration)
             playerView.progress = progress
@@ -198,10 +179,8 @@ class HistoryTC: UITableViewCell {
         private func updateTimeDisplay() {
             guard let currentItem = player?.currentItem,
                   let currentTime = player?.currentTime() else { return }
-
             let totalDuration = CMTimeGetSeconds(currentItem.duration)
             let elapsedTime = CMTimeGetSeconds(currentTime)
-
             if totalDuration.isFinite && elapsedTime.isFinite {
                 let currentFormatted = formatTime(elapsedTime)
                 let totalFormatted = formatTime(totalDuration)
@@ -216,7 +195,7 @@ class HistoryTC: UITableViewCell {
         private func formatTime(_ seconds: Double) -> String {
             let minutes = Int(seconds) / 60
             let seconds = Int(seconds) % 60
-            return String(format: "%02d:%02d", minutes, seconds)
+            return String(format: CommonStringFile.Time_formate, minutes, seconds)
         }
 
     func configureShimmer() {
@@ -225,8 +204,6 @@ class HistoryTC: UITableViewCell {
         contentlbl.removeShimmer()
         PlayerFullview.removeShimmer()
         playBtn.removeShimmer()
-
-        //NewImageView.isHidden = false
         totaltime.isHidden = false
         playerView.isHidden = false
         sendbtn.isHidden = false

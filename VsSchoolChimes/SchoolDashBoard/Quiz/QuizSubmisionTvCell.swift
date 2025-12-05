@@ -7,7 +7,6 @@
 
 import UIKit
 protocol call: AnyObject{
-    
     func callMobileNumber(indexPath:Int)
 }
 class QuizSubmisionTvCell: UITableViewCell {
@@ -25,10 +24,7 @@ class QuizSubmisionTvCell: UITableViewCell {
     @IBOutlet weak var ANStack: UIStackView!
     @IBOutlet weak var FNBtn: UIButton!
     @IBOutlet weak var ANBtn: UIButton!
-    
-    
     weak var delegate:call?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -39,10 +35,8 @@ class QuizSubmisionTvCell: UITableViewCell {
         classLbl.setFont(style: .body, size: FontSize.BodySize)
         SubmittedOnBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         StatusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
         SubmittedOnBtn.titleLabel?.numberOfLines = 0
         SubmittedOnBtn.titleLabel?.lineBreakMode = .byWordWrapping
-        
         separatorView.isHidden = true
         FNStack.isHidden = true
         ANStack.isHidden = true
@@ -50,14 +44,7 @@ class QuizSubmisionTvCell: UITableViewCell {
         ANBtn.layer.cornerRadius = 10
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     @IBAction func stausBtnAct(_ sender: UIButton) {
         delegate?.callMobileNumber(indexPath: sender.tag)
-        
     }
 }

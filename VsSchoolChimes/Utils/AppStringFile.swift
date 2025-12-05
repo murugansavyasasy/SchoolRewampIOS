@@ -10,6 +10,7 @@ import Foundation
 struct MenuStringFile{
     
     static let Communication = "Communication"
+    static let No_of_question = "No of question"
     static let ImagePdf = "Image/Pdf"
     static let VideoUpload = "Video Upload"
     static let Video = "Video"
@@ -44,6 +45,28 @@ struct MenuStringFile{
     static var selectedMenuName = ""
     static let Title = "Title"
     static let description = "Description"
+    static let selectCorrectAnswer = "Select correct answer"
+    static let addAttachment = "Add Attachment"
+    static let dropYourMarkHere = "Drop Your Mark here"
+    static let addQuestion = "Add Question"
+    static let optionA = "Option A"
+    static let optionB = "Option B"
+    static let optionC = "Option C"
+    static let optionD = "Option D"
+    static let enterOptionA = "Enter Option A"
+    static let enterOptionB = "Enter Option B"
+    static let enterOptionC = "Enter Option C"
+    static let enterOptionD = "Enter Option D"
+    static let enterQuestionHere = "Enter Question here"
+    static let Sent_at = "Sent at "
+    static let Posted_By = "Posted By - "
+    static let Level = "Level "
+    static let Submitted = "Submitted"
+    static let Pending = "Pending"
+    static let Quiz_Submission_List = "Quiz Submission List"
+    static let Create_new = "Create new "
+    static let Update_Existing = "Update Existing "
+    static let All_Schools = "All Schools"
 }
 
 struct ReceiverMenuItems {
@@ -73,6 +96,14 @@ struct ReceiverMenuItems {
 struct AlertstringFile{
     
     static let title = "Confirm Action"
+    static let You_can_only_select_up_to_video_files = "You can only select up to 2 video files."
+    static let Choose_file_type = "Choose file type"
+    static let addAttachment = "Add Attachment"
+    static let You_exceed_the_maximum_number_of_questions = "You exceed the maximum number of questions"
+    static let Limit_Reached = "Limit Reached"
+    static let No_Selection = "No Selection"
+    static let You_didn_select_any_questions_from_the_Question_Bank = "You didn’t select any questions from the Question Bank."
+    static let Missing_Information = "Missing Information"
     static let Please_fill = "Please fill all required field"
     static let voice_or_title_is_required = "Voice and title is required"
     static let enter_title_description = "Enter title and description"
@@ -131,7 +162,8 @@ struct AlertstringFile{
     static let CameraNotAvailable = "Camera Not Available"
     static let devicehasnoCamara = "This device has no camera."
     static let Camera = "Camera"
-    static let Gallery = "Gallery"
+    static let Gallery = "Photos"
+    static let Video = "Video"
     static let PDF = "PDF"
     static let Document = "Document"
     static let Cancel = "Cancel"
@@ -160,13 +192,13 @@ struct AlertstringFile{
     static let submitAttendanceConfirmation = "Are you sure you want to submit the attendance to mark all students as present?"
     static let Mark_All_as_Presents = "Mark All as Present"
     static let Oops = "Oops!"
+    static let No_Data_Found = "No Data Found"
 }
 
 struct classTimeTableStrings {
     static let weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     static let weekDaysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
     static let subjects = ["Mathematics", "Science", "History", "English", "Geography", "Physics", "Chemistry", "Biology", "Computer Science", "Art"]
-
     static var timeArr = ["8 AM", "10 AM",  "12 PM",  "2 PM",  "4 PM",  "6 PM",  "8 PM","10 PM"]
     static var toTimeArr = [ "9 AM",  "11 AM", "1 PM",  "3 PM",  "5 PM",  "7 PM", "9 PM", "11 PM"]
     static let timeGet = "10 AM"
@@ -280,6 +312,7 @@ struct CommonStringFile {
     static let UploadImagepdf = "Upload Image/Document"
     static let UploadImagepdfoptional = "Upload Image/Document (Optional)"
     static let Description = "Description"
+    static let Time_formate = "%02d:%02d"
     static let addDescription = "Add Description"
     static let Starts_on = "Starts on"
     static let Groups = "Groups"

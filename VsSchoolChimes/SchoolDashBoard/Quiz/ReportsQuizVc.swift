@@ -28,7 +28,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         registerCells()
         Get_Quiz()
     }
-    
     // MARK: - Setup
     private func setupUI() {
         searchView.delegate = self
@@ -54,7 +53,7 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     func Get_Quiz() {
         APIService.shared.makeApi(
             url: ServiceUrl.quiz_report,
-            parameters: ["type": "2"],
+            parameters: [QuizKeys.type: "2"],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<senderQuizListSuc, Error>) in
@@ -80,9 +79,8 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     
     @IBAction func search(_ sender: UIButton) {
         sender.isSelected.toggle()
-        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-//        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
-        
+        //        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        //        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         searchView.isHidden = !sender.isSelected
         if sender.isSelected {
             searchView.becomeFirstResponder()
@@ -129,11 +127,9 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
 
 // MARK: - UITableViewDataSource & UITableViewDelegate
 extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CellConfingName.SenderQuizListTvCell,
@@ -141,25 +137,21 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
         ) as? QuizListTvCell else {
             return UITableViewCell()
         }
-        
         let quiz = filteredData[indexPath.row]
         cell.delegate = self
         cell.addQuestionBtnName.tag = indexPath.row
         cell.submittedListBtnName.tag = indexPath.row
-        
         let imageName = images[indexPath.row % images.count]
         cell.DeafultimageView.image = UIImage(named: imageName)
-        
         cell.PlayBtn.isHidden = true
         cell.titleLbl.text = quiz.title
         cell.discretiponsLbl.text = quiz.description
-        cell.exameDateLbl.text = "Sent at ".translated() + formattedDateStatus(
+        cell.exameDateLbl.text = MenuStringFile.Sent_at.translated() + formattedDateStatus(
             from: quiz.sent_time ?? "",
             isTimeNeeded: true)
         cell.subjectLbl.text = quiz.subject
-        cell.postedByLbl.text = "\("Posted By:")".translated() + "\(quiz.sent_by ?? "")"
-        cell.levelLbl.text = "Level ".translated() + String(quiz.level ?? 0)
-        
+        cell.postedByLbl.text = MenuStringFile.Posted_By.translated() + "\(quiz.sent_by ?? "")"
+        cell.levelLbl.text = MenuStringFile.Level.translated() + String(quiz.level ?? 0)
         return cell
     }
     
@@ -176,9 +168,7 @@ extension ReportsQuizVc: UISearchBarDelegate {
         } else {
             filteredData = get_QuizDetails.filter {
                 ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||
-                ($0.subject ?? "").localizedCaseInsensitiveContains(searchText)
-            }
-        }
+                ($0.subject ?? "").localizedCaseInsensitiveContains(searchText)}}
         updateNoDataState()
         tv.reloadData()
     }

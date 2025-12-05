@@ -106,14 +106,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
   
     }
     
-    override func viewDidLayoutSubviews() {
-//        view.applyGradient(
-//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
-    }
-    
     func StyleAndTranslater() {
         filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         search.placeholder = CommonStringFile.Search.translated()
@@ -129,9 +121,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
         dropDown.anchorView = filterBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
-        
         dropDown.direction = .bottom
-        
         dropDown.show()
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
@@ -180,7 +170,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
-        
         // Update data model to mark all students as present/absent
         let isSelectingAll = sender.isSelected
         if isAttandanceMarkingScreen == true{
@@ -208,8 +197,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             for i in 0..<(studentsDetails?.count ?? 0) {
                 studentsDetails?[i].isSelect = isSelectAllEnabled
                 filterData?[i].isSelect = isSelectAllEnabled
-                
-                // Update `selectedRows` to match the state
                 selectedRows[i] = isSelectAllEnabled
             }
             historyTable.reloadData()
@@ -227,10 +214,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     @IBAction func SearchAct(_ sender: UIButton) {
-        
         SearchStack.isHidden.toggle()
-        
-        
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
@@ -239,7 +223,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             SearchStack?.becomeFirstResponder()
         } else {
             filterData = studentsDetails
-//            self.noDataImg.isHidden = !self.searchData.isEmpty
             historyTable.reloadData()
             search.searchTextField.text = ""
             search?.resignFirstResponder()
@@ -260,11 +243,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func recipient_get_student_list(selected_sectionId: String,academic_year_id:Int){
         APIService.shared
             .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [
-                
                 speficStudentStringFile.section_id : selected_sectionId
                 ,speficStudentStringFile.academic_year_id : academic_year_id
-                
-            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <GetStudentlistSuc,
                 Error>
             ) in
@@ -274,7 +255,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             historyTable.isHidden = false
                             studentsDetails = successMessage.data
-                            
                             if var students = studentsDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
@@ -415,7 +395,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 switch ScreenType {
                 case screenType.communication_text:
                     sendtextmessage_communication()
-                    
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     if user_inputs.voice_link.contains("https:") {
                         // Voice link is already uploaded
@@ -750,7 +729,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             let backgroundColor = colorForName(
                 filterData?[indexPath.row].name ?? ""
             )
-            
             cell.NameLbl.text =  filterData?[indexPath.row].name ?? ""
             cell.AdmisionNoLbl.text = filterData?[indexPath.row].admission_no ?? ""
             cell.RollNoLbl.text = filterData?[indexPath.row].roll_no ?? ""
@@ -765,11 +743,8 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             if let select = filterData?[indexPath.row].isSelect {
                 cell.CheckBoxImgview.image = select ? ImageName.checkedSquares: ImageName.uncheckedSquares
             }
-            // Set visibility state
             cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
             cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
-            
-            //             Configure tap action
             cell.tapAction = { [weak self] in
                 self?.handleImageTap(at: indexPath)
             }

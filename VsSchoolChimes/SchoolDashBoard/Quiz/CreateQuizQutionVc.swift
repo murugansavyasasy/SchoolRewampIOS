@@ -9,41 +9,35 @@ import UIKit
 extension CreateQuizQutionVc: QuestionCellDelegate {
     
     func checkboxAction(id: String, isSelected: Bool) {
-            if isSelected {
-                selectedQuestionIds.insert(id)
-            } else {
-                selectedQuestionIds.remove(id)
-            }
-           updateSelectAllButtonState()
+        if isSelected {
+            selectedQuestionIds.insert(id)
+        } else {
+            selectedQuestionIds.remove(id)
         }
+        updateSelectAllButtonState()
+    }
     
     func addAnotherCell(at indexPath: IndexPath) {
-        
         if let errorMessage = validateQuestions() {
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: errorMessage, on: self)
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information, message: errorMessage, on: self)
             return
         }
-        
         questions.insert(QuizQuestiondata(), at: indexPath.row + 1)
         tv.reloadData()
         self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
     }
-        
+    
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata) {
         var existing = questions[indexPath.row]
-
         if let existingId = existing.id {
             existing.id = existingId
         }
-
         if let existingQuizId = existing.quiz_id {
             existing.quiz_id = existingQuizId
         }
-        
         if let newAnswer = model.answer, !newAnswer.isEmpty {
             existing.answer = newAnswer
         }
-
         if let newText = model.correct_answer_text, !newText.isEmpty {
             existing.correct_answer_text = newText
         }
@@ -57,24 +51,24 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         existing.file_path = model.file_path
         questions[indexPath.row] = existing
     }
-        
-        func removeCell(at indexPath: IndexPath) {
-            guard questions.count > 1 else { return }
-            questions.remove(at: indexPath.row)
-            tv.reloadData()
-            self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
-        }
+    
+    func removeCell(at indexPath: IndexPath) {
+        guard questions.count > 1 else { return }
+        questions.remove(at: indexPath.row)
+        tv.reloadData()
+        self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
+    }
     
     func addAttachment(at indexPath: IndexPath, file: FilePaths) {
-           // append the file into question model
+        // append the file into question model
         if questions[indexPath.row].file_path == nil {
             questions[indexPath.row].file_path = []
-           }
-       }
+        }
+    }
 }
 
 class CreateQuizQutionVc: UIViewController {
-   
+    
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var popupBGview: UIView!
     @IBOutlet weak var popupView: UIView!
@@ -95,44 +89,35 @@ class CreateQuizQutionVc: UIViewController {
     var QuestionBankData: [QuestionItem] = []
     var selectedQuestionIds: Set<String> = []
     var titleString = ""
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         popupBGview.isHidden = true
         popupView.layer.cornerRadius = 10
         popupView.layer.shadowColor = UIColor.black.cgColor
         popupView.layer.shadowOpacity = 0.3
         popupView.layer.shadowOffset = CGSize(width: 2, height: 2)
         popupView.layer.shadowRadius = 3
-        
         ImportQuestionBtn.layer.cornerRadius = 10
         CancelBtn.layer.cornerRadius = 10
         sendQuizBtn.layer.cornerRadius = 10
-        
         ImportQuestionBtn.setTitle(QuizListStringFile.Import_Question.translated(), for: .normal)
         CancelBtn.setTitle(CommonStringFile.Cancel.translated(), for: .normal)
         selectAllBtn.setTitle(QuizListStringFile.Select_All.translated(), for: .normal)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-           NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         TitleLbl.text = titleString
-        
-        tv.register(UINib(nibName: "QuistionTvTableViewCell", bundle: nil),
-                forCellReuseIdentifier: "QuistionTvTableViewCell")
+        tv.register(UINib(nibName: CellConfingName.QuistionTvTableViewCell, bundle: nil),
+                    forCellReuseIdentifier: CellConfingName.QuistionTvTableViewCell)
         tv.dataSource = self
         tv.delegate = self
-        
-        QuestionBankTv.register(UINib(nibName: "QuistionTvTableViewCell", bundle: nil),
-                forCellReuseIdentifier: "QuistionTvTableViewCell")
+        QuestionBankTv.register(UINib(nibName: CellConfingName.QuistionTvTableViewCell, bundle: nil),
+                                forCellReuseIdentifier: CellConfingName.QuistionTvTableViewCell)
         QuestionBankTv.dataSource = self
         QuestionBankTv.delegate = self
-        
         addQuestion(id:id ?? "" )
     }
-
+    
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
@@ -141,21 +126,20 @@ class CreateQuizQutionVc: UIViewController {
         tv.contentInset.bottom = keyboardHeight
         tv.scrollIndicatorInsets.bottom = keyboardHeight
     }
-
+    
     @objc private func keyboardWillHide(_ notification: Notification) {
         tv.contentInset.bottom = 0
         tv.scrollIndicatorInsets.bottom = 0
     }
-
+    
     
     
     @IBAction func btnAct(_ sender: UIButton) {
         
         if let errorMessage = validateQuestions() {
-            CustomAlert.showAlertWithOkAction(title: "Missing Information".translated(), message: errorMessage, on: self)
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(), message: errorMessage, on: self)
             return
         }
-        
         submitQuestions()
     }
     
@@ -200,12 +184,9 @@ class CreateQuizQutionVc: UIViewController {
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let res):
-                    
                     if res.status == true{
-                        
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: res.message ?? "", on: self) {
                             self.dismiss(animated: true)
                         }
@@ -213,7 +194,6 @@ class CreateQuizQutionVc: UIViewController {
                         
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: res.message ?? "", on: self)
                     }
-                    
                 case .failure(let error):
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
@@ -225,24 +205,24 @@ class CreateQuizQutionVc: UIViewController {
         // 1. Convert all QuizQuestiondata → questions
         let dictArray: [[String: Any]] = questions.map { q in
             [
-                "ques_no": q.id ?? "",  // use id if available, else ""
-                "chapter": q.chapter,
-                "question": q.question,
-                "a_option": q.a_option,
-                "b_option": q.b_option,
-                "c_option": q.c_option,
-                "d_option": q.d_option,
-                "answer": q.answer ?? "",
-                "mark": q.mark ?? 0,
-                "iframe": "",
-                "file_size": "",
-                "thumbnail": "",
-                "file_path": (q.file_path?.isEmpty ?? true)
-                    ? []
-                    : q.file_path!.map { ["url": $0.url, "type": $0.type] }
+                QuizKeys.ques_no: q.id ?? "",
+                QuizKeys.chapter: q.chapter,
+                QuizKeys.question: q.question,
+                QuizKeys.a_option: q.a_option,
+                QuizKeys.b_option: q.b_option,
+                QuizKeys.c_option: q.c_option,
+                QuizKeys.d_option: q.d_option,
+                QuizKeys.answer: q.answer ?? "",
+                QuizKeys.mark: q.mark ?? 0,
+                QuizKeys.iframe: "",
+                QuizKeys.file_size: "",
+                QuizKeys.thumbnail: "",
+                QuizKeys.file_path:
+                    (q.file_path?.isEmpty ?? true)
+                ? []
+                : q.file_path!.map { [QuizKeys.url: $0.url, QuizKeys.type: $0.type] }
             ]
         }
-        
         // 2. Lookup QuestionBankData by id
         let questionBankLookup: [String: QuestionItem] = Dictionary(
             uniqueKeysWithValues: QuestionBankData.compactMap { item in
@@ -263,43 +243,40 @@ class CreateQuizQutionVc: UIViewController {
         let updateArray: [[String: Any]] = importedQuestions.compactMap { q in
             guard let qid = q.id, let bankItem = questionBankLookup[qid] else { return nil }
             return [
-                "ques_no": qid,                        // use bank id
-                "subject_id": bankItem.subject_id ?? "",
-                "chapter": q.chapter,
-                "question": q.question,
-                "a_option": q.a_option,
-                "b_option": q.b_option,
-                "c_option": q.c_option,
-                "d_option": q.d_option,
-                "answer": q.answer ?? "",
-                "mark": q.mark ?? 0
+                QuizKeys.ques_no: qid,
+                QuizKeys.subject_id: bankItem.subject_id ?? "",
+                QuizKeys.chapter: q.chapter,
+                QuizKeys.question: q.question,
+                QuizKeys.a_option: q.a_option,
+                QuizKeys.b_option: q.b_option,
+                QuizKeys.c_option: q.c_option,
+                QuizKeys.d_option: q.d_option,
+                QuizKeys.answer: q.answer ?? "",
+                QuizKeys.mark: q.mark ?? 0
             ]
         }
+        
         
         // 5. Calculate total marks
         let totalMarks = questions.compactMap { $0.mark }.reduce(0, +)
         
         // 6. Build final params
         return [
-            "quiz_id": id ?? "",
-            "questions": dictArray,
-            "max_mark": totalMarks,
-            "ok_flag": false,
-            "update_question_bank": updateArray
+            QuizKeys.quiz_id: id ?? "",
+            QuizKeys.questions: dictArray,
+            QuizKeys.max_mark: totalMarks,
+            QuizKeys.ok_flag: false,
+            QuizKeys.update_question_bank: updateArray
         ]
+        
     }
     
     func get_QuestionBank_Api(){
-        
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_pick_from_qbank, parameters: ["subject_id": subject_Id ?? ""], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<QuestionsResponse,Error>) in
-            
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_pick_from_qbank, parameters: [QuizKeys.subject_id: subject_Id ?? ""], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<QuestionsResponse,Error>) in
             guard let self = self else {return}
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
-                    
                     if success.status == true {
                         self.QuestionBankData = success.data ?? []
                         self.popupBGview.isHidden = false
@@ -310,17 +287,14 @@ class CreateQuizQutionVc: UIViewController {
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                     }
-                   
-                    
                 case .failure(let failure):
-                    
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
                 }
             }
             
         }
     }
-
+    
     func validateQuestions() -> String? {
         for (i, q) in questions.enumerated() {
             if q.chapter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -353,10 +327,9 @@ class CreateQuizQutionVc: UIViewController {
         }
         return nil // ✅ all good
     }
-
+    
     
     @IBAction func ImportquestionAct(_ sender: Any) {
-        
         get_QuestionBank_Api()
     }
     
@@ -369,34 +342,34 @@ class CreateQuizQutionVc: UIViewController {
         // ✅ First check if nothing is selected
         if selectedQuestionIds.isEmpty {
             CustomAlert.showAlertWithOkAction(
-                title: "No Selection",
-                message: "You didn’t select any questions from the Question Bank.",
+                title: AlertstringFile.No_Selection,
+                message: AlertstringFile.You_didn_select_any_questions_from_the_Question_Bank,
                 on: self
             )
             return
         }
-
+        
         // ✅ Then check the limit
         if selectedQuestionIds.count > noOfQuestion {
             CustomAlert.showAlertWithOkAction(
-                title: "Limit Reached",
+                title: AlertstringFile.Limit_Reached,
                 message: "You exceed the maximum number of questions (\(noOfQuestion)).",
                 on: self
             )
             return
         }
-
+        
         // 1. Remove questions that are no longer selected
         questions.removeAll { quizQ in
             guard let id = quizQ.id else { return false }
             return !selectedQuestionIds.contains(id)
         }
-
+        
         // 2. Add new ones that were selected but not yet in `questions`
         for id in selectedQuestionIds {
             if !questions.contains(where: { $0.id == id }),
                let bankItem = QuestionBankData.first(where: { $0.id == id }) {
-
+                
                 let answerIndex = Int(bankItem.answer ?? "")
                 var correctText: String? = nil
                 if let idx = answerIndex {
@@ -408,7 +381,7 @@ class CreateQuizQutionVc: UIViewController {
                     default: break
                     }
                 }
-
+                
                 let newQuizQ = QuizQuestiondata(
                     id: bankItem.id,
                     quiz_id: nil,
@@ -425,23 +398,23 @@ class CreateQuizQutionVc: UIViewController {
                 questions.append(newQuizQ)
             }
         }
-
+        
         // 3. Refresh main table
         tv.reloadData()
-
+        
         // 4. Dismiss popup
         popupBGview.isHidden = true
-
+        
         QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
     }
-
-
+    
+    
     @IBAction func cancelAct(_ sender: Any) {
         
-            selectedQuestionIds = Set(questions.compactMap { $0.id }) // reset to actual imported
-            popupBGview.isHidden = true
-            QuestionBankTv.reloadData()
-            QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
+        selectedQuestionIds = Set(questions.compactMap { $0.id }) // reset to actual imported
+        popupBGview.isHidden = true
+        QuestionBankTv.reloadData()
+        QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
     }
     
     @IBAction func selectAllAct(_ sender: Any) {
@@ -451,7 +424,7 @@ class CreateQuizQutionVc: UIViewController {
             // Check limit
             if questions.count + QuestionBankData.count > noOfQuestion {
                 CustomAlert.showAlertWithOkAction(
-                    title: "Limit Reached",
+                    title: AlertstringFile.Limit_Reached,
                     message: "You cannot select all because it exceeds the maximum number of questions (\(noOfQuestion)).",
                     on: self
                 )
@@ -468,7 +441,7 @@ class CreateQuizQutionVc: UIViewController {
         QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count + selectedQuestionIds.count)/\(noOfQuestion)"
         updateSelectAllButtonState()
     }
-
+    
     private func updateSelectAllButtonState() {
         let total = QuestionBankData.count
         let selected = selectedQuestionIds.count
@@ -481,7 +454,7 @@ class CreateQuizQutionVc: UIViewController {
         
         QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count + selected)/\(noOfQuestion)"
     }
-
+    
     
 }
 
@@ -495,10 +468,10 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             return QuestionBankData.count
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tv {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuistionTvTableViewCell", for: indexPath) as? QuistionTvTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
                 return UITableViewCell()
             }
             cell.layoutIfNeeded()
@@ -516,7 +489,7 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             )
             return cell
         }else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuistionTvTableViewCell", for: indexPath) as? QuistionTvTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
                 return UITableViewCell()
             }
             
@@ -526,19 +499,19 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             cell.indexPath = indexPath
             cell.questionId = model.id
             cell.delegate = self
-
+            
             // ✅ Use selectedQuestionIds instead of questions
             let isChecked = selectedQuestionIds.contains(model.id ?? "")
             cell.configureQuestionBankCell(with: model, isChecked: isChecked)
-
+            
             return cell
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
 }
 
 struct QuestionModel {
