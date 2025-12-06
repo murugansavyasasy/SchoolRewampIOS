@@ -89,6 +89,13 @@ extension RateUsViewController: RatingDelegate {
     func Submit(_ category: CategoriesSection, suggessions: String) {
         if let index = categorySections?.firstIndex(where: { $0.rating == category.rating }) {
             categorySections?[index] = category
+            for i in 0..<(categorySections?.count ?? 0) {
+                if i != index {
+                    for j in 0..<(categorySections?[i].category?.count ?? 0) {
+                        categorySections?[i].category?[j].selected = false
+                    }
+                }
+            }
         }
         submit = true
         isSelected = false
