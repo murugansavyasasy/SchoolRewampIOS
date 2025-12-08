@@ -656,8 +656,17 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewA
                     if self.versionData?.ratus ?? false {
                         self.presentPopover()
                     }else{
-                        UserDefaultFileManager.saveUserDetails(data: userData)
-                        self.navigateBasedOnUserRole(data: userData)
+                        if userData.otp_sent == true{
+                            let vc = OTPVc(nibName: nil, bundle: nil)
+                            vc.validateMobileData = response.data ?? []
+                            vc.mobile_number = mobile_num
+                            vc.pageType = screenType.isLoginPage
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        }else{
+                            UserDefaultFileManager.saveUserDetails(data: userData)
+                            self.navigateBasedOnUserRole(data: userData)
+                        }
                     }
                 case .failure(let error):
                     print("Validation error: \(error.localizedDescription)")
@@ -671,7 +680,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewA
     private func navigateBasedOnUserRole(data: UserData) {
         let isStaff = data.user_details?.is_staff == true
         let isParent = data.user_details?.is_parent == true
-        
         if isStaff && isParent {
             presentViewController(PriorityVC.self)
         } else if isStaff {
@@ -752,7 +760,6 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewA
             appFlowChecking()
             return
         }
-        
         let alert = UIAlertController(
             title: versionData.toaster_title,
             message: versionData.new_version_updates,

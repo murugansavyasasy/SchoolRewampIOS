@@ -24,8 +24,8 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var isStudent:Bool?
     // MARK: - Data
     var menuArray: [MenuItem] = [
-        MenuItem(name: "DashBoard".translated(), icon: "house"),
-        MenuItem(name: "View Profile".translated(), icon: "person.circle"),
+        MenuItem(name: "Home".translated(), icon: "house"),
+        MenuItem(name: "Profile".translated(), icon: "person.circle"),
         MenuItem(name: "Settings".translated(), icon: "gear"),
         MenuItem(name: "Help".translated(), icon: "questionmark.circle")
     ]
@@ -123,7 +123,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let selectedItem = menuArray[indexPath.row]
         
         switch selectedItem.name {
-        case "View Profile".translated():
+        case "Profile".translated():
             delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent ?? false))
             
         case "Settings".translated():

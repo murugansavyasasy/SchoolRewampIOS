@@ -32,21 +32,18 @@ class OutpassVC: UIViewController {
         super.viewDidLoad()
 
         if let Leave = leaveInfo{
-            
             NameLbl.text = leaveInfo?.student_name
-            StandardLbl.text = (leaveInfo?.class_name ?? "") + " - " + (leaveInfo?.section_name ?? "")
-            AppliedOnLbl.text = leaveInfo?.applied_on?.convertToTargetDateFormat()
-            FromDateLbl.text = leaveInfo?.leave_from?.convertToTargetDateFormat()
-            ToDateLbl.text = leaveInfo?.leave_to?.convertToTargetDateFormat()
-            NoOfDaysLbl.text = (leaveInfo?.no_of_days ?? "") + " Days"
-            ReasonLbl.text = leaveInfo?.reason ?? ""
-            ApprovedByLbl.text = leaveInfo?.approved_by
+            StandardLbl.text = (Leave.class_name ?? "") + " - " + (Leave.section_name ?? "")
+            AppliedOnLbl.text = Leave.applied_on?.convertToTargetDateFormat()
+            FromDateLbl.text = Leave.leave_from?.convertToTargetDateFormat()
+            ToDateLbl.text = Leave.leave_to?.convertToTargetDateFormat()
+            NoOfDaysLbl.text = (Leave.no_of_days ?? "") + " Days"
+            ReasonLbl.text = Leave.reason ?? ""
+            ApprovedByLbl.text = Leave.approved_by
         }
         
         let imageUrl = URL(string: UserDefaultFileManager.get_child_Details()?.profile ?? "")
-        
         ImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(systemName: "Default_profile"))
-        
         ImageView.layer.cornerRadius = ImageView.frame.height / 2
         
         [outpassBaseView, outpassView].forEach {
@@ -75,15 +72,4 @@ class OutpassVC: UIViewController {
         
         dismiss(animated: true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
