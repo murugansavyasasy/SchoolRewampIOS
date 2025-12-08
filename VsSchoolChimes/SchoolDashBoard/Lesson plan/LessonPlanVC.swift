@@ -11,7 +11,7 @@ import UIKit
 @available(iOS 15.0, *)
 class LessonPlanVC: UIViewController {
     
-
+    
     @IBOutlet weak var MenuNameLbl: UILabel!
     @IBOutlet weak var searchIconBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
@@ -25,9 +25,7 @@ class LessonPlanVC: UIViewController {
     @IBOutlet weak var MyClassBtn: UIButton!
     
     
-    //let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
-    let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
-    let colours1 = ["AttendenceColor","Clr","Color","lesson1","lesson3"]
+    
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ViewLessonData: [LessonPlanDetail]?
     var ReqestType = "myclass"
@@ -157,7 +155,7 @@ class LessonPlanVC: UIViewController {
         searchBar.resignFirstResponder()
         lesson_plan_staff_report_Api()
     }
-  
+    
     @IBAction func MyClassAct(_ sender: Any) {
         addUnderline(to: MyClassBtn, unselectedButton: AllClassBtn)
         ReqestType = LessonPlanStringFile.myclass
@@ -224,13 +222,13 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let lesson = SearchData?[indexPath.row] else { return }
-            let vc = ViewLessonVC(nibName: nil, bundle: nil)
-            vc.Reqest_Type = ReqestType
-            vc.LesonPlanReport = lesson
-            vc.SubjectId = lesson.section_subject_id
-            vc.IsDeleteHiden = ReqestType == "myclass" ? false : true
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+        let vc = ViewLessonVC(nibName: nil, bundle: nil)
+        vc.Reqest_Type = ReqestType
+        vc.LesonPlanReport = lesson
+        vc.SubjectId = lesson.section_subject_id
+        vc.IsDeleteHiden = ReqestType == "myclass" ? false : true
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @objc func ViewbtnAct(_ sender: UIButton) {

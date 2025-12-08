@@ -87,6 +87,10 @@ struct MenuStringFile{
     static let  You_cannot_select_a_past_time_for_today_date   = "You cannot select a past time for today's date."
     static let  End_time_must_be_greater_than_start_time   = "End time must be greater than start time."
     static let  Blocked_on   = "Blocked on: "
+    static let  ChaptersCompleted   = "Chapters Completed"
+    static let  Create   = "Create"
+    static let  Update   = "Update"
+    static let  DaysApplication   = " Days Application"
     
 }
 
@@ -117,6 +121,8 @@ struct ReceiverMenuItems {
 struct AlertstringFile{
     
     static let title = "Confirm Action"
+    static let toapprovethisleaverequest   = "Are you sure you want to approve this leave request?"
+    static let toRejectthisleaverequest   = "Are you sure you want to reject this leave request?"
     static let Please_enter_reson_for_blocking = "Please enter reson for blocking"
     static let Block = "Block"
     static let You_have_blocked_this_user = "You have blocked this user."

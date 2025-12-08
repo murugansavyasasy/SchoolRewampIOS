@@ -66,25 +66,25 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         BlockBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         BlockBtn.layer.cornerRadius = 8
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
         MessgeTextview.delegate = self
         getChat()
     }
- 
-
+    
+    
     override func viewDidLayoutSubviews() {
         PopupView.layer.cornerRadius = 10
         Popuptopview.layer.cornerRadius = 10
         Popuptopview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         Popuptopview.clipsToBounds = true
     }
- 
+    
     //MARK: Api Call functions
     func getChat(){
         APIService.shared
             .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: [ChatAPIKeys.section_id : staffMembersData.section_id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
-               result:Result <StaffChatResponse,Error>
+                result:Result <StaffChatResponse,Error>
             ) in
                 switch result {
                 case .success(let successMessage):
@@ -190,24 +190,24 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
     
- @objc func keyboardWillShow(notification: NSNotification) {
-     if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-         if MessgeTextview.isFirstResponder && self.view.frame.origin.y == 0 {
-             self.view.frame.origin.y -= keyboardSize.height
-         }
-     }
- }
-
- @objc func keyboardWillHide(notification: NSNotification) {
-     if self.view.frame.origin.y != 0 {
-         self.view.frame.origin.y = 0
-     }
- }
- 
- @IBAction func backBtn(_ sender: Any) {
-     dismiss(animated: true)
- }
- 
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if MessgeTextview.isFirstResponder && self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    @IBAction func backBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     @IBAction func addAttachmenAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
             MediaPickerManager.shared.pickedMedia = []
@@ -222,7 +222,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
             MediaPickerManager.shared.showPicker(from: self)
         }
     }
- 
+    
     @IBAction func closeBtnAct(_ sender: Any) {
         replyFullview.isHidden = true
         MessgeTextview.isHidden = true
@@ -231,14 +231,14 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         view.endEditing(true)
     }
     
- 
+    
     @IBAction func sendBtnAction(_ sender: UIButton) {
         if sender == replyBtn {
             Send_Answer_Api(replyType: "2")
         }else{
             Send_Answer_Api(replyType: "1")
         }
- }
+    }
     
     @IBAction func ClosePopupAct(_ sender: UIButton) {
         hidePopup()
@@ -259,7 +259,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
             self.PopupContainerview.alpha = 1
         }
     }
-
+    
     func hidePopup() {
         reasonTextfield.text = ""
         UIView.animate(withDuration: 0.3, animations: {
@@ -269,28 +269,28 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         }
     }
     
-
- func textViewDidBeginEditing(_ textView: UITextView) {
-     if MessgeTextview.text == TexviewStringFile.Enter_Chat_Description {
-         MessgeTextview.text = ""
-         MessgeTextview.textColor = .black
-     }
-     
- }
-
- func textViewDidEndEditing(_ textView: UITextView) {
-     if textView.text == "" {
-         MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-         MessgeTextview.textColor = .lightGray
-     }
- }
- 
- 
- func resetTextView() {
-     MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-     MessgeTextview.textColor = .lightGray
-     MessgeTextview.resignFirstResponder()
- }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if MessgeTextview.text == TexviewStringFile.Enter_Chat_Description {
+            MessgeTextview.text = ""
+            MessgeTextview.textColor = .black
+        }
+        
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
+            MessgeTextview.textColor = .lightGray
+        }
+    }
+    
+    
+    func resetTextView() {
+        MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
+        MessgeTextview.textColor = .lightGray
+        MessgeTextview.resignFirstResponder()
+    }
 }
 
 
@@ -301,24 +301,24 @@ extension chatWithStudentVc: UITableViewDelegate,UITableViewDataSource,ChatTable
         return chatDataDetails?.count ?? 0
     }
     
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StaffChatTV, for: indexPath) as! StaffChatTV
-           
-           let message = chatDataDetails?[indexPath.row]
-           cell.QuestionLbl.text = message?.question
-           cell.studentNameLbl.text = message?.student_name
-           cell.questionDateLbl.text = formattedDateStatus(from: message?.created_on ?? "", isTimeNeeded: true)
-           cell.replyTypeLbl.text = message?.reply_type == "2" ? Privatereply : Publicreply
-           cell.answerLbl.text = message?.answer
-           cell.answerDateLbl.text = formattedDateStatus(from: message?.answer_on ?? "", isTimeNeeded: true)
-           let isAnswered = !(message?.answer_on == "")
-           cell.edit(edit: true, delete: true, selectedId: message?.id ?? "", isChangeAnswer: isAnswered, isBlock: message?.is_blocked ?? false)
-           cell.answerView.isHidden = !isAnswered
-           cell.replyTypeLbl.isHidden = !isAnswered
-           cell.delegate = self
-           
-           return cell
-       }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StaffChatTV, for: indexPath) as! StaffChatTV
+        
+        let message = chatDataDetails?[indexPath.row]
+        cell.QuestionLbl.text = message?.question
+        cell.studentNameLbl.text = message?.student_name
+        cell.questionDateLbl.text = formattedDateStatus(from: message?.created_on ?? "", isTimeNeeded: true)
+        cell.replyTypeLbl.text = message?.reply_type == "2" ? Privatereply : Publicreply
+        cell.answerLbl.text = message?.answer
+        cell.answerDateLbl.text = formattedDateStatus(from: message?.answer_on ?? "", isTimeNeeded: true)
+        let isAnswered = !(message?.answer_on == "")
+        cell.edit(edit: true, delete: true, selectedId: message?.id ?? "", isChangeAnswer: isAnswered, isBlock: message?.is_blocked ?? false)
+        cell.answerView.isHidden = !isAnswered
+        cell.replyTypeLbl.isHidden = !isAnswered
+        cell.delegate = self
+        
+        return cell
+    }
     
     // MARK: - ChatTableViewCellDelegate
     func didSlideToReply(for message: String,studentName: String) {
@@ -338,16 +338,13 @@ extension chatWithStudentVc: UITableViewDelegate,UITableViewDataSource,ChatTable
                 questionLbl.text = message.question
             }
             MessgeTextview.becomeFirstResponder()
-           
-        }else {
             
+        }else {
             if let message = chatDataDetails?.first(where: { $0.id == id }) {
                 selectedMessage = message
             }
-            
-           if selectedMessage?.is_blocked == true{
+            if selectedMessage?.is_blocked == true{
                 self.Block_Api()
-                
             }else{
                 showPopup()
             }

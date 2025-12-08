@@ -38,30 +38,21 @@ class ReportStudentTVC: UITableViewCell {
     
     var smsNumber = ""
     var Email = ""
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         if let originalImage = ImageName.idCard {
             // Resize the image to match outerView's size
             let resizedImage = originalImage.resized(to: outerView.bounds.size)
-            
             // Create the background UIImageView
             let backgroundImageView = UIImageView(image: resizedImage)
             backgroundImageView.frame = outerView.bounds
             backgroundImageView.contentMode = .scaleAspectFill
-            //            backgroundImageView.tintColor = .blue
             backgroundImageView.layer.cornerRadius = 10
             backgroundImageView.clipsToBounds = true
             
-//            backgroundImageView.alpha = 0.6
-            // Add the background UIImageView to outerView
             outerView.insertSubview(backgroundImageView, at: 0)
-            
-            // Ensure resizing adjusts dynamically with outerView
             backgroundImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         }
-        
         // Style outerView
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
@@ -76,16 +67,11 @@ class ReportStudentTVC: UITableViewCell {
         profileView.layer.shadowOffset = CGSize(width: 4, height: 4)
         profileView.layer.shadowOpacity = 0.5
         profileView.layer.shadowRadius = 4
-        
         confic()
-//        hiddenui(true)
-//        animationview()
-
     }
     func hiddenui(_ hide:Bool){
         shimmerView.changeHeightAndAnimate(0,0, 60, 60, top: 5)
         outerView.isHidden = hide
-//        playbtl.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
         shimmerView.backgroundColor = color
     }
@@ -100,7 +86,7 @@ class ReportStudentTVC: UITableViewCell {
         
     }
     func confic(){
-
+        
         //MARK: Label Font
         
         tcherLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -109,7 +95,7 @@ class ReportStudentTVC: UITableViewCell {
         admissionLbl.setFont(style: .body, size: FontSize.BodySize)
         dobLbl.setFont(style: .body, size: FontSize.BodySize)
         dobTitleLbl.setFont(style: .body, size: FontSize.BodySize)
-       
+        
         studentNmae.setFont(style: .title, size: FontSize.TitleSize)
         genderLbl.setFont(style: .body, size: FontSize.BodySize)
         fatherName.setFont(style: .body, size: FontSize.BodySize)
@@ -117,7 +103,7 @@ class ReportStudentTVC: UITableViewCell {
         
         rollNoLbl.setFont(style: .body, size: FontSize.BodySize)
         rollNo.setFont(style: .body, size: FontSize.BodySize)
-       
+        
         standerdLbl.setFont(style: .title, size: FontSize.BodySize)
         genderTitle.setFont(style: .body, size: FontSize.BodySize)
         emailBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -140,34 +126,23 @@ class ReportStudentTVC: UITableViewCell {
         if let phoneURL = URL(string: "tel://\(phoneNumber)"),
            UIApplication.shared.canOpenURL(phoneURL) {
             UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
-        } else {
-            print("Phone app is not available on this device or invalid phone number.")
         }
     }
     @IBAction func emailAction(_ sender: UIButton) {
         let email = Email // Replace with the recipient's email
-        
         let emailURL = "mailto:\(email)?"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
         if let url = URL(string: emailURL ?? ""),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            
-            print("Mail app is not available or invalid email address.")
         }
     }
     @IBAction func smsAction(_ sender: UIButton) {
         let phoneNumber = smsNumber // Replace with the recipient's phone number
-        
         let smsURL = "sms:\(phoneNumber)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
         if let url = URL(string: smsURL ?? ""),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            print("Messages app is not available or invalid phone number.")
         }
     }
 }

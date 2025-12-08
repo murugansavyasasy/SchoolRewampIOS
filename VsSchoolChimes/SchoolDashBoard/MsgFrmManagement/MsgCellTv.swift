@@ -8,33 +8,26 @@
 import UIKit
 
 class MsgCellTv: UITableViewCell {
-
+    
     @IBOutlet weak var readView: UIView!
     @IBOutlet weak var schoolName: UILabel!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var cardView: UIView!
-    // Emergency Banner
     @IBOutlet weak var emergencyBannerView: UIView!
     @IBOutlet weak var emergencyIconImageView: UIImageView!
     @IBOutlet weak var emergencyTitleLabel: UILabel!
-    @IBOutlet weak var emergencyBannerHeightConstraint: NSLayoutConstraint! // To hide/show
-    
-    // Profile Section
-    @IBOutlet weak var profileContainerView: UIView! // For the circle gradient
+    @IBOutlet weak var emergencyBannerHeightConstraint: NSLayoutConstraint! // To
+    @IBOutlet weak var profileContainerView: UIView!
     @IBOutlet weak var profileInitialsLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleContainerView: UIView!
     @IBOutlet weak var roleLabel: UILabel!
-    
-    // Content Section
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    
-    // Bottom Section
     @IBOutlet weak var timeIconImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var viewButton: UIButton!
-  
+    
     // MARK: - Lifecycle
     var delegate : ViewAttachments?
     var viewBtnTitle : String?
@@ -43,17 +36,17 @@ class MsgCellTv: UITableViewCell {
         super.awakeFromNib()
         setupUI()
     }
-
+    
     @IBAction func viewBtn(_ sender: UIButton) {
         delegate?.viewAttachment(sender: sender)
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        // Update gradients if needed on layout changes
-//        applyGradients()
-//    }
-//    
+    //    override func layoutSubviews() {
+    //        super.layoutSubviews()
+    //        // Update gradients if needed on layout changes
+    //        applyGradients()
+    //    }
+    //    
     // MARK: - Setup
     private func setupUI() {
         self.backgroundColor = .clear
@@ -80,7 +73,7 @@ class MsgCellTv: UITableViewCell {
         emergencyTitleLabel.textColor = .red
         emergencyIconImageView.image = UIImage(systemName: "light.beacon.max.fill")
         emergencyIconImageView.tintColor = .red
-
+        
         
         // Profile
         profileContainerView.layer.cornerRadius = 24 // 48x48
@@ -135,26 +128,26 @@ class MsgCellTv: UITableViewCell {
         
     }
     
-//    private func applyGradients() {
-//
-//        emergencyBannerView.layer.sublayers?
-//            .filter { $0 is CAGradientLayer }
-//            .forEach { $0.removeFromSuperlayer() }
-//
-//        let bannerGradient = CAGradientLayer()
-//
-//        bannerGradient.colors = [
-//            UIColor.systemRed.cgColor,
-//            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 6.0).cgColor // ✅ light white mix
-//        ]
-//
-//        bannerGradient.startPoint = CGPoint(x: 0, y: 0.5)
-//        bannerGradient.endPoint = CGPoint(x: 1, y: 0.5)
-//        bannerGradient.frame = emergencyBannerView.bounds
-//
-//        emergencyBannerView.layer.insertSublayer(bannerGradient, at: 0)
-//    }
-
-
+    //    private func applyGradients() {
+    //
+    //        emergencyBannerView.layer.sublayers?
+    //            .filter { $0 is CAGradientLayer }
+    //            .forEach { $0.removeFromSuperlayer() }
+    //
+    //        let bannerGradient = CAGradientLayer()
+    //
+    //        bannerGradient.colors = [
+    //            UIColor.systemRed.cgColor,
+    //            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 6.0).cgColor // ✅ light white mix
+    //        ]
+    //
+    //        bannerGradient.startPoint = CGPoint(x: 0, y: 0.5)
+    //        bannerGradient.endPoint = CGPoint(x: 1, y: 0.5)
+    //        bannerGradient.frame = emergencyBannerView.bounds
+    //
+    //        emergencyBannerView.layer.insertSublayer(bannerGradient, at: 0)
+    //    }
+    
+    
     
 }

@@ -23,7 +23,7 @@ class ViewLessonVC: UIViewController, SelectedId {
             }
         }
     }
-
+    
     @IBOutlet weak var creteBtn: UIButton!
     @IBOutlet weak var BAckBtn: UIButton!
     @IBOutlet weak var SearchBar: UISearchBar!
@@ -49,9 +49,9 @@ class ViewLessonVC: UIViewController, SelectedId {
     override func viewDidLoad() {
         super.viewDidLoad()
         menuNameLbl.configureAsBackTitle(
-                firstLine: MenuStringFile.LessonPlan,
-                secondLine: staffDetails?.school_name ?? ""
-            )
+            firstLine: MenuStringFile.LessonPlan,
+            secondLine: staffDetails?.school_name ?? ""
+        )
         creteBtn.setShadow(cornerRadius: creteBtn.frame.width/2)
         creteBtn.isHidden = IsDeleteHiden
         NoDataImg.isHidden = true
@@ -189,28 +189,28 @@ class ViewLessonVC: UIViewController, SelectedId {
                 result: Result<CommonApiSuc,
                 Error>
             ) in
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else{return}
-                switch result{
-                case .success(let success):
-                    let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
-                    if success.status == true {
-                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
-                            self.ViewLessonData?.removeAll{$0.particular_id == particularID}
-                            self.FilteredData?.removeAll{$0.particular_id == particularID}
-                            self.searchData?.removeAll{$0.particular_id == particularID}
-                            self.TableView.reloadData()
-                        })
-                    }else {
-                        CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else{return}
+                    switch result{
+                    case .success(let success):
+                        let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
+                        if success.status == true {
+                            CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
+                                self.ViewLessonData?.removeAll{$0.particular_id == particularID}
+                                self.FilteredData?.removeAll{$0.particular_id == particularID}
+                                self.searchData?.removeAll{$0.particular_id == particularID}
+                                self.TableView.reloadData()
+                            })
+                        }else {
+                            CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                        }
+                        
+                    case .failure(let error):
+                        CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                     }
-                    
-                case .failure(let error):
-                    CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
             }
-        }
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -259,7 +259,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         let cell = TableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTVC, for: indexPath) as! LessonPlanTVC
         let lesson = FilteredData?[indexPath.row]
         cell.titleNameLbl.text = LesonPlanReport?.subject_name
-        cell.chapterLbl.text = "Chapters Completed".translated() + (
+        cell.chapterLbl.text = MenuStringFile.ChaptersCompleted.translated() + (
             LesonPlanReport?.items_completed ?? ""
         )
         switch lesson?.lesson_plan_status{
@@ -392,5 +392,5 @@ extension ViewLessonVC: UISearchBarDelegate {
         NoDataLbl.text = (FilteredData?.isEmpty ?? false) ? "No LessonPlan Found" : ""
         TableView.reloadData()
     }
-
+    
 }

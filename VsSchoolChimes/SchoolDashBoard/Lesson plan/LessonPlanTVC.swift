@@ -48,7 +48,6 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         let height: CGFloat = (hasEdit && hasDelete) ? 90 : (hasEdit || hasDelete ? 50 : 0)
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: height)
         popoverContentVC.modalPresentationStyle = .popover
-        
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
@@ -59,7 +58,6 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             popoverContentVC.modalPresentationStyle = .overFullScreen
             popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         }
-
         if let topVC = getCurrentViewController(), height > 0 {
             topVC.present(popoverContentVC, animated: true, completion: nil)
         }
@@ -69,12 +67,9 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func configure(with details: [LessonDetailItem]) {
         // Clear old views
         subTitlleStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
         var pillItems: [LessonDetailItem] = []
-        
         for detail in details {
             guard let name = detail.name, let value = detail.value else { continue }
-            
             switch name {
             case "Topic":
                 titleNameLbl.text = value

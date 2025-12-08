@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */; };
-		1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */; };
 		187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */; };
 		187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */; };
 		187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */; };
@@ -301,8 +299,6 @@
 		8483F6412E6AF89100E2C886 /* PunchUserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483F63E2E6AF89100E2C886 /* PunchUserDetailsTVC.swift */; };
 		8488061B2DF6A963004806BF /* SubmissionTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848806192DF6A963004806BF /* SubmissionTVC.swift */; };
 		8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8488061A2DF6A963004806BF /* SubmissionTVC.xib */; };
-		84883C4E2EBC77D5005108AD /* PunchAttendaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */; };
-		84883C4F2EBC77D5005108AD /* PunchAttendaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
 		8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8489D9EA2DFBF07700D7226A /* FeePendingTVC.xib */; };
 		8489D9EC2DFBF07700D7226A /* FeePendingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D9E92DFBF07700D7226A /* FeePendingTVC.swift */; };
@@ -729,8 +725,6 @@
 /* Begin PBXFileReference section */
 		0DC7D6C4BDF7577FC4E3DADD /* Pods-School Chimes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-School Chimes.release.xcconfig"; path = "Target Support Files/Pods-School Chimes/Pods-School Chimes.release.xcconfig"; sourceTree = "<group>"; };
 		11488136D5686E65FD0FC70E /* Pods_School_Chimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_Chimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideVideoViewController.swift; sourceTree = "<group>"; };
-		1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideVideoViewController.xib; sourceTree = "<group>"; };
 		187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromManagementViewController.swift; sourceTree = "<group>"; };
 		187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageFromManagementViewController.xib; sourceTree = "<group>"; };
 		187CF5BD2D13F009001422CE /* WeekDaysNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDaysNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1036,8 +1030,6 @@
 		8483F63F2E6AF89100E2C886 /* PunchUserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchUserDetailsTVC.xib; sourceTree = "<group>"; };
 		848806192DF6A963004806BF /* SubmissionTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionTVC.swift; sourceTree = "<group>"; };
 		8488061A2DF6A963004806BF /* SubmissionTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmissionTVC.xib; sourceTree = "<group>"; };
-		84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchAttendaceVC.swift; sourceTree = "<group>"; };
-		84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchAttendaceVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
 		8489D9E92DFBF07700D7226A /* FeePendingTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeePendingTVC.swift; sourceTree = "<group>"; };
 		8489D9EA2DFBF07700D7226A /* FeePendingTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeePendingTVC.xib; sourceTree = "<group>"; };
@@ -1451,7 +1443,6 @@
 		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
 		84AB0FFC2E78E094001160AD /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
 		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
-		84C765B52EC48C8700D78358 /* Message */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Message; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
 		84E0FBF72D8E73D800CACCFE /* SchoolList */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SchoolList; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -1498,15 +1489,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1861BEE92CE61DC70095BF28 /* Video */ = {
-			isa = PBXGroup;
-			children = (
-				1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */,
-				1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */,
-			);
-			path = Video;
-			sourceTree = "<group>";
-		};
 		187CF48F2D113524001422CE /* MsgFrmManagement */ = {
 			isa = PBXGroup;
 			children = (
@@ -1693,21 +1675,6 @@
 				189E99802CE3794A00FE98A5 /* NotificationService.swift */,
 			);
 			path = ImageNotificationService;
-			sourceTree = "<group>";
-		};
-		189E99DC2CE4925F00FE98A5 /* SchoolSide */ = {
-			isa = PBXGroup;
-			children = (
-				189E99DD2CE4927000FE98A5 /* ImagePdf */,
-			);
-			path = SchoolSide;
-			sourceTree = "<group>";
-		};
-		189E99DD2CE4927000FE98A5 /* ImagePdf */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ImagePdf;
 			sourceTree = "<group>";
 		};
 		18D718542D0D471A00E9EDA3 /* DailyCollection */ = {
@@ -2226,15 +2193,6 @@
 			path = VideoPreviewVC;
 			sourceTree = "<group>";
 		};
-		84883C4B2EBC779F005108AD /* PunchAttendaceVc */ = {
-			isa = PBXGroup;
-			children = (
-				84883C4C2EBC77D5005108AD /* PunchAttendaceVC.swift */,
-				84883C4D2EBC77D5005108AD /* PunchAttendaceVC.xib */,
-			);
-			path = PunchAttendaceVc;
-			sourceTree = "<group>";
-		};
 		848CC16A2D899E4000CD0255 /* Otp */ = {
 			isa = PBXGroup;
 			children = (
@@ -2705,8 +2663,6 @@
 			isa = PBXGroup;
 			children = (
 				FABA6E772ED5776B00278807 /* Exam Mark */,
-				84C765B52EC48C8700D78358 /* Message */,
-				84883C4B2EBC779F005108AD /* PunchAttendaceVc */,
 				84DE94992E5324F7008E1BF4 /* Quiz */,
 				847F62992E12703600EE5180 /* SenderLSRW */,
 				FA2A3FB72DB0CA6C0000AF55 /* Sender Attachment */,
@@ -2726,8 +2682,6 @@
 				18926D252D04140B002BBB97 /* PendingFeeReport */,
 				18926D342D041D54002BBB97 /* ImportantInfo */,
 				FAFF9DD12D6C7B7A00498368 /* PTM */,
-				1861BEE92CE61DC70095BF28 /* Video */,
-				189E99DC2CE4925F00FE98A5 /* SchoolSide */,
 				84EFF9D02CCC7C8800C11C26 /* HomePage */,
 				849978422CEF1FE5007D45BA /* Attendance */,
 				849970C82CF8752400800B07 /* Communication */,
@@ -3491,7 +3445,6 @@
 				849DD1612D9668B00027910D /* Biometric */,
 				84AB0FFC2E78E094001160AD /* CvCell */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
-				84C765B52EC48C8700D78358 /* Message */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
 			);
@@ -3696,7 +3649,6 @@
 				847F62B42E12ADAA00EE5180 /* LSRWActivitesVC.xib in Resources */,
 				FAD8BDA82E66CDD100C7CD53 /* BookedSlotTV.xib in Resources */,
 				18926C642D02DE81002BBB97 /* TestTVC.xib in Resources */,
-				84883C4E2EBC77D5005108AD /* PunchAttendaceVC.xib in Resources */,
 				849AD0352D1A841C002DEC07 /* StrengthTvCell.xib in Resources */,
 				849AD0362D1A841C002DEC07 /* SchoolStrengthVC.xib in Resources */,
 				18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */,
@@ -3738,7 +3690,6 @@
 				8479003B2EE14A05007EB35B /* SideTvcell.xib in Resources */,
 				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
 				8483D2222EBF1F6200C326A6 /* ClaimCouponVc.xib in Resources */,
-				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
 				FABA6E782ED5776B00278807 /* staffExamMarkVC.xib in Resources */,
 				FABA6E792ED5776B00278807 /* ExamActivitiesCV.xib in Resources */,
@@ -4195,7 +4146,6 @@
 				FA7014D22E7D76CD00B3C012 /* AttendanceMarkingVC.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
 				FA6CD8A12E3DEEC500C146AB /* OutpassVC.swift in Sources */,
-				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
@@ -4252,7 +4202,6 @@
 				84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */,
 				848126D92D91820500BE6979 /* CountryListVC.swift in Sources */,
 				84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */,
-				84883C4F2EBC77D5005108AD /* PunchAttendaceVC.swift in Sources */,
 				84BB5EB02D11337E00AD0C87 /* ExamsListCVCell.swift in Sources */,
 				FA4709532E39FF1000764E28 /* WeeklyReportTV.swift in Sources */,
 				84017F7E2E44942A006CB477 /* certificateHstryCell.swift in Sources */,

@@ -11,7 +11,6 @@ import FSCalendar
 
 class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate, call {
     func callMobileNumber(indexPath: Int) {
-        
         makePhoneCall(to: absentStudentData[indexPath].primary_mobile ?? "")
     }
     
@@ -25,14 +24,12 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     @IBOutlet weak var calanderHeighnt: NSLayoutConstraint!
     @IBOutlet weak var totalLbl: UILabel!
     @IBOutlet weak var progres: UIProgressView!
-    
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     @IBOutlet weak var abesentCountLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var classNameLbl: UILabel!
-    
     @IBOutlet weak var scrollview: UIScrollView!
     @IBOutlet weak var calanderFulView: UIView!
     @IBOutlet weak var calendar: FSCalendar!
@@ -49,7 +46,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     var sectionWiseArray: [SectionAbsentees] = []
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.dateFormat = DateInputs.dd_MM_yyyy
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
@@ -74,7 +71,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         fullview.backgroundColor = .clear
         studentLbl.isHidden = true
         let formatter = DateFormatter()
-        formatter.dateFormat = "EE MMM dd, yyyy"
+        formatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         // current date string in dd-MM-yyyy
         let currentDateString = formatter.string(from: Date())
         dateLbl.text = currentDateString
@@ -109,8 +106,6 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
                 UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: nil)
-            } else {
-                print("Device cannot make calls")
             }
         }
     }
@@ -139,7 +134,6 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         calendar.isDate(eventDate, inSameDayAs: today)}
                     
                     if !hasEventToday {
-                        print("No absentee event today.")
                         self.dateLbl.isHidden = !hasEventToday
                         self.cvIcon.isHidden = !hasEventToday
                         self.infoStack.isHidden = !hasEventToday
@@ -468,9 +462,7 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
             updateProgress(
                 absentees: "\(info.totalAbsentees)",
                 total: "\(info.studentCounts)")
-            
         } else {
-            print("No data found for this date")
             noRecordView.isHidden = false
             fullview.isHidden = true
         }
@@ -516,10 +508,8 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if velocity.y > 0 {
-            // Swipe up → collapse
             calendar.setScope(.week, animated: true)
         } else if velocity.y < 0 {
-            // Swipe down → expand
             calendar.setScope(.month, animated: true)
         }
     }

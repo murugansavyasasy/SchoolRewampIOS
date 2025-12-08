@@ -396,3 +396,12 @@ class ChatAPIKeys {
     static let section_id = "section_id"
     static let detail_id = "detail_id"
 }
+class LessonPlanAPIKeys {
+
+    static let activity = "activity"
+    static let mobileNumber = "mobile_number"
+    static let userType = "user_type"
+    static let menuId = "menu_id"
+    static let fieldId = "field_id"
+    static let value = "value"
+}
