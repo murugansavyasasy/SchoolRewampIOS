@@ -39,11 +39,8 @@ class OTPVc: UIViewController {
         
         BottomView.layer.cornerRadius = 40
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        
-        
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         BackBtn.layer.cornerRadius = BackBtn.frame.width / 2
-        
         OtpContentLbl.setFont(style: .body, size: FontSize.BodySize)
         ResendLbl.setFont(style: .body, size: FontSize.BodySize)
         DidnotReciveOtpLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -57,21 +54,15 @@ class OTPVc: UIViewController {
         }
         
         if  pageType == screenType.isForgotPassword{
-            
             OtpContentLbl.text =  otpContent
             DidnotReciveOtpLbl.text = didnotReciveMessage
             
         }else{
             OtpContentLbl.text = (validateMobileData.first?.message ?? "")
-            
             DidnotReciveOtpLbl.text = (validateMobileData.first?.more_info ?? "")
             //+ (mobile_number ?? "") + "  "
         }
         
-        
-        
-        
-        // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -86,11 +77,8 @@ class OTPVc: UIViewController {
         )
         
         setupOTPTextFields()
-        
-        
         let callUsGesture = UITapGestureRecognizer(target: self,action: #selector(showDialOptions))
         callUsLbl.addGestureRecognizer(callUsGesture)
-        
         checkAutoFillPermission()
     }
     
@@ -102,51 +90,44 @@ class OTPVc: UIViewController {
         dismiss(animated: true)
     }
     
-     @objc func showDialOptions() {
+    @objc func showDialOptions() {
         doneButtonAction()
         
-         var dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
-         
-         if pageType == screenType.isForgotPassword {
-          dialNumbersString = forgotpasswordData.first?.dial_numbers ?? ""
-         }
-         
+        var dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
+        
+        if pageType == screenType.isForgotPassword {
+            dialNumbersString = forgotpasswordData.first?.dial_numbers ?? ""
+        }
+        
         let dialNumbers = dialNumbersString.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-
+        
         guard !dialNumbers.isEmpty else {
             print("No numbers available")
             return
         }
-
+        
         let alertController = UIAlertController(title: "Choose a Number", message: nil, preferredStyle: .actionSheet)
-
+        
         for number in dialNumbers {
             let action = UIAlertAction(title: number, style: .default) { _ in
                 self.callNumber(phoneNumber: number)
             }
             alertController.addAction(action)
         }
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
-
-
-     // Function to dial the selected number
-     func callNumber(phoneNumber: String) {
-     if let url = URL(string: "tel://\(phoneNumber)"),
-     UIApplication.shared.canOpenURL(url) {
-     UIApplication.shared.open(url)
-     } else {
-     print("Cannot open dial pad")
-     }
-     }
     
-   
-    
-    
-    
+    func callNumber(phoneNumber: String) {
+        if let url = URL(string: "tel://\(phoneNumber)"),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            print("Cannot open dial pad")
+        }
+    }
     
     
     @IBAction func validationBtn(_ sender: Any) {
@@ -165,10 +146,10 @@ class OTPVc: UIViewController {
         otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
         
         for (index, textField) in otpFields.enumerated() {
-            textField.textContentType = .oneTimeCode // Enables OTP Auto-Fill from SMS
-            textField.isSecureTextEntry = false // Ensure OTP is visible
+            textField.textContentType = .oneTimeCode
+            textField.isSecureTextEntry = false
             textField.delegate = self
-            textField.tag = index // Assign a tag to each text field
+            textField.tag = index
             textField.textAlignment = .center
             textField.keyboardType = .numberPad
             textField.font = UIFont.systemFont(ofSize: 24)
@@ -181,7 +162,6 @@ class OTPVc: UIViewController {
         otpTextField1.becomeFirstResponder()
     }
     
-    // Optionally, collect the entire OTP when needed (for submission)
     func collectOTP() -> String {
         let otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
         return otpFields.compactMap { $0?.text }.joined()
@@ -232,22 +212,17 @@ class OTPVc: UIViewController {
     @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
               let text = label.attributedText?.string else { return }
-        
         let resendRange = (text as NSString).range(of: "Resend")
         if resendRange.location == NSNotFound { return }
-        
         let tapLocation = gesture.location(in: label)
-        
         let textStorage = NSTextStorage(attributedString: label.attributedText!)
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: label.bounds.size)
         textContainer.lineFragmentPadding = 0
         textContainer.maximumNumberOfLines = label.numberOfLines
         textContainer.lineBreakMode = label.lineBreakMode
-        
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
-        
         let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
         if NSLocationInRange(index, resendRange) {
@@ -265,15 +240,11 @@ class OTPVc: UIViewController {
     
     func Validate_OTP(mobileNumber : String , otp : String) {
         
-        APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
-                COMMON_PARAMETER.mobile_number :  mobileNumber,
-                OTP_PARAMETER.otp :  otp
-                
-            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+        APIService.shared.makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
+            COMMON_PARAMETER.mobile_number :  mobileNumber,
+            OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
                 result: Result<ValidateOTPSuc,
-                Error>
-            ) in
+                Error>) in
                 switch result {
                 case .success(let successMessage):
                     DispatchQueue.main.async { [weak self] in
@@ -295,9 +266,7 @@ class OTPVc: UIViewController {
                                 vc.mobile_number = mobileNumber
                                 present(vc, animated: true)
                                 
-                            }
-                            
-                            else if(UserDefaultFileManager
+                            }else if(UserDefaultFileManager
                                 .getUserDetails()?.is_password_updated == false){
                                 
                                 let vc = CreatePasswordVc(nibName: nil,bundle: nil)
@@ -305,8 +274,7 @@ class OTPVc: UIViewController {
                                 vc.createNewPassword = true
                                 vc.mobile_number = mobileNumber
                                 present(vc, animated: true)
-                            }
-                            else {
+                            }else {
                                 
                                 let password = UserDefaultFileManager.getLoginCredentials()?.pwd
                                 UserDefaultFileManager
@@ -317,16 +285,11 @@ class OTPVc: UIViewController {
                                 if(UserDefaultFileManager
                                     .getUserDetails()?.user_details?.is_staff == true) &&  (
                                         UserDefaultFileManager
-                                            .getUserDetails()?.user_details?.is_parent == true
-                                    ){
-                                    let vc = PriorityVC(
-                                        nibName: nil,
-                                        bundle: nil
-                                    )
+                                            .getUserDetails()?.user_details?.is_parent == true){
+                                    let vc = PriorityVC(nibName: nil,bundle: nil)
                                     vc.modalPresentationStyle = .fullScreen
                                     present(vc, animated: true)
-                                }
-                                else if(UserDefaultFileManager
+                                }else if(UserDefaultFileManager
                                     .getUserDetails()?.user_details?.is_staff == true){
                                     
                                     if(UserDefaultFileManager
@@ -335,83 +298,55 @@ class OTPVc: UIViewController {
                                             .getUserDetails()?.user_details?.staff_role == PriorityType.is_principal){
                                         if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1)
                                         {
-                                            let vc = PriorityVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
+                                            let vc = PriorityVC(nibName: nil,bundle: nil)
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
-                                        }
-                                        else{
+                                        }else{
                                             if let data = UserDefaultFileManager
                                                 .getUserDetails()?.user_details?.staff_details?.first{
                                                 UserDefaultFileManager.saveStaffDetails(data: data)
                                             }
                                             
-                                            let vc = TapBarVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
                                             vc.login_astype = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }
                                         
-                                    }
-                                    else{
-                                        
-                                        //
+                                    }else{
                                         if let data = UserDefaultFileManager
                                             .getUserDetails()?.user_details?.staff_details?.first{
                                             UserDefaultFileManager.saveStaffDetails(data: data)
                                         }
-                                        
-                                        
-                                        let vc = TapBarVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
+                                        let vc = TapBarVC(nibName: nil, bundle: nil)
                                         vc.login_astype = 1
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
                                     
-                                }
-                                else if(UserDefaultFileManager
+                                }else if(UserDefaultFileManager
                                     .getUserDetails()?.user_details?.is_parent == true){
                                     
                                     if(
                                         UserDefaultFileManager
                                             .getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
                                     ){
-                                        let vc = PriorityVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        
+                                        let vc = PriorityVC(nibName: nil,bundle: nil)
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
-                                    }
-                                    else{
-                                        
+                                    } else{
                                         if let data = UserDefaultFileManager
                                             .getUserDetails()?.user_details?.child_details?.first{
                                             UserDefaultFileManager.saveChildDetails(data: data)
                                         }
                                         
-                                        let vc = TapBarVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
+                                        let vc = TapBarVC(nibName: nil,bundle: nil)
                                         vc.login_astype = 2
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
                                 }
-                                
                             }
-                            
-                            
                         }else{
                             DispatchQueue.main.async {
                                 
@@ -453,8 +388,6 @@ class OTPVc: UIViewController {
                 case .success(let response):
                     if response.status == true {
                         DispatchQueue.main.async {
-                            // ✅ Handle successful validation here
-                            // Example:
                             print("User validated successfully")
                         }
                     } else {
@@ -478,17 +411,10 @@ class OTPVc: UIViewController {
                 }
             }
     }
-    
-    
 }
 
-// MARK: - ✅ Text Field Delegate Functions
 @available(iOS 14.0, *)
 extension OTPVc : UITextFieldDelegate{
-    
-    
-    
-    
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         let text = textField.text ?? ""
@@ -496,14 +422,14 @@ extension OTPVc : UITextFieldDelegate{
         if text.count == 1 {
             let nextTag = textField.tag + 1
             if nextTag < otpFields.count {
-                otpFields[nextTag].becomeFirstResponder() // Move to next field
+                otpFields[nextTag].becomeFirstResponder()
             } else {
-                textField.resignFirstResponder() // Hide keyboard if last digit entered
+                textField.resignFirstResponder()
             }
         } else if text.count == 0 {
             let prevTag = textField.tag - 1
             if prevTag >= 0 {
-                otpFields[prevTag].becomeFirstResponder() // Move back if deleted
+                otpFields[prevTag].becomeFirstResponder()
             }
         }
         
@@ -513,36 +439,11 @@ extension OTPVc : UITextFieldDelegate{
             
         }
     }
-    
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        // Allow backspace for first two fields and move focus to the previous field
-//        
-//        print("rrrrr")
-//        if string.isEmpty {
-//            if textField.tag == 0 /*|| textField.tag == 1*/ {
-//                return true // Allow backspace on first two fields
-//            } else {
-//                let previousTextField = otpFields[textField.tag - 1]
-//                
-//                DispatchQueue.main.async {
-//                    previousTextField.becomeFirstResponder()
-//                }
-//                
-//                return true
-//            }
-//        }
-//        
-//        // Allow only one character per field
-//        return textField.text?.count == 0
-//    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Detect paste (more than 1 character)
         if string.count > 1 {
             let characters = Array(string)
             var index = 0
-
+            
             for field in otpFields {
                 if index < characters.count {
                     field.text = String(characters[index])
@@ -551,15 +452,11 @@ extension OTPVc : UITextFieldDelegate{
                 }
                 index += 1
             }
-
-            // Move focus to last filled field
             let lastIndex = min(characters.count, otpFields.count - 1)
             otpFields[lastIndex].becomeFirstResponder()
-
-            return false // Prevent default paste behavior
+            
+            return false
         }
-
-        // Handle backspace
         if string.isEmpty {
             if textField.tag > 0 {
                 let previousTextField = otpFields[textField.tag - 1]
@@ -569,40 +466,35 @@ extension OTPVc : UITextFieldDelegate{
             }
             return true
         }
-
-        // Allow only one character per field
         return textField.text?.count == 0
     }
-
+    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
-
-        // Find the lowest point among your text field, labels, and button
-        let elements: [UIView] = [otpTextField1, ResendLbl, DidnotReciveOtpLbl, callUsLbl] // Add all relevant elements
+        
+        let elements: [UIView] = [otpTextField1, ResendLbl, DidnotReciveOtpLbl, callUsLbl]
         let bottomMost = elements.map {
             $0.convert($0.bounds, to: self.view).maxY
         }.max() ?? 0
-
+        
         let keyboardTop = self.view.frame.height - keyboardFrame.height
-
-        // Only move up if the bottom-most element is hidden by the keyboard
         if bottomMost > keyboardTop {
-            let overlap = bottomMost - keyboardTop + 20 // padding
+            let overlap = bottomMost - keyboardTop + 20
             UIView.animate(withDuration: 0.3) {
                 self.view.frame.origin.y = -overlap
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) {
             self.view.frame.origin.y = 0
         }
     }
-
+    
     
     @objc func doneButtonAction() {
         view.endEditing(true)

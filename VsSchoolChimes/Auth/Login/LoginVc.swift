@@ -372,7 +372,6 @@ extension LoginVc: UITextFieldDelegate {
         textField.text = finalText
     }
     
-    
     func removeCountryCodeAndSpaces(from phone: String) -> String {
         let pattern = "^\\+\\d{1,3}\\s*"
         var phoneWithoutCountryCode = phone

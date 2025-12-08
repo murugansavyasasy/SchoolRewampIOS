@@ -6,7 +6,21 @@
 //
 
 import UIKit
+// MARK: - Section Models
+struct Section {
+    let title: String
+    let items: [String]
+}
 
+struct Image {
+    let title: String
+    let uiImages: [UIImage?]
+    
+    init(title: String, Imageitems: [String]) {
+        self.title = title
+        self.uiImages = Imageitems.map { UIImage(systemName: $0) ?? UIImage(named: $0) }
+    }
+}
 @available(iOS 14.0, *)
 class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     func viewAttachment(sender: UIButton) {
@@ -24,6 +38,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     }
     
     // MARK: - Outlets
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var SettingspageHeading: UILabel!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var topView: UIView!
@@ -34,6 +49,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     var delegate: BaktoHome?
     var passVale = 1
     var Language: String?
+    var hideBack = false
     private var popoverOverlayView: UIView?
     // MARK: - Section Data
     lazy var sections: [Section] = [
@@ -103,7 +119,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        backBtn.isHidden = hideBack
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         section = sections
         SettingspageHeading.text = MenuTapbar.shared.Settings
@@ -128,10 +144,19 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
         tableview.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil),
                            forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
     }
-    
+    @IBAction func back(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         section = sections
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
@@ -146,7 +171,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.SettingHeaderView) as! SettingHeaderView
         header.headerLabel.text = sections[section].title.translated()
-        header.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
+        header.headerLabel.setFont(style: .title, size: FontSize.BodySize)
         return header
     }
     
@@ -154,8 +179,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         return 40
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-
-        // Only last section should show footer
         if section == sections.count - 1 {
             let footer = UIView()
             footer.backgroundColor = .clear
@@ -326,21 +349,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - Section Models
-struct Section {
-    let title: String
-    let items: [String]
-}
-
-struct Image {
-    let title: String
-    let uiImages: [UIImage?]
-    
-    init(title: String, Imageitems: [String]) {
-        self.title = title
-        self.uiImages = Imageitems.map { UIImage(systemName: $0) ?? UIImage(named: $0) }
-    }
-}
 @available(iOS 14.0, *)
 extension SettingsViewController {
     private func presentPopover() {
