@@ -26,35 +26,28 @@ class IntractwithStudentVc: UIViewController {
     var getStandardDetails:[StaffMember]?
     var filteredData:[StaffMember]?
     var BlockList: [BlockedStudent]?
-    
+    var STAFFCHAT = "STAFFCHAT"
     override func viewDidLoad() {
         super.viewDidLoad()
         
         popupContainerView.isHidden = true
         popupContainerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        
         popupView.layer.cornerRadius = 10
-        
         backBtn.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: StaffDetails?.school_name ?? "")
-        
         searchBar.delegate = self
         searchBar.isHidden = true
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
         searchBar.placeholder = CommonStringFile.Search
-        
         imgView.isHidden = true
         noDataFoundLbl.isHidden = true
-        
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.interactTvcell)
         tv.delegate = self
         tv.dataSource = self
-        
         getStaff()
-        
-        blockListTV.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
+        blockListTV.register(UINib(nibName: CellConfingName.SubmitedStudentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SubmitedStudentTVC)
         blockListTV.delegate = self
         blockListTV.dataSource = self
     }
@@ -101,22 +94,16 @@ class IntractwithStudentVc: UIViewController {
         APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_blocked_students, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[weak self] (result:Result<BlockedStudentsResponse,Error>) in
             
             guard let self = self else {return}
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
-                    
                     self.BlockList = success.data
-                    
-                    // CustomAlert.showAlertWithOkAction(title: "No Data", message: success.message ?? "", on: self) {}
                     self.showPopup()
                     self.NodataView.isHidden = !(self.BlockList?.isEmpty ?? false)
                     self.popupNodataLbl.text = success.message
                     self.showPopup()
                     self.blockListTV.reloadData()
-                   
-                    
+    
                 case .failure(let failure):
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {}
                     self.NodataView.isHidden = false
@@ -130,28 +117,22 @@ class IntractwithStudentVc: UIViewController {
         
         let alert = CustomAlert()
         
-        alert.showAlertCancel(title: AlertstringFile.Confirm, message: "Are you sure want to Unblock this Student?", actionLbl1: "Yes", actionLbl2: AlertstringFile.Cancel, on: self) {
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Unblock_this_Student, actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.Cancel, on: self) {
             
             let param: [String:Any] = [
-                "student_id" : id,
-                "is_block" : false,
-                "reason" : ""
+                ChatAPIKeys.student_id : id,
+                ChatAPIKeys.is_block : false,
+                ChatAPIKeys.reason : ""
             ]
             
             APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: self.StaffDetails?.access_token ?? "") { [weak self]
                 (result: Result<CommonApiSuc,Error>) in
-                
                 guard let self = self else {return}
-                
                 DispatchQueue.main.async {
-                    
                     switch result {
                     case .success(let success):
-                        
                         if success.status == true {
-                            
                             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
-                                
                                 if var blockList = self.BlockList,
                                    let index = blockList.firstIndex(where: { $0.id == id }) {
                                     blockList.remove(at: index)
@@ -166,7 +147,6 @@ class IntractwithStudentVc: UIViewController {
                         }
                         
                     case .failure(let failure):
-                        
                         print("Error",failure.localizedDescription)
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {}
                     }
@@ -181,21 +161,17 @@ class IntractwithStudentVc: UIViewController {
     func readStatusApi(sectionId:String, completion: (()->Void)? = nil){
         
         let param : [String:Any] = [
-            "type" : "STAFFCHAT",
-            "detail_id" : sectionId
+            ChatAPIKeys.Types : STAFFCHAT,
+            ChatAPIKeys.detail_id: sectionId
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: param, type: ApitTypeSringFile.POST, token: StaffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
             
             guard let self = self else {return}
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
-                   
                     if success.status == true{
-                        
                         if let index = self.getStandardDetails?.firstIndex(where: {$0.section_id == sectionId}) {
                             self.getStandardDetails?[index].unread_count = 0
                         }
@@ -205,9 +181,7 @@ class IntractwithStudentVc: UIViewController {
                                 self.tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: UITableView.RowAnimation.automatic)
                         }
                     }
-                    
                     completion?()
-                    
                 case .failure(let failure):
                     print(failure.localizedDescription)
                     completion?()
@@ -221,12 +195,10 @@ class IntractwithStudentVc: UIViewController {
     }
     
     @IBAction func blockListAct(_ sender: Any) {
-        
         get_blockList_Api()
     }
     
     @IBAction func popupDismissAct(_ sender: Any) {
-        
         hidePopup()
     }
     
@@ -280,14 +252,12 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView == tv {
-            
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: CellConfingName.interactTvcell,
                 for: indexPath
             ) as? interactTvcell else {
                 return UITableViewCell()
             }
-            
             cell.selectionStyle = .none
             let datas = filteredData?[indexPath.row]
             
@@ -326,16 +296,14 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             return cell
         }else {
             
-            let cell = blockListTV.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as! SubmitedStudentTVC
+            let cell = blockListTV.dequeueReusableCell(withIdentifier: CellConfingName.SubmitedStudentTVC, for: indexPath) as! SubmitedStudentTVC
             
             let student = BlockList?[indexPath.row]
-            
             cell.studentNameLbl.text = student?.name
             if let letter = student?.name?.first{
                 cell.initialBtn.setTitle(String(letter).uppercased(), for: .normal)
             }
-            
-            cell.submitDate.text = "Blocked on: " + (student?.blocked_on ?? "")
+            cell.submitDate.text = MenuStringFile.Blocked_on + (student?.blocked_on ?? "")
             cell.statusView.layer.cornerRadius = 10
             cell.statusView.backgroundColor = .systemBlue
             cell.statusView.setTitleColor(.white, for: .normal)

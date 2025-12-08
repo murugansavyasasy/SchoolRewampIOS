@@ -642,10 +642,37 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 
 @available(iOS 14.0, *)
 extension CustomDasboard: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView == recentActiveMenuCollection
-        ? CGSize(width: 200, height: 90)
-        : CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let isRecentMenu = (collectionView == recentActiveMenuCollection)
+
+        switch UIDevice.current.userInterfaceIdiom {
+
+        case .phone:
+            return isRecentMenu
+            ? CGSize(width: 200, height: 90)
+            : CGSize(
+                width: (collectionView.bounds.width - 32) / 2,
+                height: 100
+            )
+
+        case .pad:
+            return isRecentMenu
+            ? CGSize(width: 260, height: 110)
+            : CGSize(
+                width: (collectionView.bounds.width - 48) / 3,
+                height: 120
+            )
+
+        case .mac:
+            return CGSize(width: 280, height: 120)
+
+        default:
+            return CGSize(width: 200, height: 100)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

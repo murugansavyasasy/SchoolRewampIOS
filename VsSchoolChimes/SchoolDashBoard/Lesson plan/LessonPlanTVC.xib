@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -52,13 +52,13 @@
                                                 <state key="normal" title="1"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVe-75-sO4">
-                                                <rect key="frame" x="25.000000000000004" y="0.0" width="63.333333333333343" height="20"/>
+                                                <rect key="frame" x="24.999999999999996" y="0.0" width="50.666666666666657" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwl-fP-6Vz">
-                                                <rect key="frame" x="93.333333333333343" y="0.0" width="20" height="20"/>
+                                                <rect key="frame" x="80.666666666666657" y="0.0" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="QMP-NB-GPI"/>
                                                     <constraint firstAttribute="height" constant="20" id="zOU-WG-Rk2"/>
@@ -68,11 +68,24 @@
                                                 <state key="normal" image="dot.circle.fill" catalog="system"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Admin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0aP-aD-GTf">
-                                                <rect key="frame" x="118.33333333333336" y="0.0" width="158.66666666666663" height="20"/>
+                                                <rect key="frame" x="105.66666666666664" y="0.0" width="146.33333333333337" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wCr-kb-DWl">
+                                                <rect key="frame" x="257" y="0.0" width="20" height="20"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="hzf-v6-WDk"/>
+                                                    <constraint firstAttribute="width" constant="20" id="kJj-Bv-Gip"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.059000000359999999" green="0.53520187340000003" blue="0.059000000359999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="checkmark.arrow.trianglehead.counterclockwise" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -105,19 +118,22 @@
                                     <constraint firstAttribute="height" constant="20" id="E51-uY-GrK"/>
                                     <constraint firstAttribute="width" constant="20" id="FEI-1w-olG"/>
                                 </constraints>
-                                <color key="tintColor" red="0.059000000359999999" green="0.53520187340000003" blue="0.059000000359999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="checkmark.arrow.trianglehead.counterclockwise" catalog="system">
+                                <state key="normal" image="dots">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                 </state>
+                                <connections>
+                                    <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="seG-Fc-gsZ"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="osU-fc-cLa">
-                                <rect key="frame" x="10" y="91" width="352" height="106"/>
+                                <rect key="frame" x="10" y="91" width="352" height="131"/>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lT4-Sq-mwA">
-                                <rect key="frame" x="312" y="207" width="55" height="25"/>
+                                <rect key="frame" x="367" y="232" width="0.0" height="0.0"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQn-hm-jSC">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQn-hm-jSC">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="CaY-V6-cHD"/>
@@ -129,8 +145,8 @@
                                             <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pvo-zG-Db7"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pe6-eH-lfp">
-                                        <rect key="frame" x="25" y="0.0" width="30" height="25"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pe6-eH-lfp">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="25"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Edit">
@@ -177,12 +193,13 @@
             <connections>
                 <outlet property="EditBtn" destination="KQn-hm-jSC" id="nq7-sU-uNb"/>
                 <outlet property="EditBtn1" destination="pe6-eH-lfp" id="R72-SJ-0d7"/>
+                <outlet property="ThreeDot" destination="nhJ-KM-xrN" id="Vjq-xF-PYR"/>
                 <outlet property="chapterLbl" destination="A0A-Qh-F2S" id="Fuj-UG-6ql"/>
                 <outlet property="iconBtn" destination="4a0-Wc-3Co" id="TK5-8C-Q59"/>
                 <outlet property="levelBtn" destination="JUA-9j-h3h" id="5n1-vl-JMn"/>
                 <outlet property="outerView" destination="ded-pW-i6L" id="v1T-zv-4Bo"/>
                 <outlet property="rollBtn" destination="0aP-aD-GTf" id="rmg-9J-nl7"/>
-                <outlet property="statusBtn" destination="nhJ-KM-xrN" id="pw3-2z-7YS"/>
+                <outlet property="statusBtn" destination="wCr-kb-DWl" id="8SP-NE-lTh"/>
                 <outlet property="subTitlleStack" destination="osU-fc-cLa" id="hCq-Jy-9Yc"/>
                 <outlet property="titleNameLbl" destination="dXZ-RP-4C5" id="Npd-Jf-vx4"/>
             </connections>
@@ -193,6 +210,7 @@
         <image name="book 1" width="48" height="48"/>
         <image name="checkmark.arrow.trianglehead.counterclockwise" catalog="system" width="119" height="128"/>
         <image name="dot.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="dots" width="32" height="32"/>
         <image name="pencil" width="42.666667938232422" height="42.666667938232422"/>
         <namedColor name="Red1">
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

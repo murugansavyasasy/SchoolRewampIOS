@@ -71,14 +71,16 @@ class MessageFromManagementViewController: UIViewController {
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.separatorStyle = .none
+//        tv.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         FilterCV.isHidden = true
         updateNoDataUI(isEmpty: true)
     }
     
     private func setupTableView() {
-        tv.register(UINib(nibName: CellConfingName.MsgTvCell, bundle: nil),
-                    forCellReuseIdentifier: CellConfingName.MsgTvCell)
+        tv.register(UINib(nibName: "MsgCellTv", bundle: nil),
+                    forCellReuseIdentifier: "MsgCellTv")
         tv.dataSource = self
         tv.delegate = self
         tv.rowHeight = UITableView.automaticDimension
@@ -431,28 +433,30 @@ extension MessageFromManagementViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MsgTvCell, for: indexPath) as? MsgTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MsgCellTv", for: indexPath) as? MsgCellTv else {
             return UITableViewCell()
         }
-        
-        let message = filteredData[indexPath.row]
-        configureCell(cell, with: message, at: indexPath.row)
+        let item = filteredData[indexPath.row]
+       configure(with: item, cell, at: indexPath.row)
         return cell
     }
     
-    private func configureCell(_ cell: MsgTvCell, with message: ManagemantMessageData, at index: Int) {
-        let displayText = formattedDateStatus(from: message.date ?? "")
-        cell.senderNamelbl.text = message.sent_by
-        cell.timeAndDateLbl.text = "\(displayText)  \(message.time ?? "")"
-        cell.titleLbl.text = message.title
-        cell.descrptionLb.text = message.description
-        cell.descrptionLb.isHidden = message.description?.isEmpty ?? true
-        cell.alphbetLbl.text = shortName(from: message.sent_by ?? "")
-        cell.readView.isHidden = !(message.is_unread ?? false)
-        cell.rollBtn.setTitle(message.role?.capitalized, for: .normal)
-        cell.schoolNameLbl.text = message.school_name
-        cell.viewBtn.tag = index
+    
+    private func configure(with data: ManagemantMessageData,_ cell: MsgCellTv,at index: Int) {
+        let displayText = formattedDateStatus(from: data.date ?? "")
+        cell.nameLabel.text = data.sent_by
+        cell.roleLabel.text = data.role
+        cell.titleLabel.text = data.title
+        cell.roleContainerView.isHidden = data.role == ""
+        cell.descriptionLabel.text = data.description
+        cell.timeLabel.text = "\(displayText)  \(data.time ?? "")"
+        cell.profileInitialsLabel.text = shortName(from: data.sent_by ?? "")
+        cell.schoolName.text = data.school_name
+        cell.readView.isHidden = !(data.is_unread ?? false)
+        cell.emergencyBannerView.isHidden = !(data.is_emergency ?? false)
+        cell.viewButton.tag = index
         cell.delegate = self
+        cell.emergencyBannerHeightConstraint.constant = data.is_emergency ?? false ? 44 : 0
     }
 }
 

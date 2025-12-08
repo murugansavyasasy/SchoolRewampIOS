@@ -11,6 +11,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)
     }
+    @IBOutlet weak var ThreeDot: UIButton!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var statusBtn: UIButton!
@@ -35,8 +36,9 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         self.selectedId = selectedId
         self.delete = !delete
         self.edit = edit
-        EditBtn.isHidden = !(edit || delete)
-        EditBtn1.isHidden = !(edit || delete)
+//        EditBtn.isHidden = !(edit || delete)
+//        EditBtn1.isHidden = !(edit || delete)
+        ThreeDot.isHidden = !(edit || delete)
     }
     @IBAction func edit(_ sender: UIButton) {
         let hasEdit = self.edit ?? false

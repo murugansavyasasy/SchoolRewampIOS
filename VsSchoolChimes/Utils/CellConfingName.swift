@@ -130,5 +130,8 @@ class CellConfingName {
     static let  SectionStregnthCVC = "SectionStregnthCVC"
     static let  MsgTvCell = "MsgTvCell"
     static let  MsgVoiceCvCell = "MsgVoiceCvCell"
+    static let  StaffChatTV = "StaffChatTV"
+    static let  SubmitedStudentTVC = "SubmitedStudentTVC"
+    static let  LessonPlanTVC = "LessonPlanTVC"
     
 }

@@ -15,6 +15,8 @@
 		187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5BD2D13F009001422CE /* WeekDaysNameCollectionViewCell.swift */; };
 		187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */; };
 		187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */; };
+		18886D0D2EE6B4FA008B71FF /* MsgCellTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */; };
+		18886D0E2EE6B4FA008B71FF /* MsgCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */; };
 		188EBD8E2ED5632F00BEA524 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8B2ED5632F00BEA524 /* LICENSE */; };
 		188EBD8F2ED5632F00BEA524 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD842ED5632F00BEA524 /* DropDownCell.xib */; };
 		188EBD902ED5632F00BEA524 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8C2ED5632F00BEA524 /* README.md */; };
@@ -735,6 +737,8 @@
 		187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekDaysNameCollectionViewCell.xib; sourceTree = "<group>"; };
 		187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateTableViewCell.swift; sourceTree = "<group>"; };
 		187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateTableViewCell.xib; sourceTree = "<group>"; };
+		18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgCellTv.swift; sourceTree = "<group>"; };
+		18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MsgCellTv.xib; sourceTree = "<group>"; };
 		188EBD802ED5632F00BEA524 /* DPDConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDConstants.swift; sourceTree = "<group>"; };
 		188EBD812ED5632F00BEA524 /* DPDKeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDKeyboardListener.swift; sourceTree = "<group>"; };
 		188EBD822ED5632F00BEA524 /* DPDUIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DPDUIView+Extension.swift"; sourceTree = "<group>"; };
@@ -1514,6 +1518,8 @@
 				84C3A1F12E66BE55002E7506 /* MsgViewVC.xib */,
 				84C3A1F42E66EF4B002E7506 /* MsgVoiceCvCell.swift */,
 				84C3A1F52E66EF4B002E7506 /* MsgVoiceCvCell.xib */,
+				18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */,
+				18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */,
 			);
 			path = MsgFrmManagement;
 			sourceTree = "<group>";
@@ -3624,6 +3630,7 @@
 				84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */,
 				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
 				849AD0212D1A8402002DEC07 /* LessonPlanVC.xib in Resources */,
+				18886D0E2EE6B4FA008B71FF /* MsgCellTv.xib in Resources */,
 				8480477E2E02DF6E0042BC5D /* SubmitedStudentTVC.xib in Resources */,
 				FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */,
 				18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */,
@@ -4410,6 +4417,7 @@
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
 				84235A172E1E287F002F2E1D /* LSWTaskTVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
+				18886D0D2EE6B4FA008B71FF /* MsgCellTv.swift in Sources */,
 				84BCE91F2EA12654002C8068 /* LblTvCell.swift in Sources */,
 				84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */,
 				843BCD842E2FB1B700D4364A /* CustomTransition.swift in Sources */,
