@@ -173,7 +173,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         super.viewWillDisappear(animated)
         stopAllAudioPlayback()
     }
-    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -241,7 +240,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
     }
-
+    
     // MARK: - Public Methods
     func setSelectedHomeWork(title: String, content: String, imageUrls: [FilePath]) {
         DetailsTxtview.text = content
@@ -738,23 +737,30 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     private func configureAudioCell(_ cell: AudioCVC, at indexPath: IndexPath) {
         let audioFiles = attachments.filter { $0.fileType.lowercased() == "audio" }
         let file = audioFiles[indexPath.item]
-        
-        // Set up the cell
-        if let url = URL(string: file.imageURL ?? "") {
+        if let urlString = file.imageURL {
+            let url: URL
+            
+            if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+                guard let remoteURL = URL(string: urlString) else { return }
+                url = remoteURL
+            } else {
+                let cleanPath = urlString
+                    .replacingOccurrences(of: "file://", with: "")
+                    .removingPercentEncoding ?? urlString
+                
+                url = URL(fileURLWithPath: cleanPath)
+            }
+            
             cell.audioURL = url
             cell.TrashIcon.isHidden = false
             cell.TrashIcon.isUserInteractionEnabled = true
         }
         
-        // Set the delegate and index for single playback control
         cell.audioDelegate = self
         cell.cellIndex = indexPath.item
         cell.TrashIcon.tag = indexPath.item
         cell.delegate = self
-        
-        // Set parent reference for AudioMessageView
         cell.waveView.setParentCell(cell)
-        // Update collection view height
         collectionViewHeight.constant = uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
     }
     
@@ -765,9 +771,9 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         } else {
             let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3
             if indexPath.section == 0 {
-                return CGSize(width: width, height: 100) // add + image + video + pdf
+                return CGSize(width: width, height: 100)
             } else {
-                return CGSize(width: collectionView.frame.width - 20, height: 70) // audio full width
+                return CGSize(width: collectionView.frame.width - 20, height: 70)
             }
         }
     }
@@ -796,7 +802,6 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     present(imageVC, animated: true)
                 }
             }
-            // Audio cells don't need tap handling as they have their own play button
         }
     }
 }
@@ -867,13 +872,44 @@ extension SenderLSRWVC {
             print("No file selected.")
             return
         }
-        self.attachments.append(AttachmentItem(image: nil, imageURL: selectedFileURL.absoluteString, fileType: CommonStringFile.audio))
-        self.uploadAttachmentView.imageCollectionview.reloadData()
-        self.uploadAttachmentView.imageCollectionview.layoutIfNeeded()
-        collectionViewHeight.constant = self.uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-        recordingView.isHidden = true
+        guard selectedFileURL.startAccessingSecurityScopedResource() else {
+            print("❌ Cannot access file")
+            return
+        }
+        
+        defer {
+            selectedFileURL.stopAccessingSecurityScopedResource()
+        }
+        
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let filename = selectedFileURL.lastPathComponent
+        let destinationURL = documentsDirectory.appendingPathComponent(filename)
+        if attachments.contains(where: { $0.imageURL == destinationURL.path }) {
+            print("⚠️ File already added")
+            return
+        }
+        
+        do {
+            if !FileManager.default.fileExists(atPath: destinationURL.path) {
+                try FileManager.default.copyItem(at: selectedFileURL, to: destinationURL)
+            } else {
+                print("ℹ️ File already exists, using existing copy")
+            }
+            self.attachments.append(AttachmentItem(
+                image: nil,
+                imageURL: destinationURL.path,
+                fileType: CommonStringFile.audio
+            ))
+            
+            self.uploadAttachmentView.imageCollectionview.reloadData()
+            self.uploadAttachmentView.imageCollectionview.layoutIfNeeded()
+            collectionViewHeight.constant = self.uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+            recordingView.isHidden = true
+            
+        } catch {
+            print("❌ Error copying file:", error.localizedDescription)
+        }
     }
-    
     // Handle cancellation
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("Document picker was cancelled.")

@@ -57,7 +57,17 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             self.testTable.scrollIndicatorInsets = self.testTable.contentInset
         }
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopAllAudioPlayback()
+    }
+    func stopAllAudioPlayback() {
+        for visibleCell in testTable.visibleCells {
+            if let audioCell = visibleCell as? AddAttachmentTVC {
+                audioCell.stopAllAudioPlayback()
+            }
+        }
+    }
     @objc func keyboardWillHide(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
