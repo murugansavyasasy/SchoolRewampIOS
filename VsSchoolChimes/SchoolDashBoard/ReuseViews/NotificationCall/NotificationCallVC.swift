@@ -40,11 +40,12 @@ class NotificationCallVC: UIViewController {
     
     var voiceUrl: String = ""
     var ringTone: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7043/2025-10-23/Communication_20251023_161939.wav"
-    
+    var welcomeFileUrl : String = ""
     private var audioPlayer: AVAudioPlayer?
     private var ringtonePlayer: AVAudioPlayer?
     private var volumeObserver: NSKeyValueObservation?
-    
+    private var totalQueueDuration: Double = 0
+
     // Cache for downloaded audio to reduce I/O
     private static var audioCache: NSCache<NSString, NSData> = {
         let cache = NSCache<NSString, NSData>()
@@ -66,9 +67,12 @@ class NotificationCallVC: UIViewController {
         }
     }
     
+    private var audioQueuePlayer: AVQueuePlayer?
+    private var queueItems: [AVPlayerItem] = []
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         setupModernUI()
         setupCallerInfo()
@@ -90,6 +94,26 @@ class NotificationCallVC: UIViewController {
         
         setupVolumeObserver()
         setupPowerButtonObserver()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(queueDidFinish),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: nil
+        )
+
+    }
+
+    @objc private func queueDidFinish() {
+        guard audioQueuePlayer?.items().isEmpty == true else { return }
+
+        DispatchQueue.main.async {
+            self.durationLbl.text = "Call ended"
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.dismissCallScreen()
+            }
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -226,14 +250,12 @@ class NotificationCallVC: UIViewController {
                 }
                 return
             }
-            
             guard let data = data else {
                 DispatchQueue.main.async {
                     self.playSystemDefaultTone()
                 }
                 return
             }
-            
             // Cache the downloaded data
             Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
             
@@ -261,7 +283,6 @@ class NotificationCallVC: UIViewController {
             self.ringtonePlayer?.play()
             
             self.startVibration()
-            
             // Stop after 30 seconds
             self.ringtoneTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { [weak self] _ in
                 self?.handleRingtoneTimeout()
@@ -275,18 +296,15 @@ class NotificationCallVC: UIViewController {
     
     private func handleRingtoneTimeout() {
         guard callState == .ringing else { return }
-        
         stopVibration()
         ringtonePlayer?.stop()
         ringtonePlayer = nil
-        
         dismissCallScreen()
     }
     
     private func playSystemDefaultTone() {
         AudioServicesPlaySystemSound(1005)
         startVibration()
-        
         ringtoneTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
             self?.handleRingtoneTimeout()
         }
@@ -294,10 +312,8 @@ class NotificationCallVC: UIViewController {
     
     private func startVibration() {
         stopVibration()
-        
         // Immediate vibration
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        
         vibrationTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
@@ -655,7 +671,6 @@ class NotificationCallVC: UIViewController {
         generator.notificationOccurred(.warning)
         
         callState = .ended
-        
         UIView.animate(withDuration: 0.4, animations: {
             self.draggableButton.center.x = self.draggableButton.frame.width / 2 + 15
             self.draggableButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -698,12 +713,9 @@ class NotificationCallVC: UIViewController {
     
     @objc private func cutCallAction() {
         guard callState == .active else { return }
-        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
-        
         callState = .ended
-        
         UIView.animate(withDuration: 0.3) {
             self.cutCallBtn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         } completion: { _ in
@@ -729,7 +741,6 @@ class NotificationCallVC: UIViewController {
         
         do {
             let session = AVAudioSession.sharedInstance()
-            
             if speakerBtn.isSelected {
                 try session.overrideOutputAudioPort(.speaker)
                 print("🔈 Speaker ON")
@@ -759,49 +770,117 @@ class NotificationCallVC: UIViewController {
     
     // MARK: - Audio Player
     private func setupAudioPlayer() {
-        guard let url = URL(string: voiceUrl) else {
-            print("⚠️ Invalid voice URL")
+        var urlsArray: [String] = []
+        if !voiceUrl.isEmpty {
+            urlsArray.append(voiceUrl)
+        }
+        if !welcomeFileUrl.isEmpty {
+            urlsArray.append(welcomeFileUrl)
+        }
+        let finalVoiceUrl = urlsArray.joined(separator: ",")
+        // ✅ Split comma-separated voice URLs
+        let urls = finalVoiceUrl
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .compactMap { URL(string: $0) }
+
+        guard !urls.isEmpty else {
+            print("⚠️ No valid voice URLs")
             handleAudioPlaybackError()
             return
         }
-        
-        let cacheKey = url.absoluteString as NSString
-        
-        // Check cache first
-        if let cachedData = Self.audioCache.object(forKey: cacheKey) {
-            print("📦 Using cached voice message")
-            playAudioData(cachedData as Data)
-            return
-        }
-        
-        // Download if not cached
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Download error: \(error)")
-                DispatchQueue.main.async {
-                    self.handleAudioPlaybackError()
-                }
-                return
-            }
-            
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    self.handleAudioPlaybackError()
-                }
-                return
-            }
-            
-            // Cache the downloaded data
-            Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
-            
-            DispatchQueue.main.async {
-                self.playAudioData(data)
+        audioQueuePlayer = AVQueuePlayer()
+        queueItems.removeAll()
+        let dispatchGroup = DispatchGroup()
+        for url in urls {
+            dispatchGroup.enter()
+            let cacheKey = url.absoluteString as NSString
+            // ✅ Use cache if available
+            if let cachedData = Self.audioCache.object(forKey: cacheKey) {
+                let item = createQueueItem(from: cachedData as Data)
+                queueItems.append(item)
+                dispatchGroup.leave()
+            } else {
+                URLSession.shared.dataTask(with: url) { data, _, error in
+                    defer { dispatchGroup.leave() }
+                    guard let data = data, error == nil else {
+                        print("⚠️ Failed to download voice file")
+                        return
+                    }
+                    Self.audioCache.setObject(
+                        data as NSData,
+                        forKey: cacheKey,
+                        cost: data.count
+                    )
+                    let item = self.createQueueItem(from: data)
+                    self.queueItems.append(item)
+                }.resume()
             }
         }
-        task.resume()
+
+        // ✅ Start playing once all files ready
+        dispatchGroup.notify(queue: .main) {
+            guard let player = self.audioQueuePlayer else { return }
+
+            self.totalQueueDuration = 0
+
+            self.queueItems.forEach {
+                player.insert($0, after: nil)
+
+                let seconds = CMTimeGetSeconds($0.asset.duration)
+                if seconds.isFinite {
+                    self.totalQueueDuration += seconds
+                }
+            }
+
+            self.startQueueTimer()
+            player.play()
+
+            print("▶️ Total voice duration:", self.totalQueueDuration)
+        }
+
     }
+
+    
+    private func createQueueItem(from data: Data) -> AVPlayerItem {
+        let tempURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+            .appendingPathExtension("m4a")
+        try? data.write(to: tempURL)
+        let asset = AVURLAsset(url: tempURL)
+        // ✅ Preload duration
+        asset.loadValuesAsynchronously(forKeys: ["duration"]) { }
+        let item = AVPlayerItem(asset: asset)
+        // ✅ Helps buffering & smoother queue playback
+        item.preferredForwardBufferDuration = 5
+        return item
+    }
+
+    
+    private func startQueueTimer() {
+        audioTimer?.invalidate()
+        audioTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self,
+                  let player = self.audioQueuePlayer else { return }
+
+            let current = Int(CMTimeGetSeconds(player.currentTime()))
+            let total = Int(self.totalQueueDuration)
+
+            guard total > 0 else { return }
+
+            let cMin = current / 60
+            let cSec = current % 60
+            let tMin = total / 60
+            let tSec = total % 60
+
+            self.durationLbl.text = String(
+                format: "Connected\n\n%02d:%02d / %02d:%02d",
+                cMin, cSec, tMin, tSec
+            )
+        }
+    }
+
+
     
     private func playAudioData(_ data: Data) {
         do {
