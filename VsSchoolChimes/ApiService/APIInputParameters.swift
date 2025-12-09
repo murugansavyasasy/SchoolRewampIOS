@@ -380,9 +380,28 @@ class QuizKeys {
 
 class ChatAPIKeys {
     static let staffId = "staff_id"
+    static let question_id = "question_id"
+    static let answer = "answer"
+    static let reply_type = "reply_type"
+    static let is_change_answer = "is_change_answer"
     static let subjectId = "subject_id"
     static let question = "question"
     static let isClassTeacher = "is_class_teacher"
     static let filePath = "file_path"
     static let offset = "offset"
+    static let student_id = "student_id"
+    static let is_block = "is_block"
+    static let reason = "reason"
+    static let Types = "Type"
+    static let section_id = "section_id"
+    static let detail_id = "detail_id"
+}
+class LessonPlanAPIKeys {
+
+    static let activity = "activity"
+    static let mobileNumber = "mobile_number"
+    static let userType = "user_type"
+    static let menuId = "menu_id"
+    static let fieldId = "field_id"
+    static let value = "value"
 }

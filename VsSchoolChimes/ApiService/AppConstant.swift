@@ -294,6 +294,7 @@ struct DateInputs{
     static let MMMM_yyyy =  "MMMM yyyy"
     static let dd_MMM_yy =  "dd MMM yy"
     static let dd_MMM_yyyy =  "dd MMM yyyy"
+    static let ddMMMyyyyhhmma =  "dd MMM yyyy hh:mm a"
     
 }
 struct DateOutPut{

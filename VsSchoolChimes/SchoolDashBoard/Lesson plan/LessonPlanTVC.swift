@@ -11,6 +11,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)
     }
+    @IBOutlet weak var ThreeDot: UIButton!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var statusBtn: UIButton!
@@ -35,8 +36,9 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         self.selectedId = selectedId
         self.delete = !delete
         self.edit = edit
-        EditBtn.isHidden = !(edit || delete)
-        EditBtn1.isHidden = !(edit || delete)
+//        EditBtn.isHidden = !(edit || delete)
+//        EditBtn1.isHidden = !(edit || delete)
+        ThreeDot.isHidden = !(edit || delete)
     }
     @IBAction func edit(_ sender: UIButton) {
         let hasEdit = self.edit ?? false
@@ -46,7 +48,6 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         let height: CGFloat = (hasEdit && hasDelete) ? 90 : (hasEdit || hasDelete ? 50 : 0)
         popoverContentVC.preferredContentSize = CGSize(width: 120, height: height)
         popoverContentVC.modalPresentationStyle = .popover
-        
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
@@ -57,7 +58,6 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             popoverContentVC.modalPresentationStyle = .overFullScreen
             popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         }
-
         if let topVC = getCurrentViewController(), height > 0 {
             topVC.present(popoverContentVC, animated: true, completion: nil)
         }
@@ -67,12 +67,9 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func configure(with details: [LessonDetailItem]) {
         // Clear old views
         subTitlleStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
         var pillItems: [LessonDetailItem] = []
-        
         for detail in details {
             guard let name = detail.name, let value = detail.value else { continue }
-            
             switch name {
             case "Topic":
                 titleNameLbl.text = value

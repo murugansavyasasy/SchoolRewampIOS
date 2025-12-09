@@ -555,7 +555,6 @@ class MarkAttendenceVC: UIViewController {
                             }
                         }
                         updateAttendancePercentages()
-                        // ✅ Table reload
                         TV.isHidden = false
                         reportFullView.isHidden = false
                         TV.dataSource = self

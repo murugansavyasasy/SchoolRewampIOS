@@ -18,7 +18,6 @@ protocol HistorySelectDelegate {
 @available(iOS 14.0, *)
 class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, UITextFieldDelegate {
     func didTapButton(title: String, content: String, items: [FilePath],editId:String) {
-        print("sdhbh")
     }
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -62,13 +61,13 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var editId : String?
     var selectNotice: EditObjectDelegate?
     var EditHomeWork = Homework()
+    let  video = "video"
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtnNm
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
                 secondLine: staffDetails?.school_name ?? "")
-        
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -93,7 +92,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
@@ -143,9 +141,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
                 image: nil,
-                imageURL: type != "video" ? file.url : nil,
+                imageURL: type != video ? file.url : nil,
                 fileType: type,
-                VideoURl: type == "video" ? URL(string: file.url ?? "") : nil)}
+                VideoURl: type == video ? URL(string: file.url ?? "") : nil)}
         attachments = imageItems
         let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
@@ -157,7 +155,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     func StyleAndTranslater(){
-        
         //MARK: UI Update
         TextViewheight.constant = initialHeight
         DetailsTxtview.layer.cornerRadius = 10
@@ -308,7 +305,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     func VideoPick() {
         let totalRemaining = 10 - attachments.count
-        let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
+        let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
         let videoRemaining = 2 - videoCount
         if totalRemaining <= 0 {
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
@@ -411,7 +408,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                                                     CommonStringFile.Video, style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
-                    let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
+                    let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
                     let videoRemaining = Filecount.SelectVideoCount - videoCount
                     if totalRemaining <= 0 {
                         CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)

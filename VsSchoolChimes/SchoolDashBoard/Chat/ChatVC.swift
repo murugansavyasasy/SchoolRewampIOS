@@ -24,6 +24,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     var staffMembersData = StaffMember()
     var childDetails = UserDefaultFileManager.get_child_Details()
     var chatDataDetails : [ChatMessage]?
+    let Askedby  = "Asked by ~ "
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
@@ -76,9 +77,6 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -126,7 +124,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
             return
         }
         sendChat()
-
+        
     }
     // MARK: - UITableView DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -141,7 +139,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
             cell.othersQuestionView.isHidden = false
             cell.studentNameLbl.isHidden = false
             cell.othersQuestionLbl.text = message?.question
-            cell.studentNameLbl.text = "Asked by ~ \(message?.student_name ?? "")"
+            cell.studentNameLbl.text = Askedby + "\(message?.student_name ?? "")"
         }else{
             cell.myQuestionView.isHidden = false
             cell.othersQuestionView.isHidden = true

@@ -303,7 +303,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         nodataImg.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.text = "No data found"
-        print("Filtered student count: \(filterStudent?.count ?? 0)")
     }
     func getStandardsAPI(academic_year_id:Int){
         standerdArray.removeAll()
@@ -505,7 +504,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
 @available(iOS 14.0, *)
 extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return Sorting.count
     }
     

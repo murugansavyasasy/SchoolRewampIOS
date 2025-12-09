@@ -41,7 +41,6 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     let VOICE = "VOICE"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         backBtn.layer.cornerRadius = backBtn.frame.width/2
         cv.isHidden = file_path?.count == 0
         AudioFullView.isHidden = file_path?.count != 0
@@ -54,7 +53,6 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         )
         cv.delegate = self
         cv.dataSource = self
-        
         if MsgFromManagmentData.type == ATTACHMENT{
             AudioFullView.isHidden = true
             cv.isHidden = false
@@ -86,6 +84,7 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     }
     
     @IBAction func backBtnAct(_ sender: Any) {
+        player?.pause()
         delegate?.dismiss(true)
         dismiss(animated: true)
     }
@@ -176,8 +175,6 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
 }
 
 extension MsgViewVC :  UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return file_path?.count ?? 0
         

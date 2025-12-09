@@ -25,22 +25,13 @@ class FeedetailTVC: UITableViewCell {
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
-        
         dowloadBtn.layer.cornerRadius = 10
         dowloadBtn.layer.borderWidth = 1
         dowloadBtn.layer.borderColor = UIColor.systemBlue.cgColor
-        
         timeLbl.isHidden = true
 
     }
 
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }
 class GlowingImageView: UIImageView {
     override func layoutSubviews() {

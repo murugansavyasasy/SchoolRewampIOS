@@ -41,12 +41,10 @@ class MessageFromManagementViewController: UIViewController {
     private var messageData: [ManagemantMessageData] = []
     private var filteredData: [ManagemantMessageData] = []
     private let dateFormatter = DateFormatter()
-    
     private var shouldShowFooter = true
     private var shouldShowFooterLabel = false
     private var archiveMessage = ""
     private var playIndex: Int?
-    
     private let dropDown = DropDown()
     private var searchText = ""
     private var selectedSchoolId: String?
@@ -67,18 +65,18 @@ class MessageFromManagementViewController: UIViewController {
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         BackBtn.applyBackButton()
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
-        
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.separatorStyle = .none
         FilterCV.isHidden = true
         updateNoDataUI(isEmpty: true)
     }
     
     private func setupTableView() {
-        tv.register(UINib(nibName: CellConfingName.MsgTvCell, bundle: nil),
-                    forCellReuseIdentifier: CellConfingName.MsgTvCell)
+        tv.register(UINib(nibName: CellConfingName.MsgCellTv, bundle: nil),
+                    forCellReuseIdentifier: CellConfingName.MsgCellTv)
         tv.dataSource = self
         tv.delegate = self
         tv.rowHeight = UITableView.automaticDimension
@@ -105,7 +103,6 @@ class MessageFromManagementViewController: UIViewController {
     // MARK: - Business Logic
     private func hasMultipleSchools() -> Bool {
         guard let details = school_details, details.count > 1 else { return false }
-        
         switch details.first?.priority_level {
         case PriorityType.is_principal,
             PriorityType.is_grouphead,
@@ -158,18 +155,13 @@ class MessageFromManagementViewController: UIViewController {
             type: ApitTypeSringFile.GET,
             token: token
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
-            
             guard let self = self else { return }
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let response):
                     self.messageData = response.data ?? []
                     self.filteredData = self.messageData
-                    
                     if self.filteredData.isEmpty{
-                        
                         self.searchBtn.isHidden = true
                         self.NoDataImage.isHidden = false
                         self.NoDataLbl.isHidden = false
@@ -231,13 +223,11 @@ class MessageFromManagementViewController: UIViewController {
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                
                 switch result{
                 case .success(let response):
                     self.messageData.append(contentsOf: response.data ?? [])
                     let hidden = self.messageData.isEmpty
                     self.searchBtn.isHidden = hidden
-                    
                     if self.messageData.isEmpty{
                         self.SearchBar.isHidden = true
                         self.schoolDropDown.isHidden = true
@@ -250,7 +240,6 @@ class MessageFromManagementViewController: UIViewController {
                     self.filterMessages()
                     self.NoDataLbl.text = response.message ?? ""
                     self.archiveMessage = response.message ?? ""
-                    
                 case .failure(let error):
                     let hidden = self.messageData.isEmpty
                     self.searchBtn.isHidden = hidden
@@ -288,7 +277,6 @@ class MessageFromManagementViewController: UIViewController {
     private func handleMessagesResponse(_ result: Result<MessageFromManagementResp, Error>) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
             switch result {
             case .success(let response):
                 self.messageData = response.data ?? []
@@ -312,7 +300,6 @@ class MessageFromManagementViewController: UIViewController {
     private func handleArchivedMessagesResponse(_ result: Result<MessageFromManagementResp, Error>) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
             switch result {
             case .success(let response):
                 if response.status == true {
@@ -331,8 +318,6 @@ class MessageFromManagementViewController: UIViewController {
                 self.handleEmptyArchive(message: error.localizedDescription)
                 self.searchBtn.isHidden = true
             }
-            
-            
             self.tv.reloadData()
         }
     }
@@ -350,7 +335,6 @@ class MessageFromManagementViewController: UIViewController {
     private func handleReadStatusResponse(_ result: Result<ReadStatusResponse, Error>, detailId: String) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
             if case .success(let response) = result, response.status == true {
                 self.updateMessageReadStatus(detailId: detailId)
             }
@@ -431,28 +415,29 @@ extension MessageFromManagementViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MsgTvCell, for: indexPath) as? MsgTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MsgCellTv, for: indexPath) as? MsgCellTv else {
             return UITableViewCell()
         }
-        
-        let message = filteredData[indexPath.row]
-        configureCell(cell, with: message, at: indexPath.row)
+        let item = filteredData[indexPath.row]
+        configure(with: item, cell, at: indexPath.row)
         return cell
     }
     
-    private func configureCell(_ cell: MsgTvCell, with message: ManagemantMessageData, at index: Int) {
-        let displayText = formattedDateStatus(from: message.date ?? "")
-        cell.senderNamelbl.text = message.sent_by
-        cell.timeAndDateLbl.text = "\(displayText)  \(message.time ?? "")"
-        cell.titleLbl.text = message.title
-        cell.descrptionLb.text = message.description
-        cell.descrptionLb.isHidden = message.description?.isEmpty ?? true
-        cell.alphbetLbl.text = shortName(from: message.sent_by ?? "")
-        cell.readView.isHidden = !(message.is_unread ?? false)
-        cell.rollBtn.setTitle(message.role?.capitalized, for: .normal)
-        cell.schoolNameLbl.text = message.school_name
-        cell.viewBtn.tag = index
+    private func configure(with data: ManagemantMessageData,_ cell: MsgCellTv,at index: Int) {
+        let displayText = formattedDateStatus(from: data.date ?? "")
+        cell.nameLabel.text = data.sent_by
+        cell.roleLabel.text = data.role
+        cell.titleLabel.text = data.title
+        cell.roleContainerView.isHidden = data.role == ""
+        cell.descriptionLabel.text = data.description
+        cell.timeLabel.text = "\(displayText)  \(data.time ?? "")"
+        cell.profileInitialsLabel.text = shortName(from: data.sent_by ?? "")
+        cell.schoolName.text = data.school_name
+        cell.readView.isHidden = !(data.is_unread ?? false)
+        cell.emergencyBannerView.isHidden = !(data.is_emergency ?? false)
+        cell.viewButton.tag = index
         cell.delegate = self
+        cell.emergencyBannerHeightConstraint.constant = data.is_emergency ?? false ? 44 : 0
     }
 }
 
@@ -620,30 +605,24 @@ extension MessageFromManagementViewController: ReadUpdatesManagement {
 // MARK: - ReloadDelegate
 @available(iOS 14.0, *)
 extension MessageFromManagementViewController: reloadDelegate {
-    
     func deleteDelegate(index: Int) {
         // Implementation for delete if needed
     }
-    
     func reload(index: Int) {
         guard index < filteredData.count else { return }
-        
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)
             if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
                 previousCell.updatePlayState(isPlaying: false, url: nil)
             }
         }
-        
         playIndex = (playIndex == index) ? nil : index
         var message = filteredData[index]
-        
         if message.is_unread == true, let type = message.type, let id = message.id {
             updateReadStatus(type: type, detailId: id, isArchived: message.is_archive ?? false)
             message.is_unread = false
             filteredData[index] = message
         }
-        
         tv.reloadData()
     }
 }
@@ -652,18 +631,14 @@ extension MessageFromManagementViewController {
     
     private func addPopoverOverlay() {
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-        
         let overlay = UIView(frame: window.bounds)
         overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         overlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         overlay.alpha = 0
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissPopoverOverlay))
         overlay.addGestureRecognizer(tapGesture)
-        
         window.addSubview(overlay)
         popoverOverlayView = overlay
-        
         UIView.animate(withDuration: 0.2) {
             overlay.alpha = 1
         }
