@@ -144,8 +144,6 @@ class AudioCVC: UICollectionViewCell {
         if fileManager.fileExists(atPath: permanentURL.path) {
             try? fileManager.removeItem(at: permanentURL)
         }
-        
-        // Copy to permanent location
         do {
             try fileManager.copyItem(at: tempURL, to: permanentURL)
             print("✅ Audio saved to: \(permanentURL.path)")
@@ -171,17 +169,11 @@ class AudioCVC: UICollectionViewCell {
             showErrorAlert(message: "Audio not loaded yet")
             return
         }
-        
-        // Notify other cells to stop playing
         NotificationCenter.default.post(
             name: NSNotification.Name("AudioCellStartedPlaying"),
             object: cellIndex
         )
-        
-        // Notify delegate
         audioDelegate?.audioCell(self, willStartPlayingAtIndex: cellIndex)
-        
-        // Start playback
         waveView.isPlaying = true
         waveView.startPlaybackAnimation()
         updatePlayButtonState(isPlaying: true)

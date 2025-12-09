@@ -17,6 +17,7 @@ class RatingTypeTableViewCell: UITableViewCell,
     @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var collectionview: UICollectionView!
     @IBOutlet weak var suggestContetTxtView: UITextView!
+    @IBOutlet weak var suggestLbl: UILabel!
     @IBOutlet weak var SubmitBtn: UIButton!
     
     var ratingDelegate: RatingDelegate?
@@ -41,7 +42,7 @@ class RatingTypeTableViewCell: UITableViewCell,
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.lightGray.cgColor
         textview.addDoneButton()
-        
+        setAttributedText(for: suggestLbl, with: CommonStringFile.any_other_suggestions.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         SubmitBtn.layer.cornerRadius = SubmitBtn.frame.height / 2
         
         // Register Cell

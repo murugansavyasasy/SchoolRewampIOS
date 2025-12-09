@@ -130,5 +130,14 @@ class CellConfingName {
     static let  SectionStregnthCVC = "SectionStregnthCVC"
     static let  MsgTvCell = "MsgTvCell"
     static let  MsgVoiceCvCell = "MsgVoiceCvCell"
+    static let  LSRWProgressTVC = "LSRWProgressTVC"
+    static let  LSRWTaskTVC = "LSRWTaskTVC"
+    static let  TestTVC = "TestTVC"
+    static let  RecorderTVC = "RecorderTVC"
+    static let  AddAttachmentTVC = "AddAttachmentTVC"
+    static let  AudioPlayerTVC = "AudioPlayerTVC"
+    static let  LSWTaskTVC = "LSWTaskTVC"
+    static let  AudioCVC = "AudioCVC"
+    static let  AttachmentCVC = "AttachmentCVC"
     
 }

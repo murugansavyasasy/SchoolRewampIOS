@@ -401,6 +401,7 @@ struct CommonStringFile {
     static let SelectCatagorie = "Select Catagorie"
     static let AddPdfoptional = "Add Pdf (Optional?)"
     static let Add_attachment_optional = "Add attachment (Optional)"
+    static let any_other_suggestions = "any_other_suggestions"
     static let Recording_Time = "Recording Time (Optional?)"
     static let Add_attachment = "Add attachment"
     static let RTime = "Recording Time"

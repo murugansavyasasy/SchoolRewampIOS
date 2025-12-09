@@ -31,8 +31,8 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
         super.awakeFromNib()
         attachmentCollectionView.delegate = self
         attachmentCollectionView.dataSource = self
-        attachmentCollectionView.register(UINib(nibName: "AttachmentCVC", bundle: nil), forCellWithReuseIdentifier: "AttachmentCVC")
-        attachmentCollectionView.register(UINib(nibName: "AudioCVC", bundle: nil), forCellWithReuseIdentifier: "AudioCVC")
+        attachmentCollectionView.register(UINib(nibName: CellConfingName.AttachmentCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.AttachmentCVC)
+        attachmentCollectionView.register(UINib(nibName: CellConfingName.AudioCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.AudioCVC)
     }
     // MARK: - Configure
     func configureCell(with assignment: LSRWTask, attachments: [FilePath]) {
@@ -81,8 +81,8 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
     }
     // MARK: - Collection View Setup
     private func setupCollectionView() {
-        attachmentCollectionView.register(UINib(nibName: "AttachmentCVC", bundle: nil),
-                                          forCellWithReuseIdentifier: "AttachmentCVC")
+        attachmentCollectionView.register(UINib(nibName: CellConfingName.AttachmentCVC, bundle: nil),
+                                          forCellWithReuseIdentifier: CellConfingName.AttachmentCVC)
         attachmentCollectionView.delegate = self
         attachmentCollectionView.dataSource = self
     }
@@ -107,7 +107,7 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
         if file.type?.uppercased() == CommonStringFile.M4A {
             if #available(iOS 15.0, *) {
                 guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "AudioCVC",
+                    withReuseIdentifier: CellConfingName.AudioCVC,
                     for: indexPath
                 ) as? AudioCVC else {
                     return UICollectionViewCell()
@@ -128,7 +128,7 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
         
         // 📎 ATTACHMENT CELL
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "AttachmentCVC",
+            withReuseIdentifier: CellConfingName.AttachmentCVC,
             for: indexPath
         ) as? AttachmentCVC else {
             return UICollectionViewCell()

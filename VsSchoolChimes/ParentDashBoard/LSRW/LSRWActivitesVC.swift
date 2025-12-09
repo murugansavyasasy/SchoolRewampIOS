@@ -117,8 +117,8 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     
     private func setupTableView() {
         let nibs = [
-            "TestTVC", "RecorderTVC", "AddAttachmentTVC",
-            "LSWTaskTVC", "AudioPlayerTVC"
+            CellConfingName.TestTVC, CellConfingName.RecorderTVC, CellConfingName.AddAttachmentTVC,
+            CellConfingName.LSWTaskTVC, CellConfingName.AudioPlayerTVC
         ]
         testTable.register(SubmitFooterCell.self, forCellReuseIdentifier: SubmitFooterCell.identifier)
         nibs.forEach { testTable.register(UINib(nibName: $0, bundle: nil), forCellReuseIdentifier: $0) }
@@ -191,7 +191,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         let type = captions[indexPath.row]
         switch type {
         case .task :
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as! LSWTaskTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LSWTaskTVC, for: indexPath) as! LSWTaskTVC
             cell.titleLbl.text = lsrw?.title ?? "No Title"
             cell.descriptionLbl.text = lsrw?.description ?? "No Description"
             cell.reminderBtn.isHidden = true
@@ -210,7 +210,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             return cell
         case .audio:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AudioPlayerTVC", for: indexPath) as! AudioPlayerTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AudioPlayerTVC, for: indexPath) as! AudioPlayerTVC
             if let urlString = lsrw?.file_path?.first?.url,
                let url = URL(string: urlString) {
                 cell.audioURL = url
@@ -220,7 +220,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         case .test:
             let index = captions[..<indexPath.row].filter { $0 == .test }.count
             if let test = lsrw?.test?[safe: index] {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TestTVC", for: indexPath) as! TestTVC
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.TestTVC, for: indexPath) as! TestTVC
                 cell.test = test
                 cell.questionLbl.text = test.question
                 return cell
@@ -231,7 +231,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             }
             
         case .addAttachment:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AddAttachmentTVC", for: indexPath) as! AddAttachmentTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AddAttachmentTVC, for: indexPath) as! AddAttachmentTVC
             cell.delegate = self
             cell.Adddelegate = self
             cell.descriptionTXT.delegate = self
@@ -243,7 +243,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             return cell
             
         case .record:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RecorderTVC", for: indexPath) as! RecorderTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecorderTVC, for: indexPath) as! RecorderTVC
             cell.recoderTime.text = "00:00"
             cell.delegate = self
             return cell

@@ -303,10 +303,6 @@ class AddAttachmentTVC: UITableViewCell,
             print("⚠️ Invalid delete index: \(index)")
             return
         }
-        
-        print("🗑️ Deleting attachment at index \(index)")
-        
-        // Stop audio if it's playing
         if let collectionView = addAttachmentView.imageCollectionview {
             let cellIndexPath = IndexPath(item: index + 1, section: 0) // +1 for add button
             if let audioCell = collectionView.cellForItem(at: cellIndexPath) as? AudioCVC {
