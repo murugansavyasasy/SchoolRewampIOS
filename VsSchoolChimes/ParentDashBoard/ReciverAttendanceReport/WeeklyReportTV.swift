@@ -23,15 +23,11 @@ class WeeklyReportTV: UITableViewCell {
         WeekStatusDefLbl.setFont(style: .body, size: FontSize.BodySize)
         
         let fulltext = "Wednesday July 2025"
-        
         let attributedString = NSMutableAttributedString(string: fulltext)
-        
         attributedString.addAttributes([.font: UIFont(name: "Poppins-Bold", size: 14) ], range: (fulltext as NSString).range(of: "Wednesday"))
-        
         attributedString.addAttributes([.font: UIFont(name: "Poppins-Medium", size: 13) ], range: (fulltext as NSString).range(of: "July 2025"))
         
         DayAndMonthLbl.attributedText = attributedString
-        
         setupDayButtons()
         
     }
@@ -43,39 +39,25 @@ class WeeklyReportTV: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        let dayInitials = ["M", "T", "W", "T", "F", "S"] // You can include Sunday if needed
+        let dayInitials = ["M", "T", "W", "T", "F", "S"]
         
         for initial in dayInitials {
-            // Create a vertical stack: [Label, Button]
             let verticalStack = UIStackView()
             verticalStack.axis = .vertical
             verticalStack.alignment = .center
             verticalStack.spacing = 4
 
-            // Create the day label
             let label = UILabel()
             label.text = initial
             label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 14)
-
-            // Create the checkbox button
             let button = UIButton(type: .system)
             button.setTitle("⬜", for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 24)
-
-            // Add label and button to the vertical stack
             verticalStack.addArrangedSubview(label)
             verticalStack.addArrangedSubview(button)
-
-            // Add vertical stack to the horizontal stack
             Stackview.addArrangedSubview(verticalStack)
         }
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

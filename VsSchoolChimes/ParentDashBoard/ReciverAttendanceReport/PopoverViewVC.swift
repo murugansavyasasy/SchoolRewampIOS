@@ -15,7 +15,6 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     private var configData: [(symbol: String, title: String, color: UIColor)]?
     private var configType: PopoverType?
-    
     var itemCount: Int { configData?.count ?? 0 }
     var delegate: SelectedId?
     var selectedId:String?
@@ -107,7 +106,6 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }else{
             delegate?.selectId(id: selectedId, edit: true)
         }
-        
         dismiss(animated: true)
     }
 }

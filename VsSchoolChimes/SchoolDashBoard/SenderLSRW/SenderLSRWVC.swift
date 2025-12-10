@@ -32,6 +32,8 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         if attachments[index].fileType.lowercased() == "audio" {
             stopAllAudioPlayback()
         }
+        let fileURL = URL(fileURLWithPath: attachments[index].imageURL ?? "")
+            fileURL.stopAccessingSecurityScopedResource()
         attachments.remove(at: index)
         uploadAttachmentView.imageCollectionview.reloadData()
     }
@@ -872,44 +874,29 @@ extension SenderLSRWVC {
             print("No file selected.")
             return
         }
+
+        // Start security access for external file
         guard selectedFileURL.startAccessingSecurityScopedResource() else {
             print("❌ Cannot access file")
             return
         }
-        
-        defer {
-            selectedFileURL.stopAccessingSecurityScopedResource()
-        }
-        
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let filename = selectedFileURL.lastPathComponent
-        let destinationURL = documentsDirectory.appendingPathComponent(filename)
-        if attachments.contains(where: { $0.imageURL == destinationURL.path }) {
+        if attachments.contains(where: { $0.imageURL == selectedFileURL.path }) {
             print("⚠️ File already added")
             return
         }
-        
-        do {
-            if !FileManager.default.fileExists(atPath: destinationURL.path) {
-                try FileManager.default.copyItem(at: selectedFileURL, to: destinationURL)
-            } else {
-                print("ℹ️ File already exists, using existing copy")
-            }
-            self.attachments.append(AttachmentItem(
-                image: nil,
-                imageURL: destinationURL.path,
-                fileType: CommonStringFile.audio
-            ))
-            
-            self.uploadAttachmentView.imageCollectionview.reloadData()
-            self.uploadAttachmentView.imageCollectionview.layoutIfNeeded()
-            collectionViewHeight.constant = self.uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-            recordingView.isHidden = true
-            
-        } catch {
-            print("❌ Error copying file:", error.localizedDescription)
-        }
+        attachments.append(AttachmentItem(
+            image: nil,
+            imageURL: selectedFileURL.path,
+            fileType: CommonStringFile.audio
+        ))
+
+        // Reload UI
+        self.uploadAttachmentView.imageCollectionview.reloadData()
+        self.uploadAttachmentView.imageCollectionview.layoutIfNeeded()
+        collectionViewHeight.constant = self.uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+        recordingView.isHidden = true
     }
+
     // Handle cancellation
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("Document picker was cancelled.")

@@ -730,8 +730,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewA
     // MARK: - App Flow Decision
     private func appFlowChecking() {
         guard let credentials = UserDefaultFileManager.getLoginCredentials(),
-              !credentials.mobile_number.isNilOrEmpty,
-              !credentials.pwd.isNilOrEmpty else {
+              !credentials.mobile_number.isNilOrEmpty else {
             navigateToLogin()
             return
         }

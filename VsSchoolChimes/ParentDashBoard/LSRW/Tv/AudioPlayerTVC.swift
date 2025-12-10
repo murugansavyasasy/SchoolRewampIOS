@@ -235,48 +235,46 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
 
     private func loadAudio() {
         guard let url = audioURL else {
-            DispatchQueue.main.async { [weak self] in
-                self?.durationLabel.text = "Error"
+            DispatchQueue.main.async {
+                self.durationLabel.text = "Error"
             }
             return
         }
-        DispatchQueue.main.async { [weak self] in
+
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
-            
-            let sampleCount = Int(self.bounds.width / 4)
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                guard let self = self else { return }
 
-                do {
-                    try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-                    try AVAudioSession.sharedInstance().setActive(true)
+            do {
+                // Audio session setup
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                try AVAudioSession.sharedInstance().setActive(true)
 
-                    guard url.isFileURL else {
-                        DispatchQueue.main.async { self.durationLabel.text = "Error" }
-                        return
-                    }
+                // Directly play from original URL (no copy)
+                let player = try AVAudioPlayer(contentsOf: url)
+                player.delegate = self
+                player.prepareToPlay()
+                self.audioPlayer = player
 
-                    let player = try AVAudioPlayer(contentsOf: url)
-                    player.delegate = self
-                    audioPlayer?.delegate = self
-                    player.prepareToPlay()
-                    self.audioPlayer = player
+                let duration = player.duration
 
-                    let duration = player.duration
-
-                    DispatchQueue.main.async {
-                        self.durationLabel.text = self.formatTime(duration)
-                    }
+                // Update UI
+                DispatchQueue.main.async {
+                    self.durationLabel.text = self.formatTime(duration)
+                    let sampleCount = Int(self.bounds.width / 4)
+                    
                     AudioProcessor.extractAmplitudes(from: url, sampleCount: sampleCount) { [weak self] amplitudes in
                         guard let self = self else { return }
+                        
                         if self.waveformBars.isEmpty {
                             self.generateWaveformBars()
                         }
                         
                         self.barsGenerated = true
                     }
-                } catch {
-                    DispatchQueue.main.async { self.durationLabel.text = "Error" }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.durationLabel.text = "Error"
                 }
             }
         }

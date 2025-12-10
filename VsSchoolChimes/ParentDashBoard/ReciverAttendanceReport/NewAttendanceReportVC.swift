@@ -8,48 +8,7 @@
 import UIKit
 
 class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return FilteredReportData?.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttendanceRepCv", for: indexPath) as! AttendanceRepCv
-        let dateStr = FilteredReportData?[indexPath.row].date ?? ""
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "dd-MM-yyyy"
-        
-        if let date = inputFormatter.date(from: dateStr) {
-            let outputFormatter = DateFormatter()
-            
-            // Get full month name
-            outputFormatter.dateFormat = "MMM"
-            let monthName = outputFormatter.string(from: date)
-            
-            
-            // Get day only
-            let calendar = Calendar.current
-            let day = calendar.component(.day, from: date)
-            cell.MnthLbl.text = monthName
-            cell.dateLbl.text = String(day)
-            
-        }
-        
-        let formattedDateString = dateFormatter.convertDate(
-            FilteredReportData?[indexPath.row].date ?? ""
-        ) ?? ""
-        cell.dateYrLbl.text = formattedDateString
-        cell.dayLbl.text = FilteredReportData?[indexPath.row].day
-        
-        
-        return cell
-    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2, height: 200 )
-    }
-
-
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var TopView: UIView!
     @IBOutlet weak var tv: UITableView!
@@ -70,7 +29,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         let name = childDetails?.name ?? ""
@@ -90,14 +49,14 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         NoDataLbl.isHidden = true
         
         cv.register(
-                UINib(nibName: "AttendanceRepCv", bundle: nil),
-                forCellWithReuseIdentifier: "AttendanceRepCv")
+            UINib(nibName: "AttendanceRepCv", bundle: nil),
+            forCellWithReuseIdentifier: "AttendanceRepCv")
         cv.delegate = self
         cv.dataSource = self
         Get_attendaceReport()
         
     }
-
+    
     func Get_attendaceReport() {
         
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<StudentAttendanceResponse,Error>) in
@@ -126,9 +85,8 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
     }
-
+    
     @IBAction func BackAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     
@@ -166,9 +124,9 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
                 let typeStr = record.type?.lowercased()
                 
                 return
-                    (dateStr?.contains(lowercasedQuery) ?? false) ||
-                    (dayStr?.contains(lowercasedQuery) ?? false) ||
-                    (typeStr?.contains(lowercasedQuery) ?? false)
+                (dateStr?.contains(lowercasedQuery) ?? false) ||
+                (dayStr?.contains(lowercasedQuery) ?? false) ||
+                (typeStr?.contains(lowercasedQuery) ?? false)
             }
         }
         
@@ -179,7 +137,41 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         
         cv.reloadData()
     }
-
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return FilteredReportData?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttendanceRepCv", for: indexPath) as! AttendanceRepCv
+        let dateStr = FilteredReportData?[indexPath.row].date ?? ""
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        
+        if let date = inputFormatter.date(from: dateStr) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "MMM"
+            let monthName = outputFormatter.string(from: date)
+            let calendar = Calendar.current
+            let day = calendar.component(.day, from: date)
+            cell.MnthLbl.text = monthName
+            cell.dateLbl.text = String(day)
+            
+        }
+        
+        let formattedDateString = dateFormatter.convertDate(
+            FilteredReportData?[indexPath.row].date ?? ""
+        ) ?? ""
+        cell.dateYrLbl.text = formattedDateString
+        cell.dayLbl.text = FilteredReportData?[indexPath.row].day
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/2, height: 200 )
+    }
+    
+    
     
 }
 
