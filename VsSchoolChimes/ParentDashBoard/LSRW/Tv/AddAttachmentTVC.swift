@@ -262,29 +262,12 @@ class AddAttachmentTVC: UITableViewCell,
             ) as! AudioCVC
             // In your cell configuration
             if let urlStr = data.imageURL {
-                print("Original string:", urlStr)
-                
-                let url: URL
-                if urlStr.hasPrefix("http://") || urlStr.hasPrefix("https://") {
-                    // Remote URL
-                    guard let remoteURL = URL(string: urlStr) else {
-                        print("Invalid remote URL: \(urlStr)")
-                        return cell
-                    }
-                    url = remoteURL
-                } else {
-                    let path = urlStr
-                        .replacingOccurrences(of: "file://", with: "")
-                        .removingPercentEncoding ?? urlStr
-                    print("Decoded path:", path)
-                    url = URL(fileURLWithPath: path)
-                }
-                
-                print("Final URL:", url)
+                let url = URL(fileURLWithPath: urlStr)
                 cell.audioURL = url
                 cell.TrashIcon.isHidden = false
                 cell.TrashIcon.isUserInteractionEnabled = true
             }
+
             cell.audioDelegate = self
             cell.delegate = self
             cell.cellIndex = indexPath.item - 1
@@ -320,7 +303,6 @@ class AddAttachmentTVC: UITableViewCell,
     // MARK: - Delete Delegate
     func deleteImage(index: Int) {
         guard index < attachments.count else {
-            print("⚠️ Invalid delete index: \(index)")
             return
         }
         if let collectionView = addAttachmentView.imageCollectionview {
@@ -329,13 +311,9 @@ class AddAttachmentTVC: UITableViewCell,
                 audioCell.stopPlayback()
             }
         }
-        
-        // Delete local file if exists
         let urlString = attachments[index].imageURL
-        if let url = urlString.flatMap(URL.init),
-           url.isFileURL,
-           FileManager.default.fileExists(atPath: url.path) {
-            try? FileManager.default.removeItem(at: url)
+        if let url = urlString.flatMap(URL.init), url.isFileURL {
+            url.stopAccessingSecurityScopedResource()  // <- important
         }
         attachments.remove(at: index)
         reloadAttachments()
@@ -494,47 +472,26 @@ class AddAttachmentTVC: UITableViewCell,
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    func documentPicker(_ controller: UIDocumentPickerViewController,
+                        didPickDocumentsAt urls: [URL]) {
+
         guard let fileURL = urls.first else { return }
-        
+
+        // Allow external file access
         guard fileURL.startAccessingSecurityScopedResource() else {
             print("❌ Cannot access file")
             return
         }
         
-        defer {
-            fileURL.stopAccessingSecurityScopedResource()
-        }
-        
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let filename = fileURL.lastPathComponent
-        let existingAudioPath = documentsDirectory.appendingPathComponent(filename).path
-        if attachments.contains(where: { $0.imageURL == existingAudioPath }) {
-            print("⚠️ File already added")
-            return
-        }
-        
-        let destinationURL = documentsDirectory.appendingPathComponent(filename)
-        
-        do {
-            if !FileManager.default.fileExists(atPath: destinationURL.path) {
-                try FileManager.default.copyItem(at: fileURL, to: destinationURL)
-                print("✅ New file copied")
-            } else {
-                print("ℹ️ File already exists, using existing copy")
-            }
-            
-            attachments.append(.init(
-                image: nil,
-                imageURL: destinationURL.path,
-                fileType: CommonStringFile.audio
-            ))
-            reloadAttachments()
-            
-        } catch {
-            print("❌ Error:", error.localizedDescription)
-        }
+        attachments.append(.init(
+            image: nil,
+            imageURL: fileURL.path,      // store original path
+            fileType: CommonStringFile.audio
+        ))
+
+        reloadAttachments()
     }
+
     // MARK: - Current VC
     func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes

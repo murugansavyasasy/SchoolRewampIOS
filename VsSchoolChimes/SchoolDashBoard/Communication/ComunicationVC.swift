@@ -727,6 +727,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
+    
     func deleteFile(at url: URL) {
         if FileManager.default.fileExists(atPath: url.path) {
             do {
