@@ -33,7 +33,6 @@ class SchoolListTVC: UITableViewCell {
         // Ensure the cell remains interactive
         contentView.isUserInteractionEnabled = true
         self.isUserInteractionEnabled = true
-        
         // Start with a smaller scale and invisible
         contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         contentView.alpha = 0

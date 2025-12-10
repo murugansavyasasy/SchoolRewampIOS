@@ -30,13 +30,11 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
     var selectedId:String?
     var is_change_answer:Bool?
     var is_blocked:Bool?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         optionBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
         questionView.layer.cornerRadius = 10
         answerView.layer.cornerRadius = 10
-        
         studentNameLbl.setFont(style: .body, size: FontSize.BodySize)
         QuestionLbl.setFont(style: .body, size: FontSize.BodySize)
         questionDateLbl.setFont(style: .body, size: 11)
@@ -44,13 +42,6 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         answerLbl.setFont(style: .body, size: FontSize.BodySize)
         answerDateLbl.setFont(style: .body, size: 11)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     func edit(edit:Bool,delete:Bool,selectedId:String,isChangeAnswer:Bool,isBlock:Bool){
         self.selectedId = selectedId
         self.delete = delete
@@ -61,7 +52,6 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
     }
     
     @IBAction func optionBtnAct(_ sender: UIButton) {
-        
         let popoverContentVC = PopupVC(edit: edit ?? false, delete: delete ?? false, selectedId: selectedId)
         popoverContentVC.delegate = self
         popoverContentVC.ptm = false
@@ -77,7 +67,6 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
             popoverController.permittedArrowDirections = .up
             popoverController.delegate = self
         }
-        
         // For iPhones: Present as a pop-up instead of full-screen
         if UIDevice.current.userInterfaceIdiom == .phone {
             popoverContentVC.modalPresentationStyle = .overFullScreen

@@ -52,9 +52,7 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
     private var completedTask: [LSRWTask] = []
     private var selectedIndex = 0
     let alert = CustomAlert()
-    private let filterArray = [
-        "All".translated(), "Listening".translated(), "Speaking".translated(), "Reading".translated(), "Writing".translated(), "Completed".translated(), "Active".translated()
-    ]
+    private let filterArray = ["All".translated(), "Listening".translated(), "Speaking".translated(), "Reading".translated(), "Writing".translated(), "Completed".translated(), "Active".translated()]
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -78,8 +76,8 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
     private func setupTableView() {
         lsrwTable.dataSource = self
         lsrwTable.delegate = self
-        lsrwTable.register(UINib(nibName: "LSRWTaskTVC", bundle: nil), forCellReuseIdentifier: "LSRWTaskTVC")
-        lsrwTable.register(UINib(nibName: "LSRWProgressTVC", bundle: nil), forCellReuseIdentifier: "LSRWProgressTVC")
+        lsrwTable.register(UINib(nibName: CellConfingName.LSRWTaskTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.LSRWTaskTVC)
+        lsrwTable.register(UINib(nibName: CellConfingName.LSRWProgressTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.LSRWProgressTVC)
         lsrwTable.separatorStyle = .none
         lsrwTable.showsVerticalScrollIndicator = false
 
@@ -257,8 +255,6 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
                 }
             }
         }
-
-        // ✅ Handle No Data state
         let hasData = filterTask.contains { section in
             switch section {
             case .active(let list), .completed(let list):
@@ -323,17 +319,17 @@ extension LSRWVC: UITableViewDataSource {
 
         switch filterTask[indexPath.section] {
         case .overview(let overview):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LSRWProgressTVC, for: indexPath) as! LSRWProgressTVC
             cell.configure(with: overview)
             cell.delegate = self
             return cell
         case .filterArray:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWProgressTVC", for: indexPath) as! LSRWProgressTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LSRWProgressTVC, for: indexPath) as! LSRWProgressTVC
             cell.configure(with: nil, selectedIndex: selectedIndex)
             cell.delegate = self
             return cell
         case .active(let tasks), .completed(let tasks):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LSRWTaskTVC", for: indexPath) as! LSRWTaskTVC
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LSRWTaskTVC, for: indexPath) as! LSRWTaskTVC
             cell.configure(with: tasks[indexPath.row])
             cell.delegate = self
             return cell

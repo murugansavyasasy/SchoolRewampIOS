@@ -23,6 +23,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var editedFields: [String: String] = [:]
     let alert = CustomAlert()
     var isCreate = false
+    var EDIT_LESSONPLAN = "EDIT_LESSONPLAN"
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,27 +32,24 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         BottomView.layer.shadowOffset = CGSize(width: 0, height: 4)
         BottomView.layer.shadowRadius = 8
         BottomView.layer.masksToBounds = false
-        
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         CancelBtn.layer.cornerRadius = 10
         UpdateBtn.layer.cornerRadius = 10
         CancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         UpdateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         if isCreate{
-            UpdateBtn.setTitle("Create", for: .normal)
+            UpdateBtn.setTitle(MenuStringFile.Create, for: .normal)
             BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.createLessonPlan, secondLine: staffDetails?.school_name ?? "")
         }else{
-            UpdateBtn.setTitle("Update", for: .normal)
+            UpdateBtn.setTitle(MenuStringFile.Update, for: .normal)
             BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.editLessonPlan, secondLine: staffDetails?.school_name ?? "")
         }
         Tableview.showsVerticalScrollIndicator = false
         Tableview.showsHorizontalScrollIndicator = false
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        let nib = UINib(nibName: "LessonEditTV", bundle: nil)
-        Tableview.register(nib, forCellReuseIdentifier: "LessonEditTV")
+        let nib = UINib(nibName: CellConfingName.LessonEditTV, bundle: nil)
+        Tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonEditTV)
         Tableview.delegate = self
         Tableview.dataSource = self
     }
@@ -79,16 +77,11 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        
         let keyboardHeight = keyboardFrame.height
-        
         Tableview.contentInset.bottom = keyboardHeight
-        
         var insets = Tableview.verticalScrollIndicatorInsets
         insets.bottom = keyboardHeight
         Tableview.verticalScrollIndicatorInsets = insets
-        
-        // Optionally scroll to the active cell
         if let firstResponder = view.currentFirstResponder(),
            let cell = firstResponder.superview(of: UITableViewCell.self),
            let indexPath = Tableview.indexPath(for: cell) {
@@ -101,7 +94,6 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         Tableview.verticalScrollIndicatorInsets = .zero
     }
     
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -109,32 +101,24 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     //MARK: Lesson Edit Api call
     
     func Get_Edit_Details(){
-        
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
         let param: [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.request_type: ReqestType ?? ""]
         
         APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[ weak self] (result: Result<LessonEditResponse,Error>) in
-            
             DispatchQueue.main.async {[weak self] in
-                
                 guard let self = self else {return}
-                
                 if #available(iOS 15.0, *) {
                     self.hideActivityLoader()
                 }
-                
-                
                 switch result {
-                    
                 case .success(let success):
                     if user_inputs.clearTempData(){
-                        let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                       "activity": "EDIT_LESSONPLAN",
-                                       "user_type": 1,
-                                       "menu_id": 2]
+                        let parms = [ LessonPlanAPIKeys.mobileNumber: UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                      LessonPlanAPIKeys.activity: EDIT_LESSONPLAN,
+                                      LessonPlanAPIKeys.userType: 1,
+                                      LessonPlanAPIKeys.menuId: 2]
                         paketApiCall(params:parms)
                     }
                     self.EditData = success.data ?? []
@@ -155,7 +139,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         
         let converted = editedFields.map { (key, value) in
-            return ["field_id": key, "value": value]
+            return [LessonPlanAPIKeys.fieldId: key, LessonPlanAPIKeys.value: value]
         }
         let LessonPlanid = isCreate ? LessonPlanStringFile.section_subject_id : LessonPlanStringFile.particular_id
         let type = isCreate ? ApitTypeSringFile.POST : ApitTypeSringFile.PUT
@@ -166,40 +150,34 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 result: Result<CommonApiSuc,
                 Error>
             ) in
-            
-            DispatchQueue.main.async { [weak self] in
                 
-                guard let self = self else {return}
-                
-                if #available(iOS 15.0, *){
-                    self.hideActivityLoader()
-                }
-                
-                switch result {
-                    
-                case .success(let Success):
-                    if Success.status == true {
-                        if user_inputs.clearTempData(){
-                            let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                           "activity": "EDIT_LESSONPLAN",
-                                           "user_type": 1,
-                                          "menu_id": Menu_id.staffSelectedMenuId]
-                            paketApiCall(params:parms)
-                        }
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: Success.message ?? "", on: self, okAction: {
-                            self.dismiss(animated: true)
-                        })
-                    }else {
-                        
-                        self.alert.showAlert(title: AlertstringFile.Failed, message:Success.message ?? "", on: self)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else {return}
+                    if #available(iOS 15.0, *){
+                        self.hideActivityLoader()
                     }
-                    
-                case .failure(let error):
-                    
-                    self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                    switch result {
+                    case .success(let Success):
+                        if Success.status == true {
+                            if user_inputs.clearTempData(){
+                                let parms = [ LessonPlanAPIKeys.mobileNumber: UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                              LessonPlanAPIKeys.activity: EDIT_LESSONPLAN,
+                                              LessonPlanAPIKeys.userType: 1,
+                                              LessonPlanAPIKeys.menuId: Menu_id.staffSelectedMenuId]
+                                paketApiCall(params:parms)
+                            }
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: Success.message ?? "", on: self, okAction: {
+                                self.dismiss(animated: true)
+                            })
+                        }else {
+                            self.alert.showAlert(title: AlertstringFile.Failed, message:Success.message ?? "", on: self)
+                        }
+                        
+                    case .failure(let error):
+                        self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                    }
                 }
             }
-        }
     }
     func paketApiCall(params:[String:Any]){
         APIService.shared.makeApi(
@@ -209,9 +187,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-
                 guard let self = self else { return }
-
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {
@@ -227,18 +203,15 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func CancelAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     
     @IBAction func UpdateAct(_ sender: Any) {
-        
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_update_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
             self.LessonPlan_Update_Api()
         }, onNo: {
             
         })
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -247,19 +220,14 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = Tableview.dequeueReusableCell(withIdentifier: "LessonEditTV", for: indexPath) as! LessonEditTV
-        
+        let cell = Tableview.dequeueReusableCell(withIdentifier: CellConfingName.LessonEditTV, for: indexPath) as! LessonEditTV
         cell.tableView = self.Tableview
-        
         if var edit = EditData?[indexPath.row] {
-            
             if let updatedValue = editedFields[edit.field_id ?? ""] {
                 edit.value = updatedValue
             }
             cell.configure(with: edit)
         }
-        
         cell.onEdit = { [weak self] fieldID, newValue in
             self?.editedFields[fieldID] = newValue
             print("editedFields: ", self?.editedFields ?? [:])

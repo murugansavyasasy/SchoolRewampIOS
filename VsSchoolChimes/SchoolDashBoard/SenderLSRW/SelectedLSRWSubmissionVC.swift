@@ -44,14 +44,11 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         tableView.dataSource = self
         dropDownView.setShadow(cornerRadius: 4)
         
-        // Set current month in label
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         monthId = Calendar.current.component(.month, from: date)
         monthLbl.text = dateFormatter.string(from: date)
-        
-        // Dropdown tap gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         dropDownView.isUserInteractionEnabled = true
         dropDownView.addGestureRecognizer(tapGesture)
@@ -168,8 +165,6 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         if let writing = data.writing {
             filterArray.append(Overview(title: "Writing", value: writing.over_all_percentage ?? "0%", subtitle: "\(writing.student_count ?? "0") Students"))
         }
-
-        // ✅ Final Report Data
         newReportData.append(.filterList(filterArray))
         newReportData.append(.monthlyReport(monthlyReport))
         newReportData.append(.studentList(uniqueStudentList))
@@ -177,78 +172,6 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         self.reportData = newReportData
         self.tableView.reloadData()
     }
-//
-//    private func mapResponseToReportData(data: PerformanceData) {
-//        self.currentData = data
-//        var newReportData: [ReportData] = []
-//
-//        // ✅ Weekly Reports — comparing across all categories
-//        let totalWeeks = weeksInMonth(month: monthId)
-//        var weeklyReports: [PerformanceReport] = []
-//print("totalWeeks ==>",totalWeeks)
-//        for week in 1...totalWeeks {
-//            // Reading
-//            let readingDetail = data.reading?.details?[safe: week - 1]
-//            let readingSubmitted = readingDetail?.submitted_count ?? 0
-//            let readingTotal = readingDetail?.member_count ?? 0
-//
-//            // Listening
-//            let listeningDetail = data.listening?.details?[safe: week - 1]
-//            let listeningSubmitted = listeningDetail?.submitted_count ?? 0
-//            let listeningTotal = listeningDetail?.member_count ?? 0
-//
-//            // Speaking
-//            let speakingDetail = data.speaking?.details?[safe: week - 1]
-//            let speakingSubmitted = speakingDetail?.submitted_count ?? 0
-//            let speakingTotal = speakingDetail?.member_count ?? 0
-//
-//            // Writing
-//            let writingDetail = data.writing?.details?[safe: week - 1]
-//            let writingSubmitted = writingDetail?.submitted_count ?? 0
-//            let writingTotal = writingDetail?.member_count ?? 0
-//
-//            let totalSubmitted = readingSubmitted + listeningSubmitted + speakingSubmitted + writingSubmitted
-//            let totalMembers = readingTotal + listeningTotal + speakingTotal + writingTotal
-//
-//            let percentage = totalMembers > 0 ? Int((Double(totalSubmitted) / Double(totalMembers)) * 100) : 0
-//            weeklyReports.append(PerformanceReport(title: "Week \(week)", percentage: percentage))
-//        }
-//
-//        let topPerformers = getTopPerformers(from: data)
-//
-//        let monthlyReport = MonthlyReport(
-//            weeklyReport: weeklyReports,
-//            topPerformance: topPerformers
-//        )
-//        let studentList = data.today_submitted ?? []
-//
-//        // ✅ Map Categories → Overview
-//        var filterArray: [Overview] = []
-//        if let todaySubmitted = data.today_submitted {
-//            filterArray.append(Overview(title: "Today Submitted", value: "", subtitle: "\(todaySubmitted.count) Students"))
-//        }
-//        if let listening = data.listening {
-//            filterArray.append(Overview(title: "Listening", value: listening.over_all_percentage ?? "0%", subtitle: "\(listening.student_count ?? "0") Students"))
-//        }
-//        if let speaking = data.speaking {
-//            filterArray.append(Overview(title: "Speaking", value: speaking.over_all_percentage ?? "0%", subtitle: "\(speaking.student_count ?? "0") Students"))
-//        }
-//        if let reading = data.reading {
-//            filterArray.append(Overview(title: "Reading", value: reading.over_all_percentage ?? "0%", subtitle: "\(reading.student_count ?? "0") Students"))
-//        }
-//        if let writing = data.writing {
-//            filterArray.append(Overview(title: "Writing", value: writing.over_all_percentage ?? "0%", subtitle: "\(writing.student_count ?? "0") Students"))
-//        }
-//
-//        // ✅ Final Report Data
-//        newReportData.append(.filterList(filterArray))
-//        newReportData.append(.monthlyReport(monthlyReport))
-//        newReportData.append(.studentList(studentList))
-//
-//        self.reportData = newReportData
-//        self.tableView.reloadData()
-//    }
-
     func getTopPerformers(from data: PerformanceData) -> [TopReport] {
         let readingDetails = data.reading?.details ?? []
         let writingDetails = data.writing?.details ?? []
@@ -290,36 +213,12 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
                 percentage: highest
             )
         }
-        
-        // 🔥 Filter only students >= 70%
         reports = reports.filter { $0.percentage >= 70 }
         reports.sort { $0.percentage > $1.percentage }
         
         return reports
     }
 
-
-//    // MARK: - Weeks in Current Month (Days ÷ 7)
-//    func weeksInMonth(month: Int) -> Int {
-//        let calendar = Calendar.current
-//        let date = Date()
-//        let currentYear = calendar.component(.year, from: date)
-//        
-//        // Create the start date of the given month
-//        var components = DateComponents()
-//        components.year = currentYear
-//        components.month = month
-//        components.day = 1
-//        
-//        guard let startOfMonth = calendar.date(from: components),
-//              let monthRange = calendar.range(of: .day, in: .month, for: startOfMonth) else {
-//            return 0
-//        }
-//        
-//        let days = monthRange.count
-//        let weeks = Int(ceil(Double(days) / 7.0))
-//        return weeks
-//    }
     func weekOfMonth(from dateString: String, format: String = "dd-MM-yyyy") -> Int? {
         let formatter = DateFormatter()
         formatter.dateFormat = format
@@ -334,8 +233,6 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         let calendar = Calendar.current
         let date = Date()
         let currentYear = calendar.component(.year, from: date)
-        
-        // Create the start date of the given month and current year
         var components = DateComponents()
         components.year = currentYear
         components.month = month
@@ -345,11 +242,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
               let monthRange = calendar.range(of: .day, in: .month, for: startOfMonth) else {
             return 0
         }
-        
-        // Calculate the end date of the month
         let endOfMonth = calendar.date(byAdding: .day, value: monthRange.count - 1, to: startOfMonth)!
-        
-        // Get the week numbers
         let startWeek = calendar.component(.weekOfMonth, from: startOfMonth)
         let endWeek = calendar.component(.weekOfMonth, from: endOfMonth)
         
@@ -465,22 +358,6 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
                 submitted_average: student.submitted_average
             )
             cell.configure(with: task)
-          
-//            if let firstLetter = student.student_name?.first {
-//                cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
-//            } else {
-//                cell.initialBtn.setTitle("-", for: .normal)
-//            }
-//            
-//            cell.nameLbl.text = student.student_name
-//            cell.tittleLbl.isHidden = false
-//            cell.tittleLbl.text = student.title
-//            cell.descriptionLbl.isHidden = false
-//            cell.descriptionLbl.text = student.description
-//            cell.classLbl.text = student.std_sec
-//            cell.pesantageProgress.isHidden = true
-//            cell.persantageLbl.text = student.remark
-//            cell.persantageLbl.textColor = .systemGreen
             return cell
         }
     }
@@ -488,11 +365,7 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // No header for first section
         if section == 0 { return nil }
-        
-        // Check if there's data for this section
         guard let sectionData = reportData?[section] else { return nil }
-        
-        // Only show header if there is meaningful data
         switch sectionData {
         case .monthlyReport(let report):
             guard !report.weeklyReport.isEmpty else { return nil }
@@ -514,7 +387,6 @@ extension SelectedLSRWSubmissionVC: UITableViewDelegate, UITableViewDataSource {
         case .studentList: label.text = "Tasks"
         default: label.text = ""
         }
-        
         headerView.addSubview(label)
         return headerView
     }

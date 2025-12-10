@@ -145,9 +145,9 @@ class UpdateProfileVC: UIViewController {
                             self.changeProfileUrl = imageUrl
                             self.profileNode = photoItem.node ?? "photoPath"
                             self.editBtn.isEnabled = photoItem.is_editable ?? false
+                            self.editBtn.isHidden = photoItem.is_editable ?? false
                         }
                         
-                        // Find document section and extract URLs into attachments
                         if let documentSection = self.profileSections.first(where: { section in
                             section.items.contains(where: { $0.node == "documents" })
                         }), let documentItem = documentSection.items.first(where: { $0.node == "documents" }) {

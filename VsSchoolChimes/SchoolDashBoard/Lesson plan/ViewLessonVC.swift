@@ -23,7 +23,7 @@ class ViewLessonVC: UIViewController, SelectedId {
             }
         }
     }
-
+    
     @IBOutlet weak var creteBtn: UIButton!
     @IBOutlet weak var BAckBtn: UIButton!
     @IBOutlet weak var SearchBar: UISearchBar!
@@ -48,17 +48,15 @@ class ViewLessonVC: UIViewController, SelectedId {
     var LesonPlanReport : LessonPlanStaffReport?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         menuNameLbl.configureAsBackTitle(
-                firstLine: MenuStringFile.LessonPlan,
-                secondLine: staffDetails?.school_name ?? ""
-            )
+            firstLine: MenuStringFile.LessonPlan,
+            secondLine: staffDetails?.school_name ?? ""
+        )
         creteBtn.setShadow(cornerRadius: creteBtn.frame.width/2)
         creteBtn.isHidden = IsDeleteHiden
         NoDataImg.isHidden = true
         NoDataLbl.isHidden = true
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
-        
         SearchBar.isHidden = true
         SearchBar.searchTextField.addDoneButton()
         SearchBar.placeholder = CommonStringFile.Search.translated()
@@ -70,30 +68,25 @@ class ViewLessonVC: UIViewController, SelectedId {
         SearchBar.searchTextField.addDoneButton()
         TableView.showsVerticalScrollIndicator = false
         TableView.showsHorizontalScrollIndicator = false
-        let nib = UINib(nibName: "LessonPlanTVC", bundle: nil)
-        TableView.register(nib, forCellReuseIdentifier: "LessonPlanTVC")
-        
+        let nib = UINib(nibName: CellConfingName.LessonPlanTVC, bundle: nil)
+        TableView.register(nib, forCellReuseIdentifier: CellConfingName.LessonPlanTVC)
         TableView.delegate = self
         TableView.dataSource = self
         
         let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)
         FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
-        
         FilterCV.delegate = self
         FilterCV.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         View_Lesson_Plan_Api()
     }
     
     
     @IBAction func searchBtnAct(_ sender: UIButton) {
-        
         SearchBar.becomeFirstResponder()
         sender.isSelected.toggle()
-        
         if sender.isSelected{
             SearchBar.isHidden = false
             SearchBar.becomeFirstResponder()
@@ -115,27 +108,19 @@ class ViewLessonVC: UIViewController, SelectedId {
     //MARK: Api Call Functions
     
     func View_Lesson_Plan_Api(){
-        
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
         
         let param: [String: Any] = [LessonPlanStringFile.section_subject_id : SubjectId ?? "",LessonPlanStringFile.lesson_plan_status: 0]
-        
         APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanDetailResponse,Error>) in
-            
             DispatchQueue.main.async { [weak self] in
-                
                 guard let self = self else{return}
-                
                 if #available(iOS 15.0, *) {
                     self.hideActivityLoader()
                 }
-                
                 switch result {
                 case .success(let success):
-                    
-                    
                     if success.status == true{
                         self.ViewLessonData = success.data
                         FilteredData = ViewLessonData
@@ -149,15 +134,11 @@ class ViewLessonVC: UIViewController, SelectedId {
                         self.searchBtnName.isHidden = !success.status
                     }
                     TableView.reloadData()
-                    
-                    
                 case .failure(let failure):
-                    
                     self.SearchBar.isHidden = true
                     self.NoDataImg.isHidden = false
                     self.NoDataLbl.isHidden = false
                     self.NoDataLbl.text = failure.localizedDescription
-                    
                     print("Error: ",failure.localizedDescription)
                 }
             }
@@ -182,11 +163,9 @@ class ViewLessonVC: UIViewController, SelectedId {
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                
                 if #available(iOS 15.0, *) {
                     self.hideActivityLoader()
                 }
-                
                 switch result {
                 case .success(let success):
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -210,31 +189,28 @@ class ViewLessonVC: UIViewController, SelectedId {
                 result: Result<CommonApiSuc,
                 Error>
             ) in
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else{return}
-                switch result{
-                    
-                case .success(let success):
-                    
-                    let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
-                    
-                    if success.status == true {
-                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
-                            self.ViewLessonData?.removeAll{$0.particular_id == particularID}
-                            self.FilteredData?.removeAll{$0.particular_id == particularID}
-                            self.searchData?.removeAll{$0.particular_id == particularID}
-                            self.TableView.reloadData()
-                        })
-                    }else {
-                        CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else{return}
+                    switch result{
+                    case .success(let success):
+                        let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
+                        if success.status == true {
+                            CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
+                                self.ViewLessonData?.removeAll{$0.particular_id == particularID}
+                                self.FilteredData?.removeAll{$0.particular_id == particularID}
+                                self.searchData?.removeAll{$0.particular_id == particularID}
+                                self.TableView.reloadData()
+                            })
+                        }else {
+                            CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                        }
+                        
+                    case .failure(let error):
+                        CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                     }
-                    
-                case .failure(let error):
-                    CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                 }
             }
-        }
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -275,32 +251,24 @@ class ViewLessonVC: UIViewController, SelectedId {
 
 @available(iOS 14.0, *)
 extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return FilteredData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = TableView.dequeueReusableCell(withIdentifier: "LessonPlanTVC", for: indexPath) as! LessonPlanTVC
-        
+        let cell = TableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTVC, for: indexPath) as! LessonPlanTVC
         let lesson = FilteredData?[indexPath.row]
         cell.titleNameLbl.text = LesonPlanReport?.subject_name
-        cell.chapterLbl.text = "Chapters Completed".translated() + (
+        cell.chapterLbl.text = MenuStringFile.ChaptersCompleted.translated() + (
             LesonPlanReport?.items_completed ?? ""
         )
         switch lesson?.lesson_plan_status{
-            
         case 1:
             cell.statusBtn.setImage(UIImage.pending, for: .normal)
             cell.statusBtn.tintColor = .systemOrange
-            
         case 2:
             cell.statusBtn.setImage(UIImage(systemName: "arrow.2.circlepath.circle.fill"), for: .normal)
             cell.statusBtn.tintColor = .systemBlue
-            
         case 3:
             cell.statusBtn.setImage(UIImage(systemName: "checkmark.arrow.trianglehead.counterclockwise"), for: .normal)
             cell.statusBtn.tintColor = .systemGreen
@@ -311,6 +279,7 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
         cell.levelBtn.setTitle("\(indexPath.row+1)", for: .normal)
         cell.EditBtn.tag = indexPath.row
         cell.EditBtn1.tag = indexPath.row
+        cell.ThreeDot.tag = indexPath.row
         let details = FilteredData?[indexPath.row].details ?? []
         cell.edit(edit:true, delete:  IsDeleteHiden, selectedId: FilteredData?[indexPath.row].particular_id  ?? "")
         cell.delegate = self
@@ -323,21 +292,17 @@ extension ViewLessonVC: UITableViewDelegate,UITableViewDataSource{
 @available(iOS 14.0, *)
 extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return Filters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
-        
         cell.FilterLbl.text = Filters[indexPath.item].translated()
-        
         cell.cellView.backgroundColor = indexPath == selectedIndex ? UIColor.primery
             .withAlphaComponent(0.8) : .systemGray5
         cell.FilterLbl.textColor = indexPath == selectedIndex ? UIColor.white : .black
         cell.CheckboxImg.isHidden = false
-        
         switch Filters[indexPath.item]{
         case LessonplanStringFile.yetToStart:
             cell.CheckboxImg.image = UIImage.pending
@@ -356,11 +321,9 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         selectedIndex = indexPath
         LessonPlanStatus = indexPath.item
         LessonFilter(Status: LessonPlanStatus)
-        
         FilterCV.reloadData()
         TableView.reloadData()
     }
@@ -382,13 +345,11 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let text = Filters[indexPath.item] // Assuming your label text is from a data source
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
         label.text = text
         label.sizeToFit()
-        
         let width = label.frame.width + 60  // Add padding
         return CGSize(width: width, height: 40) // Adjust height accordingly
     }
@@ -399,7 +360,6 @@ extension ViewLessonVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchLesson(searchText)
     }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
@@ -412,7 +372,6 @@ extension ViewLessonVC: UISearchBarDelegate {
         } else {
             baseFiltered = allData.filter { $0.lesson_plan_status == LessonPlanStatus }
         }
-
         // Now apply search filter
         if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             // No search text → show normal filtered data
@@ -427,13 +386,11 @@ extension ViewLessonVC: UISearchBarDelegate {
                 }
             }
         }
-
         // Handle empty state
         NoDataImg.isHidden = !(FilteredData?.isEmpty ?? false)
         NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? false)
         NoDataLbl.text = (FilteredData?.isEmpty ?? false) ? "No LessonPlan Found" : ""
-
         TableView.reloadData()
     }
-
+    
 }

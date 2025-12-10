@@ -18,7 +18,7 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var totalduraionLbl: UILabel!
     @IBOutlet weak var AudioFullView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
-
+    
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var reasonImgView: UIImageView!
@@ -35,28 +35,29 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     var playerItem: AVPlayerItem?
     var timer: Timer?
     var delegate : ViewAttachments?
+    let EmergencyVoice = "Emergency Voice"
+    let Voice = "Voice"
+    let ATTACHMENT = "ATTACHMENT"
+    let VOICE = "VOICE"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         backBtn.layer.cornerRadius = backBtn.frame.width/2
         cv.isHidden = file_path?.count == 0
         AudioFullView.isHidden = file_path?.count != 0
         pageControls.isHidden = file_path?.count == 1 || file_path?.count == 0
-        
         pageControls.numberOfPages = file_path?.count ?? 0
         pageControls.currentPage = 0
         cv.register(
-                UINib(nibName: "MsgVoiceCvCell", bundle: nil),
-                forCellWithReuseIdentifier: "MsgVoiceCvCell"
-            )
+            UINib(nibName: CellConfingName.MsgVoiceCvCell, bundle: nil),
+            forCellWithReuseIdentifier: CellConfingName.MsgVoiceCvCell
+        )
         cv.delegate = self
         cv.dataSource = self
-       
-        if MsgFromManagmentData.type == "ATTACHMENT"{
+        if MsgFromManagmentData.type == ATTACHMENT{
             AudioFullView.isHidden = true
             cv.isHidden = false
             separatorView.isHidden = false
-        }else if MsgFromManagmentData.type == "VOICE"{
+        }else if MsgFromManagmentData.type == VOICE{
             AudioFullView.isHidden = false
             separatorView.isHidden = false
             cv.isHidden = true
@@ -66,24 +67,24 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
             cv.isHidden = true
             separatorView.isHidden = true
         }
-
         reasonLbl.isHidden = MsgFromManagmentData.description?.isEmpty ?? true
         reasonDfltLbl.isHidden = reasonLbl.isHidden
         reasonImgView.isHidden = reasonLbl.isHidden
-        postedByLbl.text = ("Posted By:") + (MsgFromManagmentData.sent_by ?? "")
+        postedByLbl.text = (MenuStringFile.Posted_By) + (MsgFromManagmentData.sent_by ?? "")
         titleLbl.text = MsgFromManagmentData.title?.capitalized
         reasonLbl.text = MsgFromManagmentData.description?.capitalized
         voiceTitle.text = MsgFromManagmentData.title
         postedOn.text = formattedDateStatus(from: MsgFromManagmentData.date ?? "" ) + " " +  (
             MsgFromManagmentData.time ?? "" )
         if MsgFromManagmentData.is_emergency ?? false{
-            typeLbl.text = "Emergency Voice"
+            typeLbl.text = EmergencyVoice
         }else{
-            typeLbl.text = "Voice"
+            typeLbl.text = Voice
         }
     }
     
     @IBAction func backBtnAct(_ sender: Any) {
+        player?.pause()
         delegate?.dismiss(true)
         dismiss(animated: true)
     }
@@ -91,124 +92,109 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         guard let url = URL(string: MsgFromManagmentData.content ?? "") else {
             return
         }
-
-           playerItem = AVPlayerItem(url: url)
-           player = AVPlayer(playerItem: playerItem)
-
-           // Observe when playback finishes
-           NotificationCenter.default.addObserver(self,
-                                                  selector: #selector(playerDidFinishPlaying),
-                                                  name: .AVPlayerItemDidPlayToEndTime,
-                                                  object: playerItem)
-
-           // Load total duration
-           playerItem?.asset.loadValuesAsynchronously(forKeys: ["duration"]) {
-               DispatchQueue.main.async {
-                   if let duration = self.playerItem?.asset.duration {
-                       let seconds = CMTimeGetSeconds(duration)
-                       if seconds.isFinite {
-                           self.slider.minimumValue = 0
-                           self.slider.maximumValue = Float(seconds)
-                           self.totalduraionLbl.text = self.formatTime(seconds)
-                           self.reminingLbl.text = self.formatTime(seconds) // initially remaining = total
-                       }
-                   }
-               }
-           }
-       }
-
-       @IBAction func playTapped(_ sender: UIButton) {
-           guard let player = player else { return }
-
-           if player.timeControlStatus == .playing {
-               player.pause()
-               timer?.invalidate()
-               playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-           } else {
-               player.play()
-               startTimer()
-               playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-           }
-       }
-
-       func startTimer() {
-           timer?.invalidate()
-           timer = Timer.scheduledTimer(timeInterval: 0.5,
-                                        target: self,
-                                        selector: #selector(updateSlider),
-                                        userInfo: nil,
-                                        repeats: true)
-       }
-
-       @objc func updateSlider() {
-           guard let currentTime = player?.currentTime(),
-                 let duration = playerItem?.duration else { return }
-
-           let currentSeconds = CMTimeGetSeconds(currentTime)
-           let totalSeconds = CMTimeGetSeconds(duration)
-
-           if currentSeconds.isFinite, totalSeconds.isFinite {
-               slider.value = Float(currentSeconds)
-
-               // update labels
-               reminingLbl.text = formatTime(totalSeconds - currentSeconds)
-               totalduraionLbl.text = formatTime(totalSeconds)
-           }
-       }
-
-       @IBAction func sliderValueChanged(_ sender: UISlider) {
-           let seekTime = CMTime(seconds: Double(sender.value), preferredTimescale: 600)
-           player?.seek(to: seekTime)
-           if player?.timeControlStatus != .playing {
-               player?.play()
-               startTimer()
-               playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-           }
-       }
-
-       @objc func playerDidFinishPlaying() {
-           timer?.invalidate()
-           slider.value = 0
-           reminingLbl.text = formatTime(0)
-           playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-       }
-
-       // MARK: - Helper
-       func formatTime(_ seconds: Double) -> String {
-           let mins = Int(seconds) / 60
-           let secs = Int(seconds) % 60
-           return String(format: "%02d:%02d", mins, secs)
-       }
+        playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        // Observe when playback finishes
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerDidFinishPlaying),
+                                               name: .AVPlayerItemDidPlayToEndTime,
+                                               object: playerItem)
+        // Load total duration
+        playerItem?.asset.loadValuesAsynchronously(forKeys: ["duration"]) {
+            DispatchQueue.main.async {
+                if let duration = self.playerItem?.asset.duration {
+                    let seconds = CMTimeGetSeconds(duration)
+                    if seconds.isFinite {
+                        self.slider.minimumValue = 0
+                        self.slider.maximumValue = Float(seconds)
+                        self.totalduraionLbl.text = self.formatTime(seconds)
+                        self.reminingLbl.text = self.formatTime(seconds) // initially remaining = total
+                    }
+                }
+            }
+        }
+    }
+    
+    @IBAction func playTapped(_ sender: UIButton) {
+        guard let player = player else { return }
+        if player.timeControlStatus == .playing {
+            player.pause()
+            timer?.invalidate()
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        } else {
+            player.play()
+            startTimer()
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        }
+    }
+    func startTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 0.5,
+                                     target: self,
+                                     selector: #selector(updateSlider),
+                                     userInfo: nil,
+                                     repeats: true)
+    }
+    
+    @objc func updateSlider() {
+        guard let currentTime = player?.currentTime(),
+              let duration = playerItem?.duration else { return }
+        let currentSeconds = CMTimeGetSeconds(currentTime)
+        let totalSeconds = CMTimeGetSeconds(duration)
+        if currentSeconds.isFinite, totalSeconds.isFinite {
+            slider.value = Float(currentSeconds)
+            // update labels
+            reminingLbl.text = formatTime(totalSeconds - currentSeconds)
+            totalduraionLbl.text = formatTime(totalSeconds)
+        }
+    }
+    
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let seekTime = CMTime(seconds: Double(sender.value), preferredTimescale: 600)
+        player?.seek(to: seekTime)
+        if player?.timeControlStatus != .playing {
+            player?.play()
+            startTimer()
+            playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        }
+    }
+    
+    @objc func playerDidFinishPlaying() {
+        timer?.invalidate()
+        slider.value = 0
+        reminingLbl.text = formatTime(0)
+        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+    }
+    
+    // MARK: - Helper
+    func formatTime(_ seconds: Double) -> String {
+        let mins = Int(seconds) / 60
+        let secs = Int(seconds) % 60
+        return String(format:CommonStringFile.Time_formate, mins, secs)
+    }
 }
 
 extension MsgViewVC :  UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return file_path?.count ?? 0
         
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MsgVoiceCvCell", for: indexPath) as? MsgVoiceCvCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.MsgVoiceCvCell, for: indexPath) as? MsgVoiceCvCell else {
             return UICollectionViewCell()
         }
         
         if let url = URL(string: file_path?[indexPath.row].url ?? "") {
-                    let request = URLRequest(url: url)
+            let request = URLRequest(url: url)
             cell.webView.load(request)
-                }
-      
-        
+        }
         
         let urlString = file_path?[indexPath.row].url ?? ""
         if let url = URL(string: urlString) {
             let ext = url.pathExtension.lowercased()
             if ["png", "jpg", "jpeg", "webp"].contains(ext) {
-               
                 let imageUrl = urlString
-
                 let htmlString = """
                 <html>
                 <head>
@@ -229,38 +215,28 @@ extension MsgViewVC :  UICollectionViewDelegate, UICollectionViewDataSource,UICo
                 cell.webView
                     .load(
                         URLRequest(url: URL(string:file_path?[indexPath.row].url ?? "")!)
-                    )
-            }
+                    )}
         }
-        
         return cell
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let file = file_path?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
-       
-        
-       
-           
-            let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-            imageVC.fileURL = file_path ?? []
-//            imageVC.subjectName = backBtn.title(for: .normal) ?? ""
-            imageVC.pdfUrl = urlString
-            imageVC.scrollIndex = indexPath
-            imageVC.index = indexPath.row
-//            imageVC.type = isImage ? 2 : 0
-            imageVC.modalPresentationStyle = .fullScreen
-            present(imageVC, animated: true)
-        }
+        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+        imageVC.fileURL = file_path ?? []
+        imageVC.pdfUrl = urlString
+        imageVC.scrollIndex = indexPath
+        imageVC.index = indexPath.row
+        imageVC.modalPresentationStyle = .fullScreen
+        present(imageVC, animated: true)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return CGSize(width: collectionView.layer.frame.width, height: 180)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-           let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
+        let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
         pageControls.currentPage = Int(pageIndex)
-       }
+    }
 }

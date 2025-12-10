@@ -7,26 +7,14 @@
 
 import Foundation
 import UIKit
-
-
-
 @available(iOS 14.0, *)
-
 class MenuRedirectHandler {
-    
-    
-    
     static let shared = MenuRedirectHandler()
-    
-    
     static func createInstance() -> MenuRedirectHandler {
-        
         return MenuRedirectHandler()
-        
     }
     var getValue = 1
     var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequest,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
-    
     
     var Imgitems: [MenuImage] = [
         // MenuImage(id: 0, name: "Communication"),
@@ -72,39 +60,12 @@ class MenuRedirectHandler {
         MenuImage(id: 40, name: "Rewards"),
         MenuImage(id: 194, name: "Finance")
     ]
-
-
-    
-
-//    13    Fee Payment
-//    14    Fee Pending Report
-    
-   
-   
-   
-   
-    
-   
-   
-   
- 
-  
-    
-   
-    
-
-   
-          
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
     var receiverImageItems : [String] = ["Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM","MySchoolBus"]
-    
-    
-    
-    
+   
     //MARK: COMMONPAGE FOR MULTIPLE SCHOOL LIST PAGE
-    
     func SchoolListVc(from viewController: UIViewController) {
         let vc = SchoolListVC(nibName: nil, bundle: nil)
         vc.come_fromLogin = true
@@ -114,26 +75,10 @@ class MenuRedirectHandler {
     
     
     //MARK: SenderSideMenuViewContoller Starts
-//    
-//    func senderVideoNavigate(from viewController: UIViewController) {
-//        let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//    }
-    
     func senderHomeWorkNavigate(from viewController: UIViewController) {
-//        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-        
         let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-//        vc.page1 = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-//        vc.page2 = SenderHomeWorkVC(nibName: nil, bundle: nil)
-//        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-        
-        
     }
     
     func senderCommunicationNavigate(from viewController: UIViewController) {
@@ -143,22 +88,15 @@ class MenuRedirectHandler {
         
     }
     func senderNoticeboardNavigate(from viewController: UIViewController) {
-//        let vc = EventPageVC(nibName: nil, bundle: nil)
         let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-//        vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-//        vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-//
-//        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     
     func senderPtmNavigate(from viewController: UIViewController,PushNotiMsgId : String) {
-        //let vc = StaffPtmViewController(nibName: nil, bundle: nil)
         let vc = NewPtmVC(nibName: nil, bundle: nil)
         vc.pushNotiMsgId = PushNotiMsgId
         vc.modalPresentationStyle = .fullScreen
-        
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = .fade
@@ -176,33 +114,19 @@ class MenuRedirectHandler {
     func senderLeaveRequestNavigate(
         from viewController: UIViewController,
         PushnotiMsg_id : String) {
-        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-        
-    }
+            let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            viewController.present(vc, animated: true)
+        }
     func SenderLSRWVCNavigate(from viewController: UIViewController){
-       // let vc = ExamCreatVC(nibName: nil, bundle: nil)
-//        if #available(iOS 15.0, *) {
-//            let vc = SenderLSRWVC(nibName: nil, bundle: nil)
-//            vc.modalPresentationStyle = .fullScreen
-//            viewController.present(vc, animated: true)
-//        }
         if #available(iOS 15.0, *) {
             let vc = LSRWVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             viewController.present(vc, animated: true)
         }
-        
-    }
-    func RecipientNavigat(from viewController: UIViewController){
-//        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
     }
     func senderAssignmentNavigate(from viewController: UIViewController) {
         let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
-//        let vc = AssignmentPageVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         
@@ -228,29 +152,19 @@ class MenuRedirectHandler {
             viewController.present(vc, animated: true)
         }
     }
-
+    
     func senderStudentreportNavigate(from viewController: UIViewController) {
         let vc = ReportStudentListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-     
+        
         
     }
     func senderMarkAttendence(from viewController: UIViewController) {
         let vc = MarkAttendenceVC (nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-        
     }
-    
-    //
-//        func senderLeaveRequestNavigate(from viewController: UIViewController) {
-//            let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
-//            vc.modalPresentationStyle = .fullScreen
-//            viewController.present(vc, animated: true)
-//    
-//        }
-    
     
     func senderMarkAttendanceNavigate(from viewController: UIViewController) {
         let vc = LocationViewController(nibName: nil, bundle: nil)
@@ -270,8 +184,6 @@ class MenuRedirectHandler {
             vc.modalPresentationStyle = .fullScreen
             viewController.present(vc, animated: true)
         }
-       
-        
     }
     
     func senderSchoolStrength(from viewController: UIViewController) {
@@ -289,17 +201,13 @@ class MenuRedirectHandler {
         
     }
     func senderQuiz(from viewController: UIViewController) {
-        
         let vc = QuistionPagenationVc(nibName: nil, bundle: nil)
         vc.page1 = SenderQuizVc(nibName: nil, bundle: nil)
         vc.page2 = ReportsQuizVc(nibName: nil, bundle: nil)
-//        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         
     }
-    
-    
     
     func senderLocationNavigate(from viewController: UIViewController) {
         let vc = LocationViewController(nibName: nil, bundle: nil)
@@ -319,7 +227,6 @@ class MenuRedirectHandler {
         
     }
     func senderAttachment(from viewController: UIViewController) {
-        
         let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -331,7 +238,7 @@ class MenuRedirectHandler {
             vc.modalPresentationStyle = .fullScreen
             viewController.present(vc, animated: true)
         }
-       
+        
     }
     func StaffWiseAttendance(from viewController: UIViewController) {
         let vc = LocationHistoryVc(nibName: nil, bundle: nil)
@@ -340,7 +247,6 @@ class MenuRedirectHandler {
     }
     
     func senderExamMarkNavigate(from viewController: UIViewController) {
-        
         let vc = staffExamMarkVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -348,12 +254,7 @@ class MenuRedirectHandler {
     
     
     //MARK: ResiverSideMenuViewContoller Starts
-    
-    
-   
-    
     func receiverCommunicationNavigate(from viewController: UIViewController,PushNotiMsgId:String) {
-        
         if #available(iOS 15.0, *) {
             let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
             vc.clickedMessageId = PushNotiMsgId
@@ -362,16 +263,12 @@ class MenuRedirectHandler {
         }
     }
     
-    
-    
     func receiverPtmNavigate(from viewController: UIViewController) {
-       // let vc = PTMViewController(nibName: nil, bundle: nil)
         let vc = PtmNavigationVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     func receiverFeeDetails(from viewController: UIViewController) {
-        
         let vc = FeeDetails(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -384,7 +281,6 @@ class MenuRedirectHandler {
     
     @available(iOS 14.0, *)
     func receiverNoticeBoardNavigate(from viewController: UIViewController,PushNotiMsgId:String) {
-//        let vc = ParentNoticeBoardVc(nibName: nil, bundle: nil)
         let vc = ReciverNoticeBoardVC(nibName: nil, bundle: nil)
         vc.clickedMessageId = PushNotiMsgId
         vc.modalPresentationStyle = .fullScreen
@@ -399,12 +295,8 @@ class MenuRedirectHandler {
         
     }
     
-    func receiverLeaveRequestNavigate(from viewController: UIViewController) {
-        
-    }
     
     func receiverExamTestNavigate(from viewController: UIViewController) {
-        
         let vc = ExamDetailsVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -422,39 +314,26 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: false)
     }
-
     
-    func receiverAttendenceMark(from viewController: UIViewController){
-        
-        
-        
-    }
     func receiverchat(from viewController: UIViewController){
         let vc = InteractionVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        //vc.getValue = getValue
         vc.passvalue = 1
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     
     func receiverAttachment(from viewController: UIViewController,PushNotiMsgId:String){
-        
-//        let vc = ReciverAttachmentrVC(nibName: nil, bundle: nil)
         let vc = AttachmentsVc(nibName: nil, bundle: nil)
         vc.clickedMessageId = PushNotiMsgId
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     func receiverEvent(from viewController: UIViewController,PushNotiMsgId:String){
-
         let pageVC = EventResiverVC(nibName: nil, bundle: nil)  // Make sure your XIB is named PageVC.xib
         pageVC.clickedMessageId = PushNotiMsgId
-            pageVC.modalPresentationStyle = .fullScreen
-//            let assignmentVC = EventResiverVC()
-//            let imageVC = HolidayVC()
-//            pageVC.configure(with: [assignmentVC, imageVC])
-            viewController.present(pageVC, animated: true, completion: nil)
+        pageVC.modalPresentationStyle = .fullScreen
+        viewController.present(pageVC, animated: true, completion: nil)
     }
     
     func receiverOnlineNavigate(from viewController: UIViewController) {
@@ -465,23 +344,17 @@ class MenuRedirectHandler {
     }
     
     func resiverExamMark(from viewController: UIViewController){
-//        let vc = ExameMarVC(nibName: nil, bundle: nil)
         let vc = ExamDetailsVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     func receiverCertificateRequest(from viewController: UIViewController){
-        //let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
         let vc = certificateReqVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     
     func receiverHomework(from viewController: UIViewController,PushNotiMsgId:String){
-//        let vc = ReciverHomeworkVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-        
         let vc = homeWorkVc(nibName: nil, bundle: nil)
         vc.clickedMessageId = PushNotiMsgId
         vc.modalPresentationStyle = .fullScreen
@@ -490,11 +363,11 @@ class MenuRedirectHandler {
     func receiverAttendancereport(
         from viewController: UIViewController,
         PushNotiMsgId:String){
-        let vc = ReciverAttendanceReportVC(nibName: nil, bundle: nil)
-        vc.pushNotiMsg_id = PushNotiMsgId
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-    }
+            let vc = ReciverAttendanceReportVC(nibName: nil, bundle: nil)
+            vc.pushNotiMsg_id = PushNotiMsgId
+            vc.modalPresentationStyle = .fullScreen
+            viewController.present(vc, animated: true)
+        }
     func QuizExam(from viewController: UIViewController,PushNotiMsgId:String){
         let vc = QuizVC(nibName: nil, bundle: nil)
         vc.PushNotiMsgId = PushNotiMsgId

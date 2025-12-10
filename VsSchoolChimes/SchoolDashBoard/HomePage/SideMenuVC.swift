@@ -24,8 +24,8 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var isStudent:Bool?
     // MARK: - Data
     var menuArray: [MenuItem] = [
-        MenuItem(name: "DashBoard".translated(), icon: "house"),
-        MenuItem(name: "View Profile".translated(), icon: "person.circle"),
+        MenuItem(name: "Home".translated(), icon: "house"),
+        MenuItem(name: "Profile".translated(), icon: "person.circle"),
         MenuItem(name: "Settings".translated(), icon: "gear"),
         MenuItem(name: "Help".translated(), icon: "questionmark.circle")
     ]
@@ -52,14 +52,10 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if (staffCount + studentCount) > 1 {
             menuArray.append(MenuItem(name: "Switch Role".translated(), icon: "arrow.2.squarepath"))
         }
-
-        
-        // Exit is always last
         menuArray.append(MenuItem(name: "Logout".translated(), icon: "iphone.and.arrow.forward"))
-        
         menuTable.delegate = self
         menuTable.dataSource = self
-        menuTable.tableFooterView = UIView() // Removes extra separators
+        menuTable.tableFooterView = UIView()
     }
     
     private func setupProfileImage(url:URL?) {
@@ -68,13 +64,11 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }else{
             profileImgaView.image = UIImage(systemName: "person.circle.fill")
         }
-       
         profileImgaView.layer.cornerRadius = profileImgaView.frame.width / 2
         profileImgaView.clipsToBounds = true
         profileImgaView.layer.borderWidth = 2
         profileImgaView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
         profileImgaView.isUserInteractionEnabled = true
-        // 2️⃣ Add tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         profileImgaView.addGestureRecognizer(tapGesture)
         
@@ -97,29 +91,25 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "SideTvcell",
-//                                                 for: indexPath) as! SideTvcell
-//        let item = menuArray[indexPath.row]
-//        
-//        cell.ExameLbl.text = item.name
-//        
-//        if let iconName = item.icon {
-//            if let systemImage = UIImage(systemName: iconName) {
-//                cell.iconBtn.setImage(systemImage, for: .normal)
-//            } else {
-//                cell.iconBtn.setImage(UIImage(named: iconName), for: .normal)
-//            }
-//        }
-//        
-//        if item.name == "Logout".translated() {
-//            cell.ExameLbl.textColor = .red
-//            cell.iconBtn.tintColor = .red
-//        }else{
-//            cell.ExameLbl.textColor = .label
-//            cell.iconBtn.tintColor = .link
-//        }
-//        
-//        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SideTvcell",
+                                                 for: indexPath) as! SideTvcell
+        let item = menuArray[indexPath.row]
+        cell.ExameLbl.text = item.name
+        if let iconName = item.icon {
+            if let systemImage = UIImage(systemName: iconName) {
+                cell.iconBtn.setImage(systemImage, for: .normal)
+            } else {
+                cell.iconBtn.setImage(UIImage(named: iconName), for: .normal)
+            }
+        }
+        if item.name == "Logout".translated() {
+            cell.ExameLbl.textColor = .red
+            cell.iconBtn.tintColor = .red
+        }else{
+            cell.ExameLbl.textColor = .label
+            cell.iconBtn.tintColor = .link
+        }
+        return cell
         
         return UITableViewCell()
     }
@@ -133,29 +123,13 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let selectedItem = menuArray[indexPath.row]
         
         switch selectedItem.name {
-        case "View Profile".translated():
+        case "Profile".translated():
             delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent ?? false))
             
         case "Settings".translated():
             delegate?.meunu(viewController: SettingsViewController())
             
         case "Switch Role".translated():
-//            if isSwitchRoleExpanded {
-//                // collapse → remove inserted schools
-//                menuArray.removeAll { item in
-//                    staffDetailsCount?.contains(where: { $0.school_name == item.name }) ?? false
-//                }
-//                isSwitchRoleExpanded = false
-//            } else {
-//                // expand → insert schools before Exit
-//                for i in 0..<(staffDetailsCount?.count ?? 0) {
-//                    let schoolName = staffDetailsCount?[i].school_name ?? "Unknown"
-//                    menuArray.insert(MenuItem(name: schoolName, icon: "building.columns"),
-//                                     at: menuArray.count - 1)
-//                }
-//                isSwitchRoleExpanded = true
-//            }
-//            tableView.reloadData()
             delegate?.meunu(viewController: UIViewController())
             
         case "Help".translated():
@@ -165,17 +139,6 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             delegate?.meunu(viewController: LogoutViewController())
             
         default:
-//            if let school = staffDetailsCount?.first(where: { $0.school_name == selectedItem.name }) {
-//                print("Switched to school: \(school.school_name ?? "")")
-//                UserDefaultFileManager.saveStaffDetails(data: school)
-//                // Collapse menu after selection
-//                menuArray.removeAll { item in
-//                    staffDetailsCount?.contains(where: { $0.school_name == item.name }) ?? false
-//                }
-//                isSwitchRoleExpanded = false
-//                tableView.reloadData()
-//                delegate?.meunu(viewController: nil)
-//            }
             delegate?.meunu(viewController: CustomDasboard())
         }
     }

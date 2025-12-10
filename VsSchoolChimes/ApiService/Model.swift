@@ -45,6 +45,7 @@ struct VersionData: Codable {
     let play_store_link: String?
     let app_store_link: String?
     let description: String?
+    var ratus:Bool?
 }
 
 
@@ -2834,7 +2835,7 @@ struct Review: Codable {
 struct CategoriesSection:Codable{
     let name: String?
     let rating: Int?
-    let category: [Categories]?
+    var category: [Categories]?
 }
 
 struct Categories:Codable{

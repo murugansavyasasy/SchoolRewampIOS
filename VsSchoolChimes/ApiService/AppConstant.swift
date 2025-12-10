@@ -27,7 +27,6 @@ struct ServiceUrl{
     static let global_global_variables   = "app/api/global/global-variables"
     static let auth_device_token        = "app/api/auth/device-token"
     static let app_api_auth_logout        = "app/api/auth/logout"
-//    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
     static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
     static let  dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
     static let recipient_get_group_list  = "comm/api/recipient/get-group-list"
@@ -251,11 +250,8 @@ struct Menu_id{
     static let  Alert = 36
     static let leaveReq = 18
     static let Upload_Marks = 41
-    
-    
 }
 struct TargetTypes{
-    
     static let school = 1
     static let standard = 2
     static let section = 3
@@ -286,9 +282,25 @@ struct Filecount{
 
 }
 
+class FileTypeConstants {
+    static let publicData = "public.data"
+    static let publicContent = "public.content"
+    static let adobePDF = "com.adobe.pdf"
+    static let publicText = "public.text"
+}
 struct DateInputs{
     
     static let dd_MM_yyyy =  "dd-MM-yyyy"
+    static let MMMM_yyyy =  "MMMM yyyy"
+    static let dd_MMM_yy =  "dd MMM yy"
+    static let dd_MMM_yyyy =  "dd MMM yyyy"
+    static let ddMMMyyyyhhmma =  "dd MMM yyyy hh:mm a"
+    
+}
+struct DateOutPut{
+    static let EE_MMM_dd_yyyy =  "EE MMM dd, yyyy"
+    static let EEEE =  "EEEE"
+    static let EEEE_d =  "EEE d"
 }
 
 struct user_inputs {
@@ -444,7 +456,7 @@ class DateFormatterHelpers {
 func formatDuration(_ duration: Int) -> String {
     let minutes = duration / 60
     let seconds = duration % 60
-    return String(format: "%02d:%02d", minutes, seconds)
+    return String(format: CommonStringFile.Time_formate, minutes, seconds)
 }
 
 

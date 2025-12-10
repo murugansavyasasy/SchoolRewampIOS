@@ -44,24 +44,17 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
 
         
         let baseURL = global?.fees_url ?? ""
-
         let studentId = studentDetails?.child_id ?? ""
         let schoolId = studentDetails?.school_id ?? ""
-
         let finalURL = baseURL
             .replacingOccurrences(of: ":student_id", with: studentId)
             .replacingOccurrences(of: ":school_id", with: schoolId)
-
-        print(finalURL)
-
         if let pdfURL = URL(string: finalURL) {
             let request = URLRequest(url: pdfURL)
             webView.load(request)
         } else {
             print("Invalid URL: \(finalURL)")
         }
-
-        // Register custom cell
         feeDetailTableView.register(UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeedetailTVC)
         feeDetailTableView.delegate = self
         feeDetailTableView.dataSource = self
@@ -82,7 +75,6 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
                    case 0:
                        self.webOuterView.isHidden = false
                        self.tableOuterView.isHidden = true
-                       
                    case 1:
                        self.webOuterView.isHidden = true
                        self.tableOuterView.isHidden = false
@@ -97,7 +89,6 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     }
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
-//            self.searcchBtn.isHidden = index == 0
             self.createLbl.backgroundColor = index == 0 ? UIColor.parentClr : .clear
             self.reportsLb.backgroundColor = index == 0 ? .clear : UIColor.parentClr
             self.reportsBtn.tintColor = index == 0 ? .black : UIColor.parentClr
@@ -108,21 +99,16 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     func Get_Fee_Invoice_Api(){
         
         APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_student_invoice, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<InvoiceDetailsResponse,Error>) in
-            
             guard let self = self else {return}
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
-                    
                     self.feeDetailsList = success.data ?? []
                     self.NodataImage.isHidden = success.status ?? true
                     self.NoDataLbl.isHidden = success.status ?? true
                     self.NoDataLbl.text = success.message ?? ""
                     self.feeDetailTableView.reloadData()
                 case .failure(let failure):
-                    
                     self.NodataImage.isHidden = false
                     self.NoDataLbl.isHidden = false
                     self.NoDataLbl.text = failure.localizedDescription
@@ -133,18 +119,12 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     }
     
     func Get_Invoice_Receipt_Api(invoiceId: String){
-        
         APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_invoice_details, parameters: ["invoice_id": invoiceId], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
-            
             guard let self = self else {return}
-            
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
-                    
                     if success.status == true{
-                        
                         self.receipt_url = success.data ?? []
                         let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
                         let fileURL = URL(fileURLWithPath: self.receipt_url.first ?? "")
@@ -152,12 +132,10 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
                         ViewPaymentVC.modalPresentationStyle = .fullScreen
                         self.present(ViewPaymentVC, animated: true)
                     }else{
-                        
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                     }
                     
                 case .failure(let failure):
-                    
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
                 }
             }
@@ -172,19 +150,15 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: "FeedetailTVC", for: indexPath) as! FeedetailTVC
+        let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: CellConfingName.FeedetailTVC, for: indexPath) as! FeedetailTVC
         let feeDetail = feeDetailsList[indexPath.row]
-
         cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoice_no ?? "")"
         let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
         cell.invoceDate.text = "\(result.date ?? "") \(result.time ?? "")"
         cell.timeLbl.text = result.time
         cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoice_amount ?? "")"
-      
-       // cell.sizeLbl.text = feeDetail.fileSize
         let iconImage = UIImage(named: "pdf (1)")
         cell.document.image = iconImage
-
         return cell
     }
 

@@ -103,13 +103,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
               let index = filteredTasks.firstIndex(where: { $0.id == id }) else {
             return
         }
-
+        
         let indexPath = IndexPath(row: index, section: 0)
-        
-        // Scroll to that cell smoothly
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
-        
-        // Optionally highlight the cell for 1 second
         if let cell = tv.cellForRow(at: indexPath) {
             UIView.animate(withDuration: 0.3, animations: {
                 cell.contentView.backgroundColor = UIColor.lightGray
@@ -124,12 +120,6 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - Actions
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
-    }
-    
-    @IBAction func takeReadingSkill() {
-//        let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
     }
     
     @IBAction func search(_ sender: UIButton) {
@@ -167,9 +157,6 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         cell.readVieaw.isHidden = !(item.is_unread ?? false)
         cell.startBtn.tag = indexPath.row
         cell.starticon.tag = indexPath.row
-//        cell.startBtn.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
-//        cell.starticon.addTarget(self, action: #selector(AttachmentRedirect(_:)), for: .touchUpInside)
-        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -259,9 +246,4 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         result += currentLine
         return result
     }
-}
-
-// MARK: - Gesture
-class LsrwListShowGesture: UITapGestureRecognizer {
-    var getSkillId: String?
 }

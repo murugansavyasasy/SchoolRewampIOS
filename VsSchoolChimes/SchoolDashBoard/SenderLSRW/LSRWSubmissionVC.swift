@@ -43,13 +43,9 @@ class LSRWSubmissionVC: UIViewController {
     private func configureUI() {
         filterReport = report
         backBtn.setTitle(btnTitle ?? "", for: .normal)
-        
-        // TableView setup
         submitionList.delegate = self
         submitionList.dataSource = self
         submitionList.register(UINib(nibName: "LSRWTaskTVC", bundle: nil), forCellReuseIdentifier: "LSRWTaskTVC")
-        
-        // Search bar setup
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.layer.borderWidth = 0
@@ -72,7 +68,6 @@ class LSRWSubmissionVC: UIViewController {
         if sender.isSelected {
             self.searchBar.becomeFirstResponder()
         } else {
-            // Reset search
             self.searchBar.text = ""
             self.searchBar.resignFirstResponder()
             self.filterReport = self.report
@@ -84,8 +79,6 @@ class LSRWSubmissionVC: UIViewController {
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    
-    // MARK: - Apply Filter Logic
     private func applyFilter() {
         guard let data = report else { return }
         
@@ -107,7 +100,6 @@ class LSRWSubmissionVC: UIViewController {
         let hasData = !(filterReport?.isEmpty ?? true)
         noDataImg.isHidden = hasData
         noDataLbl.isHidden = hasData
-//        submitionList.isHidden = !hasData
         noDataLbl.text = "No Data found."
     }
 }
@@ -163,7 +155,6 @@ extension LSRWSubmissionVC: UISearchBarDelegate {
             filteredData = filteredData.filter { $0.is_submitted == false }
         }
         
-        // Apply search
         if !trimmed.isEmpty {
             filteredData = filteredData.filter {
                 ($0.title?.lowercased().contains(trimmed) ?? false) ||

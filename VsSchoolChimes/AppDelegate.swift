@@ -104,6 +104,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         let type = userInfo["type"] as? String
         let voiceUrl = userInfo["voice_url"] as? String ?? ""
+        let welcomeFileUrl = userInfo["WelcomeUrl"] as? String ?? ""
         if type == "normal" {
             let loginAs = userInfo["receiver_type"] as? String
             if loginAs == "student" {
@@ -153,6 +154,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         } else if type == "call" {
             let vc = NotificationCallVC()
             vc.voiceUrl = voiceUrl
+            vc.welcomeFileUrl =  welcomeFileUrl
             vc.modalPresentationStyle = .fullScreen
             topVC.present(vc, animated: true)
         }

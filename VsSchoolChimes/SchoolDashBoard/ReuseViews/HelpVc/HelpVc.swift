@@ -10,21 +10,31 @@ import WebKit
 
 class HelpVc: UIViewController, WKNavigationDelegate {
 
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HelppageHeader: UILabel!
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     var passVale = 1
+    var hideBack = false
     var global = UserDefaultFileManager.get_globalSelection()
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        backBtn.isHidden = hideBack
         webview.navigationDelegate = self
         HelppageHeader.text = MenuTapbar.shared.Help
         HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize+3)
         
         webkitLoading()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     func webkitLoading() {
         let urlStr = global?.helpline_url ?? ""
         let url = URL (string: urlStr)
@@ -32,15 +42,10 @@ class HelpVc: UIViewController, WKNavigationDelegate {
         webview.load(requestObj)
     }
     
-    // MARK: - WKNavigationDelegate Methods
-
-       // Show loading animation when page starts loading
        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
            
            ActivityIndicator.startAnimating()
        }
-
-       // Hide loading animation when page finishes loading
        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
            
            ActivityIndicator.stopAnimating()
@@ -54,5 +59,8 @@ class HelpVc: UIViewController, WKNavigationDelegate {
            ActivityIndicator.isHidden = true
            print("Error loading page: \(error.localizedDescription)")
        }
-
+    @IBAction func back(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

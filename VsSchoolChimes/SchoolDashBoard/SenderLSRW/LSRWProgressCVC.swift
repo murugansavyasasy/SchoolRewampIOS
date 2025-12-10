@@ -31,23 +31,16 @@ class LSRWProgressCVC: UICollectionViewCell {
         titleLbl.text = data.title
         valueLbl.text = data.value
         descriptionLbl.text = data.subtitle
-        
-        // Configure icon + colors
         let iconConfig = getIconConfiguration(for: data.title ?? "")
         iconBtn.setTitle(iconConfig.icon, for: .normal)
         iconBtn.backgroundColor = iconConfig.backgroundColor
         iconBtn.setTitleColor(iconConfig.tintColor, for: .normal)
-        
-        // Label styles
         titleLbl.textColor = .black
         titleLbl.numberOfLines = 2
         valueLbl.textColor = .label
-        
         descriptionLbl.font = .systemFont(ofSize: 12, weight: .regular)
         descriptionLbl.textColor = .gray
         descriptionLbl.numberOfLines = 2
-        
-        // Subtle bounce animation
         animateConfiguration()
     }
     

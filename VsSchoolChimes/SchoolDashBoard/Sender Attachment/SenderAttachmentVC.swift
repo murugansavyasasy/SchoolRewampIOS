@@ -13,10 +13,10 @@ import QuickLook
 
 @available(iOS 14.0, *)
 class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge{
-   
+    
     func deleteImage(index: Int) {
         attachments.remove(at: index)
-    
+        
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
@@ -61,7 +61,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var alert = CustomAlert()
-    let vimeoAccessToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var attachments: [AttachmentItem] = []
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
@@ -75,21 +74,16 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-       
-        // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
+            object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
             name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-        
+            object: nil)
         setupPlaceholder()
         assignTitleTxtFld.addDoneButton()
         contentTextView.addDoneButton()
@@ -101,22 +95,19 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         letterscountLbl.applyRightTxt()
         titleLbl.applyRightTxt()
         assignTitleTxtFld.applyRightTxt()
-        
         let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
         AssignmentTypeview.addGestureRecognizer(typeGesture)
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         selectImgPdfview.imageCollectionview.backgroundColor = .clear
         imageSelection()
-        
         menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        menuTitleLbl.text = "Create new " + MenuStringFile.selectedMenuName
-        
+        menuTitleLbl.text = MenuStringFile.Create_new + MenuStringFile.selectedMenuName
         chooseRecipientsBtn.setTitle(CommonStringFile.NEXT, for: .normal)
         if let id = editId,id != ""{
-            menuTitleLbl.text = "Update Existing " + MenuStringFile.selectedMenuName
-           setSelectedHomeWork(
-            title:  Editattachment.title ?? "",
+            menuTitleLbl.text = MenuStringFile.Update_Existing + MenuStringFile.selectedMenuName
+            setSelectedHomeWork(
+                title:  Editattachment.title ?? "",
                 content: Editattachment.description ?? "",
                 imageUrls: Editattachment.file_path ?? [],
                 editId: Editattachment.id ?? ""
@@ -124,9 +115,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         }
     }
     
-    
     @IBAction func backBtnAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     
@@ -140,49 +129,32 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.text = content
         contentTextView.textColor = content != "" ? .black:.lightGray
         assignTitleTxtFld.text = title
-            self.editId = editId
+        self.editId = editId
         chooseRecipientsBtn.setTitle(CommonStringFile.UPDATE, for: .normal)
-        
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
                 image: nil,
                 imageURL: type != "video" ? file.url : nil,
                 fileType: type,
-                VideoURl: type == "video" ? URL(string: file.url ?? "") : nil
-            )
-        }
+                VideoURl: type == "video" ? URL(string: file.url ?? "") : nil)}
         attachments = imageItems
         updateTextViewHeight(contentTextView)
         attachments.removeAll()
         attachments.append(contentsOf: imageItems)
-
         selectImgPdfview.imageCollectionview.reloadData()
     }
-    deinit {
-        // Remove observers
+    deinit {// Remove observers
         NotificationCenter.default.removeObserver(self)
     }
     
     func  StyleAndTranslater(){
-        
-//        PopupView.layer.cornerRadius = 10
-//        PopupView.layer.shadowColor = UIColor.black.cgColor
-//        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        PopupView.layer.shadowRadius = 5
-//        PopupView.layer.shadowOpacity = 0.3
-        
         AttachmentDropdownHeight.constant = 0
         AssignmentTypeview.isHidden = true
         TextviewHeight.constant = initialHeight
-        
         //MARK: UI Update
-        //AddAtachmentStack.isHidden = true
         VideoView.isHidden = true
-        //selectImgPdfview.isHidden = true
-
         VideoView.layer.cornerRadius = 10
-        
         selectImgPdfview.layer.cornerRadius = 10
         contentTextView.layer.cornerRadius = 10
         contentTextView.layer.borderWidth = 1
@@ -193,11 +165,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         AssignmentTypeview.layer.borderWidth = 1
         AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
         AssignmentTypeview.backgroundColor = .white
-        
         //MARK: Button Font Style
         chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         BackBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
-       
         //MARK: Label Font Style
         AddAttachmentsLbl.setRequiredText(CommonStringFile.Add_attachment)
         titleLbl.setRequiredText(CommonStringFile.Title)
@@ -206,39 +176,32 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         TitleLettersCount.setFont(style: .body, size: FontSize.BodySize)
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
-
+    
     @IBAction func viewHistory(_ sender: UIButton) {
         let vc = AttachHistroyVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true)
+        present(vc, animated: true)
     }
-    
     func imageSelection(){
-        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))         
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
-        
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-            
             let imageItems = images.map {
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
-          selectImgPdfview.imageCollectionview.reloadData()
+            selectImgPdfview.imageCollectionview.reloadData()
         }
-        
         PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
             selectImgPdfview.imageCollectionview.reloadData()
         }
-        
         PhotoPickerManager.shared.onVideoPicked = { [self] data in
             // handle picked PDF
             user_inputs.selectedFileType = CommonStringFile.VIDEO
@@ -251,10 +214,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                         VideoURl: data
                     )
                 )
-               selectImgPdfview.imageCollectionview.reloadData()
+            selectImgPdfview.imageCollectionview.reloadData()
         }
-        
-        
     }
     
     // MARK: File Attachments Actions
@@ -271,7 +232,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-
     
     func openCamera() {
         if attachments.count < 10 {
@@ -280,8 +240,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-
-    
     func selectDocuments() {
         let remaining = 10 - attachments.count
         if remaining > 0 {
@@ -291,59 +249,44 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
     }
-
     
     func VideoPick() {
         let totalRemaining = 10 - attachments.count
         let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
         let videoRemaining = 2 - videoCount
-
         if totalRemaining <= 0 {
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         } else if videoRemaining <= 0 {
-            CustomAlert().showAlert(title: "", message: "You can only select up to 2 video files.", on: self)
+            CustomAlert().showAlert(title: "", message: AlertstringFile.You_can_only_select_up_to_video_files, on: self)
         } else {
-            // Ensure both limits respected
             let pickLimit = min(totalRemaining, videoRemaining)
             PhotoPickerManager.shared.limiSelection = pickLimit
             PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
         }
     }
-
-
-    
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        
         controller.dismiss(animated: true, completion: nil)
     }
-     
+    
     @IBAction func backVc() {
-        
         dismiss(animated: true)
     }
     
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
-        
         guard let textFieldText = assignTitleTxtFld.text, !textFieldText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let textViewText = contentTextView.text, !textViewText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
-                return
-            }
-        
+            return}
         if attachments.isEmpty && selectedVideoURL == nil {
             alert.showAlert(title: "", message: AlertstringFile.Please_Add_Attachment, on: self)
         }else {
-            
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            
             var params: [String: Any] = [
                 SendAttachmentStringFile.title: textFieldText,
                 SendAttachmentStringFile.description: textViewText
             ]
-            
             if let editId = editId,!editId.isEmpty{
-                
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId
                 com.SendingAttachmentFlow(
@@ -371,9 +314,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                         }
                     }
                 }
-                
             }else{
-                
                 if isStaff(){
                     let vc = SchoolListVC(nibName: nil, bundle: nil)
                     vc.Common_request_params = params
@@ -387,7 +328,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }
-                
             }
         }
     }
@@ -399,12 +339,10 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 staff_role == PriorityType.is_admin {
                 return true
             } else {
-                
                 return false
             }
         } else {
-            return false
-        }
+            return false}
     }
     
     @IBAction  func typeDropdown (){
@@ -412,17 +350,10 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         self.view.layoutIfNeeded()
         TypeDropDown.width = AssignmentTypeview.bounds.width
         TypeDropDown.bottomOffset = CGPoint(x: 0, y: AssignmentTypeview.bounds.height - 220)
-        
         TypeDropDown.direction = .bottom
         TypeDropDown.show()
         TypeDropDown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
-            print("Images count",self.attachments.count)
-            // Update the label inside the UIView
-            
             if item == AttachmentTypeString.VIDEO{
-                
                 self.isImage = false
                 self.VideoView.isHidden = false
                 self.AddAtachmentStack.isHidden = false
@@ -433,7 +364,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 self.attachments.removeAll()
             }
             else if item == AttachmentTypeString.DOCUMENT{
-                
                 self.isImage = false
                 self.VideoView.isHidden = true
                 self.AddAtachmentStack.isHidden = false
@@ -446,12 +376,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 self.selectImgPdfview.imageCollectionview.reloadData()
             }
             else{
-                
                 if user_inputs.selectedFileType != AttachmentTypeString.IMAGE {
-                    
                     self.attachments.removeAll()
                 }
-                
                 self.isImage = true
                 self.VideoView.isHidden = true
                 self.AddAtachmentStack.isHidden = false
@@ -462,7 +389,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 self.VideoPath_URL = nil
                 self.selectImgPdfview.imageCollectionview.reloadData()
             }
-            
             if let label = self.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.AssignmenttypeLbl.text = item
             }
@@ -474,17 +400,13 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
 
 @available(iOS 14.0, *)
 extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDataSource{
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         // First cell is the "Add Attachment" button cell
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(
@@ -498,12 +420,11 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                 withReuseIdentifier: CellConfingName.ImageCvCell,
                 for: indexPath
             ) as! ImageCvCell
-            
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
-               cell.delegate = self
-               cell.deleteBtn.tag = adjustedIndex
-
+            cell.delegate = self
+            cell.deleteBtn.tag = adjustedIndex
+            cell.imageViews.tintColor = .clear
             if let image = item.image {
                 cell.imageViews.image = image
             } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
@@ -516,67 +437,47 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             } else if let vido = item.VideoURl{
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
-                
+                cell.imageViews.tintColor = .black
             }
             else if let vido = URL(string: item.VimeoVideoURL ?? ""){
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
-                
             }
             else{
                 cell.imageViews.image = nil
             }
-            
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
             return cell
         }
     }
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = (selectImgPdfview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
-        
+        let width = (selectImgPdfview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
             let remaining = Filecount.SelectImageAndDocumetCount - attachments.count
-            
             if remaining > 0 {
-                
-                let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-                
-                // Camera option
+                let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Choose_file_type.translated(), preferredStyle: .actionSheet)
                 let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
-                    //
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
-                
-                // Gallery option
                 let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
                     selectImages()
-                    //
                 }
                 alertController.addAction(galleryAction)
-                
-                //             PDF option
                 let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
-                
-                //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                CommonStringFile.Video, style: .default) { [self] _ in
-                    
+                                                    CommonStringFile.Video, style: .default) { [self] _ in
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
                     let videoRemaining = Filecount.SelectVideoCount - videoCount
-                    
                     if totalRemaining <= 0 {
                         CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
                     } else if videoRemaining <= 0 {
@@ -584,12 +485,9 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                             .showAlert(
                                 title: "",
                                 message: CommonStringFile.You_can_only_select_up_to2_video_files,
-                                on: self
-                            )
+                                on: self)
                     }else{
-                        
                         VideoPick()
-                        
                     }
                 }
                 alertController.addAction(VideoAction)
@@ -600,15 +498,12 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                     handler: nil
                 )
                 alertController.addAction(cancelAction)
-                
                 self.present(alertController, animated: true, completion: nil)
             }else{
-                
                 CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             }
             
         }else{
-            
             let attachment = attachments[indexPath.item - 1]
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             imageVC.attachment = attachments
@@ -619,28 +514,21 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             imageVC.modalPresentationStyle = .fullScreen
             present(imageVC, animated: true)
         }
-        
     }
     
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-       
         attachments.count == 0 ? 0:1
     }
-
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-        
         if let Url = DocumentpreviewURL {
-            
             return Url as QLPreviewItem
         }
-        
         return NSURL(fileURLWithPath: "")
     }
 }
 
 @available(iOS 14.0, *)
 extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
-    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel?.text = CommonStringFile.Description.translated()
@@ -656,91 +544,44 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty // Hide if text. exists
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        let currentText = textField.text ?? ""
-        
-        // Compute the new text after the proposed change
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        
-        // If the new text count is within the limit, update the character count label and allow the change
-//        if updatedText.count <= 50 {
-//            TitleLettersCount.text = "\(updatedText.count) / 50"
-            return true
-//        } else {
-//            // If the limit is exceeded, show an alert and reject the change
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            return false
-//        }
-    }
-
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty
     }
-    
-    
     func textViewDidEndEditing(_ textView: UITextView) {
-       
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Current text in the UITextView
         let currentText = textView.text ?? ""
-        
-        // Compute the new text length
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-//        
-//        if newText.count <= 500 {
-//            letterscountLbl.text = "\(newText.count) / 500" // Update the character count label
-            return true // Allow the change
-//        } else {
-//            let alert = CustomAlert()
-//            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-//            //contentTxtView.isEditable = false // Optionally disable editing
-//            return false // Reject the change
-//        }
+        return true // Allow the change
         updateTextViewHeight(textView)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            
-            // Adjust the scroll view content inset
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
             scrollView.scrollIndicatorInsets = scrollView.contentInset
-            
-            // Ensure the UITextView is visible
             scrollToView(contentTextView)
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        // Reset the scroll view content inset
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
     }
     
-    // UITextViewDelegate Method: Adjust the height of the UITextView dynamically
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty
         let size = textView.contentSize
         if size.height > initialHeight {
             let newHeight = min(size.height, maxHeight)
             TextviewHeight.constant = newHeight
-            executeFunctionWhenTextExceeds()
         }
-        
-        // Animate the change for smoother UI
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        
-        // Scroll to make the UITextView visible
         scrollToView(textView)
     }
     func updateTextViewHeight(_ textView: UITextView) {
@@ -748,25 +589,10 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         let newHeight = max(60, min(size.height, maxHeight)) // Min = 60, Max = maxHeight
         TextviewHeight.constant = newHeight
         UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-        }
+            self.view.layoutIfNeeded()}
     }
-    // Helper Method: Scroll to a specific view inside the UIScrollView
     func scrollToView(_ view: UIView) {
-        // Calculate the frame of the view relative to the UIScrollView
         let rect = view.convert(view.bounds, to: scrollView)
         scrollView.scrollRectToVisible(rect, animated: true)
     }
-    
-    // The function you want to execute when the text exceeds the boundary
-    func executeFunctionWhenTextExceeds() {
-        // Your custom logic here, e.g., log a message, trigger an event, etc.
-        print("TextView content has exceeded the initial height.")
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 enum AttachmentSection {
-    case media([FilePath])   // videos + images + pdf
+    case media([FilePath])
     case audios([FilePath])
 }
 
@@ -17,32 +17,7 @@ class LSRWSubmisionListVC: UIViewController,
                            UICollectionViewDelegate,
                            UICollectionViewDataSource,
                            UICollectionViewDelegateFlowLayout, AudioPlaybackDelegate {
-    // MARK: - Audio Delegate
-    func audioCell(_ cell: AudioCVC, willStartPlayingAtIndex index: Int) {
-        stopAllOtherAudioCells(except: index)
-    }
-    
-    func audioCell(_ cell: AudioCVC, didStopPlayingAtIndex index: Int) {
-        print("🎵 Audio stopped at index \(index)")
-    }
-    private func stopAllOtherAudioCells(except playingIndex: Int) {
-        guard let collectionView = lsrwCV else { return }
-        
-        for cell in collectionView.visibleCells {
-            if let audioCell = cell as? AudioCVC, audioCell.cellIndex != playingIndex {
-                audioCell.stopPlayback()
-            }
-        }
-    }
-    private func stopAllAudioPlayback() {
-        guard let collectionView = lsrwCV else { return }
-        
-        for cell in collectionView.visibleCells {
-            if let audioCell = cell as? AudioCVC {
-                audioCell.stopPlayback()
-            }
-        }
-    }
+   
     @IBOutlet weak var remarkView: UIView!
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var percentageLbl: UILabel!
@@ -62,7 +37,6 @@ class LSRWSubmisionListVC: UIViewController,
         
         lsrwCV.delegate = self
         lsrwCV.dataSource = self
-        
         slider.transform = CGAffineTransform(scaleX: 1, y: 1.5)
         
         if let st_id = student_id {
@@ -74,25 +48,18 @@ class LSRWSubmisionListVC: UIViewController,
             backBtn.setTitle("My Submission", for: .normal)
         }
         
-        // Cell register
         lsrwCV.register(UINib(nibName: CellConfingName.VideoPlayerCVC, bundle: nil),
                         forCellWithReuseIdentifier: CellConfingName.VideoPlayerCVC)
-        
         lsrwCV.register(UINib(nibName: "AudioCVC", bundle: nil),
                         forCellWithReuseIdentifier: "AudioCVC")
-        
         lsrwCV.register(UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil),
                         forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
-        
-        // Header
         lsrwCV.register(UICollectionReusableView.self,
                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                         withReuseIdentifier: "SectionHeader")
         
         prepareAttachments()
         lsrwCV.reloadData()
-        
-        // Slider
         slider.minimumValue = 0
         slider.maximumValue = 100
         slider.value = 50
@@ -113,8 +80,6 @@ class LSRWSubmisionListVC: UIViewController,
         if !media.isEmpty {
             filterSection.append(.media(media))
         }
-        
-        // 2️⃣ AUDIO SECTION (only audio files)
         let audios = attachment.filter { item in
             guard let type = item.type?.lowercased() else { return false }
             return audioExtensions.contains { type.contains($0) }
@@ -167,8 +132,6 @@ class LSRWSubmisionListVC: UIViewController,
             }
         }
     }
-    
-    
     // MARK: - Slider
     @IBAction func sliderChanged(_ sender: UISlider) {
         updateSliderUI(for: Int(sender.value))
@@ -213,9 +176,32 @@ class LSRWSubmisionListVC: UIViewController,
             attributedString.draw(in: rect)
         }
     }
+    // MARK: - Audio Delegate
+    func audioCell(_ cell: AudioCVC, willStartPlayingAtIndex index: Int) {
+        stopAllOtherAudioCells(except: index)
+    }
     
-    
-    // MARK: - Collection View
+    func audioCell(_ cell: AudioCVC, didStopPlayingAtIndex index: Int) {
+        print("🎵 Audio stopped at index \(index)")
+    }
+    private func stopAllOtherAudioCells(except playingIndex: Int) {
+        guard let collectionView = lsrwCV else { return }
+        
+        for cell in collectionView.visibleCells {
+            if let audioCell = cell as? AudioCVC, audioCell.cellIndex != playingIndex {
+                audioCell.stopPlayback()
+            }
+        }
+    }
+    private func stopAllAudioPlayback() {
+        guard let collectionView = lsrwCV else { return }
+        
+        for cell in collectionView.visibleCells {
+            if let audioCell = cell as? AudioCVC {
+                audioCell.stopPlayback()
+            }
+        }
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return filterSection.count
@@ -262,17 +248,17 @@ class LSRWSubmisionListVC: UIViewController,
                     cell.webView.isHidden = false
                     
                     if let urlStr = file.url, let url = URL(string: urlStr) {
-
+                        
                         var request = URLRequest(url: url)
                         request.cachePolicy = .reloadIgnoringLocalCacheData
                         request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
                         request.setValue("no-store", forHTTPHeaderField: "Pragma")
                         request.setValue("no-cache, no-store, must-revalidate", forHTTPHeaderField: "Cache-Control")
                         request.setValue("0", forHTTPHeaderField: "Expires")
-
+                        
                         cell.webView.load(request)
                     }
-
+                    
                 }
                 
                 return cell

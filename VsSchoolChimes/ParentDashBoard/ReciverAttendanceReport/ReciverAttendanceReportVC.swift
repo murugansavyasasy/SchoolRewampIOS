@@ -65,7 +65,7 @@ class ReciverAttendanceReportVC: UIViewController {
             LeaveHistoryAct()
         }
     }
-
+    
     
     //MARK: UI Changes
     func StyleAndTranslate(){
@@ -125,13 +125,13 @@ class ReciverAttendanceReportVC: UIViewController {
         let spacing: CGFloat = 2
         WeekStatusDefBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: -spacing)
         WeekStatusDefBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
-
+        
         let today = Date()
-
+        
         DateLbl.attributedText = getDayWithSuffix(from: today)
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let localeID = normalizedLocaleIdentifier(for: savedCode)
-
+        
         let dayFormatter = DateFormatter()
         dayFormatter.locale = Locale(identifier: localeID)
         dayFormatter.dateFormat = "EEEE"
@@ -145,7 +145,7 @@ class ReciverAttendanceReportVC: UIViewController {
         attributedString.addAttributes([
             .font: UIFont(name: "Poppins-Medium", size: 15)!
         ], range: (fullText as NSString).range(of: dayName))
-
+        
         attributedString.addAttributes([
             .font: UIFont(name: "Poppins-Medium", size: 10)!
         ], range: (fullText as NSString).range(of: monthYear))
@@ -187,9 +187,6 @@ class ReciverAttendanceReportVC: UIViewController {
                     
                     noStatsLbl.isHidden = false
                     noStatsLbl.text = error.localizedDescription
-//                    CustomAlert.showAlertWithOkAction(title: "Error", message: error.localizedDescription, on: self, okAction: {
-//                        self.dismiss(animated: true)
-//                    })
                 }
             }
         }
@@ -211,16 +208,10 @@ class ReciverAttendanceReportVC: UIViewController {
             default: suffix = "th"
             }
         }
-        
-        // Format day with leading zero if < 10
         let dayString = String(format: "%02d", day)
         let fullString = "\(dayString)\(suffix)"
         let attributed = NSMutableAttributedString(string: fullString)
-        
-        // Load Poppins-Medium
         let suffixFont = UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)
-        
-        // Apply style to suffix only
         attributed.setAttributes([
             .font: suffixFont,
             .baselineOffset: 20
@@ -235,8 +226,8 @@ class ReciverAttendanceReportVC: UIViewController {
         
         return attributed
     }
-
-
+    
+    
     
     func setupDayButtons() {
         
@@ -245,23 +236,22 @@ class ReciverAttendanceReportVC: UIViewController {
             view.removeFromSuperview()
         }
         
-        let dayInitials = ["M", "T", "W", "T", "F", "S", "S"] // Add "S" for Sunday if needed
+        let dayInitials = ["M", "T", "W", "T", "F", "S", "S"]
         let attList = studentStats?.first?.weekly_status?.att_list ?? []
         
         for (index,initial) in dayInitials.enumerated() {
-            // Create a vertical stack: [Label, ImageView]
             let verticalStack = UIStackView()
             verticalStack.axis = .vertical
             verticalStack.alignment = .center
             verticalStack.spacing = 4
-
+            
             // Create the day label
             let label = UILabel()
             label.text = initial
             label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 13)
             label.textColor = .black.withAlphaComponent(0.8)
-
+            
             // Create the image view
             let imageView = UIImageView()
             let status = attList.indices.contains(index) ? attList[index] : nil
@@ -273,7 +263,7 @@ class ReciverAttendanceReportVC: UIViewController {
             case "x":
                 imageView.image = UIImage(systemName: "checkmark.circle.fill")
                 imageView.tintColor = .backGroundClr
-            
+                
             case "A":
                 imageView.image = UIImage(systemName: "a.circle.fill")
                 imageView.tintColor = .systemRed
@@ -285,7 +275,7 @@ class ReciverAttendanceReportVC: UIViewController {
             case "/" :
                 imageView.image = UIImage(systemName: "circle.lefthalf.filled")
                 imageView.tintColor = .backGroundClr
-            
+                
             case "SH" :
                 imageView.image = UIImage(systemName: "circle.righthalf.filled")
                 imageView.tintColor = .backGroundClr
@@ -301,21 +291,13 @@ class ReciverAttendanceReportVC: UIViewController {
                 imageView.widthAnchor.constraint(equalToConstant: 20),
                 imageView.heightAnchor.constraint(equalToConstant: 20)
             ])
-
-            // Add label and imageView to the vertical stack
             verticalStack.addArrangedSubview(label)
             verticalStack.addArrangedSubview(imageView)
-
-            // Add vertical stack to the horizontal stack
             Stackview.addArrangedSubview(verticalStack)
         }
     }
     
     func Set_Piechart_data(){
-//        guard let stats = studentStats?.first else {
-//            return
-//        }
-        
         let stats = studentStats?.first
         
         let attendancePercent = Double(stats?.attendance_percentage?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
@@ -361,7 +343,7 @@ class ReciverAttendanceReportVC: UIViewController {
         pieChart.chartDescription.enabled = false
         pieChart.holeColor = .white
     }
-
+    
     func setProgress(
         on pieChart: PieChartView,
         value: Double,
@@ -372,92 +354,79 @@ class ReciverAttendanceReportVC: UIViewController {
     ) {
         let filledEntry = PieChartDataEntry(value: value)
         let emptyEntry = PieChartDataEntry(value: max(0, total - value))
-
+        
         let dataSet = PieChartDataSet(entries: [filledEntry, emptyEntry], label: "")
         dataSet.colors = [fillColor, .systemGray6]
         dataSet.drawValuesEnabled = false
-
+        
         let pieData = PieChartData(dataSet: dataSet)
         pieChart.data = pieData
-
-        // ✅ Animate the chart
         pieChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
-
-        // ✅ Center label with smaller unit
-           let valueText = "\(Int(value))"
-           let unitText = unit // like "%"
-
-           let fullText = valueText + unitText
-           let attributedText = NSMutableAttributedString(string: fullText)
-
-           attributedText.addAttributes([
+        let valueText = "\(Int(value))"
+        let unitText = unit
+        let fullText = valueText + unitText
+        let attributedText = NSMutableAttributedString(string: fullText)
+        
+        attributedText.addAttributes([
             .font: UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 17),
-               .foregroundColor: labelColor
-           ], range: NSRange(location: 0, length: valueText.count))
-
-           attributedText.addAttributes([
-               .font: UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12),
-               .foregroundColor: labelColor
-           ], range: NSRange(location: valueText.count, length: unitText.count))
-
-           let paragraphStyle = NSMutableParagraphStyle()
-           paragraphStyle.alignment = .center
-           attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: fullText.count))
-
-           pieChart.centerAttributedText = attributedText
-           pieChart.centerTextRadiusPercent = 0.9
+            .foregroundColor: labelColor
+        ], range: NSRange(location: 0, length: valueText.count))
+        
+        attributedText.addAttributes([
+            .font: UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12),
+            .foregroundColor: labelColor
+        ], range: NSRange(location: valueText.count, length: unitText.count))
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: fullText.count))
+        
+        pieChart.centerAttributedText = attributedText
+        pieChart.centerTextRadiusPercent = 0.9
     }
-
-
-
+    
+    
+    
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {
-            //        case 0...20:
-            //            return UIColor.systemRed.withAlphaComponent(0.8)
-            //        case 21...40:
-            //            return UIColor.systemOrange.withAlphaComponent(0.8)
-            //        case 41...60:
-            //            return UIColor.systemYellow.withAlphaComponent(0.8)
-            //        case 61...100:
-            //            return UIColor.systemGreen.withAlphaComponent(0.8)
         case 1...99:
             return UIColor.systemIndigo.withAlphaComponent(0.8)
         case 100:
             return UIColor.systemGreen.withAlphaComponent(0.8)
         default:
-            return UIColor.lightGray // Default color (0% or invalid input)
+            return UIColor.lightGray
         }
     }
-
+    
     @IBAction func InfoBtnAct(_ sender: UIButton) {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
+        
+        popoverVC.configureButtons(with: [
+            ("minus.circle.fill", "Not Taken", .systemRed),
+            ("checkmark.circle.fill", "Present", .systemBlue),
+            ("a.circle.fill", "Absent", .systemRed),
+            ("Late", "Late Comer", .systemPink),
+            ("Od", "OD", .systemOrange),
+            ("present_absent", "FN Present - AN Absent", .systemBlue),
+            ("present_late", "FN Present - AN Late comer", .systemBlue),
+            ("present_OD", "FN Present - AN OD", .systemBlue),
+            ("presnt_notTaken", "FN Present - AN Not Taken", .systemBlue),
+            ("absent_present", "FN Absent - AN Present", .systemBlue),
+            ("Late_Present", "FN Late comer - AN Present", .systemBlue),
+            ("Late_Absent", "FN Late comer - AN Absent", .systemBlue),
+            ("Late_Od", "FN Late comer - AN OD", .systemBlue),
+            ("Late_notTaken", "FN Late comer - AN Not Taken", .systemBlue),
+            ("Od_Present", "FN OD - AN Present", .systemBlue),
+            ("Od_Absent", "FN OD - AN Absent", .systemBlue),
+            ("Od_Late", "FN OD - AN Late comer", .systemBlue),
+            ("Od_notTaken", "FN OD - AN Not Taken", .systemBlue),
             
-            popoverVC.configureButtons(with: [
-                ("minus.circle.fill", "Not Taken", .systemRed),
-                ("checkmark.circle.fill", "Present", .systemBlue),
-                ("a.circle.fill", "Absent", .systemRed),
-                ("Late", "Late Comer", .systemPink),
-                ("Od", "OD", .systemOrange),
-                ("present_absent", "FN Present - AN Absent", .systemBlue),
-                ("present_late", "FN Present - AN Late comer", .systemBlue),
-                ("present_OD", "FN Present - AN OD", .systemBlue),
-                ("presnt_notTaken", "FN Present - AN Not Taken", .systemBlue),
-                ("absent_present", "FN Absent - AN Present", .systemBlue),
-                ("Late_Present", "FN Late comer - AN Present", .systemBlue),
-                ("Late_Absent", "FN Late comer - AN Absent", .systemBlue),
-                ("Late_Od", "FN Late comer - AN OD", .systemBlue),
-                ("Late_notTaken", "FN Late comer - AN Not Taken", .systemBlue),
-                ("Od_Present", "FN OD - AN Present", .systemBlue),
-                ("Od_Absent", "FN OD - AN Absent", .systemBlue),
-                ("Od_Late", "FN OD - AN Late comer", .systemBlue),
-                ("Od_notTaken", "FN OD - AN Not Taken", .systemBlue),
-                
-            ], type: .symbol)
-            
-            showPopover(from: sender, contentVC: popoverVC)
+        ], type: .symbol)
+        
+        showPopover(from: sender, contentVC: popoverVC)
     }
-
-
+    
+    
     
     @IBAction func AskLeaveAct(){
         
@@ -510,15 +479,15 @@ extension ReciverAttendanceReportVC: UIPopoverPresentationControllerDelegate {
             popover.delegate = self
             popover.backgroundColor = .white
         }
-
+        
         if UIDevice.current.userInterfaceIdiom == .phone {
             contentVC.modalPresentationStyle = .overFullScreen
-            contentVC.view.backgroundColor = .white//UIColor(white: 1, alpha: 1)
+            contentVC.view.backgroundColor = .white
         }
-
+        
         present(contentVC, animated: true)
     }
-
+    
     public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }

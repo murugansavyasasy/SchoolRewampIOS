@@ -739,3 +739,5 @@
 "Certificate History" = "ประวัติใบรับรอง";
 "Select Urgency Level" = "เลือกระดับความเร่งด่วน";
 "Enter your reason here..." = "กรอกเหตุผลของคุณที่นี่...";
+"any_other_suggestions" = "มีคำแนะนำอื่นไหม? (ไม่จำเป็น)";
+"rate_experience" = "คุณจะให้คะแนนประสบการณ์ของคุณอย่างไร?";

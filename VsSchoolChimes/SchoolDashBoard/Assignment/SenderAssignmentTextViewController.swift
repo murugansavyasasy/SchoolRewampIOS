@@ -125,12 +125,8 @@ class SenderAssignmentTextViewController: UIViewController,
         dateBtn.layer.cornerRadius = 8
         dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
         setInitialButtonTitles(date:nil)
-        
-        // Gestures
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
-        
-        // CollectionView
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         cancelBtn.isHidden = true
@@ -526,7 +522,7 @@ class SenderAssignmentTextViewController: UIViewController,
     }
     func updateTextViewHeight(_ textView: UITextView) {
         let size = textView.contentSize
-        let newHeight = max(60, min(size.height, maxHeight)) // Min = 60, Max = maxHeight
+        let newHeight = max(60, min(size.height, maxHeight))
         TextviewHeight.constant = newHeight
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -535,7 +531,7 @@ class SenderAssignmentTextViewController: UIViewController,
 
     func updateCollectionHeight() {
         let totalItems = attachments.count
-        addphotosheight.constant = totalItems > 0 ? 20 : 20 // keep visible as per your original
+        addphotosheight.constant = totalItems > 0 ? 20 : 20
         view.layoutIfNeeded()
     }
     
@@ -567,6 +563,7 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             let item = attachments[adjustedIndex]
             cell.delegate = self
             cell.deleteBtn.tag = adjustedIndex
+            cell.imageViews.tintColor = .clear
             if let image = item.image {
                 cell.imageViews.image = image
             } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
@@ -579,6 +576,7 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             } else if let vido = item.VideoURl{
                 let iconName = getFileIconName(for: vido)
                 cell.imageViews.image = UIImage(named: iconName)
+                cell.imageViews.tintColor = .black
             }else{
                 cell.imageViews.image = nil
             }

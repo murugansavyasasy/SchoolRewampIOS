@@ -11,7 +11,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
         let filterArray = allAttachments.filter { $0.type?.uppercased() != CommonStringFile.M4A }
         if allAttachments[index].type?.uppercased() != CommonStringFile.M4A {
-            // Find new index inside filtered array
             let selectedFile = allAttachments[index]
             if let newIndex = filterArray.firstIndex(where: { $0.url == selectedFile.url }) {
                 let imageVC = ImageShowVc(nibName: nil, bundle: nil)
@@ -62,7 +61,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                         self?.submittedAssignment = response.data ?? []
                         self?.filterAssignment = response.data ?? []
                         self?.priviewTable.reloadData()
-                        //                        self?.updateCountLabels()
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -71,8 +69,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("API Error: \(error.localizedDescription)")
-                    //                    self?.showAlert(message: "Network error occurred. Please try again.")
                     self?.priviewTable.reloadData()
                 }
             }
@@ -86,7 +82,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Submitted Student
         if indexPath.section == 0 {
             if #available(iOS 15.0, *) {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "LSWTaskTVC", for: indexPath) as? LSWTaskTVC else {
@@ -101,7 +96,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 cell.delegate = self
                 return cell
             } else {
-                // Fallback for iOS < 15
                 let cell = UITableViewCell(style: .default, reuseIdentifier: "defaultCell")
                 cell.textLabel?.text = "Not supported on < iOS 15"
                 return cell
@@ -122,13 +116,9 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
             let statusText = isNotSubmitted ? "Pending" : "Submitted"
             let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
-            
-            // Background color & corner radius
             cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
             cell.statusView.layer.cornerRadius = 8
             cell.statusView.clipsToBounds = true
-            
-            // Attributed text
             let fullText = NSMutableAttributedString(
                 string: statusText,
                 attributes: [

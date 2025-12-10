@@ -14,7 +14,6 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
         }
        
     }
-    
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordImg: UIImageView!
     @IBOutlet weak var backBtn: UIButton!
@@ -192,7 +191,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
 extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData?.count ?? 0 // Adjust this based on your data
+        return filteredData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -253,11 +252,10 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
 
           var currentDate = pastStartDate
           while currentDate <= today {
-              // Example logic: red dot on Wednesdays, green on Saturdays
               let weekday = calendar.component(.weekday, from: currentDate)
               var status: DotStatus? = nil
-              if weekday == 4 { status = .red }      // Wednesday
-              if weekday == 7 { status = .green }    // Saturday
+              if weekday == 4 { status = .red }
+              if weekday == 7 { status = .green }
 
               items.append(AssignmentCalendar(date: currentDate, status: status))
               guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
@@ -265,7 +263,6 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
               }
               currentDate = nextDate
           }
-
           return items
       }
 }
@@ -294,8 +291,6 @@ extension AssignmentListVC: UISearchBarDelegate {
                        category.contains(lowercasedQuery)
             }
         }
-
-        // Update No Data UI
         let isEmpty = filteredData?.isEmpty ?? true
         nodataLbl.isHidden = !isEmpty
         noRecordImg.isHidden = !isEmpty

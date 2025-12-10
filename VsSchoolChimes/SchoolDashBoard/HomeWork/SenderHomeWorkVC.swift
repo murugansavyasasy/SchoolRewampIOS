@@ -19,12 +19,12 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                 selectNotice?.editDta(edit: selectedEvent)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                   
-                        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+                    
+                    let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
                     vc.editId = selectedEvent.id
                     vc.EditHomeWork = selectedEvent
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
                     
                 }
             }
@@ -36,7 +36,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     }
     @IBOutlet weak var backLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
-
+    
     @IBOutlet weak var designUseView: UIView!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
     // MARK: - Outlets
@@ -79,28 +79,24 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let transitionDelegate = TransitioningDelegate()
     let alert = CustomAlert()
+    let Today = "Today"
+    let FutureDate = "Future Date"
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        HomeWorkCvCell
         setupViews()
         registerCVCells()
-       
         searchBar.delegate = self
     }
- 
+    
     @IBAction func backBtnAct(_ sender: UIButton) {
-        
         dismiss(animated: true)
     }
     
-
+    
     @IBAction func searchBtnAct(_ sender: UIButton) {
-        
         sender.isSelected.toggle()
-        
         if sender.isSelected{
-            
             searchBar.isHidden = false
             searchBar.becomeFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
@@ -117,20 +113,16 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         getAcademicYearList()
     }
     // MARK: - Setup
     private func setupViews() {
-//        applyShadowAndCornerRadius(to: dateView)
         backLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
         acodemicdropView.setShadow()
         standerdView.setShadow(cornerRadius: 8)
         sectionView.setShadow(cornerRadius: 8)
@@ -141,13 +133,10 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         dateBtn.backgroundColor = .blue.withAlphaComponent(0.6)
         acodemicdropView.layer.borderColor = UIColor.lightGray.cgColor
         acodemicdropView.layer.borderWidth = 0.5
-        
         standerdView.layer.borderColor = UIColor.lightGray.cgColor
         standerdView.layer.borderWidth = 0.5
-        
         sectionView.layer.borderColor = UIColor.lightGray.cgColor
         sectionView.layer.borderWidth = 0.5
-
         searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
@@ -156,16 +145,14 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         SectionLbl.setFont(style: .body, size: FontSize.BodySize)
         dateSelect(nil)
     }
-
+    
     private func registerCVCells() {
-        
         Cv.register(
-                UINib(nibName: "HomeWorkCvCell", bundle: nil),
-                forCellWithReuseIdentifier: "HomeWorkCvCell"
-            )
-//        homeWorkTable.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
+            UINib(nibName: CellConfingName.HomeWorkCvCell, bundle: nil),
+            forCellWithReuseIdentifier: CellConfingName.HomeWorkCvCell
+        )
     }
-
+    
     // MARK: - Dropdown Selections
     @IBAction func selectAcademicYear(_ sender: UIButton) {
         acidamicdrops.anchorView = acodemicdropView
@@ -178,10 +165,9 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             self?.getStandardsAPI()
         }
     }
-
+    
     
     @IBAction func CreateNewAct(_ sender: UIButton) {
-        
         let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
         vc.editId = ""
         vc.modalPresentationStyle = .fullScreen
@@ -195,7 +181,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         standardDropdown.bottomOffset = CGPoint(x: 0, y: standerdView.bounds.height)
         standardDropdown.direction = .bottom
         standardDropdown.show()
-
         standardDropdown.selectionAction = { [weak self] index, item in
             guard let self = self else { return }
             guard let selectedSections = self.standardDetails?[index].sections else { return }
@@ -205,35 +190,26 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             self.sectionId = selectedSections.first?.id
             self.StandardLbl.text = item
             self.SectionLbl.text = selectedSections.first?.name ?? ""
-//            DispatchQueue.main.async {
-//                self.Cv.layoutIfNeeded()
-//                self.cvHeight.constant = 300
-//            }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }
-
+    
     @IBAction func selectSection(_ sender: UIButton) {
         guard !dropDownStack.isHidden else { return }
         SectionDropdown.anchorView = sectionView
         SectionDropdown.dataSource = sectionList
         SectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
         SectionDropdown.show()
-        
         SectionDropdown.selectionAction = { [weak self] index, item in
             guard let self = self else { return }
             guard index < (self.sectionsDetails?.count ?? 0) else { return }
             self.searchBar.text = ""
             self.sectionId = self.sectionsDetails?[index].id
             self.SectionLbl.text = item
-//            DispatchQueue.main.async {
-//                self.Cv.layoutIfNeeded()
-//                self.cvHeight.constant = 300
-//            }
             self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }
-
+    
     @IBAction func selectDate(_ sender: UIButton) {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
@@ -244,37 +220,34 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         present(vc, animated: false)
     }
-
+    
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "dd MMM yyyy"
-        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
-
+        outputFormatter.dateFormat = DateInputs.dd_MMM_yyyy
+        outputFormatter.locale = Locale(identifier: localeID)
         var selectedDate = Date()
         if let dateStr = date, !dateStr.isEmpty {
             let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "dd MMM yy"
-            inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+            inputFormatter.dateFormat = DateInputs.dd_MMM_yy
+            inputFormatter.locale = Locale(identifier: localeID)
             selectedDate = inputFormatter.date(from: dateStr) ?? Date()
         }
-
         let comparison = Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day)
         if comparison == .orderedSame {
-            todayLbl.text = "Today"
+            todayLbl.text = Today
         } else if comparison == .orderedAscending {
-            // 🟢 Past date → show day name
             let dayFormatter = DateFormatter()
-            dayFormatter.dateFormat = "EEEE" // Full day name: Monday, Tuesday...
+            dayFormatter.dateFormat = DateOutPut.EEEE // Full day name: Monday, Tuesday...
             todayLbl.text = dayFormatter.string(from: selectedDate)
         } else {
-            // 🔵 Future date
-            todayLbl.text = "Future Date"
+            todayLbl.text = FutureDate
         }
-
         dateLbl.text = outputFormatter.string(from: selectedDate)
     }
-
+    
     // MARK: - API Calls
     func getAcademicYearList() {
         APIService.shared.makeApi(
@@ -290,7 +263,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                     guard res.status == true else { return }
                     self.AcadimicYearDatas = res.data ?? []
                     self.accadimYr = self.AcadimicYearDatas.compactMap { $0.year }
-
                     if let current = self.AcadimicYearDatas.first(where: { $0.current_academic_year == true }) {
                         self.acodemicId = current.id
                         self.acodomicYearLbl.text = current.year
@@ -302,12 +274,12 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             }
         }
     }
-
+    
     func getStandardsAPI() {
         guard let academicId = acodemicId else { return }
         APIService.shared.makeApi(
             url: ServiceUrl.recipient_get_standards,
-            parameters: ["academic_year_id": academicId],
+            parameters: [homeWorkViewStringFile.academic_year_id: academicId],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<GetStandardsSuc, Error>) in
@@ -320,10 +292,8 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                         self.searchBtn.isHidden = true
                         return
                     }
-
                     self.standardDetails = res.data
                     self.standerdList = res.data?.compactMap { $0.name } ?? []
-
                     if let first = res.data?.first {
                         self.sectionsDetails = first.sections
                         self.sectionList = first.sections?.compactMap { $0.name } ?? []
@@ -332,7 +302,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
                         self.SectionLbl.text = first.sections?.first?.name
                         self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
                     }
-
                     self.dropDownStack.isHidden = false
                     self.searchBar.isHidden = true
                     self.nodataFoundLbl.isHidden = true
@@ -343,32 +312,26 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             }
         }
     }
-
+    
     func GetHomeWorkReport(_ sectionId: String?, _ date: String?) {
-       let dateFormatted = ConvertDateStringSmart(date)
-
+        let dateFormatted = ConvertDateStringSmart(date)
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_report,
-            parameters: ["section_id": sectionId ?? "", "date": dateFormatted, "academic_year_id": acodemicId ?? 0],
+            parameters: [homeWorkViewStringFile.section_id: sectionId ?? "", homeWorkViewStringFile.date: dateFormatted, homeWorkViewStringFile.academic_year_id: acodemicId ?? 0],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<HomeworkResponse, Error>) in
             guard let self = self else { return }
-
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     self.hideActivityLoader()
                 }
-
                 switch result {
                 case .success(let response):
-                   
                     if response.status == true{
-                        
                         self.FilterHomeWorkList = response.data
                         self.homeWorkList = response.data
                         self.nodataFoundLbl.isHidden = true
@@ -402,7 +365,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             }
         }
     }
-
+    
     private func handleNoData(message: String) {
         dropDownStack.isHidden = true
         searchBar.isHidden = true
@@ -411,7 +374,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         nodataFoundLbl.isHidden = false
         noDataFound.isHidden = false
         Cv.isHidden = true
-//        cvHeight.constant = 0
     }
 }
 
@@ -421,12 +383,11 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return FilterHomeWorkList?.count ?? 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeWorkCvCell", for: indexPath) as? HomeWorkCvCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomeWorkCvCell, for: indexPath) as? HomeWorkCvCell else {
             return UICollectionViewCell()
         }
-       
         cell.SubjectLbl.text = FilterHomeWorkList?[indexPath.row].subject_name
         cell.stafNamLbl.text = FilterHomeWorkList?[indexPath.row].sent_by
         cell.edit(edit: FilterHomeWorkList?[indexPath.row].can_edit ?? false, delete:  FilterHomeWorkList?[indexPath.row].can_delete ?? false, selectedId: FilterHomeWorkList?[indexPath.row].id ?? "")
@@ -436,66 +397,48 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         cell.delegate = self
         cell.roundview.isHidden = true
         cell.homeWorkCompletImg.isHidden = true
-//        cell.threeDotBtn.isHidden = false
-            
-            return cell
-        }
+        return cell
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-      
-            return CGSize(width: 170, height: 230)
-       
+        return CGSize(width: 170, height: 230)
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        
         guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
         let cellFrameInSuperview = collectionView.convert(attributes.frame, to: view)
-        
         let detailVC = PrivewVc()
         detailVC.attachmetList = FilterHomeWorkList?[indexPath.row].file_path
         detailVC.selectedDate  = dateLbl.text
         detailVC.titleString  = FilterHomeWorkList?[indexPath.row].title
         detailVC.descriptionString  = FilterHomeWorkList?[indexPath.row].description
-//        detailVC.homeWorkid  = FilterHomeWorkList?[indexPath.row].id
         detailVC.postedBy  = FilterHomeWorkList?[indexPath.row].sent_by
         detailVC.subject_name  = FilterHomeWorkList?[indexPath.row].subject_name
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
         detailVC.transitioningDelegate = transitionDelegate
-        
         present(detailVC, animated: true)
-        
     }
-    }
-
-
-
+}
 // MARK: - Delegates
 @available(iOS 14.0, *)
 extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
-
-
     func date(date: String) {
         dateSelect(date)
         GetHomeWorkReport(sectionId, date)
     }
-    
     func HomeWork(withId eventId: String) -> Homework? {
         return homeWorkList?.first(where: { $0.id == eventId })
     }
-
-
     func homeWorkDelete(id: String?) {
-        guard let noticeId = id, !noticeId.isEmpty else {
-            print("Invalid notice ID")
+        guard let homeWorkID = id, !homeWorkID.isEmpty else {
+            print("Invalid homeWorkID ID")
             return
         }
-        
         alert.showAlertCancel(
             title: AlertstringFile.Confirm,
             message: AlertstringFile.deletemessage,
@@ -505,64 +448,48 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
             onOk: {
                 APIService.shared.makeApi(
                     url: ServiceUrl.comm_api_homework_delete,
-                    parameters: ["id": noticeId],
+                    parameters: [homeWorkViewStringFile.id: homeWorkID],
                     type: ApitTypeSringFile.PUT,
                     token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }
-                        
                         switch result {
                         case .success(let successResponse):
                             if successResponse.status == true {
                                 CustomAlert.showAlertWithOkAction(
                                     title: AlertstringFile.Success,
                                     message: successResponse.message ?? "",
-                                    on: self
-                                ) {
-                                    self.removeEvent(withId: noticeId)
-                                }
+                                    on: self) {
+                                        self.removeEvent(withId: homeWorkID)}
                             } else {
                                 self.alert.showAlert(
                                     title: AlertstringFile.Failed,
                                     message: successResponse.message ?? "",
-                                    on: self
-                                )
-                            }
+                                    on: self)}
                             
                         case .failure(let error):
                             print("Error deleting notice: \(error.localizedDescription)")
-                            self.alert.showAlert(title: "Error", message: error.localizedDescription, on: self)
-                        }
+                            self.alert.showAlert(title: AlertstringFile.Error, message: error.localizedDescription, on: self)}
                     }
                 }
             },
-            onNo: {
-                print("User canceled deletion")
-            }
-        )
+            onNo: {print("User canceled deletion")})
     }
-    
-    
-    
     func removeEvent(withId eventId: String) {
         // Remove from filtered list
         FilterHomeWorkList = FilterHomeWorkList?.filter { $0.id != eventId }
-
         // Remove from original list
         homeWorkList = homeWorkList?.filter { $0.id != eventId }
         // Reload the UI
         if FilterHomeWorkList?.count == 0{
             self.noDataFound.isHidden = false
             self.nodataFoundLbl.isHidden = false
-            self.nodataFoundLbl.text = "No home work found" 
+            self.nodataFoundLbl.text = MenuStringFile.No_home_work_found
             self.cvHeight.constant = 0
         }
         Cv.reloadData()
     }
-
-    
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             FilterHomeWorkList = homeWorkList

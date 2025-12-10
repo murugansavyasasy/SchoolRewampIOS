@@ -15,7 +15,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
        
         noRecLbl.isHidden = true
-       
         let rowNib = UINib(nibName: CellConfingName.deleteTV, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: CellConfingName.deleteTV)
         let gifImage = UIImage.gifImageWithName("Map Location")
@@ -24,9 +23,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         backView.addGestureRecognizer(back)
         fetchAttachments()
     }
-    
-    
-    
+
     @IBAction func backViewss(){
         dismiss(animated: true)
     }
@@ -41,11 +38,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         if let locationData = locationHistory?[indexPath.row]{
             cell.configure(with:locationData, at: indexPath)
         }
-        
-        
-//        cell.coordinatesLbl.text = "\(locationHistory?[indexPath.row].latitude ?? "") - \(locationHistory?[indexPath.row].longitude ?? "")"
-//        cell.locationLbl.text = locationHistory?[indexPath.row].location
-//        cell.distanceLbl.text = "\(locationHistory?[indexPath.row].distance ?? "") Meter"
         cell.deleteBtn.addTarget(self, action: #selector(DeletTapped(_:)), for: .touchUpInside)
         cell.editBtn.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         cell.deleteBtn.tag = indexPath.row
@@ -65,8 +57,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         let confirmAction = UIAlertAction(title: "Update", style: .default) { [self] (_) in
             if let location = alertController.textFields?[0].text, let distance = alertController.textFields?[1].text {
-                print("location Name: \(location)")
-                print("distance Name: \(distance)")
                 if distance != "" && location != ""{
                     update(param: ["id":String(self.locationHistory?[sender.tag].id ?? 0),
                                    "location":location,
@@ -90,7 +80,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             if #available(iOS 15.0, *) {
                 showActivityLoader()
             }
-            
             APIService.shared.makeApi(
                 url: ServiceUrl.staff_attd_geometric_remove_geometric_location,
                 parameters: ["location_id":locationHistory?[sender.tag].id ?? 0],
@@ -101,7 +90,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                     if #available(iOS 15.0, *) {
                         self?.hideActivityLoader()
                     }
-                    
                     switch result {
                     case .success(let result):
                         DispatchQueue.main.async {
@@ -120,11 +108,9 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         present(refreshAlert, animated: true, completion: nil)
     }
     func update(param:[String:Any]){
-        
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
         APIService.shared.makeApi(
             url: ServiceUrl.staff_attd_geometric_update_geometric_location,
             parameters:param,
@@ -135,7 +121,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if #available(iOS 15.0, *) {
                     self?.hideActivityLoader()
                 }
-                
                 switch result {
                 case .success(let result):
                     self?.fetchAttachments()
@@ -156,7 +141,6 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
         APIService.shared.makeApi(
             url: ServiceUrl.staff_attd_geometric_get_geometric_location_history,
             parameters: [:],
@@ -167,10 +151,8 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if #available(iOS 15.0, *) {
                     self?.hideActivityLoader()
                 }
-                
                 switch result {
                 case .success(let response):
-                    
                     if response.status == true{
                         DispatchQueue.main.async {
                             self?.noRecLbl.isHidden = true

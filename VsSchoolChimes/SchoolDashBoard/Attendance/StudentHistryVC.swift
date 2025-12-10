@@ -16,9 +16,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             filterData?[index].isAbsent = status
             // Count of students marked as absent
             totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
-            let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-//            PresentCountLbl.text = String(PresenrCount)
-//            AbsentCountLbl.text = String(totalcount)
             let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
             selectAllBtn.setImage(image, for: .normal)
         }
@@ -32,15 +29,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBOutlet weak var sendbtnName: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     @IBOutlet weak var TopView: UIView!
+    
+    
     var switchCell = 1
     var dropDown = DropDown()
-    
     var isSelectAllEnabled = false
     var isAttandanceMarkingScreen = false
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
-    let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
-    var vimeoUploader: VimeoUploader?
     var StandardString: String?
     var SectionString: String?
     var img = ["shiyam","stuentimg 1"]
@@ -51,13 +47,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var selected_student : [String] = []
     var ScreenType:Int?
     let alert = CustomAlert()
-    var communicatio_textDetails :[String] = []
     var target_type : Int?
     var circular_types : String?
-    var standard_sectionlabel : String? = "10"
     var selectedAcadimicYearId : Int?
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
-    
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var uploadedURLs: [String] = []
     var AlertMessageContent:Bool?
@@ -78,40 +71,25 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         search.searchTextField.backgroundColor = .systemGray5
         search.layer.cornerRadius = 8
         search.searchTextField.layer.masksToBounds = true
-        search.placeholder = "Search"
+        search.placeholder =  CommonStringFile.Search
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-             
         SearchStack.isHidden = true
-                
         selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         sendbtnName.setTitleFont(style: .body, size: FontSize.BodySize)
-        
         let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
         BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        
-        
-            filterBtn.isHidden = true
-            selectAllBtn.setImage(ImageName.square, for: .normal)
-            selectAllBtn.semanticContentAttribute = .forceRightToLeft
-            filterBtn.isUserInteractionEnabled = true
-            
-        
+        filterBtn.isHidden = true
+        selectAllBtn.setImage(ImageName.square, for: .normal)
+        selectAllBtn.semanticContentAttribute = .forceRightToLeft
+        filterBtn.isUserInteractionEnabled = true
         registerCell()
         recipient_get_student_list(
             selected_sectionId: selected_sectionID ?? "",
             academic_year_id: selectedAcadimicYearId ?? 0
         )
         search.delegate = self
-  
-    }
-    
-    override func viewDidLayoutSubviews() {
-//        view.applyGradient(
-//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
+        
     }
     
     func StyleAndTranslater() {
@@ -129,9 +107,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
         dropDown.anchorView = filterBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
-        
         dropDown.direction = .bottom
-        
         dropDown.show()
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
@@ -180,8 +156,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
-        
-        // Update data model to mark all students as present/absent
         let isSelectingAll = sender.isSelected
         if isAttandanceMarkingScreen == true{
             for i in 0..<(studentsDetails?.count ?? 0) {
@@ -201,15 +175,13 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             } else {
                 selectAllBtn.setImage(ImageName.square, for: .normal)
                 totalcount = 0
-         }
+            }
         }
         else{
             isSelectAllEnabled.toggle()
             for i in 0..<(studentsDetails?.count ?? 0) {
                 studentsDetails?[i].isSelect = isSelectAllEnabled
                 filterData?[i].isSelect = isSelectAllEnabled
-                
-                // Update `selectedRows` to match the state
                 selectedRows[i] = isSelectAllEnabled
             }
             historyTable.reloadData()
@@ -222,15 +194,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 totalcount = 0
             }
         }
-
+        
     }
     
     
     @IBAction func SearchAct(_ sender: UIButton) {
-        
         SearchStack.isHidden.toggle()
-        
-        
         sender.isSelected.toggle()
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
@@ -239,7 +208,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             SearchStack?.becomeFirstResponder()
         } else {
             filterData = studentsDetails
-//            self.noDataImg.isHidden = !self.searchData.isEmpty
             historyTable.reloadData()
             search.searchTextField.text = ""
             search?.resignFirstResponder()
@@ -260,10 +228,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func recipient_get_student_list(selected_sectionId: String,academic_year_id:Int){
         APIService.shared
             .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [
-                
                 speficStudentStringFile.section_id : selected_sectionId
                 ,speficStudentStringFile.academic_year_id : academic_year_id
-                
             ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <GetStudentlistSuc,
                 Error>
@@ -274,7 +240,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             historyTable.isHidden = false
                             studentsDetails = successMessage.data
-                            
                             if var students = studentsDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
@@ -310,40 +275,38 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
         
-            selected_student = studentsDetails?
-                .filter { $0.isSelect == true }
-                .compactMap { $0.id } ?? []
-
-            guard !selected_student.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self
-                )
-                return
-            }
+        selected_student = studentsDetails?
+            .filter { $0.isSelect == true }
+            .compactMap { $0.id } ?? []
+        
+        guard !selected_student.isEmpty else {
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self
+            )
+            return
+        }
+        let comm = commonApi_forSending()
+        switch Menu_id.staffSelectedMenuId{
+        case Menu_id.communicationMenuId:
+            SendingCommunicationFlow()
+        case Menu_id.AttachmentMenuId:
+            sendAttachmentFlow(
+                via: comm,
+                url:  ServiceUrl.comm_attachment_send_attachment,
+                subjectId: ""
+            )
+        case Menu_id.isAssaignment:
+            sendAttachmentFlow(
+                via: comm,
+                url:  ServiceUrl.comm_assignment_send_assignment,
+                subjectId: selected_subjectID ?? ""
+            )
             
-            let comm = commonApi_forSending()
-            switch Menu_id.staffSelectedMenuId{
-            case Menu_id.communicationMenuId:
-                SendingCommunicationFlow()
-                
-            case Menu_id.AttachmentMenuId:
-                sendAttachmentFlow(
-                    via: comm,
-                    url:  ServiceUrl.comm_attachment_send_attachment,
-                    subjectId: ""
-                )
-            case Menu_id.isAssaignment:
-                sendAttachmentFlow(
-                    via: comm,
-                    url:  ServiceUrl.comm_assignment_send_assignment,
-                    subjectId: selected_subjectID ?? ""
-                )
-                
-            default:
-                print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
-            }
+        default:
+            print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+        }
     }
     
     
@@ -355,16 +318,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     ) {
         let message : String?
         if AlertMessageContent ?? false{
-            
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
             
         }else{
-            
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-            
         }
-        
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: selectedAcadimicYearId ?? 0,
             target_type: target_type ?? 0,
@@ -388,23 +347,20 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
     }
     
-  
+    
     private func SendingCommunicationFlow() {
-        
-        
         let message : String?
         let title = AlertstringFile.Confirm_title
         
         if AlertMessageContent ?? false{
-            
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
             
         }else{
             
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-            
         }
+        
         alert.showAlertCancel(
             title: title,
             message: message ?? "",
@@ -415,7 +371,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 switch ScreenType {
                 case screenType.communication_text:
                     sendtextmessage_communication()
-                    
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     if user_inputs.voice_link.contains("https:") {
                         // Voice link is already uploaded
@@ -427,8 +382,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                             self.sendVoiceMessage_communication()
                         }
                     }
-                    
-                    
                 default:
                     print("❗️Unhandled communication screen type: \(ScreenType)")
                 }
@@ -441,9 +394,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
         var completed = 0
-        
         switch file {
-            
             // 🎙️ Case: Audio File from String (URL Path)
         case let files as String:
             guard let audioURL = URL(string: files) else {
@@ -488,7 +439,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-            
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
@@ -562,7 +512,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     func sendtextmessage_communication(){
-
+        
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
                 
@@ -591,13 +541,29 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     }else {
                         DispatchQueue.main.async {
                             
-                            
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) { [self] in
+                                    gotoDashboard()
+                                    
+                                }
                         }
                     }
                 case.failure(let error) :
-                    
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Success,
+                                message: error.localizedDescription,
+                                on: self
+                            ) { [self] in
+                                gotoDashboard()
+                                
+                            }
                     }
                 }
             }
@@ -607,7 +573,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func sendVoiceMessage_communication() {
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
-                
                 send_voicemeassageStringFile.voice_link : user_inputs.voice_link,
                 send_voicemeassageStringFile.target_type : target_type ?? 0,
                 send_voicemeassageStringFile.target_code : selected_student,
@@ -622,18 +587,13 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 send_voicemeassageStringFile.circular_type  : circular_type.student,
                 send_voicemeassageStringFile.academic_year_id  : selectedAcadimicYearId ?? 0
                 
-                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
-                
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -642,21 +602,32 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     on: self
                                 ) {
                                     self.gotoDashboard()
-                                    
                                 }
                         }
                     }else {
-                        
                         DispatchQueue.main.async {
-                            
-                            
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.gotoDashboard()
+                                }
                         }
                     }
                     
                 case.failure(let error) :
-                    
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Success,
+                                message: error.localizedDescription,
+                                on: self
+                            ) {
+                                self.gotoDashboard()
+                            }
                     }
                 }
             }
@@ -665,8 +636,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     func markAttendaceApi(){
-
-        print("attendance",selected_student)
         let MakeAbsentId: [[String: String]] = selected_student.compactMap { id in
             return [
                 "ID": id
@@ -674,8 +643,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
         APIService.shared
             .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
-                
-                
                 MarkAttendenceStringFile.student_id: MakeAbsentId,
                 MarkAttendenceStringFile.class_id: user_inputs.class_id,
                 MarkAttendenceStringFile.section_id: user_inputs.section_id,
@@ -688,13 +655,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 result : Result<CommonApiSuc,
                 Error>
             ) in
-                
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -731,8 +694,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 }
                 
             }
-        
-        
     }
     
 }
@@ -740,41 +701,36 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return filterData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-            let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
-            let backgroundColor = colorForName(
-                filterData?[indexPath.row].name ?? ""
-            )
-            
-            cell.NameLbl.text =  filterData?[indexPath.row].name ?? ""
-            cell.AdmisionNoLbl.text = filterData?[indexPath.row].admission_no ?? ""
-            cell.RollNoLbl.text = filterData?[indexPath.row].roll_no ?? ""
-            if let firstChar =  filterData?[indexPath.row].name?.first {
-                cell.alphabetLbl.text = String(firstChar)
-            } else {
-                cell.alphabetLbl.text = "" // Fallback for empty string
-            }
-            cell.AlphabetView.backgroundColor = backgroundColor
-            cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
-            
-            if let select = filterData?[indexPath.row].isSelect {
-                cell.CheckBoxImgview.image = select ? ImageName.checkedSquares: ImageName.uncheckedSquares
-            }
-            // Set visibility state
-            cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
-            cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
-            
-            //             Configure tap action
-            cell.tapAction = { [weak self] in
-                self?.handleImageTap(at: indexPath)
-            }
-            
-            return cell
+        let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
+        let backgroundColor = colorForName(
+            filterData?[indexPath.row].name ?? ""
+        )
+        cell.NameLbl.text =  filterData?[indexPath.row].name ?? ""
+        cell.AdmisionNoLbl.text = filterData?[indexPath.row].admission_no ?? ""
+        cell.RollNoLbl.text = filterData?[indexPath.row].roll_no ?? ""
+        if let firstChar =  filterData?[indexPath.row].name?.first {
+            cell.alphabetLbl.text = String(firstChar)
+        } else {
+            cell.alphabetLbl.text = "" // Fallback for empty string
+        }
+        cell.AlphabetView.backgroundColor = backgroundColor
+        cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
+        
+        if let select = filterData?[indexPath.row].isSelect {
+            cell.CheckBoxImgview.image = select ? ImageName.checkedSquares: ImageName.uncheckedSquares
+        }
+        cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
+        cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
+        cell.tapAction = { [weak self] in
+            self?.handleImageTap(at: indexPath)
+        }
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -832,8 +788,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                     self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                     
                 case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-                    
-                    
                     if (staffDetailsCount?.count ?? 0) > 1 {
                         self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                         
@@ -845,15 +799,11 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                     print("Unhandled staff role")
                 }
             }else{
-                
-                
                 switch staff_role {
                 case PriorityType.is_staff:
                     self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                     
                 case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-                    
-                    
                     if (staffDetailsCount?.count ?? 0) > 1 {
                         self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                         
@@ -870,14 +820,10 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func attendaceGoBackDashBoard(){
-        
         switch staff_role {
         case PriorityType.is_staff:
             self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-            
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-            
-            
             if (staffDetailsCount?.count ?? 0) > 1 {
                 self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                 

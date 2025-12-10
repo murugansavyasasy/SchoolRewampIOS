@@ -9,8 +9,9 @@ import StoreKit
 
 protocol RatingDelegate: AnyObject {
     func rating(_ ratingcount: Int)
-    func Submit(_ category: Set<String>, suggessions: String)
+    func Submit(_ category: CategoriesSection, suggessions: String)
 }
+
 
 class RateUsViewController: UIViewController {
     
@@ -26,7 +27,6 @@ class RateUsViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         registerKeyboardNotifications()
-        setupRatingCategories()
         getReview()
     }
     
@@ -34,70 +34,7 @@ class RateUsViewController: UIViewController {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
-    private func setupRatingCategories() {
-        categorySections = [
-            CategoriesSection(
-                name: "What went wrong?",
-                rating: 1,
-                category: [
-                    Categories(name: "Limited amenities", selected: false),
-                    Categories(name: "Limited facilities", selected: false),
-                    Categories(name: "Unmaintained facilities", selected: false),
-                    Categories(name: "Irrelevant curriculum", selected: false),
-                    Categories(name: "Inexperienced", selected: false),
-                    Categories(name: "Extra fees", selected: false)
-                ]
-            ),
-            CategoriesSection(
-                name: "What went wrong?",
-                rating: 2,
-                category: [
-                    Categories(name: "Inadequate security", selected: false),
-                    Categories(name: "Unmaintained facilities", selected: false),
-                    Categories(name: "Limited facilities", selected: false),
-                    Categories(name: "Less/No evaluation", selected: false),
-                    Categories(name: "Extra fees", selected: false),
-                    Categories(name: "Not specialised", selected: false)
-                ]
-            ),
-            CategoriesSection(
-                name: "What did you like and dislike?",
-                rating: 3,
-                category: [
-                    Categories(name: "AC classrooms", selected: false),
-                    Categories(name: "Cafeteria", selected: false),
-                    Categories(name: "Limited amenities", selected: false),
-                    Categories(name: "Limited facilities", selected: false),
-                    Categories(name: "Reasonably priced", selected: false),
-                    Categories(name: "Highly priced", selected: false)
-                ]
-            ),
-            CategoriesSection(
-                name: "What did you like and dislike?",
-                rating: 4,
-                category: [
-                    Categories(name: "AC classrooms", selected: false),
-                    Categories(name: "Multiple facilities", selected: false),
-                    Categories(name: "Limited amenities", selected: false),
-                    Categories(name: "Limited facilities", selected: false),
-                    Categories(name: "Reasonable fees", selected: false),
-                    Categories(name: "High fee structure", selected: false)
-                ]
-            ),
-            CategoriesSection(
-                name: "What did you love?",
-                rating: 5,
-                category: [
-                    Categories(name: "Resourceful library", selected: false),
-                    Categories(name: "Sports", selected: false),
-                    Categories(name: "Relevant curriculum", selected: false),
-                    Categories(name: "Adequate security", selected: false),
-                    Categories(name: "Expert faculty", selected: false),
-                    Categories(name: "Reasonable fees", selected: false)
-                ]
-            )
-        ]
-    }
+    
     
     // MARK: - UI SETUP
     private func setupUI() {
@@ -141,6 +78,7 @@ class RateUsViewController: UIViewController {
 
 // MARK: - Rating Delegate
 extension RateUsViewController: RatingDelegate {
+    
     func rating(_ ratingcount: Int) {
         selectedRating = ratingcount
         isSelected = ratingcount > 0
@@ -148,12 +86,23 @@ extension RateUsViewController: RatingDelegate {
         delegate?.viewAttachment(sender: UIButton())
     }
     
-    func Submit(_ category: Set<String>, suggessions: String) {
+    func Submit(_ category: CategoriesSection, suggessions: String) {
+        if let index = categorySections?.firstIndex(where: { $0.rating == category.rating }) {
+            categorySections?[index] = category
+            for i in 0..<(categorySections?.count ?? 0) {
+                if i != index {
+                    for j in 0..<(categorySections?[i].category?.count ?? 0) {
+                        categorySections?[i].category?[j].selected = false
+                    }
+                }
+            }
+        }
         submit = true
         isSelected = false
-        
-        saveRatingToBackend(rating: selectedRating, description: suggessions)
         tableview.reloadData()
+        delegate?.viewAttachment(sender: UIButton())
+        saveRatingToBackend(rating: selectedRating, description: suggessions)
+       
     }
     
     func getReview() {
@@ -175,6 +124,7 @@ extension RateUsViewController: RatingDelegate {
                         self.descriptionContent = review.description ?? ""
                         self.selectedRating = review.rating ?? 0
                         self.isSelected = self.selectedRating > 0
+                        self.categorySections = review.remarks
                         self.tableview.reloadData()
                         self.tableview.layoutIfNeeded()
                         UIView.performWithoutAnimation {
@@ -193,6 +143,7 @@ extension RateUsViewController: RatingDelegate {
             }
         }
     }
+
 }
 
 
@@ -202,10 +153,24 @@ extension RateUsViewController {
     func saveRatingToBackend(rating: Int, description: String?) {
         let mobile = UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
         
+        let formattedCategories = categorySections?.map { section in
+            return [
+                "name": section.name ?? "",
+                "rating": section.rating ?? 0,
+                "category": section.category?.map { cat in
+                    return [
+                        "name": cat.name ?? "",
+                        "selected": cat.selected ?? false
+                    ]
+                } ?? []
+            ] as [String : Any]
+        }
+
         let params: [String: Any] = [
             "mobile_number": mobile,
             "rating": rating,
-            "description": description ?? ""
+            "description": description ?? "",
+            "categories":formattedCategories ?? []
         ]
         
         APIService.shared.makeApi(
@@ -219,7 +184,7 @@ extension RateUsViewController {
             
             switch result {
             case .success(_):
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     if self.selectedRating >= 4 {
                         self.redirectToAppStoreWriteReview()
                     }
@@ -273,7 +238,7 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.ratingDelegate = self
             cell.suggestContetTxtView.text = descriptionContent
             let filtered = categorySections?.filter { $0.rating == selectedRating }
-            cell.configure(names: filtered?.first)
+            cell.configure(names: filtered?.first, rating: selectedRating)
             return cell
             
         default:

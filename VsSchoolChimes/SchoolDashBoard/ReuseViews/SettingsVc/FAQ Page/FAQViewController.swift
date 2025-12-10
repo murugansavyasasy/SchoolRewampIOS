@@ -41,7 +41,6 @@ class FAQViewController: UIViewController {
     
     func Getfaq() {
         if #available(iOS 15.0, *) { showActivityLoader() }
-        
         let token = passValue == 2
             ? (UserDefaultFileManager.get_child_Details()?.access_token ?? "")
             : (UserDefaultFileManager.get_staff_Details()?.access_token ?? "")
@@ -67,23 +66,7 @@ class FAQViewController: UIViewController {
         }
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        if passValue == 1 {
-//            view.applyGradient(
-//                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-//                startPoint: CGPoint(x: 1, y: 0.5),
-//                endPoint: CGPoint(x: 0, y: 0.5)
-//            )
-//        } else {
-//            view.applyGradient(
-//                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-//                startPoint: CGPoint(x: 1, y: 0.5),
-//                endPoint: CGPoint(x: 0, y: 0.5)
-//            )
-//        }
-//    }
-    
+
     @IBAction func SubmitBtnAction(_ sender: Any) {
         // Add your submit logic here
     }
@@ -118,18 +101,15 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var reloadPaths: [IndexPath] = []
-        
         if let selected = selectedIndexPath {
             reloadPaths.append(selected)
         }
-        
         if selectedIndexPath == indexPath {
             selectedIndexPath = nil // collapse
         } else {
             selectedIndexPath = indexPath // expand
             reloadPaths.append(indexPath)
         }
-        
         tableView.reloadRows(at: reloadPaths, with: .automatic)
     }
     

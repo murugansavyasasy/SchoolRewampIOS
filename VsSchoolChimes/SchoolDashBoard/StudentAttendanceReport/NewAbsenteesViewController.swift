@@ -11,10 +11,9 @@ import FSCalendar
 
 class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate, call {
     func callMobileNumber(indexPath: Int) {
-       
         makePhoneCall(to: absentStudentData[indexPath].primary_mobile ?? "")
     }
-
+    
     
     @IBOutlet weak var noRecordView: UIView!
     @IBOutlet weak var noRecordLbl: UILabel!
@@ -25,14 +24,12 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     @IBOutlet weak var calanderHeighnt: NSLayoutConstraint!
     @IBOutlet weak var totalLbl: UILabel!
     @IBOutlet weak var progres: UIProgressView!
-    
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     @IBOutlet weak var abesentCountLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var classNameLbl: UILabel!
-   
     @IBOutlet weak var scrollview: UIScrollView!
     @IBOutlet weak var calanderFulView: UIView!
     @IBOutlet weak var calendar: FSCalendar!
@@ -49,19 +46,23 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     var sectionWiseArray: [SectionAbsentees] = []
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.dateFormat = DateInputs.dd_MM_yyyy
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
     var absentStudentData: [AbsentisReportStudent] = []
     var selectedDate: String?
+    var Class  = "Class : "
+    var Section = "Section : "
+    var Absent   = "Absent : "
+    var Absentees   = "Absentees : "
+    var Total_students   = "Total students : "
     override func viewDidLoad() {
         super.viewDidLoad()
         
         noRecordView.layer.cornerRadius = 8
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
-        
         updateMonthLabel()
         dateLbl.isHidden = true
         cvIcon.isHidden = true
@@ -70,18 +71,15 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         fullview.backgroundColor = .clear
         studentLbl.isHidden = true
         let formatter = DateFormatter()
-        formatter.dateFormat = "EE MMM dd, yyyy"
-
+        formatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         // current date string in dd-MM-yyyy
         let currentDateString = formatter.string(from: Date())
         dateLbl.text = currentDateString
         calanderFulView.layer.cornerRadius = 10
-
         calendar.delegate = self
         calendar.dataSource = self
         scrollview.delegate = self
         scrollview.alwaysBounceVertical = true
-
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
         calendar.appearance.selectionColor = .error
@@ -93,15 +91,11 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         fullview.layer.cornerRadius = 10
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
         Tv.register(UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
-        
         cvIcon.dataSource = self
         cvIcon.delegate = self
         Tv.dataSource = self
         Tv.delegate = self
-        
         Absentees_Response()
-        
-        
     }
     
     @IBAction func BackAct() {
@@ -112,24 +106,19 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
             if UIApplication.shared.canOpenURL(phoneCallURL) {
                 UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: nil)
-            } else {
-                print("Device cannot make calls")
             }
         }
     }
     
     func Absentees_Response() {
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_get_absentees_count_by_date, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [weak self] (result: Result<AbsenteesResponse, Error>) in
-            
             guard let self = self else { return }
-            
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
                     self.absentData = response.data
                     self.class_wiseData = self.absentData?.first?.class_wise ?? []
                     self.eventDates.removeAll()
-                    
                     if let data = response.data {
                         for item in data {
                             if let total = item.total_absentees,
@@ -145,14 +134,13 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         calendar.isDate(eventDate, inSameDayAs: today)}
                     
                     if !hasEventToday {
-                        print("No absentee event today.")
                         self.dateLbl.isHidden = !hasEventToday
                         self.cvIcon.isHidden = !hasEventToday
                         self.infoStack.isHidden = !hasEventToday
                         self.Tv.isHidden = !hasEventToday
                         self.fullview.isHidden = true
                         self.noRecordView.isHidden = false
-                        self.noRecordLbl.text = "No Absentees Report from this date"
+                        self.noRecordLbl.text = MenuStringFile.No_Absentees_Report_from_this_date
                         self.studentLbl.isHidden = true
                     }else{
                         self.studentLbl.isHidden = false
@@ -164,21 +152,18 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         self.fullview.isHidden = false
                         self.noRecordView.isHidden = true
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "dd-MM-yyyy"
+                        formatter.dateFormat = DateInputs.dd_MM_yyyy
                         let currentDateString = formatter.string(from: Date())
-                        
                         if let ids = self.getClassAndSectionID(
                             for: currentDateString) {
                             self.AbsentStudent(
                                 sectionId:ids.sectionID ?? "" ,
                                 date: currentDateString,
                                 standarId: ids.classID ?? "")}
-                        
                         if let info = self.getAbsenteeInfo(
                             for: currentDateString) {self.updateProgress(
                                 absentees: "\(info.totalAbsentees)",
                                 total: "\(info.studentCounts)")}}
-                    
                     self.calendar.reloadData()
                     if let firstDate = self.absentData?.first?.date {
                         self.filterData(for: firstDate)
@@ -198,9 +183,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     
     func filterData(for date: String) {
         guard let allData = self.absentData else { return }
-
         let filteredClassWise = allData.filter { $0.date == date }
-        
         self.sectionWiseArray = flattenClassWiseData(classData: filteredClassWise.first?.class_wise ?? [])
         classNameLbl.text =  (
             sectionWiseArray.first?.class_name ?? ""
@@ -210,10 +193,9 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         )
         self.cvIcon.reloadData()
     }
-
+    
     func flattenClassWiseData(classData: [ClassWise]) -> [SectionAbsentees] {
         var flatArray: [SectionAbsentees] = []
-        
         for cls in classData {
             // ✅ Optional unwrap
             for section in cls.section_wise ?? [] {
@@ -222,8 +204,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                     class_id: cls.class_id ?? "",
                     section_name: section.section_name ?? "",
                     section_id: section.section_id ?? "",
-                    total_absentees: section.total_absentees ?? "", student_counts: section.student_counts ?? ""
-                )
+                    total_absentees: section.total_absentees ?? "", student_counts: section.student_counts ?? "")
                 flatArray.append(item)
             }
         }
@@ -237,7 +218,6 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
             AbsenteesReportStringFile.section_id: sectionId,
             AbsenteesReportStringFile.standard_id: standarId
         ]
-
         APIService.shared.makeApi(
             url: ServiceUrl.stud_attd_api_attendance_get_absentees_students_by_date,
             parameters: param,
@@ -246,16 +226,10 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         ) { [weak self] (result: Result<AbsentisReportStudentResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-
-//                if #available(iOS 15.0, *) {
-//                    self.hideLottieProgressLoader()
-//                }
-
                 switch result {
                 case .success(let response):
-                        self.absentStudentData = response.data
+                    self.absentStudentData = response.data
                     self.Tv.reloadData()
-
                     self.updateTableHeight()
                 case .failure(let error):
                     print("API error: \(error.localizedDescription)")
@@ -264,28 +238,24 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
             }
         }
     }
-
-   
+    
+    
 }
 
 // MARK: - UICollectionViewDelegate & DataSource
 extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sectionWiseArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CVIconCollectionViewCell, for: indexPath) as? scetionCvcell else {
             return UICollectionViewCell()
         }
-        
         let data = sectionWiseArray[indexPath.item]
-        cell.standardLbl.text = "Class : " + data.class_name
-        cell.sectionLbl.text = "Section : " + data.section_name
-        cell.absentCountLbl.text =  " Absent : " +  data.total_absentees + " / " +  data.student_counts
-        
+        cell.standardLbl.text = Class + data.class_name
+        cell.sectionLbl.text = Section + data.section_name
+        cell.absentCountLbl.text =  Absent +  data.total_absentees + " / " +  data.student_counts
         if ClickID == indexPath.row  {
             cell.fullview.backgroundColor = .primery
             cell.fullview.layer.cornerRadius = 10
@@ -300,8 +270,8 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             cell.absentCountLbl.textColor = .primery
             classNameLbl.text =  data.class_name
             sectionLbl.text =  data.section_name
-            abesentCountLbl.text = "Absentees : \(data.total_absentees)"
-            totalLbl.text = "Total students : \(data.student_counts)"
+            abesentCountLbl.text =  Absentees + "\(data.total_absentees)"
+            totalLbl.text = Absentees + "\(data.student_counts)"
             cell.absentFullview.backgroundColor = .attendence
         } else {
             cell.fullview.backgroundColor = .systemGray6
@@ -321,7 +291,6 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         ClickID = indexPath.row
-        
         let data = sectionWiseArray[indexPath.item]
         classNameLbl.text =  data.class_name
         sectionLbl.text =  data.section_name
@@ -329,22 +298,17 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
         updateProgress(
             absentees: data.total_absentees,
             total: data.student_counts)
-        
-        
-            self.AbsentStudent(
-                sectionId:data.section_id ,
-                date: selectedDate ?? "",
-                standarId: data.class_id)
-       
-        
-        abesentCountLbl.text = "Absentees : \(data.total_absentees)"
-        totalLbl.text = "Total students : \(data.student_counts)"
+        self.AbsentStudent(
+            sectionId:data.section_id ,
+            date: selectedDate ?? "",
+            standarId: data.class_id)
+        abesentCountLbl.text = Absentees + "\(data.total_absentees)"
+        totalLbl.text = Total_students + "\(data.student_counts)"
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 150, height: 110)
     }
-    
     
     func updateProgress(absentees: String, total: String) {
         let absentCount = Float(absentees) ?? 0
@@ -352,37 +316,22 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
         let progressValue = absentCount / totalCount
         progres.setProgress(progressValue, animated: true)
     }
-
-
-    
-
 }
 
 // MARK: - UITableViewDelegate & DataSource
 extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return absentStudentData.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ClassTableViewCell, for: indexPath) as? QuizSubmisionTvCell else {
             return UITableViewCell()
         }
-        
         let data = absentStudentData[indexPath.row]
-        
         cell.nameLbl.text = data.student_name
         cell.classLbl.text = data.roll_no
-//        cell.StatusBtn.setTitle("Call", for: .normal)
-//        cell.StatusBtn.backgroundColor = .systemBlue
         cell.addmissionLbl.isHidden = data.admission_no ==  "" ? true : false
-        cell.addmissionLbl.text =  "admission no: " + (data.admission_no ?? "")
-       // cell.delegate = self
-//        cell.StatusBtn.tag = indexPath.row
-//        cell.StatusBtn.isUserInteractionEnabled = true
-        
+        cell.addmissionLbl.text =  MenuStringFile.admission_no + (data.admission_no ?? "")
         if data.photo_path == nil || data.photo_path == "" {
             cell.profileImage.tintColor = .error
             if data.gender == "male"{
@@ -394,9 +343,7 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
             }
         }else{
             cell.profileImage.tintColor = .clear
-            cell.profileImage.sd_setImage(with: URL(string: data.photo_path ?? ""), placeholderImage: UIImage(named: "placeholder"))
-        }
-        
+            cell.profileImage.sd_setImage(with: URL(string: data.photo_path ?? ""), placeholderImage: UIImage(named: "placeholder"))}
         cell.StatusBtn.isHidden = true
         cell.separatorView.isHidden = false
         cell.FNStack.isHidden = false
@@ -404,15 +351,12 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
         
         if let attStatus = absentStudentData[indexPath.row].attd_status {
             let parts = attStatus.components(separatedBy: "/")
-            
             // Expecting formats like "P/A", "OD/OD", "P~/P", etc.
             if parts.count == 2 {
                 let fnInfo = getStatusInfo(for: parts[0])
                 let anInfo = getStatusInfo(for: parts[1])
-                
                 cell.FNBtn.setTitle(fnInfo.0, for: .normal)
                 cell.FNBtn.backgroundColor = fnInfo.1
-                
                 cell.ANBtn.setTitle(anInfo.0, for: .normal)
                 cell.ANBtn.backgroundColor = anInfo.1
             } else {
@@ -423,21 +367,17 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
                 cell.ANBtn.backgroundColor = .lightGray
             }
         }
-        
         return cell
     }
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateTableHeight()
     }
-    
     func updateTableHeight() {
         Tv.layoutIfNeeded()
         tvHeight.constant = Tv.contentSize.height
     }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             self.updateTableHeight()
@@ -446,7 +386,6 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
     func getStatusInfo(for status: String) -> (String, UIColor) {
         switch status {
         case "P":
@@ -467,13 +406,11 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
 extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance,UIScrollViewDelegate {
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        // Check if this date is in eventDates
         if eventDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) }) {
             return 1 // show dot
         }
         return 0
     }
-    
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
         if eventDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) }) {
             return [.error]  // dot color
@@ -482,72 +419,63 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
     }
     
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        // eventDates-ல இருக்கிறதா check பண்ணு
         let hasEvent = eventDates.contains { Calendar.current.isDate($0, inSameDayAs: date) }
-        
         if hasEvent {
             return true
         } else {
             fullview.isHidden = true
             noRecordView.isHidden = false
-            noRecordLbl.text = "No Absentees Report from this date"
+            noRecordLbl.text = MenuStringFile.No_Absentees_Report_from_this_date
             return false
         }
     }
-
+    
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         ClickID = 0
         dateLbl.isHidden = false
         cvIcon.isHidden = false
-     infoStack.isHidden = false
+        infoStack.isHidden = false
         Tv.isHidden = false
         fullview.backgroundColor = .white
         studentLbl.isHidden = false
-        studentLbl.text = "👨🏻‍🎓 Absent  students list"
+        studentLbl.text = MenuStringFile.Absent_students_list
         let filterFormatter = DateFormatter()
-        filterFormatter.dateFormat = "dd-MM-yyyy"
-        
+        filterFormatter.dateFormat = DateInputs.dd_MM_yyyy
         let showFormatter = DateFormatter()
-        showFormatter.dateFormat = "EE MMM dd, yyyy"
-        
+        showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         let selectedDateForFilter = filterFormatter.string(from: date)
         let selectedDateForLabel = showFormatter.string(from: date)
-
         // UILabel update
         dateLbl.text = selectedDateForLabel
         selectedDate = selectedDateForFilter
         // Data filter
         filterData(for: selectedDateForFilter)
-        
         if let ids = self.getClassAndSectionID(
             for: selectedDate ?? ""
         ) {self.AbsentStudent(
-                sectionId:ids.sectionID ?? "" ,
-                date: selectedDate ?? "",
-                standarId: ids.classID ?? "")}
-        
+            sectionId:ids.sectionID ?? "" ,
+            date: selectedDate ?? "",
+            standarId: ids.classID ?? "")}
         if let info = getAbsenteeInfo(for: selectedDateForFilter) {
             noRecordView.isHidden = true
             fullview.isHidden = false
             updateProgress(
                 absentees: "\(info.totalAbsentees)",
                 total: "\(info.studentCounts)")
-            
         } else {
-            print("No data found for this date")
             noRecordView.isHidden = false
             fullview.isHidden = true
         }
- 
+        
     }
     func minimumDate(for calendar: FSCalendar) -> Date {
         return Date(timeIntervalSince1970: 0) // very old date
     }
-
+    
     func maximumDate(for calendar: FSCalendar) -> Date {
         return Date()
     }
-   
+    
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         calanderHeighnt.constant = bounds.height
         self.view.layoutIfNeeded()
@@ -556,46 +484,38 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
     @IBAction func nextMonthTapped(_ sender: UIButton) {
         moveCurrentPage(isNext: true)
     }
-
+    
     @IBAction func prevMonthTapped(_ sender: UIButton) {
         moveCurrentPage(isNext: false)
     }
-
+    
     func moveCurrentPage(isNext: Bool) {
         let current = calendar.currentPage
         var dateComponents = DateComponents()
         dateComponents.month = isNext ? 1 : -1
         let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
         calendar.setCurrentPage(newDate, animated: true)
-        
         updateMonthLabel()
     }
     
-   
-    
     func updateMonthLabel() {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"   // Example: "September 2025"
+        formatter.dateFormat = DateInputs.MMMM_yyyy   // Example: "September 2025"
         mothLbl.text = formatter.string(from: calendar.currentPage)
     }
-
-
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if velocity.y > 0 {
-            // Swipe up → collapse
             calendar.setScope(.week, animated: true)
         } else if velocity.y < 0 {
-            // Swipe down → expand
             calendar.setScope(.month, animated: true)
         }
     }
-   
+    
     func getClassAndSectionID(for selectedDate: String) -> (classID: String?, sectionID: String?)? {
         guard let absentData = absentData else { return nil }
-        
         if let matchedDate = absentData.first(where: { $0.date == selectedDate }) {
             let classID = matchedDate.class_wise?.first?.class_id
             let sectionID = matchedDate.class_wise?.first?.section_wise?.first?.section_id
@@ -603,18 +523,13 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         }
         return nil
     }
-
-    
     func getAbsenteeInfo(for selectedDate: String) -> (totalAbsentees: Int, studentCounts: Int)? {
         guard let absentData = absentData else { return nil }
-        
         // Find the matching date entry
         if let matchedDate = absentData.first(where: { $0.date == selectedDate }),
            let classWiseList = matchedDate.class_wise {
-            
             var totalAbs = 0
             var totalStu = 0
-            
             // Loop through all classes and sections
             for classItem in classWiseList {
                 if let sectionList = classItem.section_wise {

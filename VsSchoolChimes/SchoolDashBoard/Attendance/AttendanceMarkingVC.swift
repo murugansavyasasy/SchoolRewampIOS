@@ -291,9 +291,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-                
                 guard let self = self else { return }
-                
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {
@@ -372,17 +370,10 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
             studentsDetails?[originalIndex].isAbsent = status
             filterData?[index].isAbsent = status
-            //            abseentessData?[index].isAbsent = status
-            // Count of students marked as absent
             totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
             let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-            //            PresentCountLbl.text = String(PresenrCount)
-            //            AbsentCountLbl.text = String(totalcount)
-            
             PresentCountLbl.text = formatCount(PresenrCount)
             AbsentCountLbl.text = formatCount(totalcount)
-            
-            //                OdCountLbl.text = String(format: "%02d", odCount)
             let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
             selectAllBtn.setImage(image, for: .normal)
         }
@@ -398,11 +389,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         }
     }
     @IBAction func selectAllAct(_ sender: UIButton) {
-        
-        // Toggle the state
         isAllAbsent.toggle()
-        
-        // Update button UI
         if isAllAbsent {
             sender.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
         } else {
@@ -411,7 +398,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
         // Update all students
         guard var students = student_List else { return }
-        
         for i in 0..<students.count {
             var components = students[i].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
             
@@ -517,9 +503,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     
     func applyFilterAndSort() {
-        
         var result = student_List ?? []
-        
         if !searchQuery.isEmpty {
             let query = searchQuery.lowercased()
             result = result.filter { student in
@@ -528,7 +512,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 (student.admission_no?.lowercased().contains(query) ?? false)
             }
         }
-        
         switch selectedSort {
         case CommonStringFile.RollNoASC:
             result.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
@@ -572,16 +555,12 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         dropDown.dataSource = [CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.AdmissionNoASC,CommonStringFile.AdmissionNoDESC]
         dropDown.anchorView = filterBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
-        
         dropDown.direction = .bottom
-        
         dropDown.show()
-        
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             self.filterBtn.setTitle(item.translated(), for: .normal)
             self.selectedSort =  item
-            
             applyFilterAndSort()
         }
         
@@ -590,7 +569,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchQuery = searchText
         applyFilterAndSort()
-        
         selectAllBtn.isHidden = !searchText.isEmpty
     }
     
@@ -606,22 +584,18 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
         
         let student_data = Filtered_stuent_Listt?[indexPath.row]
-        
         cell.nameLbl.text = student_data?.name
         cell.admissionlbl.text = "ADMIS No: " + (student_data?.admission_no ?? "")
         cell.rollNoLbl.text = "Roll No: " + (student_data?.roll_no ?? "")
         cell.rollNoLbl.isHidden = student_data?.roll_no?.isEmpty ?? false
-        
         let attendanceStatus = student_data?.att_status
         let components = attendanceStatus?.split(separator: "/")
         var attendanceType = ""
         let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
         
         if allAbsent {
-            
             self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
         } else {
-            
             self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
         }
         if user_inputs.attendance_type == "H" {
@@ -683,10 +657,8 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
 extension AttendanceMarkingVC: studentAttenance {
     
     func didTapPresentAbsent(for id: String) {
-        
         guard let filteredList = Filtered_stuent_Listt,
               let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
-        
         var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
         if user_inputs.attendance_type == "H" {
             if user_inputs.session_type == "FH" {
@@ -705,14 +677,12 @@ extension AttendanceMarkingVC: studentAttenance {
            let index = mainList.firstIndex(where: { $0.id == id }) {
             student_List?[index].att_status = components.joined(separator: "/")
         }
-        
         getAttendanceCounts()
         tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }
     
     
     func didTapLate(for id: String) {
-        
         guard let filteredList = Filtered_stuent_Listt,
               let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
         
@@ -730,7 +700,6 @@ extension AttendanceMarkingVC: studentAttenance {
             components[0] = (components.first == "P~") ? "P" : "P~"
         }
         
-        
         Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
         
         if let mainList = student_List,
@@ -743,12 +712,9 @@ extension AttendanceMarkingVC: studentAttenance {
     }
     
     func didToggleOD(for id: String, isOn: Bool) {
-        
         guard let filteredList = Filtered_stuent_Listt,
               let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
-        
         let newType = isOn ? "OD" : "P"
-        
         var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
         
         if user_inputs.attendance_type == "H" {
@@ -764,12 +730,10 @@ extension AttendanceMarkingVC: studentAttenance {
         }
         
         Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
-        
         if let mainList = student_List,
            let index = mainList.firstIndex(where: { $0.id == id }) {
             student_List?[index].att_status = components.joined(separator: "/")
         }
-        
         getAttendanceCounts()
         tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
     }

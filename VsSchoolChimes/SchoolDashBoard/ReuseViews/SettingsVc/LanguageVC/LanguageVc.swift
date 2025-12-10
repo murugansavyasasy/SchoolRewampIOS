@@ -82,15 +82,7 @@ class LanguageVc: UIViewController {
             UserDefaults.standard.set(index, forKey: "index")
             let userDefault = UserDefaults.standard
             userDefault.set(languageCode, forKey: DefaultsKeys.Language)
-            
-            print("languageCode",languageCode)
-            TranslationManager.shared.setLanguage(languageCode)
-            
-            // Apply the language immediately
             userDefault.synchronize()
-            
-            LanguageManager.shared.setLanguage(languageCode)
-
             guard let windowScene = UIApplication.shared.connectedScenes
                     .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
                   let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {

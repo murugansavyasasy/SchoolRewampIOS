@@ -17,9 +17,6 @@ class SectionStregnthCVC: UICollectionViewCell {
     @IBOutlet weak var studentCount: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code\
-        
-        
     }
     
     

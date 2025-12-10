@@ -225,8 +225,9 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     private func configureTopViewController(_ navController: UINavigationController) {
         guard let topVC = navController.viewControllers.first else { return }
         
-        if let settingsVC = topVC as? SettingsViewController, login_astype == 2 {
+        if let settingsVC = topVC as? SettingsViewController{
             settingsVC.delegate = self
+            settingsVC.hideBack = true
             settingsVC.passVale = login_astype ?? 0
         } else if let profileVC = topVC as? CustomParentDashboardVC, login_astype == 2 {
             profileVC.delegate = self
@@ -236,6 +237,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             holidayVC.passValue = login_astype ?? 0
         } else if let schoolVC = topVC as? UpdateProfileVC {
             schoolVC.hideBack = true
+        }else if let help = topVC as? HelpVc{
+            help.hideBack = true
         }
     }
     

@@ -28,14 +28,8 @@ struct common_redirection {
                     vc.modalPresentationStyle = .fullScreen
                     let currentController = getCurrentViewController()
                     currentController?.present(vc, animated: true)
-                } else {
-                    // Fallback on earlier versions
                 }
-//                vc.isEmergency = isVoice
-               
-                
-            }
-            else{
+            }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.requestCommonDataDetails = api_request_param
                 vc.modalPresentationStyle = .fullScreen
@@ -43,10 +37,7 @@ struct common_redirection {
                 currentController?.present(vc, animated: true)
             }
             
-        }
-    
-            
-            else{
+        }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.requestCommonDataDetails = api_request_param
                 vc.modalPresentationStyle = .fullScreen
@@ -57,7 +48,6 @@ struct common_redirection {
     
     
     static func getCurrentViewController() -> UIViewController? {
-        
         if let rootController = UIApplication.shared.keyWindow?.rootViewController {
             var currentController: UIViewController! = rootController
             while( currentController.presentedViewController != nil ) {
