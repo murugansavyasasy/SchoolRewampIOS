@@ -572,12 +572,14 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             
             cell.meetigModeLbl.isHidden = false
             cell.meetigNameLbl.isHidden = false
+            cell.dateStack.isHidden = false
+            cell.modeStack.isHidden = false
             cell.meetigNameLbl.text = slot?.event_name
             cell.meetigModeLbl.text = slot?.event_mode
 
             // MARK: - Basic Info
-            cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
-            cell.DurationLbl.text = "\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
+            cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "") (\(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated()))"
+            cell.DurationLbl.text = slot?.date?.convertToTargetDateFormat()//"\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
             cell.bookedByNameLbl.text = slot?.student_name
             cell.fatherNameLbl.text = slot?.father_name
             cell.motherNameLbl.text = slot?.mother_name
