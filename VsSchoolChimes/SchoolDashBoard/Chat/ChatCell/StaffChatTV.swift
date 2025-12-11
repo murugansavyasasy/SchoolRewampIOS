@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+protocol ShowPopupDelegate{
+    func showPopup(sender:UIButton)
+}
 class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
     
     func selectId(id: String?, edit: Bool?) {
