@@ -100,6 +100,8 @@ class ImageName{
     static let missing_file = UIImage(named: "missing-file")
     static let customer_support = UIImage(named: "customer-support")
     static let need_location_access = UIImage(named: "need-location-access")
+    static let magnifyingglass = UIImage(named: "magnifyingglass")
+    static let magnifyingglass_circle_fill = UIImage(named: "magnifyingglass.circle.fill")
                                        
   
 }

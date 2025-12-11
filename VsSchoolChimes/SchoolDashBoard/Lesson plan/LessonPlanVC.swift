@@ -11,7 +11,6 @@ import UIKit
 @available(iOS 15.0, *)
 class LessonPlanVC: UIViewController {
     
-    
     @IBOutlet weak var MenuNameLbl: UILabel!
     @IBOutlet weak var searchIconBtn: UIButton!
     @IBOutlet weak var BackBtn: UIButton!
@@ -23,8 +22,6 @@ class LessonPlanVC: UIViewController {
     @IBOutlet weak var ButtonStack: UIStackView!
     @IBOutlet weak var AllClassBtn: UIButton!
     @IBOutlet weak var MyClassBtn: UIButton!
-    
-    
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ViewLessonData: [LessonPlanDetail]?
@@ -135,8 +132,6 @@ class LessonPlanVC: UIViewController {
         ])
     }
     
-    
-    
     @IBAction func SegmentAct(_ sender: Any) {
         if segmentControl.selectedSegmentIndex == 0{
             ReqestType = LessonPlanStringFile.allclass
@@ -151,7 +146,7 @@ class LessonPlanVC: UIViewController {
         ReqestType = LessonPlanStringFile.allclass
         searchBar.text = ""
         searchBar.isHidden = true
-        searchIconBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchIconBtn.setImage(ImageName.magnifyingglass, for: .normal)
         searchBar.resignFirstResponder()
         lesson_plan_staff_report_Api()
     }
@@ -161,7 +156,7 @@ class LessonPlanVC: UIViewController {
         ReqestType = LessonPlanStringFile.myclass
         searchBar.text = ""
         searchBar.isHidden = true
-        searchIconBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchIconBtn.setImage(ImageName.magnifyingglass, for: .normal)
         searchBar.resignFirstResponder()
         lesson_plan_staff_report_Api()
     }
@@ -172,14 +167,13 @@ class LessonPlanVC: UIViewController {
         if sender.isSelected{
             searchBar.isHidden = false
             searchBar.becomeFirstResponder()
-            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+            sender.setImage(ImageName.magnifyingglass_circle_fill, for: .normal)
         }else{
-            
             searchBar.isHidden = true
             NodataImage.isHidden = true
             NodataLbl.isHidden = true
             searchBar.resignFirstResponder()
-            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            sender.setImage(ImageName.magnifyingglass, for: .normal)
             searchBar.searchTextField.text = ""
             SearchData = LessonPlanData
             tableview.reloadData()
