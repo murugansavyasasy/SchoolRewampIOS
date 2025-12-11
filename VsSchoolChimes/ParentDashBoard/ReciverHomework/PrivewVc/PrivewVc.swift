@@ -20,7 +20,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var attachmentFullView: UIView!
     @IBOutlet weak var targetCvHeight: NSLayoutConstraint!
     @IBOutlet weak var targetCv: UICollectionView!
-   
+    
     @IBOutlet weak var yourTargetLbl: UILabel!
     @IBOutlet weak var doneHomeWorkBtnName: UIButton!
     @IBOutlet weak var postedByLbl: UILabel!
@@ -54,25 +54,21 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var isStaffAndStudent : Bool = false
     var standarSenction : [String] = []
     var params : [String : Any] = [:]
+    let id = "id"
+    let HOMEWORK = "HOMEWORK"
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // Reload collection view once the view has appeared and frame is set
         cv.reloadData()
         reloadCollectionAndUpdateHeight()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //view.applyTopToWhiteGradient(topColor: UIColor.homeWorkClr)
-        
-        // Invalidate layout when bounds change
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.invalidateLayout()
         }
-        
         setupTopRoundedCorners(for: sendToInnerView)
-           setupTopRoundedCorners(for: attachmentInnerView)
-        
+        setupTopRoundedCorners(for: attachmentInnerView)
     }
     
     private func setupTopRoundedCorners(for view: UIView) {
@@ -82,14 +78,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             byRoundingCorners: [.topLeft, .topRight],
             cornerRadii: CGSize(width: 12, height: 12)
         )
-        
         let maskLayer = CAShapeLayer()
         maskLayer.path = path.cgPath
         view.layer.mask = maskLayer
-        
         // Remove previous border if any
         view.layer.sublayers?.removeAll(where: { $0.name == "bottomBorder" })
-        
         // Add bottom line
         let border = CALayer()
         border.name = "bottomBorder"
@@ -108,11 +101,10 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         targetFullView.layer.cornerRadius = 10
         attachmentFullView.layer.cornerRadius = 10
         attachmentFullView.isHidden = attachmetList?.count == 0
-//        attachmetList?.count ?? 0 ==
         setupUI()
         setupCollectionView()
         if EndUrl == "" || EndUrl == nil {
-                targetFullView.isHidden = true
+            targetFullView.isHidden = true
         }else{
             targetFullView.isHidden = false
             getTargetReport(EndUrl: EndUrl ?? "", params: params)
@@ -135,22 +127,20 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         let displayText = selectedDate?.convertToTargetDateFormat() ?? ""
         titleLbl.text = titleString
         discreption.text = descriptionString
-        dateLbl.text = "\("posted on".translated()) : \(displayText)"
-        postedByLbl.text = "\("posted by".translated()) : \(postedBy ?? "")"
-
+        dateLbl.text =  MenuStringFile.posted_on + "\(displayText)"
+        postedByLbl.text = MenuStringFile.Posted_By + "\(postedBy ?? "")"
+        
         if is_unreadStatus ?? false{
             ReadStatusUpdateArchive(
-                type: "HOMEWORK",
+                type: HOMEWORK,
                 detail_id: homeWorkdetail_id ?? ""
             )
         }
         
-        
-        
         if let homeWorkid = homeWorkdetail_id, !homeWorkid.isEmpty {
             doneHomeWorkBtnName.isHidden = isCompleted
         }
-     
+        
         backBtn.setTitle(subject_name ?? "", for: .normal)
         backBtn.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         backBtn.tintColor = .white
@@ -172,20 +162,19 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     private func setupCollectionView() {
-        cv.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
-        targetCv.register(UINib(nibName: "TargetCvCell", bundle: nil), forCellWithReuseIdentifier: "TargetCvCell")
+        cv.register(UINib(nibName: CellConfingName.PreviewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PreviewCell)
+        targetCv.register(UINib(nibName: CellConfingName.TargetCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.TargetCvCell)
         
         cv.delegate = self
         cv.dataSource = self
         targetCv.delegate = self
         targetCv.dataSource = self
-    
+        
         let layout = LeftAlignedFlowLayout()
         layout.minimumInteritemSpacing = 10 // Customize spacing between items
         layout.minimumLineSpacing = 10 // Customize line spacing
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
         targetCv.collectionViewLayout = layout
-
         // Configure flow layout
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
@@ -194,9 +183,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             layout.scrollDirection = .vertical
             layout.estimatedItemSize = .zero // Important: disable self-sizing
         }
-        
-       
-        
         // Reload after a slight delay to ensure frame is available
         DispatchQueue.main.async {
             self.reloadCollectionAndUpdateHeight()
@@ -219,23 +205,22 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         APIService.shared.makeApi(
             url: ServiceUrl.homework_mark_complete,
-            parameters: ["id": homeWorkid ?? ""],
+            parameters: [id: homeWorkid ?? ""],
             type: ApitTypeSringFile.PUT,
             token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) { self?.hideActivityLoader() }
-                
                 guard let self = self else { return }
                 switch result {
                 case .success(_):
                     CustomAlert.showAlertWithOkAction(
-                        title: "🎉 Well Done!",
-                        message: "That's it! Homework done – you're amazing!",
+                        title: "🎉 Well Done!".translated(),
+                        message: "That's it! Homework done – you're amazing!".translated(),
                         on: self,
                         okAction: {
                             self.doneHomeWorkBtnName.isHidden = true
-//                            self.dismiss(animated: true)
+                            //                            self.dismiss(animated: true)
                         })
                     
                     self.isCompleted = true
@@ -251,12 +236,10 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func ReadStatusUpdateArchive(type: String,detail_id: String){
         
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
-            
             switch result {
             case .success(let SuccessMessage):
                 ""
             case .failure(let error):
-                
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
                 }
@@ -265,9 +248,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func reloadss(){
-        
         targetCv.reloadData()
-        
         targetCv.layoutIfNeeded()
         DispatchQueue.main.async {
             self.targetCvHeight.constant = self.targetCv.collectionViewLayout.collectionViewContentSize.height
@@ -275,40 +256,43 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func getTargetReport(EndUrl : String ,params:[String:Any]) {
-        
         APIService.shared.makeApi(url: EndUrl,parameters: params,type: ApitTypeSringFile.GET,token: staffDetails?.access_token ?? "") {[weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
-                    
                     if res.status == true{
                         self.yourTargetLbl.text = res.data?.first?.type?.translated()
                         self.isStaffAndStudent = true
-                        if res.data?.first?.type == "Message sent to STANDARD"{
+                        if res.data?.first?.type == MessageType.toStandard {
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             self.standarSenction = res.data?.first?.name?.first?.standard ?? []
-                        }else if  res.data?.first?.type == "Message sent to SCHOOL"{
+                            
+                        } else if res.data?.first?.type == MessageType.toSchool {
                             self.yourTargetImageView.image = UIImage(systemName: "building.columns")
                             self.standarSenction = res.data?.first?.name?.first?.institute ?? []
-//
-                        } else if  res.data?.first?.type == "Message sent to GROUP"{
-//                            
+                            
+                        } else if res.data?.first?.type == MessageType.toGroup {
+                            
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                             self.standarSenction = res.data?.first?.name?.first?.group ?? []
-                        }else if  res.data?.first?.type == "Message sent to STUDENTS"{
+                            
+                        } else if res.data?.first?.type == MessageType.toStudents {
                             self.isStaffAndStudent = false
                             self.targetCvdata = res.data?.first?.name ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
-                        }else if  res.data?.first?.type == "Message sent to SECTION"{
-                   self.standarSenction = res.data?.first?.name?.first?.section ?? []
+                            
+                        } else if res.data?.first?.type == MessageType.toSection {
+                            self.standarSenction = res.data?.first?.name?.first?.section ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             
-                        }else if  res.data?.first?.type == "Message sent to STAFF"{
+                        } else if res.data?.first?.type == MessageType.toStaff {
+                            
                             self.isStaffAndStudent = false
                             self.targetCvdata = res.data?.first?.name ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
                         }
+                        
                         self.reloadss()
                     }
                 case .failure(let err):
@@ -321,7 +305,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func reloadCollectionAndUpdateHeight() {
         cv.reloadData()
         cv.layoutIfNeeded()
-       
+        
         DispatchQueue.main.async {
             let contentHeight = self.cv.collectionViewLayout.collectionViewContentSize.height
             self.cvHeight.constant = contentHeight
@@ -348,18 +332,16 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         default:
             return  4
         }
-       
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if  collectionView == cv{
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreviewCell", for: indexPath) as? PreviewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PreviewCell, for: indexPath) as? PreviewCell else {
                 return UICollectionViewCell()
             }
-            
             guard let data = attachmetList?[indexPath.item] else { return cell }
-            
             switch data.type?.uppercased() {
             case CommonStringFile.IMAGE:
                 cell.imageView.isHidden = false
@@ -383,25 +365,19 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
         
         else{
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TargetCvCell", for: indexPath) as? TargetCvCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.TargetCvCell, for: indexPath) as? TargetCvCell else {
                 return UICollectionViewCell()
             }
-     
             if isStaffAndStudent{
                 cell.nameLbl.text = standarSenction[indexPath.row]
-                
             }else{
-                
                 cell.nameLbl.text =  targetCvdata[indexPath.row].name ?? ""
             }
-      
             return  cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if  collectionView == cv{
             guard let file = attachmetList?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
@@ -410,19 +386,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             imageVC.pdfUrl = urlString
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
-            //            imageVC.type = isImage ? 2 : 0
             imageVC.modalPresentationStyle = .fullScreen
             present(imageVC, animated: true)
         }
     }
     
-//    func playVideo(for item: String) {
-//        let vc = VideoPreviewVc(nibName: nil, bundle: nil)
-//        vc.url = item
-//        vc.titles = backBtn.titleLabel?.text ?? ""
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-//    }
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -431,40 +399,31 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             // Get the collection view's actual width
             let collectionViewWidth = collectionView.bounds.width
             let screenWidth = collectionViewWidth > 0 ? collectionViewWidth : UIScreen.main.bounds.width - 32
-            
             // Define spacing and insets (0 spacing as requested)
             let sectionInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
             let minimumInteritemSpacing: CGFloat = 0
             let itemsPerRow: CGFloat = 3
-            
             // Calculate available width for items
             let totalHorizontalSpacing = (itemsPerRow - 1) * minimumInteritemSpacing + sectionInsets.left + sectionInsets.right
             let availableWidth = screenWidth - totalHorizontalSpacing
             let itemWidth = floor(availableWidth / itemsPerRow)
             let finalWidth = max(itemWidth, 80)
-            
             // Return square cells
             return CGSize(width: finalWidth, height: finalWidth)
             
         }else{
-//
-           
+            
             if isStaffAndStudent{
-                
                 let titleString = standarSenction[indexPath.item]
                 let font = UIFont.systemFont(ofSize: 14) // Customize as needed
                 let titleWidth = titleString.size(
                     withAttributes: [NSAttributedString.Key.font: font]
                 ).width
                 return CGSize(width: titleWidth + 70, height: 40) // Add padding if needed
-                
             }else{
                 
                 let item = targetCvdata[indexPath.item]
-
                 let titleString = item.name
-                   
-
                 let font = UIFont.systemFont(ofSize: 14)
                 let titleWidth = titleString?.size(
                     withAttributes: [NSAttributedString.Key.font: font]
@@ -479,7 +438,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         if  collectionView == cv{
             return 0
         }else{
-            
             return 8
         }
     }
@@ -487,15 +445,12 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
-        
         if  collectionView == cv{
             return 0
         }
         else{
             return 8
         }
-        
     }
 }
 
@@ -510,7 +465,6 @@ class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
                 if layoutAttribute.frame.origin.y >= maxY {
                     leftMargin = sectionInset.left
                 }
-                
                 layoutAttribute.frame.origin.x = leftMargin
                 leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
                 maxY = max(layoutAttribute.frame.maxY, maxY)
@@ -527,4 +481,12 @@ extension UIView {
         gradient.locations = [0, NSNumber(value: Float(heightRatio))]
         self.layer.insertSublayer(gradient, at: 0)
     }
+}
+struct MessageType {
+    static let toStandard = "Message sent to STANDARD"
+    static let toSchool   = "Message sent to SCHOOL"
+    static let toGroup    = "Message sent to GROUP"
+    static let toStudents = "Message sent to STUDENTS"
+    static let toSection  = "Message sent to SECTION"
+    static let toStaff    = "Message sent to STAFF"
 }

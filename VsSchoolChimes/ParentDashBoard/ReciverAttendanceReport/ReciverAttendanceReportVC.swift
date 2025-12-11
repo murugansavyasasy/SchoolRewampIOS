@@ -47,9 +47,6 @@ class ReciverAttendanceReportVC: UIViewController {
     var pushNotiMsg_id : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //BackBtn.applyBackButton()
-        
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
@@ -58,9 +55,7 @@ class ReciverAttendanceReportVC: UIViewController {
         Topview.layer.cornerRadius = 25
         Topview.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         StyleAndTranslate()
-        
         get_student_stats()
-        
         if pushNotiMsg_id != ""{
             LeaveHistoryAct()
         }
@@ -69,7 +64,6 @@ class ReciverAttendanceReportVC: UIViewController {
     
     //MARK: UI Changes
     func StyleAndTranslate(){
-        
         WeeklyView.layer.cornerRadius = 10
         WeeklyView.layer.borderWidth = 0.5
         WeeklyView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -78,11 +72,9 @@ class ReciverAttendanceReportVC: UIViewController {
         WeeklyView.layer.shadowOffset = CGSize(width: 0, height: 2)
         WeeklyView.layer.shadowRadius = 4
         WeeklyView.layer.masksToBounds = false
-        
         noStatsLbl.isHidden = true
         noStatsLbl.setFont(style: .body, size: 10)
         noStatsLbl.textColor = .systemRed
-        
         percentagesBaseView.layer.cornerRadius = 10
         percentagesBaseView.layer.borderWidth = 0.2
         percentagesBaseView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -91,9 +83,7 @@ class ReciverAttendanceReportVC: UIViewController {
         percentagesBaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
         percentagesBaseView.layer.shadowRadius = 4
         percentagesBaseView.layer.masksToBounds = false
-        
         WeekStatusDefBtn.setTitle(AttendanceString.thisWeekStatus.translated(), for: .normal)
-        
         AttendanceDefLbl.text = AttendanceString.attendance.translated()
         LeaveTakenDefLbl.text = AttendanceString.leaveTaken.translated()
         OngoingdaysDefLbl.text = AttendanceString.ongoingDays.translated()
@@ -163,28 +153,20 @@ class ReciverAttendanceReportVC: UIViewController {
     
     //MARK: Api call
     func get_student_stats() {
-        
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_stats, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<StudentStatisticsResponse,Error>) in
-            
             DispatchQueue.main.async { [weak self] in
-                
                 guard let self = self else {return}
-                
                 switch result{
-                    
                 case .success(let success):
-                    
                     self.studentStats = success.data
                     setupDayButtons()
                     Set_Piechart_data()
-                    
                     if success.status == false {
                         noStatsLbl.isHidden = false
                         noStatsLbl.text = success.message
                     }
                     
                 case .failure(let error):
-                    
                     noStatsLbl.isHidden = false
                     noStatsLbl.text = error.localizedDescription
                 }
@@ -195,7 +177,6 @@ class ReciverAttendanceReportVC: UIViewController {
     func getDayWithSuffix(from date: Date) -> NSAttributedString {
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
-        
         let suffix: String
         switch day {
         case 11, 12, 13:
@@ -219,7 +200,6 @@ class ReciverAttendanceReportVC: UIViewController {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = 30
-        
         attributed.addAttributes([
             .paragraphStyle: paragraphStyle
         ], range: NSRange(location: 0, length: fullString.count))
@@ -230,7 +210,6 @@ class ReciverAttendanceReportVC: UIViewController {
     
     
     func setupDayButtons() {
-        
         Stackview.arrangedSubviews.forEach { view in
             Stackview.removeArrangedSubview(view)
             view.removeFromSuperview()
@@ -238,7 +217,6 @@ class ReciverAttendanceReportVC: UIViewController {
         
         let dayInitials = ["M", "T", "W", "T", "F", "S", "S"]
         let attList = studentStats?.first?.weekly_status?.att_list ?? []
-        
         for (index,initial) in dayInitials.enumerated() {
             let verticalStack = UIStackView()
             verticalStack.axis = .vertical
@@ -259,27 +237,21 @@ class ReciverAttendanceReportVC: UIViewController {
             case "-":
                 imageView.image = UIImage(systemName: "circle")
                 imageView.tintColor = .systemPink
-                
             case "x":
                 imageView.image = UIImage(systemName: "checkmark.circle.fill")
                 imageView.tintColor = .backGroundClr
-                
             case "A":
                 imageView.image = UIImage(systemName: "a.circle.fill")
                 imageView.tintColor = .systemRed
-                
             case "S":
                 imageView.image = UIImage(systemName: "h.circle.fill")
                 imageView.tintColor = .systemPink
-                
             case "/" :
                 imageView.image = UIImage(systemName: "circle.lefthalf.filled")
                 imageView.tintColor = .backGroundClr
-                
             case "SH" :
                 imageView.image = UIImage(systemName: "circle.righthalf.filled")
                 imageView.tintColor = .backGroundClr
-                
             default:
                 imageView.image = UIImage(systemName: "circle")
                 imageView.tintColor = .systemPink
@@ -299,14 +271,11 @@ class ReciverAttendanceReportVC: UIViewController {
     
     func Set_Piechart_data(){
         let stats = studentStats?.first
-        
         let attendancePercent = Double(stats?.attendance_percentage?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
         let absentDays = Double(stats?.absent_days ?? 0)
         let completedDays = Double(stats?.completed_working_days ?? 0)
         let totalDays = Double(stats?.total_working_days ?? 1) // avoid divide by zero
-        
         let OnGoingPercentage = Int((completedDays / totalDays) * 100)
-        
         setProgress(
             on: AttendencePercentage,
             value: attendancePercent,
@@ -429,7 +398,6 @@ class ReciverAttendanceReportVC: UIViewController {
     
     
     @IBAction func AskLeaveAct(){
-        
         if #available(iOS 14.0, *) {
             let vc = LeveCreateVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
@@ -463,15 +431,12 @@ class ReciverAttendanceReportVC: UIViewController {
     }
     
     @IBAction func BackBtnAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
 }
 extension ReciverAttendanceReportVC: UIPopoverPresentationControllerDelegate {
-    
     func showPopover(from sender: UIView, contentVC: PopoverViewVC) {
         contentVC.modalPresentationStyle = .popover
-        
         if let popover = contentVC.popoverPresentationController {
             popover.sourceView = sender
             popover.sourceRect = sender.bounds
@@ -479,12 +444,10 @@ extension ReciverAttendanceReportVC: UIPopoverPresentationControllerDelegate {
             popover.delegate = self
             popover.backgroundColor = .white
         }
-        
         if UIDevice.current.userInterfaceIdiom == .phone {
             contentVC.modalPresentationStyle = .overFullScreen
             contentVC.view.backgroundColor = .white
         }
-        
         present(contentVC, animated: true)
     }
     

@@ -32,11 +32,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     var chnage_passwordPage : Bool = false
     let mobileNo = UserDefaultFileManager.getLoginCredentials()
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         setUpUI()
-        
         if createNewPassword == true {
             createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_old_password
             ConfirmPassLabel.localizationKey = ChangePasswordStringFile.Enter_the_new_password
@@ -53,11 +50,9 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         confirmPassTextFld.delegate = self
         confirmPassTextFld.addDoneButton()
         createPassTextFLd.addDoneButton()
-        
         createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
         ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
         confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
-        
         createPassTextFLd.isSecureTextEntry = true
         confirmPassTextFld.isSecureTextEntry = true
         
@@ -101,15 +96,12 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         confirmPassTextFld.leftView = paddingView2
         confirmPassTextFld.leftViewMode = .always
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        
         if let activeField = view.firstResponder as? UIView {
             let activeFieldFrame = activeField.convert(activeField.bounds, to: self.view)
             let keyboardTop = self.view.frame.height - keyboardFrame.height
@@ -141,10 +133,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func confirmBtn(_ sender: Any) {
-        
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
-        
         if createPassTextFLd.text != "" {
             if  confirmPassTextFld.text != "" {
                 if createPassTextFLd.text == confirmPassTextFld.text{
@@ -175,7 +165,6 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func showPassword(_ sender: UITapGestureRecognizer) {
-        
         if sender.view == NewPassEyeImage{
             createPassTextFLd.isSecureTextEntry.toggle()
             let imageName = createPassTextFLd.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
@@ -190,7 +179,6 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     
     @available(iOS 14.0, *)
     func CretaeNewPasswordAPIcall(){
-        
         APIService.shared
             .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
                 
@@ -199,13 +187,12 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                 result: Result<CreateNewPasswordSuc,
                 Error>
             ) in
-                
                 switch result {
                 case.success(let successMessage):
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
                             CustomAlert.showAlertWithOkAction(
-                                title: "Success",
+                                title: AlertstringFile.Success,
                                 message: successMessage.message ?? "",
                                 on: self
                             ) { [self] in
@@ -254,7 +241,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                         present(vc, animated: true)
                                     }else{
                                         
-                                        if let data =                                             UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first{
+                                        if let data =                                 UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first{
                                             UserDefaultFileManager.saveChildDetails(data: data)
                                         }
                                         
@@ -290,7 +277,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                 if successMessage.status == true {
                     
                     DispatchQueue.main.async { [self] in
-                        CustomAlert.showAlertWithOkAction(title: "Success",message: successMessage.message ?? "",on: self) { [self] in
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success,message: successMessage.message ?? "",on: self) { [self] in
                             
                             UserDefaultFileManager.saveLoginCredentials(mobile_number:mobile_number ?? "",pwd:confirmPassTextFld.text ?? "")
                             
@@ -302,7 +289,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                 present(vc, animated: true)
                                 
                             }else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
-                                if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == "p3"){
+                                if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
                                     if(UserDefaultFileManager
                                         .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1){
                                         let vc = PriorityVC(nibName: nil,bundle: nil)
@@ -374,7 +361,6 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                 let loginVC = LoginVc(nibName: nil, bundle: nil)
                                 let nav = UINavigationController(rootViewController: loginVC)
                                 nav.navigationBar.isHidden = true
-                                
                                 if let window = UIApplication.shared.connectedScenes
                                     .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
                                     window.rootViewController = nav
@@ -401,7 +387,6 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 extension CreatePasswordVc: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
         if textField == createPassTextFLd {
             createPasswordBaseview.layer.borderColor = UIColor.systemBlue.cgColor
             createPasswordBaseview.layer.borderWidth = 1
@@ -416,7 +401,6 @@ extension CreatePasswordVc: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
         if textField == createPassTextFLd {
             createPasswordBaseview.layer.borderColor = UIColor.clear.cgColor
             createPasswordBaseview.layer.borderWidth = 0

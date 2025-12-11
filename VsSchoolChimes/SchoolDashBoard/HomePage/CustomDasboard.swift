@@ -284,7 +284,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         var deviceToken: String?
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            deviceToken = appDelegate.DeviceToken
+            deviceToken = appDelegate.deviceTokenString
         }
         let model = UIDevice.current.modelName
         

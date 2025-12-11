@@ -28,8 +28,6 @@ class QuizListTvCell: UITableViewCell {
     @IBOutlet weak var LevelView: UIView!
     @IBOutlet weak var levelLbl: UILabel!
     
-    
-    
     var delegate : addQuestionAndSubmitedListDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,17 +44,10 @@ class QuizListTvCell: UITableViewCell {
     }
 
     @IBAction func addQestBtn(_ sender: UIButton) {
-        
         delegate?.addQuestionAndSubmitedList(index: sender.tag)
     }
     
     @IBAction func submitedList(_ sender: UIButton) {
-        
         delegate?.submitedList(index: sender.tag)
     }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
-    
 }

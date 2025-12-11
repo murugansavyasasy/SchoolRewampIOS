@@ -11,7 +11,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     func ReadCompleted(Id: String, IscompletedStatus: Bool) {
         markHomeworkAsUnread(eventId: Id, isCompletedStatus: IscompletedStatus)
     }
-  
+    
     func markHomeworkAsUnread(eventId: String,isCompletedStatus: Bool) {
         if let index = FilterHomeWorkList.firstIndex(where: { $0.id == eventId }) {
             var updatedHomework = FilterHomeWorkList[index]
@@ -94,7 +94,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         
         self.bottomCV.reloadData()
     }
-
+    
     
     func convertDateToString(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -275,23 +275,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-      
-    }
-    
-    
     func getAllPastDatesIncludingTodayForLastMonth() -> [CalendarItem] {
         var items: [CalendarItem] = []
-        
         let calendar = Calendar.current
         let today = Date()
-        
         // Start from 1 month ago
         guard let pastStartDate = calendar.date(byAdding: .month, value: -1, to: today) else {
             return items
         }
-        
         var currentDate = pastStartDate
         while currentDate <= today {
             items.append(CalendarItem(date: currentDate))
@@ -302,14 +293,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }
         return items
     }
-
+    
     
     
     func GetHomeWorkReport() {
         
         FilterHomeWorkList.removeAll()
         if #available(iOS 15.0, *) { showActivityLoader() }
-       
+        
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_list,
             parameters: [:],
@@ -347,7 +338,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                         }
                     }
                     let isEmpty = filteredHomework.isEmpty
-                  
+                    
                     self.NodataFoundLbl.isHidden = !isEmpty
                     
                     self.noDataImage.isHidden = !isEmpty
@@ -375,9 +366,9 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
-
+                
                 guard let self = self else { return }
-
+                
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {
@@ -475,10 +466,10 @@ extension homeWorkVc: UISearchBarDelegate{
         self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
         self.noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
         self.homeWorkDefaultLbl.isHidden = self.FilterHomeWorkList.isEmpty
-      
+        
         self.bottomCV.reloadData()
     }
-
+    
 }
 
 struct CalendarItem {
@@ -494,19 +485,19 @@ struct CalendarItem {
         formatter.locale = locale
         return formatter
     }
-
+    
     var dayString: String {
         let formatter = dateFormatter
         formatter.dateFormat = "EEE"
         return formatter.string(from: date)
     }
-
+    
     var dateString: String {
         let formatter = dateFormatter
         formatter.dateFormat = "dd"
         return formatter.string(from: date)
     }
-
+    
     var monthString: String {
         let formatter = dateFormatter
         formatter.dateFormat = "MMM"

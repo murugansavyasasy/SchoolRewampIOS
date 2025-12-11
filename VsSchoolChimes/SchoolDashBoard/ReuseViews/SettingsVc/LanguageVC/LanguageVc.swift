@@ -35,24 +35,18 @@ class LanguageVc: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("LanguageVc")
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        
         SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
-        
-         if UserDefaults.standard.object(forKey: "index") != nil {
-             index = UserDefaults.standard.integer(forKey: "index")
-         }else {
-             index = 1
-         }
+        if UserDefaults.standard.object(forKey: "index") != nil {
+            index = UserDefaults.standard.integer(forKey: "index")
+        }else {
+            index = 1
+        }
         
         Items[index ?? 1].selected = true
         baseview.layer.cornerRadius = Colornames.CORadius15
-        
         ConfirmBtn.layer.cornerRadius = Colornames.CORadius10
         ConfirmBtn.backgroundColor = .lightGray
-        
         ConfirmBtn.setTitle(Buttontext[index ?? 1], for: .normal) // Use setTitle(_:for:) here
         ConfirmBtn.titleLabel?.textAlignment = .center
         ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -60,20 +54,16 @@ class LanguageVc: UIViewController {
         tv.dataSource = self
         tv.delegate = self
         tv.reloadData()
-        
         tv.isScrollEnabled = false
         let nib = UINib(nibName: CellConfingName.LangTvCellTableViewCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:  CellConfingName.LangTvCellTableViewCell)
-        
         adjustTableViewHeight()
         
     }
     
     
     @IBAction func backClick(_ sender: Any) {
-        
         dismiss(animated: true)
-        
     }
     
     @IBAction func ConfirmClick(_ sender: Any) {
@@ -84,7 +74,7 @@ class LanguageVc: UIViewController {
             userDefault.set(languageCode, forKey: DefaultsKeys.Language)
             userDefault.synchronize()
             guard let windowScene = UIApplication.shared.connectedScenes
-                    .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
                   let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
                 return
             }
@@ -94,44 +84,39 @@ class LanguageVc: UIViewController {
             let initialViewController = storyboard.instantiateInitialViewController()
             window.rootViewController = initialViewController
             window.makeKeyAndVisible()
-
+            
             // Optional: Add a transition animation
             UIView.transition(with: window,
                               duration: 0.3,
                               options: .transitionCrossDissolve,
                               animations: nil,
                               completion: nil)
-
+            
         }
     }
     
     // Reload the application to apply the new language
     func reloadApplication(value : Int) {
-    
-        
         let window = UIApplication.shared.windows.first
         let homeVC = TapBarVC(nibName: "TapBarVC", bundle: nil)
         homeVC.login_astype = value
-        // Set the new rootViewController to the window
         window?.rootViewController = homeVC
         window?.makeKeyAndVisible()
     }
     
-  
-        }
-        
- 
+    
+}
+
+
 @available(iOS 14.0, *)
 extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return Items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LangTvCellTableViewCell , for: indexPath) as! LangTvCellTableViewCell
-        
         if index == indexPath.row{
             ConfirmBtn.setTitle(Buttontext[index ?? 1], for: .normal)
             ConfirmBtn.titleLabel?.textAlignment = .center
@@ -160,7 +145,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             Items[previousIndex].selected = false
             previousCell.LangIconImg.tintColor = .lightGray
         }
-
+        
         // Select the new cell
         if let cell = tableView.cellForRow(at: indexPath) as? LangTvCellTableViewCell {
             cell.RadioImage.image = ImageName.checkedTick
@@ -169,39 +154,37 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             ConfirmBtn.titleLabel?.textAlignment = .center
             ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         }
-
+        
         // Update selection
         selectedLanguage = Items[indexPath.row].language
         Items[indexPath.row].selected = true
         index = indexPath.row
-
+        
         // Change Confirm Button color
         ConfirmBtn.backgroundColor = UIColor.button
-
+        
         switch selectedLanguage {
-            case "Tamil":
-                languageCode = "ta-IN"
-            case "Thai":
-                languageCode = "th"
-            case "Hindi":
-                languageCode = "hi"
-            case "English":
-                languageCode = "en"
-            case "Arabic":
-                languageCode = "ar"
-            default:
-                break
+        case "Tamil":
+            languageCode = "ta-IN"
+        case "Thai":
+            languageCode = "th"
+        case "Hindi":
+            languageCode = "hi"
+        case "English":
+            languageCode = "en"
+        case "Arabic":
+            languageCode = "ar"
+        default:
+            break
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return  75
     }
     
     func adjustTableViewHeight() {
-        // Calculate the total height based on rows and row height
-        let totalHeight = CGFloat(Items.count) * 75.0 // 60.0 is example row height; replace
+        let totalHeight = CGFloat(Items.count) * 75.0
         tableViewHeightConstraint.constant = totalHeight
         self.baseview.layoutIfNeeded()
     }

@@ -26,9 +26,6 @@ class scetionCvcell: UICollectionViewCell {
         let totalCount = Float(total) ?? 1  // avoid divide by zero
         let progressValue = absentCount / totalCount
         progress.setProgress(progressValue, animated: true)   // 0.0 to 1.0 range
-        // Optional: progress color change
-//        progress.progressTintColor = 
-//        progress.trackTintColor = .systemGreen
     }
 
 }
