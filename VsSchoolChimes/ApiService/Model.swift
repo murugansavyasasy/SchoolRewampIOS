@@ -45,7 +45,7 @@ struct VersionData: Codable {
     let play_store_link: String?
     let app_store_link: String?
     let description: String?
-    var ratus:Bool?
+    var is_rate_as:Bool?
 }
 
 
