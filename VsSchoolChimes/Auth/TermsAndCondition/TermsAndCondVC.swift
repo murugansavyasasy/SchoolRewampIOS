@@ -21,7 +21,6 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
     var tittleString:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         Pdfview.navigationDelegate = self
         BackBtn.setTitle(tittleString ?? "", for: .normal)
         if let pdfURL = URL(string: url ?? "https://schoolchimes.com/vs_web/terms_conditions/") {
@@ -47,7 +46,6 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
     }
     
     @IBAction func BackAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     

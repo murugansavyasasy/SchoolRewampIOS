@@ -92,21 +92,16 @@ class OTPVc: UIViewController {
     
     @objc func showDialOptions() {
         doneButtonAction()
-        
         var dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
-        
         if pageType == screenType.isForgotPassword {
             dialNumbersString = forgotpasswordData.first?.dial_numbers ?? ""
         }
-        
         let dialNumbers = dialNumbersString.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        
         guard !dialNumbers.isEmpty else {
-            print("No numbers available")
             return
         }
         
-        let alertController = UIAlertController(title: "Choose a Number", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: AlertstringFile.Choose_a_Number, message: nil, preferredStyle: .actionSheet)
         
         for number in dialNumbers {
             let action = UIAlertAction(title: number, style: .default) { _ in
@@ -115,7 +110,7 @@ class OTPVc: UIViewController {
             alertController.addAction(action)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
@@ -124,8 +119,6 @@ class OTPVc: UIViewController {
         if let url = URL(string: "tel://\(phoneNumber)"),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
-        } else {
-            print("Cannot open dial pad")
         }
     }
     
@@ -139,7 +132,6 @@ class OTPVc: UIViewController {
         }else{
             view.makeToast(AlertstringFile.Enter_Otp)
         }
-        
     }
     
     func setupOTPTextFields() {
@@ -173,10 +165,8 @@ class OTPVc: UIViewController {
         ResendLbl.textAlignment = .left
         ResendLbl.setFont(style: .body, size: FontSize.BodySize)
         ResendLbl.isUserInteractionEnabled = true
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
         ResendLbl.addGestureRecognizer(tapGesture)
-        
         updateLabelWithTime()
     }
     
@@ -201,7 +191,6 @@ class OTPVc: UIViewController {
     func showResend() {
         let text = "Didn't receive a verification code? Resend"
         let attributed = NSMutableAttributedString(string: text)
-        
         let resendRange = (text as NSString).range(of: "Resend")
         attributed.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: resendRange)
         attributed.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: resendRange)
@@ -239,7 +228,6 @@ class OTPVc: UIViewController {
     
     
     func Validate_OTP(mobileNumber : String , otp : String) {
-        
         APIService.shared.makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
             COMMON_PARAMETER.mobile_number :  mobileNumber,
             OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
@@ -254,12 +242,10 @@ class OTPVc: UIViewController {
                             self.hideActivityLoader()
                         }
                         if successMessage.status == true {
-                            
                             self.remainingTime = 0
                             self.startTimer()
                             
                             if(pageType == screenType.isForgotPassword){
-                                
                                 let vc = CreatePasswordVc(nibName: nil, bundle: nil)
                                 vc.modalPresentationStyle = .fullScreen
                                 vc.createNewPassword = false
@@ -268,7 +254,6 @@ class OTPVc: UIViewController {
                                 
                             }else if(UserDefaultFileManager
                                 .getUserDetails()?.is_password_updated == false){
-                                
                                 let vc = CreatePasswordVc(nibName: nil,bundle: nil)
                                 vc.modalPresentationStyle = .fullScreen
                                 vc.createNewPassword = true
@@ -349,7 +334,6 @@ class OTPVc: UIViewController {
                             }
                         }else{
                             DispatchQueue.main.async {
-                                
                                 self.AlertModal.showAlert(title: AlertstringFile.Oops, message: successMessage.message ?? "", on: self)
                             }
                         }
@@ -504,7 +488,6 @@ extension OTPVc : UITextFieldDelegate{
     func checkAutoFillPermission() {
         let context = LAContext()
         var error: NSError?
-        
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             print("🔹 Auto-Fill is enabled.")
         } else {

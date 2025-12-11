@@ -1593,23 +1593,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 
 //MARK: Table view Delegate Functions
 extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
-    
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
-            
             return TextHistory?.count ?? 0
         }
         else{
             return VoiceHistory?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
-            
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
             cell.descriptContent
                 .setupExpandable(
@@ -1620,33 +1614,25 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
-            
             cell.descriptiontext = TextHistory?[indexPath.row].content ?? ""
             cell.MessageTitle.text = TextHistory?[indexPath.row].title
             cell.delegate = self
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
-                
                 cell.configureShimmer()
             }
             if let sentOn = TextHistory?[indexPath.row].date,
                let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
-                
                 let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
                 let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
-                
                 let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
-                
                 let attributedText = NSMutableAttributedString(string: fullText)
-                
                 // Change time part color
                 if let timeRange = fullText.range(of: timeString) {
                     let nsRange = NSRange(timeRange, in: fullText)
                     attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
                 }
-                
                 cell.DateLabel.attributedText = attributedText
             }
-            
             return cell
             
         }else{
@@ -1654,21 +1640,17 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = VoiceHistory?[indexPath.row]
-            
             cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.url)
             cell.playBtn.tag = indexPath.row
             cell.sendbtn.tag = indexPath.row
             cell.delegate = self
             cell.ForwordDelegate = self
             cell.FinishPlayingdelegate = self
-            
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-            
             let duration = voiceData?.duration ?? 0
             let formatted = formatDuration(duration)
             cell.totaltime.text = "00:00 / \(formatted)"
             cell.contentlbl.text = voiceData?.title ?? ""
-            
             if !isPlaying {
                 cell.playerView.progress = 0.0
                 cell.playerView.updateWithLevel(0.0)
@@ -1681,14 +1663,10 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
             if let sentOn = voiceData?.sent_on,
                let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
-                
                 let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
                 let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
-                
                 let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
-                
                 let attributedText = NSMutableAttributedString(string: fullText)
-                
                 // Change time part color
                 if let timeRange = fullText.range(of: timeString) {
                     let nsRange = NSRange(timeRange, in: fullText)
@@ -1754,7 +1732,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         timePicker.backgroundColor = .white
         timePicker.isHidden = true // Initially hidden
         self.view.addSubview(timePicker)
-        
         // Add Done Button
         doneButton = UIButton(type: .system)
         doneButton.setTitle("Done", for: .normal)

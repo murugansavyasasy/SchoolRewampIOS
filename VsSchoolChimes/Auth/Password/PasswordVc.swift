@@ -27,7 +27,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         SetpUI()
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
@@ -59,7 +58,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
             self.view.frame.origin.y = 0
         }
     }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -78,7 +76,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     func SetpUI(){
-        
         backbtn.layer.cornerRadius = backbtn.frame.width / 2
         PasswordBaseview.layer.borderWidth = 1
         PasswordBaseview.layer.borderColor = UIColor.clear.cgColor
@@ -147,7 +144,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     }
     
     func validate_user() {
-        
         let secureID = SecureIDManager.getSecureID()
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:[
@@ -166,7 +162,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                             }
                             
                             UserDefaultFileManager.saveUserDetails(data: (data))
-                            
                             if(data.is_number_exists == true){
                                 UserDefaultFileManager.saveLoginCredentials( mobile_number:mobile_number ?? "",pwd:passwordTxtFld.text ?? "")
                                 if(data.otp_sent == true){

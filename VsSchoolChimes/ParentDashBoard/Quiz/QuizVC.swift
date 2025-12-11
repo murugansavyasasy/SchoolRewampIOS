@@ -8,7 +8,7 @@
 import UIKit
 
 class QuizVC: UIViewController, UISearchBarDelegate {
-
+    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var tv: UITableView!
@@ -24,8 +24,6 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBtn: UIButton!
     
     
-    //var colours = ["lesson1","lesson2","lesson3"]
-    let colours = ["AttendenceColor","Color","lesson1","lesson3"]
     var id = 0
     var correctoption : [Int] = []
     var selectedOption : [Int] = []
@@ -39,46 +37,39 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     var stausType   = "1"
     var searchText = ""
     var PushNotiMsgId : String?
+    let CorrectAnswers  = "Correct Answers : "
+    let IncorrectAnswers  = "Incorrect Answers : "
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         BackBtn.applyBackButton()
-
         StyleAndTranslate()
-       
-        CorrectAnswerLbl.text = "Correct Answers : " + " \(correctAnswers) / \(questions.count)"
-        IncorrectAnswerLbl.text = "Incorrect Answers : " + " \(questions.count - (Int(correctAnswers) ?? 0)) / \(questions.count)"
-       
+        CorrectAnswerLbl.text = CorrectAnswers + " \(correctAnswers) / \(questions.count)"
+        IncorrectAnswerLbl.text = IncorrectAnswers + " \(questions.count - (Int(correctAnswers) ?? 0)) / \(questions.count)"
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
-        
         searchBar.isHidden = true
         searchBar.placeholder = CommonStringFile.Search
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
-        
         CellRegister()
         tv.delegate = self
         tv.dataSource = self
         Get_Quiz()
-
     }
     
     
     func Get_Quiz() {
-       
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: ["type" : "2","status_type" : stausType], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: [QuizKeys.type : "2",QuizKeys.status_type : stausType], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
                 result: Result<QuizListSuc,
                 Error>
             ) in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let successResponse):
-                   
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success(let successResponse):
                         self.get_QuizDetails = successResponse.data ?? []
                         self.filteredExams = self.get_QuizDetails
                         let isempty = self.filteredExams.isEmpty
@@ -86,22 +77,22 @@ class QuizVC: UIViewController, UISearchBarDelegate {
                         self.NoDataImage.isHidden = !isempty
                         self.NoDataLbl.isHidden = !isempty
                         self.NoDataLbl.text = successResponse.message ?? ""
-                    if  self.PushNotiMsgId != ""{
-                        DispatchQueue.main.async {
-                            self.scrollToClickedMessage()
+                        if  self.PushNotiMsgId != ""{
+                            DispatchQueue.main.async {
+                                self.scrollToClickedMessage()
+                            }
                         }
+                        
+                    case .failure(let error):
+                        print("Error fetching notices: \(error.localizedDescription)")
+                        self.NoDataImage.isHidden = false
+                        self.NoDataLbl.isHidden = false
+                        self.get_QuizDetails = []
+                        self.tv.reloadData()
+                        self.NoDataLbl.text = error.localizedDescription
                     }
-                    
-                case .failure(let error):
-                    print("Error fetching notices: \(error.localizedDescription)")
-                    self.NoDataImage.isHidden = false
-                    self.NoDataLbl.isHidden = false
-                    self.get_QuizDetails = []
-                    self.tv.reloadData()
-                    self.NoDataLbl.text = error.localizedDescription
                 }
             }
-        }
     }
     
     private func scrollToClickedMessage() {
@@ -109,12 +100,9 @@ class QuizVC: UIViewController, UISearchBarDelegate {
               let index = filteredExams.firstIndex(where: { $0.id == id }) else {
             return
         }
-
         let indexPath = IndexPath(row: index, section: 0)
-        
         // Scroll to that cell smoothly
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
-        
         // Optionally highlight the cell for 1 second
         if let cell = tv.cellForRow(at: indexPath) {
             UIView.animate(withDuration: 0.3, animations: {
@@ -127,27 +115,22 @@ class QuizVC: UIViewController, UISearchBarDelegate {
             }
         }
     }
-
- 
+    
+    
     func StyleAndTranslate(){
-        
         //MARK: UI Changes
         NoDataImage.isHidden = true
         NoDataLbl.isHidden = true
         addUnderline(to: upcomingBtn, unselectedButton: CompletedBtn)
         //MARK: Font Style
         NameLbl.setFont(style: .header, size: FontSize.HeaderSize)
-      
         IncorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
         CorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
-        
         //MARK: Translate
-        
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         NameLbl.text = MenuStringFile.selectedMenuName
-        
     }
     
     //MARK: Cell Registration
@@ -162,14 +145,8 @@ class QuizVC: UIViewController, UISearchBarDelegate {
         tv.register(nib3, forCellReuseIdentifier: CellConfingName.QuizListTvCell)
     }
     
-//    override func viewDidLayoutSubviews() {
-//        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//    }
-//    
     func gradientcolours(button : UIButton,colours : [CGColor]){
-        
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
         // Create and configure the gradient layer
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colours
@@ -187,7 +164,6 @@ class QuizVC: UIViewController, UISearchBarDelegate {
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
             button.tintColor = .black
         }
-        
         // Add underline to the selected button
         selectedButton.tintColor = .systemBlue
         let underline = UIView()
@@ -195,7 +171,6 @@ class QuizVC: UIViewController, UISearchBarDelegate {
         underline.backgroundColor = .systemBlue
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
-        
         NSLayoutConstraint.activate([
             underline.heightAnchor.constraint(equalToConstant: 2),
             underline.leadingAnchor.constraint(equalTo: selectedButton.leadingAnchor),
@@ -204,21 +179,6 @@ class QuizVC: UIViewController, UISearchBarDelegate {
         ])
     }
     
-    
-    func configureButton(
-        _ button: UIButton,
-        gradientColors: [UIColor],
-        opacity: CGFloat = 0.5, // Opacity for the gradient
-        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
-    ) {
-        
-        // Adjust colors for lightening and opacity
-//        let adjustedColors = gradientColors.map { color in
-//            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
-//        }
-        
-       // gradientcolours(button: button, colours: adjustedColors)
-    }
     
     @IBAction func UpcomingAct(_ sender: Any) {
         addUnderline(to: upcomingBtn, unselectedButton: CompletedBtn)
@@ -239,24 +199,19 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     
     @available(iOS 14.0, *)
     @IBAction func BackAct(_ sender: Any) {
-//        let vc = SchoolDashboardVc(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
         dismiss(animated: true)
     }
     
     @IBAction func searchBtnAct(_ sender: UIButton) {
-        
         sender.isSelected.toggle()
-        
         if sender.isSelected{
             searchBar.isHidden = false
             searchBar.becomeFirstResponder()
-            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+            searchBtn.setImage(ImageName.magnifyingglass_circle_fill, for: .normal)
         }else{
             searchBar.isHidden = true
             searchBar.resignFirstResponder()
-            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBtn.setImage(ImageName.magnifyingglass, for: .normal)
             searchBar.searchTextField.text = ""
             filteredExams = get_QuizDetails
             NoDataLbl.isHidden = true
@@ -268,29 +223,25 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     func Filter_data(){
         
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty {
+            filteredExams = get_QuizDetails
+        } else {
+            filteredExams = get_QuizDetails.filter { exam in
+                let titleMatch = exam.title?.localizedCaseInsensitiveContains(trimmed) ?? false
+                let descMatch = exam.description?.localizedCaseInsensitiveContains(trimmed) ?? false
+                let subjectMatch = exam.subject?.localizedCaseInsensitiveContains(trimmed) ?? false
+                let sentByMatch = exam.sent_by?.localizedCaseInsensitiveContains(trimmed) ?? false
+                let createdOnMatch = exam.created_on?.localizedCaseInsensitiveContains(trimmed) ?? false
                 
-                if trimmed.isEmpty {
-                    filteredExams = get_QuizDetails
-                } else {
-                    filteredExams = get_QuizDetails.filter { exam in
-                        let titleMatch = exam.title?.localizedCaseInsensitiveContains(trimmed) ?? false
-                        let descMatch = exam.description?.localizedCaseInsensitiveContains(trimmed) ?? false
-                        let subjectMatch = exam.subject?.localizedCaseInsensitiveContains(trimmed) ?? false
-                        let sentByMatch = exam.sent_by?.localizedCaseInsensitiveContains(trimmed) ?? false
-                        let createdOnMatch = exam.created_on?.localizedCaseInsensitiveContains(trimmed) ?? false
-                        
-                        return titleMatch || descMatch || subjectMatch || sentByMatch || createdOnMatch
-                    }
-                }
-
-                // Reload your table or collection view
-                tv.reloadData()
+                return titleMatch || descMatch || subjectMatch || sentByMatch || createdOnMatch
+            }
+        }
+        // Reload your table or collection view
+        tv.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         self.searchText = searchText
-        
         Filter_data()
     }
     
@@ -299,28 +250,24 @@ class QuizVC: UIViewController, UISearchBarDelegate {
 //MARK: Tableview Delegate Functions
 extension QuizVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      
         return filteredExams.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? quizCellTv else {
+            return UITableViewCell()
+        }
+        let quiz = filteredExams[indexPath.row]
+        let imageName = images[indexPath.row % images.count]
         
-
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as? quizCellTv else {
-                return UITableViewCell()
-            }
-            let quiz = filteredExams[indexPath.row]
-               let imageName = images[indexPath.row % images.count]
-            
         cell.titleLbl.text = filteredExams[indexPath.row].title?.capitalized
         cell.discretiponsLbl.text = filteredExams[indexPath.row].description?.capitalized
-            cell.subjectLbl.text = filteredExams[indexPath.row].subject
+        cell.subjectLbl.text = filteredExams[indexPath.row].subject
         cell.LevelLbl.text = String(filteredExams[indexPath.row].level ?? 0)
         cell.MaxmarkLbl.text = String(filteredExams[indexPath.row].max_mark ?? 0)
         cell.NoOfQuestionLbl.text = String(filteredExams[indexPath.row].no_of_questions ?? 0)
-        cell.createdDateLbl.text = "Created on ".translated() + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
-        cell.PostByLbl.text = "Posted By".translated() + ": " + (
+        cell.createdDateLbl.text = MenuStringFile.CreateOn + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
+        cell.PostByLbl.text = MenuStringFile.Posted_By + (
             filteredExams[indexPath.row].sent_by ?? ""
         )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
@@ -328,8 +275,8 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         let title = stausType == "1" ? "Play Now" : ""
         cell.playBtn.setTitle(title.translated(), for: .normal)
         cell.playBtnWidth.constant = stausType == "1" ? 138 : 40
-            return cell
-//        }
+        return cell
+        //        }
     }
     
     
@@ -337,10 +284,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        
-        
         if stausType == "1"{
-            
             let vc = PlayQuizVc(nibName: nil, bundle: nil)
             vc.selectedQuizId = self.filteredExams[indexPath.row].quiz_id
             vc.modalPresentationStyle = .fullScreen
@@ -348,7 +292,6 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         }else{
             
             let vc = QuizCompletedVc(nibName: nil, bundle: nil)
-//            vc.selectedQuizId = self.get_QuizDetails[indexPath.row].quiz_id
             vc.subjet_name = self.filteredExams[indexPath.row].subject ?? ""
             vc.completed_date = self
                 .filteredExams[indexPath.row].submitted_on ?? ""

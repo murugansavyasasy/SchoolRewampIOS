@@ -57,6 +57,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var accidmaticNAme:String?
     var Common_request_params : [String : Any] = [:]
     var selected_subjectID : String?
+    var Student_s  = "Student(s)"
     override func viewDidLoad() {
         super.viewDidLoad()
         sendbtnName.layer.cornerRadius = 10
@@ -166,7 +167,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     customCell.custSwitch.isOn = !isSelectingAll
                     customCell.hideLbl(isAbsent: !isSelectingAll)
                 }
-                
             }
             // Update select all button image and total count
             if isSelectingAll {
@@ -318,10 +318,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     ) {
         let message : String?
         if AlertMessageContent ?? false{
-            message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target + "\(selected_student.count) " + Student_s + "\n" + AlertstringFile.AreYouSureYouWantToProceed
             
         }else{
-            message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+            message = AlertstringFile.Selected_target + "\(selected_student.count) " + Student_s + "\n" + AlertstringFile.Change_academic_year + " " + (
                 accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
         }
         comm.SendingAttachmentFlow(

@@ -19,6 +19,7 @@ class COMMON_PARAMETER{
     static var section_ids = "section_ids"
     static var old_password = "old_password"
     static var member_type = "member_type"
+    static var secure_id = "secure_id"
 }
 
 class mobileNumber{
@@ -372,8 +373,9 @@ class QuizKeys {
     static let file_path = "file_path"
     static let url = "url"
     static let type = "type"
+    static let status_type = "status_type"
     static let id = "id"
-
+   
     // Bank keys
     static let subject_id = "subject_id"
 }
@@ -404,4 +406,10 @@ class LessonPlanAPIKeys {
     static let menuId = "menu_id"
     static let fieldId = "field_id"
     static let value = "value"
+}
+class AttendanceAPIKeys{
+    static let mobile_number = "mobile_number"
+    static let activity = "activity"
+    static let user_type = "user_type"
+    static let menu_id = "menu_id"
 }

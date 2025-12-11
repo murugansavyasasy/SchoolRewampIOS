@@ -45,7 +45,7 @@ class NotificationCallVC: UIViewController {
     private var ringtonePlayer: AVAudioPlayer?
     private var volumeObserver: NSKeyValueObservation?
     private var totalQueueDuration: Double = 0
-
+    
     // Cache for downloaded audio to reduce I/O
     private static var audioCache: NSCache<NSString, NSData> = {
         let cache = NSCache<NSString, NSData>()
@@ -101,21 +101,21 @@ class NotificationCallVC: UIViewController {
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil
         )
-
+        
     }
-
+    
     @objc private func queueDidFinish() {
         guard audioQueuePlayer?.items().isEmpty == true else { return }
-
+        
         DispatchQueue.main.async {
             self.durationLbl.text = "Call ended"
-
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.dismissCallScreen()
             }
         }
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gradientLayer?.frame = slideLabel.bounds
@@ -178,14 +178,11 @@ class NotificationCallVC: UIViewController {
     
     private func muteRingtone() {
         guard ringtonePlayer?.isPlaying == true else { return }
-        
         stopVibration()
         ringtonePlayer?.stop()
         ringtonePlayer = nil
         ringtoneTimeoutTimer?.invalidate()
         ringtoneTimeoutTimer = nil
-        
-        print("📵 Ringtone muted via volume button")
     }
     
     // MARK: - Audio Session Configuration
@@ -207,22 +204,17 @@ class NotificationCallVC: UIViewController {
                 options: [.allowBluetooth, .allowBluetoothA2DP]
             )
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
-            
             // Explicitly route to earpiece (receiver)
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
-            
-            print("🎧 Audio routed to earpiece")
         } catch {
             print("⚠️ Failed to configure audio session for call: \(error.localizedDescription)")
         }
     }
     private func isPhoneInSilentMode() -> Bool {
         let session = AVAudioSession.sharedInstance()
-        
         do {
             try session.setCategory(.ambient, mode: .default)
             try session.setActive(true)
-            
             return session.outputVolume == 0
         } catch {
             print("Failed to check silent mode: \(error)")
@@ -231,20 +223,15 @@ class NotificationCallVC: UIViewController {
     }
     private func playRingtone(from url: URL) {
         let cacheKey = url.absoluteString as NSString
-        
         // Check cache first
         if let cachedData = Self.audioCache.object(forKey: cacheKey) {
-            print("📦 Using cached ringtone")
             playRingtoneData(cachedData as Data)
             return
         }
-        
         // Download if not cached
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
-            
             if let error = error {
-                print("Failed to download ringtone: \(error)")
                 DispatchQueue.main.async {
                     self.playSystemDefaultTone()
                 }
@@ -268,10 +255,9 @@ class NotificationCallVC: UIViewController {
     
     private func playRingtoneData(_ data: Data) {
         guard !isPhoneInSilentMode() else {
-            print("📴 Phone is silent – not playing ringtone")
             return
         }
-
+        
         do {
             // Use .playback so it can play even in silent if you want
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voiceChat)
@@ -283,16 +269,14 @@ class NotificationCallVC: UIViewController {
             self.ringtonePlayer?.play()
             
             self.startVibration()
-            // Stop after 30 seconds
             self.ringtoneTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { [weak self] _ in
                 self?.handleRingtoneTimeout()
             }
         } catch {
-            print("Failed to play ringtone: \(error)")
             self.playSystemDefaultTone()
         }
     }
-
+    
     
     private func handleRingtoneTimeout() {
         guard callState == .ringing else { return }
@@ -312,13 +296,12 @@ class NotificationCallVC: UIViewController {
     
     private func startVibration() {
         stopVibration()
-        // Immediate vibration
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         vibrationTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
     }
-
+    
     private func stopVibration() {
         vibrationTimer?.invalidate()
         vibrationTimer = nil
@@ -752,7 +735,7 @@ class NotificationCallVC: UIViewController {
             print("⚠️ Failed to toggle speaker: \(error.localizedDescription)")
         }
     }
-
+    
     private func dismissCallScreen() {
         cleanup()
         
@@ -783,7 +766,7 @@ class NotificationCallVC: UIViewController {
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .compactMap { URL(string: $0) }
-
+        
         guard !urls.isEmpty else {
             print("⚠️ No valid voice URLs")
             handleAudioPlaybackError()
@@ -817,30 +800,30 @@ class NotificationCallVC: UIViewController {
                 }.resume()
             }
         }
-
+        
         // ✅ Start playing once all files ready
         dispatchGroup.notify(queue: .main) {
             guard let player = self.audioQueuePlayer else { return }
-
+            
             self.totalQueueDuration = 0
-
+            
             self.queueItems.forEach {
                 player.insert($0, after: nil)
-
+                
                 let seconds = CMTimeGetSeconds($0.asset.duration)
                 if seconds.isFinite {
                     self.totalQueueDuration += seconds
                 }
             }
-
+            
             self.startQueueTimer()
             player.play()
-
+            
             print("▶️ Total voice duration:", self.totalQueueDuration)
         }
-
+        
     }
-
+    
     
     private func createQueueItem(from data: Data) -> AVPlayerItem {
         let tempURL = FileManager.default.temporaryDirectory
@@ -855,32 +838,32 @@ class NotificationCallVC: UIViewController {
         item.preferredForwardBufferDuration = 5
         return item
     }
-
+    
     
     private func startQueueTimer() {
         audioTimer?.invalidate()
         audioTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self,
                   let player = self.audioQueuePlayer else { return }
-
+            
             let current = Int(CMTimeGetSeconds(player.currentTime()))
             let total = Int(self.totalQueueDuration)
-
+            
             guard total > 0 else { return }
-
+            
             let cMin = current / 60
             let cSec = current % 60
             let tMin = total / 60
             let tSec = total % 60
-
+            
             self.durationLbl.text = String(
                 format: "Connected\n\n%02d:%02d / %02d:%02d",
                 cMin, cSec, tMin, tSec
             )
         }
     }
-
-
+    
+    
     
     private func playAudioData(_ data: Data) {
         do {
@@ -923,8 +906,8 @@ class NotificationCallVC: UIViewController {
             
             // Format: "Connected\n\n00:45 / 03:20"
             self.durationLbl.text = String(format: "Connected\n\n%02d:%02d / %02d:%02d",
-                                          currentMinutes, currentSeconds,
-                                          totalMinutes, totalSeconds)
+                                           currentMinutes, currentSeconds,
+                                           totalMinutes, totalSeconds)
         }
     }
     

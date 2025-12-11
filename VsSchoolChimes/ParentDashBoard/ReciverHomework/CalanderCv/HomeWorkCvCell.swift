@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
- 
+
 class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationControllerDelegate {
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)
@@ -30,8 +30,6 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         roundview.layer.cornerRadius = roundview.frame.width/2
         contentView.layer.masksToBounds = true
         applyShadowAndCornerRadius(to: contentView)
-       // setupPieChart()
-        
         homeWorkCompletImg.isHidden = true
         newImage.isHidden = true
     }
@@ -77,14 +75,6 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         homeWorkCompletImg.isHidden = !(edit || delete)
     }
     
-//    private func setupPieChart() {
-//        pieChart.holeRadiusPercent = 0.9 // Adjust inner circle size
-//        pieChart.transparentCircleRadiusPercent = 0.2
-//        pieChart.drawEntryLabelsEnabled = false
-//        pieChart.legend.enabled = false
-//        pieChart.chartDescription.enabled = false
-//        pieChart.holeColor = UIColor.white // Background of the hole
-//       }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         // Ensure the popup style is maintained on iPhone
@@ -95,34 +85,22 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         let progressEntry = PieChartDataEntry(value: percentage, label: nil)
         let emptyEntry = PieChartDataEntry(value: 100 - percentage, label: nil)
         
-        let progressColor = colorForPercentage(percentage) //UIColor.systemYellow.withAlphaComponent(0.8)
-//        SideColourView.backgroundColor = progressColor.withAlphaComponent(0.6)
-
+        let progressColor = colorForPercentage(percentage)
         let progressDataSet = PieChartDataSet(entries: [progressEntry, emptyEntry], label: "Hello")
         progressDataSet.colors = [progressColor, UIColor.lightGray]
         progressDataSet.drawValuesEnabled = false
-
-//        let pieData = PieChartData(dataSet: progressDataSet)
-//        pieChart.data = pieData
-
         // Display Percentage in the Center
-            let percentageText = "\(Int(percentage))%"
-            let attributedString = NSAttributedString(
-                string: percentageText,
-                attributes: [
-                 .font: UIFont(name: "Poppins-Bold", size: 11), // Change font size
-                 .foregroundColor: UIColor.homeWorkClr // Change text color
-                ]
-            )
-            
-//        pieChart.centerAttributedText = attributedString
-//        pieChart.centerTextRadiusPercent = 0.9
+        let percentageText = "\(Int(percentage))%"
+        let attributedString = NSAttributedString(
+            string: percentageText,
+            attributes: [
+                .font: UIFont(name: "Poppins-Bold", size: 11), // Change font size
+                .foregroundColor: UIColor.homeWorkClr // Change text color
+            ]
+        )
         
-//        if isAnimate{
-//            pieChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
-//        }
     }
- 
+    
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {
             //        case 0...20:

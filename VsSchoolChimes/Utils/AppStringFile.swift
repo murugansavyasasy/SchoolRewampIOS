@@ -73,11 +73,12 @@ struct MenuStringFile{
     static let posted_on  = "posted on - "
     static let Something_went_wrong  = "Something went wrong"
     static let Roll_No   = "Roll No : "
-    static let admission_no   = "admission no : "
+    static let ADMIS_No  = "ADMIS No: "
+    static let admission_no = "admission no : "
     static let perentage   = "%.1f%%"
     static let No_Student_Data_Found   = "No Student Data Found"
     static let No_home_work_found   = "No home work found"
-    static let See_Archived_Messages   = "See Archived Messages"
+    static let See_Archived_Messages  = "See Archived Messages"
     static let No_messages_yet   = "No messages yet"
     static let  No_Absentees_Report_from_this_date   = "No Absentees Report from this date"
     static let  Absent_students_list   = "👨🏻‍🎓 Absent  students list"
@@ -89,6 +90,7 @@ struct MenuStringFile{
     static let  Blocked_on   = "Blocked on: "
     static let  ChaptersCompleted   = "Chapters Completed"
     static let  Create   = "Create"
+    static let  CreateOn   = "Created On "
     static let  Update   = "Update"
     static let  DaysApplication   = " Days Application"
     
@@ -121,13 +123,13 @@ struct ReceiverMenuItems {
 struct AlertstringFile{
     
     static let title = "Confirm Action"
+    static let Are_you_sure_want_to_submit = "Are you sure want to submit ?"
     static let toapprovethisleaverequest   = "Are you sure you want to approve this leave request?"
     static let toRejectthisleaverequest   = "Are you sure you want to reject this leave request?"
     static let Please_enter_reson_for_blocking = "Please enter reson for blocking"
     static let Block = "Block"
     static let You_have_blocked_this_user = "You have blocked this user."
     static let  Unblock_this_Student = "Are you sure want to Unblock this Student?"
-    
     static let MessageOptions = "Message Options"
     static let Error = "Error"
     static let You_can_only_select_up_to_video_files = "You can only select up to 2 video files."
@@ -202,6 +204,7 @@ struct AlertstringFile{
     static let PDF = "PDF"
     static let Document = "Document"
     static let Cancel = "Cancel"
+    static let Choose_a_Number = "Choose a Number"
     static let LeaveRequest = " Leave Request"
     static let Mark_All_as_Present = "Mark All as Present?"
     static let Failed_to_upload_video = "Failed to upload video"
@@ -265,16 +268,16 @@ class SettingStringFile{
     
     static var shared = SettingStringFile()
     
-     let general = "general"
-     let notifications = "notifications"
-     let faq = "faq"
-     let contactUs = "contactUs"
-     let termsAndConditions = "termsAndConditions"
-     let changeAppLanguage = "changeAppLanguage"
-     let feedback = "feedback"
-     let reportABug = "reportABug"
-     let sendFeedback = "sendFeedback"
-     let logout = "logout"
+    let general = "general"
+    let notifications = "notifications"
+    let faq = "faq"
+    let contactUs = "contactUs"
+    let termsAndConditions = "termsAndConditions"
+    let changeAppLanguage = "changeAppLanguage"
+    let feedback = "feedback"
+    let reportABug = "reportABug"
+    let sendFeedback = "sendFeedback"
+    let logout = "logout"
     let faceID  = "faceID"
     let accountSecurity  = "accountSecurity"
     let preference  = "preference"
@@ -495,7 +498,7 @@ struct StringsName {
     static var Help = "Help"
     static var Settings = "Settings"
     static  var Profile = "Profile"
- 
+    
 }
 
 
@@ -524,13 +527,13 @@ struct DefaultsKeys {
 
 
 class AwsCredentials {
- 
- static var bucketNameIndia = "schoolchimes-files-india"
- static var bucketNameBangkok = "schoolchimes-files-bangkok"
- static var UploadProfileBucket = "schoolchimes-student-images"
- static var uploadprofileBrowes = "schoolchimes-docs"
- static var CognitoPoolID = "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
-
+    
+    static var bucketNameIndia = "schoolchimes-files-india"
+    static var bucketNameBangkok = "schoolchimes-files-bangkok"
+    static var UploadProfileBucket = "schoolchimes-student-images"
+    static var uploadprofileBrowes = "schoolchimes-docs"
+    static var CognitoPoolID = "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
+    
 }
 
 struct AttachmentTypeString {
@@ -677,7 +680,7 @@ struct PTMString {
     static let No_Slot_Booked_yet = "No Slot Booked yet";
     static let Book_PTM_Slots = "Book PTM Slots";
     static let Join = "Join";
-
+    
 }
 
 struct BucketName {

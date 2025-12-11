@@ -43,7 +43,6 @@ class LoginVc: UIViewController {
         
         MobilTextFld.placeholder = country_data?.mobile_no_hint
         passTextFld.placeholder = menuname.Password.translated()
-        
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
@@ -57,7 +56,6 @@ class LoginVc: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         self.view.layoutIfNeeded() // ✅ Make sure layout is up-to-date
         DispatchQueue.main.async {
             self.MobilTextFld.becomeFirstResponder()
@@ -95,16 +93,13 @@ class LoginVc: UIViewController {
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
-        //loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 2)
         loginBtnNm.layer.shadowOpacity = 0.2
         loginBtnNm.layer.shadowRadius = 2
-        
         passTextFld.delegate = self
         passTextFld.keyboardType = .default
         passTextFld.isSecureTextEntry = true
-        
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         loginBtnNm.setTitleFont(style: .primary, size: FontSize.TitleSize)
         WelcomeLbl.setFont(style: .title, size: FontSize.HeaderSize)
@@ -172,14 +167,12 @@ class LoginVc: UIViewController {
                 if response.status == true {
                     DispatchQueue.main.async { [self] in
                         guard let data = response.data?.first else {
-                            print("No data available")
                             return
                         }
                         if #available(iOS 15.0, *) {
                             self.hideActivityLoader()
                         }
                         UserDefaultFileManager.saveUserDetails(data: (data))
-                        
                         if(data.is_number_exists == true){
                             if(data.otp_sent == true){
                                 UserDefaultFileManager.saveLoginCredentials(
@@ -191,7 +184,6 @@ class LoginVc: UIViewController {
                                     UserDefaultFileManager.saveLoginCredentials(
                                         mobile_number:MobilTextFld.text ?? "",
                                         pwd:passTextFld.text ?? "")
-                                    
                                     if(data.user_details?.is_staff == true) &&  (
                                         data.user_details?.is_parent == true
                                     ){
@@ -236,7 +228,6 @@ class LoginVc: UIViewController {
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
-                        
                         if #available(iOS 15.0, *) {
                             self.hideActivityLoader()
                         }
@@ -322,7 +313,6 @@ extension LoginVc: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
-        
         if textField == MobilTextFld {
             MobilTextFld.layer.borderColor = UIColor.systemBlue.cgColor
             MobilTextFld.backgroundColor = .white

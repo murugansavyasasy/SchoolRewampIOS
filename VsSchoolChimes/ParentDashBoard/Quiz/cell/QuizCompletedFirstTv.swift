@@ -21,7 +21,6 @@ class QuizCompletedFirstTv: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
         fullview.layer.cornerRadius = 10
         fullview.backgroundColor = .white
         wrongBtn.setTitleFont(style: .primary, size: 10)
@@ -31,26 +30,15 @@ class QuizCompletedFirstTv: UITableViewCell {
         notAnsBtn.setTitleFont(style: .primary, size: 10)
         crtBtn.setTitleFont(style: .primary, size: 10)
         setupPieChart()
-        
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-        
-    }
-    
-    
     func configureButton(_ button: UIButton, systemImageName: String, title: String, tintColor: UIColor) {
         let image = UIImage(systemName: systemImageName)
         button.setImage(image, for: .normal)
         button.setTitle(title, for: .normal)
-        
         // Text and image spacing
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-        
         // Alignment & color
         button.tintColor = tintColor
         button.setTitleColor(.black, for: .normal)
@@ -71,9 +59,7 @@ class QuizCompletedFirstTv: UITableViewCell {
            let progressEntry = PieChartDataEntry(value: percentage, label: nil)
            let emptyEntry = PieChartDataEntry(value: 100 - percentage, label: nil)
            
-           let progressColor = UIColor.primery //UIColor.systemYellow.withAlphaComponent(0.8)
-//           SideColourView.backgroundColor = progressColor.withAlphaComponent(0.6)
-
+           let progressColor = UIColor.primery
            let progressDataSet = PieChartDataSet(entries: [progressEntry, emptyEntry], label: "Hello")
            progressDataSet.colors = [
             progressColor,
@@ -84,7 +70,6 @@ class QuizCompletedFirstTv: UITableViewCell {
            let pieData = PieChartData(dataSet: progressDataSet)
            pieChartView.data = pieData
 
-           // Display Percentage in the Center
                let percentageText = "\(Int(percentage))%"
                let attributedString = NSAttributedString(
                    string: percentageText,
@@ -93,10 +78,8 @@ class QuizCompletedFirstTv: UITableViewCell {
                     .foregroundColor: UIColor.black // Change text color
                    ]
                )
-               
                pieChartView.centerAttributedText = attributedString
                pieChartView.centerTextRadiusPercent = 0.9
-           
 //           if isAnimate{
 //               pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
 //           }
@@ -104,14 +87,6 @@ class QuizCompletedFirstTv: UITableViewCell {
     
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {
-//        case 0...20:
-//            return UIColor.systemRed.withAlphaComponent(0.8)
-//        case 21...40:
-//            return UIColor.systemOrange.withAlphaComponent(0.8)
-//        case 41...60:
-//            return UIColor.systemYellow.withAlphaComponent(0.8)
-//        case 61...100:
-//            return UIColor.systemGreen.withAlphaComponent(0.8)
         case 1...99:
             return UIColor.systemOrange.withAlphaComponent(0.8)
         case 100:

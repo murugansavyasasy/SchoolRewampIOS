@@ -36,13 +36,10 @@ class FAQTableViewCell: UITableViewCell {
     func configure(question: String?, answers: [String]?, isSelected: Bool) {
         QuestionLabel.text = question
         AnswerLbl.isHidden = !isSelected
-        
         guard let answers = answers else {
             AnswerLbl.text = nil
             return
         }
-        
-        // 🟢 Create bullet-point list
         let bullet = "🔹 "
         let bulletText = answers.map { "\(bullet)\($0)" }.joined(separator: "\n")
         AnswerLbl.text = bulletText

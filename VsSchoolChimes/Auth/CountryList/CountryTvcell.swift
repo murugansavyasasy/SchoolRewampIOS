@@ -17,19 +17,10 @@ class CountryTvcell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
         cellView.layer.cornerRadius = 25
         cellView.layer.borderWidth = 1
-        
         FlagImage.layer.cornerRadius = FlagImage.frame.width / 2
-        
         nameLbl.setFont(style: .body, size: FontSize.TitleSize)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }
