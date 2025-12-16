@@ -50,7 +50,7 @@
                         <constraint firstAttribute="height" constant="80" id="Y2T-Hi-ZR6"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HH4-d5-LtO">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HH4-d5-LtO">
                     <rect key="frame" x="214.66666666666666" y="142" width="25" height="25"/>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
