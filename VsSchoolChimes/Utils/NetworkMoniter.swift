@@ -7,7 +7,7 @@ class NetworkMonitor {
     
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue.global(qos: .background)
-    
+
     var isConnected: Bool = true // Default to connected
     
     private init() {
@@ -19,7 +19,6 @@ class NetworkMonitor {
             DispatchQueue.main.async {
                 self.isConnected = (path.status == .satisfied)
                 print(self.isConnected ? "Connected to Internet" : "No Internet Connection")
-                
                 NotificationCenter.default.post(name: .networkStatusChanged, object: nil)
                 
                 if !self.isConnected {
@@ -49,7 +48,6 @@ class NetworkMonitor {
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
-        
         // Prevent multiple alerts
         if rootViewController.presentedViewController == nil {
             rootViewController.present(alertController, animated: true, completion: nil)

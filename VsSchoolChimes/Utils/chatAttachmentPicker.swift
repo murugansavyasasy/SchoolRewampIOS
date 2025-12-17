@@ -18,16 +18,16 @@ class MediaPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     
     var pickedMedia: [PickedMedia] = []
     var onMediaPicked: (([PickedMedia]) -> Void)?
-
+    
     enum MediaType {
         case image(UIImage)
         case document(URL)
     }
-
+    
     struct PickedMedia {
         let type: MediaType
     }
-
+    
     private weak var presentingVC: UIViewController?
     
     // MARK: - Show Picker
@@ -60,10 +60,10 @@ class MediaPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         picker.delegate = self
         vc.present(picker, animated: true)
     }
-
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-
+        
         let group = DispatchGroup()
         var newMedia: [PickedMedia] = []
         
@@ -82,7 +82,7 @@ class MediaPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
             self.onMediaPicked?(self.pickedMedia)
         }
     }
-
+    
     // MARK: - Take Photo
     
     private func takePhoto(_ vc: UIViewController) {
@@ -93,7 +93,7 @@ class MediaPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         picker.sourceType = .camera
         vc.present(picker, animated: true)
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
         if let image = info[.originalImage] as? UIImage {
@@ -101,7 +101,7 @@ class MediaPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
             onMediaPicked?(pickedMedia)
         }
     }
-
+    
     // MARK: - Document Picker
     
     private func pickDocument(_ vc: UIViewController) {
@@ -110,7 +110,7 @@ class MediaPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         docPicker.delegate = self
         vc.present(docPicker, animated: true)
     }
-
+    
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         for url in urls {
             pickedMedia.append(PickedMedia(type: .document(url)))

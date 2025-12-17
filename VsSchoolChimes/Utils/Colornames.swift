@@ -47,9 +47,6 @@ class Colornames {
     static  var gradientgreen =  UIColor.white//UIColor(hex: "#0097b2")
     static  var stafGradient =  UIColor.white//UIColor(hex: "#33a8cd")
     static  var stafGradient1 =  UIColor.white//UIColor(hex: "#a6dadf")
-//    static  var stafGradient =  UIColor(hex: "#06B6D4")
-//    static  var stafGradient1 =  UIColor(hex: "#3B82F6")
-    //static var Timetable = UIColor(hex: "#ED6E68")
     static var Timetable = UIColor(hex: "#ff6861")
     static var primeryColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0)
    
@@ -84,7 +81,6 @@ class ImageName{
     static let Pending = UIImage(named: "Pending")
     static let check = UIImage(named: "check")
     static let person_circle = UIImage(systemName: "person.circle")
-    
     static let checkmark = UIImage(systemName: "checkmark.square.fill")
     static let square = UIImage(systemName: "square")
     static let circle = UIImage(systemName: "circle")

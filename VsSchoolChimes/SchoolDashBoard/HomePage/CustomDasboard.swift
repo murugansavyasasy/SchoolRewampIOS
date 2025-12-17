@@ -20,15 +20,13 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         present(vc, animated: true)
     }
-    
-    
+
     func switchRoll(userToken: String) {
         self.get_dashboard_details(token: userToken)
         setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
         setupProfileImage()
     }
-    
-    
+
     // MARK: - Outlets
     @IBOutlet weak var headerView: HeaderWaveView!
     @IBOutlet weak var welcomeLabel: UILabel!
@@ -96,8 +94,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.comeFormNotification = comefromNotification
             self.PushNotificationMenuId = menuId
             self.pushNotificationId = messageId
-        super.init(nibName: nil, bundle: nil)
-    }
+            super.init(nibName: nil, bundle: nil)
+        }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -333,7 +331,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 if successMessage.status == true {
                     if let respo = successMessage.data?.first {
                         UserDefaultFileManager
-                            .save_global_Selection(data: respo)}
+                        .save_global_Selection(data: respo)}
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -504,22 +502,21 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let selectedItem = collectionView == recentActiveMenuCollection
-            ? recentMenuItems?[indexPath.row]
-            : menu_details?[indexPath.row]
-
+        ? recentMenuItems?[indexPath.row]
+        : menu_details?[indexPath.row]
+        
         guard let item = selectedItem else { return }
         Menu_id.staffSelectedMenuId = item.id ?? 0
         self.handleMenuSelection(menuId: item.id ?? 0, PushNotiMsg: "")
     }
-
+    
     
     func handleMenuSelection(menuId: Int,PushNotiMsg : String) {
-
         let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
@@ -531,11 +528,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         let actions: [Int: () -> Void] = [
             1: { self.MenuRedirect.senderAbsenteesReport(from: self) },
             2: { if PushNotiMsg != ""{
-                self.assigemtHistoryPage(pushNoti: PushNotiMsg)
-            }
-             self.MenuRedirect.senderAssignmentNavigate(from: self) },
+                self.assigemtHistoryPage(pushNoti: PushNotiMsg)}
+                self.MenuRedirect.senderAssignmentNavigate(from: self) },
             3: { self.MenuRedirect.senderMarkAttendence(from: self) },
-            5: { self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg) },
+            5: { self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg)},
             7: { self.MenuRedirect.senderCommunicationNavigate(from: self) },
             8: { self.MenuRedirect.senderDailyCollectionNavigate(from: self) },
             9: { self.MenuRedirect.senderEventNavigate(from: self) },
@@ -546,19 +542,14 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             19: { self.MenuRedirect.senderLessonplanNavigate(from: self) },
             20: { self.MenuRedirect.SenderLSRWVCNavigate(from: self) },
             21: { self.MenuRedirect.senderMarkAttendanceNavigate(from: self) },
-            22: {
-                self.MenuRedirect.senderMgmt(from: self, Notification_MsgId: PushNotiMsg)},
-            23: {
-                self.noticeBordHistory{
-                    self.MenuRedirect.senderNoticeboardNavigate(from: self)}
-            },
-            24: { self.MenuRedirect.senderOnlineNavigate(from: self) },
-            26: { self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg) },
+            22: {self.MenuRedirect.senderMgmt(from: self, Notification_MsgId: PushNotiMsg)},
+            23: {self.noticeBordHistory{
+                self.MenuRedirect.senderNoticeboardNavigate(from: self)}},
+            24: {self.MenuRedirect.senderOnlineNavigate(from: self) },
+            26: {self.MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: PushNotiMsg)},
             27: { self.MenuRedirect.senderQuiz(from: self) },
-            28: {
-                self.MenuRedirect
-                    .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: PushNotiMsg)
-            },
+            28: {self.MenuRedirect
+                .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: PushNotiMsg)},
             29: { self.MenuRedirect.senderEventNavigate(from: self) },
             30: { self.MenuRedirect.senderSchoolNeedsNavigate(from: self) },
             31: { self.MenuRedirect.senderSchoolStrength(from: self) },
@@ -569,9 +560,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             40: { self.MenuRedirect.receiverPauckt(from: self) },
             41: { self.MenuRedirect.senderExamMarkNavigate(from: self) },
         ]
-
+        
         guard let action = actions[menuId] else {
-            
             let alert = UIAlertController(
                 title: nil,
                 message: nil,
@@ -584,13 +574,9 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
             )
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true)
-            
             return
         }
-
-
         // If item requires school selection → wrap with navigateOrSchoolList
-        
         if PushNotiMsg == ""{
             if needSchoolCheck.contains(menuId) {
                 self.navigateOrSchoolList(action)
@@ -602,7 +588,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     }
-
+    
     // MARK: - Helpers
     func navigateOrSchoolList(_ defaultAction: () -> Void) {
         if checkMutipleSchool() {
@@ -612,10 +598,10 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     func noticeBordHistory(_ defaultAction: () -> Void) {
-        if !checkMutipleSchool() {
+        if checkMutipleSchool() {
             let vc = NoticeBoardVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-             present(vc, animated: true)
+            present(vc, animated: true)
         } else {
             defaultAction()
         }
@@ -625,7 +611,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
         let vc = AssignmentReport(nibName: nil, bundle: nil)
         vc.pushNotiMsg_id = pushNoti
         vc.modalPresentationStyle = .fullScreen
-       present(vc, animated: true)
+        present(vc, animated: true)
     }
     func checkMutipleSchool() -> Bool {
         if staffDetailsCount?.count ?? 0 > 1 {
@@ -647,7 +633,6 @@ extension CustomDasboard: UICollectionViewDelegateFlowLayout {
         ? CGSize(width: 200, height: 90)
         : CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
@@ -664,16 +649,16 @@ struct DashboardMenu {
 }
 extension UIAlertController {
     func addIconTitleMessage(icon: UIImage?, title: String, message: String) {
-
+        
         // Resize icon
         let iconAttachment = NSTextAttachment()
         iconAttachment.image = icon
         iconAttachment.bounds = CGRect(x: 0, y: -10, width: 35, height: 35)
-
+        
         // Icon + Newline
         let iconString = NSAttributedString(attachment: iconAttachment)
         let newline = NSAttributedString(string: "\n\n")
-
+        
         // Title attributed
         let titleAttr = NSAttributedString(
             string: title + "\n",
@@ -682,7 +667,7 @@ extension UIAlertController {
                 .foregroundColor: UIColor.label
             ]
         )
-
+        
         // Message attributed
         let messageAttr = NSAttributedString(
             string: message,
@@ -691,14 +676,14 @@ extension UIAlertController {
                 .foregroundColor: UIColor.secondaryLabel
             ]
         )
-
+        
         // Combine all
         let final = NSMutableAttributedString()
         final.append(iconString)
         final.append(newline)
         final.append(titleAttr)
         final.append(messageAttr)
-
+        
         self.setValue(final, forKey: "attributedTitle")
     }
 }
@@ -710,10 +695,10 @@ extension UIDevice {
             String(cString: ptr)
         }
     }
-
+    
     var modelName: String {
         let identifier = self.modelIdentifier
-
+        
         let map: [String: String] = [
             // iPhone 8 → iPhone 17 Pro Max
             "iPhone10,1": "iPhone 8", "iPhone10,4": "iPhone 8",
@@ -750,7 +735,7 @@ extension UIDevice {
             "iPhone18,3": "iPhone 17 Pro",
             "iPhone18,4": "iPhone 17 Pro Max"
         ]
-
+        
         return map[identifier] ?? identifier
     }
 }
