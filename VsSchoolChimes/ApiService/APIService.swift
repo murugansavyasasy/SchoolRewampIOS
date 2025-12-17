@@ -35,10 +35,8 @@ class APIService: NSObject, URLSessionDelegate {
         print("✅ Request URL: \(fullURL)")
         print("📦 Parameters: \(parameters ?? [:])")
         print("TOKEN : \(token)")
-        
-        
+
         var request = URLRequest(url: fullURL)
-        
         if token != PaucketHeader.Paucket{
             request.httpMethod = type
             request.addValue("Application/json", forHTTPHeaderField: "Accept")

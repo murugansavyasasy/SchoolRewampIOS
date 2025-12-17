@@ -16,132 +16,6 @@ class  commonApi_forSending {
     let alert = CustomAlert()
     let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     
-    
-    
-    //    func SendingAttachmentFlow(
-    //        selectedAcadimicYearId : Int,
-    //        target_type : Int,
-    //        selectedId : [String] ,
-    //        baseURL: String ,
-    //        subjectId : String,
-    //        message: String,
-    //        from viewController: UIViewController,
-    //        Common_request_params: [String: Any]? = nil,
-    //        onComplete : @escaping(Send_AttachmentResponse) -> Void
-    //    ) {
-    //        let selectedType = user_inputs.selectedFileType
-    //        var uploadedFiles: [[String: String]] = []
-    //        var iframeValue = ""
-    //        var fileSizeValue = ""
-    //        let title = AlertstringFile.Confirm_title
-    //        alert.showAlertCancel(
-    //            title: title,
-    //            message: message,
-    //            actionLbl1: AlertstringFile.Yes_Send,
-    //            actionLbl2: AlertstringFile.Cancel,
-    //            on: viewController,
-    //            onOk: { [self] in
-    //                if selectedType == AttachmentTypeString.VIDEO {
-    //                    guard let videoURL = user_inputs.VideoPath else {
-    //                        print("❌ Video path is missing")
-    //                        return
-    //                    }
-    //                    let videoTitle =  Common_request_params?[assignmentResquestStringKey.title] as? String ?? ""
-    //                    let videoDescription = Common_request_params?[assignmentResquestStringKey.description] as? String ?? ""
-    //
-    //
-    ////                    compressVideo(inputURL: videoURL) { [weak self] compressedURL in
-    ////                        //            guard let self = self, let compressedURL = compressedURL else { return }
-    ////
-    ////                    }
-    //                    startUpload(
-    //                        from: viewController,
-    //                        videoURL: videoURL,
-    //                        title: videoTitle,
-    //                        description: videoDescription
-    //                    ) {
-    //                        videoURLString,
-    //                        iframeHTML,
-    //                        fileSize,
-    //                        finalEmbedUrl in
-    //
-    //                        if let videoURLString = videoURLString {
-    //                            uploadedFiles = [["url": finalEmbedUrl ?? "","type": selectedType]]
-    //                            if let iframeHTML = iframeHTML {
-    //                                iframeValue = iframeHTML
-    //                            }
-    //                            if let size = fileSize {
-    //                                fileSizeValue = self
-    //                                    .convertSize(size)//String(size)
-    //                            }
-    //
-    //                            self.sendAttachment(
-    //                                from: viewController,
-    //                                with: uploadedFiles,
-    //                                iframe: iframeValue,
-    //                                filesize: fileSizeValue,
-    //                                baseURl: baseURL,
-    //                                array_selectedId: selectedId,
-    //                                target_type: target_type,
-    //                                selectedAcadimicYearId: selectedAcadimicYearId,
-    //                                Common_request_params: Common_request_params,
-    //                                subjectId: subjectId
-    //                            ) { response in
-    //                                print("✅ Upload complete: \(response)")
-    //                                onComplete(response)
-    //                            }
-    //
-    //
-    //                        } else {
-    //                            print("❌ Video upload failed")
-    //                            // Optionally show alert or retry UI
-    //                        }
-    //                    }
-    //                }else {
-    //
-    //
-    //
-    //                    let file: Any = user_inputs.SelectedUrls
-    //                    uploadAWSMedia(file: file) { [self] in
-    //                        CircularProgressLoader.shared.hide()
-    //                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-    //                            if let url = URL(string: url) {
-    //                                let type = url.pathExtension.lowercased()
-    //                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-    //                            }
-    //                            return [
-    //                                CommonStringFile.url: url,
-    //                                CommonStringFile.type: user_inputs.selectedFileType
-    //                            ]
-    //                        }
-    //
-    //                        sendAttachment(
-    //                            from: viewController,
-    //                            with: uploadedFiles,
-    //                            iframe: iframeValue,
-    //                            filesize: fileSizeValue,
-    //                            baseURl: baseURL,
-    //                            array_selectedId: selectedId,
-    //                            target_type: target_type,
-    //                            selectedAcadimicYearId: selectedAcadimicYearId,
-    //                            Common_request_params: Common_request_params,
-    //                            subjectId: subjectId
-    //                        ) { response in
-    //                            print("✅ Upload complete: \(response)")
-    //                            onComplete(response)
-    //                        }
-    //                    }
-    //                }
-    //            },
-    //
-    //            onNo: {
-    //                print("User canceled.")
-    //            }
-    //        )
-    //    }
-    
-    
-    //onComplete: (Send_AttachmentResponse) -> Void
     func SendingAttachmentFlow(
         selectedAcadimicYearId: Int,
         edit: Bool = false,
@@ -228,9 +102,7 @@ class  commonApi_forSending {
                         uploadNextVideo()
                     }
                 }
-                
                 uploadNextVideo()
-                
                 // 📷 Upload other files (images, PDFs, etc.)
                 dispatchGroup.enter()
                 uploadAWSMedia(file: user_inputs.SelectedUrls) {
@@ -248,14 +120,12 @@ class  commonApi_forSending {
                     updateProgress()
                     dispatchGroup.leave()
                 }
-                
                 // ✅ Once all uploads are complete, make the final API call
                 dispatchGroup.notify(queue: .main) {
                     if uploadedFiles.isEmpty {
                         print("❌ No files uploaded.")
                         //                        return
                     }
-                    
                     if edit == true {
                         self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) { response in
                             print("✅ All uploads complete.")
@@ -564,9 +434,6 @@ class  commonApi_forSending {
                 return
             }
             
-            //            CircularProgressLoader.shared.show(style: .circle)
-            //            CircularProgressLoader.shared.updateProgress(to: 0)
-            //
             for (index, url) in files.enumerated() {
                 guard let PdfURL = URL(string: url) else {
                     print("❌ Invalid audio URL.")
@@ -624,9 +491,7 @@ class  commonApi_forSending {
                         completed += 1
                         updateAndCheckCompletion(total: total)
                     } else if let fileURL = URL(string: fileURLStr) {
-                        let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
-                        
-                        AWSUploadManager.shared.uploadFileToAWS(
+                     AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,
                             progressHandler: nil,
                             completion: { url in

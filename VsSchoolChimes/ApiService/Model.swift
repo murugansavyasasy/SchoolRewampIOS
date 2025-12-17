@@ -631,7 +631,7 @@ struct AttendanceReportResponse: Codable {
 struct AttenenceReportData: Codable{
     let holiday_message  : String?
     let attd_report : [AttendanceDataList]?
-   
+    
 }
 struct AttendanceDataList: Codable {
     let student_name: String?
@@ -784,7 +784,7 @@ struct SchoolStrength: Codable {
     let standards: [Standard]?
 }
 
- struct Previous: Codable {
+struct Previous: Codable {
     let total_student_strength: String?
     let total_male_staffs_strength: String?
     let total_female_staffs_strength: String?
@@ -864,8 +864,6 @@ struct SectionWise: Codable {
 
 
 //MARK: Absentis Report Student Report
-
-
 struct AbsentisReportStudentResponse: Codable {
     let status: Bool
     let message: String
@@ -884,27 +882,6 @@ struct AbsentisReportStudent: Codable {
     
 }
 
-//MARK: Leave Request History
-
-//struct LeaveInfoResponse: Codable {
-//    let status: Bool
-//    let message: String
-//    let data: [LeaveInfo]
-//}
-
-//struct LeaveInfo: Codable {
-//    let id: String
-//    let applied_on: String
-//    let student_name: String
-//    let class_name: String
-//    let section_name: String
-//    let leave_from: String
-//    let leave_to: String
-//    let no_of_days: String
-//    let reason: String
-//    var status: String
-//    var updated_on: String
-//}
 
 struct LeaveTypesResponse: Codable {
     var status: Bool?
@@ -947,32 +924,6 @@ struct LeaveInfo: Codable {
     var leave_type_id: Int?
 }
 
-////MARK: ASSIGINMENT LIST
-//struct AssignmentResponse: Codable {
-//    var status: Bool?
-//    var message: String?
-//    var data: [Assignment]?
-//}
-
-//struct Assignment: Codable {
-//    var id: String?
-//    var header_id: String?
-//    var title: String?
-//    var description: String?
-//    var category: String?
-//    var subject: String?
-//    var date: String?
-//    var time: String?
-//    var submitted_count: Int?
-//    var end_date: String?
-//    var is_unread: Bool?
-//    var sent_by: String?
-//    var sort_order: String?
-//    var is_archive: Bool?
-//    var iframe: String?
-//    var file_size: String?
-//    var file_path: [FilePath]?
-//}
 //MARK: ASSIGNMENT MY SUBMISION
 struct SubmissionResponse: Codable {
     let status: Bool?
@@ -1042,7 +993,7 @@ struct LessonEditData: Codable {
     let is_disable: Bool?
 }
 
- 
+
 
 // MARK: Packet Modal
 //
@@ -1187,7 +1138,7 @@ struct MyCouponResponse: Codable {
 struct CouponData: Codable {
     let couponList: CouponList?
     let totalPages: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case couponList = "coupon_list"
         case totalPages = "total_pages"
@@ -1202,7 +1153,7 @@ struct CouponList: Codable {
     let to: Int?
     let path: String?
     let data: [Coupon]?
-
+    
     enum CodingKeys: String, CodingKey {
         case firstPageURL = "first_page_url"
         case nextPageURL = "next_page_url"
@@ -1240,7 +1191,7 @@ struct Coupon: Codable {
     let ctaRedirect: String?
     let howToUse: String?
     let termsAndConditions: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case qrCode = "qr_code"
         case campaignType = "campaign_type"
@@ -1276,7 +1227,7 @@ struct Location: Codable {
     let longitude: String?
     let latitude: String?
     let locationName: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case locationName = "location_name"
         case longitude, latitude
@@ -1444,20 +1395,20 @@ struct StaffChatResponse: Codable {
 
 struct StaffChatMessage: Codable {
     
-        var id: String?
-        var question: String?
-        var student_id: String?
-        var student_name: String?
-        var is_blocked: Bool?
-        var reason: String?
-        var created_on: String?
-        var chat_count: Int?
-        var ques_file_path: [String]?
-        var answer: String?
-        var answer_on: String?
-        var change_answer: Bool?
-        var ans_file_path: [String]?
-        var reply_type: String?
+    var id: String?
+    var question: String?
+    var student_id: String?
+    var student_name: String?
+    var is_blocked: Bool?
+    var reason: String?
+    var created_on: String?
+    var chat_count: Int?
+    var ques_file_path: [String]?
+    var answer: String?
+    var answer_on: String?
+    var change_answer: Bool?
+    var ans_file_path: [String]?
+    var reply_type: String?
 }
 
 struct BlockedStudentsResponse: Codable {
@@ -1806,30 +1757,30 @@ struct BookedSlotsData: Codable {
 }
 
 struct BookedSlot: Codable {
-        var slot_id : String?
-        var date: String?
-        var from_time: String?
-        var to_time: String?
-        var event_name: String?
-        var event_mode: String?
-        var event_link: String?
-        var meeting_duration: Int?
-        var sent_by: String?
-        var student_id: String?
-        var student_name: String?
-        var father_name: String?
-        var mother_name: String?
-        var mobile_no: String?
-        var class_id: String?
-        var section_id: String?
-        var class_name: String?
-        var section_name: String?
-        var slot_status: String?
-        var is_booked: Bool?
-        var profile_url: String?
-        var can_cancel: Bool?
-        var is_cancelled: Bool?
-        var is_cancelled_by_staff: Bool?
+    var slot_id : String?
+    var date: String?
+    var from_time: String?
+    var to_time: String?
+    var event_name: String?
+    var event_mode: String?
+    var event_link: String?
+    var meeting_duration: Int?
+    var sent_by: String?
+    var student_id: String?
+    var student_name: String?
+    var father_name: String?
+    var mother_name: String?
+    var mobile_no: String?
+    var class_id: String?
+    var section_id: String?
+    var class_name: String?
+    var section_name: String?
+    var slot_status: String?
+    var is_booked: Bool?
+    var profile_url: String?
+    var can_cancel: Bool?
+    var is_cancelled: Bool?
+    var is_cancelled_by_staff: Bool?
 }
 
 
@@ -1884,7 +1835,7 @@ struct EventData: Codable {
     var staff_id: String?
     var staff_name: String?
     var event_name: String?
-   // var subject_name: String?
+    // var subject_name: String?
     var start_time: String?
     var end_time: String?
     var slots: [StudentSlot]?
@@ -1902,7 +1853,7 @@ struct StudentSlot: Codable {
     let event_mode: String?
     let event_link: String?
     let my_booking: Bool?
-
+    
     // Local state (not from API)
     var userSelected: Bool? = false // temporary selection
     var is_conflictDisabled: Bool? = false // disabled due to overlap
@@ -2016,46 +1967,46 @@ enum LSRWType: Codable {
     case reading
     case writing
     case unknown(String)
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = (try? container.decode(String.self)) ?? ""
-
+        
         let value = raw.lowercased()
-
+        
         // Normalize translated values back to English
         let mapToEnglish: [String: LSRWType] = [
             "listening": .listening,
             "speaking": .speaking,
             "reading": .reading,
             "writing": .writing,
-
+            
             // Tamil
             "கேட்குதல்": .listening,
             "பேசுதல்": .speaking,
             "படித்தல்": .reading,
             "எழுதுதல்": .writing,
-
+            
             // Hindi
             "सुनना": .listening,
             "बोलना": .speaking,
             "पढ़ना": .reading,
             "लिखना": .writing,
-
+            
             // Thai
             "การฟัง": .listening,
             "การพูด": .speaking,
             "การอ่าน": .reading,
             "การเขียน": .writing
         ]
-
+        
         if let mapped = mapToEnglish[value] {
             self = mapped
         } else {
             self = .unknown(raw)
         }
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
@@ -2066,7 +2017,7 @@ enum LSRWType: Codable {
         case .unknown(let value): try container.encode(value)
         }
     }
-
+    
     var icon: String {
         switch self {
         case .listening: return "🎧"
@@ -2076,7 +2027,7 @@ enum LSRWType: Codable {
         case .unknown:   return "❓"
         }
     }
-
+    
     var displayName: String {
         switch self {
         case .listening: return "Listening".translated()
@@ -2135,7 +2086,7 @@ struct QuizListSuc : Codable{
     let status : Bool?
     let message : String?
     let data : [QuizListData]?
-
+    
 }
 
 struct senderQuizListSuc : Codable{
@@ -2143,12 +2094,12 @@ struct senderQuizListSuc : Codable{
     let status : Bool?
     let message : String?
     let data : [senderQuizListData]?
-
+    
 }
 
-           
 
-           
+
+
 struct QuizListData : Codable{
     let id : String?
     let standard : String?
@@ -2177,7 +2128,7 @@ struct QuizListData : Codable{
     let total_mark : String?
     let no_of_levels : String?
 }
-    
+
 
 struct QuizStudentReportSuc : Codable{
     
@@ -2196,10 +2147,10 @@ struct QuizStudentReportData : Codable{
     var submitted_on : String?
     var gender : String?
     var is_unread : Bool?
-
+    
 }
-        
-            
+
+
 struct senderQuizListData : Codable{
     var id : String?
     var sent_time : String?
@@ -2264,7 +2215,7 @@ struct myQuizDetails : Codable  {
     var wrong_answer : String?
     var un_answer : String?
     var quiz_details : [MyQuizDetails]?
-            
+    
 }
 struct MyQuizDetails : Codable  {
     var id : String?
@@ -2280,63 +2231,6 @@ struct MyQuizDetails : Codable  {
     var file_path : [FilePath]?
     
 }
-
-
-//struct QuizQuestiondata: Codable {
-//    var ques_no: String?
-//    var id: String?         // for Quizdata from API
-//    var quiz_id: String?     // for API
-//    var chapter: String
-//    var question: String
-//    var answer: String?
-//    var a_option: String
-//    var b_option: String
-//    var c_option: String
-//    var d_option: String
-//    var mark:Int?
-//    var option_a_count:Int?
-//    var option_b_count:Int?
-//    var option_c_count:Int?
-//    var option_d_count:Int?
-//    var correct_answer_count:Int?
-//    var incorrect_answer_count:Int?
-//    var correct_answer_text:String?
-//    var correct_answer: String?
-//    var file_path: [FilePath]?
-//    
-//    // Local init for empty question (when adding manually)
-//    init(
-//        id: String? = nil,
-//        ques_no: String? = nil,
-//        quizId: String? = nil,
-//        chapter: String = "",
-//        question: String = "",
-//        answer: String? = nil,
-//        optionA: String = "",
-//        optionB: String = "",
-//        optionC: String = "",
-//        optionD: String = "",
-//        marks: Int = 0,
-//        correctAnswer: String? = nil,
-//        filePath: [FilePath]? = nil,
-//        filePaths: [FilePaths]? = nil
-//    ) {
-//        self.id = id
-//        self.quiz_id = quizId
-//        self.chapter = chapter
-//        self.question = question
-//        self.answer = answer
-//        self.a_option = optionA
-//        self.b_option = optionB
-//        self.c_option = optionC
-//        self.d_option = optionD
-//        self.mark = marks
-//        self.ques_no = ques_no
-//        self.correct_answer = correctAnswer
-//        self.file_path = filePath
-//    
-//    }
-//}
 
 struct QuizQuestiondata: Codable {
     var id: String?
@@ -2357,7 +2251,7 @@ struct QuizQuestiondata: Codable {
     var incorrect_answer_counts: Int?
     var correct_answer_text: String?
     var file_path: [FilePath]?
-
+    
     init(
         id: String? = nil,
         quiz_id: String? = nil,
@@ -2440,7 +2334,7 @@ struct SubmittedActivity: Codable {
     let thumbnail: String?
     let file_path: [FilePath]?
 }
- //MARK: LSRWSUBMISION
+//MARK: LSRWSUBMISION
 struct LSWSubmissionResponse: Codable {
     let status: Bool?
     let message: String?
