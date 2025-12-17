@@ -56,7 +56,6 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
             self.uploadURL = uploadURL
             self.videoURI = videoURI
             self.embedHTML = iframeHTML
-            
             self.getUploadOffset(for: uploadURL) { offset in
                 guard let offset = offset else {
                     print("❌ Upload server not ready")
@@ -65,7 +64,6 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
                     }
                     return
                 }
-                
                 self.offset = offset
                 self.performUpload(videoFileURL: videoFileURL)
             }
@@ -205,16 +203,7 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
                 print("✅ Got embed HTML: \(embedHTML ?? "N/A")")
                 print("✅ Got video URI: \(uri)")
                 print("✅ embeddddddddembeddddddddembedddddddd \(finalUrl)")
-                
-                
                 completion(url, uri, embedHTML,finalUrl)
-                
-                //                if let imageData =  user_inputs.thumbNail?.jpegData(
-                //                    compressionQuality: 0.8
-                //                ) {
-                //                    self.uploadThumbnailToVimeo(videoUri: "1097481073", imageData: imageData, accessToken: self.accessToken)
-                //
-                //                }
                 print("videoUpload json: \(json)")
             } else {
                 print("❌ Failed to parse upload link: \(String(data: data, encoding: .utf8) ?? "No data")")
@@ -223,74 +212,6 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
         }.resume()
     }
     
-    
-    //    func uploadThumbnailToVimeo(videoUri: String, imageData: Data, accessToken: String) {
-    //           let thumbURL = URL(string: "https://api.vimeo.com\(videoUri)/pictures")!
-    //           var request = URLRequest(url: thumbURL)
-    //           request.httpMethod = "POST"
-    //           request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-    //           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    //           request.httpBody = try? JSONSerialization.data(withJSONObject: ["active": true])
-    //
-    //           URLSession.shared.dataTask(with: request) { data, _, error in
-    //               if let error = error {
-    //                   print("Error creating thumbnail: \(error)")
-    //                   return
-    //               }
-    //               guard let data = data,
-    //                     let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-    //                     let link = json["link"] as? String else {
-    //                   print("❌ Failed to parse thumbnail upload link")
-    //                   return
-    //               }
-    //
-    //               print("🖼 Thumbnail upload URL: \(link)")
-    //
-    //               var uploadRequest = URLRequest(url: URL(string: link)!)
-    //               uploadRequest.httpMethod = "PUT"
-    //               uploadRequest.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
-    //               uploadRequest.httpBody = imageData
-    //
-    //               URLSession.shared.dataTask(with: uploadRequest) { _, _, error in
-    //                   if let error = error {
-    //                       print("Error uploading thumbnail image: \(error)")
-    //                       return
-    //                   }
-    //                   print("✅ Thumbnail uploaded")
-    //                   self.fetchVimeoVideoDetails(videoUri: videoUri, accessToken: accessToken)
-    //               }.resume()
-    //           }.resume()
-    //       }
-    //
-    //       func fetchVimeoVideoDetails(videoUri: String, accessToken: String) {
-    //           let url = URL(string: "https://api.vimeo.com\(videoUri)?fields=pictures.sizes.link")!
-    //           var request = URLRequest(url: url)
-    //           request.httpMethod = "GET"
-    //           request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-    //
-    //           URLSession.shared.dataTask(with: request) { data, _, error in
-    //               if let error = error {
-    //                   print("Error fetching video details: \(error)")
-    //                   return
-    //               }
-    //               guard let data = data,
-    //                     let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-    //                     let pictures = json["pictures"] as? [String: Any],
-    //                     let sizes = pictures["sizes"] as? [[String: Any]],
-    //                     let last = sizes.last,
-    //                     let publicThumb = last["link"] as? String else {
-    //                   print("❌ Failed to fetch public thumbnail")
-    //                   return
-    //               }
-    //
-    //               self.thumbnailURL = publicThumb
-    //               print("🌍 Public Thumbnail URL: \(publicThumb)")
-    //
-    //               DispatchQueue.main.async {
-    ////                   self.thumbnailLabel.text = "Thumbnail URL:\n\(publicThumb)"
-    //               }
-    //           }.resume()
-    //       }
     
     private func getUploadOffset(for uploadURL: URL, completion: @escaping (Int?) -> Void) {
         var request = URLRequest(url: uploadURL)

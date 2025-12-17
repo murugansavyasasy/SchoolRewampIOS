@@ -169,11 +169,11 @@ class MarkAttendenceVC: UIViewController {
         if sender.isSelected{
             SearchBar.isHidden = false
             SearchBar.becomeFirstResponder()
-            sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+            sender.setImage(ImageName.magnifyingglass_circle_fill, for: .normal)
             sender.tintColor = .label
         }else{
             SearchBar.isHidden = true
-            sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            sender.setImage(ImageName.missing_file, for: .normal)
             sender.tintColor = .black
             noSearchDataLbl.isHidden = true
             searchImage.isHidden = true
@@ -288,7 +288,7 @@ class MarkAttendenceVC: UIViewController {
             ("P",  "Present", .systemGreen),
             ("A",  "Absent", .systemRed),
             ("OD", "On Duty", .systemBlue),
-            ("LA", "Late", .systemOrange),
+            ("Pᴸᴬ", "Present/Late", .systemGreen),
             ("-",  "Not Taken", .systemGray)
         ], type: .badge)
         showPopover(from: sender, contentVC: popoverVC)
@@ -580,83 +580,178 @@ class MarkAttendenceVC: UIViewController {
             }
         }
     }
+//    func updateAttendancePercentages() {
+//        guard let data = FilteredReport else { return }
+//        let total = Double(data.count)
+//        var present = 0.0
+//        var absent = 0.0
+//        var od = 0.0
+//        var late = 0.0
+//        for item in data {
+//            guard let status = item.att_status else { continue }
+//            let parts = status.components(separatedBy: "/")
+//            if parts.count == 2 {
+//                let first = parts[0]
+//                let second = parts[1]
+//                // 1️⃣ Case: second half missing ("P/-")
+//                if second == "-" {
+//                    switch first {
+//                    case "P":
+//                        present += 1.0
+//                    case "A":
+//                        absent += 1.0
+//                    case "OD":
+//                        od += 1.0
+//                    case "P~":
+//                        late += 1.0
+//                    default:
+//                        break
+//                    }
+//                    // 2️⃣ Case: first half missing ("-/P")
+//                } else if first == "-" {
+//                    switch second {
+//                    case "P":
+//                        present += 1.0
+//                    case "A":
+//                        absent += 1.0
+//                    case "OD":
+//                        od += 1.0
+//                    case "P~":
+//                        late += 1.0
+//                    default:
+//                        break
+//                    }
+//                    // 3️⃣ Normal half-day logic (each half 0.5)
+//                } else {
+//                    for part in parts {
+//                        switch part {
+//                        case "P":
+//                            present += 0.5
+//                        case "A":
+//                            absent += 0.5
+//                        case "OD":
+//                            od += 0.5
+//                        case "P~":
+//                            late += 0.5
+//                        default:
+//                            break
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        // Convert to percentage
+//        let presentPercent = (present / total) * 100
+//        let absentPercent = (absent / total) * 100
+//        let odPercent = (od / total) * 100
+//        let latePercent = (late / total) * 100
+//        // Update UI labels
+//        PresentPresentageLbl.text = String(format: MenuStringFile.perentage, presentPercent)
+//        absentPresentageLbl.text = String(format: MenuStringFile.perentage, absentPercent)
+//        ODperesentageLbl.text = String(format: MenuStringFile.perentage, odPercent)
+//        LatePresentageLbl.text = String(format: MenuStringFile.perentage, latePercent)
+//    }
+    
     func updateAttendancePercentages() {
         guard let data = FilteredReport else { return }
         let total = Double(data.count)
+
         var present = 0.0
         var absent = 0.0
         var od = 0.0
         var late = 0.0
+
+        var lateMemberCount = 0  // count unique late students
+
         for item in data {
             guard let status = item.att_status else { continue }
             let parts = status.components(separatedBy: "/")
+
+            var studentHasLate = false   // NEW: mark if this student is late
+
             if parts.count == 2 {
                 let first = parts[0]
                 let second = parts[1]
-                // 1️⃣ Case: second half missing ("P/-")
+
+                // Evaluate both halves (FN + AN)
+                let halves = [first, second]
+
+                for half in halves {
+                    switch half {
+                    case "P":
+                        present += 0.5
+                    case "P~":  // Late = Present + Late
+                        present += 0.5
+                        late += 0.5
+                        studentHasLate = true
+                    case "A":
+                        absent += 0.5
+                    case "OD":
+                        od += 0.5
+                    case "-":
+                        break
+                    default:
+                        break
+                    }
+                }
+
+                // CASE: FN or AN missing ("P/-" or "-/P~")
                 if second == "-" {
                     switch first {
                     case "P":
-                        present += 1.0
-                    case "A":
-                        absent += 1.0
-                    case "OD":
-                        od += 1.0
+                        present += 0.5  // remaining half
                     case "P~":
-                        late += 1.0
-                    default:
-                        break
+                        present += 0.5
+                        late += 0.5
+                        studentHasLate = true
+                    case "A":
+                        absent += 0.5
+                    case "OD":
+                        od += 0.5
+                    default: break
                     }
-                    // 2️⃣ Case: first half missing ("-/P")
                 } else if first == "-" {
                     switch second {
                     case "P":
-                        present += 1.0
-                    case "A":
-                        absent += 1.0
-                    case "OD":
-                        od += 1.0
+                        present += 0.5
                     case "P~":
-                        late += 1.0
-                    default:
-                        break
-                    }
-                    // 3️⃣ Normal half-day logic (each half 0.5)
-                } else {
-                    for part in parts {
-                        switch part {
-                        case "P":
-                            present += 0.5
-                        case "A":
-                            absent += 0.5
-                        case "OD":
-                            od += 0.5
-                        case "P~":
-                            late += 0.5
-                        default:
-                            break
-                        }
+                        present += 0.5
+                        late += 0.5
+                        studentHasLate = true
+                    case "A":
+                        absent += 0.5
+                    case "OD":
+                        od += 0.5
+                    default: break
                     }
                 }
             }
+            // ⭐ Count this student once if late in any half
+            if studentHasLate {
+                lateMemberCount += 1
+            }
         }
+
         // Convert to percentage
         let presentPercent = (present / total) * 100
         let absentPercent = (absent / total) * 100
         let odPercent = (od / total) * 100
-        let latePercent = (late / total) * 100
+//        let latePercent = (late / total) * 100
+
         // Update UI labels
         PresentPresentageLbl.text = String(format: MenuStringFile.perentage, presentPercent)
         absentPresentageLbl.text = String(format: MenuStringFile.perentage, absentPercent)
         ODperesentageLbl.text = String(format: MenuStringFile.perentage, odPercent)
-        LatePresentageLbl.text = String(format: MenuStringFile.perentage, latePercent)
+//        LatePresentageLbl.text = String(format: MenuStringFile.perentage, latePercent)
+        LatePresentageLbl.text =   "👨🏻‍🎓 \(lateMemberCount)"
+        print("Late Members Count = \(lateMemberCount)")
     }
+
 }
 
 @available(iOS 14.0, *)
 extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return FilteredReport?.count ?? 0
     }
     
@@ -676,34 +771,52 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
             if parts.count == 2 {
                 let fnInfo = getStatusInfo(for: parts[0])
                 let anInfo = getStatusInfo(for: parts[1])
-                cell.FnBtnName.setTitle(fnInfo.0, for: .normal)
+                cell.FnBtnName.setAttributedTitle(fnInfo.0, for: .normal)
                 cell.FnBtnName.backgroundColor = fnInfo.1
-                cell.AnBtnName.setTitle(anInfo.0, for: .normal)
+                cell.AnBtnName.setAttributedTitle(anInfo.0, for: .normal)
                 cell.AnBtnName.backgroundColor = anInfo.1
+
             } else {
-                cell.FnBtnName.setTitle("-", for: .normal)
+                cell.FnBtnName.setAttributedTitle(NSAttributedString(string: "-"), for: .normal)
                 cell.FnBtnName.backgroundColor = .lightGray
-                cell.AnBtnName.setTitle("-", for: .normal)
+                cell.AnBtnName.setAttributedTitle(NSAttributedString(string: "-"), for: .normal)
                 cell.AnBtnName.backgroundColor = .lightGray
             }
         }
         return cell
     }
     // Helper function to map code -> (Title, Color)
-    func getStatusInfo(for status: String) -> (String, UIColor) {
+    func getStatusInfo(for status: String) -> (NSAttributedString, UIColor) {
         switch status {
         case "P":
-            return ("P", .systemGreen)
+            let text = NSAttributedString(string: "P",
+                                          attributes: [.foregroundColor: UIColor.white])
+            return (text, .systemGreen)
         case "A":
-            return ("A", .error)
+            let text = NSAttributedString(string: "A",
+                                          attributes: [.foregroundColor: UIColor.white])
+            return (text, .error)
         case "OD":
-            return ("OD", .systemBlue)
+            let text = NSAttributedString(string: "OD",
+                                          attributes: [.foregroundColor: UIColor.white])
+            return (text, .systemBlue)
         case "P~":
-            return ("LA", .button)
+            let text = NSMutableAttributedString(string: "Pᴸᴬ")
+            // P = white
+            text.addAttribute(.foregroundColor, value: UIColor.white,
+                              range: NSRange(location: 0, length: 1))
+            // ᴸᴬ = orange
+            text.addAttribute(.foregroundColor, value: UIColor.button,
+                            range: NSRange(location: 1, length: 2))
+            return (text, .systemGreen)
         default:
-            return ("-", .lightGray)
+            let text = NSAttributedString(string: "-",
+                                          attributes: [.foregroundColor: UIColor.white])
+            return (text, .lightGray)
         }
     }
+
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             self.updateTableHeight()
@@ -731,11 +844,9 @@ extension MarkAttendenceVC: UISearchBarDelegate {
             TV.reloadData()
             TV.layoutIfNeeded()
         }
-        
         // Check if filtered data is empty
         let isEmpty = (FilteredReport?.isEmpty ?? true)
         if isEmpty {
-            // Optional UI handling
             noSearchDataLbl.isHidden = false
             searchImage.isHidden = false
             noSearchDataLbl.text = MenuStringFile.No_Student_Data_Found

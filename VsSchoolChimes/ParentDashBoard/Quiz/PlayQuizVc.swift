@@ -32,24 +32,12 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var Button3: UIButton!
     @IBOutlet weak var Button4: UIButton!
     @IBOutlet weak var NextBtn: UIButton!
-//    @IBOutlet weak var CompletedView: UIView!
-//    @IBOutlet weak var ContinueBtn: UIButton!
-//    @IBOutlet weak var CompletedImg: UIImageView!
-//    @IBOutlet weak var CompletedLbl: UILabel!
-//    @IBOutlet weak var CompTotalQuestionDefLbl: UILabel!
-//    @IBOutlet weak var CompTotalQuestionNoLbl: UILabel!
-//    @IBOutlet weak var CompCorretAnsDefLbl: UILabel!
-//    @IBOutlet weak var CompCorrectAnsCountLbl: UILabel!
-//    @IBOutlet weak var CompInccorectCountLbl: UILabel!
-//    @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
-//    @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
-//    @IBOutlet weak var CompTotalmarkLbl: UILabel!
+    
     var answeredOptions: [String: Int] = [:]
     var currentQuestionIndex = 0
     var buttons: [UIButton] = []
     var selectedOptionIndex: Int? = nil
     var selectedOptions: [Int?] = []
-    let gifImages = UIImage.gifImageWithName("Successful")
     var correctOption: [Int] = []
     var correctAnswers = ""
     var getQuestiondataDetails : [QuizQuestionDataDetails] = []
@@ -61,42 +49,28 @@ class PlayQuizVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Get_QuizQuestion()
-//        CompletedView.isHidden = true
         fullView.layer.cornerRadius = 10
         buttons = [Button1,Button2,Button3,Button4]
+        cv.register(UINib(nibName: CellConfingName.MsgVoiceCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.MsgVoiceCvCell)
         
-        cv.register(UINib(nibName: "MsgVoiceCvCell", bundle: nil), forCellWithReuseIdentifier: "MsgVoiceCvCell")
-      
         applyCustomFontToButtons()
-       
-//        if getQuestiondataDetails.count != 0 {
-//            loadQuestion()
-//        }
-//        
+        
         let name = childDetails?.name ?? ""
         let stadard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        
         backBtn.configureAsBackButton(firstLine: name, secondLine: stadard)
-        
         NameLbl.text = MenuStringFile.selectedMenuName
-        
         StyleAndTranslate()
     }
-//    override func viewDidLayoutSubviews() {
-//        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//    }
-//    
+    
     //To Set Font to the Option Buttons
     func applyCustomFontToButtons() {
         guard let customFont = UIFont(name: "Poppins-Medium", size: 14) else {
             print("Error: Custom font not found")
             return
         }
-        
         for button in buttons {
             button.titleLabel?.font = customFont
             button.setTitleColor(.black, for: .normal)
-            
             // Explicitly set the font for all states
             for state: UIControl.State in [.normal, .highlighted, .selected, .disabled] {
                 let title = button.title(for: state) ?? "" // Fallback to empty string if nil
@@ -113,74 +87,57 @@ class PlayQuizVc: UIViewController {
     
     
     func Get_QuizQuestion() {
-       
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_get_questions, parameters: ["id" : selectedQuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_get_questions, parameters: [QuizKeys.id : selectedQuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
                 result: Result<QuizQuestionSuc,
                 Error>
             ) in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let successResponse):
-                    if successResponse.status == true{
-                        self.getQuestiondata = successResponse.data ?? []
-                        
-                        self.getQuestiondataDetails = successResponse.data?.first?.question_details ?? []
-                        self.selectedOptions = Array(
-                            repeating: nil,
-                            count: self.getQuestiondataDetails.count
-                        )
-                        self.progressQuizStac.isHidden = false
-                        self.contentStack.isHidden = false
-                        self.noRecordStack.isHidden = true
-                        self.loadQuestion()
-                        self.setDefaultProgressState()
-                    }else{
-                        self.progressQuizStac.isHidden = true
-                        self.contentStack.isHidden = true
-                        self.noRecordStack.isHidden = false
-                        self.noDataFoundLbl.text = successResponse.message ?? ""
-                    }
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
                     
-                case .failure(let error):
-                    print("Error fetching notices: \(error.localizedDescription)")
+                    switch result {
+                    case .success(let successResponse):
+                        if successResponse.status == true{
+                            self.getQuestiondata = successResponse.data ?? []
+                            
+                            self.getQuestiondataDetails = successResponse.data?.first?.question_details ?? []
+                            self.selectedOptions = Array(
+                                repeating: nil,
+                                count: self.getQuestiondataDetails.count
+                            )
+                            self.progressQuizStac.isHidden = false
+                            self.contentStack.isHidden = false
+                            self.noRecordStack.isHidden = true
+                            self.loadQuestion()
+                            self.setDefaultProgressState()
+                        }else{
+                            self.progressQuizStac.isHidden = true
+                            self.contentStack.isHidden = true
+                            self.noRecordStack.isHidden = false
+                            self.noDataFoundLbl.text = successResponse.message ?? ""
+                        }
+                        
+                    case .failure(let error):
+                        print("Error fetching notices: \(error.localizedDescription)")
+                    }
                 }
             }
-        }
     }
     
     func StyleAndTranslate() {
-        
         //MARK: UI Changes
         NextBtn.layer.cornerRadius = 10
         PreviousBtn.layer.cornerRadius = 10
         PreviousBtn.backgroundColor = .lightGray
         QuestionView.layer.cornerRadius = 10
-//        CompletedView.layer.cornerRadius = 10
-//        ContinueBtn.layer.cornerRadius = 10
-//        CompletedImg.image = gifImages
         Button1.layer.cornerRadius = 15
         Button2.layer.cornerRadius = 15
         Button3.layer.cornerRadius = 15
         Button4.layer.cornerRadius = 15
-        
         //MARK: Font Style
         QuestionLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        QuestionCountLbl.setFont(style: .title, size: FontSize.TitleSize)
         NextBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         PreviousBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-//        CompletedLbl.setFont(style: .header, size: FontSize.HeaderSize)
-//        CompTotalmarkLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompTotalMarkDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompTotalQuestionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompTotalQuestionNoLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompCorrectAnsCountLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompInCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        CompInccorectCountLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        ContinueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }
     
     func loadQuestion() {
@@ -197,19 +154,15 @@ class PlayQuizVc: UIViewController {
         cv.dataSource = self
         cv.reloadData()
         
-       
-            let questionId = currentQuestion.id ?? ""
-
-            // If no answer saved yet, save default (0)
-            if answeredOptions[questionId] == nil {
-                answeredOptions[questionId] = 0
-            }
-        
+        let questionId = currentQuestion.id ?? ""
+        // If no answer saved yet, save default (0)
+        if answeredOptions[questionId] == nil {
+            answeredOptions[questionId] = 0
+        }
         for (index, button) in buttons.enumerated() {
             button.setTitle(currentQuestion.options?[index], for: .normal)
             button.tag = index // Set button tag to match option index
             resetButtonStyle(button)
-            
             // Highlight the previously selected option, if any
             if let selectedOption = selectedOptions[currentQuestionIndex], selectedOption == index {
                 button.backgroundColor = .systemBlue
@@ -218,20 +171,12 @@ class PlayQuizVc: UIViewController {
             }
         }
         
-        // Apply the custom font to the buttons again when loading a new question
         applyCustomFontToButtons()
-        
-        // Update progress bar and question count
-       // progressBar.progress = Float(currentQuestionIndex + 1) / Float(getQuestiondataDetails.count)
-//        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(getQuestiondata.first?.total_questions ?? 0)"
-        
         
         let current = "\(currentQuestionIndex + 1)"
         let total = "\(getQuestiondataDetails.count)"
         let fullText = "\(current) / \(total)"
-
         let attributedString = NSMutableAttributedString(string: fullText)
-
         // current number range
         if let range = fullText.range(of: current) {
             let nsRange = NSRange(range, in: fullText)
@@ -240,37 +185,24 @@ class PlayQuizVc: UIViewController {
                     .foregroundColor,
                     value: UIColor.primery,
                     range: nsRange)}
-
-       // QuestionCountLbl.attributedText = attributedString
-
     }
     
     @IBAction func NextAct(_ sender: Any) {
-        
-//        print("NextActNextAct",answeredOptions)
         if currentQuestionIndex < getQuestiondataDetails.count - 1 {
             currentQuestionIndex += 1
             loadQuestion()
             PreviousBtn.backgroundColor = .systemIndigo
             if currentQuestionIndex == getQuestiondataDetails.count - 1 {
                 NextBtn.backgroundColor = .systemGreen
-                NextBtn.setTitle("Submit", for: .normal)
+                NextBtn.setTitle(AlertstringFile.Submit, for: .normal)
             }
             
         } else if currentQuestionIndex == getQuestiondataDetails.count - 1 {
-            
-            
-            print("answeredOptionsansweredOptions",answeredOptions)
-          
-            
             let zeroCount = answeredOptions.values.filter { $0 == 0 }.count
             if zeroCount > 0 {
-                print("Number of zeros: \(zeroCount)")
                 showAlert(message: " Are you sure you want to submit the quiz? because you not answered \(zeroCount) questions!")
-                
             } else {
-                print("No zeros found")
-                showAlert(message: "Are you sure want to submit ?")
+                showAlert(message: AlertstringFile.Are_you_sure_want_to_submit)
             }
         }
     }
@@ -278,39 +210,30 @@ class PlayQuizVc: UIViewController {
     func updateProgressUI() {
         let total = getQuestiondataDetails.count
         let answeredCount = answeredOptions.values.filter { $0 != 0 }.count
-        
         // Progress bar update
         progressBar.progress = Float(answeredCount) / Float(total)
-        
         // Question count label update
         let current = "\(answeredCount)"
         let fullText = "\(answeredCount) / \(total)"
-        
         let attributed = NSMutableAttributedString(string: fullText)
-        
         if let range = fullText.range(of: current) {
             let nsRange = NSRange(range, in: fullText)
             attributed.addAttribute(.foregroundColor,
                                     value: UIColor.primery,
-                                    range: nsRange)
-        }
-        
+                                    range: nsRange)}
         QuestionCountLbl.attributedText = attributed
     }
     
     func setDefaultProgressState() {
         let answeredCount = 0
         let total = getQuestiondataDetails.count
-
         // Set progress bar to zero
         progressBar.progress = 0.0
-
+        
         let current = "\(answeredCount)"
         let totalText = "\(total)"
         let fullText = "\(current) / \(totalText)"
-
         let attributedString = NSMutableAttributedString(string: fullText)
-
         // Highlight the 0 in primery color
         if let range = fullText.range(of: current) {
             let nsRange = NSRange(range, in: fullText)
@@ -320,11 +243,8 @@ class PlayQuizVc: UIViewController {
                 range: nsRange
             )
         }
-
         QuestionCountLbl.attributedText = attributedString
     }
-
-
     
     func showAlert(message: String) {
         alert.showAlertCancel(
@@ -334,8 +254,7 @@ class PlayQuizVc: UIViewController {
             actionLbl2: AlertstringFile.Cancel,
             on: self,
             onOk: { [weak self] in
-                
-            self?.submitQuiz()
+                self?.submitQuiz()
             },
             onNo: {
                 print("User canceled.")
@@ -345,36 +264,32 @@ class PlayQuizVc: UIViewController {
     
     
     func submitQuiz() {
-        
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_submit, parameters: ["id" : selectedQuizId ?? "","answers" : answeredOptions ], type: ApitTypeSringFile.POST, token: childDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_submit, parameters: [QuizKeys.id : selectedQuizId ?? "","answers" : answeredOptions ], type: ApitTypeSringFile.POST, token: childDetails?.access_token ?? "") { [weak self] (
                 result: Result<CommonApiSuc,
                 Error>
             ) in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let successResponse):
-                   
-                    if successResponse.status == true {
-                        
-                    }else{
-                        
-                        
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let successResponse):
+                        if successResponse.status == true {
+                            
+                        }else{
+                            
+                            
+                        }
+                    case .failure(let error):
+                        print("Error fetching notices: \(error.localizedDescription)")
                     }
-                    
-                case .failure(let error):
-                    print("Error fetching notices: \(error.localizedDescription)")
                 }
             }
-        }
     }
     
     @IBAction func previousQuesAct(){
         if currentQuestionIndex > 0 {
             currentQuestionIndex -= 1
-            NextBtn.setTitle("Next", for: .normal)
+            NextBtn.setTitle(CommonStringFile.NEXT, for: .normal)
             NextBtn.backgroundColor = .systemIndigo
             loadQuestion()
         }
@@ -386,44 +301,39 @@ class PlayQuizVc: UIViewController {
     }
     
     // In optionSelected(_:) update logic
-        @IBAction func optionSelected(_ sender: UIButton) {
-            let currentIndex = currentQuestionIndex
-
-            // If user taps the same selected option → deselect it
-            if selectedOptions[currentIndex] == sender.tag {
-                // Remove selection
-                selectedOptions[currentIndex] = nil
-                let currentQuestion = getQuestiondataDetails[currentIndex]
-                let questionId = currentQuestion.id ?? ""
-                answeredOptions[questionId] = 0
-
-                // Reset styles for all buttons
-                for button in buttons {
-                    resetButtonStyle(button)
-                }
-                updateProgressUI()
-                return
-            }
-
-            // Normal selection
-            selectedOptions[currentIndex] = sender.tag
+    @IBAction func optionSelected(_ sender: UIButton) {
+        let currentIndex = currentQuestionIndex
+        // If user taps the same selected option → deselect it
+        if selectedOptions[currentIndex] == sender.tag {
+            // Remove selection
+            selectedOptions[currentIndex] = nil
             let currentQuestion = getQuestiondataDetails[currentIndex]
             let questionId = currentQuestion.id ?? ""
-            answeredOptions[questionId] = sender.tag + 1
-
-            // Reset all styles
+            answeredOptions[questionId] = 0
+            // Reset styles for all buttons
             for button in buttons {
                 resetButtonStyle(button)
             }
-
-            // Highlight selected button
-            sender.backgroundColor = .systemBlue
-            sender.tintColor = .white
-            sender.setTitleColor(.white, for: .normal)
-            
             updateProgressUI()
+            return
         }
-
+        // Normal selection
+        selectedOptions[currentIndex] = sender.tag
+        let currentQuestion = getQuestiondataDetails[currentIndex]
+        let questionId = currentQuestion.id ?? ""
+        answeredOptions[questionId] = sender.tag + 1
+        // Reset all styles
+        for button in buttons {
+            resetButtonStyle(button)
+        }
+        // Highlight selected button
+        sender.backgroundColor = .systemBlue
+        sender.tintColor = .white
+        sender.setTitleColor(.white, for: .normal)
+        
+        updateProgressUI()
+    }
+    
     
     
     func resetButtonStyle(_ button: UIButton) {
@@ -432,7 +342,6 @@ class PlayQuizVc: UIViewController {
         button.tintColor = .systemBlue
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.systemBlue.cgColor
-        // button.setTitleFont(style: .body, size: FontSize.BodySize)
     }
     
     
@@ -453,26 +362,22 @@ extension PlayQuizVc : UICollectionViewDelegateFlowLayout,UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filePath?.count ?? 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MsgVoiceCvCell", for: indexPath) as? MsgVoiceCvCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.MsgVoiceCvCell, for: indexPath) as? MsgVoiceCvCell else {
             return UICollectionViewCell()
         }
         if let url = URL(string: filePath?[indexPath.row].url ?? "") {
-                    let request = URLRequest(url: url)
+            let request = URLRequest(url: url)
             cell.webView.load(request)
-                }
-      
-        
+        }
         
         let urlString = filePath?[indexPath.row].url ?? ""
         if let url = URL(string: urlString) {
             let ext = url.pathExtension.lowercased()
             if ["png", "jpg", "jpeg", "webp"].contains(ext) {
-               
                 let imageUrl = urlString
-
                 let htmlString = """
                 <html>
                 <head>
@@ -501,16 +406,15 @@ extension PlayQuizVc : UICollectionViewDelegateFlowLayout,UICollectionViewDataSo
         
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return CGSize(width: collectionView.layer.frame.width, height: 180)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-           let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
+        let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
         pageControls.currentPage = Int(pageIndex)
-       }
+    }
 }
 
 struct Question {

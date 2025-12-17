@@ -311,20 +311,14 @@ class TextfieldWithImage: UITextField {
             return
         }
         
-        // Use template rendering to apply tint color
         let imageView = UIImageView(image: image.withRenderingMode(.alwaysTemplate))
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .gray // Make it gray
-        
-        let imageSize: CGFloat = 16 // Smaller size
+        imageView.tintColor = .gray
+        let imageSize: CGFloat = 16
         let containerSize: CGFloat = imageSize + rightImagePadding * 2
-        
         imageView.frame = CGRect(x: rightImagePadding, y: 0, width: imageSize, height: imageSize)
-        
         let container = UIView(frame: CGRect(x: 0, y: 0, width: containerSize, height: containerSize))
         container.addSubview(imageView)
-        
-        // Center image inside container
         imageView.center = CGPoint(x: container.bounds.midX, y: container.bounds.midY)
         
         rightView = container

@@ -49,8 +49,8 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         NoDataLbl.isHidden = true
         
         cv.register(
-            UINib(nibName: "AttendanceRepCv", bundle: nil),
-            forCellWithReuseIdentifier: "AttendanceRepCv")
+            UINib(nibName: CellConfingName.AttendanceRepCv, bundle: nil),
+            forCellWithReuseIdentifier: CellConfingName.AttendanceRepCv)
         cv.delegate = self
         cv.dataSource = self
         Get_attendaceReport()
@@ -92,17 +92,15 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     
     
     @IBAction func searchBtnAct(_ sender: UIButton) {
-        
         sender.isSelected.toggle()
-        
         if sender.isSelected{
             searchBar.isHidden = false
             searchBar.becomeFirstResponder()
-            SearchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+            SearchBtn.setImage(ImageName.magnifyingglass_circle_fill, for: .normal)
         }else{
             searchBar.isHidden = true
             searchBar.resignFirstResponder()
-            SearchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            SearchBtn.setImage(ImageName.magnifyingglass, for: .normal)
             searchBar.searchTextField.text = ""
             FilteredReportData = attendanceReportData
             NoDataLbl.isHidden = true
@@ -117,24 +115,20 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
             FilteredReportData = attendanceReportData
         } else {
             let lowercasedQuery = trimmed.lowercased()
-            
             FilteredReportData = attendanceReportData?.filter { record in
                 let dateStr = record.date?.convertToTargetDateFormat()?.lowercased()
                 let dayStr = record.day?.lowercased()
                 let typeStr = record.type?.lowercased()
-                
                 return
                 (dateStr?.contains(lowercasedQuery) ?? false) ||
                 (dayStr?.contains(lowercasedQuery) ?? false) ||
                 (typeStr?.contains(lowercasedQuery) ?? false)
             }
         }
-        
         let ishidden = !(FilteredReportData?.isEmpty == true)
         NoDataImage.isHidden = ishidden
         NoDataLbl.isHidden = ishidden
         NoDataLbl.text = "No Data Found"
-        
         cv.reloadData()
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -143,10 +137,10 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttendanceRepCv", for: indexPath) as! AttendanceRepCv
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttendanceRepCv, for: indexPath) as! AttendanceRepCv
         let dateStr = FilteredReportData?[indexPath.row].date ?? ""
         let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.dateFormat = DateInputs.dd_MM_yyyy
         
         if let date = inputFormatter.date(from: dateStr) {
             let outputFormatter = DateFormatter()
@@ -156,9 +150,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
             let day = calendar.component(.day, from: date)
             cell.MnthLbl.text = monthName
             cell.dateLbl.text = String(day)
-            
         }
-        
         let formattedDateString = dateFormatter.convertDate(
             FilteredReportData?[indexPath.row].date ?? ""
         ) ?? ""
@@ -170,8 +162,6 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/2, height: 200 )
     }
-    
-    
     
 }
 

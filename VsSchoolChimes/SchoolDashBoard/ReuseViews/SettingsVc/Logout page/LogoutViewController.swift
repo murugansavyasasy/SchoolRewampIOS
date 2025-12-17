@@ -8,7 +8,7 @@
 import UIKit
 
 class LogoutViewController: UIViewController {
-
+    
     @IBOutlet weak var DescribeLabel: UILabel!
     @IBOutlet var overallview: UIView!
     @IBOutlet weak var LogoutView: UIView!
@@ -47,26 +47,6 @@ class LogoutViewController: UIViewController {
     }
     
     @IBAction func LogoutAct(_ sender: Any) {
-//        UserDefaultFileManager.removeLoginCredentials()
-//        if #available(iOS 14.0, *) {
-//            let vc = LoginVc(nibName: nil, bundle: nil)
-//            vc.modalPresentationStyle = .fullScreen
-//            present(vc, animated: true)
-//        }
-//        UserDefaultFileManager.removeLoginCredentials()
-//            
-//        if #available(iOS 15.0, *) {
-//            let loginVC = LoginVc(nibName: nil, bundle: nil)
-//            let nav = UINavigationController(rootViewController: loginVC)
-//            nav.navigationBar.isHidden = true
-//            
-//            if let window = UIApplication.shared.connectedScenes
-//                .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first {
-//                window.rootViewController = nav
-//                window.makeKeyAndVisible()
-//            }
-//        }
-           
         Logout_Api()
     }
     
@@ -78,12 +58,10 @@ class LogoutViewController: UIViewController {
         
         if #available(iOS 15.0, *) {showActivityLoader() }
         
-        
-        print("secureIDsecureIDsecureID",secureID)
         let param : [String:Any] = [
             COMMON_PARAMETER.mobile_number : mobileNo?.mobile_number ?? "",
             COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
-            "secure_id": secureID
+            COMMON_PARAMETER.secure_id : secureID
         ]
         
         let token = (IsParent == true ? childDetails?.access_token : staffDetails?.access_token) ?? ""
@@ -96,7 +74,7 @@ class LogoutViewController: UIViewController {
                 if #available(iOS 15.0, *) { self.hideActivityLoader() }
                 switch result {
                 case .success(let success):
-                   
+                    
                     if success.status == true{
                         
                         UserDefaultFileManager.removeLoginCredentials()

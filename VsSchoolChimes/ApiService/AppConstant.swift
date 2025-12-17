@@ -90,7 +90,7 @@ struct ServiceUrl{
     static let   comm_api_assignment_delete = "comm/api/assignment/delete"
     static let   lms_api_lsrw_delete = "lms/api/lsrw/delete"
     static let   comm_api_assignment_delete_submission
- = "comm/api/assignment/delete-submission"
+    = "comm/api/assignment/delete-submission"
     static let   comm_api_assignment_update = "comm/api/assignment/update"
     static let comm_api_assignment_submit_assignment = "comm/api/assignment/submit-assignment"
     static let comm_api_assignment_update_submission = "comm/api/assignment/update-submission"
@@ -160,7 +160,7 @@ struct ServiceUrl{
     static let quiz_submit = "lms/api/quiz/submit"
     static let quiz_submission_list = "lms/api/quiz/submission-list"
     static let check_level = "lms/api/quiz/check-level"
-
+    
     static let lms_api_lsrw_remark = "lms/api/lsrw/remark"
     static let lms_api_lsrw_submission_list = "lms/api/lsrw/submission-list"
     static let lms_api_lsrw_my_submissions = "lms/api/lsrw/my-submissions"
@@ -205,7 +205,7 @@ struct localData{
     static var user_data : UserData? = nil
     static var  accidamic_year_data : get_academic_yearSuc? = nil
     static var  editToken : String?
-
+    
 }
 struct screenType{
     
@@ -266,7 +266,7 @@ struct PriorityType{
     static let is_staff  = "p3"
     static let is_admin = "p4"
     static let is_non_teaching_staff = "p5"
-   
+    
 }
 struct recipeint_tabBarName{
     static let Standard = "Standards"
@@ -279,7 +279,7 @@ struct recipeint_tabBarName{
 struct Filecount{
     static let SelectImageAndDocumetCount = 10
     static let SelectVideoCount = 2
-
+    
 }
 
 class FileTypeConstants {
@@ -336,7 +336,7 @@ struct user_inputs {
     static var assigmentCategory = ""
     static var menuList:[String] = []
     static var level : Int = 1
-
+    
     static func clearTempData() -> Bool {
         selectedImgData.removeAll()
         selectedImgUrls.removeAll()
@@ -428,7 +428,7 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
             return outputFormatter.string(from: dateObj)
         }
     }
-
+    
     print("❌ Could not match format for: \(date)")
     return ""
 }
@@ -547,8 +547,8 @@ func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = f
     
     // Normal date
     return isTimeNeeded
-        ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
-        : dateFormatter.string(from: date)
+    ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
+    : dateFormatter.string(from: date)
 }
 
 

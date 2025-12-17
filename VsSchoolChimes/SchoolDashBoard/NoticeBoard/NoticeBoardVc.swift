@@ -443,18 +443,13 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
             std: "",
             mobile: ""
         )
-
-    
-
         let detailVC = PrivewVc()
-        
         detailVC.attachmetList = notice.file_path
         detailVC.selectedDate  = notice.created_on
         detailVC.titleString  = notice.title
         detailVC.targetCvdata.append(data1)
         detailVC.ComFromNoticeBoard = true
         detailVC.descriptionString  = notice.description
-        //        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
         detailVC.subject_name = "Notice Board".translated()
         detailVC.postedBy  = notice.sent_by
         detailVC.modalPresentationStyle = .custom

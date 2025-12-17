@@ -14,22 +14,22 @@ extension UILabel {
         case title
         case body
     }
-
+    
     func setFont(style: LabelStyle, size: CGFloat? = nil) {
         switch style {
-          
+            
         case .header:
             self.font = UIFont(name: "Poppins-Bold", size: size ?? self.font.pointSize)
-                ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .bold)
+            ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .bold)
             if font == nil{
                 print("Poppins bold not available")
             }
         case .title:
             self.font = UIFont(name: "Poppins-Bold", size: size ?? self.font.pointSize)
-                ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .bold)
+            ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .bold)
         case .body:
             self.font = UIFont(name: "Poppins-Medium", size: size ?? self.font.pointSize)
-                ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .medium)
+            ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .medium)
         }
     }
 }
@@ -42,10 +42,10 @@ extension UIButton {
         case secondary
         case body
     }
-
+    
     func setTitleFont(style: ButtonStyle, size: CGFloat? = nil) {
         let defaultSize = size ?? self.titleLabel?.font.pointSize ?? 17
-
+        
         switch style {
         case .primary:
             let font = UIFont(name: "Poppins-Bold", size: defaultSize)

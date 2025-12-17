@@ -15,6 +15,39 @@
 		187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */; };
 		18886D0D2EE6B4FA008B71FF /* MsgCellTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */; };
 		18886D0E2EE6B4FA008B71FF /* MsgCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */; };
+		188870372EEAEAC6008B71FF /* LSRWPerformenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1888701D2EEAEAC6008B71FF /* LSRWPerformenceTVC.xib */; };
+		188870382EEAEAC6008B71FF /* LSRWPreviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1888701F2EEAEAC6008B71FF /* LSRWPreviewVC.xib */; };
+		188870392EEAEAC6008B71FF /* LSRWProgressCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870212EEAEAC6008B71FF /* LSRWProgressCVC.xib */; };
+		1888703A2EEAEAC6008B71FF /* LSRWProgressTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870232EEAEAC6008B71FF /* LSRWProgressTVC.xib */; };
+		1888703B2EEAEAC6008B71FF /* LSRWReportTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870252EEAEAC6008B71FF /* LSRWReportTVC.xib */; };
+		1888703C2EEAEAC6008B71FF /* LSRWSubmissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870272EEAEAC6008B71FF /* LSRWSubmissionVC.xib */; };
+		1888703D2EEAEAC6008B71FF /* LSRWSubmitTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870292EEAEAC6008B71FF /* LSRWSubmitTVC.xib */; };
+		1888703E2EEAEAC6008B71FF /* LSRWTaskTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1888702B2EEAEAC6008B71FF /* LSRWTaskTVC.xib */; };
+		1888703F2EEAEAC6008B71FF /* LSRWVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1888702D2EEAEAC6008B71FF /* LSRWVC.xib */; };
+		188870402EEAEAC6008B71FF /* PerformenceReportCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1888702F2EEAEAC6008B71FF /* PerformenceReportCVC.xib */; };
+		188870412EEAEAC6008B71FF /* QuestionAnsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870312EEAEAC6008B71FF /* QuestionAnsTVC.xib */; };
+		188870422EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870332EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.xib */; };
+		188870432EEAEAC6008B71FF /* SenderLSRWVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870352EEAEAC6008B71FF /* SenderLSRWVC.xib */; };
+		188870442EEAEAC6008B71FF /* LSRWPerformenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888701C2EEAEAC6008B71FF /* LSRWPerformenceTVC.swift */; };
+		188870452EEAEAC6008B71FF /* LSRWPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888701E2EEAEAC6008B71FF /* LSRWPreviewVC.swift */; };
+		188870462EEAEAC6008B71FF /* LSRWProgressCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870202EEAEAC6008B71FF /* LSRWProgressCVC.swift */; };
+		188870472EEAEAC6008B71FF /* LSRWProgressTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870222EEAEAC6008B71FF /* LSRWProgressTVC.swift */; };
+		188870482EEAEAC6008B71FF /* LSRWReportTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870242EEAEAC6008B71FF /* LSRWReportTVC.swift */; };
+		188870492EEAEAC6008B71FF /* LSRWSubmissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870262EEAEAC6008B71FF /* LSRWSubmissionVC.swift */; };
+		1888704A2EEAEAC6008B71FF /* LSRWSubmitTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870282EEAEAC6008B71FF /* LSRWSubmitTVC.swift */; };
+		1888704B2EEAEAC6008B71FF /* LSRWTaskTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888702A2EEAEAC6008B71FF /* LSRWTaskTVC.swift */; };
+		1888704C2EEAEAC6008B71FF /* LSRWVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888702C2EEAEAC6008B71FF /* LSRWVC.swift */; };
+		1888704D2EEAEAC6008B71FF /* PerformenceReportCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888702E2EEAEAC6008B71FF /* PerformenceReportCVC.swift */; };
+		1888704E2EEAEAC6008B71FF /* QuestionAnsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870302EEAEAC6008B71FF /* QuestionAnsTVC.swift */; };
+		1888704F2EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870322EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.swift */; };
+		188870502EEAEAC6008B71FF /* SenderLSRWVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870342EEAEAC6008B71FF /* SenderLSRWVC.swift */; };
+		188870552EEAEB0F008B71FF /* parentPTMcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188870532EEAEB0F008B71FF /* parentPTMcell.xib */; };
+		188870562EEAEB0F008B71FF /* parentPTMcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870522EEAEB0F008B71FF /* parentPTMcell.swift */; };
+		1888705E2EEAED86008B71FF /* APIInputParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870572EEAED86008B71FF /* APIInputParameters.swift */; };
+		1888705F2EEAED86008B71FF /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870582EEAED86008B71FF /* APIService.swift */; };
+		188870602EEAED86008B71FF /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870592EEAED86008B71FF /* AppConstant.swift */; };
+		188870612EEAED86008B71FF /* com_SendingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888705A2EEAED86008B71FF /* com_SendingAPI.swift */; };
+		188870622EEAED86008B71FF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888705B2EEAED86008B71FF /* Model.swift */; };
 		188EBD8E2ED5632F00BEA524 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8B2ED5632F00BEA524 /* LICENSE */; };
 		188EBD8F2ED5632F00BEA524 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD842ED5632F00BEA524 /* DropDownCell.xib */; };
 		188EBD902ED5632F00BEA524 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8C2ED5632F00BEA524 /* README.md */; };
@@ -556,8 +589,6 @@
 		FA3B30032E2F8BD6003B6E6D /* TotalMarkTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3B30012E2F8BD6003B6E6D /* TotalMarkTvCell.xib */; };
 		FA3E28D22E4DDE48008885A3 /* CreateMeetingVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */; };
 		FA3E28D32E4DDE48008885A3 /* CreateMeetingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */; };
-		FA4709532E39FF1000764E28 /* WeeklyReportTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */; };
-		FA4709542E39FF1000764E28 /* WeeklyReportTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */; };
 		FA48A6982E754AA7004E10C7 /* QuizSubmisionTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */; };
 		FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		FA68BBBB2EDD77640051EF7A /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA68BBB92EDD77640051EF7A /* EnterMarkVC.swift */; };
@@ -644,48 +675,6 @@
 		FAFB40BE2ED6E75A00783142 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFB40BB2ED6E75A00783142 /* SubjectsTVCell.swift */; };
 		FAFB40C12ED6FA2000783142 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */; };
 		FAFB40C22ED6FA2000783142 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */; };
-		FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */; };
-		FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */; };
-		FAFF9DD52D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA42D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift */; };
-		FAFF9DD62D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBF2D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift */; };
-		FAFF9DD72D6C7B7A00498368 /* SubjectListForStudentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DCA2D6C7B7A00498368 /* SubjectListForStudentResponse.swift */; };
-		FAFF9DD92D6C7B7A00498368 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D9D2D6C7B7A00498368 /* CalendarHelper.swift */; };
-		FAFF9DDA2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBB2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift */; };
-		FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC32D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift */; };
-		FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC92D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift */; };
-		FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBC2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift */; };
-		FAFF9DDF2D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA32D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift */; };
-		FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DAF2D6C7B7A00498368 /* TimeCollectionViewCell.swift */; };
-		FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBD2D6C7B7A00498368 /* DateWiseModal.swift */; };
-		FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB72D6C7B7A00498368 /* PTMViewController.swift */; };
-		FAFF9DE32D6C7B7A00498368 /* SlotHistoryForParentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC62D6C7B7A00498368 /* SlotHistoryForParentResponse.swift */; };
-		FAFF9DE42D6C7B7A00498368 /* SubjectListForStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA62D6C7B7A00498368 /* SubjectListForStudentRequest.swift */; };
-		FAFF9DE52D6C7B7A00498368 /* BookingSlotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA52D6C7B7A00498368 /* BookingSlotRequest.swift */; };
-		FAFF9DE72D6C7B7A00498368 /* CancelSlotResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC52D6C7B7A00498368 /* CancelSlotResponse.swift */; };
-		FAFF9DE82D6C7B7A00498368 /* SlotHistoryForParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA22D6C7B7A00498368 /* SlotHistoryForParentRequest.swift */; };
-		FAFF9DE92D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC42D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift */; };
-		FAFF9DEA2D6C7B7A00498368 /* slotValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC02D6C7B7A00498368 /* slotValidation.swift */; };
-		FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBA2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift */; };
-		FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC82D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift */; };
-		FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC72D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift */; };
-		FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC22D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift */; };
-		FAFF9DF02D6C7B7A00498368 /* cancelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DAC2D6C7B7A00498368 /* cancelTableViewCell.swift */; };
-		FAFF9DF12D6C7B7A00498368 /* verifyReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DCB2D6C7B7A00498368 /* verifyReq.swift */; };
-		FAFF9DF22D6C7B7A00498368 /* StaffPtmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D9E2D6C7B7A00498368 /* StaffPtmTableViewCell.swift */; };
-		FAFF9DF32D6C7B7A00498368 /* parentPTMcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DCE2D6C7B7A00498368 /* parentPTMcell.swift */; };
-		FAFF9DF42D6C7B7A00498368 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB02D6C7B7A00498368 /* CalendarCollectionViewCell.swift */; };
-		FAFF9DF52D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC12D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift */; };
-		FAFF9DF82D6C7B7A00498368 /* CalenderCVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB22D6C7B7A00498368 /* CalenderCVcell.swift */; };
-		FAFF9DF92D6C7B7A00498368 /* CreateSlotByStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBE2D6C7B7A00498368 /* CreateSlotByStaffRequest.swift */; };
-		FAFF9DFA2D6C7B7A00498368 /* TimeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA92D6C7B7A00498368 /* TimeHeader.swift */; };
-		FAFF9DFD2D6C7B7A00498368 /* parentPTMcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DCF2D6C7B7A00498368 /* parentPTMcell.xib */; };
-		FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DB32D6C7B7A00498368 /* CalenderCVcell.xib */; };
-		FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DB62D6C7B7A00498368 /* PTMViewController.xib */; };
-		FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DB12D6C7B7A00498368 /* CalendarCollectionViewCell.xib */; };
-		FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DAA2D6C7B7A00498368 /* TimeHeader.xib */; };
-		FAFF9E052D6C7B7A00498368 /* cancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DAB2D6C7B7A00498368 /* cancelTableViewCell.xib */; };
-		FAFF9E062D6C7B7A00498368 /* TimeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DAE2D6C7B7A00498368 /* TimeCollectionViewCell.xib */; };
-		FAFF9E072D6C7B7A00498368 /* StaffPtmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D9F2D6C7B7A00498368 /* StaffPtmTableViewCell.xib */; };
 		FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9E0A2D6C806700498368 /* NewLSRWTVcell.swift */; };
 		FAFF9E0D2D6C806700498368 /* NewLSRWTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9E0B2D6C806700498368 /* NewLSRWTVcell.xib */; };
 		FAFFBD072E336F8600F8B150 /* ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFFBD052E336F8600F8B150 /* ExamListTV.swift */; };
@@ -733,6 +722,39 @@
 		187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateTableViewCell.xib; sourceTree = "<group>"; };
 		18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgCellTv.swift; sourceTree = "<group>"; };
 		18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MsgCellTv.xib; sourceTree = "<group>"; };
+		1888701C2EEAEAC6008B71FF /* LSRWPerformenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWPerformenceTVC.swift; sourceTree = "<group>"; };
+		1888701D2EEAEAC6008B71FF /* LSRWPerformenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWPerformenceTVC.xib; sourceTree = "<group>"; };
+		1888701E2EEAEAC6008B71FF /* LSRWPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWPreviewVC.swift; sourceTree = "<group>"; };
+		1888701F2EEAEAC6008B71FF /* LSRWPreviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWPreviewVC.xib; sourceTree = "<group>"; };
+		188870202EEAEAC6008B71FF /* LSRWProgressCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWProgressCVC.swift; sourceTree = "<group>"; };
+		188870212EEAEAC6008B71FF /* LSRWProgressCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWProgressCVC.xib; sourceTree = "<group>"; };
+		188870222EEAEAC6008B71FF /* LSRWProgressTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWProgressTVC.swift; sourceTree = "<group>"; };
+		188870232EEAEAC6008B71FF /* LSRWProgressTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWProgressTVC.xib; sourceTree = "<group>"; };
+		188870242EEAEAC6008B71FF /* LSRWReportTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWReportTVC.swift; sourceTree = "<group>"; };
+		188870252EEAEAC6008B71FF /* LSRWReportTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWReportTVC.xib; sourceTree = "<group>"; };
+		188870262EEAEAC6008B71FF /* LSRWSubmissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWSubmissionVC.swift; sourceTree = "<group>"; };
+		188870272EEAEAC6008B71FF /* LSRWSubmissionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWSubmissionVC.xib; sourceTree = "<group>"; };
+		188870282EEAEAC6008B71FF /* LSRWSubmitTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWSubmitTVC.swift; sourceTree = "<group>"; };
+		188870292EEAEAC6008B71FF /* LSRWSubmitTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWSubmitTVC.xib; sourceTree = "<group>"; };
+		1888702A2EEAEAC6008B71FF /* LSRWTaskTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTaskTVC.swift; sourceTree = "<group>"; };
+		1888702B2EEAEAC6008B71FF /* LSRWTaskTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTaskTVC.xib; sourceTree = "<group>"; };
+		1888702C2EEAEAC6008B71FF /* LSRWVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWVC.swift; sourceTree = "<group>"; };
+		1888702D2EEAEAC6008B71FF /* LSRWVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWVC.xib; sourceTree = "<group>"; };
+		1888702E2EEAEAC6008B71FF /* PerformenceReportCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformenceReportCVC.swift; sourceTree = "<group>"; };
+		1888702F2EEAEAC6008B71FF /* PerformenceReportCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PerformenceReportCVC.xib; sourceTree = "<group>"; };
+		188870302EEAEAC6008B71FF /* QuestionAnsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnsTVC.swift; sourceTree = "<group>"; };
+		188870312EEAEAC6008B71FF /* QuestionAnsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionAnsTVC.xib; sourceTree = "<group>"; };
+		188870322EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedLSRWSubmissionVC.swift; sourceTree = "<group>"; };
+		188870332EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectedLSRWSubmissionVC.xib; sourceTree = "<group>"; };
+		188870342EEAEAC6008B71FF /* SenderLSRWVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderLSRWVC.swift; sourceTree = "<group>"; };
+		188870352EEAEAC6008B71FF /* SenderLSRWVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderLSRWVC.xib; sourceTree = "<group>"; };
+		188870522EEAEB0F008B71FF /* parentPTMcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parentPTMcell.swift; sourceTree = "<group>"; };
+		188870532EEAEB0F008B71FF /* parentPTMcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = parentPTMcell.xib; sourceTree = "<group>"; };
+		188870572EEAED86008B71FF /* APIInputParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInputParameters.swift; sourceTree = "<group>"; };
+		188870582EEAED86008B71FF /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		188870592EEAED86008B71FF /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
+		1888705A2EEAED86008B71FF /* com_SendingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = com_SendingAPI.swift; sourceTree = "<group>"; };
+		1888705B2EEAED86008B71FF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		188EBD802ED5632F00BEA524 /* DPDConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDConstants.swift; sourceTree = "<group>"; };
 		188EBD812ED5632F00BEA524 /* DPDKeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDKeyboardListener.swift; sourceTree = "<group>"; };
 		188EBD822ED5632F00BEA524 /* DPDUIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DPDUIView+Extension.swift"; sourceTree = "<group>"; };
@@ -1290,8 +1312,6 @@
 		FA3B30012E2F8BD6003B6E6D /* TotalMarkTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TotalMarkTvCell.xib; sourceTree = "<group>"; };
 		FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMeetingVc.swift; sourceTree = "<group>"; };
 		FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateMeetingVc.xib; sourceTree = "<group>"; };
-		FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportTV.swift; sourceTree = "<group>"; };
-		FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyReportTV.xib; sourceTree = "<group>"; };
 		FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSubmisionTvCell.swift; sourceTree = "<group>"; };
 		FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizSubmisionTvCell.xib; sourceTree = "<group>"; };
 		FA68BBB92EDD77640051EF7A /* EnterMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterMarkVC.swift; sourceTree = "<group>"; };
@@ -1377,48 +1397,6 @@
 		FAFB40BC2ED6E75A00783142 /* SubjectsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectsTVCell.xib; sourceTree = "<group>"; };
 		FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTVCell.swift; sourceTree = "<group>"; };
 		FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivitiesTVCell.xib; sourceTree = "<group>"; };
-		FAFF9D9D2D6C7B7A00498368 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
-		FAFF9D9E2D6C7B7A00498368 /* StaffPtmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffPtmTableViewCell.swift; sourceTree = "<group>"; };
-		FAFF9D9F2D6C7B7A00498368 /* StaffPtmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffPtmTableViewCell.xib; sourceTree = "<group>"; };
-		FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSlotByParentRequest.swift; sourceTree = "<group>"; };
-		FAFF9DA22D6C7B7A00498368 /* SlotHistoryForParentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHistoryForParentRequest.swift; sourceTree = "<group>"; };
-		FAFF9DA32D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailablityForStudentRequest.swift; sourceTree = "<group>"; };
-		FAFF9DA42D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTeacherWiseSlotRequest.swift; sourceTree = "<group>"; };
-		FAFF9DA52D6C7B7A00498368 /* BookingSlotRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSlotRequest.swift; sourceTree = "<group>"; };
-		FAFF9DA62D6C7B7A00498368 /* SubjectListForStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentRequest.swift; sourceTree = "<group>"; };
-		FAFF9DA92D6C7B7A00498368 /* TimeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHeader.swift; sourceTree = "<group>"; };
-		FAFF9DAA2D6C7B7A00498368 /* TimeHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeHeader.xib; sourceTree = "<group>"; };
-		FAFF9DAB2D6C7B7A00498368 /* cancelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cancelTableViewCell.xib; sourceTree = "<group>"; };
-		FAFF9DAC2D6C7B7A00498368 /* cancelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cancelTableViewCell.swift; sourceTree = "<group>"; };
-		FAFF9DAE2D6C7B7A00498368 /* TimeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeCollectionViewCell.xib; sourceTree = "<group>"; };
-		FAFF9DAF2D6C7B7A00498368 /* TimeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCollectionViewCell.swift; sourceTree = "<group>"; };
-		FAFF9DB02D6C7B7A00498368 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
-		FAFF9DB12D6C7B7A00498368 /* CalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarCollectionViewCell.xib; sourceTree = "<group>"; };
-		FAFF9DB22D6C7B7A00498368 /* CalenderCVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCVcell.swift; sourceTree = "<group>"; };
-		FAFF9DB32D6C7B7A00498368 /* CalenderCVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalenderCVcell.xib; sourceTree = "<group>"; };
-		FAFF9DB62D6C7B7A00498368 /* PTMViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PTMViewController.xib; sourceTree = "<group>"; };
-		FAFF9DB72D6C7B7A00498368 /* PTMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTMViewController.swift; sourceTree = "<group>"; };
-		FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotsByStaffModal.swift; sourceTree = "<group>"; };
-		FAFF9DBA2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndCloseSlotStaffRequest.swift; sourceTree = "<group>"; };
-		FAFF9DBB2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetailsForStaffRequest.swift; sourceTree = "<group>"; };
-		FAFF9DBC2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWiseSlotDetailsStaffRequest.swift; sourceTree = "<group>"; };
-		FAFF9DBD2D6C7B7A00498368 /* DateWiseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWiseModal.swift; sourceTree = "<group>"; };
-		FAFF9DBE2D6C7B7A00498368 /* CreateSlotByStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotByStaffRequest.swift; sourceTree = "<group>"; };
-		FAFF9DBF2D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndReopenSlotStaffRequest.swift; sourceTree = "<group>"; };
-		FAFF9DC02D6C7B7A00498368 /* slotValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotValidation.swift; sourceTree = "<group>"; };
-		FAFF9DC12D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetailsForStaffResponse.swift; sourceTree = "<group>"; };
-		FAFF9DC22D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSectionDetailsStaffRequest.swift; sourceTree = "<group>"; };
-		FAFF9DC32D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSectionDetailsForStaffResponse.swift; sourceTree = "<group>"; };
-		FAFF9DC42D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndCloseSlotByStaffModal.swift; sourceTree = "<group>"; };
-		FAFF9DC52D6C7B7A00498368 /* CancelSlotResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSlotResponse.swift; sourceTree = "<group>"; };
-		FAFF9DC62D6C7B7A00498368 /* SlotHistoryForParentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHistoryForParentResponse.swift; sourceTree = "<group>"; };
-		FAFF9DC72D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSlotsForStudentResponse.swift; sourceTree = "<group>"; };
-		FAFF9DC82D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailabilityForStudentsResponse.swift; sourceTree = "<group>"; };
-		FAFF9DC92D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherWiseSlotAvailabilityResponse.swift; sourceTree = "<group>"; };
-		FAFF9DCA2D6C7B7A00498368 /* SubjectListForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentResponse.swift; sourceTree = "<group>"; };
-		FAFF9DCB2D6C7B7A00498368 /* verifyReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyReq.swift; sourceTree = "<group>"; };
-		FAFF9DCE2D6C7B7A00498368 /* parentPTMcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parentPTMcell.swift; sourceTree = "<group>"; };
-		FAFF9DCF2D6C7B7A00498368 /* parentPTMcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = parentPTMcell.xib; sourceTree = "<group>"; };
 		FAFF9E0A2D6C806700498368 /* NewLSRWTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLSRWTVcell.swift; sourceTree = "<group>"; };
 		FAFF9E0B2D6C806700498368 /* NewLSRWTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewLSRWTVcell.xib; sourceTree = "<group>"; };
 		FAFFBD052E336F8600F8B150 /* ExamListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListTV.swift; sourceTree = "<group>"; };
@@ -1435,11 +1413,9 @@
 		845AB85F2EC1A786003C22E1 /* OnboardingFlow */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingFlow; sourceTree = "<group>"; };
 		845CF1202E81737E001B2147 /* What'sNewVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "What'sNewVC"; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
-		847F62992E12703600EE5180 /* SenderLSRW */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SenderLSRW; sourceTree = "<group>"; };
 		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
 		848554CB2E8FB06300CDED47 /* NotificationCall */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NotificationCall; sourceTree = "<group>"; };
 		849183E62E7DC34900DE4F7C /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
-		8491FFCF2D818A080060C22B /* ApiService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApiService; sourceTree = "<group>"; };
 		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
 		84AB0FFC2E78E094001160AD /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
 		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
@@ -1551,6 +1527,60 @@
 				FA861C352E38ABA900859726 /* CertificateCv.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		188870362EEAEAC6008B71FF /* SenderLSRW */ = {
+			isa = PBXGroup;
+			children = (
+				1888701C2EEAEAC6008B71FF /* LSRWPerformenceTVC.swift */,
+				1888701D2EEAEAC6008B71FF /* LSRWPerformenceTVC.xib */,
+				1888701E2EEAEAC6008B71FF /* LSRWPreviewVC.swift */,
+				1888701F2EEAEAC6008B71FF /* LSRWPreviewVC.xib */,
+				188870202EEAEAC6008B71FF /* LSRWProgressCVC.swift */,
+				188870212EEAEAC6008B71FF /* LSRWProgressCVC.xib */,
+				188870222EEAEAC6008B71FF /* LSRWProgressTVC.swift */,
+				188870232EEAEAC6008B71FF /* LSRWProgressTVC.xib */,
+				188870242EEAEAC6008B71FF /* LSRWReportTVC.swift */,
+				188870252EEAEAC6008B71FF /* LSRWReportTVC.xib */,
+				188870262EEAEAC6008B71FF /* LSRWSubmissionVC.swift */,
+				188870272EEAEAC6008B71FF /* LSRWSubmissionVC.xib */,
+				188870282EEAEAC6008B71FF /* LSRWSubmitTVC.swift */,
+				188870292EEAEAC6008B71FF /* LSRWSubmitTVC.xib */,
+				1888702A2EEAEAC6008B71FF /* LSRWTaskTVC.swift */,
+				1888702B2EEAEAC6008B71FF /* LSRWTaskTVC.xib */,
+				1888702C2EEAEAC6008B71FF /* LSRWVC.swift */,
+				1888702D2EEAEAC6008B71FF /* LSRWVC.xib */,
+				1888702E2EEAEAC6008B71FF /* PerformenceReportCVC.swift */,
+				1888702F2EEAEAC6008B71FF /* PerformenceReportCVC.xib */,
+				188870302EEAEAC6008B71FF /* QuestionAnsTVC.swift */,
+				188870312EEAEAC6008B71FF /* QuestionAnsTVC.xib */,
+				188870322EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.swift */,
+				188870332EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.xib */,
+				188870342EEAEAC6008B71FF /* SenderLSRWVC.swift */,
+				188870352EEAEAC6008B71FF /* SenderLSRWVC.xib */,
+			);
+			path = SenderLSRW;
+			sourceTree = "<group>";
+		};
+		188870542EEAEB0F008B71FF /* ParentSideCell */ = {
+			isa = PBXGroup;
+			children = (
+				188870522EEAEB0F008B71FF /* parentPTMcell.swift */,
+				188870532EEAEB0F008B71FF /* parentPTMcell.xib */,
+			);
+			path = ParentSideCell;
+			sourceTree = "<group>";
+		};
+		1888705D2EEAED86008B71FF /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				188870572EEAED86008B71FF /* APIInputParameters.swift */,
+				188870582EEAED86008B71FF /* APIService.swift */,
+				188870592EEAED86008B71FF /* AppConstant.swift */,
+				1888705A2EEAED86008B71FF /* com_SendingAPI.swift */,
+				1888705B2EEAED86008B71FF /* Model.swift */,
+			);
+			path = ApiService;
 			sourceTree = "<group>";
 		};
 		188EBD832ED5632F00BEA524 /* helpers */ = {
@@ -2313,8 +2343,6 @@
 				849183E62E7DC34900DE4F7C /* CvCell */,
 				849ACFF92D1A8369002DEC07 /* ReciverAttendanceReportVC.swift */,
 				849ACFFA2D1A8369002DEC07 /* ReciverAttendanceReportVC.xib */,
-				FA4709512E39FF1000764E28 /* WeeklyReportTV.swift */,
-				FA4709522E39FF1000764E28 /* WeeklyReportTV.xib */,
 				FAD5DAD92E3B263F00A3CE97 /* NewAttendanceReportVC.swift */,
 				FAD5DADA2E3B263F00A3CE97 /* NewAttendanceReportVC.xib */,
 				84E12C382ECC71F200FF614B /* PopoverTVC.swift */,
@@ -2538,7 +2566,7 @@
 			isa = PBXGroup;
 			children = (
 				189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */,
-				8491FFCF2D818A080060C22B /* ApiService */,
+				1888705D2EEAED86008B71FF /* ApiService */,
 				849E57302C1FF6A9006119DA /* Fonts */,
 				849E572D2C1FF656006119DA /* Gif */,
 				84A5BE7E2C1973F400E32496 /* Utils */,
@@ -2664,7 +2692,7 @@
 			children = (
 				FABA6E772ED5776B00278807 /* Exam Mark */,
 				84DE94992E5324F7008E1BF4 /* Quiz */,
-				847F62992E12703600EE5180 /* SenderLSRW */,
+				188870362EEAEAC6008B71FF /* SenderLSRW */,
 				FA2A3FB72DB0CA6C0000AF55 /* Sender Attachment */,
 				849AD04F2D1A858D002DEC07 /* Assignment */,
 				849AD03B2D1A845E002DEC07 /* Mark Attendence */,
@@ -3250,132 +3278,11 @@
 			path = PTM;
 			sourceTree = "<group>";
 		};
-		FAFF9DA02D6C7B7A00498368 /* BothStaffParentTv */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9D9D2D6C7B7A00498368 /* CalendarHelper.swift */,
-				FAFF9D9E2D6C7B7A00498368 /* StaffPtmTableViewCell.swift */,
-				FAFF9D9F2D6C7B7A00498368 /* StaffPtmTableViewCell.xib */,
-			);
-			name = BothStaffParentTv;
-			sourceTree = "<group>";
-		};
-		FAFF9DA72D6C7B7A00498368 /* Parent */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */,
-				FAFF9DA22D6C7B7A00498368 /* SlotHistoryForParentRequest.swift */,
-				FAFF9DA32D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift */,
-				FAFF9DA42D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift */,
-				FAFF9DA52D6C7B7A00498368 /* BookingSlotRequest.swift */,
-				FAFF9DA62D6C7B7A00498368 /* SubjectListForStudentRequest.swift */,
-			);
-			name = Parent;
-			sourceTree = "<group>";
-		};
-		FAFF9DA82D6C7B7A00498368 /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DA72D6C7B7A00498368 /* Parent */,
-			);
-			name = Request;
-			sourceTree = "<group>";
-		};
-		FAFF9DAD2D6C7B7A00498368 /* Tv */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DA92D6C7B7A00498368 /* TimeHeader.swift */,
-				FAFF9DAA2D6C7B7A00498368 /* TimeHeader.xib */,
-				FAFF9DAB2D6C7B7A00498368 /* cancelTableViewCell.xib */,
-				FAFF9DAC2D6C7B7A00498368 /* cancelTableViewCell.swift */,
-			);
-			name = Tv;
-			sourceTree = "<group>";
-		};
-		FAFF9DB42D6C7B7A00498368 /* Cv */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DAE2D6C7B7A00498368 /* TimeCollectionViewCell.xib */,
-				FAFF9DAF2D6C7B7A00498368 /* TimeCollectionViewCell.swift */,
-				FAFF9DB02D6C7B7A00498368 /* CalendarCollectionViewCell.swift */,
-				FAFF9DB12D6C7B7A00498368 /* CalendarCollectionViewCell.xib */,
-				FAFF9DB22D6C7B7A00498368 /* CalenderCVcell.swift */,
-				FAFF9DB32D6C7B7A00498368 /* CalenderCVcell.xib */,
-			);
-			name = Cv;
-			sourceTree = "<group>";
-		};
-		FAFF9DB52D6C7B7A00498368 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DAD2D6C7B7A00498368 /* Tv */,
-				FAFF9DB42D6C7B7A00498368 /* Cv */,
-			);
-			name = Cell;
-			sourceTree = "<group>";
-		};
-		FAFF9DB82D6C7B7A00498368 /* Vc */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DB62D6C7B7A00498368 /* PTMViewController.xib */,
-				FAFF9DB72D6C7B7A00498368 /* PTMViewController.swift */,
-			);
-			name = Vc;
-			sourceTree = "<group>";
-		};
-		FAFF9DCC2D6C7B7A00498368 /* ParentSide */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */,
-				FAFF9DBA2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift */,
-				FAFF9DBB2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift */,
-				FAFF9DBC2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift */,
-				FAFF9DBD2D6C7B7A00498368 /* DateWiseModal.swift */,
-				FAFF9DBE2D6C7B7A00498368 /* CreateSlotByStaffRequest.swift */,
-				FAFF9DBF2D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift */,
-				FAFF9DC02D6C7B7A00498368 /* slotValidation.swift */,
-				FAFF9DC12D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift */,
-				FAFF9DC22D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift */,
-				FAFF9DC32D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift */,
-				FAFF9DC42D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift */,
-				FAFF9DC52D6C7B7A00498368 /* CancelSlotResponse.swift */,
-				FAFF9DC62D6C7B7A00498368 /* SlotHistoryForParentResponse.swift */,
-				FAFF9DC72D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift */,
-				FAFF9DC82D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift */,
-				FAFF9DC92D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift */,
-				FAFF9DCA2D6C7B7A00498368 /* SubjectListForStudentResponse.swift */,
-				FAFF9DCB2D6C7B7A00498368 /* verifyReq.swift */,
-			);
-			name = ParentSide;
-			sourceTree = "<group>";
-		};
-		FAFF9DCD2D6C7B7A00498368 /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DCC2D6C7B7A00498368 /* ParentSide */,
-			);
-			name = Modal;
-			sourceTree = "<group>";
-		};
-		FAFF9DD02D6C7B7A00498368 /* ParentSide */ = {
-			isa = PBXGroup;
-			children = (
-				FAFF9DA82D6C7B7A00498368 /* Request */,
-				FAFF9DB52D6C7B7A00498368 /* Cell */,
-				FAFF9DB82D6C7B7A00498368 /* Vc */,
-				FAFF9DCD2D6C7B7A00498368 /* Modal */,
-				FAFF9DCE2D6C7B7A00498368 /* parentPTMcell.swift */,
-				FAFF9DCF2D6C7B7A00498368 /* parentPTMcell.xib */,
-			);
-			name = ParentSide;
-			sourceTree = "<group>";
-		};
 		FAFF9DD12D6C7B7A00498368 /* PTM */ = {
 			isa = PBXGroup;
 			children = (
+				188870542EEAEB0F008B71FF /* ParentSideCell */,
 				FA0EDF102E4A1700008EC30D /* NewPTM */,
-				FAFF9DA02D6C7B7A00498368 /* BothStaffParentTv */,
-				FAFF9DD02D6C7B7A00498368 /* ParentSide */,
 			);
 			path = PTM;
 			sourceTree = "<group>";
@@ -3437,11 +3344,9 @@
 				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
 				845CF1202E81737E001B2147 /* What'sNewVC */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
-				847F62992E12703600EE5180 /* SenderLSRW */,
 				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				848554CB2E8FB06300CDED47 /* NotificationCall */,
 				849183E62E7DC34900DE4F7C /* CvCell */,
-				8491FFCF2D818A080060C22B /* ApiService */,
 				849DD1612D9668B00027910D /* Biometric */,
 				84AB0FFC2E78E094001160AD /* CvCell */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
@@ -3715,30 +3620,22 @@
 				84D85FF02DE5815200633784 /* SectionStregnthCVC.xib in Resources */,
 				846CF7462E2F5B01000361CE /* OngoingTVC.xib in Resources */,
 				84C3A1F62E66EF4B002E7506 /* MsgVoiceCvCell.xib in Resources */,
-				FAFF9DFD2D6C7B7A00498368 /* parentPTMcell.xib in Resources */,
 				84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */,
 				844DF00A2E5AD28F0016A347 /* QuistionPagenationVc.xib in Resources */,
 				84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */,
-				FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */,
 				8464BE392E62BB7D00518917 /* CommunicationTVC.xib in Resources */,
 				FA7C7BB02E55B55B009BD4CF /* CreateSlotsBottomVC.xib in Resources */,
 				84C3A1F22E66BE55002E7506 /* MsgViewVC.xib in Resources */,
 				84E614252ED02B85003DBCE1 /* SplashVC.xib in Resources */,
 				8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */,
-				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				FAFB40BD2ED6E75A00783142 /* SubjectsTVCell.xib in Resources */,
 				FABA6E8A2ED5D2F700278807 /* ExamImgUploadVC.xib in Resources */,
 				84235A122E1E2819002F2E1D /* AddAttachmentTVC.xib in Resources */,
-				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
 				FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */,
 				846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */,
-				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
 				843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */,
 				848047722E02A7D90042BC5D /* AssignmentReport.xib in Resources */,
-				FAFF9E052D6C7B7A00498368 /* cancelTableViewCell.xib in Resources */,
-				FAFF9E062D6C7B7A00498368 /* TimeCollectionViewCell.xib in Resources */,
-				FAFF9E072D6C7B7A00498368 /* StaffPtmTableViewCell.xib in Resources */,
 				84017F792E447559006CB477 /* certificateReqTVCell.xib in Resources */,
 				84174EA92E717FA100AC7092 /* QuizSubmissionVc.xib in Resources */,
 				8449D8D22ED4646C00822FAC /* emergency_voice.mp3 in Resources */,
@@ -3768,9 +3665,21 @@
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				8464468E2E4BABF7007D1C5A /* NotiTvheader.xib in Resources */,
+				188870372EEAEAC6008B71FF /* LSRWPerformenceTVC.xib in Resources */,
+				188870382EEAEAC6008B71FF /* LSRWPreviewVC.xib in Resources */,
+				188870392EEAEAC6008B71FF /* LSRWProgressCVC.xib in Resources */,
+				1888703A2EEAEAC6008B71FF /* LSRWProgressTVC.xib in Resources */,
+				1888703B2EEAEAC6008B71FF /* LSRWReportTVC.xib in Resources */,
+				1888703C2EEAEAC6008B71FF /* LSRWSubmissionVC.xib in Resources */,
+				1888703D2EEAEAC6008B71FF /* LSRWSubmitTVC.xib in Resources */,
+				1888703E2EEAEAC6008B71FF /* LSRWTaskTVC.xib in Resources */,
+				1888703F2EEAEAC6008B71FF /* LSRWVC.xib in Resources */,
+				188870402EEAEAC6008B71FF /* PerformenceReportCVC.xib in Resources */,
+				188870412EEAEAC6008B71FF /* QuestionAnsTVC.xib in Resources */,
+				188870422EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.xib in Resources */,
+				188870432EEAEAC6008B71FF /* SenderLSRWVC.xib in Resources */,
 				FAED585C2E4B682200497026 /* MeetingDetailTV.xib in Resources */,
 				FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */,
-				FA4709542E39FF1000764E28 /* WeeklyReportTV.xib in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
 				84FBAA882E3BA05300A3FC31 /* CustomMenuCVC.xib in Resources */,
 				8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */,
@@ -3848,6 +3757,7 @@
 				FA6CD8A22E3DEEC500C146AB /* OutpassVC.xib in Resources */,
 				84127AEE2E03C8F00092159D /* BottomView.xib in Resources */,
 				84127AEF2E03C8F00092159D /* CoupenCvCell.xib in Resources */,
+				188870552EEAEB0F008B71FF /* parentPTMcell.xib in Resources */,
 				84127AF02E03C8F00092159D /* ActivateCoupenTVC.xib in Resources */,
 				84174DF32E70061C00AC7092 /* QuizCompletedVc.xib in Resources */,
 				84127AF12E03C8F00092159D /* CoupenDetailTVC.xib in Resources */,
@@ -4070,61 +3980,40 @@
 				84BCE9172E9E5270002C8068 /* GenderDistriTvcel.swift in Sources */,
 				84F90FD92EB241A3005CF3A4 /* ReportAttCell.swift in Sources */,
 				844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */,
-				FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */,
-				FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */,
 				843F9A2D2DAF71FF00215973 /* SenderHomeWorkVC.swift in Sources */,
 				84017F862E44B1BD006CB477 /* CertificatePreviewVc.swift in Sources */,
+				188870442EEAEAC6008B71FF /* LSRWPerformenceTVC.swift in Sources */,
+				188870452EEAEAC6008B71FF /* LSRWPreviewVC.swift in Sources */,
+				188870462EEAEAC6008B71FF /* LSRWProgressCVC.swift in Sources */,
+				188870472EEAEAC6008B71FF /* LSRWProgressTVC.swift in Sources */,
+				188870482EEAEAC6008B71FF /* LSRWReportTVC.swift in Sources */,
+				188870492EEAEAC6008B71FF /* LSRWSubmissionVC.swift in Sources */,
+				1888704A2EEAEAC6008B71FF /* LSRWSubmitTVC.swift in Sources */,
+				1888704B2EEAEAC6008B71FF /* LSRWTaskTVC.swift in Sources */,
+				1888704C2EEAEAC6008B71FF /* LSRWVC.swift in Sources */,
+				1888704D2EEAEAC6008B71FF /* PerformenceReportCVC.swift in Sources */,
+				1888704E2EEAEAC6008B71FF /* QuestionAnsTVC.swift in Sources */,
+				1888704F2EEAEAC6008B71FF /* SelectedLSRWSubmissionVC.swift in Sources */,
+				188870502EEAEAC6008B71FF /* SenderLSRWVC.swift in Sources */,
 				84BCE9132E9E4D24002C8068 /* SummerizeTvCel.swift in Sources */,
-				FAFF9DD52D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift in Sources */,
-				FAFF9DD62D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift in Sources */,
-				FAFF9DD72D6C7B7A00498368 /* SubjectListForStudentResponse.swift in Sources */,
-				FAFF9DD92D6C7B7A00498368 /* CalendarHelper.swift in Sources */,
-				FAFF9DDA2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift in Sources */,
 				FACD4D712E30F46F0084B125 /* TimetableBottomVC.swift in Sources */,
 				846E7FAD2E2785CC00BC954B /* AudioPlayerTVC.swift in Sources */,
 				FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */,
 				845AB8712EC1F89C003C22E1 /* SuccesseRatusTVC.swift in Sources */,
-				FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */,
-				FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
-				FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */,
-				FAFF9DDF2D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift in Sources */,
 				84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */,
 				845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */,
-				FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */,
-				FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */,
 				FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */,
 				84BCE90F2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift in Sources */,
-				FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */,
-				FAFF9DE32D6C7B7A00498368 /* SlotHistoryForParentResponse.swift in Sources */,
-				FAFF9DE42D6C7B7A00498368 /* SubjectListForStudentRequest.swift in Sources */,
-				FAFF9DE52D6C7B7A00498368 /* BookingSlotRequest.swift in Sources */,
 				FAD5DADC2E3B263F00A3CE97 /* NewAttendanceReportVC.swift in Sources */,
-				FAFF9DE72D6C7B7A00498368 /* CancelSlotResponse.swift in Sources */,
-				FAFF9DE82D6C7B7A00498368 /* SlotHistoryForParentRequest.swift in Sources */,
-				FAFF9DE92D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift in Sources */,
-				FAFF9DEA2D6C7B7A00498368 /* slotValidation.swift in Sources */,
-				FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
-				FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */,
 				FA3230962D95292B0070BA51 /* ExamDetailsVC.swift in Sources */,
 				84E5A2602E53255100A71420 /* AudioCVC.swift in Sources */,
 				843BCD892E2FBCBA00D4364A /* PreviewCell.swift in Sources */,
 				844DEDE82E549C150016A347 /* QuistionTvTableViewCell.swift in Sources */,
 				FA68BBBB2EDD77640051EF7A /* EnterMarkVC.swift in Sources */,
-				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
-				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
 				FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */,
 				84017BFE2E4079BB006CB477 /* AttachHistroyVC.swift in Sources */,
-				FAFF9DF02D6C7B7A00498368 /* cancelTableViewCell.swift in Sources */,
-				FAFF9DF12D6C7B7A00498368 /* verifyReq.swift in Sources */,
-				FAFF9DF22D6C7B7A00498368 /* StaffPtmTableViewCell.swift in Sources */,
-				FAFF9DF32D6C7B7A00498368 /* parentPTMcell.swift in Sources */,
-				FAFF9DF42D6C7B7A00498368 /* CalendarCollectionViewCell.swift in Sources */,
-				FAFF9DF52D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift in Sources */,
-				FAFF9DF82D6C7B7A00498368 /* CalenderCVcell.swift in Sources */,
 				8463D0EB2D6EF5CD00361F55 /* Extentions.swift in Sources */,
 				8476882D2D892D7D00EAB9DB /* DeviceUUIDManager.swift in Sources */,
-				FAFF9DF92D6C7B7A00498368 /* CreateSlotByStaffRequest.swift in Sources */,
-				FAFF9DFA2D6C7B7A00498368 /* TimeHeader.swift in Sources */,
 				849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */,
 				845F21822E4601810078AF69 /* AssignmentsearchTVC.swift in Sources */,
 				84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */,
@@ -4203,7 +4092,6 @@
 				848126D92D91820500BE6979 /* CountryListVC.swift in Sources */,
 				84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */,
 				84BB5EB02D11337E00AD0C87 /* ExamsListCVCell.swift in Sources */,
-				FA4709532E39FF1000764E28 /* WeeklyReportTV.swift in Sources */,
 				84017F7E2E44942A006CB477 /* certificateHstryCell.swift in Sources */,
 				18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */,
 				845F21792E45C2660078AF69 /* AssignmentDetailTVC.swift in Sources */,
@@ -4320,6 +4208,11 @@
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
 				FA82918B2E4379960051844E /* CountryTvcell.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
+				1888705E2EEAED86008B71FF /* APIInputParameters.swift in Sources */,
+				1888705F2EEAED86008B71FF /* APIService.swift in Sources */,
+				188870602EEAED86008B71FF /* AppConstant.swift in Sources */,
+				188870612EEAED86008B71FF /* com_SendingAPI.swift in Sources */,
+				188870622EEAED86008B71FF /* Model.swift in Sources */,
 				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				84E12C3A2ECC71F200FF614B /* PopoverTVC.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
@@ -4348,6 +4241,7 @@
 				84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */,
 				84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */,
 				84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */,
+				188870562EEAEB0F008B71FF /* parentPTMcell.swift in Sources */,
 				846CF73F2E2F5A98000361CE /* OngoingCVC.swift in Sources */,
 				FAF43B602E02811E00F28A16 /* ViewLessonVC.swift in Sources */,
 				849970D02CF8752400800B07 /* HistoryTC.swift in Sources */,

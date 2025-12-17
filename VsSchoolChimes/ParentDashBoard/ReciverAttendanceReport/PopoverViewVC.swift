@@ -67,6 +67,7 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         cell.tittleLbl.text = item.title
         
+        
         switch type {
         case .badge:
             cell.iconImg.isHidden = true
@@ -76,13 +77,27 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             cell.iconBtn.backgroundColor = item.color
             cell.iconBtn.layer.cornerRadius = 8
             cell.iconBtn.clipsToBounds = true
+            if item.symbol == "Pᴸᴬ" {
+                    let text = NSMutableAttributedString(string: "Pᴸᴬ")
+                    // Color P = white
+                    text.addAttribute(.foregroundColor, value: UIColor.white,
+                                      range: NSRange(location: 0, length: 1))
+                    // Color LA = orange
+                    text.addAttribute(.foregroundColor, value: UIColor.button,
+                                      range: NSRange(location: 1, length: 2))
+                    // Apply attributed title
+                    cell.iconBtn.setAttributedTitle(text, for: .normal)
+
+                } else {
+                    // Normal symbols
+                    cell.iconBtn.setTitle(item.symbol, for: .normal)
+                    cell.iconBtn.setTitleColor(.white, for: .normal)
+                }
             
         case .symbol:
             cell.iconBtn.isHidden = true
             cell.iconImg.isHidden = false
-            
             let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
-            
             if let sysImg = UIImage(systemName: item.symbol, withConfiguration: config) {
                 cell.iconImg.image = sysImg
                 cell.iconImg.tintColor = item.color

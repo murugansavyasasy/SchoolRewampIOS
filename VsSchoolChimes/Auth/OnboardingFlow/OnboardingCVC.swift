@@ -12,7 +12,6 @@ class OnboardingCVC: UICollectionViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var headingLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UITextView!
-
     override func awakeFromNib() {
         super.awakeFromNib()
         setupInitialState()
@@ -27,7 +26,6 @@ class OnboardingCVC: UICollectionViewCell {
         imgView.alpha = 0
         headingLbl.alpha = 0
         descriptionLbl.alpha = 0
-
         imgView.transform = CGAffineTransform(translationX: 0, y: 20)
         headingLbl.transform = CGAffineTransform(translationX: 0, y: 20)
         descriptionLbl.transform = CGAffineTransform(translationX: 0, y: 20)

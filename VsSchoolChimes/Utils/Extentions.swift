@@ -81,7 +81,7 @@ extension UIView {
 }
 
 extension UIView {
-
+    
     func addDoneButton() {
         if #available(iOS 26.0, *) {
             applyLiquidToolbar()   // New custom rounded design
@@ -89,59 +89,59 @@ extension UIView {
             applyClassicToolbar()  // Old UIToolbar
         }
     }
-
+    
     // MARK: - Classic iOS 15 toolbar
     private func applyClassicToolbar() {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-
+        
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
-
+        
         toolbar.items = [flex, done]
-
+        
         if let tf = self as? UITextField { tf.inputAccessoryView = toolbar }
         if let tv = self as? UITextView { tv.inputAccessoryView = toolbar }
     }
-
+    
     // MARK: - Custom Liquid toolbar (iOS 26+)
     private func applyLiquidToolbar() {
         let width = UIScreen.main.bounds.width
         let height: CGFloat = 44
         let radius: CGFloat = 14
         let rightPadding: CGFloat = 20   // << increase this as much as you want
-
+        
         let keyboardBackground = UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 28/255, green: 28/255, blue: 30/255, alpha: 1)
-                : UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
+            ? UIColor(red: 28/255, green: 28/255, blue: 30/255, alpha: 1)
+            : UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1)
         }
-
+        
         let container = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         container.backgroundColor = keyboardBackground
-
+        
         // Rounded TOP corners only
         container.layer.cornerRadius = radius
         container.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.clipsToBounds = true
-
+        
         // Bottom separator
         let separator = UIView()
         separator.backgroundColor = UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(white: 1, alpha: 0.15)
-                : UIColor(red: 199/255, green: 199/255, blue: 204/255, alpha: 1)
+            ? UIColor(white: 1, alpha: 0.15)
+            : UIColor(red: 199/255, green: 199/255, blue: 204/255, alpha: 1)
         }
         separator.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(separator)
-
+        
         NSLayoutConstraint.activate([
             separator.heightAnchor.constraint(equalToConstant: 0.5),
             separator.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             separator.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
-
+        
         // Done button
         let done = UIButton(type: .system)
         done.setTitle("Done", for: .normal)
@@ -149,20 +149,20 @@ extension UIView {
         done.setTitleColor(.systemBlue, for: .normal)
         done.translatesAutoresizingMaskIntoConstraints = false
         done.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
-
+        
         container.addSubview(done)
-
+        
         NSLayoutConstraint.activate([
             done.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -rightPadding),
             done.centerYAnchor.constraint(equalTo: container.centerYAnchor)
         ])
-
+        
         // Apply to view
         if let tf = self as? UITextField { tf.inputAccessoryView = container }
         if let tv = self as? UITextView { tv.inputAccessoryView = container }
     }
-
-
+    
+    
     @objc private func dismissKeyboard() {
         endEditing(true)
     }
@@ -273,8 +273,8 @@ extension UIViewController {
             if UIViewController.loaders[id] != nil { return }
             
             guard let window = UIApplication.shared.connectedScenes
-                    .compactMap({ $0 as? UIWindowScene })
-                    .first?.keyWindow else { return }
+                .compactMap({ $0 as? UIWindowScene })
+                .first?.keyWindow else { return }
             
             let bg = UIView(frame: window.bounds)
             bg.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -332,118 +332,118 @@ enum LoaderStyle {
 }
 
 class CircularProgressLoader: UIView {
-
+    
     static let shared = CircularProgressLoader()
-
+    
     private let backgroundView = UIView()
     private let progressLayer = CAShapeLayer()
     private let trackLayer = CAShapeLayer()
     private let percentageLabel = UILabel()
     private var currentStyle: LoaderStyle = .circle
-
+    
     private override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         setupCommonUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupCommonUI() {
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.backgroundColor = .white
         backgroundView.layer.cornerRadius = 20
         backgroundView.clipsToBounds = true
         addSubview(backgroundView)
-
+        
         NSLayoutConstraint.activate([
             backgroundView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             backgroundView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             backgroundView.widthAnchor.constraint(equalToConstant: 100),
             backgroundView.heightAnchor.constraint(equalToConstant: 100)
         ])
-
+        
         percentageLabel.translatesAutoresizingMaskIntoConstraints = false
         percentageLabel.textAlignment = .center
         percentageLabel.font = UIFont.boldSystemFont(ofSize: 13)
         percentageLabel.textColor = .black
         backgroundView.addSubview(percentageLabel)
-
+        
         NSLayoutConstraint.activate([
             percentageLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
             percentageLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor)
         ])
     }
-
+    
     private func setupStyle(_ style: LoaderStyle) {
         trackLayer.removeFromSuperlayer()
         progressLayer.removeFromSuperlayer()
-
+        
         let path: UIBezierPath
-
+        
         if style == .circle {
             let padding: CGFloat = 20
             let diameter: CGFloat = 100 - (padding * 2)
             let centerPoint = CGPoint(x: 50, y: 50)
             path = UIBezierPath(arcCenter: centerPoint, radius: diameter / 2, startAngle: -.pi / 2, endAngle: 1.5 * .pi, clockwise: true)
-
+            
             trackLayer.strokeColor = UIColor.lightGray.cgColor
             progressLayer.strokeColor = UIColor.systemGreen.cgColor
-
+            
             trackLayer.lineWidth = 8
             progressLayer.lineWidth = 5
-
+            
             trackLayer.fillColor = UIColor.clear.cgColor
             progressLayer.fillColor = UIColor.clear.cgColor
-
+            
             trackLayer.path = path.cgPath
             progressLayer.path = path.cgPath
         } else {
             // Rectangle loader
             let baseRect = CGRect(x: 10, y: 45, width: 80, height: 10)
             path = UIBezierPath(roundedRect: baseRect, cornerRadius: 5)
-
+            
             trackLayer.fillColor = UIColor.lightGray.cgColor
             progressLayer.fillColor = UIColor.systemGreen.cgColor
-
+            
             trackLayer.strokeColor = nil
             progressLayer.strokeColor = nil
-
+            
             trackLayer.lineWidth = 0
             progressLayer.lineWidth = 0
-
+            
             trackLayer.path = path.cgPath
             progressLayer.path = UIBezierPath(roundedRect: CGRect(x: 10, y: 45, width: 0, height: 10), cornerRadius: 5).cgPath
         }
-
+        
         backgroundView.layer.addSublayer(trackLayer)
         backgroundView.layer.addSublayer(progressLayer)
-
+        
         progressLayer.strokeEnd = 0
         percentageLabel.text = "0%"
         self.currentStyle = style
     }
-
+    
     func show(style: LoaderStyle = .circle) {
         DispatchQueue.main.async {
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-
+            
             if self.superview == nil {
                 window.addSubview(self)
             }
-
+            
             self.setupStyle(style)
         }
     }
-
+    
     func updateProgress(to percent: Double) {
         DispatchQueue.main.async {
             let clamped = max(0.0, min(100.0, percent))
             let stroke = clamped / 100.0
             self.percentageLabel.text = String(format: "%.0f%%", clamped)
-
+            
             if self.currentStyle == .circle {
                 // Animate stroke for circle
                 CATransaction.begin()
@@ -457,7 +457,7 @@ class CircularProgressLoader: UIView {
                 let path = UIBezierPath(roundedRect: CGRect(x: 10, y: 45, width: width, height: 10), cornerRadius: 5)
                 self.progressLayer.path = path.cgPath
             }
-
+            
             if clamped >= 100 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     self.hide()
@@ -465,26 +465,26 @@ class CircularProgressLoader: UIView {
             }
         }
     }
-
-
+    
+    
     func hide() {
         DispatchQueue.main.async {
             self.removeFromSuperview()
         }
     }
 }
- class ExpandableLabelState {
+class ExpandableLabelState {
     var fullText: String = ""
     var isExpanded: Bool = false
     var onTap: (() -> Void)?
 }
 
 extension UILabel {
-
+    
     private struct AssociatedKeys {
         static var expandableState = "expandableState"
     }
-
+    
     private var expandableState: ExpandableLabelState {
         if let state = objc_getAssociatedObject(self, &AssociatedKeys.expandableState) as? ExpandableLabelState {
             return state
@@ -493,7 +493,7 @@ extension UILabel {
         objc_setAssociatedObject(self, &AssociatedKeys.expandableState, state, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         return state
     }
-
+    
     var isExpanded: Bool {
         get { expandableState.isExpanded }
         set {
@@ -501,12 +501,12 @@ extension UILabel {
             updateExpandableLabel()
         }
     }
-
+    
     var onExpandableTap: (() -> Void)? {
         get { expandableState.onTap }
         set { expandableState.onTap = newValue }
     }
-
+    
     func setupExpandable(text: String, isExpanded: Bool = false) {
         expandableState.fullText = text
         expandableState.isExpanded = isExpanded
@@ -514,16 +514,16 @@ extension UILabel {
         updateExpandableLabel()
         addExpandableTapGesture()
     }
-
+    
     private func updateExpandableLabel() {
         let fullText = expandableState.fullText
         guard let font = self.font else { return }
-
+        
         if fullText.count <= 100 {
             self.attributedText = NSAttributedString(string: fullText, attributes: [.font: font])
             return
         }
-
+        
         if expandableState.isExpanded {
             let text = fullText + " " + CommonStringFile.seeLess.translated()
             let attr = NSMutableAttributedString(string: text, attributes: [.font: font])
@@ -539,46 +539,46 @@ extension UILabel {
             self.attributedText = attr
         }
     }
-
+    
     private func addExpandableTapGesture() {
         isUserInteractionEnabled = true
         gestureRecognizers?.forEach { removeGestureRecognizer($0) }
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleExpandableLabelTap(_:)))
         addGestureRecognizer(tap)
     }
-
+    
     @objc private func handleExpandableLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let text = self.attributedText?.string else { return }
-
+        
         // Only handle tap if full text is longer than 100
         if expandableState.fullText.count <= 100 { return }
-
+        
         let nsText = text as NSString
         let keyword = expandableState.isExpanded ? CommonStringFile.seeLess.translated() : CommonStringFile.seemore.translated()
         let range = nsText.range(of: keyword)
-
+        
         let tapPoint = gesture.location(in: self)
         let index = indexOfCharacter(at: tapPoint)
-
+        
         if NSLocationInRange(index, range) {
             expandableState.onTap?()
         }
     }
-
+    
     private func indexOfCharacter(at point: CGPoint) -> Int {
         guard let attributedText = self.attributedText else { return NSNotFound }
-
+        
         let textStorage = NSTextStorage(attributedString: attributedText)
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: bounds.size)
-
+        
         textContainer.lineFragmentPadding = 0
         textContainer.lineBreakMode = lineBreakMode
         textContainer.maximumNumberOfLines = numberOfLines
-
+        
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
-
+        
         return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
 }
@@ -586,12 +586,12 @@ extension UIView {
     func addTopAndBottomBorders(color: UIColor, thickness: CGFloat = 0.2) {
         // Remove old borders (if any)
         self.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
-
+        
         let topBorder = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: thickness))
         topBorder.backgroundColor = color
         topBorder.tag = 999
         self.addSubview(topBorder)
-
+        
         let bottomBorder = UIView(frame: CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness))
         bottomBorder.backgroundColor = color
         bottomBorder.tag = 999
@@ -602,7 +602,7 @@ extension UIView {
 extension DateFormatter {
     func convertDate(_ dateString: String, fromFormat: String = "dd-MM-yyyy", toFormat: String = "dd MMM yyyy") -> String? {
         self.dateFormat = fromFormat
-
+        
         if let date = self.date(from: dateString) {
             self.dateFormat = toFormat
             return self.string(from: date)
@@ -616,19 +616,19 @@ extension UILabel {
     func setStyledDateTime(dateString: String, timeString: String?) {
         let dateAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.black]
         let timeAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.gray]
-
+        
         let attributedText = NSMutableAttributedString(string: dateString, attributes: dateAttributes)
         if let time = timeString {
             let timeAttributedString = NSAttributedString(string: "  " + time, attributes: timeAttributes)
             attributedText.append(timeAttributedString)
         }
-
+        
         self.attributedText = attributedText
     }
 }
 func getFileIconName(for fileURL: URL) -> String {
     let ext = fileURL.pathExtension.lowercased()
-
+    
     switch ext {
     case "jpg", "jpeg", "png", "gif", "heic", "heif", "webp":
         return "image"
@@ -736,7 +736,7 @@ func getDateRangeLabel(from fromDate: Date, to toDate: Date) -> String {
 func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> String? {
     let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
     let localeID = normalizedLocaleIdentifier(for: savedCode)
-
+    
     let possibleFormats = [
         "yyyy-MM-dd",
         "dd/MM/yyyy",
@@ -748,21 +748,21 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
         "MMM d, yyyy",
         "EEE, d MMM yyyy"
     ]
-
+    
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: localeID)
-
+    
     for format in possibleFormats {
         dateFormatter.dateFormat = format
         if let date = dateFormatter.date(from: dateString) {
-
+            
             // Output locale based on selected language
             dateFormatter.locale = Locale(identifier: localeID)
             dateFormatter.dateFormat = toFormat
             return dateFormatter.string(from: date)
         }
     }
-
+    
     return nil
 }
 
@@ -903,24 +903,24 @@ func fetchVimeoVideoFiles(videoID: String, accessToken: String, completion: @esc
         completion([])
         return
     }
-
+    
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-
+    
     URLSession.shared.dataTask(with: request) { data, response, error in
         if let error = error {
             print("Network error: \(error.localizedDescription)")
             DispatchQueue.main.async { completion([]) }
             return
         }
-
+        
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             print("Invalid response from Vimeo")
             DispatchQueue.main.async { completion([]) }
             return
         }
-
+        
         guard let data = data,
               let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let files = jsonObject["files"] as? [[String: Any]] else {
@@ -928,7 +928,7 @@ func fetchVimeoVideoFiles(videoID: String, accessToken: String, completion: @esc
             DispatchQueue.main.async { completion([]) }
             return
         }
-
+        
         let videoURLs = files.compactMap { $0["link"] as? String }
         DispatchQueue.main.async { completion(videoURLs) }
     }.resume()
@@ -939,18 +939,18 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
         completion(nil)
         return
     }
-
+    
     let apiURL = URL(string: "https://api.vimeo.com/videos/\(videoID)")!
     var request = URLRequest(url: apiURL)
     request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-
+    
     URLSession.shared.dataTask(with: request) { data, response, error in
         if let error = error {
             print("Vimeo API error: \(error.localizedDescription)")
             completion(nil)
             return
         }
-
+        
         guard let data = data,
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let pictures = json["pictures"] as? [String: Any],
@@ -962,7 +962,7 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
             completion(nil)
             return
         }
-
+        
         // Download thumbnail image
         URLSession.shared.dataTask(with: thumbnailURL) { data, _, _ in
             if let data = data, let image = UIImage(data: data) {
@@ -981,7 +981,7 @@ func loadVimeoThumbnail(from url: String, accessToken: String, completion: @esca
 
 extension UILabel {
     func setRequiredText(_ text: String, asteriskColor: UIColor = .red) {
-
+        
         // Font safety
         let mainFont = UIFont(name: "Poppins-Bold", size: 14) ?? .boldSystemFont(ofSize: 14)
         let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? .systemFont(ofSize: 16)
@@ -1000,26 +1000,26 @@ extension UILabel {
                 .baselineOffset: 3
             ]
         )
-
+        
         let combined = NSMutableAttributedString()
         combined.append(normalText)
         combined.append(asteriskText)
-
+        
         self.attributedText = combined
     }
-
+    
     func profilesetRequiredText(_ text: String, asteriskColor: UIColor = .red) {
-
+        
         // Asterisk font: Poppins-Regular, larger size
         let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
-
+        
         let normalText = NSAttributedString(
             string: text,
             attributes: [
                 .font: UIFont.systemFont(ofSize: 12, weight: .medium),
                 .foregroundColor: self.textColor ?? .black
             ])
-
+        
         let asteriskText = NSAttributedString(
             string: "*",
             attributes: [
@@ -1027,11 +1027,11 @@ extension UILabel {
                 .foregroundColor: asteriskColor,
                 .baselineOffset: 2 // tweak to align nicely with main text
             ])
-
+        
         let combined = NSMutableAttributedString()
         combined.append(normalText)
         combined.append(asteriskText)
-
+        
         self.attributedText = combined
     }
 }
@@ -1097,26 +1097,26 @@ extension UILabel {
 }
 
 class LocalizationButton: UIButton {
-
+    
     @IBInspectable var localizationKey: String?
-
-     override func awakeFromNib() {
-         super.awakeFromNib()
-         applyLocalization()
-
-         NotificationCenter.default.addObserver(
-             self,
-             selector: #selector(applyLocalization),
-             name: NSNotification.Name("LANGUAGE_CHANGED"),
-             object: nil
-         )
-     }
-
-     @objc private func applyLocalization() {
-         let key = localizationKey?.isEmpty == false ? localizationKey! : (self.title(for: .normal) ?? "")
-
-         self.setTitle(key.translated(), for: .normal)
-     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        applyLocalization()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applyLocalization),
+            name: NSNotification.Name("LANGUAGE_CHANGED"),
+            object: nil
+        )
+    }
+    
+    @objc private func applyLocalization() {
+        let key = localizationKey?.isEmpty == false ? localizationKey! : (self.title(for: .normal) ?? "")
+        
+        self.setTitle(key.translated(), for: .normal)
+    }
 }
 func normalizedLocaleIdentifier(for code: String) -> String {
     if Locale.availableIdentifiers.contains(code) {
@@ -1129,17 +1129,17 @@ func normalizedLocaleIdentifier(for code: String) -> String {
     return "en"
 }
 class LocalizationLabel: UILabel {
-
+    
     @IBInspectable var localizationKey: String? {
         didSet {
             applyLocalization()
         }
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         applyLocalization()
-
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(applyLocalization),
@@ -1147,7 +1147,7 @@ class LocalizationLabel: UILabel {
             object: nil
         )
     }
-
+    
     @objc private func applyLocalization() {
         let key = localizationKey?.isEmpty == false ? localizationKey! : (self.text ?? "")
         self.text = key.translated()

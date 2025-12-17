@@ -12,70 +12,70 @@ import AWSCore
 import FirebaseCrashlytics
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate {
-    
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
+
     var notificationAlreadyHandled = false
-    var DeviceToken : String?
+    var deviceTokenString: String?
     var window: UIWindow?
-    var languages : String!
+
+    var languages: String!
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
 
+    // MARK: - Application Life Cycle
     func application(_ application: UIApplication,
-                        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
-           FirebaseApp.configure()
-//        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
-           UNUserNotificationCenter.current().delegate = self
-//           application.registerForRemoteNotifications()
-           Messaging.messaging().delegate = self
-        
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-                print("Permission granted: \(granted)")
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+
+        FirebaseApp.configure()
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+
+        // Push notification permission
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
+            if granted {
                 DispatchQueue.main.async {
                     application.registerForRemoteNotifications()
                 }
             }
-           return true
-       }
+        }
+        return true
+    }
 
-    
+    // MARK: - Firebase Token
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
-        
-        DeviceToken = fcmToken
+        deviceTokenString = fcmToken
+        print("FCM Token:", fcmToken ?? "")
     }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Stop network monitoring when the app is terminated
-        NetworkMonitor.shared.stopMonitoring()
-    }
-    
-    func application(_ application: UIApplication,didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
     }
-    
-    
-    func application(_ application: UIApplication,didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register: \(error)")
+
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Push registration failed:", error.localizedDescription)
     }
-    
-    // MARK: UISceneSession Lifecycle
-    
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        NetworkMonitor.shared.stopMonitoring()
     }
-    
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-    
+
+    // MARK: - Scene
+    func application(_ application: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        UISceneConfiguration(name: "Default Configuration",
+                             sessionRole: connectingSceneSession.role)
     }
- 
+
+    func application(_ application: UIApplication,
+                     didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
 }
 
-
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
+
+    // MARK: - Notification Handler
     func handleNotificationTap(userInfo: [AnyHashable: Any]) {
 
         guard let topVC = UIApplication.topViewController() else {
@@ -83,292 +83,160 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
 
-        // Login Check
         guard let login = UserDefaultFileManager.getLoginCredentials(),
               !login.mobile_number.isEmpty,
               !login.pwd.isEmpty else {
-
-            if #available(iOS 14.0, *) {
-                presentLogin(from: topVC)
-            }
+            presentLogin(from: topVC)
             return
         }
 
-        print("🔔 Notification tapped:", userInfo)
-
         if notificationAlreadyHandled {
-                    print("🚫 Notification already handled. Skipping duplicate call.")
-                    return
-                }
-                notificationAlreadyHandled = true
-        
+            print("🚫 Notification already handled — skipping duplicate.")
+            return
+        }
+        notificationAlreadyHandled = true
+
         let type = userInfo["type"] as? String
         let voiceUrl = userInfo["voice_url"] as? String ?? ""
-        let welcomeFileUrl = userInfo["WelcomeUrl"] as? String ?? ""
+        let welcomeURL = userInfo["WelcomeUrl"] as? String ?? ""
+
         if type == "normal" {
-            let loginAs = userInfo["receiver_type"] as? String
-            if loginAs == "student" {
-                guard let menuId = userInfo["menu_id"] as? String,
-                      let instituteId = userInfo["institute_id"] as? String,
-                      let childId = userInfo["receiver_id"] as? String,
-                      let headerId = userInfo["header_id"] as? String else { return }
-
-                guard let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
-
-                if #available(iOS 14.0, *) {
-                    handleNavigation(
-                        instituteId: instituteId,
-                        childId: childId,
-                        childDetails: childDetails,
-                        menuID: menuId,
-                        header_id: headerId,
-                        logintype: 2,
-                        from: topVC
-                    )
-                }
-            }
-            else if loginAs == "staff" {
-                guard let menuId = userInfo["menu_id"] as? String,
-                      let instituteId = userInfo["institute_id"] as? String,
-                      let childId = userInfo["receiver_id"] as? String,
-                      let headerId = userInfo["header_id"] as? String else { return }
-
-                guard let staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details else {
-                    return
-                }
-
-                if #available(iOS 14.0, *) {
-                    StaffhandleNavigation(
-                        instituteId: instituteId,
-                        staffId: childId,
-                        staffdetails: staffDetails,
-                        menuID: menuId,
-                        header_id: headerId,
-                        logintype: 1,
-                        from: topVC
-                    )
-                }
-                
-            }
-            
+            handleNormalNotification(userInfo: userInfo, from: topVC)
         } else if type == "call" {
             let vc = NotificationCallVC()
             vc.voiceUrl = voiceUrl
-            vc.welcomeFileUrl =  welcomeFileUrl
+            vc.welcomeFileUrl = welcomeURL
             vc.modalPresentationStyle = .fullScreen
             topVC.present(vc, animated: true)
         }
     }
 
+    // MARK: - Notification Types
+    private func handleNormalNotification(userInfo: [AnyHashable: Any], from topVC: UIViewController) {
+
+        let loginAs = userInfo["receiver_type"] as? String
+
+        if loginAs == "student" {
+            guard let menuId = userInfo["menu_id"] as? String,
+                  let instituteId = userInfo["institute_id"] as? String,
+                  let childId = userInfo["receiver_id"] as? String,
+                  let headerId = userInfo["header_id"] as? String,
+                  let childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details else { return }
+
+            handleStudentNavigation(
+                instituteId: instituteId,
+                childId: childId,
+                childDetails: childDetails,
+                menuID: menuId,
+                header_id: headerId,
+                logintype: 2,
+                from: topVC
+            )
+        }
+
+        else if loginAs == "staff" {
+            guard let menuId = userInfo["menu_id"] as? String,
+                  let instituteId = userInfo["institute_id"] as? String,
+                  let staffId = userInfo["receiver_id"] as? String,
+                  let headerId = userInfo["header_id"] as? String,
+                  let staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details else { return }
+
+            handleStaffNavigation(
+                instituteId: instituteId,
+                staffId: staffId,
+                staffdetails: staffDetails,
+                menuID: menuId,
+                header_id: headerId,
+                logintype: 1,
+                from: topVC
+            )
+        }
+    }
+
+    // MARK: - Foreground & Tap Notification
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-
+                                withCompletionHandler completion: @escaping () -> Void) {
         handleNotificationTap(userInfo: response.notification.request.content.userInfo)
-        completionHandler()
+        completion()
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-
+                                withCompletionHandler completion: @escaping (UNNotificationPresentationOptions) -> Void) {
         print("📩 Foreground notification:", notification.request.content.userInfo)
-        completionHandler([.alert,.sound])
+        completion([.alert, .sound])
     }
 
-    @available(iOS 14.0, *)
-    // MARK: - Handle Login
+    // MARK: - Login & Navigation Helpers
     private func presentLogin(from rootVC: UIViewController) {
-        let loginVC = LoginVc(nibName: nil, bundle: nil)
-        loginVC.modalPresentationStyle = .fullScreen
-        rootVC.present(loginVC, animated: true)
+        if #available(iOS 14.0, *) {
+            let loginVC = LoginVc()
+            loginVC.modalPresentationStyle = .fullScreen
+            rootVC.present(loginVC, animated: true)
+        }
+        
     }
 
-    // MARK: - Handle Navigation to tapbar(homePage)
-    @available(iOS 14.0, *)
-    private func handleNavigation(
+    private func handleStudentNavigation(
         instituteId: String,
         childId: String,
         childDetails: [ChildDetails],
-        menuID : String,
-        header_id : String,
-        logintype : Int,
+        menuID: String,
+        header_id: String,
+        logintype: Int,
         from rootVC: UIViewController
     ) {
-        // Filter matching children
-        let matchingChildren = childDetails.filter { $0.school_id == instituteId && $0.child_id == childId }
-        
-        if let firstChild = matchingChildren.first {
-            UserDefaultFileManager.saveChildDetails(data: firstChild)
+        if let match = childDetails.first(where: { $0.school_id == instituteId && $0.child_id == childId }) {
+            UserDefaultFileManager.saveChildDetails(data: match)
         }
-        
-        DispatchQueue.main.async {
-            guard let topVC = UIApplication.topViewController() else {
-                print("❌ No top visible view controller")
-                return
-            }
-            print("TOP VC = \(topVC)")
-            
-            let vc = TapBarVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            vc.login_astype = logintype
-            vc.comfromNotification = true
-            vc.menuId = menuID
-            vc.messageId = header_id
-            topVC.present(vc, animated: true)
-        }
+
+        presentHome(menuID: menuID, headerID: header_id, loginType: logintype)
     }
-    @available(iOS 14.0, *)
-    private func StaffhandleNavigation(
+
+    private func handleStaffNavigation(
         instituteId: String,
         staffId: String,
         staffdetails: [StaffDetails],
-        menuID : String,
-        header_id : String,
-        logintype : Int,
+        menuID: String,
+        header_id: String,
+        logintype: Int,
         from rootVC: UIViewController
     ) {
-        // Filter matching staff
-        let matchingChildren = staffdetails.filter {
-            $0.school_id == instituteId && $0.staff_id == staffId
+        if let match = staffdetails.first(where: { $0.school_id == instituteId && $0.staff_id == staffId }) {
+            UserDefaultFileManager.saveStaffDetails(data: match)
         }
-        
-        if let firstChild = matchingChildren.first {
-            UserDefaultFileManager.saveStaffDetails(data: firstChild)
-        }
-        
-        DispatchQueue.main.async {
-            guard let topVC = UIApplication.topViewController() else {
-                print("❌ No top visible view controller")
-                return
-            }
-            print("TOP VC = \(topVC)")
-            
-            let vc = TapBarVC(nibName: nil, bundle: nil)
+        presentHome(menuID: menuID, headerID: header_id, loginType: logintype)
+    }
+
+    private func presentHome(menuID: String, headerID: String, loginType: Int) {
+        guard let topVC = UIApplication.topViewController() else { return }
+        if #available(iOS 14.0, *) {
+            let vc = TapBarVC()
             vc.modalPresentationStyle = .fullScreen
-            vc.login_astype = logintype
+            vc.login_astype = loginType
             vc.comfromNotification = true
             vc.menuId = menuID
-            vc.messageId = header_id
+            vc.messageId = headerID
             topVC.present(vc, animated: true)
         }
     }
-    
 }
 
 
+// MARK: - UIApplication Helpers
 extension UIApplication {
-
-    // Get current active window (iOS 13+)
     var currentWindow: UIWindow? {
-        return self.connectedScenes
+        connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .flatMap { $0.windows }
             .first { $0.isKeyWindow }
     }
 
-    // Get top most view controller
     class func topViewController(_ vc: UIViewController? = UIApplication.shared.currentWindow?.rootViewController) -> UIViewController? {
-
-        if let nav = vc as? UINavigationController {
-            return topViewController(nav.visibleViewController)
-        }
-
-        if let tab = vc as? UITabBarController {
-            return topViewController(tab.selectedViewController)
-        }
-
-        if let presented = vc?.presentedViewController {
-            return topViewController(presented)
-        }
-
+        if let nav = vc as? UINavigationController { return topViewController(nav.visibleViewController) }
+        if let tab = vc as? UITabBarController { return topViewController(tab.selectedViewController) }
+        if let presented = vc?.presentedViewController { return topViewController(presented) }
         return vc
     }
 }
-
-
-
-
-// MARK: Ios Home Wallpapper Widets
-
-
-
-//func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//
-//    window?.overrideUserInterfaceStyle = .light
-//    NetworkMonitor.shared.startMonitoring()
-//    FirebaseApp.configure()
-//
-//    UNUserNotificationCenter.current().delegate = self
-//
-//    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-//
-//        print("Permission granted: \(granted)")
-//
-//    }
-//
-//    application.registerForRemoteNotifications()
-//    Messaging.messaging().delegate = self
-//    let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APSouth1, identityPoolId: AwsCredentials.CognitoPoolID)//3-2
-//    let configuration = AWSServiceConfiguration(region: .APSouth1, credentialsProvider: credentialsProvider)
-//    AWSServiceManager.default().defaultServiceConfiguration = configuration
-//
-//    let attendanceAction = UIApplicationShortcutItem(
-//               type: "com.voicesnap.schoolmessenger.attendance",
-//               localizedTitle: "Attendance",
-//               localizedSubtitle: "Mark your attendance",
-//               icon: UIApplicationShortcutIcon(systemImageName: "checkmark.circle"),
-//               userInfo: nil
-//           )
-//
-//           let feeDetailsAction = UIApplicationShortcutItem(
-//               type: "com.voicesnap.schoolmessenger.feeDetails",
-//               localizedTitle: "Fee Details",
-//               localizedSubtitle: "Check your fees",
-//               icon: UIApplicationShortcutIcon(systemImageName: "dollarsign.circle"),
-//               userInfo: nil
-//           )
-//
-//           let videoAction = UIApplicationShortcutItem(
-//               type: "com.voicesnap.schoolmessenger.video",
-//               localizedTitle: "Videos",
-//               localizedSubtitle: "Watch learning videos",
-//               icon: UIApplicationShortcutIcon(systemImageName: "video"),
-//               userInfo: nil
-//           )
-//
-//           UIApplication.shared.shortcutItems = [attendanceAction, feeDetailsAction, videoAction]
-//
-//
-//
-//
-//
-//    return true
-//
-//}
-//
-//
-//// Handle Menu Selection
-//  func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-//      guard let rootVC = window?.rootViewController as? UINavigationController else {
-//          completionHandler(false)
-//          return
-//      }
-//
-//      switch shortcutItem.type {
-//      case "com.voicesnap.schoolmessenger.attendance":
-//          let attendanceVC = ReciverAttendanceReportVC()
-//          rootVC.pushViewController(attendanceVC, animated: true)
-//      case "com.voicesnap.schoolmessenger.feeDetails":
-//          let feeVC = VideoVC()
-//          rootVC.pushViewController(feeVC, animated: true)
-//      case "com.voicesnap.schoolmessenger.video":
-//          let videoVC = VideoVC()
-//          rootVC.pushViewController(videoVC, animated: true)
-//      default:
-//          completionHandler(false)
-//          return
-//      }
-//
-//      completionHandler(true)
-//  }

@@ -159,7 +159,6 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     
     // MARK: - ChatTableViewCellDelegate
     func didSlideToReply(for message: String,studentName: String) {
-        print("Reply to: \(message)")
         replayStackView.isHidden = false
         ReplyTextFild.text = message
         

@@ -9,7 +9,6 @@ import UIKit
 //import DropDown
 
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
-    
     func markAsAbsent(AbsentStudent: [AttendanceStudentListDetails], CallAttendaceApi: Bool) {
         if CallAttendaceApi {
             user_inputs.all_present = areAllStudentsPresent() ? "T" : "F"
@@ -79,7 +78,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     var searchQuery: String = ""
     var selectedSort = CommonStringFile.NameASC
     var isAllAbsent = false
-    
+    var MARK_ATTENDANCE = "MARK_ATTENDANCE"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,7 +144,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         nameLbl.text = CommonStringFile.Name.translated()
         statusLbl.text = CommonStringFile.Status.translated()
         searchBar.placeholder = CommonStringFile.Search.translated()
-        //filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
     }
     
     func Get_student_List_Api(){
@@ -162,16 +160,15 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             guard let self = self else {return}
             
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
                     
                     if success.status == true {
                         
                         if success.data?.first?.is_edit == true{
-                            self.confirmBtn.setTitle("Confirm & Edit Attendance", for: .normal)
+                            self.confirmBtn.setTitle("Confirm & Edit Attendance".translated(), for: .normal)
                         }else{
-                            self.confirmBtn.setTitle("Confirm & Submit Attendance", for: .normal)
+                            self.confirmBtn.setTitle("Confirm & Submit Attendance".translated(), for: .normal)
                         }
                         
                         self.student_List = success.data?.first?.attd_details
@@ -183,10 +180,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                         let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
                         
                         if allAbsent {
-                            
                             self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
                         } else {
-                            
                             self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
                         }
                         
@@ -209,17 +204,11 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     
     func markAttendaceApi(){
-        
         let payload = student_List?.map {
             getSpecialAttendanceType(for: $0)
         } ?? []
-        
-        print("param",payload)
-        
         APIService.shared
             .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
-                
-                // MarkAttendenceStringFile.student_id: MakeAbsentId,
                 MarkAttendenceStringFile.class_id: user_inputs.class_id,
                 MarkAttendenceStringFile.section_id: user_inputs.section_id,
                 MarkAttendenceStringFile.all_present: user_inputs.all_present,
@@ -227,28 +216,21 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 MarkAttendenceStringFile.session_type: user_inputs.session_type,
                 MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date,
                 MarkAttendenceStringFile.student_details: payload
-                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
-                
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [self] in
-                            
                             if user_inputs.clearTempData(){
-                                let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                                              "activity": "MARK_ATTENDANCE",
-                                              "user_type": 2,
-                                              "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+                                let parms = [ AttendanceAPIKeys.mobile_number: UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                                              AttendanceAPIKeys.activity: MARK_ATTENDANCE,
+                                              AttendanceAPIKeys.user_type: 2,
+                                              AttendanceAPIKeys.menu_id: Menu_id.staffSelectedMenuId] as [String : Any]
                                 self.paketApiCall(params:parms)
                             }
-                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: AlertstringFile.Success,
@@ -256,11 +238,9 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     on: self
                                 ) {
                                     self.attendaceGoBackDashBoard()
-                                    
                                 }
                         }
                     }else {
-                        
                         DispatchQueue.main.async {
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -269,13 +249,11 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     on: self
                                 ) {
                                     self.attendaceGoBackDashBoard()
-                                    
                                 }
                         }
                     }
                     
                 case.failure(let error) :
-                    
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                     }
@@ -316,7 +294,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         let statuses: [String] = students.map { student in
             let components = student.att_status?.split(separator: "/").map(String.init) ?? []
             var value = ""
-            
             // Determine session value
             if user_inputs.session_type == "FH" {
                 value = components.first ?? ""
@@ -334,7 +311,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 return "PRESENT"
             }
         }
-        
         // Count occurrences
         let presentCount = statuses.filter { $0 == "PRESENT" }.count
         let absentCount = statuses.filter { $0 == "ABSENT" }.count
@@ -349,10 +325,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         switch staff_role {
         case PriorityType.is_staff:
             self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-            
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-            
-            
             if (staffDetailsCount?.count ?? 0) > 1 {
                 self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                 
@@ -400,7 +373,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         guard var students = student_List else { return }
         for i in 0..<students.count {
             var components = students[i].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-            
             if user_inputs.attendance_type == "H" {
                 if user_inputs.session_type == "FH" {
                     components[0] = isAllAbsent ? "A" : "P"
@@ -424,7 +396,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     }
     
     @IBAction func BackAct(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     
@@ -451,7 +422,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     func areAllStudentsPresent() -> Bool {
         guard let students = Filtered_stuent_Listt else { return false }
-        
         return students.allSatisfy { student in
             let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
             var value = ""
@@ -494,7 +464,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         default:
             splType = "PRESENT"
         }
-        
         return [
             "id": student.id ?? "",
             "spl_attendance_type": splType
@@ -585,8 +554,8 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         
         let student_data = Filtered_stuent_Listt?[indexPath.row]
         cell.nameLbl.text = student_data?.name
-        cell.admissionlbl.text = "ADMIS No: " + (student_data?.admission_no ?? "")
-        cell.rollNoLbl.text = "Roll No: " + (student_data?.roll_no ?? "")
+        cell.admissionlbl.text = MenuStringFile.ADMIS_No + (student_data?.admission_no ?? "")
+        cell.rollNoLbl.text = MenuStringFile.Roll_No + (student_data?.roll_no ?? "")
         cell.rollNoLbl.isHidden = student_data?.roll_no?.isEmpty ?? false
         let attendanceStatus = student_data?.att_status
         let components = attendanceStatus?.split(separator: "/")
@@ -637,7 +606,6 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
             cell.ODSwitch.isOn = true
             
         default:
-            
             cell.AttendanceBtn.backgroundColor = .systemGreen
             cell.AttendanceBtn.setTitle("P", for: .normal)
             cell.OnLateBtn.isHidden = false
