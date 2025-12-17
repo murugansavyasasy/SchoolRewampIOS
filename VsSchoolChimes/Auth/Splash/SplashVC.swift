@@ -103,7 +103,7 @@ class RippleRingView: UIView {
 
 // MARK: - SplashVC
 @available(iOS 14.0, *)
-class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewAttachments {
+class SplashVC: UIViewController, ViewAttachments {
     
     
     // MARK: - IBOutlets
