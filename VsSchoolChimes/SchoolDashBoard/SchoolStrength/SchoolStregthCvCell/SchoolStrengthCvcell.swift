@@ -18,7 +18,11 @@ class SchoolStrengthCvcell: UICollectionViewCell {
     @IBOutlet weak var Icons: UIImageView!
     @IBOutlet weak var OverAllcountLbl: UILabel!
     @IBOutlet weak var fullview: UIView!
+    @IBOutlet weak var othersCountLbl: UILabel!
+    @IBOutlet weak var progress: ThreeColorProgressView!
+    
     private var gradientLayer: CAGradientLayer?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -59,28 +63,25 @@ class SchoolStrengthCvcell: UICollectionViewCell {
         fullview.layoutIfNeeded()
     }
 
-    func updateProgress(absentees: String, total: String) {
-        let value = Float(absentees) ?? 0
-        let totalValue = Float(total) ?? 1
+    func updateProgress(male: Int, female: Int, others: Int, name:String) {
         
-        var progressValue = value / totalValue
-        if progressValue > 1 { progressValue = 1 } // avoid overflow
+        let maleCount = CGFloat(Double(male))
+        let femaleCount = CGFloat(Double(female))
+        let othersCount = CGFloat(Double(others))
         
-        progressbar.setProgress(progressValue, animated: true)
+        progress.setProgress(v1: maleCount, v2: femaleCount, v3: othersCount)
+        
     }
 
-
-    
-    func updateProgressStaffAndStudent(absentees: String, total: String) {
-        // String → Float convert
-        let absentCount = Float(absentees) ?? 0
-        let totalCount = Float(total) ?? 1  // avoid divide by zero
-        
-        let progressValue = totalCount / absentCount
-        
-        progressbar.setProgress(progressValue, animated: true)   // 0.0 to 1.0
-    }
-    
+//    func updateProgress(absentees: String, total: String) {
+//        let value = Float(absentees) ?? 0
+//        let totalValue = Float(total) ?? 1
+//        
+//        var progressValue = value / totalValue
+//        if progressValue > 1 { progressValue = 1 } // avoid overflow
+//        
+//        progressbar.setProgress(progressValue, animated: true)
+//    }
     
     
 //    func setupProgressView() {

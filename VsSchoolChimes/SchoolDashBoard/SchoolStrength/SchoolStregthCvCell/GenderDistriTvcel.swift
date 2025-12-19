@@ -9,71 +9,58 @@ import UIKit
 
 class GenderDistriTvcel: UITableViewCell {
 
-    @IBOutlet weak var otherLbl: UILabel!
-    @IBOutlet weak var girlsLbl: UILabel!
-    @IBOutlet weak var boysLbl: UILabel!
-    @IBOutlet weak var boysProgress: UIProgressView!
-    var  total_students : String?
-    var total_staff : String?
+    @IBOutlet weak var studentLbl: UILabel!
+    @IBOutlet weak var staffLbl: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
        
-        boysProgress.layer.cornerRadius = 8
-        boysProgress.clipsToBounds = true
+        progressBar.layer.cornerRadius = 8
+        progressBar.clipsToBounds = true
         
-        boysProgress.layer.sublayers?.forEach { layer in
+        progressBar.layer.sublayers?.forEach { layer in
             layer.cornerRadius = 8
             layer.masksToBounds = true
         }
-        
-        
     }
-    
-    
-    func updateGenderLabels(boys:String,girls:String) {
-        let boys = Int(boys) ?? 0
-        let girls = Int(girls) ?? 0
-        let total = boys + girls
 
-        print("total",total)
-        guard total > 0 else {
-            boysLbl.text = "No Data"
-            girlsLbl.text = "No Data"
+    func updateProgress(studentCount: String, staffCount: String) {
+        guard
+            let students = Float(studentCount),
+            let staff = Float(staffCount)
+        else {
+            progressBar.progress = 0
             return
         }
 
-        let boysPercentage = (Double(boys) / Double(total)) * 100
-        let girlsPercentage = (Double(girls) / Double(total)) * 100
+        let total = students + staff
+        guard total > 0 else {
+            progressBar.progress = 0
+            return
+        }
 
-        boysLbl.text = "\(boys) \("Staffs".translated()) (\(String(format: "%.1f", boysPercentage))%)"
-        girlsLbl.text = "\(girls) \("Students".translated()) (\(String(format: "%.1f", girlsPercentage))%)"
-
+        let progress = staff / total
+        progressBar.setProgress(progress, animated: true)
     }
-   
-//    func updateProgress(absentees: String, total: String) {
-//        // String → Float convert
-//        let absentCount = Float(absentees) ?? 0
-//        let totalCount = Float(total) ?? 1  // avoid divide by zero
-//        
-//        let progressValue = absentCount / totalCount
-//        
-//        boysProgress.setProgress(progressValue, animated: true)   // 0.0 to 1.0
-//        
-//       
-//    }
- 
 
+    func updateLabels(staffCount: String, studentCount: String) {
+        let staff = Int(staffCount) ?? 0
+        let students = Int(studentCount) ?? 0
+        let total = staff + students
 
-    func updateProgress(maleCount: String, totalCount: String) {
-        let male = Float(maleCount) ?? 0
-        let total = Float(totalCount) ?? 1
-        
-        var progressValue = male / total
-        if progressValue > 1 { progressValue = 1 }
-        
-        boysProgress.setProgress(progressValue, animated: true)
-        updateGenderLabels(boys: maleCount, girls: String(Int(total) - Int(male)))
+        guard total > 0 else {
+            staffLbl.text = "No Data"
+            studentLbl.text = "No Data"
+            return
+        }
+
+        let staffPercentage = (Double(staff) / Double(total)) * 100
+        let studentPercentage = (Double(students) / Double(total)) * 100
+
+        staffLbl.text = "\(staff) \("Staffs".translated()) (\(String(format: "%.1f", staffPercentage))%)"
+        studentLbl.text = "\(students) \("Students".translated()) (\(String(format: "%.1f", studentPercentage))%)"
     }
 
 }

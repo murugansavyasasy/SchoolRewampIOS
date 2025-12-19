@@ -26,8 +26,8 @@ class SchoolStrengthVC: UIViewController {
     var chartSet = false
     let acidamicdrops = DropDown()
     var displayArray : [StrengthDisplayModel] = []
-    var totalBoys : String?
-    var totalgirls : String?
+    var totalStudents : String?
+    var totalStaffs : String?
     var previousData : Previous?
     let Total = "Total"
     let Students = "Students"
@@ -35,6 +35,7 @@ class SchoolStrengthVC: UIViewController {
     let Standard = "Standard "
     let Boys = "Boys"
     let Girls = "Girls"
+    let NotSpecified = "Not specified"
     let TotalStudents = "Total Students"
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,10 +52,12 @@ class SchoolStrengthVC: UIViewController {
         Tv.register(UINib(nibName: CellConfingName.LblTvCell, bundle: nil), forCellReuseIdentifier: CellConfingName.LblTvCell)
         Tv.estimatedRowHeight = 100
         Tv.rowHeight = UITableView.automaticDimension
+        Tv.showsVerticalScrollIndicator = false
+        Tv.showsHorizontalScrollIndicator = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
         academicyearDrp.addGestureRecognizer(tapGesture)
         if localData.accidamic_year_data?.data?.isEmpty == false {
-            getacadmicYr()
+            getAcademicYear()
         }
     }
     
@@ -62,9 +65,7 @@ class SchoolStrengthVC: UIViewController {
         var list: [StrengthDisplayModel] = []
         let totalStudent = Int(data.total_student_strength ?? "0") ?? 0
         let totalStaff = Int(data.total_staff_strength ?? "0") ?? 0
-        let total = totalStudent + totalStaff + (Int(
-            data.total_others_strength ?? "0"
-        ) ?? 0)
+        let total = totalStudent + totalStaff
         let totalPreviousYear = Int(previousData?.total_student_strength ?? "0") ?? 0 + (
             Int(previousData?.total_staff_strength ?? "0") ?? 0
         )
@@ -74,21 +75,17 @@ class SchoolStrengthVC: UIViewController {
                 name: Total,
                 previousYear: totalPreviousYear,
                 Girl:Int(data.total_staff_strength ?? "0") ?? 0,
-                boys:  Int(
-                    data.total_student_strength ?? "0"
-                ) ?? 0,
+                boys:  Int(data.total_student_strength ?? "0") ?? 0,
+                others: 0,
                 message: previousData?.message ?? ""))
         list.append(
             StrengthDisplayModel(
                 count: totalStudent,
                 name: Students,
-                previousYear: Int(
-                    previousData?.total_student_strength ?? ""
-                ) ?? 0,
+                previousYear: Int(previousData?.total_student_strength ?? "") ?? 0,
                 Girl: Int(data.total_girls_strength ?? "0") ?? 0,
-                boys: Int(
-                    data.total_boys_strength ?? "0"
-                ) ?? 0,
+                boys: Int(data.total_boys_strength ?? "0") ?? 0,
+                others: Int(data.total_others_strength ?? "0") ?? 0,
                 message: previousData?.message ?? ""
             )
         )
@@ -96,15 +93,10 @@ class SchoolStrengthVC: UIViewController {
             StrengthDisplayModel(
                 count: totalStaff,
                 name: Staff,
-                previousYear: Int(
-                    previousData?.total_staff_strength ?? ""
-                ) ?? 0,
-                Girl: Int(
-                    data.total_female_staffs_strength ?? "0"
-                ) ?? 0,
-                boys: Int(
-                    data.total_male_staffs_strength ?? "0"
-                ) ?? 0,
+                previousYear: Int(previousData?.total_staff_strength ?? "") ?? 0,
+                Girl: Int(data.total_female_staffs_strength ?? "0") ?? 0,
+                boys: Int(data.total_male_staffs_strength ?? "0") ?? 0,
+                others: Int(data.total_other_staffs_strength ?? "0") ?? 0,
                 message: previousData?.message ?? ""
             )
         )
@@ -128,12 +120,34 @@ class SchoolStrengthVC: UIViewController {
         }
     }
     
-    func getacadmicYr() {
-        accadimYr = localData.accidamic_year_data?.data?.compactMap { $0.year } ?? []
-        acodomicYearLbl.text = accadimYr.last ?? ""
-        acodemicId = localData.accidamic_year_data?.data?.last?.id ?? 0
+//    func getacadmicYr() {
+//        for i in 0..<(localData.accidamic_year_data?.data?.count ?? 0){
+////            if let year = localData.accidamic_year_data?.data?[i].year{
+////                AcademicList.append(year)
+////            }
+//            if localData.accidamic_year_data?.data?[i].current_academic_year == true {
+//                acodomicYearLbl.text = localData.accidamic_year_data?.data?[i].year
+//                acodemicId = localData.accidamic_year_data?.data?[i].id
+//            }
+//        }
+//        accadimYr = localData.accidamic_year_data?.data?.compactMap { $0.year } ?? []
+//        Get_School_Strength()
+//    }
+    
+    func getAcademicYear() {
+       let academicData = localData.accidamic_year_data?.data
+
+        accadimYr = academicData?.compactMap { $0.year } ?? []
+
+        // Get current academic year first
+        let currentYear = academicData?.first(where: { $0.current_academic_year == true })
+        acodomicYearLbl.text = currentYear?.year
+        acodemicId = currentYear?.id
+
+        // Now safely call this since acodemicId is set
         Get_School_Strength()
     }
+
     
     @IBAction func BackbtnAct(_ sender: Any) {
         dismiss(animated: true)
@@ -160,8 +174,8 @@ class SchoolStrengthVC: UIViewController {
                     }
                     self.selectedIndexPath = nil
                     self.chartSet = false
-                    self.totalBoys = response.data?.first?.total_student_strength ?? "0"
-                    self.totalgirls = response.data?.first?.total_staff_strength ?? "0"
+                    self.totalStudents = response.data?.first?.total_student_strength ?? "0"
+                    self.totalStaffs = response.data?.first?.total_staff_strength ?? "0"
                     let hasData = !(response.data?.isEmpty ?? true)
                     self.norecordLbl.text = response.message
                     self.norecordLbl.isHidden = hasData
@@ -205,18 +219,15 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.dispalyArray = displayArray
+            cell.cv.reloadData()
             return cell
         }
         else if indexPath.section == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.GenderDistriTvcel, for: indexPath) as? GenderDistriTvcel else {
                 return UITableViewCell()
             }
-            let boys = (Int(totalBoys ?? "0") ?? 0) + (Int(totalgirls ?? "0") ?? 0)
-            cell
-                .updateProgress(
-                    maleCount:totalBoys ?? "",
-                    totalCount: String(boys)
-                )
+            cell.updateProgress(studentCount:totalStudents ?? "",staffCount: totalStaffs ?? "")
+            cell.updateLabels(staffCount: totalStaffs ?? "", studentCount: totalStudents ?? "")
             return cell
         }
         else if indexPath.section == 2{
@@ -231,33 +242,78 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(standard.sections)
-            cell.updateProgress(boys: standard.boys_count ?? "0", girls: standard.girls_count ?? "0")
+            cell.updateProgress(boys: standard.boys_count ?? "0", girls: standard.girls_count ?? "0", others: standard.other_count ?? "")
             cell.standardLbl.text = Standard.translated() + (standard.name ?? "")
             cell.boysCountLbl.text = "\(Boys.translated()): \(standard.boys_count ?? "")"
             cell.girlsCountLbl.text = "\(Girls.translated()): \(standard.girls_count ?? "")"
+            cell.othersCountLbl.text = "\(NotSpecified.translated()): \(standard.other_count ?? "")"
             cell.countLbl.text = "\(TotalStudents.translated()): \(standard.total_students ?? "")"
-            if standard.girls_count == "0" && standard.boys_count  == "0"{
-                cell.femaleImgView.isHidden = true
-                cell.maleImageView.isHidden = true
-                cell.progressView.tintColor = .lightGray
+            
+            let total = Int(standard.total_students ?? "") ?? 0
+            let boys  = Int(standard.boys_count ?? "") ?? 0
+            let girls = Int(standard.girls_count ?? "") ?? 0
+            let other = Int(standard.other_count ?? "") ?? 0
+
+            
+            cell.maleImageView.isHidden = true
+            cell.femaleImgView.isHidden = true
+            cell.othersImageView.isHidden = true
+
+            cell.maleImageView.image = nil
+            cell.femaleImgView.image = nil
+            cell.othersImageView.image = nil
+
+            if total > 0 {
+
+                if total == boys {
+                    cell.maleImageView.image = UIImage(named: "males")
+                    cell.femaleImgView.image = UIImage(named: "males")
+
+                    cell.maleImageView.tintColor = .maleClr
+                    cell.femaleImgView.tintColor = .maleClr
+
+                    cell.maleImageView.isHidden = false
+                    cell.femaleImgView.isHidden = false
+
+                } else if total == girls {
+                    cell.maleImageView.image = UIImage(named: "females")
+                    cell.femaleImgView.image = UIImage(named: "females")
+
+                    cell.maleImageView.tintColor = .femaleClr
+                    cell.femaleImgView.tintColor = .femaleClr
+
+                    cell.maleImageView.isHidden = false
+                    cell.femaleImgView.isHidden = false
+
+                } else if total == other {
+                    cell.maleImageView.image = .otherGender
+                    cell.femaleImgView.image = .otherGender
+
+                    cell.maleImageView.isHidden = false
+                    cell.femaleImgView.isHidden = false
+
+                } else {
+                   
+                    if boys > 0 {
+                        cell.maleImageView.image = UIImage(named: "males")
+                        cell.maleImageView.tintColor = .maleClr
+                        cell.maleImageView.isHidden = false
+                    }
+
+                    if girls > 0 {
+                        cell.femaleImgView.image = UIImage(named: "females")
+                        cell.femaleImgView.tintColor = .femaleClr
+                        cell.femaleImgView.isHidden = false
+                    }
+
+                    if other > 0 {
+                        cell.othersImageView.image = .otherGender
+                        cell.othersImageView.isHidden = false
+                    }
+                }
             }
-            else if standard.girls_count == "0"{
-                cell.femaleImgView.image = UIImage(named: "males")
-                cell.femaleImgView.tintColor = .maleClr
-                cell.maleImageView.image = UIImage(named: "males")
-                cell.maleImageView.tintColor = .maleClr
-            }
-            else if standard.boys_count  == "0"{
-                cell.femaleImgView.image = UIImage(named: "females")
-                cell.femaleImgView.tintColor = .femaleClr
-                cell.maleImageView.image = UIImage(named: "females")
-                cell.maleImageView.tintColor = .femaleClr
-            }else{
-                cell.maleImageView.image = UIImage(named: "males")
-                cell.maleImageView.tintColor = .maleClr
-                cell.femaleImgView.image = UIImage(named: "females")
-                cell.femaleImgView.tintColor = .femaleClr
-            }
+
+            
             let isExpanded = (indexPath == selectedIndexPath)
             cell.barchartHeight.constant = isExpanded ? cell.sectionCollertionView.collectionViewLayout.collectionViewContentSize.height : 0
             cell.cellview.backgroundColor = isExpanded ? .white : .clear
@@ -295,5 +351,6 @@ struct StrengthDisplayModel {
     var previousYear: Int
     var Girl : Int
     var boys : Int
+    var others: Int
     var message : String
 }

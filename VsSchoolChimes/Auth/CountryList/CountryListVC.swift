@@ -69,6 +69,7 @@ class CountryListVC: UIViewController {
     private func configureSearchBar() {
         searchBar.placeholder = "Find your country"
         searchBar.searchTextField.backgroundColor = .white
+        searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
     }
