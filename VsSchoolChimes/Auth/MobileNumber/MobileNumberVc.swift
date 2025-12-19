@@ -8,7 +8,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class MobileNumberVc: UIViewController,UITextFieldDelegate {
+class MobileNumberVc: UIViewController{
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var LoginTitleLbl: UILabel!

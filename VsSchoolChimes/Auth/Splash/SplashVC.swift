@@ -103,7 +103,7 @@ class RippleRingView: UIView {
 
 // MARK: - SplashVC
 @available(iOS 14.0, *)
-class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewAttachments {
+class SplashVC: UIViewController, ViewAttachments {
     
     
     // MARK: - IBOutlets
@@ -653,7 +653,7 @@ class SplashVC: UIViewController, UIPopoverPresentationControllerDelegate, ViewA
 //                        }
                         return
                     }
-                    if self.versionData?.ratus ?? false {
+                    if self.versionData?.is_rate_as ?? false {
                         self.presentPopover()
                     }else{
                         if userData.otp_sent == true{
@@ -879,7 +879,7 @@ extension SplashVC {
     }
     
     func dismiss(_: Bool) {
-        versionData?.ratus = false
+        versionData?.is_rate_as = false
         removePopoverOverlay()
         validateUser()
     }

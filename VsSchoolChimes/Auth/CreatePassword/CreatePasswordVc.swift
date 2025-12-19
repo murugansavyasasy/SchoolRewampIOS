@@ -8,7 +8,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class CreatePasswordVc: UIViewController,UITextFieldDelegate {
+class CreatePasswordVc: UIViewController{
     
     @IBOutlet weak var NewPassEyeImage: UIImageView!
     @IBOutlet weak var ConfirmPassEyeImage: UIImageView!

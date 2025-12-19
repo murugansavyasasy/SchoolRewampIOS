@@ -21,7 +21,7 @@ struct editLeave{
 import UIKit
 import FSCalendar
 @available(iOS 14.0, *)
-class LeveCreateVC: UIViewController,UITextViewDelegate{
+class LeveCreateVC: UIViewController{
     
     
     @IBOutlet weak var scrollView: UIScrollView!

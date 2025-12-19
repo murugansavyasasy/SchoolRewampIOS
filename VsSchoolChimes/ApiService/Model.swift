@@ -45,7 +45,7 @@ struct VersionData: Codable {
     let play_store_link: String?
     let app_store_link: String?
     let description: String?
-    var ratus:Bool?
+    var is_rate_as:Bool?
 }
 
 
@@ -2252,7 +2252,10 @@ struct QuizQuestiondata: Codable {
     var incorrect_answer_counts: Int?
     var correct_answer_text: String?
     var file_path: [FilePath]?
-    
+    var a_image : String?
+    var b_image : String?
+    var c_image : String?
+    var d_image : String?
     init(
         id: String? = nil,
         quiz_id: String? = nil,
@@ -2271,7 +2274,12 @@ struct QuizQuestiondata: Codable {
         correct_answer_counts: Int? = nil,
         incorrect_answer_counts: Int? = nil,
         correct_answer_text: String? = nil,
-        file_path: [FilePath]? = nil
+        file_path: [FilePath]? = nil,
+        a_image : String = "",
+        b_image : String = "",
+        c_image : String = "",
+        d_image : String = ""
+        
     ) {
         self.id = id
         self.quiz_id = quiz_id
@@ -2291,6 +2299,10 @@ struct QuizQuestiondata: Codable {
         self.incorrect_answer_counts = incorrect_answer_counts
         self.correct_answer_text = correct_answer_text
         self.file_path = file_path
+        self.a_image = a_image
+        self.b_image = b_image
+        self.c_image = c_image
+        self.d_image = d_image
     }
 }
 
