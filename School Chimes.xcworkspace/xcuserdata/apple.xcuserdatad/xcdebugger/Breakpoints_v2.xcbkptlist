@@ -3,4 +3,84 @@
    uuid = "7E5A5E04-2375-43D7-BC67-6F6FE55D7365"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5F8B7CB4-2AEF-4A0F-8FE9-42CA34553A45"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Quiz/QuistionTvTableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "imageSelection()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F387A54B-847B-4CD4-8C73-C9A3176F58CA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Quiz/QuistionTvTableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "imageSelection()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F387A54B-847B-4CD4-8C73-C9A3176F58CA - 11abf6e35a74f17c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Array&lt;__C.UIImage&gt;) -&gt; () in School_Chimes.QuistionTvTableViewCell.imageSelection() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/Desktop/NEW_SCHOOL/SchoolRewampIOS%203/VsSchoolChimes/SchoolDashBoard/Quiz/QuistionTvTableViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132">
+               </Location>
+               <Location
+                  uuid = "F387A54B-847B-4CD4-8C73-C9A3176F58CA - 67a0f487dbab00fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIImage) -&gt; School_Chimes.QuizAttachmentItem in closure #1 @Swift.MainActor () -&gt; () in closure #2 (Swift.Array&lt;__C.UIImage&gt;) -&gt; () in School_Chimes.QuistionTvTableViewCell.imageSelection() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/Desktop/NEW_SCHOOL/SchoolRewampIOS%203/VsSchoolChimes/SchoolDashBoard/Quiz/QuistionTvTableViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "133"
+                  endingLineNumber = "133">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6118F8D6-F3F3-48E5-BE74-AC9492087B0A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolDashBoard/Quiz/QuistionTvTableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "imageSelection()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

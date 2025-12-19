@@ -48,6 +48,7 @@
 		188870602EEAED86008B71FF /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188870592EEAED86008B71FF /* AppConstant.swift */; };
 		188870612EEAED86008B71FF /* com_SendingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888705A2EEAED86008B71FF /* com_SendingAPI.swift */; };
 		188870622EEAED86008B71FF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888705B2EEAED86008B71FF /* Model.swift */; };
+		188876152EF2D7E1008B71FF /* QuizAttachmentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188876142EF2D7E1008B71FF /* QuizAttachmentPicker.swift */; };
 		188EBD8E2ED5632F00BEA524 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8B2ED5632F00BEA524 /* LICENSE */; };
 		188EBD8F2ED5632F00BEA524 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD842ED5632F00BEA524 /* DropDownCell.xib */; };
 		188EBD902ED5632F00BEA524 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8C2ED5632F00BEA524 /* README.md */; };
@@ -755,6 +756,7 @@
 		188870592EEAED86008B71FF /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		1888705A2EEAED86008B71FF /* com_SendingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = com_SendingAPI.swift; sourceTree = "<group>"; };
 		1888705B2EEAED86008B71FF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		188876142EF2D7E1008B71FF /* QuizAttachmentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAttachmentPicker.swift; sourceTree = "<group>"; };
 		188EBD802ED5632F00BEA524 /* DPDConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDConstants.swift; sourceTree = "<group>"; };
 		188EBD812ED5632F00BEA524 /* DPDKeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDKeyboardListener.swift; sourceTree = "<group>"; };
 		188EBD822ED5632F00BEA524 /* DPDUIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DPDUIView+Extension.swift"; sourceTree = "<group>"; };
@@ -2968,6 +2970,7 @@
 				84174EA82E717FA100AC7092 /* QuizSubmissionVc.xib */,
 				FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */,
 				FA48A6972E754AA7004E10C7 /* QuizSubmisionTvCell.xib */,
+				188876142EF2D7E1008B71FF /* QuizAttachmentPicker.swift */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -4025,6 +4028,7 @@
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
 				8466E83F2D6ED0CB004F4EFC /* PopupVC.swift in Sources */,
+				188876152EF2D7E1008B71FF /* QuizAttachmentPicker.swift in Sources */,
 				84FC4DCA2DBCAE6700BBEDD7 /* FiltersCvCell.swift in Sources */,
 				84FC4DCB2DBCAE6700BBEDD7 /* ParentCommunicationVc.swift in Sources */,
 				844DF0092E5AD28F0016A347 /* QuistionPagenationVc.swift in Sources */,
