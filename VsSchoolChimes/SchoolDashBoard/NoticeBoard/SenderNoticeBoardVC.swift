@@ -343,6 +343,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         vc.minimumDate = Date()
         dateFormatter.dateFormat = DateFormatString.StandardFormat
         vc.dateSelection = 2
+        vc.date = fromDateLbl.text
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)

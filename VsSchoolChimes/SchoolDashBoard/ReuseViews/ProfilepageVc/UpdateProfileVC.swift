@@ -22,7 +22,7 @@ class UpdateProfileVC: UIViewController {
     let transitionDelegate = TransitioningDelegate()
     var changedParams: [String: Any] = [:]
     var attachmentNode: String?
-    var changeProfileImg: UIImage?
+    var changeProfileImg: UIImage? = UIImage(systemName: "person.fill")
     var changeProfileUrl: URL?
     var profileNode: String = "photoPath"
     var isStudent = false
@@ -144,8 +144,7 @@ class UpdateProfileVC: UIViewController {
                             self.profileImg.kf.setImage(with: imageUrl)
                             self.changeProfileUrl = imageUrl
                             self.profileNode = photoItem.node ?? "photoPath"
-                            self.editBtn.isEnabled = photoItem.is_editable ?? false
-                            self.editBtn.isHidden = photoItem.is_editable ?? false
+                            self.editBtn.isHidden = !(photoItem.is_editable ?? false)
                         }
                         
                         if let documentSection = self.profileSections.first(where: { section in
@@ -789,7 +788,7 @@ extension UpdateProfileVC: UIImagePickerControllerDelegate, UINavigationControll
         picker.dismiss(animated: true)
         if let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             profileImg.image = image
-            changeProfileImg = image // Store the changed image
+            changeProfileImg = image
         }
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

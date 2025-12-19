@@ -77,15 +77,20 @@ class RateUsViewController: UIViewController {
 
 
 // MARK: - Rating Delegate
-extension RateUsViewController: RatingDelegate {
-    
+extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
+    func didUpdateHeight() {
+        self.tableview.beginUpdates()
+        self.tableview.endUpdates()
+    }
     func rating(_ ratingcount: Int) {
         selectedRating = ratingcount
         isSelected = ratingcount > 0
         tableview.reloadData()
-        delegate?.viewAttachment(sender: UIButton())
+        DispatchQueue.main.async {
+            self.delegate?.viewAttachment(sender: UIButton())
+        }
     }
-    
+
     func Submit(_ category: CategoriesSection, suggessions: String) {
         if let index = categorySections?.firstIndex(where: { $0.rating == category.rating }) {
             categorySections?[index] = category
@@ -236,6 +241,7 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTypeTableViewCell, for: indexPath) as! RatingTypeTableViewCell
             cell.ratingDelegate = self
+            cell.heightDelegate = self
             cell.suggestContetTxtView.text = descriptionContent
             let filtered = categorySections?.filter { $0.rating == selectedRating }
             cell.configure(names: filtered?.first, rating: selectedRating)

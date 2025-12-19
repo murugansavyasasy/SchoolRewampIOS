@@ -7,8 +7,7 @@
 
 import UIKit
 
-@available(iOS 14.0, *)
-class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, SelectedId {
+class EventHistoryVC: UIViewController, SelectedId {
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             if let selectedEvent = event(withId: id ?? "") {
@@ -419,7 +418,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
 }
 
 // MARK: - UITableViewDelegate & DataSource
-@available(iOS 14.0, *)
 extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -602,7 +600,6 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - UISearchBarDelegate
-@available(iOS 14.0, *)
 extension EventHistoryVC: UISearchBarDelegate, FilterCatagories {
     func filterCatagories(name: String) {
         if name != "All"{

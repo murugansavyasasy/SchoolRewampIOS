@@ -6,6 +6,10 @@
 
 import UIKit
 
+protocol RatingTypeCellDelegate: AnyObject {
+    func didUpdateHeight()
+}
+
 class RatingTypeTableViewCell: UITableViewCell,
                                UICollectionViewDelegate,
                                UICollectionViewDataSource,
@@ -21,12 +25,20 @@ class RatingTypeTableViewCell: UITableViewCell,
     @IBOutlet weak var SubmitBtn: UIButton!
     
     var ratingDelegate: RatingDelegate?
+    weak var heightDelegate: RatingTypeCellDelegate?
+
     var names: [Categories] = []
     var SelectedCategory : CategoriesSection?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        names = []
+        collectionview.reloadData()
     }
     
     // MARK: - UI Setup
@@ -42,7 +54,14 @@ class RatingTypeTableViewCell: UITableViewCell,
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.lightGray.cgColor
         textview.addDoneButton()
-        setAttributedText(for: suggestLbl, with: CommonStringFile.any_other_suggestions.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        
+        setAttributedText(for: suggestLbl,
+                          with: CommonStringFile.any_other_suggestions.translated(),
+                          firstString: CommonStringFile.Add_attachment.translated(),
+                          secondString: CommonStringFile.Optional.translated(),
+                          color1: .black,
+                          color2: .lightGray)
+        
         SubmitBtn.layer.cornerRadius = SubmitBtn.frame.height / 2
         
         // Register Cell
@@ -56,17 +75,19 @@ class RatingTypeTableViewCell: UITableViewCell,
         layout.minimumLineSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
         collectionview.collectionViewLayout = layout
-        collectionview.layoutIfNeeded()
     }
     
     // MARK: - Configure
-    func configure(names: CategoriesSection?,rating:Int) {
+    func configure(names: CategoriesSection?, rating: Int) {
         SelectedCategory = names
         self.names = names?.category ?? []
+        
         AnySuggestionsLbl.text = names?.name ?? ""
         AnySuggestionsLbl.isHidden = self.names.isEmpty
+        
         collectionview.reloadData()
         collectionview.layoutIfNeeded()
+        
         updateCollectionViewHeight()
     }
     
@@ -76,15 +97,28 @@ class RatingTypeTableViewCell: UITableViewCell,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell, for: indexPath) as! SuggestionsCollectionViewCell
-        cell.layer.cornerRadius = 10
-        cell.backgroundColor = names[indexPath.row].selected ?? false ?  .gradient1 :UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
+        let cell = collectionview.dequeueReusableCell(
+            withReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell,
+            for: indexPath
+        ) as! SuggestionsCollectionViewCell
+        
+        let isSelected = names[indexPath.row].selected ?? false
+        
+        cell.layer.cornerRadius = 20
+        cell.layer.borderWidth = 1
+        
+        let selectedColor = UIColor.orange
+        let normalColor = UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
+        
+        cell.backgroundColor = isSelected ? selectedColor.withAlphaComponent(0.2) : normalColor
+        cell.layer.borderColor = (isSelected ? selectedColor : normalColor).cgColor
         
         cell.name.text = names[indexPath.item].name
-        cell.name.textColor = names[indexPath.item].selected ?? false ?  .black :.black
+        cell.name.textColor = .black
+        
         return cell
     }
-    
+
     // Dynamic cell width
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -101,16 +135,17 @@ class RatingTypeTableViewCell: UITableViewCell,
 
         let newValue = !(names[indexPath.item].selected ?? false)
         names[indexPath.item].selected = newValue
+        
         if SelectedCategory?.category != nil {
             SelectedCategory?.category?[indexPath.item].selected = newValue
         }
+        
         names.sort { ($0.selected ?? false) && !($1.selected ?? false) }
         SelectedCategory?.category = names
-
+        
         collectionView.reloadData()
+        updateCollectionViewHeight()
     }
-
-    
     
     // MARK: - Update Height
     override func layoutSubviews() {
@@ -122,12 +157,14 @@ class RatingTypeTableViewCell: UITableViewCell,
         collectionview.layoutIfNeeded()
         let height = collectionview.collectionViewLayout.collectionViewContentSize.height
         collectionviewheight.constant = height
+        
+        heightDelegate?.didUpdateHeight()
     }
+    
     // MARK: - Submit
     @IBAction func submit(_ sender: Any) {
-        if let ctegory = SelectedCategory{
+        if let ctegory = SelectedCategory {
             ratingDelegate?.Submit(ctegory, suggessions: suggestContetTxtView.text)
         }
     }
 }
-

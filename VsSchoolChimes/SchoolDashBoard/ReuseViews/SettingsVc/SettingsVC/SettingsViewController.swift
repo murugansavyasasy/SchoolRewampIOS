@@ -50,6 +50,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     var passVale = 1
     var Language: String?
     var hideBack = false
+    var isUpdatingPopover = false
     private var popoverOverlayView: UIView?
     // MARK: - Section Data
     lazy var sections: [Section] = [
@@ -400,27 +401,38 @@ extension SettingsViewController {
         }
     }
     func updatePopoverHeight() {
-        guard let presentedVC = presentedViewController as? RateUsViewController else { return }
+        guard !isUpdatingPopover else { return }
+        isUpdatingPopover = true
 
-        presentedVC.loadViewIfNeeded()
-        presentedVC.view.layoutIfNeeded()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            guard let presentedVC = self.presentedViewController as? RateUsViewController else {
+                self.isUpdatingPopover = false
+                return
+            }
 
-        let scrollContentHeight = presentedVC.tableview.contentSize.height
-        let paddingX: CGFloat = 20
-        let width = view.frame.width - (paddingX * 2)
-        let height = min(scrollContentHeight, view.frame.height * 0.85)
+            presentedVC.loadViewIfNeeded()
+            presentedVC.view.layoutIfNeeded()
 
-        presentedVC.preferredContentSize = CGSize(width: width, height: height)
+            let scrollContentHeight = presentedVC.tableview.contentSize.height
+            let paddingX: CGFloat = 20
+            let width = self.view.frame.width - (paddingX * 2)
+            let height = min(scrollContentHeight, self.view.frame.height * 0.85)
 
-        if let popover = presentedVC.popoverPresentationController {
-            popover.sourceRect = CGRect(
-                x: (view.frame.width - width) / 2,
-                y: (view.frame.height - height) / 2,
-                width: width,
-                height: height
-            )
+            presentedVC.preferredContentSize = CGSize(width: width, height: height)
+
+            if let popover = presentedVC.popoverPresentationController {
+                popover.sourceRect = CGRect(
+                    x: (self.view.frame.width - width) / 2,
+                    y: (self.view.frame.height - height) / 2,
+                    width: width,
+                    height: height
+                )
+            }
+            self.isUpdatingPopover = false
         }
     }
+
     @objc private func dismissPopoverOverlay() {
         guard let popoverVC = presentedViewController else { return }
            popoverVC.dismiss(animated: true)
