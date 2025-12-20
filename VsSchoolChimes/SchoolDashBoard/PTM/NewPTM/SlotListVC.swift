@@ -172,9 +172,10 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             let slot = slotData?.slots?[indexPath.row]
 
             // MARK: - Basic Info
-            cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "")"
-            cell.DurationLbl.text = "\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
+            cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "") (\(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated()))"
+            cell.DurationLbl.text = slot?.date?.convertToTargetDateFormat() //"\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
             cell.bookedByNameLbl.text = slot?.booked_by
+            cell.standardLbl.text = (slot?.my_class ?? "") + " - " + (slot?.my_section ?? "")
 
             // MARK: - Image
             if let url = URL(string: slot?.profile_url ?? "") {

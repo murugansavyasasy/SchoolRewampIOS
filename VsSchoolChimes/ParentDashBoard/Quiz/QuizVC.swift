@@ -23,7 +23,6 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     
-    
     var id = 0
     var correctoption : [Int] = []
     var selectedOption : [Int] = []
@@ -39,6 +38,7 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     var PushNotiMsgId : String?
     let CorrectAnswers  = "Correct Answers : "
     let IncorrectAnswers  = "Incorrect Answers : "
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()

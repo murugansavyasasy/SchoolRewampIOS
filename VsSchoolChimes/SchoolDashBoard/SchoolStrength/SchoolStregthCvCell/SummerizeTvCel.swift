@@ -11,6 +11,7 @@ class SummerizeTvCel: UITableViewCell {
 
     @IBOutlet weak var cv: UICollectionView!
     var dispalyArray : [StrengthDisplayModel] = []
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -18,7 +19,6 @@ class SummerizeTvCel: UITableViewCell {
         cv.register(UINib(nibName: "SchoolStrengthCvcell", bundle: nil), forCellWithReuseIdentifier: "SchoolStrengthCvcell")
         cv.delegate = self
         cv.dataSource = self
-        cv.reloadData()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -59,10 +59,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         // MARK: - Common Setup
         let item = dispalyArray[indexPath.row]
         cell.roles.text = item.name.translated()
-        cell.updateProgress(
-                absentees: String(item.boys),
-                total: String(item.count)
-            )
+        cell.updateProgress(male: item.boys, female: item.Girl, others: item.others, name: item.name)
         cell.OverAllcountLbl.text = "\(item.count)"
         
         // MARK: - Role-based Setup
@@ -70,31 +67,48 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
             switch item.name {
             case "Staff":
                 configureCell(cell, icon: "teachers", tint: .aproved,
-                              maleLabel: "Male".translated(), femaleLabel: "Female".translated(),
                               progressTint: .maleClr, trackTint: .femaleClr,
                               present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
-                //            cell.updateProgress(
-                //                absentees: String(item.boys),
-                //                total: String(item.count)
-                //                )
-                //            cell.OverAllcountLbl.text = "\(item.count)"
+                
+                cell.girlCount.isHidden = false
+                cell.boyCountLbl.textColor = .primery
+                cell.girlCount.textColor = .systemPink
+                cell.othersCountLbl.textColor = .systemGray
+                cell.boyCountLbl.text = "Male".translated() + ":" + String(item.boys)
+                cell.girlCount.text = "Female".translated() + ":" + String(item.Girl)
+                cell.othersCountLbl.text = "Others".translated() + ":" + String(item.others)
+                cell.progress.segment1Color = UIColor(hex: "#3D82ED")
+                cell.progress.segment2Color = UIColor(hex: "#FF93C0")
+               
             case "Students":
                 configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
-                              maleLabel: "Boys".translated(), femaleLabel: "Girls".translated(),
                               progressTint: .maleClr, trackTint: .femaleClr,
                               present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
-                //            cell.updateProgress(
-                //                absentees: String(item.boys),
-                //                total: String(item.count)
-                //                )
-                //
-                //            cell.OverAllcountLbl.text = "\(item.count)"
+                
+                cell.girlCount.isHidden = false
+                cell.boyCountLbl.textColor = .primery
+                cell.girlCount.textColor = .femaleClr
+                cell.othersCountLbl.textColor = .lightGray
+                cell.boyCountLbl.text = "Boys".translated() + ":" + String(item.boys)
+                cell.girlCount.text = "Girls".translated() + ":" + String(item.Girl)
+                cell.othersCountLbl.text = "Others".translated() + ":" + String(item.others)
+                cell.progress.segment1Color = UIColor(hex: "#3D82ED")
+                cell.progress.segment2Color = UIColor(hex: "#FF93C0")
+               
             case "Total":
                 configureCell(cell, icon: "School Needs", tint: .button,
-                              maleLabel: "Staffs".translated(), femaleLabel: "Students".translated(),
                               progressTint: .aproved.withAlphaComponent(0.7),
                               trackTint: .primery.withAlphaComponent(0.7),
                               present: item.count, previous: item.previousYear,girls: item.boys,boys: item.Girl,message: item.message)
+                
+                cell.girlCount.isHidden = true
+                cell.boyCountLbl.textColor = .aproved
+                cell.othersCountLbl.textColor = .primery
+                cell.boyCountLbl.text = "Staffs".translated() + ":" + String(item.boys)
+                cell.othersCountLbl.text = "Students".translated() + ":" + String(item.Girl)
+                cell.progress.segment1Color = .aproved.withAlphaComponent(0.7)
+                cell.progress.segment2Color = .primery.withAlphaComponent(0.7)
+                
                 
                 
             default:
@@ -108,8 +122,6 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         _ cell: SchoolStrengthCvcell,
         icon: String,
         tint: UIColor,
-        maleLabel: String,
-        femaleLabel: String,
         progressTint: UIColor,
         trackTint: UIColor,
         present: Int,
@@ -122,10 +134,6 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         cell.Icons.tintColor = tint
         cell.progressbar.progressTintColor = progressTint
         cell.progressbar.trackTintColor = trackTint
-
-        cell.girlCount.text = "\(femaleLabel): \(girls)"
-        cell.boyCountLbl.text = "\(maleLabel): \(boys)"
-
         
         // MARK: - Year Comparison Logic
         cell.lastYearLbl.text =  message
@@ -157,7 +165,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: 190, height: 150)
+        return CGSize(width: 220, height: 150)
     }
     
 }

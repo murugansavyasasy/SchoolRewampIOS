@@ -175,6 +175,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             user_inputs.selectedFileType = CommonStringFile.IMAGE

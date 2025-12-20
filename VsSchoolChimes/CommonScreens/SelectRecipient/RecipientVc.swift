@@ -294,9 +294,176 @@ class RecipientVc: UIViewController{
         }
     }
     
+    func uploadMultipleImages(_ attachments: [QuizAttachmentItem], completion: @escaping ([[String: String]]) -> Void) {
+
+        let images = attachments.compactMap { $0.image }
+        
+        uploadMedia(
+            file: images,           // 🚀 Multiple images
+            viewController: self,
+            title: "",
+            description: ""
+        ) { urls, iframe, fileSize, embedUrl in
+            
+            var formatted: [[String: String]] = []
+            
+            for urlString in urls {
+                guard let url = URL(string: urlString) else { continue }
+                
+                let ext = url.pathExtension.lowercased()
+                var type = ""
+
+                if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
+                    type = CommonStringFile.IMAGE
+                } else if urlString.contains("vimeo.com") {
+                    type = CommonStringFile.VIDEO
+                } else {
+                    type = ext.uppercased()
+                }
+                
+                formatted.append([
+                    "url": urlString,
+                    "type": type
+                ])
+            }
+            
+            completion(formatted)
+        }
+    }
+    
+    func uploadSingleImage(_ image: UIImage, completion: @escaping (String?) -> Void) {
+        uploadMedia(
+            file: [image],                // 🚀 Single image only
+            viewController: self,
+            title: "",
+            description: ""
+        ) { urls, iframe, fileSize, embedUrl in
+            // Return first URL
+            completion(urls.first)
+        }
+    }
+
+
+    private func uploadMedia(
+        file: Any,
+        viewController: UIViewController,
+        title: String = "",
+        description: String = "",
+        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
+    ) {
+        var uploadedURLs: [String] = []
+        var completed = 0
+        var iframeValue: String?
+        var fileSizeValue: Int?
+        var embedUrlValue: String?
+        
+        func updateAndCheckCompletion(total: Int) {
+            let progress = (Double(completed) / Double(total)) * 100
+            CircularProgressLoader.shared.updateProgress(to: progress)
+            if completed == total {
+                CircularProgressLoader.shared.hide()
+                completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
+            }
+        }
+        
+        switch file {
+        case let attachments as [AttachmentItem]:
+            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
+            let total = uploadableItems.count
+            guard total > 0 else {
+                completion([], nil, nil, nil)
+                return
+            }
+            
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            
+            for item in uploadableItems {
+                if let image = item.image {
+                    // 🖼 Local image → upload to AWS
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: image,
+                        progressHandler: nil
+                    ) { url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                        }
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    }
+                    
+                } else if let fileURLStr = item.imageURL,
+                          let fileURL = URL(string: fileURLStr) {
+                    
+                    if item.fileType.uppercased() == CommonStringFile.VIDEO {
+                        if fileURLStr.contains("vimeo.com") {
+                            uploadedURLs.append(fileURLStr)
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        } else {
+                            CircularProgressLoader.shared.show()
+                            vimeoUploader = VimeoUploader(
+                                accessToken: YOUR_VIMEO_TOKEN,
+                                presentingViewController: viewController
+                            )
+                            vimeoUploader?.upload(
+                                videoFileURL: fileURL,
+                                title: title,
+                                description: description,
+                                progress: { progress in
+                                    CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                                },
+                                completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
+                                    if let finalEmbedUrl = finalEmbedUrl {
+                                        uploadedURLs.append(finalEmbedUrl)
+                                    }
+                                    iframeValue = iframeHTML
+                                    fileSizeValue = fileSize
+                                    embedUrlValue = finalEmbedUrl
+                                    
+                                    completed += 1
+                                    updateAndCheckCompletion(total: total)
+                                }
+                            )
+                        }
+                        
+                    } else {
+                        if fileURLStr.lowercased().starts(with: "http") {
+                            uploadedURLs.append(fileURLStr)
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        } else {
+                            let path = item.fileType.uppercased() != CommonStringFile.IMAGE
+                            ? "uploads/Documents/"
+                            : "uploads/images/"
+                            
+                            AWSUploadManager.shared.uploadFileToAWS(
+                                file: fileURL,
+                                progressHandler: nil
+                            ) { url in
+                                if let uploadedURL = url {
+                                    uploadedURLs.append(uploadedURL)
+                                }
+                                completed += 1
+                                updateAndCheckCompletion(total: total)
+                            }
+                        }
+                    }
+                    
+                } else {
+                    print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
+                    completed += 1
+                    updateAndCheckCompletion(total: total)
+                }
+            }
+            
+        default:
+            print("❌ Unsupported file type")
+            completion([], nil, nil, nil)
+        }
+    }
     
     func CreateQuiz(){
-        
         let params: [String: Any] = [
             createQuizStringFile.target_type: target_type ?? 0,
             createQuizStringFile.target_code: array_selectedId,
@@ -1440,5 +1607,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
     
 }

@@ -37,6 +37,11 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
     @IBOutlet weak var LinkImage: UIImageView!
     @IBOutlet weak var meetigNameLbl: UILabel!
     @IBOutlet weak var meetigModeLbl: UILabel!
+    @IBOutlet weak var dateStack: UIStackView!
+    @IBOutlet weak var timeStack: UIStackView!
+    @IBOutlet weak var modeStack: UIStackView!
+    
+    
     
     var showpopup:ShowPopupDelegate?
     var edit:Bool?
@@ -80,6 +85,8 @@ class SlotListTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerDe
         motherNAmeStack.isHidden = true
         meetigModeLbl.isHidden = true
         meetigNameLbl.isHidden = true
+        dateStack.isHidden = true
+        modeStack.isHidden = true
         
         callImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CallAct)))
         LinkImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(JoinAct)))

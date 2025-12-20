@@ -32,8 +32,9 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func getacadmicYr() {
         AcadimicYears = localData.accidamic_year_data?.data ?? []
-        academicYearBtn.setTitle(AcadimicYears.last?.year, for: .normal)
-        Get_standardSection_Api(academicId: AcadimicYears.last?.id ?? 0)
+        let currentYear = AcadimicYears.first(where: { $0.current_academic_year == true })
+        academicYearBtn.setTitle(currentYear?.year, for: .normal)
+        Get_standardSection_Api(academicId: currentYear?.id ?? 0)
     }
     
     @IBAction func academicYearDrop_action(_ sender: UIButton) {

@@ -50,6 +50,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         existing.mark = model.mark
         existing.file_path = model.file_path
         questions[indexPath.row] = existing
+        
     }
     
     func removeCell(at indexPath: IndexPath) {
@@ -458,10 +459,10 @@ class CreateQuizQutionVc: UIViewController {
     
 }
 
+@available(iOS 14.0, *)
 extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if tableView == tv{
             return questions.count
         }else{
@@ -478,9 +479,16 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             
             let model = questions[indexPath.row]
             let isLastCell = (indexPath.row == questions.count - 1)
-            
             cell.indexPath = indexPath
             cell.delegate = self
+            cell.parentVC = self
+            cell.onAttachmentsUpdated = { [weak self] in
+                DispatchQueue.main.async {
+                    self?.tv.beginUpdates()
+                    self?.tv.endUpdates()
+                }
+            }
+
             cell.configureCell(
                 with: model,
                 isLast: isLastCell,
@@ -499,7 +507,7 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             cell.indexPath = indexPath
             cell.questionId = model.id
             cell.delegate = self
-            
+            cell.parentVC = self
             // ✅ Use selectedQuestionIds instead of questions
             let isChecked = selectedQuestionIds.contains(model.id ?? "")
             cell.configureQuestionBankCell(with: model, isChecked: isChecked)

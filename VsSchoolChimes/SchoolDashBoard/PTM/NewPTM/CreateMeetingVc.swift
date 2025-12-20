@@ -323,8 +323,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     func getAcadmicYear() {
         academicYears = localData.accidamic_year_data?.data?.compactMap { $0.year } ?? []
         academicYearDataList = localData.accidamic_year_data?.data ?? []
-        academicYearLabel.text = academicYears.last ?? ""
-        academicId = localData.accidamic_year_data?.data?.last?.id ?? 0
+        let currentYear = academicYearDataList.first(where: {$0.current_academic_year == true})
+        academicYearLabel.text = currentYear?.year
+        academicId = currentYear?.id
     }
     
     
