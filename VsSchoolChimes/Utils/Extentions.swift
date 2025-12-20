@@ -186,7 +186,9 @@ class CustomView:UIView{
         self.layer.cornerRadius = 8
     }
 }
-
+func optionLetter(for index: Int) -> String {
+    return String(UnicodeScalar(65 + index)!)
+}
 extension UITapGestureRecognizer {
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
         // Ensure there is attributed text

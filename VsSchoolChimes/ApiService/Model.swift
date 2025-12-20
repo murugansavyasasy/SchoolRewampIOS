@@ -2169,28 +2169,23 @@ struct senderQuizListData : Codable{
     var mark : String?
     
 }
-
+struct QstDetail: Codable {
+    let id: String?
+    let chapter: String?
+    let question: String?
+    let mark: String?
+    let options: [OptionsDeatil]?
+    let q_file_path: [FilePath]?
+}
+struct OptionsDeatil: Codable {
+    let option: String?
+    let value:String?
+    let image: String?
+}
 struct QuizQuestionSuc : Codable{
-    
-    let status : Bool?
-    let message : String?
-    let data : [QuizQuestionData]?
-}
-struct QuizQuestionData : Codable{
-    
-    let level : Int?
-    let total_questions : Int?
-    let question_details : [QuizQuestionDataDetails]?
-    
-}
-
-struct QuizQuestionDataDetails : Codable{
-    let id : String?
-    let question : String?
-    let mark : Int?
-    let correctOptionIndex : Int?
-    let options : [String]?
-    var file_path: [FilePath]?
+    let status: Bool?
+    let message: String?
+    let data: [QstDetail]?
 }
 
 struct QuizaddQuestionSuc : Codable{
@@ -2221,13 +2216,10 @@ struct MyQuizDetails : Codable  {
     var id : String?
     var quiz_id : String?
     var question : String?
-    var a_option : String?
-    var b_option : String?
-    var c_cption : String?
-    var d_option : String?
     var mark : Int?
     var student_answer : String?
     var correct_answer : String?
+    var options : [OptionsDeatil]?
     var file_path : [FilePath]?
     
 }

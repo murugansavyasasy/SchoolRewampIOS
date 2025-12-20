@@ -1,184 +1,205 @@
-//
-//  QuizCompletedVc.swift
-//  School Chimes
-//
-//  Created by SARANRAJ SHANMUGAM on 09/09/25.
-//
-
 import UIKit
 
 class QuizCompletedVc: UIViewController {
-    
+
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var menuNameLbl: UILabel!
-    
-    var get_QuizDetails : [myQuizDetails] = []
-    var quiz_details : [MyQuizDetails]?
-    var selected_QuizId : String?
+
+    var get_QuizDetails: [myQuizDetails] = []
+    var quiz_details: [MyQuizDetails]?
+    var selected_QuizId: String?
     var childDetails = UserDefaultFileManager.get_child_Details()
-    var correct_ans : String = ""
-    var worng_ans : String = ""
-    var not_ans: String = ""
-    var subjet_name : String = ""
-    var completed_date : String = ""
-    var message : String = ""
+
+    var correct_ans = ""
+    var worng_ans = ""
+    var not_ans = ""
+    var subjet_name = ""
+    var completed_date = ""
+    var message = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
-        menuNameLbl.text =  MenuStringFile.selectedMenuName + " Submission"
-        tv.register(UINib(nibName: CellConfingName.QuizCompletedFirstTv, bundle: nil), forCellReuseIdentifier: CellConfingName.QuizCompletedFirstTv)
-        tv.register(UINib(nibName: CellConfingName.CompletedTVcell, bundle: nil), forCellReuseIdentifier: CellConfingName.CompletedTVcell)
-        mySubmission()
-        tv.dataSource = self
+
+        menuNameLbl.text = MenuStringFile.selectedMenuName + " Submission"
+
+        tv.register(UINib(nibName: CellConfingName.QuizCompletedFirstTv, bundle: nil),
+                    forCellReuseIdentifier: CellConfingName.QuizCompletedFirstTv)
+        tv.register(UINib(nibName: "QuestionTVC", bundle: nil),
+                    forCellReuseIdentifier: "QuestionTVC")
+        tv.register(UINib(nibName: "OptionTVC", bundle: nil),
+                    forCellReuseIdentifier: "OptionTVC")
+        tv.register(UINib(nibName: "NodataTVC", bundle: nil),
+                    forCellReuseIdentifier: "NodataTVC")
+
         tv.delegate = self
+        tv.dataSource = self
+
+        mySubmission()
     }
-    
+
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true)
     }
-    
 }
-extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
+
+// MARK: - TableView Delegate & DataSource
+extension QuizCompletedVc: UITableViewDelegate, UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let question = quiz_details else { return 1 }
+        return quiz_details?.count ?? 0
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + (quiz_details?.count ?? 0)
+        return 1 + (quiz_details?[section].options?.count ?? 0)
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        guard let question = quiz_details?[indexPath.section] else {
+            return tableView.dequeueReusableCell(withIdentifier: "NodataTVC", for: indexPath)
+        }
+
+        // QUESTION CELL
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuizCompletedFirstTv, for: indexPath) as! QuizCompletedFirstTv
-            cell.subjectQuiz.text = subjet_name
-            cell.completedAtLbl.text = "Completed at: " + formattedDateStatus(from: completed_date, isTimeNeeded: true)
-            cell.wishesLbl.text = message
-            let parts = correct_ans.split(separator: "/")
-            if parts.count == 2,
-               let correct = Double(parts[0]),
-               let total = Double(parts[1]),
-               total > 0 {
-                let percentage = (correct / total) * 100.0
-                cell.setProgress(to: percentage)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTVC",
+                                                     for: indexPath) as! QuestionTVC
+            cell.qstLbl.text = question.question
+            cell.qstCountLbl.text = "Question \(indexPath.section + 1)"
+            cell.markLbl.text = "Mark / \(question.mark ?? 0)"
+
+            if let files = question.file_path, !files.isEmpty {
+                cell.conficList(filePath: files)
+                cell.imgView.isHidden = false
+                cell.pageController.isHidden = false
+                cell.pageController.numberOfPages = files.count
             } else {
-                cell.setProgress(to: 0.0)
+                cell.imgView.isHidden = true
+                cell.pageController.isHidden = true
             }
-            // Example for "notAnsBtn"
-            cell.notAnsBtn.setImage(UIImage(systemName: "questionmark"), for: .normal)
-            cell.notAnsBtn.setTitle("Not Ans " + not_ans, for: .normal)
-            cell.notAnsBtn.titleLabel?.numberOfLines = 2
-            cell.notAnsBtn.titleLabel?.lineBreakMode = .byWordWrapping
-            
-            cell.wrongBtn.titleLabel?.numberOfLines = 2
-            cell.wrongBtn.titleLabel?.lineBreakMode = .byWordWrapping
-            cell.crtBtn.titleLabel?.numberOfLines = 2
-            cell.crtBtn.titleLabel?.lineBreakMode = .byWordWrapping
-            
-            cell.wrongBtn.setTitleFont(style: .primary, size: 10)
-            cell.notAnsBtn.setTitleFont(style: .primary, size: 10)
-            cell.crtBtn.setTitleFont(style: .primary, size: 10)
-            // Add spacing between image and text
-            cell.notAnsBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
-            cell.notAnsBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-            
-            // Optional styling
-            cell.notAnsBtn.tintColor = .orange
-            cell.notAnsBtn.setTitleColor(.orange, for: .normal)
-            
-            cell.crtBtn
-                .setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            cell.crtBtn.setTitle("Correct Ans " + correct_ans, for: .normal)
-            cell.crtBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
-            cell.crtBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-            cell.wrongBtn.setImage(UIImage(systemName: "multiply.circle"), for: .normal)
-            cell.wrongBtn.setTitle("Wrong Ans " + worng_ans, for: .normal)
-            cell.wrongBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
-            cell.wrongBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-            
             return cell
+        }
+
+        // OPTION CELL
+        let cell = tableView.dequeueReusableCell(withIdentifier: "OptionTVC",
+                                                 for: indexPath) as! OptionTVC
+
+        let optionIndex = indexPath.row - 1
+        let option = question.options?[optionIndex]
+        let chooseOption = optionLetter(for: optionIndex)
+
+        let correctAnswer = question.correct_answer ?? ""
+        let studentAnswer = question.student_answer ?? ""
+        let optionText = option?.value ?? ""
+
+        // DEFAULT (GRAY)
+        cell.optionView.layer.borderColor = UIColor.systemGray4.cgColor
+        cell.optionView.layer.borderWidth = 1
+        cell.optionView.backgroundColor = .clear
+        cell.optionBtn.setTitle(chooseOption, for: .normal)
+        cell.optionBtn.setImage(nil, for: .normal)
+        if studentAnswer == correctAnswer && optionText == studentAnswer {
+            cell.optionBtn.setTitle("", for: .normal)
+            cell.optionBtn.setImage(
+                UIImage(systemName: "checkmark.circle.fill"),
+                for: .normal
+            )
+            cell.optionView.layer.borderColor = UIColor.systemGreen.cgColor
+            cell.optionView.layer.borderWidth = 2
+            cell.optionView.backgroundColor =
+                UIColor.systemGreen.withAlphaComponent(0.1)
+            cell.optionBtn.tintColor = UIColor.systemGreen
+        }else if studentAnswer != correctAnswer && optionText == correctAnswer {
+            cell.optionBtn.setTitle("", for: .normal)
+            cell.optionBtn.setImage(
+                UIImage(systemName: "checkmark.circle.fill"),
+                for: .normal
+            )
+            cell.optionView.layer.borderColor = UIColor.systemGreen.cgColor
+            cell.optionView.layer.borderWidth = 2
+            cell.optionView.backgroundColor =
+                UIColor.systemGreen.withAlphaComponent(0.1)
+            cell.optionBtn.tintColor = UIColor.systemGreen
+        }
+        else if studentAnswer != correctAnswer && optionText == studentAnswer {
+            cell.optionView.layer.borderColor = UIColor.systemRed.cgColor
+            cell.optionBtn.setTitle("", for: .normal)
+            cell.optionBtn.tintColor = UIColor.systemRed
+            cell.optionBtn.setImage(
+                UIImage(systemName: "xmark.circle.fill"),
+                for: .normal
+            )
+            cell.optionView.layer.borderWidth = 2
+            cell.optionView.backgroundColor =
+                UIColor.systemRed.withAlphaComponent(0.1)
+            
+        }
+
+        if let imgStr = option?.image,
+           let imgURL = URL(string: imgStr),
+           !imgStr.isEmpty {
+            cell.ansImg.isHidden = false
+            cell.ansImg.kf.setImage(with: imgURL,
+                                    placeholder: UIImage(named: "ImagePdf"))
         } else {
-            // ✅ Remaining cells: Quiz details
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
-            let questionNumber = indexPath.row
-            cell.QuestionLbl.text = "\(questionNumber)) " + "  " + (quiz_details?[indexPath.row - 1].question ?? "")
-            
-            let detail = quiz_details?[indexPath.row - 1]
-            [cell.Button1, cell.Button2, cell.Button3, cell.Button4].forEach { button in
-                button?.backgroundColor = .clr
-                button?.setTitleColor(.black, for: .normal)
-            }
-            
-            // Assign titles
-            cell.Button1.setTitle(detail?.a_option, for: .normal)
-            cell.Button2.setTitle(detail?.b_option, for: .normal)
-            cell.Button3.setTitle(detail?.c_cption, for: .normal)
-            cell.Button4.setTitle(detail?.d_option, for: .normal)
-            
-            guard let studentAnswer = detail?.student_answer,
-                  let correctAnswer = detail?.correct_answer else {
-                return cell
-            }
-            
-            // Check if student answer is correct
-            if studentAnswer == correctAnswer {
-                // ✅ Correct → Green
-                if cell.Button1.title(for: .normal) == studentAnswer {
-                    cell.Button1.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-                } else if cell.Button2.title(for: .normal) == studentAnswer {
-                    cell.Button2.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-                } else if cell.Button3.title(for: .normal) == studentAnswer {
-                    cell.Button3.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-                } else if cell.Button4.title(for: .normal) == studentAnswer {
-                    cell.Button4.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-                }
-                cell.correctAnsStack.isHidden  = true
-                cell.yourAnsStack.isHidden = true
-                cell.lineView.isHidden = true
-            } else {
-                if cell.Button1.title(for: .normal) == studentAnswer {
-                    cell.Button1.backgroundColor = .systemRed
-                        .withAlphaComponent(0.3)
-                } else if cell.Button2.title(for: .normal) == studentAnswer {
-                    cell.Button2.backgroundColor = .systemRed.withAlphaComponent(0.3)
-                } else if cell.Button3.title(for: .normal) == studentAnswer {
-                    cell.Button3.backgroundColor = .systemRed.withAlphaComponent(0.3)
-                } else if cell.Button4.title(for: .normal) == studentAnswer {
-                    cell.Button4.backgroundColor = .systemRed.withAlphaComponent(0.3)
-                }
-                // ✅ Highlight correct answer separately
-                if cell.Button1.title(for: .normal) == correctAnswer {
-                    cell.Button1.backgroundColor = .systemGreen
-                } else if cell.Button2.title(for: .normal) == correctAnswer {
-                    cell.Button2.backgroundColor = .systemGreen
-                } else if cell.Button3.title(for: .normal) == correctAnswer {
-                    cell.Button3.backgroundColor = .systemGreen
-                } else if cell.Button4.title(for: .normal) == correctAnswer {
-                    cell.Button4.backgroundColor = .systemGreen
-                }
-                // 🔎 Show label with correct answer (if needed)
-                cell.correctAnsStack.isHidden  = false
-                cell.yourAnsStack.isHidden = false
-                cell.lineView.isHidden = false
-                cell.crtAnsLbl.text = correctAnswer
-                cell.yourAnsLbl.text = studentAnswer
-            }
-            
-            cell.file_path = detail?.file_path
-            cell.cv.isHidden = detail?.file_path?.count == 0
-            cell.pageControls.numberOfPages = detail?.file_path?.count ?? 0
-            return cell
+            cell.ansImg.isHidden = true
         }
+        cell.ansLbl.text = option?.option
+        return cell
     }
-    
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 330
-        }else{
-            return UITableView.automaticDimension
+
+    // MARK: - HEADER (First section only)
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
+
+        guard section == 0 else { return nil }
+
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.QuizCompletedFirstTv
+        ) as! QuizCompletedFirstTv
+
+        cell.subjectQuiz.text = subjet_name
+        cell.completedAtLbl.text =
+            "Completed at: " + formattedDateStatus(from: completed_date, isTimeNeeded: true)
+        cell.wishesLbl.text = message
+
+        let parts = correct_ans.split(separator: "/")
+        if parts.count == 2,
+           let correct = Double(parts[0]),
+           let total = Double(parts[1]),
+           total > 0 {
+            cell.setProgress(to: (correct / total) * 100)
+        } else {
+            cell.setProgress(to: 0)
         }
+
+        cell.crtBtn.setTitle("Correct Ans " + correct_ans, for: .normal)
+        cell.wrongBtn.setTitle("Wrong Ans " + worng_ans, for: .normal)
+        cell.notAnsBtn.setTitle("Not Ans " + not_ans, for: .normal)
+
+        return cell.contentView
     }
-    
+
+    func tableView(_ tableView: UITableView,
+                   heightForHeaderInSection section: Int) -> CGFloat {
+        section == 0 ? UITableView.automaticDimension : 0.01
+    }
+
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+}
+
+// MARK: - API
+extension QuizCompletedVc {
+
     func mySubmission() {
         APIService.shared
             .makeApi(url: ServiceUrl.my_submissions, parameters: [QuizKeys.id : selected_QuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
@@ -204,7 +225,4 @@ extension QuizCompletedVc : UITableViewDelegate , UITableViewDataSource {
                 }
             }
     }
-    
-    
 }
-
