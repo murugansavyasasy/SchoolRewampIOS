@@ -5,9 +5,14 @@
 //  Created by SARANRAJ SHANMUGAM on 24/08/25.
 //
 
+protocol ReportsQuizDelegate: AnyObject {
+    
+    func didSelectQuizForEdit(quiz: EditQuiz)
+}
+
 import UIKit
 
-class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListDelegate {
+class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListDelegate, SelectedId {
     
     // MARK: - Outlets
     @IBOutlet weak var searchView: UISearchBar!
@@ -21,6 +26,9 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let images = ["Quiz1", "Quiz2", "Quiz3"]
     var selectNotice: SelectNotice?
+    let alert = CustomAlert()
+    weak var delegate: ReportsQuizDelegate?
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +36,7 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         registerCells()
         Get_Quiz()
     }
+    
     // MARK: - Setup
     private func setupUI() {
         searchView.delegate = self
@@ -123,6 +132,98 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         noDataLbl.isHidden = !isEmpty
         noDataLbl.text = isEmpty ? CommonStringFile.No_data_found : ""
     }
+        
+    func selectId(id: String?, edit: Bool?) {
+        
+        if edit == true {
+            update_Quiz_Api(id: id ?? "")
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.alert.showAlertCancel(
+                    title: AlertstringFile.Confirm,
+                    message: "Are you sure want to delete this Quiz?",
+                    actionLbl1: AlertstringFile.Yes,
+                    actionLbl2: AlertstringFile.No,
+                    on: self
+                ) {
+                    self.delete_Quiz_Api(id: id ?? "")
+                } onNo: {}
+            }
+        }
+    }
+
+    
+    func update_Quiz_Api(id: String){
+        
+        guard let Quiz: senderQuizListData = filteredData.first(where: {$0.id == id}) else {return}
+        
+        let editQuiz = EditQuiz(
+            id: Quiz.id ?? "",
+            title: Quiz.title,
+            description: Quiz.description,
+            noOfQuestions: Quiz.no_of_questions,
+            levelFlag: Quiz.level_flag,
+            isEdit: true
+        )
+        
+        delegate?.didSelectQuizForEdit(quiz: editQuiz)
+        
+        
+//        let param : [String:Any] = [:]
+//        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+//            
+//            guard let self = self else {return}
+//            
+//            DispatchQueue.main.async {
+//                
+//                switch result {
+//                case .success(let success):
+//                    
+//                    
+//                    
+//                case .failure(let failure):
+//                    
+//                }
+//            }
+//        }
+    }
+    
+    func delete_Quiz_Api(id :String){
+        
+        let param : [String:Any] = ["id":id]
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_delete, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true{
+                        
+                        if let index = self.filteredData.firstIndex(where: {$0.id == id}),
+                           let mainIndex = self.get_QuizDetails.firstIndex(where: {$0.id == id}){
+                            
+                            self.filteredData.remove(at: index)
+                            self.get_QuizDetails.remove(at: mainIndex)
+                            
+                            DispatchQueue.main.async {
+                                self.tv.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                            }
+                        }
+                        
+                    }else{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                    
+                case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+        }
+    }
+    
 }
 
 // MARK: - UITableViewDataSource & UITableViewDelegate
@@ -152,6 +253,9 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
         cell.subjectLbl.text = quiz.subject
         cell.postedByLbl.text = MenuStringFile.Posted_By.translated() + "\(quiz.sent_by ?? "")"
         cell.levelLbl.text = MenuStringFile.Level.translated() + String(quiz.level ?? 0)
+        cell.optionsBtn.isHidden = (quiz.can_edit == false && quiz.can_delete == false)
+        cell.edit(edit: quiz.can_edit ?? false, delete: quiz.can_delete ?? false, selectedId: quiz.id ?? "")
+        cell.PopupDelegate = self
         return cell
     }
     
@@ -172,4 +276,14 @@ extension ReportsQuizVc: UISearchBarDelegate {
         updateNoDataState()
         tv.reloadData()
     }
+}
+
+
+struct EditQuiz{
+    let id : String
+    let title : String?
+    let description: String?
+    let noOfQuestions: Int?
+    let levelFlag: Bool?
+    let isEdit: Bool?
 }

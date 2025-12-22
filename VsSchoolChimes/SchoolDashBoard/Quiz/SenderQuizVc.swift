@@ -20,13 +20,15 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet weak var checkBox: UIView!
     @IBOutlet weak var checkBoxImage: UIImageView!
     @IBOutlet weak var nextBtn: UIButton!
-
+    @IBOutlet weak var checkBoxDefaultLbl: LocalizationLabel!
+    
     var initialHeight: CGFloat = 60
     var maxHeight: CGFloat = 300
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectNotice: SelectNotice?
     var isChecked = false
     var placeholderLabel: UILabel!
+    var editQuiz: EditQuiz?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +49,38 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         discriptionsTextFild.layer.cornerRadius = 10
         checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
         checkBox.isUserInteractionEnabled = true
+        
+//        if let edit = editQuiz, edit.isEdit == true {
+//            titleText.text = edit.title
+//            discriptionsTextFild.text = edit.description
+//            numberOfQuestionText.text = String(edit.noOfQuestions ?? 0)
+//            checkBoxImage.image = UIImage(systemName: (edit.levelFlag ?? false) ? "checkmark.circle.fill" : "circle")
+//            nextBtn.setTitle("Update", for: .normal)
+//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let edit = editQuiz, edit.isEdit == true {
+            titleText.text = edit.title
+            discriptionsTextFild.text = edit.description
+            numberOfQuestionText.text = String(edit.noOfQuestions ?? 0)
+            checkBoxImage.image = UIImage(systemName: (edit.levelFlag ?? false) ? "checkmark.circle.fill" : "circle")
+            nextBtn.setTitle("Update", for: .normal)
+            placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
+            noOfQuestionDefaultLbl.textColor = .lightGray
+            numberOfQuestionText.textColor = .lightGray
+            checkBoxImage.tintColor = .lightGray
+            checkBoxDefaultLbl.textColor = .lightGray
+            
+        }else{
+            titleText.text = ""
+            discriptionsTextFild.text = ""
+            numberOfQuestionText.text = ""
+            checkBoxImage.image = UIImage(systemName: "circle")
+            nextBtn.setTitle("NEXT", for: .normal)
+            placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
+        }
     }
 
     func setupPlaceholder() {

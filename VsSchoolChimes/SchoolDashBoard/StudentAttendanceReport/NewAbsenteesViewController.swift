@@ -15,6 +15,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     }
     
     
+   
+    @IBOutlet weak var totalAbsentBtn: UIButton!
     @IBOutlet weak var noRecordView: UIView!
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var mothView: UIView!
@@ -63,6 +65,10 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         noRecordView.layer.cornerRadius = 8
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
+        
+        totalAbsentBtn.layer.cornerRadius = totalAbsentBtn.frame.height / 2
+        totalAbsentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         updateMonthLabel()
         dateLbl.isHidden = true
         cvIcon.isHidden = true
@@ -179,6 +185,27 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                 }
             }
         }
+    }
+    
+    func setAbsentButtonTitle(totalAbsent: String) {
+        let titleText = "Total Absent: \(totalAbsent)"
+
+        let attributedString = NSMutableAttributedString(
+            string: titleText,
+            attributes: [
+                .foregroundColor: UIColor.black
+            ]
+        )
+
+        let countRange = (titleText as NSString).range(of: "\(totalAbsent)")
+        attributedString.addAttributes(
+            [
+                .foregroundColor: UIColor.red
+            ],
+            range: countRange
+        )
+
+        totalAbsentBtn.setAttributedTitle(attributedString, for: .normal)
     }
     
     func filterData(for date: String) {
@@ -528,6 +555,10 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         // Find the matching date entry
         if let matchedDate = absentData.first(where: { $0.date == selectedDate }),
            let classWiseList = matchedDate.class_wise {
+            
+            DispatchQueue.main.async {
+                self.setAbsentButtonTitle(totalAbsent: matchedDate.total_absentees ?? "")
+            }
             var totalAbs = 0
             var totalStu = 0
             // Loop through all classes and sections

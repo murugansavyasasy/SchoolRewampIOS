@@ -2152,23 +2152,25 @@ struct QuizStudentReportData : Codable{
 }
 
 
-struct senderQuizListData : Codable{
-    var id : String?
-    var sent_time : String?
-    var title : String?
-    var description : String?
-    var standard : String?
-    var section : String?
-    var level : Int?
-    var subject_id : String?
-    var subject : String?
-    var sent_by : String?
-    var submission_date : String?
-    var type_name : String?
-    var no_of_questions : Int?
-    var submitted_count : Int?
-    var mark : String?
-    
+struct senderQuizListData: Codable {
+    var id: String?
+    var sent_time: String?
+    var title: String?
+    var description: String?
+    var standard: String?
+    var section: String?
+    var level: Int?
+    var level_flag: Bool?
+    var subject_id: String?
+    var subject: String?
+    var sent_by: String?
+    var submission_date: String?
+    var mark: String?
+    var type_name: String?
+    var no_of_questions: Int?
+    var submitted_count: Int?
+    var can_edit: Bool?
+    var can_delete: Bool?
 }
 
 struct QuizQuestionSuc : Codable{
