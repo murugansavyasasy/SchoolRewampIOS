@@ -462,6 +462,7 @@ extension EventResiverVC: UISearchBarDelegate, FilterCatagories {
             self.filteredSections = filterEventListsByTitle(searchText: name)
         }else{
             filteredSections = allEventSections
+            selectedIndex = 0
         }
         self.baseSection = self.filteredSections
         searchbar.searchTextField.text = ""

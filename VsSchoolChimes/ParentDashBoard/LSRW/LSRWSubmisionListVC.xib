@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LSRWSubmisionListVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="backBtn" destination="w4h-BE-IiX" id="ugR-jl-T9P"/>
+                <outlet property="backTittleLbl" destination="HLY-Gm-tGL" id="kSl-u3-9Xa"/>
                 <outlet property="lsrwCV" destination="xWy-zP-QTT" id="3Cd-26-qL4"/>
                 <outlet property="percentageLbl" destination="BaB-uE-3dx" id="81Q-gm-GTw"/>
                 <outlet property="remarkView" destination="QYg-tg-tEz" id="2EQ-q7-aYP"/>
@@ -25,29 +26,44 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
-                    <rect key="frame" x="10" y="69" width="363" height="35"/>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i6a-Bf-Qsa">
+                    <rect key="frame" x="10" y="69" width="373" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
+                            <rect key="frame" x="0.0" y="7.6666666666666714" width="35" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="JRH-1Y-hAd"/>
+                                <constraint firstAttribute="width" constant="35" id="U0i-1b-kEC"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                            </state>
+                            <connections>
+                                <action selector="back:" destination="-1" eventType="touchUpInside" id="hDp-3q-fgU"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MySubmistion " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLY-Gm-tGL">
+                            <rect key="frame" x="35" y="14.33333333333333" width="338" height="21.666666666666671"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="35" id="JRH-1Y-hAd"/>
+                        <constraint firstItem="HLY-Gm-tGL" firstAttribute="leading" secondItem="w4h-BE-IiX" secondAttribute="trailing" id="NDN-xG-e3D"/>
                     </constraints>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="MySubmistion " image="chevron.left" catalog="system">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                    </state>
-                    <connections>
-                        <action selector="back:" destination="-1" eventType="touchUpInside" id="hDp-3q-fgU"/>
-                    </connections>
-                </button>
+                </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anq-kt-saI">
-                    <rect key="frame" x="0.0" y="114" width="393" height="738"/>
+                    <rect key="frame" x="0.0" y="129" width="393" height="723"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="vpG-AJ-hy7">
-                            <rect key="frame" x="0.0" y="10" width="393" height="694"/>
+                            <rect key="frame" x="0.0" y="10" width="393" height="679"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xWy-zP-QTT">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="694"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="679"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aR3-1x-lSR">
                                         <size key="itemSize" width="128" height="128"/>
@@ -57,7 +73,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYg-tg-tEz">
-                                    <rect key="frame" x="0.0" y="694" width="393" height="145.33333333333337"/>
+                                    <rect key="frame" x="0.0" y="679" width="393" height="145.33333333333337"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-G5-TT5">
                                             <rect key="frame" x="20" y="10.000000000000004" width="353" height="60.333333333333343"/>
@@ -126,14 +142,14 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="PrimeryColor"/>
             <constraints>
+                <constraint firstItem="anq-kt-saI" firstAttribute="top" secondItem="i6a-Bf-Qsa" secondAttribute="bottom" constant="10" id="3wd-XU-Vla"/>
                 <constraint firstItem="anq-kt-saI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Af0-uM-MEM"/>
                 <constraint firstAttribute="bottom" secondItem="anq-kt-saI" secondAttribute="bottom" id="CHP-hm-LHu"/>
-                <constraint firstItem="w4h-BE-IiX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="SoY-cl-VEm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="i6a-Bf-Qsa" secondAttribute="trailing" constant="10" id="QNM-F6-M1I"/>
                 <constraint firstItem="vpG-AJ-hy7" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="UwB-p3-Cks"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="anq-kt-saI" secondAttribute="trailing" id="cfv-Ka-pd8"/>
-                <constraint firstItem="anq-kt-saI" firstAttribute="top" secondItem="w4h-BE-IiX" secondAttribute="bottom" constant="10" id="ecW-uq-KeX"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="w4h-BE-IiX" secondAttribute="trailing" constant="20" id="gIg-th-hok"/>
-                <constraint firstItem="w4h-BE-IiX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="gmT-Lr-437"/>
+                <constraint firstItem="i6a-Bf-Qsa" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="jAh-eI-JKW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="i6a-Bf-Qsa" secondAttribute="leading" constant="-10" id="oRg-EE-Mnq"/>
             </constraints>
             <point key="canvasLocation" x="59" y="20"/>
         </view>

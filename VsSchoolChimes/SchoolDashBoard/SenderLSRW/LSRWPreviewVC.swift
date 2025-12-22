@@ -183,6 +183,8 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 vc.id = filterAssignment[indexPath.row].id
                 vc.student_id = filterAssignment[indexPath.row].student_id
                 vc.backTitle1 = filterAssignment[indexPath.row].student_name
+                vc.titleSting = filterAssignment[indexPath.row].description
+                vc.mark = filterAssignment[indexPath.row].remark
                 vc.backTitle2 = "\(filterAssignment[indexPath.row].standard ?? "") - \(filterAssignment[indexPath.row].section ?? "")"
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)

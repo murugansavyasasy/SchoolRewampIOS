@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="584" id="KGk-i7-Jjw" customClass="NodataTVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="511" height="584"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="511" height="584"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bA7-sO-LgR">
+                        <rect key="frame" x="0.0" y="0.0" width="511" height="584"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="WpN-ho-dgE">
+                                <rect key="frame" x="10" y="10" width="491" height="564"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="yVI-uE-hxV">
+                                        <rect key="frame" x="0.0" y="0.0" width="491" height="564"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizPlay" translatesAutoresizingMaskIntoConstraints="NO" id="he5-Ht-DdM">
+                                                <rect key="frame" x="0.0" y="0.0" width="491" height="300"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="300" id="dHq-3d-LRQ"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erC-t3-z0L">
+                                                <rect key="frame" x="0.0" y="310" width="491" height="254"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WpN-ho-dgE" firstAttribute="leading" secondItem="bA7-sO-LgR" secondAttribute="leading" constant="10" id="F6f-8A-f0I"/>
+                            <constraint firstAttribute="trailing" secondItem="WpN-ho-dgE" secondAttribute="trailing" constant="10" id="edS-JQ-fql"/>
+                            <constraint firstAttribute="bottom" secondItem="WpN-ho-dgE" secondAttribute="bottom" constant="10" id="hGv-KO-4oO"/>
+                            <constraint firstItem="WpN-ho-dgE" firstAttribute="top" secondItem="bA7-sO-LgR" secondAttribute="top" constant="10" id="lHA-o8-Icw"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="bA7-sO-LgR" secondAttribute="trailing" id="KAj-do-Fn8"/>
+                    <constraint firstAttribute="bottom" secondItem="bA7-sO-LgR" secondAttribute="bottom" id="elX-wr-zXC"/>
+                    <constraint firstItem="bA7-sO-LgR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="v6y-nF-B2H"/>
+                    <constraint firstItem="bA7-sO-LgR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="z1o-Il-Ofx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="nodataImg" destination="he5-Ht-DdM" id="kak-gQ-6jh"/>
+                <outlet property="nodataLbl" destination="erC-t3-z0L" id="7iN-Ue-4mX"/>
+                <outlet property="nodataStack" destination="yVI-uE-hxV" id="Pla-fR-Czb"/>
+            </connections>
+            <point key="canvasLocation" x="284.73282442748092" y="209.85915492957747"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="quizPlay" width="898" height="720"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

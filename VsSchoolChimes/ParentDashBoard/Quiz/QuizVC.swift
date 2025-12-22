@@ -285,7 +285,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         didSelectRowAt indexPath: IndexPath
     ) {
         if stausType == "1"{
-            let vc = PlayQuizVc(nibName: nil, bundle: nil)
+            let vc = NewPlayQuizVC(nibName: nil, bundle: nil)
             vc.selectedQuizId = self.filteredExams[indexPath.row].quiz_id
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)

@@ -380,6 +380,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                                 let vc = LSRWSubmisionListVC()
                                 vc.attachment = data.first?.file_path
                                 vc.titleSting = data.first?.description ?? ""
+                                vc.mark = data.first?.remark ?? ""
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
                             }else{
