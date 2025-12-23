@@ -28,6 +28,8 @@ class QuizListTvCell: UITableViewCell, SelectedId, UIPopoverPresentationControll
     @IBOutlet weak var LevelView: UIView!
     @IBOutlet weak var levelLbl: UILabel!
     @IBOutlet weak var optionsBtn: UIButton!
+    @IBOutlet weak var pendingView: UIView!
+    
     
     var delegate : addQuestionAndSubmitedListDelegate?
     var edit:Bool?

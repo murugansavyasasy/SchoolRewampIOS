@@ -12,11 +12,13 @@ class ContactUsVc: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     
     var content = ["Our 24*7 Customer Service.","Write us at."]
     var contact = [UserDefaultFileManager.get_globalSelection()?.support_contact,UserDefaultFileManager.get_globalSelection()?.support_email]
-    var icon  = [ImageName.Phone,ImageName.mail]
+    var icon: [UIImage] = [.phone, .mail]
     var passValue = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -32,17 +34,17 @@ class ContactUsVc: UIViewController {
         tv.delegate = self
         let nib = UINib(nibName: CellConfingName.ContactUsTVCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.ContactUsTVCell)
-
     }
-//    override func viewDidLayoutSubviews() {
-//        if passValue == 1{
-//            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//        }else{
-//            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//        }
-//    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        UpdateTableviewHeight()
+    }
+    
+    func UpdateTableviewHeight(){
+        tv.layoutIfNeeded()
+        tableviewHeight.constant = tv.contentSize.height
+    }
 
     @IBAction func backBtn(_ sender: Any) {
         
@@ -67,10 +69,48 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      tableView.deselectRow(at: indexPath, animated: true)
+
+        guard let value = contact[indexPath.row] else { return }
+
+        switch indexPath.row {
+
+        case 0:
+            // Phone call
+            let phoneNumber = value.replacingOccurrences(of: " ", with: "")
+            if let url = URL(string: "tel://\(phoneNumber)"),
+               UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+
+        case 1:
+            // Gmail app → browser fallback (To only)
+            let gmailAppURL = URL(string: "googlegmail://co?to=\(value)")
+            let gmailWebURL = URL(string: "https://mail.google.com/mail/?view=cm&to=\(value)")
+
+            if let appURL = gmailAppURL,
+               UIApplication.shared.canOpenURL(appURL) {
+                UIApplication.shared.open(appURL)
+            } else if let webURL = gmailWebURL {
+                UIApplication.shared.open(webURL)
+            }
+
+        default:
+            break
+        }
+    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     
-        return 100
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
+        DispatchQueue.main.async {
+            self.UpdateTableviewHeight()
+        }
     }
     
 }

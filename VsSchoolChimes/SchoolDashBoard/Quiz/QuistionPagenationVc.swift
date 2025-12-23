@@ -88,6 +88,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         if index == 0 && currentIndex != 0 {
             if let senderVC = pages.first as? SenderQuizVc {
                 senderVC.editQuiz = nil
+                senderVC.isReset = true
                }
         }else if index == 1{
             createBtn.setTitle("Create", for: .normal)

@@ -71,7 +71,7 @@ class SchoolStrengthVC: UIViewController {
         )
         list.append(
             StrengthDisplayModel(
-                count: total,
+                Total: total,
                 name: Total,
                 previousYear: totalPreviousYear,
                 Girl:Int(data.total_staff_strength ?? "0") ?? 0,
@@ -80,7 +80,7 @@ class SchoolStrengthVC: UIViewController {
                 message: previousData?.message ?? ""))
         list.append(
             StrengthDisplayModel(
-                count: totalStudent,
+                Total: totalStudent,
                 name: Students,
                 previousYear: Int(previousData?.total_student_strength ?? "") ?? 0,
                 Girl: Int(data.total_girls_strength ?? "0") ?? 0,
@@ -91,7 +91,7 @@ class SchoolStrengthVC: UIViewController {
         )
         list.append(
             StrengthDisplayModel(
-                count: totalStaff,
+                Total: totalStaff,
                 name: Staff,
                 previousYear: Int(previousData?.total_staff_strength ?? "") ?? 0,
                 Girl: Int(data.total_female_staffs_strength ?? "0") ?? 0,
@@ -346,7 +346,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 struct StrengthDisplayModel {
-    var count: Int
+    var Total: Int
     var name: String
     var previousYear: Int
     var Girl : Int

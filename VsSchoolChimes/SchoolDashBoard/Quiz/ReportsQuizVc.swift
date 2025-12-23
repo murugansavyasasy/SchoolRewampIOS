@@ -167,25 +167,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         )
         
         delegate?.didSelectQuizForEdit(quiz: editQuiz)
-        
-        
-//        let param : [String:Any] = [:]
-//        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
-//            
-//            guard let self = self else {return}
-//            
-//            DispatchQueue.main.async {
-//                
-//                switch result {
-//                case .success(let success):
-//                    
-//                    
-//                    
-//                case .failure(let failure):
-//                    
-//                }
-//            }
-//        }
     }
     
     func delete_Quiz_Api(id :String){
@@ -245,6 +226,7 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
         let imageName = images[indexPath.row % images.count]
         cell.DeafultimageView.image = UIImage(named: imageName)
         cell.PlayBtn.isHidden = true
+        cell.pendingView.isHidden = quiz.open_to_student ?? false
         cell.titleLbl.text = quiz.title
         cell.discretiponsLbl.text = quiz.description
         cell.exameDateLbl.text = MenuStringFile.Sent_at.translated() + formattedDateStatus(

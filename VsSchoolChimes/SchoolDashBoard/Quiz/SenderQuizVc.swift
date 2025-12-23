@@ -29,6 +29,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     var isChecked = false
     var placeholderLabel: UILabel!
     var editQuiz: EditQuiz?
+    var isReset = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,14 +50,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         discriptionsTextFild.layer.cornerRadius = 10
         checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
         checkBox.isUserInteractionEnabled = true
-        
-//        if let edit = editQuiz, edit.isEdit == true {
-//            titleText.text = edit.title
-//            discriptionsTextFild.text = edit.description
-//            numberOfQuestionText.text = String(edit.noOfQuestions ?? 0)
-//            checkBoxImage.image = UIImage(systemName: (edit.levelFlag ?? false) ? "checkmark.circle.fill" : "circle")
-//            nextBtn.setTitle("Update", for: .normal)
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,18 +61,30 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             checkBoxImage.image = UIImage(systemName: (edit.levelFlag ?? false) ? "checkmark.circle.fill" : "circle")
             nextBtn.setTitle("Update", for: .normal)
             placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
-            noOfQuestionDefaultLbl.textColor = .lightGray
+            noOfQuestionDefaultLbl.alpha = 0.5
             numberOfQuestionText.textColor = .lightGray
-            checkBoxImage.tintColor = .lightGray
+            checkBoxImage.tintColor = .systemBlue.withAlphaComponent(0.4)
             checkBoxDefaultLbl.textColor = .lightGray
+            checkBox.isUserInteractionEnabled = false
+            numberOfQuestionText.isUserInteractionEnabled = false
             
         }else{
-            titleText.text = ""
-            discriptionsTextFild.text = ""
-            numberOfQuestionText.text = ""
-            checkBoxImage.image = UIImage(systemName: "circle")
+            
+            if isReset{
+                titleText.text = ""
+                discriptionsTextFild.text = ""
+                numberOfQuestionText.text = ""
+                checkBoxImage.image = UIImage(systemName: "circle")
+                isReset = false
+            }
             nextBtn.setTitle("NEXT", for: .normal)
             placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
+            checkBox.isUserInteractionEnabled = true
+            numberOfQuestionText.isUserInteractionEnabled = true
+            noOfQuestionDefaultLbl.alpha = 1
+            numberOfQuestionText.textColor = .black
+            checkBoxImage.tintColor = .systemBlue
+            checkBoxDefaultLbl.textColor = .black
         }
     }
 
@@ -123,8 +128,95 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             self.view.layoutIfNeeded()
         }
     }
+    
+    func update_Quiz(){
+        
+        let param : [String:Any] = [
+            "id": editQuiz?.id ?? "",
+            "title": titleText.text ?? "",
+            "description": discriptionsTextFild.text ?? ""
+        ]
+        
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    if success.status == true{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                    }else{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                    
+                case .failure(let failure):
+                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+        }
+    }
 
     @IBAction func createQuizBtnAct(_ sender: UIButton) {
+        
+        let trimmedTitle = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trimmedDescription = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trimmedQuestionCount = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        guard !trimmedTitle.isEmpty,
+              !trimmedDescription.isEmpty,
+              let questionCount = Int(trimmedQuestionCount), questionCount > 0
+        else {
+            CustomAlert().showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Please_fill,
+                on: self
+            )
+            return
+        }
+        
+        if editQuiz != nil{
+            
+            CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: "Are you sure want to update this Quiz?", actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.Cancel, on: self) {
+                
+                self.update_Quiz()
+            } onNo: {}
+
+        }else{
+            
+            let alert = UIAlertController(
+                title: AlertstringFile.Alert_title,
+                message: "You haven't added questions to this quiz yet. Would you like to add them or do it later?",
+                preferredStyle: .alert
+            )
+            
+            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel) { _ in
+                print("Cancel tapped")
+            }
+            
+            let laterAction = UIAlertAction(title: "Later", style: .default) { _ in
+               
+                self.AddLater()
+            }
+            
+            let okAction = UIAlertAction(title: "Add Now", style: .default) { _ in
+                self.AddNow()
+            }
+            
+            alert.addAction(cancelAction)
+            alert.addAction(laterAction)
+            alert.addAction(okAction)
+            
+            present(alert, animated: true)
+        }
+    }
+    
+    func AddLater(){
+        
         let trimmedTitle = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let trimmedDescription = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let trimmedQuestionCount = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -154,6 +246,15 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         let vc = RecipientVc(nibName: nil, bundle: nil)
         vc.ScreenType = Menu_id.quiz
         vc.Common_request_params = params
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func AddNow(){
+        
+        let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
+        vc.noOfQuestion = Int(numberOfQuestionText.text ?? "0") ?? 0
+        vc.titleString = titleText.text ?? ""
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
