@@ -327,6 +327,7 @@ class createQuizStringFile{
     static let  subject_id = "subject_id"
     static let  class_id = "class_id"
     static let  questions = "questions"
+    static let  open_to_student = "open_to_student"
     
 }
 
@@ -360,6 +361,7 @@ class QuizKeys {
     static let max_mark = "max_mark"
     static let ok_flag = "ok_flag"
     static let update_question_bank = "update_question_bank"
+    static let open_to_student = "open_to_student"
 
     // Question keys
     static let ques_no = "ques_no"

@@ -158,7 +158,6 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
             txtField.placeholder = item.title
             txtField.text = item.value
             txtField.isEnabled = item.is_editable ?? false
-            
         case .address:
             txtView.isHidden = false
             txtViewHeight.constant = 100
@@ -358,6 +357,10 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         attachments.remove(at: index)
         reloadCollectionAndUpdateHeight()
         valueChanged(attachments)
+//        if let table = self.superview as? UITableView {
+//            table.beginUpdates()
+//            table.endUpdates()
+//        }
     }
     
     private func reloadCollectionAndUpdateHeight() {
@@ -403,7 +406,7 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
             cell.deleteBtn.isHidden = false
         }
         cell.delegate = self
-        
+//        cell.deleteBtn.tag = indexPath.item
         // Configure cell based on file type
         switch file.fileType.uppercased() {
         case CommonStringFile.IMAGE:
@@ -425,7 +428,6 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         } else {
             cell.imageNameLbl.text = "File \(indexPath.item + 1)"
         }
-        
         // Fetch and display file size
         if let urlString = file.imageURL, let sizeURL = URL(string: urlString) {
             getRemoteFileSize(from: sizeURL) { sizeString in

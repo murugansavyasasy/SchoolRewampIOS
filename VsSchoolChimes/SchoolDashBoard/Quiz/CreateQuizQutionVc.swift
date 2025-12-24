@@ -173,19 +173,38 @@ class CreateQuizQutionVc: UIViewController {
         }
 
         if id == ""{
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.quiz
-            vc.questions = questions
-            vc.QuestionBankData = QuestionBankData
-            vc.Common_request_params = Common_request_params
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            let remaining = noOfQuestion - questions.count
+            let msg =
+            """
+            Almost there! You’ve created \(questions.count) out of \(noOfQuestion) questions.
+
+            You still need to add \(remaining) more question(s) to complete the quiz — but don’t worry, you can add them later.
+
+            Note: The quiz will be visible to students only after all questions are filled
+            """
+            CustomAlert().showAlertCancel(
+                title: AlertstringFile.Confirm,
+                message: msg,
+                actionLbl1: AlertstringFile.OK,
+                actionLbl2: AlertstringFile.Cancel,
+                on: self
+            ) { [self] in
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = Menu_id.quiz
+                vc.questions = questions
+                vc.QuestionBankData = QuestionBankData
+                vc.Common_request_params = Common_request_params
+                vc.isQuiz_open_to_students = noOfQuestion == questions.count ? true : false
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+                
+            } onNo: {}
         }else{
             if noOfQuestion == questions.count {
                 // ✔ Full question count filled → SEND
                 CustomAlert().showAlertCancel(
                     title: AlertstringFile.Confirm,
-                    message: "Are you sure want to send this Quiz?",
+                    message: "Are you sure want to submit this Quiz?",
                     actionLbl1: AlertstringFile.Yes,
                     actionLbl2: AlertstringFile.Cancel,
                     on: self
@@ -463,12 +482,13 @@ class CreateQuizQutionVc: UIViewController {
         }
 
         let totalMarks = questions.compactMap { $0.mark }.reduce(0, +)
-
+//
         return [
             QuizKeys.questions: dictArray,
             QuizKeys.max_mark: totalMarks,
             QuizKeys.ok_flag: false,
-            QuizKeys.update_question_bank: updateArray
+            QuizKeys.update_question_bank: updateArray,
+            QuizKeys.open_to_student: noOfQuestion == questions.count ? true : false
         ]
     }
     func uploadAllQuestionsOptionImages(completion: @escaping ()->Void) {

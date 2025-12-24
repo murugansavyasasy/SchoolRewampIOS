@@ -181,7 +181,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         
         if editQuiz != nil{
-            
             CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: "Are you sure want to update this Quiz?", actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.Cancel, on: self) {
                 
                 self.update_Quiz()
@@ -200,18 +199,15 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             }
             
             let laterAction = UIAlertAction(title: "Later", style: .default) { _ in
-               
                 self.AddLater()
             }
             
             let okAction = UIAlertAction(title: "Add Now", style: .default) { _ in
                 self.AddNow()
             }
-            
             alert.addAction(cancelAction)
             alert.addAction(laterAction)
             alert.addAction(okAction)
-            
             present(alert, animated: true)
         }
     }
@@ -247,6 +243,9 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         let vc = RecipientVc(nibName: nil, bundle: nil)
         vc.ScreenType = Menu_id.quiz
         vc.Common_request_params = params
+        vc.questions = []
+        vc.QuestionBankData = []
+        vc.isQuiz_open_to_students = false
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         

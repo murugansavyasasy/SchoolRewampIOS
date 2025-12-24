@@ -83,6 +83,7 @@ class RecipientVc: UIViewController{
     var uploadedFiles1: [[String: String]] = []
     var file_path: [FilePath] = []
     var uploadedCount = 0
+    var isQuiz_open_to_students: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         nodataFound.isHidden = true
@@ -311,7 +312,6 @@ class RecipientVc: UIViewController{
     }
     
     func uploadAllQuestionsAndCreateQuiz() {
-        let total = questions.count
         uploadedCount = 0
         uploadForQuestion(index: 0)
     }
@@ -604,7 +604,7 @@ class RecipientVc: UIViewController{
                 createQuizStringFile.target_code: array_selectedId,
                 createQuizStringFile.subject_id : subjectId ?? "",
                 createQuizStringFile.class_id : classID ?? "",
-                "open_to_student" : true
+                createQuizStringFile.open_to_student : isQuiz_open_to_students
             ]
 
             params.merge(Common_request_params) { _, new in new }
