@@ -244,22 +244,41 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             QuizRequestStringFile.level_flag: isChecked
         ]
 
-//        let vc = RecipientVc(nibName: nil, bundle: nil)
-//        vc.ScreenType = Menu_id.quiz
-//        vc.Common_request_params = params
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-        
-        let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        vc.ScreenType = Menu_id.quiz
         vc.Common_request_params = params
-        vc.noOfQuestion = Int(numberOfQuestionText.text ?? "0") ?? 0
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+        
+       
     }
     
     func AddNow(){
-        
+        let trimmedTitle = titleText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trimmedDescription = discriptionsTextFild.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trimmedQuestionCount = numberOfQuestionText.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        guard !trimmedTitle.isEmpty,
+              !trimmedDescription.isEmpty,
+              let questionCount = Int(trimmedQuestionCount), questionCount > 0
+        else {
+            CustomAlert().showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Please_fill,
+                on: self
+            )
+            return
+        }
+
+        let params: [String: Any] = [
+        QuizRequestStringFile.title: trimmedTitle,
+        QuizRequestStringFile.description: trimmedDescription,
+        QuizRequestStringFile.no_of_question: questionCount,
+        QuizRequestStringFile.level: user_inputs.level,
+        QuizRequestStringFile.level_flag: isChecked
+    ]
         let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
+        vc.Common_request_params = params
         vc.noOfQuestion = Int(numberOfQuestionText.text ?? "0") ?? 0
         vc.titleString = titleText.text ?? ""
         vc.modalPresentationStyle = .fullScreen

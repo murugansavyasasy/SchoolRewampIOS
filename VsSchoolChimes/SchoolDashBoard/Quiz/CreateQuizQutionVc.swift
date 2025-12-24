@@ -90,8 +90,6 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
     }
     
-   
-    
     func updateQuestionAttachments(at indexPath: IndexPath, attachments: [QuizAttachmentItem]) {
         localAttachments[indexPath.row] = attachments
     }
@@ -169,20 +167,56 @@ class CreateQuizQutionVc: UIViewController {
     
     
     @IBAction func btnAct(_ sender: UIButton) {
-        
         if let errorMessage = validateQuestions() {
             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(), message: errorMessage, on: self)
             return
         }
-//        let vc = RecipientVc(nibName: nil, bundle: nil)
-//        vc.ScreenType = Menu_id.quiz
-//        vc.questions = questions
-//        vc.QuestionBankData = QuestionBankData
-//        vc.Common_request_params = Common_request_params
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-        
-        uploadAllQuestionsAndCreateQuiz()
+
+        if id == ""{
+            let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.ScreenType = Menu_id.quiz
+            vc.questions = questions
+            vc.QuestionBankData = QuestionBankData
+            vc.Common_request_params = Common_request_params
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }else{
+            if noOfQuestion == questions.count {
+                // ✔ Full question count filled → SEND
+                CustomAlert().showAlertCancel(
+                    title: AlertstringFile.Confirm,
+                    message: "Are you sure want to send this Quiz?",
+                    actionLbl1: AlertstringFile.Yes,
+                    actionLbl2: AlertstringFile.Cancel,
+                    on: self
+                ) {
+                    self.uploadAllQuestionsAndCreateQuiz()
+                } onNo: {}
+
+            } else {
+                // ❗ Not fully filled → Show your custom message
+                let remaining = noOfQuestion - questions.count
+                let msg =
+                """
+                Almost there! You’ve created \(questions.count) out of \(noOfQuestion) questions.
+
+                You still need to add \(remaining) more question(s) to complete the quiz — but don’t worry, you can add them later.
+
+                Note: The quiz will be visible to students only after all questions are filled
+                """
+                CustomAlert().showAlertCancel(
+                    title: AlertstringFile.Confirm,
+                    message: msg,
+                    actionLbl1: AlertstringFile.OK,
+                    actionLbl2: AlertstringFile.Cancel,
+                    on: self
+                ) {
+                    self.uploadAllQuestionsAndCreateQuiz()
+                } onNo: {}
+            }
+
+        }
+       
     }
     
     func addQuestion(id :String) {
@@ -241,7 +275,6 @@ class CreateQuizQutionVc: UIViewController {
     
     func detectType(url: String) -> String {
         let ext = URL(string: url)?.pathExtension.lowercased()
-
         if url.contains("vimeo.com") { return "video" }
         if ["jpg","jpeg","png","gif","heic"].contains(ext) { return "image" }
         if ext == "pdf" { return "pdf" }
@@ -249,11 +282,9 @@ class CreateQuizQutionVc: UIViewController {
     }
     
     func uploadAllQuestionsAndCreateQuiz() {
-        let total = questions.count
         uploadedCount = 0
         uploadForQuestion(index: 0)
     }
-
 
     func uploadForQuestion(index: Int) {
         if index >= questions.count {
@@ -387,7 +418,6 @@ class CreateQuizQutionVc: UIViewController {
 
     
     func buildQuizParams() -> [String: Any] {
-
         let dictArray: [[String: Any]] = questions.enumerated().map { (index, q) in
             let fp = (q.q_file_path ?? []).map {
                       ["url": $0.url ?? "", "type": $0.type ?? ""]
